@@ -1,0 +1,18 @@
+SecFilterEngine off
+FileETag MTime Size
+Header set Content-Style-Type "text/css"
+Options -Indexes
+DirectoryIndex index.html
+AddType text/xsl .xslt
+AddType application/xml .atom
+AddType text/html .xo
+AddType text/plain .txt
+AddType video/mp4 .mp4
+AddType application/x-srt .srt
+AddType video/ogg .ogv
+AddType image/x-icon .ico
+AddType application/vnd.oasis.opendocument.presentation .odp
+AddDefaultCharset utf-8
+RemoveOutputFilter .js
+SetEnvIfNoCase Request_URI \.js$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.mp4$ no-gzip dont-vary

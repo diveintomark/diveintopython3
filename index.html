@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dive into Python 3</title>
+<link rel="stylesheet" type="text/css" href="dip3.css">
+<meta name="description" content="This book lives at diveintopython3.org.  If you're reading it somewhere else, you may not have the latest version.">
+<meta name="keywords" content="Python, Python 3, Dive Into Python 3, tutorial, programming, documentation, book, free">
+<meta name="description" content="Python 3 from novice to pro">
+</head>
+<body>
+<p><cite>Dive into Python 3</cite> will cover Python 3 and its differences from Python 2.  Compared to the original <cite><a href="http://diveintopython.org/">Dive into Python</a></cite>, it will be about 50% revised and 50% new material.</p>
+<p>I will publish drafts online as I go.  The final book will be published on paper by Apress.  The book will remain online under the <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a> license.</p>
+<p>Below is the draft table of contents.  There is no text yet.</p>
+<p>Yes, that is <code>PapayaWhip</code>.  All hail <code>PapayaWhip</code>.</p>
+
+<section>
+<h1>Installing Python</h1>
+
+<article>
+<h2>Python on Windows</h2>
+</article>
+
+<article>
+<h2>Python on Mac OS X</h2>
+</article>
+
+<article>
+<h2>Python on Linux</h2>
+</article>
+
+<article>
+<h2>Python from source</h2>
+</article>
+
+<article>
+<h2>The interactive shell</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Your first Python program</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>Declaring functions</h2>
+<h3>How Python's datatypes compare to other programming languages</h3>
+</article>
+
+<article>
+<h2>Documenting functions</h2>
+</article>
+
+<article>
+<h2>Everything is an object</h2>
+<h3>The import search path</h3>
+<h3>What's an object?</h3>
+</article>
+
+<article>
+<h2>Indenting code</h2>
+</article>
+
+<article>
+<h2>Testing modules</h2>
+</article>       
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Native Python datatypes</h1>
+
+<article>
+<h2>Lists</h2>
+<h3>Differences from Python 2</h3>
+<h3>Creating new a list</h3>
+<h3>Modifying a list</h3>
+<h3>Searching a list</h3>
+<h3>Deleting elements from a list</h3>
+<h3>List operators</h3>
+<h3>Looping through a list (list comprehensions)</h3>
+<h3>Tuples</h3>
+</article>
+
+<article>
+<h2>Dictionaries</h2>
+<h3>Differences from Python 2</h3>
+<h3>Creating a new dictionary</h3>
+<h3>Modifying a dictionary</h3>
+<h3>Deleting items from a dictionary</h3>
+<h3>Looping through a dictionary (dictionary comprehensions)</h3>
+<h3>Dictionary views</h3>
+</article>
+
+<article>
+<h2>Sets</h2>
+<h3>Differences from Python 2</h3>
+<h3>Creating a new set</h3>
+<h3>Modifying a set</h3>
+<h3>Deleting elements from a set</h3>
+<h3>Common set operations: union, intersection, and difference</h3>
+<h3>Frozen sets</h3>
+</article>
+
+<article>
+<h2>Numbers</h2>
+<h3>Differences from Python 2</h3>
+<h3>Integers</h3>
+<h3>Long integers</h3>
+<h3>Floating point numbers</h3>
+<h3>Complex numbers</h3>
+<h3>Common numerical operations</h3>
+</article>
+       
+</section>
+
+<section>
+<h1>Strings</h1>
+
+<article>
+<h2>There ain't no such thing as "plain text"</h2>
+<h3>A brief history of character encoding</h3>
+<h3>What's a character?</h3>
+<h3>How strings are stored in memory</h3>
+<h3>Converting between different character encodings</h3>
+</article>
+
+<article>
+<h2>Differences from Python 2</h2>
+</article>
+
+<article>
+<h2>Formatting strings</h2>
+</article>
+
+<article>
+<h2>What's my string?</h2>
+</article>
+
+<article>
+<h2>Lists and strings</h2>
+</article>
+
+<article>
+<h2>Historical note on the string module</h2>
+</article>
+
+<article>
+<h2>Byte streams</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+ 
+<section>
+<h1>The power of introspection</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>Using optional and named arguments</h2>
+<h3>Keyword-only arguments</h3>
+</article>
+
+<article>
+<h2>Using type, str, dir, and other built-in functions</h2>
+<h3>The type function</h3>
+<h3>The str function</h3>
+<h3>Built-in functions</h3>
+</article>
+
+<article>
+<h2>Getting object references with getattr</h2>
+<h3>getattr with modules</h3>
+<h3>getattr as a dispatcher</h3>
+</article>
+
+<article>
+<h2>Filtering lists</h2>
+</article>
+
+<article>
+<h2>The peculiar nature of and and or</h2>
+<h3>Using the and-or trick</h3>
+</article>
+
+<article>
+<h2>Using lambda functions</h2>
+<h3>Real-world lambda functions</h3>
+</article>
+
+<article>
+<h2>Putting it all together</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Objects and object-orientation</h1>
+
+<article>
+<h2>...major changes afoot...</h2>
+</article>
+</section>
+
+<section>
+<h1>Exceptions</h1>
+
+<article>
+<h2>...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Files</h1>
+
+<article>
+<h2>File objects</h2>
+</article>
+
+<article>
+<h2>Reading files</h2>
+</article>
+
+<article>
+<h2>Close your files... or don't</h2>
+</article>
+
+<article>
+<h2>Handling I/O errors</h2>
+</article>
+
+<article>
+<h2>Writing to files</h2>
+</article>
+
+</section>
+ 
+<section>
+<h1>Regular expressions</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>Case study: street addresses</h2>
+</article>
+
+<article>
+<h2>Case study: Roman numerals</h2>
+<h3>Checking for thousands</h3>
+<h3>Checking for hundreds</h3>
+</article>
+
+<article>
+<h2>Using the {n,m} syntax</h2>
+<h3>Checking for tens and ones</h3>
+</article>
+
+<article>
+<h2>Verbose regular expressions</h2>
+</article>
+
+<article>
+<h2>Case study: parsing phone numbers</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>HTML processing</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>html5lib</h2>
+<h3>Installing html5lib</h3>
+<h3>Using html5lib</h3>
+</article>
+
+<article>
+<h2>Extracting data from HTML documents</h2>
+</article>
+
+<article>
+<h2>Building HTML documents</h2>
+</article>
+
+<article>
+<h2>Putting it all together</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>XML Processing</h1>
+
+<article>
+<h2>...major changes afoot...</h2>
+</article>
+
+</section>
+
+<section>
+<h1><del>Scripts and streams</del></h1>
+
+<article>
+<h2>...will be folded into other chapters...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>HTTP web services</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>How not to fetch data over HTTP</h2>
+</article>
+
+<article>
+<h2>Features of HTTP</h2>
+<h3>User-Agent</h3>
+<h3>Redirects</h3>
+<h3>Last-Modified/If-Modified-Since</h3>
+<h3>ETag-If-None-Match</h3>
+<h3>Compression</h3>
+</article>
+
+<article>
+<h2>Differences from Python 2</h2>
+</article>
+
+<article>
+<h2>httplib2 (note: needs port)</h2>
+<h3>Installing httplib2</h3>
+<h3>Why httplib2 is better than http.client</h3>
+</article>
+
+<article>
+<h2>Debugging HTTP web services</h2>
+</article>
+
+<article>
+<h2>Setting the User-Agent</h2>
+</article>
+
+<article>
+<h2>Handling Last-Modified and ETag</h2>
+</article>
+
+<article>
+<h2>Handling redirects</h2>
+</article>
+
+<article>
+<h2>Handling compressed data</h2>
+</article>
+
+<article>
+<h2>Putting it all together</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1><del>SOAP web services</del></h1>
+
+<article>
+<h2>...no one will miss you...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Unit testing</h1>
+
+<article>
+<h2>Introduction to Roman numerals</h2>
+</article>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>Introducing romantest.py</h2>
+</article>
+
+<article>
+<h2>Testing for success</h2>
+</article>
+
+<article>
+<h2>Testing for failure</h2>
+</article>
+
+<article>
+<h2>Testing for sanity</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Test-first programming</h1>
+
+<article>
+<h2>roman.py, stage 1</h2>
+</article>
+
+<article>
+<h2>roman.py, stage 2</h2>
+</article>
+
+<article>
+<h2>roman.py, stage 3</h2>
+</article>
+
+<article>
+<h2>roman.py, stage 4</h2>
+</article>
+
+<article>
+<h2>roman.py, stage 5</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Refactoring your code</h1>
+
+<article>
+<h2>Handling bugs</h2>
+</article>
+
+<article>
+<h2>Handling changing requirements</h2>
+</article>
+
+<article>
+<h2>The art of refactoring</h2>
+</article>
+
+<article>
+<h2>Postscript</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1><del>Functional programming</del></h1>
+
+<article>
+<h2>...bits and pieces will be folded into other chapters...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Dynamic functions</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 1</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 2</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 3</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 4</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 5</h2>
+</article>
+
+<article>
+<h2>plural.py, stage 6</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+ 
+<section>
+<h1>Metaclasses</h1>
+
+<article>
+<h2>...once I figure out WTF metaclasses are...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Performance tuning</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>Using the timeit module</h2>
+</article>
+
+<article>
+<h2>Optimizing regular expressions</h2>
+</article>
+
+<article>
+<h2>Optimizing dictionary lookups</h2>
+</article>
+
+<article>
+<h2>Optimizing list operations</h2>
+</article>
+
+<article>
+<h2>Optimizing string manipulation</h2>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Migrating old code to Python 3</h1>
+
+<article>
+<h2>Diving in</h2>
+</article>
+
+<article>
+<h2>The 2to3 migration tool</h2>
+</article>
+
+<article>
+<h2>Things the 2to3 tools won't catch</h2>
+</article>
+
+<article>
+<h2>Case study: feedparser</h2>
+<h3>Just shoot me</h3>
+</article>
+
+<article>
+<h2>Summary</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Creating graphics with the Python Imaging Library</h1>
+
+<article>
+<h2>...if it gets ported...</h2>
+</article>
+
+</section>
+
+<section>
+<h1>Packaging Python libraries</h1>
+
+<article>
+<h2>A brief history of packaging (and why it's harder than you think)</h2>
+</article>
+
+<article>
+<h2>setuptools</h2>
+</article>
+
+<article>
+<h2>distutils</h2>
+</article>
+
+<article>
+<h2>Eggs</h2>
+</article>
+
+<article>
+<h2>pip</h2>
+</article>
+
+<article>
+<h2>Platform-specific packaging</h2>
+<h3>Packaging by Linux distributions</h3>
+<h3>Py2exe</h3>
+<h3>Psyco</h3>
+</article>
+
+</section>
+
+<section>
+<h1>Where to go from here</h1>
+<p>Tentative because most of these have not been ported to Python 3 yet.</p>
+
+<article>
+<h2>WSGI</h2>
+</article>
+
+<article>
+<h2>Django</h2>
+</article>
+
+<article>
+<h2>Pylons</h2>
+</article>
+
+<article>
+<h2>TurboGears</h2>
+</article>
+
+<article>
+<h2>AppEngine</h2>
+</article>
+
+<article>
+<h2>IronPython</h2>
+</article>
+
+<article>
+<h2>Jython</h2>
+</article>
+
+<article>
+<h2>PyPy</h2>
+</article>
+
+<article>
+<h2>Stackless Python</h2>
+</article>
+
+</section>
+
+<footer>
+<p class="c">&copy; 2001-4, 2009 Mark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a></p>
+</footer>
+
+</body>
+</html>
