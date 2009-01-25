@@ -597,3 +597,61 @@ Traceback (most recent call last):
 TypeError: can't use a string pattern on a bytes-like object
 
 Now things are starting to get interesting.  And by "interesting," I mean "confusing as all hell."  
+
+First, let's see what self._highBitDetector is.  It's defined in the __init__ method of the UniversalDetector class:
+
+class UniversalDetector:
+    def __init__(self):
+        self._highBitDetector = re.compile(r'[\x80-\xFF]')
+
+This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF).  Wait, that's not quite right; I need to be more precise with my terminology.  This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.  And therein lies the problem.
+
+In Python 2, a string was an array of bytes whose character encoding was tracked separately.  If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (u'') instead.  But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths).  Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters.  But what we're searching is not a string, it's a byte array.  Looking at the traceback, this error occurred in universaldetector.py:
+
+def feed(self, aBuf):
+    .
+    .
+    .
+    if self._mInputState == ePureAscii:
+        if self._highBitDetector.search(aBuf):
+
+And what is aBuf?  Let's backtrack further to a place that calls UniversalDetector.feed().  One place that calls it is the test harness, test.py.
+
+u = UniversalDetector()
+.
+.
+.
+for line in open(f, 'rb'):
+    u.feed(line)
+
+And we have our answer: in the UniversalDetector.feed() method, aBuf is a line read from a file on disk.  Look carefully at the parameters used to open the file: 'rb'.  'r' is for read; OK, big deal, we're reading the file.  Ah, but 'b' is for 'bytes'.  Without the 'b' flag, this for loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding.  (You could override the system encoding with another parameter to open(), but never mind that for now.)  But with the 'b' flag, this for loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes.  That byte array gets passed to UniversalDetector.feed(), and eventually gets passed to the pre-compiled regular expression, self._highBitDetector, to search for high-bit... characters.  But we don't have characters; we have bytes.
+
+What we need this regular expression to search is not an array of characters, but an array of bytes.
+
+Once you realize that, the solution is not difficult.  Regular expressions defined with strings can search strings.  Regular expressions defined with byte arrays can search byte arrays.  To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array.  So instead of this:
+
+    self._highBitDetector = re.compile(r'[\x80-\xFF]')
+
+We now have this:
+
+    self._highBitDetector = re.compile(b'[\x80-\xFF]')
+
+There is one other case of this same problem, on the very next line:
+
+    self._escDetector = re.compile(r'(\033|~{)')
+
+Again, this is going to be used to search a byte array (the same aBuf variable, in fact), so the regular expression pattern needs to be defined as a byte array:
+
+    self._escDetector = re.compile(b'(\033|~{)')
+
+Curiouser and curiouser...
+
+C:\home\chardet>python test.py tests\*\*
+tests\ascii\howto.diveintomark.org.xml
+Traceback (most recent call last):
+  File "test.py", line 10, in <module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
+    elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
+TypeError: Can't convert 'bytes' object to str implicitly
+
