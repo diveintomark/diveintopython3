@@ -27,5 +27,9 @@ figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
 var{font-family:monospace;font-style:normal}
-body{counter-reset:h2}
-h2:before{counter-increment:h2;content:counter(h2) ". "}
+body{counter-reset:h1}
+h1:before{counter-increment:h1;content:counter(h1) ". "}
+h1{counter-reset:h2}
+h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
+h2{counter-reset:h3}
+h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
