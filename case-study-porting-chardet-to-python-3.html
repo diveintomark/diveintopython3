@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Case study: porting chardet to Python 3 - Dive into Python 3</title>
+<link rel="stylesheet" type="text/css" href="dip3.css">
+</head>
+<body>
+<h1>Case study: porting chardet to Python 3</h1>
+
+<ul class="toc">
+<li><a href="#running2to3">Running <code class="filename">2to3</code></a></li>
+<li><a href="#falseisinvalidsyntax"><code>False</code> is invalid syntax</a></li>
+<li><a href="#namefileisnotdefined">Name '<var>file</var>' is not defined</a></li>
+<li><a href="#cantconvertbytesobject">Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</a></li>
+</ul>
+
+<section id="running2to3">
+
+<h2>Running <code class="filename">2to3</code></h2>
+
+<p>We're going to migrate the <code class="filename">chardet</code> module from Python 2 to Python 3.  Python 3 comes with a utility script to help with this, called <code class="filename">2to3</code>.  <code class="filename">2to3</code> takes your actual Python 2 source code as input, and auto-converts as much as it can to Python 3. [FIXME reference 2to3 chapter once it's done]</p>
+
+<p>The <code class="filename">chardet</code> library is split across several different files, all in the same directory.  The <code class="filename">2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class="filename">2to3</code> will convert each of the files in turn.</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
+<samp>RefactoringTool: Skipping implicit fixer: buffer
+RefactoringTool: Skipping implicit fixer: idioms
+RefactoringTool: Skipping implicit fixer: set_literal
+RefactoringTool: Skipping implicit fixer: ws_comma
+--- chardet\__init__.py (original)
++++ chardet\__init__.py (refactored)
+@@ -18,7 +18,7 @@
+ __version__ = "1.0.1"
+
+ def detect(aBuf):
+-    import universaldetector
++    from . import universaldetector
+     u = universaldetector.UniversalDetector()
+     u.reset()
+     u.feed(aBuf)
+--- chardet\big5prober.py (original)
++++ chardet\big5prober.py (refactored)
+@@ -25,10 +25,10 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import Big5DistributionAnalysis
+-from mbcssm import Big5SMModel
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import Big5DistributionAnalysis
++from .mbcssm import Big5SMModel
+
+ class Big5Prober(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\chardistribution.py (original)
++++ chardet\chardistribution.py (refactored)
+@@ -25,12 +25,12 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
+-from euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO
+-from euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO
+-from gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO
+-from big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO
+-from jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO
++from . import constants
++from .euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO
++from .euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO
++from .gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO
++from .big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO
++from .jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO
+
+ ENOUGH_DATA_THRESHOLD = 1024
+ SURE_YES = 0.99
+--- chardet\charsetgroupprober.py (original)
++++ chardet\charsetgroupprober.py (refactored)
+@@ -26,7 +26,7 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from charsetprober import CharSetProber
++from .charsetprober import CharSetProber
+
+ class CharSetGroupProber(CharSetProber):
+     def __init__(self):
+--- chardet\codingstatemachine.py (original)
++++ chardet\codingstatemachine.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from constants import eStart, eError, eItsMe
++from .constants import eStart, eError, eItsMe
+
+ class CodingStateMachine:
+     def __init__(self, sm):
+--- chardet\constants.py (original)
++++ chardet\constants.py (refactored)
+@@ -38,10 +38,10 @@
+
+ SHORTCUT_THRESHOLD = 0.95
+
+-import __builtin__
++import builtins
+ if not hasattr(__builtin__, 'False'):
+     False = 0
+     True = 1
+ else:
+-    False = __builtin__.False
+-    True = __builtin__.True
++    False = builtins.False
++    True = builtins.True
+--- chardet\escprober.py (original)
++++ chardet\escprober.py (refactored)
+@@ -26,9 +26,9 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel
+-from charsetprober import CharSetProber
+-from codingstatemachine import CodingStateMachine
++from .escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel
++from .charsetprober import CharSetProber
++from .codingstatemachine import CodingStateMachine
+
+ class EscCharSetProber(CharSetProber):
+     def __init__(self):
+--- chardet\escsm.py (original)
++++ chardet\escsm.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from constants import eStart, eError, eItsMe
++from .constants import eStart, eError, eItsMe
+
+ HZ_cls = ( \
+ 1,0,0,0,0,0,0,0,  # 00 - 07
+--- chardet\eucjpprober.py (original)
++++ chardet\eucjpprober.py (refactored)
+@@ -26,12 +26,12 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from constants import eStart, eError, eItsMe
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import EUCJPDistributionAnalysis
+-from jpcntx import EUCJPContextAnalysis
+-from mbcssm import EUCJPSMModel
++from .constants import eStart, eError, eItsMe
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import EUCJPDistributionAnalysis
++from .jpcntx import EUCJPContextAnalysis
++from .mbcssm import EUCJPSMModel
+
+ class EUCJPProber(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\euckrprober.py (original)
++++ chardet\euckrprober.py (refactored)
+@@ -25,10 +25,10 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import EUCKRDistributionAnalysis
+-from mbcssm import EUCKRSMModel
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import EUCKRDistributionAnalysis
++from .mbcssm import EUCKRSMModel
+
+ class EUCKRProber(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\euctwprober.py (original)
++++ chardet\euctwprober.py (refactored)
+@@ -25,10 +25,10 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import EUCTWDistributionAnalysis
+-from mbcssm import EUCTWSMModel
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import EUCTWDistributionAnalysis
++from .mbcssm import EUCTWSMModel
+
+ class EUCTWProber(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\gb2312prober.py (original)
++++ chardet\gb2312prober.py (refactored)
+@@ -25,10 +25,10 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import GB2312DistributionAnalysis
+-from mbcssm import GB2312SMModel
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import GB2312DistributionAnalysis
++from .mbcssm import GB2312SMModel
+
+ class GB2312Prober(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\hebrewprober.py (original)
++++ chardet\hebrewprober.py (refactored)
+@@ -25,8 +25,8 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from charsetprober import CharSetProber
+-import constants
++from .charsetprober import CharSetProber
++from . import constants
+
+ # This prober doesn't actually recognize a language or a charset.
+ # It is a helper prober for the use of the Hebrew model probers
+--- chardet\jpcntx.py (original)
++++ chardet\jpcntx.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ NUM_OF_CATEGORY = 6
+ DONT_KNOW = -1
+--- chardet\langbulgarianmodel.py (original)
++++ chardet\langbulgarianmodel.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # 255: Control characters that usually does not exist in any text
+ # 254: Carriage/Return
+--- chardet\langcyrillicmodel.py (original)
++++ chardet\langcyrillicmodel.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # KOI8-R language model
+ # Character Mapping Table:
+--- chardet\langgreekmodel.py (original)
++++ chardet\langgreekmodel.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # 255: Control characters that usually does not exist in any text
+ # 254: Carriage/Return
+--- chardet\langhebrewmodel.py (original)
++++ chardet\langhebrewmodel.py (refactored)
+@@ -27,7 +27,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # 255: Control characters that usually does not exist in any text
+ # 254: Carriage/Return
+--- chardet\langhungarianmodel.py (original)
++++ chardet\langhungarianmodel.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # 255: Control characters that usually does not exist in any text
+ # 254: Carriage/Return
+--- chardet\langthaimodel.py (original)
++++ chardet\langthaimodel.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-import constants
++from . import constants
+
+ # 255: Control characters that usually does not exist in any text
+ # 254: Carriage/Return
+--- chardet\latin1prober.py (original)
++++ chardet\latin1prober.py (refactored)
+@@ -26,8 +26,8 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from charsetprober import CharSetProber
+-import constants
++from .charsetprober import CharSetProber
++from . import constants
+ import operator
+
+ FREQ_CAT_NUM = 4
+--- chardet\mbcharsetprober.py (original)
++++ chardet\mbcharsetprober.py (refactored)
+@@ -28,8 +28,8 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from constants import eStart, eError, eItsMe
+-from charsetprober import CharSetProber
++from .constants import eStart, eError, eItsMe
++from .charsetprober import CharSetProber
+
+ class MultiByteCharSetProber(CharSetProber):
+     def __init__(self):
+--- chardet\mbcsgroupprober.py (original)
++++ chardet\mbcsgroupprober.py (refactored)
+@@ -27,14 +27,14 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from charsetgroupprober import CharSetGroupProber
+-from utf8prober import UTF8Prober
+-from sjisprober import SJISProber
+-from eucjpprober import EUCJPProber
+-from gb2312prober import GB2312Prober
+-from euckrprober import EUCKRProber
+-from big5prober import Big5Prober
+-from euctwprober import EUCTWProber
++from .charsetgroupprober import CharSetGroupProber
++from .utf8prober import UTF8Prober
++from .sjisprober import SJISProber
++from .eucjpprober import EUCJPProber
++from .gb2312prober import GB2312Prober
++from .euckrprober import EUCKRProber
++from .big5prober import Big5Prober
++from .euctwprober import EUCTWProber
+
+ class MBCSGroupProber(CharSetGroupProber):
+     def __init__(self):
+--- chardet\mbcssm.py (original)
++++ chardet\mbcssm.py (refactored)
+@@ -25,7 +25,7 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from constants import eStart, eError, eItsMe
++from .constants import eStart, eError, eItsMe
+
+ # BIG5
+
+--- chardet\sbcharsetprober.py (original)
++++ chardet\sbcharsetprober.py (refactored)
+@@ -27,7 +27,7 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from charsetprober import CharSetProber
++from .charsetprober import CharSetProber
+
+ SAMPLE_SIZE = 64
+ SB_ENOUGH_REL_THRESHOLD = 1024
+--- chardet\sbcsgroupprober.py (original)
++++ chardet\sbcsgroupprober.py (refactored)
+@@ -27,15 +27,15 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from charsetgroupprober import CharSetGroupProber
+-from sbcharsetprober import SingleByteCharSetProber
+-from langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model
+-from langgreekmodel import Latin7GreekModel, Win1253GreekModel
+-from langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel
+-from langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel
+-from langthaimodel import TIS620ThaiModel
+-from langhebrewmodel import Win1255HebrewModel
+-from hebrewprober import HebrewProber
++from .charsetgroupprober import CharSetGroupProber
++from .sbcharsetprober import SingleByteCharSetProber
++from .langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model
++from .langgreekmodel import Latin7GreekModel, Win1253GreekModel
++from .langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel
++from .langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel
++from .langthaimodel import TIS620ThaiModel
++from .langhebrewmodel import Win1255HebrewModel
++from .hebrewprober import HebrewProber
+
+ class SBCSGroupProber(CharSetGroupProber):
+     def __init__(self):
+--- chardet\sjisprober.py (original)
++++ chardet\sjisprober.py (refactored)
+@@ -25,13 +25,13 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+-from mbcharsetprober import MultiByteCharSetProber
+-from codingstatemachine import CodingStateMachine
+-from chardistribution import SJISDistributionAnalysis
+-from jpcntx import SJISContextAnalysis
+-from mbcssm import SJISSMModel
++from .mbcharsetprober import MultiByteCharSetProber
++from .codingstatemachine import CodingStateMachine
++from .chardistribution import SJISDistributionAnalysis
++from .jpcntx import SJISContextAnalysis
++from .mbcssm import SJISSMModel
+ import constants, sys
+-from constants import eStart, eError, eItsMe
++from .constants import eStart, eError, eItsMe
+
+ class SJISProber(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\universaldetector.py (original)
++++ chardet\universaldetector.py (refactored)
+@@ -27,10 +27,10 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from latin1prober import Latin1Prober # windows-1252
+-from mbcsgroupprober import MBCSGroupProber # multi-byte character sets
+-from sbcsgroupprober import SBCSGroupProber # single-byte character sets
+-from escprober import EscCharSetProber # ISO-2122, etc.
++from .latin1prober import Latin1Prober # windows-1252
++from .mbcsgroupprober import MBCSGroupProber # multi-byte character sets
++from .sbcsgroupprober import SBCSGroupProber # single-byte character sets
++from .escprober import EscCharSetProber # ISO-2122, etc.
+ import re
+
+ MINIMUM_THRESHOLD = 0.20
+--- chardet\utf8prober.py (original)
++++ chardet\utf8prober.py (refactored)
+@@ -26,10 +26,10 @@
+ ######################### END LICENSE BLOCK #########################
+
+ import constants, sys
+-from constants import eStart, eError, eItsMe
+-from charsetprober import CharSetProber
+-from codingstatemachine import CodingStateMachine
+-from mbcssm import UTF8SMModel
++from .constants import eStart, eError, eItsMe
++from .charsetprober import CharSetProber
++from .codingstatemachine import CodingStateMachine
++from .mbcssm import UTF8SMModel
+
+ ONE_CHAR_PROB = 0.5
+
+RefactoringTool: Files that were modified:
+RefactoringTool: chardet\__init__.py
+RefactoringTool: chardet\big5prober.py
+RefactoringTool: chardet\chardistribution.py
+RefactoringTool: chardet\charsetgroupprober.py
+RefactoringTool: chardet\codingstatemachine.py
+RefactoringTool: chardet\constants.py
+RefactoringTool: chardet\escprober.py
+RefactoringTool: chardet\escsm.py
+RefactoringTool: chardet\eucjpprober.py
+RefactoringTool: chardet\euckrprober.py
+RefactoringTool: chardet\euctwprober.py
+RefactoringTool: chardet\gb2312prober.py
+RefactoringTool: chardet\hebrewprober.py
+RefactoringTool: chardet\jpcntx.py
+RefactoringTool: chardet\langbulgarianmodel.py
+RefactoringTool: chardet\langcyrillicmodel.py
+RefactoringTool: chardet\langgreekmodel.py
+RefactoringTool: chardet\langhebrewmodel.py
+RefactoringTool: chardet\langhungarianmodel.py
+RefactoringTool: chardet\langthaimodel.py
+RefactoringTool: chardet\latin1prober.py
+RefactoringTool: chardet\mbcharsetprober.py
+RefactoringTool: chardet\mbcsgroupprober.py
+RefactoringTool: chardet\mbcssm.py
+RefactoringTool: chardet\sbcharsetprober.py
+RefactoringTool: chardet\sbcsgroupprober.py
+RefactoringTool: chardet\sjisprober.py
+RefactoringTool: chardet\universaldetector.py
+RefactoringTool: chardet\utf8prober.py</samp></pre>
+
+<p>Now run the <code class="filename">2to3</code> script on the testing harness, <code class="filename">test.py</code>.</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
+<samp>RefactoringTool: Skipping implicit fixer: buffer
+RefactoringTool: Skipping implicit fixer: idioms
+RefactoringTool: Skipping implicit fixer: set_literal
+RefactoringTool: Skipping implicit fixer: ws_comma
+--- test.py (original)
++++ test.py (refactored)
+@@ -4,7 +4,7 @@
+ count = 0
+ u = UniversalDetector()
+ for f in glob.glob(sys.argv[1]):
+-    print f.ljust(60),
++    print(f.ljust(60), end=' ')
+     u.reset()
+     for line in file(f, 'rb'):
+         u.feed(line)
+@@ -12,8 +12,8 @@
+     u.close()
+     result = u.result
+     if result['encoding']:
+-        print result['encoding'], 'with confidence', result['confidence']
++        print(result['encoding'], 'with confidence', result['confidence'])
+     else:
+-        print '******** no result'
++        print('******** no result')
+     count += 1
+-print count, 'tests'
++print(count, 'tests')
+RefactoringTool: Files that were modified:
+RefactoringTool: test.py</samp></pre>
+
+<p>Well, that wasn't so hard.  Just a few imports and print statements to convert.  Time to run the new version.  Do you think it'll work?</p>
+</section>
+
+<section id="falseisinvalidsyntax">
+<h2><code>False</code> is invalid syntax</h2>
+
+<p>Now for the real test: running the test harness against the test suite.  Since the test suite is designed to cover all the possible code paths, it's a good way to test our ported code to make sure there aren't any bugs lurking anywhere.</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
+<samp class="traceback">Traceback (most recent call last):
+  File "test.py", line 1, in &lt;module>
+    from chardet.universaldetector import UniversalDetector
+  File "C:\home\chardet\chardet\universaldetector.py", line 51
+    self.done = constants.False
+                              ^
+SyntaxError: invalid syntax</samp></pre>
+
+<p>Hmm, a small snag.  In Python 3, <code>False</code> is a reserved word, so you can't use it as a variable name.  Let's look at <code class="filename">constants.py</code> to see where it's defined.  Here's the original version from <code class="filename">constants.py</code>, before the <code class="filename">2to3</code> script changed it:</p>
+
+<pre><code>import __builtin__
+if not hasattr(__builtin__, 'False'):
+    False = 0
+    True = 1
+else:
+    False = __builtin__.False
+    True = __builtin__.True</code></pre>
+
+<p>This piece of code is designed to allow this library to run under older versions of Python 2.  Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>Boolean</code> type.  This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.</p>
+
+<p>However, Python 3 will always have a <code>Boolean</code> type, so this entire code snippet is unnecessary.  The simplest solution is to replace all instances of "<code>constants.True</code>" and "<code>constants.False</code>" with "<code>True</code>" and "<code>False</code>", respectively, then delete this dead code from <code class="filename">constants.py</code>.</p>
+
+<p>So this line in <code class="filename">universaldetector.py</code>:</p>
+
+<pre><code>self.done = constants.False</code></pre>
+
+<p>Becomes</p>
+
+<pre><code>self.done = False</code></pre>
+
+<p>Ah, wasn't that satisfying?  The code is shorter and more readable already.</p>
+</section>
+
+<section id="nomodulenamedconstants">
+<h2>No module named <code class="filename">constants</code></h2>
+
+<p>Time to run test.py again and see how far it gets.</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
+<samp class="traceback">Traceback (most recent call last):
+  File "test.py", line 1, in &lt;module>
+    from chardet.universaldetector import UniversalDetector
+  File "C:\home\chardet\chardet\universaldetector.py", line 29, in &lt;module>
+    import constants, sys
+ImportError: No module named constants</samp></pre>
+
+<p>What's that you say?  No module named <code class="filename">constants</code>?  Of course there's a module named <code class="filename">constants</code>. ... Oh wait, no there isn't.  Remember when the <code class="filename">2to3</code> script fixed up all those import statements?  This library has a lot of relative imports -- that is, modules that import other modules within the library.  In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328].  To do relative imports, you need to do something like this instead:</p>
+
+<pre><code>from . import constants</code></pre>
+
+<p>But wait.  Wasn't the <code class="filename">2to3</code> script supposed to take care of these for you?  Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code class="filename">constants</code> module within the library, and an absolute import of the <code class="filename">sys</code> module that is pre-installed in the Python standard library.  In Python 2, you could combine these into one import statement.  In Python 3, you can't, and the <code class="filename">2to3</code> script is not smart enough to split the import statement into two.</p>
+
+<p>The solution is to split the import statement manually.  So this two-in-one import:</p>
+
+<pre><code>import constants, sys</code></pre>
+
+<p>Needs to become two separate imports:</p>
+
+<pre><code>from . import constants
+import sys</code></pre>
+
+<p>There are variations of this problem scattered throughout the <code class="filename">chardet</code> library.  In some places it's "<code>import constants, sys</code>"; in other places, it's "<code>import constants, re</code>".  The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.</p>
+
+<p>Onward!</p>
+</section>
+
+<section id="namefileisnotdefined">
+<h2>Name '<var>file</var>' is not defined</h2>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class="traceback">Traceback (most recent call last):
+  File "test.py", line 9, in &lt;module>
+    for line in file(f, 'rb'):
+NameError: name 'file' is not defined</samp></pre>
+
+<p>This one surprised me, because I've been using this idiom as long as I can remember.  In Python 2, the global <var>file()</var> function was an alias for <var>open()</var>, which was the standard way of opening files for reading.  In Python 3, the entire system for reading and writing files has been refactored into the <code class="filename">io</code> module. [FIXME-LINK PEP 3116]  I'll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <var>file()</var> function no longer exists.  However, the <var>open()</var> function does still exist.  (Technically, it's an alias for <var>io.open()</var>, but never mind that right now.)</p>
+
+<p>Thus, the simplest solution to the problem of the missing <var>file()</var> is to call <var>open()</var> instead:</p>
+
+<pre><code>for line in open(f, 'rb'):</code></pre>
+
+<p>And that's all I have to say about that.</p>
+</section>
+
+<section id="cantuseastringpattern">
+<h2>Can't use a string pattern on a bytes-like object</h2>
+
+<p>FIXME intro</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class="traceback">Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 98, in feed
+    if self._highBitDetector.search(aBuf):
+TypeError: can't use a string pattern on a bytes-like object</samp></pre>
+
+<p>Now things are starting to get interesting.  And by "interesting," I mean "confusing as all hell."</p>
+
+<p>First, let's see what <var>self._highBitDetector</var> is.  It's defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:</p>
+
+<pre><code>class UniversalDetector:
+    def __init__(self):
+        self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
+
+<p>This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF).  Wait, that's not quite right; I need to be more precise with my terminology.  This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.</p>
+
+<p>And therein lies the problem.</p>
+
+<p>In Python 2, a string was an array of bytes whose character encoding was tracked separately.  If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead.  But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths).  Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters.  But what we're searching is not a string, it's a byte array.  Looking at the traceback, this error occurred in <code class="filename">universaldetector.py</code>:</p>
+
+<pre><code>def feed(self, aBuf):
+    .
+    .
+    .
+    if self._mInputState == ePureAscii:
+        if self._highBitDetector.search(aBuf):</code></pre>
+
+<p>And what is <var>aBuf</var>?  Let's backtrack further to a place that calls <var>UniversalDetector.feed()</var>.  One place that calls it is the test harness, <code class="filename">test.py</code>.</p>
+
+<pre><code>u = UniversalDetector()
+.
+.
+.
+for line in open(f, 'rb'):
+    u.feed(line)</code></pre>
+
+<p>And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk.  Look carefully at the parameters used to open the file: <code>'rb'</code>.  <code>'r'</code> is for "read"; OK, big deal, we're reading the file.  Ah, but <code>'b'</code> is for "bytes."  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding.  (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes.  That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters.  But we don't have characters; we have bytes.  Oops.</p>
+
+<p>What we need this regular expression to search is not an array of characters, but an array of bytes.</p>
+
+<p>Once you realize that, the solution is not difficult.  Regular expressions defined with strings can search strings.  Regular expressions defined with byte arrays can search byte arrays.  To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array.  So instead of this:</p>
+
+<pre><code>self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
+
+<p>We now have this:</p>
+
+<pre><code>self._highBitDetector = re.compile(b'[\x80-\xFF]')</code></pre>
+
+<p>There is one other case of this same problem, on the very next line:</p>
+
+<pre><code>self._escDetector = re.compile(r'(\033|~{)')</code></pre>
+
+<p>Again, this is going to be used to search a byte array (the same <var>aBuf</var> variable, in fact), so the regular expression pattern needs to be defined as a byte array:</p>
+
+<pre><code>self._escDetector = re.compile(b'(\033|~{)')</code></pre>
+</section>
+
+<section id="cantconvertbytesobject">
+<h2>Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</h2>
+
+<p>Curiouser and curiouser...</p>
+
+<pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class="traceback">Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
+    elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
+TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
+
+</section>
+</body>
+</html>

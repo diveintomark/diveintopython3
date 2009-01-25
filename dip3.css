@@ -1,5 +1,4 @@
-/*dive into minimalism(c)2008 Mark Pilgrim,MIT-licensed*/
-html{background:white;color:black}
+html{background:#fff;color:#000}
 body{font:normal medium 'Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif;margin:1.75em auto;width:40em;line-height:1.75;word-spacing:0.1em}
 a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
@@ -9,21 +8,22 @@ h1 a,h2 a,h3 a,#nav a{color:inherit !important}
 abbr,.p{border:0;letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol,#nav{margin:1.75em 0}
 h1,h2,h3{font-size:medium}
-h1{background:papayawhip;color:black;width:100%;margin:0}
-h2{margin-left:1.75em}
-h3{margin-left:3.5em}
+h1{background:papayawhip;color:#000;width:100%;margin:0}
+#index h2{margin-left:1.75em}
+#index h3{margin-left:3.5em}
 pre,tt{white-space:pre-wrap;font-size:medium;line-height:2.154}
 cite{font-style:normal}
 img{border:0}
 .framed{border:1px solid}
-blockquote{font-size:small;line-height:2.154;margin:2.154em 0;padding:0}
-blockquote{font-style:oblique;border-left:1px dotted;margin-left:2.154em;padding-left:2.154em}
+pre,blockquote{line-height:2.154;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
+blockquote{font-size:small;font-style:oblique;margin-left:2.154em}
 blockquote p{margin:2.154em 0}
 .f,.c{text-align:center;clear:both}
-article + p:first-letter{float:left;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
+section h2 + p:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 #arc{width:100%,border-collapse:collapse}
 #arc th,#arc td{list-style:none;margin:0;padding:0}
 #arc th{padding:0 1.75em 0 0;text-align:right;vertical-align:baseline}
 figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
+var{font-family:monospace;font-style:normal}
