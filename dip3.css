@@ -27,3 +27,5 @@ figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
 var{font-family:monospace;font-style:normal}
+body{counter-reset:h2}
+h2:before{counter-increment:h2;content:counter(h2) ". "}
