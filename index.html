@@ -9,10 +9,8 @@
 <meta name="description" content="Python 3 from novice to pro">
 </head>
 <body id="index">
-<p><cite>Dive into Python 3</cite> will cover Python 3 and its differences from Python 2.  Compared to the original <cite><a href="http://diveintopython.org/">Dive into Python</a></cite>, it will be about 50% revised and 50% new material.</p>
-<p>I will publish drafts online as I go.  The final book will be published on paper by Apress.  The book will remain online under the <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a> license.</p>
-<p>Below is the draft table of contents.  There is no text yet.</p>
-<p>Yes, that is <code>PapayaWhip</code>.  All hail <code>PapayaWhip</code>.</p>
+<p><cite>Dive into Python 3</cite> will cover Python 3 and its differences from Python 2.  Compared to the original <cite><a href="http://diveintopython.org/">Dive into Python</a></cite>, it will be about 50% revised and 50% new material.  I will publish drafts online as I go.  The final book will be published on paper by Apress.  The book will remain online under the <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a> license.</p>
+<p>Below is the draft table of contents.  Only a few chapters have been written so far.  Yes, that is <code>PapayaWhip</code>.  All hail <code>PapayaWhip</code>.</p>
 
 <section>
 <h1>Installing Python</h1>
@@ -335,15 +333,6 @@
 </section>
 
 <section>
-<h1><del>Scripts and streams</del></h1>
-
-<section>
-<h2>...will be folded into other chapters...</h2>
-</section>
-
-</section>
-
-<section>
 <h1>HTTP web services</h1>
 
 <section>
@@ -399,15 +388,6 @@
 
 <section>
 <h2>Summary</h2>
-</section>
-
-</section>
-
-<section>
-<h1><del>SOAP web services</del></h1>
-
-<section>
-<h2>...no one will miss you...</h2>
 </section>
 
 </section>
@@ -492,15 +472,6 @@
 </section>
 
 <section>
-<h1><del>Functional programming</del></h1>
-
-<section>
-<h2>...bits and pieces will be folded into other chapters...</h2>
-</section>
-
-</section>
-
-<section>
 <h1>Dynamic functions</h1>
 
 <section>
@@ -580,38 +551,188 @@
 </section>
 
 <section>
-<h1>Migrating old code to Python 3</h1>
+<h1><a href="porting-code-to-python-3-with-2to3.html">Porting code to Python 3 with <code>2to3</code></a></h1>
 
 <section>
-<h2>Diving in</h2>
+<h2><a href="porting-code-to-python-3-with-2to3.html#print"><code>print</code> statement</a></h2>
 </section>
 
 <section>
-<h2>The 2to3 migration tool</h2>
+<h2><a href="porting-code-to-python-3-with-2to3.html#ne">&lt;> comparison</a></h2>
 </section>
 
 <section>
-<h2>Things the 2to3 tools won't catch</h2>
+<h2><a href="porting-code-to-python-3-with-2to3.html#has_key"><code>has_key()</code> dictionary method</a></h2>
 </section>
 
 <section>
-<h2>Case study: feedparser</h2>
-<h3>Just shoot me</h3>
+<h2><a href="porting-code-to-python-3-with-2to3.html#dict"><code>keys()</code> dictionary method</a></h2>
 </section>
 
 <section>
-<h2>Summary</h2>
+<h2><a href="porting-code-to-python-3-with-2to3.html#dict"><code>items()</code> dictionary method</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#apply"><code>apply()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#intern"><code>intern()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#exec"><code>exec</code> statement</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#repr"><code>repr</code> literals (backticks)</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#except"><code>try...except</code> statement</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#raise"><code>raise</code> statement</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#throw"><code>throw</code> statement</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#long"><code>long</code> data type</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#xrange"><code>xrange()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#raw_input"><code>raw_input()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#input"><code>input()</code> global method</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#funcattrs"><code>func_*</code> function attributes</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#xreadlines"><code>xreadlines()</code> I/O method</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#imports">imports</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#tuple_params"><code>lambda</code> functions with multiple parameters</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#methodattrs"><code>__class__</code> special class attribute</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#next"><code>next()</code> iterator method</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#nonzero"><code>__nonzero__</code> special class attribute</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#numliterals">Number literals</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#renames"><code>sys.maxint</code></a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#unicode"><code>unicode()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#unicodeliteral">Unicode string literals</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#callable"><code>callable()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#filter"><code>filter()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#map"><code>map()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#zip"><code>zip()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#standarderror"><code>StandardError()</code> exception</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#types"><code class="filename">types</code> module constants</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#basestring"><code>basestring</code> datatype</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#itertools"><code class="filename">itertools</code> module</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#import">Relative imports</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#paren">List comprehensions over tuples</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#getcwdu"><code>os.getcwdu()</code> function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#metaclass">Metaclasses</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#set_literal"><code>set()</code> literals</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#buffer"><code>buffer()</code> global function</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#wscomma">Whitespace around commas</a></h2>
+</section>
+
+<section>
+<h2><a href="porting-code-to-python-3-with-2to3.html#idioms">Common idioms</a></h2>
 </section>
 
 </section>
 
 <section>
-<h1>Creating graphics with the Python Imaging Library</h1>
-
-<section>
-<h2>...if it gets ported...</h2>
-</section>
-
+<h1>Case study: porting <code>chardet</code> to Python 3</h1>
 </section>
 
 <section>
@@ -642,6 +763,15 @@
 <h3>Packaging by Linux distributions</h3>
 <h3>Py2exe</h3>
 <h3>Psyco</h3>
+</section>
+
+</section>
+
+<section>
+<h1>Creating graphics with the Python Imaging Library</h1>
+
+<section>
+<h2>...if it gets ported...</h2>
 </section>
 
 </section>
@@ -684,6 +814,33 @@
 
 <section>
 <h2>Stackless Python</h2>
+</section>
+
+</section>
+
+<section>
+<h1><del>Scripts and streams</del></h1>
+
+<section>
+<h2>...will be folded into other chapters...</h2>
+</section>
+
+</section>
+
+<section>
+<h1><del>SOAP web services</del></h1>
+
+<section>
+<h2>...no one will miss you...</h2>
+</section>
+
+</section>
+
+<section>
+<h1><del>Functional programming</del></h1>
+
+<section>
+<h2>...bits and pieces will be folded into other chapters...</h2>
 </section>
 
 </section>

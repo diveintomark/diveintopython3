@@ -11,7 +11,7 @@ h1,h2,h3{font-size:medium}
 h1{background:papayawhip;color:#000;width:100%;margin:0}
 #index h2{margin-left:1.75em}
 #index h3{margin-left:3.5em}
-pre,tt{white-space:pre-wrap;font-size:medium;line-height:2.154}
+pre{white-space:pre-wrap;font-size:medium;line-height:2.154}
 cite{font-style:normal}
 img{border:0}
 .framed{border:1px solid}
