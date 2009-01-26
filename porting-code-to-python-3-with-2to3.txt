@@ -1,0 +1,128 @@
+# Lib/lib2to3/tests/test_fixers.py
+- <>
+- has_key
+- apply()
+- intern()
+- print
+- exec()
+- repr()
+- except
+- raise
+- throw
+- long()
+- dict()
+- xrange()
+- raw_input()
+- input()
+- func_* attributes
+- xreadlines()
+- imports of modules that have been renamed:
+# Lib/lib2to3/fixes/fix_imports.py
+MAPPING = {'StringIO':  'io',
+           'cStringIO': 'io',
+           'cPickle': 'pickle',
+           '__builtin__' : 'builtins',
+           'copy_reg': 'copyreg',
+           'Queue': 'queue',
+           'SocketServer': 'socketserver',
+           'ConfigParser': 'configparser',
+           'repr': 'reprlib',
+           'FileDialog': 'tkinter.filedialog',
+           'tkFileDialog': 'tkinter.filedialog',
+           'SimpleDialog': 'tkinter.simpledialog',
+           'tkSimpleDialog': 'tkinter.simpledialog',
+           'tkColorChooser': 'tkinter.colorchooser',
+           'tkCommonDialog': 'tkinter.commondialog',
+           'Dialog': 'tkinter.dialog',
+           'Tkdnd': 'tkinter.dnd',
+           'tkFont': 'tkinter.font',
+           'tkMessageBox': 'tkinter.messagebox',
+           'ScrolledText': 'tkinter.scrolledtext',
+           'turtle': 'tkinter.turtle',
+           'Tkconstants': 'tkinter.constants',
+           'Tix': 'tkinter.tix',
+           'Tkinter': 'tkinter',
+           'markupbase': '_markupbase',
+           '_winreg': 'winreg',
+           'thread': '_thread',
+           'dummy_thread': '_dummy_thread',
+           # anydbm and whichdb are handled by fix_imports2
+           'dbhash': 'dbm.bsd',
+           'dumbdbm': 'dbm.dumb',
+           'dbm': 'dbm.ndbm',
+           'gdbm': 'dbm.gnu',
+           'xmlrpclib': 'xmlrpc.client',
+           'DocXMLRPCServer': 'xmlrpc.server',
+           'SimpleXMLRPCServer': 'xmlrpc.server',
+           'httplib': 'http.client',
+           'Cookie': 'http.cookies',
+           'cookielib': 'http.cookiejar',
+           'BaseHTTPServer': 'http.server',
+           'SimpleHTTPServer': 'http.server',
+           'CGIHTTPServer': 'http.server',
+           #'test.test_support': 'test.support',
+           'commands': 'subprocess',
+           'UserString' : 'collections',
+           'UserList' : 'collections',
+           'urlparse' : 'urllib.parse',
+           'robotparser' : 'urllib.robotparser',
+}
+- imports of urllib/urllib2
+# Lib/lib2to3/fixes/fix_urllib.py
+MAPPING = {'urllib':  [
+                ('urllib.request',
+                    ['URLOpener', 'FancyURLOpener', 'urlretrieve',
+                     '_urlopener', 'urlcleanup']),
+                ('urllib.parse',
+                    ['quote', 'quote_plus', 'unquote', 'unquote_plus',
+                     'urlencode', 'pahtname2url', 'url2pathname']),
+                ('urllib.error',
+                    ['ContentTooShortError'])],
+           'urllib2' : [
+                ('urllib.request',
+                    ['urlopen', 'install_opener', 'build_opener',
+                     'Request', 'OpenerDirector', 'BaseHandler',
+                     'HTTPDefaultErrorHandler', 'HTTPRedirectHandler',
+                     'HTTPCookieProcessor', 'ProxyHandler',
+                     'HTTPPasswordMgr',
+                     'HTTPPasswordMgrWithDefaultRealm',
+                     'AbstractBasicAuthHandler',
+                     'HTTPBasicAuthHandler', 'ProxyBasicAuthHandler',
+                     'AbstractDigestAuthHandler',
+                     'HTTPDigestAuthHander', 'ProxyDigestAuthHandler',
+                     'HTTPHandler', 'HTTPSHandler', 'FileHandler',
+                     'FTPHandler', 'CacheFTPHandler',
+                     'UnknownHandler']),
+                ('urllib.error',
+                    ['URLError', 'HTTPError'])],
+}
+- tuple params (?!??!)
+- __class__ special attribute
+- __nonzero__ special method
+- next()
+- sys.maxint and sys.maxsize
+- number literals
+- Unicode string literals
+- callable()
+- filter()
+- map()
+- zip()
+- StandardError()
+- types module
+- common idioms
+  - while 1
+  - type(X) == T, type(X) != T
+  - type(X) is T, type(X) is not T
+  - T is type(X), T is not type(X)
+  - list.sort()
+- basestring type
+- buffer()
+- itertools functions
+- itertools imports
+- relative imports
+- set literals
+- sys.exc_type, sys.exc_value, sys.exc_traceback
+- list comprehensions over tuples
+- os.getcwdu()
+- metaclasses
+
