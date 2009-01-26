@@ -33,3 +33,4 @@ h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
+a.skip{font-size:small;display:block;margin:auto;text-align:center;border:0}

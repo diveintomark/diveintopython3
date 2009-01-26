@@ -25,6 +25,7 @@
 
 <p>The <code class="filename">chardet</code> library is split across several different files, all in the same directory.  The <code class="filename">2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class="filename">2to3</code> will convert each of the files in turn.</p>
 
+<p><a href="#skip2to3output" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
@@ -492,8 +493,9 @@ RefactoringTool: chardet\sjisprober.py
 RefactoringTool: chardet\universaldetector.py
 RefactoringTool: chardet\utf8prober.py</samp></pre>
 
-<p>Now run the <code class="filename">2to3</code> script on the testing harness, <code class="filename">test.py</code>.</p>
+<p id="skip2to3output">Now run the <code class="filename">2to3</code> script on the testing harness, <code class="filename">test.py</code>.</p>
 
+<p><a href="#skip2to3outputtest" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
@@ -525,7 +527,7 @@ RefactoringTool: Skipping implicit fixer: ws_comma
 RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
 
-<p>Well, that wasn't so hard.  Just a few imports and print statements to convert.  Time to run the new version.  Do you think it'll work?</p>
+<p id="skip2to3outputtest">Well, that wasn't so hard.  Just a few imports and print statements to convert.  Time to run the new version.  Do you think it'll work?</p>
 </section>
 
 <section id="falseisinvalidsyntax">
@@ -533,6 +535,7 @@ RefactoringTool: test.py</samp></pre>
 
 <p>Now for the real test: running the test harness against the test suite.  Since the test suite is designed to cover all the possible code paths, it's a good way to test our ported code to make sure there aren't any bugs lurking anywhere.</p>
 
+<p><a href="#skipinvalidsyntax" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp class="traceback">Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
@@ -542,8 +545,9 @@ RefactoringTool: test.py</samp></pre>
                               ^
 SyntaxError: invalid syntax</samp></pre>
 
-<p>Hmm, a small snag.  In Python 3, <code>False</code> is a reserved word, so you can't use it as a variable name.  Let's look at <code class="filename">constants.py</code> to see where it's defined.  Here's the original version from <code class="filename">constants.py</code>, before the <code class="filename">2to3</code> script changed it:</p>
+<p id="skipinvalidsyntax">Hmm, a small snag.  In Python 3, <code>False</code> is a reserved word, so you can't use it as a variable name.  Let's look at <code class="filename">constants.py</code> to see where it's defined.  Here's the original version from <code class="filename">constants.py</code>, before the <code class="filename">2to3</code> script changed it:</p>
 
+<p><a href="#skipbuiltincode" class="skip">skip over this</a></p>
 <pre><code>import __builtin__
 if not hasattr(__builtin__, 'False'):
     False = 0
@@ -552,7 +556,7 @@ else:
     False = __builtin__.False
     True = __builtin__.True</code></pre>
 
-<p>This piece of code is designed to allow this library to run under older versions of Python 2.  Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>Boolean</code> type.  This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.</p>
+<p id="skipbuiltincode">This piece of code is designed to allow this library to run under older versions of Python 2.  Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>Boolean</code> type.  This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.</p>
 
 <p>However, Python 3 will always have a <code>Boolean</code> type, so this entire code snippet is unnecessary.  The simplest solution is to replace all instances of "<code>constants.True</code>" and "<code>constants.False</code>" with "<code>True</code>" and "<code>False</code>", respectively, then delete this dead code from <code class="filename">constants.py</code>.</p>
 
@@ -572,6 +576,7 @@ else:
 
 <p>Time to run test.py again and see how far it gets.</p>
 
+<p><a href="#skipnomodulenamedconstants" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp class="traceback">Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
@@ -580,7 +585,7 @@ else:
     import constants, sys
 ImportError: No module named constants</samp></pre>
 
-<p>What's that you say?  No module named <code class="filename">constants</code>?  Of course there's a module named <code class="filename">constants</code>. ... Oh wait, no there isn't.  Remember when the <code class="filename">2to3</code> script fixed up all those import statements?  This library has a lot of relative imports -- that is, modules that import other modules within the library.  In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328].  To do relative imports, you need to do something like this instead:</p>
+<p id="skipnomodulenamedconstants">What's that you say?  No module named <code class="filename">constants</code>?  Of course there's a module named <code class="filename">constants</code>. ... Oh wait, no there isn't.  Remember when the <code class="filename">2to3</code> script fixed up all those import statements?  This library has a lot of relative imports -- that is, modules that import other modules within the library.  In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328].  To do relative imports, you need to do something like this instead:</p>
 
 <pre><code>from . import constants</code></pre>
 
@@ -603,6 +608,9 @@ import sys</code></pre>
 <section id="namefileisnotdefined">
 <h2>Name '<var>file</var>' is not defined</h2>
 
+<p>FIXME intro</p>
+
+<p><a href="#skipnamefileisnotdefined" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
@@ -610,7 +618,7 @@ import sys</code></pre>
     for line in file(f, 'rb'):
 NameError: name 'file' is not defined</samp></pre>
 
-<p>This one surprised me, because I've been using this idiom as long as I can remember.  In Python 2, the global <var>file()</var> function was an alias for <var>open()</var>, which was the standard way of opening files for reading.  In Python 3, the entire system for reading and writing files has been refactored into the <code class="filename">io</code> module. [FIXME-LINK PEP 3116]  I'll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <var>file()</var> function no longer exists.  However, the <var>open()</var> function does still exist.  (Technically, it's an alias for <var>io.open()</var>, but never mind that right now.)</p>
+<p id="skipnamefileisnotdefined">This one surprised me, because I've been using this idiom as long as I can remember.  In Python 2, the global <var>file()</var> function was an alias for <var>open()</var>, which was the standard way of opening files for reading.  In Python 3, the entire system for reading and writing files has been refactored into the <code class="filename">io</code> module. [FIXME-LINK PEP 3116]  I'll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <var>file()</var> function no longer exists.  However, the <var>open()</var> function does still exist.  (Technically, it's an alias for <var>io.open()</var>, but never mind that right now.)</p>
 
 <p>Thus, the simplest solution to the problem of the missing <var>file()</var> is to call <var>open()</var> instead:</p>
 
@@ -624,6 +632,7 @@ NameError: name 'file' is not defined</samp></pre>
 
 <p>FIXME intro</p>
 
+<p><a href="#skipcantuseastringpattern" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
@@ -633,20 +642,22 @@ NameError: name 'file' is not defined</samp></pre>
     if self._highBitDetector.search(aBuf):
 TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 
-<p>Now things are starting to get interesting.  And by "interesting," I mean "confusing as all hell."</p>
+<p id="skipcantuseastringpattern">Now things are starting to get interesting.  And by "interesting," I mean "confusing as all hell."</p>
 
 <p>First, let's see what <var>self._highBitDetector</var> is.  It's defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:</p>
 
+<p><a href="#skiphighbitdetectorcode" class="skip">skip over this</a></p>
 <pre><code>class UniversalDetector:
     def __init__(self):
         self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
 
-<p>This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF).  Wait, that's not quite right; I need to be more precise with my terminology.  This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.</p>
+<p id="skiphighbitdetectorcode">This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF).  Wait, that's not quite right; I need to be more precise with my terminology.  This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.</p>
 
 <p>And therein lies the problem.</p>
 
 <p>In Python 2, a string was an array of bytes whose character encoding was tracked separately.  If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead.  But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths).  Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters.  But what we're searching is not a string, it's a byte array.  Looking at the traceback, this error occurred in <code class="filename">universaldetector.py</code>:</p>
 
+<p><a href="#skipfeedhighbitdetectorcode" class="skip">skip over this</a></p>
 <pre><code>def feed(self, aBuf):
     .
     .
@@ -654,8 +665,9 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
     if self._mInputState == ePureAscii:
         if self._highBitDetector.search(aBuf):</code></pre>
 
-<p>And what is <var>aBuf</var>?  Let's backtrack further to a place that calls <var>UniversalDetector.feed()</var>.  One place that calls it is the test harness, <code class="filename">test.py</code>.</p>
+<p id="skipfeedhighbitdetectorcode">And what is <var>aBuf</var>?  Let's backtrack further to a place that calls <var>UniversalDetector.feed()</var>.  One place that calls it is the test harness, <code class="filename">test.py</code>.</p>
 
+<p><a href="#skiptestharnessfeedcode" class="skip">skip over this</a></p>
 <pre><code>u = UniversalDetector()
 .
 .
@@ -663,7 +675,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 for line in open(f, 'rb'):
     u.feed(line)</code></pre>
 
-<p>And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk.  Look carefully at the parameters used to open the file: <code>'rb'</code>.  <code>'r'</code> is for "read"; OK, big deal, we're reading the file.  Ah, but <code>'b'</code> is for "bytes."  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding.  (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes.  That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters.  But we don't have characters; we have bytes.  Oops.</p>
+<p id="skiptestharnessfeedcode">And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk.  Look carefully at the parameters used to open the file: <code>'rb'</code>.  <code>'r'</code> is for "read"; OK, big deal, we're reading the file.  Ah, but <code>'b'</code> is for "bytes."  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding.  (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes.  That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters.  But we don't have characters; we have bytes.  Oops.</p>
 
 <p>What we need this regular expression to search is not an array of characters, but an array of bytes.</p>
 
@@ -689,6 +701,7 @@ for line in open(f, 'rb'):
 
 <p>Curiouser and curiouser...</p>
 
+<p><a href="#skipcantconvertbytesobject" class="skip">skip over this</a></p>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
@@ -698,6 +711,7 @@ for line in open(f, 'rb'):
     elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
 
+<p id="skipcantconvertbytesobject">...</p>
 </section>
 </body>
 </html>
