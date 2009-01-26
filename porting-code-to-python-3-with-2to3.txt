@@ -109,20 +109,20 @@ MAPPING = {'urllib':  [
 - zip()
 - StandardError()
 - types module
-- common idioms
+- basestring type
+- itertools functions
+- itertools imports
+- relative imports
+- sys.exc_type, sys.exc_value, sys.exc_traceback
+- list comprehensions over tuples
+- os.getcwdu()
+- metaclasses
+- set literals (EXPLICIT)
+- whitespace around commas (EXPLICIT)
+- buffer() (EXPLICIT)
+- common idioms (EXPLICIT)
   - while 1
   - type(X) == T, type(X) != T
   - type(X) is T, type(X) is not T
   - T is type(X), T is not type(X)
   - list.sort()
-- basestring type
-- buffer()
-- itertools functions
-- itertools imports
-- relative imports
-- set literals
-- sys.exc_type, sys.exc_value, sys.exc_traceback
-- list comprehensions over tuples
-- os.getcwdu()
-- metaclasses
-
