@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Porting code to Python 3 with 2to3 - Dive into Python 3</title>
+<link rel="stylesheet" type="text/css" href="dip3.css">
+<style type="text/css">
+body{counter-reset:h1 18}
+</style>
+</head>
+<body>
+<h1>Porting code to Python 3 with <code>2to3</code></h1>
+
+<ol class="toc">
+<li><a href="#divingin">Diving in</a></li>
+<li><a href="#print"><code>print</code> statement</a></li>
+<li><a href="#ne">&lt;> comparison</a></li>
+<li><a href="#has_key"><code>has_key()</code> dictionary method</a></li>
+<li><a href="#dict">Dictionary methods</a></li>
+<li><a href="#filter"><code>filter()</code> global function</a></li>
+<li><a href="#map"><code>map()</code> global function</a></li>
+<li><a href="#apply"><code>apply()</code> global function</a></li>
+<li><a href="#intern"><code>intern()</code> global function</a></li>
+<li><a href="#exec"><code>exec</code> statement</a></li>
+<li><a href="#repr"><code>repr</code> literals (backticks)</a></li>
+<li><a href="#except"><code>try...except</code> statement</a></li>
+<li><a href="#raise"><code>raise</code> statement</a></li>
+<li><a href="#throw"><code>throw</code> statement</a></li>
+<li><a href="#long"><code>long</code> data type</a></li>
+<li><a href="#xrange"><code>xrange()</code> global function</a></li>
+<li><a href="#raw_input"><code>raw_input()</code> global function</a></li>
+<li><a href="#input"><code>input()</code> global method</a></li>
+<li><a href="#funcattrs"><code>func_*</code> function attributes</a></li>
+<li><a href="#xreadlines"><code>xreadlines()</code> I/O method</a></li>
+<li><a href="#imports">imports</a></li>
+<li><a href="#tuple_params"><code>lambda</code> functions with multiple parameters</a></li>
+<li><a href="#methodattrs"><code>__class__</code> special class attribute</a></li>
+<li><a href="#next"><code>next()</code> iterator method</a></li>
+<li><a href="#nonzero"><code>__nonzero__</code> special class attribute</a></li>
+<li><a href="#numliterals">Number literals</a></li>
+<li><a href="#renames"><code>sys.maxint</code></a></li>
+<li><a href="#unicode"><code>unicode()</code> global function</a></li>
+<li><a href="#unicodeliteral">Unicode string literals</a></li>
+<li><a href="#callable"><code>callable()</code> global function</a></li>
+<li><a href="#zip"><code>zip()</code> global function</a></li>
+<li><a href="#standarderror"><code>StandardError()</code> exception</a></li>
+<li><a href="#types"><code class="filename">types</code> module constants</a></li>
+<li><a href="#basestring"><code>basestring</code> datatype</a></li>
+<li><a href="#itertools"><code class="filename">itertools</code> module</a></li>
+<li><a href="#import">Relative imports</a></li>
+<li><a href="#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a></li>
+<li><a href="#paren">List comprehensions over tuples</a></li>
+<li><a href="#getcwdu"><code>os.getcwdu()</code> function</a></li>
+<li><a href="#metaclass">Metaclasses</a></li>
+<li><a href="#set_literal"><code>set()</code> literals</a></li>
+<li><a href="#buffer"><code>buffer()</code> global function</a></li>
+<li><a href="#wscomma">Whitespace around commas</a></li>
+<li><a href="#idioms">Common idioms</a></li>
+</ol>
+
+<section>
+<h2 id="divingin">Diving in</h2>
+
+<p class="fancy">FIXME intro</p>
+
+<p>...</p>
+
+</section>
+
+<section>
+<h2 id="print"><code>print</code> statement</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareprint">skip over this table</a></p>
+<table id="compareprint">
+<tr>
+<th class="notes">Notes</th>
+<th class="python2">Python 2</th>
+<th class="python3">Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>print</code></td>
+<td><code>print()</code></td>
+</tr>
+<tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>print 1</code></td>
+<td><code>print(1)</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>print 1, 2</code></td>
+<td><code>print(1, 2)</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>print 1, 2,</code></td>
+<td><code>print(1, 2, end=' ')</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>print >>sys.stderr, 1, 2, 3</code></td>
+<td><code>print(1, 2, 3, file=sys.stderr)</code></td>
+</tr>
+</table>
+
+<p id="skipcompareprint">...</p>
+
+</section>
+
+<section>
+<h2 id="ne">&lt;> comparison</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparene">skip over this table</a></p>
+<table>
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>if x <> y:</code></td>
+<td><code>if x != y:</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>if x <> y <> z:</code></td>
+<td><code>if x != y != z:</code></td>
+</tr>
+</table>
+
+<p id="skipcomparene">...</p>
+
+</section>
+
+<section>
+<h2 id="has_key"><code>has_key()</code> dictionary method</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparehas_key">skip over this table</a></p>
+<table id="comparehas_key">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>aDictionary.has_key("PapayaWhip")</code></td>
+<td><code>"PapayaWhip" in aDictionary</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th >
+<td><code>aDictionary.has_key(x) or aDictionary.has_key(y)</code></td>
+<td><code>x in aDictionary or y in aDictionary</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>aDictionary.has_key(x + y)</code></td>
+<td><code>(x + y) in aDictionary</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>x + aDictionary.has_key(y)</code></td>
+<td><code>x + (y in aDictionary)</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>aDictionary.has_key(x or y)</code></td>
+<td><code>(x or y) in aDictionary</code></td>
+</tr>
+</table>
+
+<p id="skipcomparehas_key">...</p>
+
+</section>
+
+<section>
+<h2 id="dict">Dictionary methods</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparedict">skip over this table</a></p>
+<table id="comparedict">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>aDictionary.keys()</code></td>
+<td><code>list(aDictionary.keys())</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>aDictionary.items()</code></td>
+<td><code>list(aDictionary.items())</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>aDictionary.iterkeys()</code></td>
+<td><code>iter(aDictionary.keys())</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>[i for i in aDictionary.iterkeys()]</code></td>
+<td><code>[i for i in aDictionary.keys()]</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>min(aDictionary.keys())</code></td>
+<td><code><i>no change</i></code></td>
+</tr>
+</table>
+
+<p id="skipcomparedict">...</p>
+
+<!--
+5. consuming_calls = set(["sorted", "list", "set", "any", "all", "tuple", "sum",
+                          "min", "max"])
+-->
+
+</section>
+
+<section>
+<h2 id="filter"><code>filter()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparefilter">skip over this table</a></p>
+<table id="comparefilter">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>filter(aFunction, aList)</code></td>
+<td><code>list(filter(aFunction, aList))</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>list(filter(aFunction, aList))</code></td>
+<td><code><i>no change</i></code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>filter(None, aList)</code></td>
+<td><code>[i for i in aList if i]</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>for i in filter(None, aList)</code></td>
+<td><code><i>no change</i></code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>[i for i in filter(aFunction, aList)]</code></td>
+<td><code><i>no change</i></code></td>
+</tr>
+</table>
+
+<p id="skipcomparefilter">...</p>
+
+</section>
+
+<section>
+<h2 id="map"><code>map()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparemap">skip over this table</a></p>
+<table id="comparemap">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparemap">...</p>
+
+</section>
+
+<section>
+<h2 id="apply"><code>apply()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareapply">skip over this table</a></p>
+<table id="compareapply">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareapply">...</p>
+
+</section>
+
+<section>
+<h2 id="intern"><code>intern()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareintern">skip over this table</a></p>
+<table id="compareintern">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareintern">...</p>
+
+</section>
+
+<section>
+<h2 id="exec"><code>exec</code> statement</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareexec">skip over this table</a></p>
+<table id="compareexec">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareexec">...</p>
+
+</section>
+
+<section>
+<h2 id="repr"><code>repr</code> literals (backticks)</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparerepr">skip over this table</a></p>
+<table id="comparerepr">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparerepr">...</p>
+
+</section>
+
+<section>
+<h2 id="except"><code>try...except</code> statement</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareexcept">skip over this table</a></p>
+<table id="compareexcept">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareexcept">...</p>
+
+</section>
+
+<section>
+<h2 id="raise"><code>raise</code> statement</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareraise">skip over this table</a></p>
+<table id="compareraise">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareraise">...</p>
+
+</section>
+
+<section>
+<h2 id="throw"><code>throw</code> statement</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparethrow">skip over this table</a></p>
+<table id="comparethrow">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparethrow">...</p>
+
+</section>
+
+<section>
+<h2 id="long"><code>long</code> data type</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparelong">skip over this table</a></p>
+<table id="comparelong">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparelong">...</p>
+
+</section>
+
+<section>
+<h2 id="xrange"><code>xrange()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparexrange">skip over this table</a></p>
+<table id="comparexrange">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparexrange">...</p>
+
+</section>
+
+<section>
+<h2 id="raw_input"><code>raw_input()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareraw_input">skip over this table</a></p>
+<table id="compareraw_input">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareraw_input">...</p>
+
+</section>
+
+<section>
+<h2 id="input"><code>input()</code> global method</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareinput">skip over this table</a></p>
+<table id="compareinput">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareinput">...</p>
+
+</section>
+
+<section>
+<h2 id="funcattrs"><code>func_*</code> function attributes</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparefuncattrs">skip over this table</a></p>
+<table id="comparefuncattrs">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparefuncattrs">...</p>
+
+</section>
+
+<section>
+<h2 id="xreadlines"><code>xreadlines()</code> I/O method</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparexreadlines">skip over this table</a></p>
+<table id="comparexreadlines">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparexreadlines">...</p>
+
+</section>
+
+<section>
+<h2 id="imports">imports</h2>
+
+<p>FIXME intro</p>
+<p>this includes fixer_imports, fixer_imports2, fixer_urllib</p>
+<table>
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+</section>
+
+<section>
+<h2 id="tuple_params"><code>lambda</code> functions with multiple parameters</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparetuple_params">skip over this table</a></p>
+<table id="comparetuple_params">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparetuple_params">...</p>
+
+</section>
+
+<section>
+<h2 id="methodattrs"><code>__class__</code> special class attribute</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparemethodattrs">skip over this table</a></p>
+<table id="comparemethodattrs">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparemethodattrs">...</p>
+
+</section>
+
+<section>
+<h2 id="next"><code>next()</code> iterator method</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparenext">skip over this table</a></p>
+<table id="comparenext">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparenext">...</p>
+
+</section>
+
+<section>
+<h2 id="nonzero"><code>__nonzero__</code> special class attribute</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparenonzero">skip over this table</a></p>
+<table id="comparenonzero">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparenonzero">...</p>
+
+</section>
+
+<section>
+<h2 id="numliterals">Number literals</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparenumliterals">skip over this table</a></p>
+<table id="comparenumliterals">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparenumliterals">...</p>
+
+</section>
+
+<section>
+<h2 id="renames"><code>sys.maxint</code></h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparerenames">skip over this table</a></p>
+<table id="comparerenames">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparerenames">...</p>
+
+</section>
+
+<section>
+<h2 id="unicode"><code>unicode()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareunicode">skip over this table</a></p>
+<table id="compareunicode">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareunicode">...</p>
+
+</section>
+
+<section>
+<h2 id="unicodeliteral">Unicode string literals</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareunicodeliteral">skip over this table</a></p>
+<table id="compareunicodeliteral">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareunicodeliteral">...</p>
+
+</section>
+
+<section>
+<h2 id="callable"><code>callable()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparecallable">skip over this table</a></p>
+<table id="comparecallable">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparecallable">...</p>
+
+</section>
+
+<section>
+<h2 id="zip"><code>zip()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparezip">skip over this table</a></p>
+<table id="comparezip">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparezip">...</p>
+
+</section>
+
+<section>
+<h2 id="standarderror"><code>StandardError()</code> exception</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparestandarderror">skip over this table</a></p>
+<table id="comparestandarderror">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparestandarderror">...</p>
+
+</section>
+
+<section>
+<h2 id="types"><code class="filename">types</code> module constants</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparetypes">skip over this table</a></p>
+<table id="comparetypes">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparetypes">...</p>
+
+</section>
+
+<section>
+<h2 id="basestring"><code>basestring</code> datatype</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparebasestring">skip over this table</a></p>
+<table id="comparebasestring">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparebasestring">...</p>
+
+</section>
+
+<section>
+<h2 id="itertools"><code class="filename">itertools</code> module</h2>
+
+<p>FIXME intro</p>
+<p>this includes fixer_itertools, fixer_itertools_imports
+<table>
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+</section>
+
+<section>
+<h2 id="import">Relative imports</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareimport">skip over this table</a></p>
+<table id="compareimport">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareimport">...</p>
+
+</section>
+
+<section>
+<h2 id="sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparesys_exc">skip over this table</a></p>
+<table id="comparesys_exc">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparesys_exc">...</p>
+
+</section>
+
+<section>
+<h2 id="paren">List comprehensions over tuples</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareparen">skip over this table</a></p>
+<table id="compareparen">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareparen">...</p>
+
+</section>
+
+<section>
+<h2 id="getcwdu"><code>os.getcwdu()</code> function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparegetcwdu">skip over this table</a></p>
+<table id="comparegetcwdu">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparegetcwdu">...</p>
+
+</section>
+
+<section>
+<h2 id="metaclass">Metaclasses</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparemetaclass">skip over this table</a></p>
+<table id="comparemetaclass">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparemetaclass">...</p>
+
+</section>
+
+<section>
+<h2 id="set_literal"><code>set()</code> literals</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareset_literal">skip over this table</a></p>
+<table id="compareset_literal">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareset_literal">...</p>
+
+</section>
+
+<section>
+<h2 id="buffer"><code>buffer()</code> global function</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparebuffer">skip over this table</a></p>
+<table id="comparebuffer">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparebuffer">...</p>
+
+</section>
+
+<section>
+<h2 id="wscomma">Whitespace around commas</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcomparewscomma">skip over this table</a></p>
+<table id="comparewscomma">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcomparewscomma">...</p>
+
+</section>
+
+<section>
+<h2 id="idioms">Common idioms</h2>
+
+<p>FIXME intro</p>
+
+<p><a class="skip" href="#skipcompareidioms">skip over this table</a></p>
+<table id="compareidioms">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>FIXME</code></td>
+<td><code>FIXME</code></td>
+</tr>
+</table>
+
+<p id="skipcompareidioms">...</p>
+
+</section>
+
+</body>
+</html>
+
+<!--
+# Lib/lib2to3/tests/test_fixers.py
+
+- <>
+- has_key
+- apply()
+- intern()
+- print
+- exec()
+- repr()
+- except
+- raise
+- throw
+- long()
+- dict()
+- xrange()
+- raw_input()
+- input()
+- func_* attributes
+- xreadlines()
+- imports of modules that have been renamed:
+# Lib/lib2to3/fixes/fix_imports.py
+MAPPING = {'StringIO':  'io',
+           'cStringIO': 'io',
+           'cPickle': 'pickle',
+           '__builtin__' : 'builtins',
+           'copy_reg': 'copyreg',
+           'Queue': 'queue',
+           'SocketServer': 'socketserver',
+           'ConfigParser': 'configparser',
+           'repr': 'reprlib',
+           'FileDialog': 'tkinter.filedialog',
+           'tkFileDialog': 'tkinter.filedialog',
+           'SimpleDialog': 'tkinter.simpledialog',
+           'tkSimpleDialog': 'tkinter.simpledialog',
+           'tkColorChooser': 'tkinter.colorchooser',
+           'tkCommonDialog': 'tkinter.commondialog',
+           'Dialog': 'tkinter.dialog',
+           'Tkdnd': 'tkinter.dnd',
+           'tkFont': 'tkinter.font',
+           'tkMessageBox': 'tkinter.messagebox',
+           'ScrolledText': 'tkinter.scrolledtext',
+           'turtle': 'tkinter.turtle',
+           'Tkconstants': 'tkinter.constants',
+           'Tix': 'tkinter.tix',
+           'Tkinter': 'tkinter',
+           'markupbase': '_markupbase',
+           '_winreg': 'winreg',
+           'thread': '_thread',
+           'dummy_thread': '_dummy_thread',
+           # anydbm and whichdb are handled by fix_imports2
+           'dbhash': 'dbm.bsd',
+           'dumbdbm': 'dbm.dumb',
+           'dbm': 'dbm.ndbm',
+           'gdbm': 'dbm.gnu',
+           'xmlrpclib': 'xmlrpc.client',
+           'DocXMLRPCServer': 'xmlrpc.server',
+           'SimpleXMLRPCServer': 'xmlrpc.server',
+           'httplib': 'http.client',
+           'Cookie': 'http.cookies',
+           'cookielib': 'http.cookiejar',
+           'BaseHTTPServer': 'http.server',
+           'SimpleHTTPServer': 'http.server',
+           'CGIHTTPServer': 'http.server',
+           #'test.test_support': 'test.support',
+           'commands': 'subprocess',
+           'UserString' : 'collections',
+           'UserList' : 'collections',
+           'urlparse' : 'urllib.parse',
+           'robotparser' : 'urllib.robotparser',
+}
+- imports of urllib/urllib2
+# Lib/lib2to3/fixes/fix_urllib.py
+MAPPING = {'urllib':  [
+                ('urllib.request',
+                    ['URLOpener', 'FancyURLOpener', 'urlretrieve',
+                     '_urlopener', 'urlcleanup']),
+                ('urllib.parse',
+                    ['quote', 'quote_plus', 'unquote', 'unquote_plus',
+                     'urlencode', 'pahtname2url', 'url2pathname']),
+                ('urllib.error',
+                    ['ContentTooShortError'])],
+           'urllib2' : [
+                ('urllib.request',
+                    ['urlopen', 'install_opener', 'build_opener',
+                     'Request', 'OpenerDirector', 'BaseHandler',
+                     'HTTPDefaultErrorHandler', 'HTTPRedirectHandler',
+                     'HTTPCookieProcessor', 'ProxyHandler',
+                     'HTTPPasswordMgr',
+                     'HTTPPasswordMgrWithDefaultRealm',
+                     'AbstractBasicAuthHandler',
+                     'HTTPBasicAuthHandler', 'ProxyBasicAuthHandler',
+                     'AbstractDigestAuthHandler',
+                     'HTTPDigestAuthHander', 'ProxyDigestAuthHandler',
+                     'HTTPHandler', 'HTTPSHandler', 'FileHandler',
+                     'FTPHandler', 'CacheFTPHandler',
+                     'UnknownHandler']),
+                ('urllib.error',
+                    ['URLError', 'HTTPError'])],
+}
+- tuple params (?!??!)
+- __class__ special attribute
+- __nonzero__ special method
+- next()
+- sys.maxint
+- number literals
+- Unicode string literals
+- callable()
+- filter()
+- map()
+- zip()
+- StandardError()
+- types module
+- basestring type
+- itertools functions
+- itertools imports
+- relative imports
+- sys.exc_type, sys.exc_value, sys.exc_traceback
+- list comprehensions over tuples
+- os.getcwdu()
+- metaclasses
+- set literals (EXPLICIT)
+- whitespace around commas (EXPLICIT)
+- buffer() (EXPLICIT)
+- common idioms (EXPLICIT)
+  - while 1
+  - type(X) == T, type(X) != T
+  - type(X) is T, type(X) is not T
+  - T is type(X), T is not type(X)
+  - list.sort()
+-->

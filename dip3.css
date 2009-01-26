@@ -18,8 +18,8 @@ img{border:0}
 pre,blockquote{line-height:2.154;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
 blockquote{font-size:small;font-style:oblique;margin-left:2.154em}
 blockquote p{margin:2.154em 0}
-.f,.c{text-align:center;clear:both}
-section h2 + p:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
+.c{text-align:center;clear:both;font-size:small}
+p.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 #arc{width:100%,border-collapse:collapse}
 #arc th,#arc td{list-style:none;margin:0;padding:0}
 #arc th{padding:0 1.75em 0 0;text-align:right;vertical-align:baseline}
