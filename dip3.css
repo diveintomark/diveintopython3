@@ -1,5 +1,5 @@
 html{background:#fff;color:#000}
-body{font:normal medium 'Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif;margin:1.75em auto;width:40em;line-height:1.75;word-spacing:0.1em}
+body{font:normal medium 'Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif;margin:1.75em;line-height:1.75;word-spacing:0.1em}
 a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link{color:#1b67c9}
@@ -27,10 +27,16 @@ figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
 var{font-family:monospace;font-style:normal}
+a.skip{font-size:small;display:block;margin:auto;text-align:center;border:0}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
+th,td{width:45%;vertical-align:top}
+th:first-child{width:10%;text-align:center}
+.callout,tr + tr th:first-child{font-family:'Arial Unicode MS','Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif}
+td{border:1px dotted black;padding:0 0.5em}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-a.skip{font-size:small;display:block;margin:auto;text-align:center;border:0}
