@@ -7,6 +7,39 @@
 <style type="text/css">
 body{counter-reset:h1 18}
 </style>
+<script type="text/javascript">
+window.onload = function() {
+var arTables = document.getElementsByTagName('table');
+for (var i = arTables.length - 1; i >= 0; i--) {
+    var elmTable = arTables[i];
+    var arNotes = document.getElementById("skip" + elmTable.id).getElementsByTagName('li');
+    var arTableRows = elmTable.getElementsByTagName('tr');
+    for (var j = arTableRows.length - 1; j >= 1; j--) {
+        var elmTableRow = arTableRows[j];
+        var elmNote = arNotes[j - 1];
+        elmTableRow._li = elmNote;
+        elmNote._tr = elmTableRow;
+        elmTableRow.addEventListener('mouseover', function() {
+           this.className = 'hover';
+           this._li.className = 'hover';
+        }, true);
+        elmNote.addEventListener('mouseover', function() {
+           this.className = 'hover';
+           this._tr.className = 'hover';
+        }, true);
+        elmTableRow.addEventListener('mouseout', function() {
+           this.className = '';
+           this._li.className = '';
+        }, true);
+        elmNote.addEventListener('mouseout', function() {
+           this.className = '';
+           this._tr.className = '';
+        }, true);
+    }
+}
+}
+
+</script>
 </head>
 <body>
 <h1>Porting code to Python 3 with <code>2to3</code></h1>
@@ -28,8 +61,7 @@ body{counter-reset:h1 18}
 <li><a href="#throw"><code>throw</code> statement</a></li>
 <li><a href="#long"><code>long</code> data type</a></li>
 <li><a href="#xrange"><code>xrange()</code> global function</a></li>
-<li><a href="#raw_input"><code>raw_input()</code> global function</a></li>
-<li><a href="#input"><code>input()</code> global method</a></li>
+<li><a href="#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a></li>
 <li><a href="#funcattrs"><code>func_*</code> function attributes</a></li>
 <li><a href="#xreadlines"><code>xreadlines()</code> I/O method</a></li>
 <li><a href="#imports">imports</a></li>
@@ -85,7 +117,6 @@ body{counter-reset:h1 18}
 <td><code>print()</code></td>
 </tr>
 <tr>
-<tr>
 <th>&#x2461;</th>
 <td><code>print 1</code></td>
 <td><code>print(1)</code></td>
@@ -107,7 +138,13 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareprint">...</p>
+<ol id="skipcompareprint">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -117,7 +154,7 @@ body{counter-reset:h1 18}
 <p>FIXME intro</p>
 
 <p><a class="skip" href="#skipcomparene">skip over this table</a></p>
-<table>
+<table id="comparene">
 <tr>
 <th>Notes</th>
 <th>Python 2</th>
@@ -135,7 +172,10 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparene">...</p>
+<ol id="skipcomparene">
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -178,7 +218,13 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparehas_key">...</p>
+<ol id="skipcomparehas_key">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -217,11 +263,17 @@ body{counter-reset:h1 18}
 <tr>
 <th>&#x2464;</th>
 <td><code>min(aDictionary.keys())</code></td>
-<td><code><i>no change</i></code></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
-<p id="skipcomparedict">...</p>
+<ol id="skipcomparedict">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 <!--
 5. consuming_calls = set(["sorted", "list", "set", "any", "all", "tuple", "sum",
@@ -250,7 +302,7 @@ body{counter-reset:h1 18}
 <tr>
 <th>&#x2461;</th>
 <td><code>list(filter(aFunction, aList))</code></td>
-<td><code><i>no change</i></code></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2462;</th>
@@ -260,16 +312,22 @@ body{counter-reset:h1 18}
 <tr>
 <th>&#x2463;</th>
 <td><code>for i in filter(None, aList)</code></td>
-<td><code><i>no change</i></code></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2464;</th>
 <td><code>[i for i in filter(aFunction, aList)]</code></td>
-<td><code><i>no change</i></code></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
-<p id="skipcomparefilter">...</p>
+<ol id="skipcomparefilter">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -287,12 +345,38 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>map(aFunction, 'PapayaWhip')</code></td>
+<td><code>list(map(aFunction, 'PapayaWhip'))</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>map(None, 'PapayaWhip')</code></td>
+<td><code>list('PapayaWhip')</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>map(lambda x: x+1, range(42))</code></td>
+<td><code>[x+1 for x in range(42)]</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>for i in map(aFunction, aList):</code></td>
+<td><i>unchanged</i></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>[i for i in map(aFunction, aList)]</code></td>
+<td><i>unchanged</i></td>
 </tr>
 </table>
 
-<p id="skipcomparemap">...</p>
+<ol id="skipcomparemap">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -310,12 +394,32 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>apply(aFunction, args)</code></td>
+<td><code>aFunction(*args)</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>apply(aFunction, args, kwds)</code></td>
+<td><code>aFunction(*args, **kwds)</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>apply(aFunction, args + z)</code></td>
+<td><code>aFunction(*args + z)</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>apply(aModule.aFunction, args)</code></td>
+<td><code>aModule.aFunction(*args)</code></td>
 </tr>
 </table>
 
-<p id="skipcompareapply">...</p>
+<ol id="skipcompareapply">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -333,12 +437,14 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>intern(aString)</code></td>
+<td><code>sys.intern(aString)</code></td>
 </tr>
 </table>
 
-<p id="skipcompareintern">...</p>
+<ol id="skipcompareintern">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -356,12 +462,26 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>exec codeString</code></td>
+<td><code>exec(codeString)</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>exec codeString in aGlobalNamespace</code></td>
+<td><code>exec(codeString, aGlobalNamespace)</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>exec codeString in aGlobalNamespace, aLocalNamespace</code></td>
+<td><code>exec(codeString, aGlobalNamespace, aLocalNamespace)</code></td>
 </tr>
 </table>
 
-<p id="skipcompareexec">...</p>
+<ol id="skipcompareexec">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -379,12 +499,26 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>`x`</code></td>
+<td><code>repr(x)</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>`1 + 2`</code></td>
+<td><code>repr(1 + 2)</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>`"PapayaWhip" + `2``</code></td>
+<td><code>repr("PapayaWhip" + repr(2))</code></td>
 </tr>
 </table>
 
-<p id="skipcomparerepr">...</p>
+<ol id="skipcomparerepr">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -402,12 +536,50 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><pre><code>try:
+    import mymodule
+except ImportError, e
+    pass</code></pre></td>
+<td><pre><code>try:
+    import mymodule
+except ImportError as e:
+    pass</code></pre></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><pre><code>try:
+    import mymodule
+except (RuntimeError, ImportError), e
+    pass</code></pre></td>
+<td><pre><code>try:
+    import mymodule
+except (RuntimeError, ImportError) as e:
+    pass</code></pre></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><pre><code>try:
+    import mymodule
+except ImportError:
+    pass</code></pre></td>
+<td><i>unchanged</i></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><pre><code>try:
+    import mymodule
+except:
+    pass</code></pre></td>
+<td><i>unchanged</i></td>
 </tr>
 </table>
 
-<p id="skipcompareexcept">...</p>
+<ol id="skipcompareexcept">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -425,12 +597,26 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>raise MyException, "error message"</code></td>
+<td><code>raise MyException("error message")</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>raise MyException, "error message", aTraceback</code></td>
+<td><code>raise MyException("error message").with_traceback(aTraceback)</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>raise "error message"</code></td>
+<td><i>unsupported</i></td>
 </tr>
 </table>
 
-<p id="skipcompareraise">...</p>
+<ol id="skipcompareraise">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -448,12 +634,26 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>aGenerator.throw(MyException)</code></td>
+<td><i>unchanged</i></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>aGenerator.throw(MyException, "error message")</code></td>
+<td><code>aGenerator.throw(MyException("error message"))</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>aGenerator.throw("error message")</code></td>
+<td><i>unsupported</i></td>
 </tr>
 </table>
 
-<p id="skipcomparethrow">...</p>
+<ol id="skipcomparethrow">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -471,12 +671,38 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>x = 1000000000000L</code></td>
+<td><code>x = 1000000000000</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>x = 0xFFFFFFFFFFFFL</code></td>
+<td><code>x = 0xFFFFFFFFFFFF</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>long(x)</code></td>
+<td><code>int(x)</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>type(x) is long</code></td>
+<td><code>type(x) is int</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>isinstance(x, long)</code></td>
+<td><code>isinstance(x, int)</code></td>
 </tr>
 </table>
 
-<p id="skipcomparelong">...</p>
+<ol id="skipcomparelong">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -494,17 +720,43 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>xrange(10)</code></td>
+<td><code>range(10)</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>aList = range(10)</code></td>
+<td><code>aList = list(range(10))</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>[i for i in xrange(10)]</code></td>
+<td><code>[i for i in range(10)]</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>for i in range(10):</code></td>
+<td><i>unchanged</i></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>sum(range(10))</code></td>
+<td><i>unchanged</i></td>
 </tr>
 </table>
 
-<p id="skipcomparexrange">...</p>
+<ol id="skipcomparexrange">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
 <section>
-<h2 id="raw_input"><code>raw_input()</code> global function</h2>
+<h2 id="raw_input"><code>raw_input()</code> and <code>input()</code> global functions</h2>
 
 <p>FIXME intro</p>
 
@@ -517,35 +769,32 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>raw_input()</code></td>
+<td><code>input()</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>raw_input("prompt")</code></td>
+<td><code>input("prompt")</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>input()</code></td>
+<td><code>eval(input())</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>input("prompt")</code></td>
+<td><code>eval(input("prompt"))</code></td>
 </tr>
 </table>
 
-<p id="skipcompareraw_input">...</p>
-
-</section>
-
-<section>
-<h2 id="input"><code>input()</code> global method</h2>
-
-<p>FIXME intro</p>
-
-<p><a class="skip" href="#skipcompareinput">skip over this table</a></p>
-<table id="compareinput">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
-</tr>
-</table>
-
-<p id="skipcompareinput">...</p>
+<ol id="skipcompareraw_input">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -563,12 +812,50 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>aFunction.func_closure</code></td>
+<td><code>aFunction.__closure__</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>aFunction.func_doc</code></td>
+<td><code>aFunction.__doc__</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>aFunction.func_name</code></td>
+<td><code>aFunction.__name__</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>aFunction.func_defaults</code></td>
+<td><code>aFunction.__defaults__</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>aFunction.func_code</code></td>
+<td><code>aFunction.__code__</code></td>
+</tr>
+<tr>
+<th>&#x2465;</th>
+<td><code>aFunction.func_globals</code></td>
+<td><code>aFunction.__globals__</code></td>
+</tr>
+<tr>
+<th>&#x2466;</th>
+<td><code>aFunction.func_dict</code></td>
+<td><code>aFunction.__dict__</code></td>
 </tr>
 </table>
 
-<p id="skipcomparefuncattrs">...</p>
+<ol id="skipcomparefuncattrs">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -586,12 +873,20 @@ body{counter-reset:h1 18}
 </tr>
 <tr>
 <th>&#x2460;</th>
-<td><code>FIXME</code></td>
-<td><code>FIXME</code></td>
+<td><code>for line in aFile.xreadlines():</code></td>
+<td><code>for line in aFile:</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>for line in aFile.xreadlines(5):</code></td>
+<td><i>unchanged</i></td>
 </tr>
 </table>
 
-<p id="skipcomparexreadlines">...</p>
+<ol id="skipcomparexreadlines">
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -600,7 +895,7 @@ body{counter-reset:h1 18}
 
 <p>FIXME intro</p>
 <p>this includes fixer_imports, fixer_imports2, fixer_urllib</p>
-<table>
+<table id="compareimports">
 <tr>
 <th>Notes</th>
 <th>Python 2</th>
@@ -612,6 +907,10 @@ body{counter-reset:h1 18}
 <td><code>FIXME</code></td>
 </tr>
 </table>
+
+<ol id="skipcompareimports">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -634,7 +933,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparetuple_params">...</p>
+<ol id="skipcomparetuple_params">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -657,7 +958,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparemethodattrs">...</p>
+<ol id="skipcomparemethodattrs">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -680,7 +983,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparenext">...</p>
+<ol id="skipcomparenext">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -703,7 +1008,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparenonzero">...</p>
+<ol id="skipcomparenonzero">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -726,7 +1033,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparenumliterals">...</p>
+<ol id="skipcomparenumliterals">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -749,7 +1058,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparerenames">...</p>
+<ol id="skipcomparerenames">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -772,7 +1083,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareunicode">...</p>
+<ol id="skipcompareunicode">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -795,7 +1108,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareunicodeliteral">...</p>
+<ol id="skipcompareunicodeliteral">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -818,7 +1133,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparecallable">...</p>
+<ol id="skipcomparecallable">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -841,7 +1158,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparezip">...</p>
+<ol id="skipcomparezip">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -864,7 +1183,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparestandarderror">...</p>
+<ol id="skipcomparestandarderror">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -887,7 +1208,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparetypes">...</p>
+<ol id="skipcomparetypes">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -910,7 +1233,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparebasestring">...</p>
+<ol id="skipcomparebasestring">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -919,7 +1244,7 @@ body{counter-reset:h1 18}
 
 <p>FIXME intro</p>
 <p>this includes fixer_itertools, fixer_itertools_imports
-<table>
+<table id="compareitertools">
 <tr>
 <th>Notes</th>
 <th>Python 2</th>
@@ -931,6 +1256,10 @@ body{counter-reset:h1 18}
 <td><code>FIXME</code></td>
 </tr>
 </table>
+
+<ol id="skipcompareitertools">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -953,7 +1282,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareimport">...</p>
+<ol id="skipcompareimport">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -976,7 +1307,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparesys_exc">...</p>
+<ol id="skipcomparesys_exc">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -999,7 +1332,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareparen">...</p>
+<ol id="skipcompareparen">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1022,7 +1357,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparegetcwdu">...</p>
+<ol id="skipcomparegetcwdu">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1045,7 +1382,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparemetaclass">...</p>
+<ol id="skipcomparemetaclass">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1068,7 +1407,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareset_literal">...</p>
+<ol id="skipcompareset_literal">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1091,7 +1432,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparebuffer">...</p>
+<ol id="skipcomparebuffer">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1114,7 +1457,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcomparewscomma">...</p>
+<ol id="skipcomparewscomma">
+<li>...</li>
+</ol>
 
 </section>
 
@@ -1137,7 +1482,9 @@ body{counter-reset:h1 18}
 </tr>
 </table>
 
-<p id="skipcompareidioms">...</p>
+<ol id="skipcompareidioms">
+<li>...</li>
+</ol>
 
 </section>
 

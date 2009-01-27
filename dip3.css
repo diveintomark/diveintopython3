@@ -16,6 +16,7 @@ cite{font-style:normal}
 img{border:0}
 .framed{border:1px solid}
 pre,blockquote{line-height:2.154;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
+td pre{margin:0;padding:0;border:0}
 blockquote{font-size:small;font-style:oblique;margin-left:2.154em}
 blockquote p{margin:2.154em 0}
 .c{text-align:center;clear:both;font-size:small}
@@ -33,10 +34,11 @@ th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
 th,td{width:45%;vertical-align:top}
 th:first-child{width:10%;text-align:center}
 .callout,tr + tr th:first-child{font-family:'Arial Unicode MS','Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif}
-td{border:1px dotted black;padding:0 0.5em}
+td{border:1px dotted;padding:0 0.5em}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
+tr.hover,li.hover{background-color:#efefef;color:inherit}
