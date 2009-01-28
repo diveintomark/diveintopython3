@@ -7,6 +7,7 @@ AddType text/xsl .xslt
 AddType application/xml .atom
 AddType text/html .xo
 AddType text/plain .txt
+AddType text/plain .py
 AddType video/mp4 .mp4
 AddType application/x-srt .srt
 AddType video/ogg .ogv
