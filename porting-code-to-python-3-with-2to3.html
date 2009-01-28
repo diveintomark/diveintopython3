@@ -53,6 +53,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#ne">&lt;> comparison</a></li>
 <li><a href="#has_key"><code>has_key()</code> dictionary method</a></li>
 <li><a href="#dict">Dictionary methods</a></li>
+<li><a href="#imports">Modules that have been renamed or reorganized</a></li>
 <li><a href="#filter"><code>filter()</code> global function</a></li>
 <li><a href="#map"><code>map()</code> global function</a></li>
 <li><a href="#apply"><code>apply()</code> global function</a></li>
@@ -67,7 +68,6 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a></li>
 <li><a href="#funcattrs"><code>func_*</code> function attributes</a></li>
 <li><a href="#xreadlines"><code>xreadlines()</code> I/O method</a></li>
-<li><a href="#imports">imports</a></li>
 <li><a href="#tuple_params"><code>lambda</code> functions with multiple parameters</a></li>
 <li><a href="#methodattrs"><code>__class__</code> special class attribute</a></li>
 <li><a href="#next"><code>next()</code> iterator method</a></li>
@@ -282,6 +282,237 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 5. consuming_calls = set(["sorted", "list", "set", "any", "all", "tuple", "sum",
                           "min", "max"])
 -->
+
+</section>
+
+<section>
+<h2 id="imports">Modules that have been renamed or reorganized</h2>
+
+<p>FIXME intro</p>
+<p><a class="skip" href="#skipcompareimports">skip over this table</a></p>
+<table id="compareimports">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><pre><code>import StringIO
+import cStringIO</code></pre></td>
+<td><code>import io</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>import cPickle</code></td>
+<td><code>import pickle</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>import __builtin__</code></td>
+<td><code>import builtins</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>import copy_reg</code></td>
+<td><code>import copyreg</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><code>import Queue</code></td>
+<td><code>import queue</code></td>
+</tr>
+<tr>
+<th>&#x2465;</th>
+<td><code>import SocketServer</code></td>
+<td><code>import socketserver</code></td>
+</tr>
+<tr>
+<th>&#x2466;</th>
+<td><code>import ConfigParser</code></td>
+<td><code>import configparser</code></td>
+</tr>
+<tr>
+<th>&#x2467;</th>
+<td><code>import repr</code></td>
+<td><code>import reprlib</code></td>
+</tr>
+<tr>
+<th>&#x2468;</th>
+<td><code>import commands</code></td>
+<td><code>import subprocess</code></td>
+</tr>
+</table>
+
+<ol id="skipcompareimports">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
+
+<p><a class="skip" href="#skipcompareimportdbm">skip over this table</a></p>
+<table id="compareimportdbm">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>import dbm</code></td>
+<td><code>import dbm.ndbm</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>import gdbm</code></td>
+<td><code>import dbm.gnu</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>import dbhash</code></td>
+<td><code>import dbm.bsd</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>import dumbdbm</code></td>
+<td><code>import dbm.dumb</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><pre><code>import anydbm
+import whichdb</code></pre></td>
+<td><code>import dbm</code></td>
+</tr>
+</table>
+
+<ol id="skipcompareimportdbm">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
+
+<p><a class="skip" href="#skipcompareimportxmlrpc">skip over this table</a></p>
+<table id="compareimportxmlrpc">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>import xmlrpclib</code></td>
+<td><code>import xmlrpc.client</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><pre><code>import DocXMLRPCServer
+import SimpleXMLRPCServer</code></pre></td>
+<td><code>import xmlrpc.server</code></td>
+</tr>
+</table>
+
+<ol id="skipcompareimportxmlrpc">
+<li>...</li>
+<li>...</li>
+</ol>
+
+<p><a class="skip" href="#skipcompareimporthttp">skip over this table</a></p>
+<table id="compareimporthttp">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>import httplib</code></td>
+<td><code>import http.client</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>import Cookie</code></td>
+<td><code>import http.cookies</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>import cookielib</code></td>
+<td><code>import http.cookiejar</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><pre><code>import BaseHTTPServer
+import SimpleHTTPServer
+import CGIHttpServer</code></pre></td>
+<td><code>import http.server</code></td>
+</tr>
+</table>
+
+<ol id="skipcompareimporthttp">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
+
+<p><a class="skip" href="#skipcompareimporturllib">skip over this table</a></p>
+<table id="compareimporturllib">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>import urllib</code></td>
+<td><code>import urllib.request, urllib.parse, urllib.error</code></td>
+</tr>
+<tr>
+<th>&#x2461;</th>
+<td><code>import urllib2</code></td>
+<td><code>import urllib.request, urllib.error</code></td>
+</tr>
+<tr>
+<th>&#x2462;</th>
+<td><code>import urlparse</code></td>
+<td><code>import urllib.parse</code></td>
+</tr>
+<tr>
+<th>&#x2463;</th>
+<td><code>import robotparser</code></td>
+<td><code>import urllib.robotparser</code></td>
+</tr>
+<tr>
+<th>&#x2464;</th>
+<td><pre><code>from urllib import FancyURLOpener
+from urllib import urlencode</code></pre></td>
+<td><pre><code>from urllib.request import FancyURLOpener
+from urllib.parse import urlencode</code></pre></td>
+</tr>
+<tr>
+<th>&#x2465;</th>
+<td><pre><code>from urllib2 import Request
+from urllib2 import HTTPError</code></pre></td>
+<td><pre><code>from urllib.request import Request
+from urllib.error import HTTPError</code></pre></td>
+</tr>
+</table>
+
+<ol id="skipcompareimporturllib">
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 
 </section>
 
@@ -887,237 +1118,6 @@ except:
 </table>
 
 <ol id="skipcomparexreadlines">
-<li>...</li>
-<li>...</li>
-</ol>
-
-</section>
-
-<section>
-<h2 id="imports">imports</h2>
-
-<p>FIXME intro</p>
-<p><a class="skip" href="#skipcompareimports">skip over this table</a></p>
-<table id="compareimports">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>import StringIO
-import cStringIO</code></pre></td>
-<td><code>import io</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import cPickle</code></td>
-<td><code>import pickle</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import __builtin__</code></td>
-<td><code>import builtins</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>import copy_reg</code></td>
-<td><code>import copyreg</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>import Queue</code></td>
-<td><code>import queue</code></td>
-</tr>
-<tr>
-<th>&#x2465;</th>
-<td><code>import SocketServer</code></td>
-<td><code>import socketserver</code></td>
-</tr>
-<tr>
-<th>&#x2466;</th>
-<td><code>import ConfigParser</code></td>
-<td><code>import configparser</code></td>
-</tr>
-<tr>
-<th>&#x2467;</th>
-<td><code>import repr</code></td>
-<td><code>import reprlib</code></td>
-</tr>
-<tr>
-<th>&#x2468;</th>
-<td><code>import commands</code></td>
-<td><code>import subprocess</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimports">
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-</ol>
-
-<p><a class="skip" href="#skipcompareimportdbm">skip over this table</a></p>
-<table id="compareimportdbm">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import dbm</code></td>
-<td><code>import dbm.ndbm</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import gdbm</code></td>
-<td><code>import dbm.gnu</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import dbhash</code></td>
-<td><code>import dbm.bsd</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>import dumbdbm</code></td>
-<td><code>import dbm.dumb</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><pre><code>import anydbm
-import whichdb</code></pre></td>
-<td><code>import dbm</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimportdbm">
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-</ol>
-
-<p><a class="skip" href="#skipcompareimportxmlrpc">skip over this table</a></p>
-<table id="compareimportxmlrpc">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import xmlrpclib</code></td>
-<td><code>import xmlrpc.client</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>import DocXMLRPCServer
-import SimpleXMLRPCServer</code></pre></td>
-<td><code>import xmlrpc.server</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimportxmlrpc">
-<li>...</li>
-<li>...</li>
-</ol>
-
-<p><a class="skip" href="#skipcompareimporthttp">skip over this table</a></p>
-<table id="compareimporthttp">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import httplib</code></td>
-<td><code>import http.client</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import Cookie</code></td>
-<td><code>import http.cookies</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import cookielib</code></td>
-<td><code>import http.cookiejar</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><pre><code>import BaseHTTPServer
-import SimpleHTTPServer
-import CGIHttpServer</code></pre></td>
-<td><code>import http.server</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimporthttp">
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
-</ol>
-
-<p><a class="skip" href="#skipcompareimporturllib">skip over this table</a></p>
-<table id="compareimporturllib">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import urllib</code></td>
-<td><code>import urllib.request, urllib.parse, urllib.error</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import urllib2</code></td>
-<td><code>import urllib.request, urllib.error</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import urlparse</code></td>
-<td><code>import urllib.parse</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>import robotparser</code></td>
-<td><code>import urllib.robotparser</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><pre><code>from urllib import FancyURLOpener
-from urllib import urlencode</code></pre></td>
-<td><pre><code>from urllib.request import FancyURLOpener
-from urllib.parse import urlencode</code></pre></td>
-</tr>
-<tr>
-<th>&#x2465;</th>
-<td><pre><code>from urllib2 import Request
-from urllib2 import HTTPError</code></pre></td>
-<td><pre><code>from urllib.request import Request
-from urllib.error import HTTPError</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcompareimporturllib">
-<li>...</li>
-<li>...</li>
-<li>...</li>
-<li>...</li>
 <li>...</li>
 <li>...</li>
 </ol>
