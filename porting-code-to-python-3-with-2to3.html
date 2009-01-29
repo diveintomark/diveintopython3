@@ -11,6 +11,7 @@ h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 </style>
 <script type="text/javascript">
 window.onload = function() {
+if (!window.addEventListener) { return; }
 var arTables = document.getElementsByTagName('table');
 for (var i = arTables.length - 1; i >= 0; i--) {
     var elmTable = arTables[i];
@@ -19,7 +20,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
     var arNotes = olNotes.getElementsByTagName('li');
     var arTableRows = elmTable.getElementsByTagName('tr');
     if (arNotes.length == 0) { continue; }
-    if (arNotes.length != arTableRows.length - 1) { alert(elmTable.id + "table has " + arTableRows.length + " rows but the list below it has " + arNotes.length + " items!"); }
+    //if (arNotes.length != arTableRows.length - 1) { alert(elmTable.id + "table has " + arTableRows.length + " rows but the list below it has " + arNotes.length + " items!"); }
     for (var j = arTableRows.length - 1; j >= 1; j--) {
         var elmTableRow = arTableRows[j];
         var elmNote = arNotes[j - 1];
@@ -50,6 +51,12 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <body>
 <h1>Porting code to Python 3 with <code>2to3</code></h1>
 
+<aside>
+<blockquote class="q">
+<p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It's the transition that's troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)</p>
+</blockquote>
+</aside>
+
 <ol class="toc">
 <li><a href="#divingin">Diving in</a></li>
 <li><a href="#print"><code>print</code> statement</a></li>
@@ -58,11 +65,11 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#dict">Dictionary methods that return lists</a></li>
 <li><a href="#imports">Modules that have been renamed or reorganized</a>
   <ol>
-  <li><a href="#http"><code>http</code> package</li>
-  <li><a href="#urllib"><code>urllib</code> package</li>
-  <li><a href="#dbm"><code>dbm</code> package</li>
-  <li><a href="#xmlrpc"><code>xmlrpc</code> package</li>
-  <li><a href="#othermodules">Other modules</li>
+  <li><a href="#http"><code>http</code> package</a></li>
+  <li><a href="#urllib"><code>urllib</code> package</a></li>
+  <li><a href="#dbm"><code>dbm</code> package</a></li>
+  <li><a href="#xmlrpc"><code>xmlrpc</code> package</a></li>
+  <li><a href="#othermodules">Other modules</a></li>
   </ol>
 </li>
 <li><a href="#import">Relative imports within a package</a></li>
