@@ -55,9 +55,13 @@
 </section>
 
 <section>
-<h2>Documenting your code</h2>
+<h2>Writing readable code</h2>
+<h3>Why bother?</h3>
 <h3>Docstrings</h3>
+<!-- http://www.python.org/dev/peps/pep-0257/ -->
 <h3>Function annotations</h3>
+<h3>Style conventions</h3>
+<!-- http://www.python.org/dev/peps/pep-0008/ -->
 <h3>...</h3>
 </section>
 
@@ -583,179 +587,6 @@
 </section>
 
 <section>
-<h1><a href="porting-code-to-python-3-with-2to3.html">Porting code to Python 3 with <code>2to3</code></a></h1>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#print"><code>print</code> statement</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#ne">&lt;> comparison</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#has_key"><code>has_key()</code> dictionary method</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#dict">Dictionary methods</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#imports">Modules that have been renamed or reorganized</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#apply"><code>apply()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#intern"><code>intern()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#exec"><code>exec</code> statement</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#repr"><code>repr</code> literals (backticks)</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#except"><code>try...except</code> statement</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#raise"><code>raise</code> statement</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#throw"><code>throw</code> statement</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#long"><code>long</code> data type</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#xrange"><code>xrange()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#raw_input"><code>raw_input()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#funcattrs"><code>func_*</code> function attributes</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#xreadlines"><code>xreadlines()</code> I/O method</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#tuple_params"><code>lambda</code> functions with multiple parameters</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#methodattrs"><code>__class__</code> special class attribute</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#next"><code>next()</code> iterator method</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#nonzero"><code>__nonzero__</code> special class attribute</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#numliterals">Number literals</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#renames"><code>sys.maxint</code></a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#unicode"><code>unicode()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#unicodeliteral">Unicode string literals</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#callable"><code>callable()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#filter"><code>filter()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#map"><code>map()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#zip"><code>zip()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#standarderror"><code>StandardError()</code> exception</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#types"><code class="filename">types</code> module constants</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#basestring"><code>basestring</code> datatype</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#itertools"><code class="filename">itertools</code> module</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#import">Relative imports</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#paren">List comprehensions over tuples</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#getcwdu"><code>os.getcwdu()</code> function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#metaclass">Metaclasses</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#set_literal"><code>set()</code> literals</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#buffer"><code>buffer()</code> global function</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#wscomma">Whitespace around commas</a></h2>
-</section>
-
-<section>
-<h2><a href="porting-code-to-python-3-with-2to3.html#idioms">Common idioms</a></h2>
-</section>
-
-</section>
-
-<section>
 <h1><a href="case-study-porting-chardet-to-python-3.html">Case study: porting <code>chardet</code> to Python 3</a></h1>
 
 <section>
@@ -791,6 +622,8 @@
 <section>
 <h1>Packaging Python libraries</h1>
 
+<!-- http://pypi.python.org/pypi -->
+
 <section>
 <h2>A brief history of packaging (and why it's harder than you think)</h2>
 </section>
@@ -815,7 +648,6 @@
 <h2>Platform-specific packaging</h2>
 <h3>Packaging by Linux distributions</h3>
 <h3>Py2exe</h3>
-<h3>Psyco</h3>
 </section>
 
 </section>
@@ -824,7 +656,7 @@
 <h1>Creating graphics with the Python Imaging Library</h1>
 
 <section>
-<h2>...if it gets ported...</h2>
+<h2>...<a href="http://www.reddit.com/r/Python/comments/7sj39/dive_into_python_3/c07b3cq">will likely get ported in time</a>...</h2>
 </section>
 
 </section>
@@ -897,6 +729,10 @@
 </section>
 
 </section>
+
+<div class="appendix">
+<h1 class="appendix">Appendix A. <a href="porting-code-to-python-3-with-2to3.html">Porting code to Python 3 with <code class="filename">2to3</code></a></h1>
+</div>
 
 <footer>
 <p class="c">This site is optimized for Lynx just because fuck you.<br>I'm told it also looks good in graphical browsers.</p>

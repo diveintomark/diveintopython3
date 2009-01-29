@@ -4,9 +4,11 @@ a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link{color:#1b67c9}
 a:visited{color:darkorchid}
+a[href^="http:"]:before,a[href^="https:"]:before{content:"\27A6  "}
 h1 a,h2 a,h3 a,#nav a{color:inherit !important}
 abbr,.p{border:0;letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol,#nav{margin:1.75em 0}
+li ol{margin:0}
 h1,h2,h3{font-size:medium}
 h1{background:papayawhip;color:#000;width:100%;margin:0}
 #index h2{margin-left:1.75em}
@@ -20,14 +22,11 @@ blockquote{font-size:small;font-style:oblique;margin-left:2.154em}
 blockquote p{margin:2.154em 0}
 .c{text-align:center;clear:both;font-size:small}
 p.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
-#arc{width:100%,border-collapse:collapse}
-#arc th,#arc td{list-style:none;margin:0;padding:0}
-#arc th{padding:0 1.75em 0 0;text-align:right;vertical-align:baseline}
 figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
 var{font-family:monospace;font-style:normal}
-a.skip{font-size:small;display:block;margin:auto;text-align:center;border:0}
+a.skip{font-size:small;display:block;margin:auto;text-align:right;border:0}
 table{width:100%;border-collapse:collapse}
 th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
 th,td{width:45%;vertical-align:top}
@@ -36,6 +35,7 @@ th:first-child{width:10%;text-align:center}
 td{border:1px dotted;padding:0 0.5em}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
+.appendix h1:before{content:""}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}

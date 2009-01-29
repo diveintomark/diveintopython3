@@ -1,36 +1,39 @@
-from optparse import OptionParser
+"""Convert file sizes to human-readable form.
 
-SUFFIXES = ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
-MULTIPLES = {True: 1024, False: 1000}
+Available functions:
+human_size(size, a_kilobyte_is_1024_bytes)
+    takes a file size and returns a human-readable string
 
-def human_size(size, use_binary_multiples=True):
+Examples:
+>>> human_size(1024)
+'1.0 KiB'
+>>> human_size(1000, False)
+'1.0 KB'
+"""
+
+SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
+            1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}
+
+def human_size(size, a_kilobyte_is_1024_bytes=True):
     """Convert a file size to human-readable form.
 
     Keyword arguments:
     size -- file size in bytes
-    use_binary_multiples -- if False, use multiples of 1000
-                            if True, use multiples of 1024 (default=True)
+    a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
+                                if False, use multiples of 1000
 
     Returns: string
 
     """
-    multiple = MULTIPLES[use_binary_multiples]
-    for suffix in SUFFIXES:
+    if size < 0:
+        raise ValueError('number must be non-negative')
+    multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
+    for suffix in SUFFIXES[multiple]:
         size /= multiple
         if size < multiple:
             return "{0:.1f} {1}".format(size, suffix)
-    return "Too large to contemplate!"
+    raise ValueError('number too large')
 
 if __name__ == "__main__":
-    parser = OptionParser()
-    parser.add_option("-d", "--decimal",
-                      action="store_false",
-                      dest="binary_multiples",
-                      default=True,
-                      help="use multiples of 1000 instead of 1024")
-    (options, args) = parser.parse_args()
-    if args:
-        print(human_size(int(args[0]), options.binary_multiples))
-    else:
-        parser.print_help()
-    
+    print(human_size(1000000000000, False))
+    print(human_size(1000000000000))
