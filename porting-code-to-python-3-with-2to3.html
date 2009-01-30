@@ -122,7 +122,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 
 <p>In Python 2, <code>print</code> was a statement -- whatever you wanted to print simply followed the <code>print</code> keyword.  In Python 3, <code>print()</code> is a function -- whatever you want to print is passed to <code>print()</code> like any other function.
 
-<p><a class="skip" href="#skipcompareprint">skip over this table</a>
+<p class="skip"><a href="#skipcompareprint">skip over this table</a>
 <table id="compareprint">
 <tr>
 <th class="notes">Notes</th>
@@ -168,7 +168,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 
 <p>Python 2 supported <code>&lt;></code> as a synonym for <code>!=</code>, the not-equals comparison operator.  Python 3 supports the <code>!=</code> operator, but not <code>&lt;></code>.
 
-<p><a class="skip" href="#skipcomparene">skip over this table</a>
+<p class="skip"><a href="#skipcomparene">skip over this table</a>
 <table id="comparene">
 <tr>
 <th>Notes</th>
@@ -196,7 +196,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 
 <p>In Python 2, dictionaries had a <code>has_key()</code> method to test whether the dictionary had a certain key.  In Python 3, this method no longer exists.  Instead, you need to use the <code>in</code> operator.
 
-<p><a class="skip" href="#skipcomparehas_key">skip over this table</a>
+<p class="skip"><a href="#skipcomparehas_key">skip over this table</a>
 <table id="comparehas_key">
 <tr>
 <th>Notes</th>
@@ -242,7 +242,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 
 <p>In Python 2, many dictionary methods returned lists.  The most frequently used methods were <code>keys()</code>, <code>items()</code>, and <code>values()</code>.  In Python 3, all of these methods return dynamic views.  In some contexts, this is not a problem.  If the method's return value is immediately passed to another function that iterates through the entire sequence, it makes no difference whether the actual type is a list or a view.  In other contexts, it matters a great deal.  If you were expecting a complete list with individually addressable elements, your code will choke, because views do not support indexing.
 
-<p><a class="skip" href="#skipcomparedict">skip over this table</a>
+<p class="skip"><a href="#skipcomparedict">skip over this table</a>
 <table id="comparedict">
 <tr>
 <th>Notes</th>
@@ -288,13 +288,11 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 
 <p>Several modules in the Python Standard Library have been renamed.  Several other modules which are related to each other have been combined or reorganized to make their association more logical.
 
-<p>FIXME: once the rest of the book is written, these should link back to the chapters and sections that explain these modules.
-
 <h3 id="http"><code>http</code> package</h3>
 
 <p>In Python 3, several related HTTP modules have been combined into a single package, <code>http</code>.
 
-<p><a class="skip" href="#skipcompareimporthttp">skip over this table</a>
+<p class="skip"><a href="#skipcompareimporthttp">skip over this table</a>
 <table id="compareimporthttp">
 <tr>
 <th>Notes</th>
@@ -336,7 +334,7 @@ import CGIHttpServer</code></pre></td>
 
 <p>Python 2 had a rat's nest of overlapping modules to parse, encode, and fetch URLs.  In Python 3, these have all been refactored and combined in a single package, <code>urllib</code>.
 
-<p><a class="skip" href="#skipcompareimporturllib">skip over this table</a>
+<p class="skip"><a href="#skipcompareimporturllib">skip over this table</a>
 <table id="compareimporturllib">
 <tr>
 <th>Notes</th>
@@ -392,7 +390,7 @@ from urllib.error import HTTPError</code></pre></td>
 
 <p>All the various DBM clones are now in a single package, <code>dbm</code>.  If you need a specific variant like GNU DBM, you can import the appropriate module within the <code>dbm</code> package.
 
-<p><a class="skip" href="#skipcompareimportdbm">skip over this table</a>
+<p class="skip"><a href="#skipcompareimportdbm">skip over this table</a>
 <table id="compareimportdbm">
 <tr>
 <th>Notes</th>
@@ -433,7 +431,7 @@ import whichdb</code></pre></td>
 
 <p>XML-RPC is a lightweight method of performing remote RPC calls over HTTP.  The XML-RPC client library and several XML-RPC server implementations are now combined in a single package, <code>xmlrpc</code>.
 
-<p><a class="skip" href="#skipcompareimportxmlrpc">skip over this table</a>
+<p class="skip"><a href="#skipcompareimportxmlrpc">skip over this table</a>
 <table id="compareimportxmlrpc">
 <tr>
 <th>Notes</th>
@@ -457,7 +455,7 @@ import SimpleXMLRPCServer</code></pre></td>
 
 <h3 id="othermodules">Other modules</h3>
 
-<p><a class="skip" href="#skipcompareimports">skip over this table</a>
+<p class="skip"><a href="#skipcompareimports">skip over this table</a>
 <table id="compareimports">
 <tr>
 <th>Notes</th>
@@ -536,7 +534,7 @@ except ImportError:
 
 <p>Suppose you had this package, with multiple files in the same directory:
 
-<p><a class="skip" href="#skippackageart">skip over this ASCII art</a>
+<p class="skip"><a href="#skippackageart">skip over this ASCII art</a>
 <pre>chardet/
 |
 +--__init__.py
@@ -549,7 +547,7 @@ except ImportError:
 
 <p id="skippackageart">Now suppose that <code class="filename">universaldetector.py</code> needs to import the entire <code class="filename">constants.py</code> file and one class from <code class="filename">mbcharsetprober.py</code>.  How do you do it?
 
-<p><a class="skip" href="#skipcompareimport">skip over this table</a>
+<p class="skip"><a href="#skipcompareimport">skip over this table</a>
 <table id="compareimport">
 <tr>
 <th>Notes</th>
@@ -575,9 +573,9 @@ except ImportError:
 
 <h2 id="filter"><code>filter()</code> global function</h2>
 
-<p>FIXME intro
+<p>In Python 2, the <code>filter()</code> function returned a list, the result of "filtering" a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence.  In Python 3, the <code>filter()</code> function returns an interator, not a list.
 
-<p><a class="skip" href="#skipcomparefilter">skip over this table</a>
+<p class="skip"><a href="#skipcomparefilter">skip over this table</a>
 <table id="comparefilter">
 <tr>
 <th>Notes</th>
@@ -601,7 +599,7 @@ except ImportError:
 </tr>
 <tr>
 <th>&#x2463;</th>
-<td><code>for i in filter(None, a_sequence)</code></td>
+<td><code>for i in filter(None, a_sequence):</code></td>
 <td><i>no change</i></td>
 </tr>
 <tr>
@@ -612,18 +610,18 @@ except ImportError:
 </table>
 
 <ol id="skipcomparefilter">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
+<li>In the most basic case, <code>2to3</code> will wrap a call to <code>filter()</code> with a call to <code>list()</code>, which simply iterates through its argument and returns a real list.
+<li>However, if the call to <code>filter()</code> is <em>already</em> wrapped in <code>list()</code>, <code>2to3</code> will do nothing, since the fact that <code>filter()</code> is returning an iterator is irrelevant.
+<li>For the special syntax of <code>filter(None, ...)</code>, <code>2to3</code> will transform the call into a semantically equivalent list comprehension.
+<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
+<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>filter()</code> returns an iterator as if it returns a list.
 </ol>
 
 <h2 id="map"><code>map()</code> global function</h2>
 
-<p>FIXME intro
+<p>In much the same way as <a href="#filter"><code>filter()</code></a>, the <code>map()</code> function now returns an iterator.  (In Python 2, it returned a list.)
 
-<p><a class="skip" href="#skipcomparemap">skip over this table</a>
+<p class="skip"><a href="#skipcomparemap">skip over this table</a>
 <table id="comparemap">
 <tr>
 <th>Notes</th>
@@ -648,28 +646,33 @@ except ImportError:
 <tr>
 <th>&#x2463;</th>
 <td><code>for i in map(a_function, a_sequence):</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2464;</th>
 <td><code>[i for i in map(a_function, a_sequence)]</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
 <ol id="skipcomparemap">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
+<li>As with <code>filter()</code>, in the most basic case, <code>2to3</code> will wrap a call to <code>map()</code> with a call to <code>list()</code>.
+<li>For the special syntax of <code>map(None, ...)</code>, the identity function, <code>2to3</code> will convert it to an equivalent call to <code>list()</code>.
+<li>If the first argument to <code>map()</code> is a lambda function, <code>2to3</code> will convert it to an equivalent list comprehension.
+<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
+<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>map()</code> returns an iterator as if it returns a list.
 </ol>
 
 <h2 id="reduce"><code>reduce()</code> global function (3.1+)</h2>
 
-<p>FIXME intro
+<p>In Python 3, the <code>reduce()</code> function has been removed from the global namespace and placed in the <code class="filename">functools</code> module.
 
-<p><a class="skip" href="#skipcomparereduce">skip over this table</a>
+<blockquote class="note">
+<p>&#x261E;</p>
+<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix this case automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
+</blockquote>
+
+<p class="skip"><a href="#skipcomparereduce">skip over this table</a>
 <table id="comparereduce">
 <tr>
 <th>Notes</th>
@@ -677,22 +680,20 @@ except ImportError:
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
+<th></th>
 <td><code>reduce(a, b, c)</code></td>
 <td><pre><code>from functtools import reduce
 reduce(a, b, c)</code></pre></td>
 </tr>
 </table>
 
-<ol id="skipcomparereduce">
-<li>...
-</ol>
+<p id="skipcomparereduce">
 
 <h2 id="apply"><code>apply()</code> global function</h2>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareapply">skip over this table</a>
+<p class="skip"><a href="#skipcompareapply">skip over this table</a>
 <table id="compareapply">
 <tr>
 <th>Notes</th>
@@ -732,7 +733,7 @@ reduce(a, b, c)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareintern">skip over this table</a>
+<p class="skip"><a href="#skipcompareintern">skip over this table</a>
 <table id="compareintern">
 <tr>
 <th>Notes</th>
@@ -754,7 +755,7 @@ reduce(a, b, c)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareexec">skip over this table</a>
+<p class="skip"><a href="#skipcompareexec">skip over this table</a>
 <table id="compareexec">
 <tr>
 <th>Notes</th>
@@ -788,7 +789,7 @@ reduce(a, b, c)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareexecfile">skip over this table</a>
+<p class="skip"><a href="#skipcompareexecfile">skip over this table</a>
 <table id="compareexecfile">
 <tr>
 <th>Notes</th>
@@ -810,7 +811,7 @@ reduce(a, b, c)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparerepr">skip over this table</a>
+<p class="skip"><a href="#skipcomparerepr">skip over this table</a>
 <table id="comparerepr">
 <tr>
 <th>Notes</th>
@@ -844,7 +845,7 @@ reduce(a, b, c)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareexcept">skip over this table</a>
+<p class="skip"><a href="#skipcompareexcept">skip over this table</a>
 <table id="compareexcept">
 <tr>
 <th>Notes</th>
@@ -879,7 +880,7 @@ except (RuntimeError, ImportError) as e:
     import mymodule
 except ImportError:
     pass</code></pre></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2463;</th>
@@ -887,7 +888,7 @@ except ImportError:
     import mymodule
 except:
     pass</code></pre></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
@@ -902,7 +903,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareraise">skip over this table</a>
+<p class="skip"><a href="#skipcompareraise">skip over this table</a>
 <table id="compareraise">
 <tr>
 <th>Notes</th>
@@ -936,7 +937,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparethrow">skip over this table</a>
+<p class="skip"><a href="#skipcomparethrow">skip over this table</a>
 <table id="comparethrow">
 <tr>
 <th>Notes</th>
@@ -946,7 +947,7 @@ except:
 <tr>
 <th>&#x2460;</th>
 <td><code>aGenerator.throw(MyException)</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2461;</th>
@@ -970,7 +971,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparelong">skip over this table</a>
+<p class="skip"><a href="#skipcomparelong">skip over this table</a>
 <table id="comparelong">
 <tr>
 <th>Notes</th>
@@ -1016,7 +1017,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparexrange">skip over this table</a>
+<p class="skip"><a href="#skipcomparexrange">skip over this table</a>
 <table id="comparexrange">
 <tr>
 <th>Notes</th>
@@ -1041,12 +1042,12 @@ except:
 <tr>
 <th>&#x2463;</th>
 <td><code>for i in range(10):</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2464;</th>
 <td><code>sum(range(10))</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
@@ -1062,7 +1063,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareraw_input">skip over this table</a>
+<p class="skip"><a href="#skipcompareraw_input">skip over this table</a>
 <table id="compareraw_input">
 <tr>
 <th>Notes</th>
@@ -1102,7 +1103,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparefuncattrs">skip over this table</a>
+<p class="skip"><a href="#skipcomparefuncattrs">skip over this table</a>
 <table id="comparefuncattrs">
 <tr>
 <th>Notes</th>
@@ -1160,7 +1161,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparexreadlines">skip over this table</a>
+<p class="skip"><a href="#skipcomparexreadlines">skip over this table</a>
 <table id="comparexreadlines">
 <tr>
 <th>Notes</th>
@@ -1175,7 +1176,7 @@ except:
 <tr>
 <th>&#x2461;</th>
 <td><code>for line in a_file.xreadlines(5):</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
@@ -1188,7 +1189,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparetuple_params">skip over this table</a>
+<p class="skip"><a href="#skipcomparetuple_params">skip over this table</a>
 <table id="comparetuple_params">
 <tr>
 <th>Notes</th>
@@ -1222,7 +1223,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparemethodattrs">skip over this table</a>
+<p class="skip"><a href="#skipcomparemethodattrs">skip over this table</a>
 <table id="comparemethodattrs">
 <tr>
 <th>Notes</th>
@@ -1256,7 +1257,7 @@ except:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparenext">skip over this table</a>
+<p class="skip"><a href="#skipcomparenext">skip over this table</a>
 <table id="comparenext">
 <tr>
 <th>Notes</th>
@@ -1287,7 +1288,7 @@ except:
 <td><pre><code>class A:
     def next(self, x, y):
         pass</code></pre></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 <tr>
 <th>&#x2464;</th>
@@ -1312,7 +1313,7 @@ for an_iterator in a_sequence_of_iterators:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparenonzero">skip over this table</a>
+<p class="skip"><a href="#skipcomparenonzero">skip over this table</a>
 <table id="comparenonzero">
 <tr>
 <th>Notes</th>
@@ -1333,7 +1334,7 @@ for an_iterator in a_sequence_of_iterators:
 <td><pre><code>class A:
     def __nonzero__(self, x, y):
         pass</code></pre></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
@@ -1346,7 +1347,7 @@ for an_iterator in a_sequence_of_iterators:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparenumliterals">skip over this table</a>
+<p class="skip"><a href="#skipcomparenumliterals">skip over this table</a>
 <table id="comparenumliterals">
 <tr>
 <th>Notes</th>
@@ -1374,7 +1375,7 @@ for an_iterator in a_sequence_of_iterators:
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparerenames">skip over this table</a>
+<p class="skip"><a href="#skipcomparerenames">skip over this table</a>
 <table id="comparerenames">
 <tr>
 <th>Notes</th>
@@ -1404,7 +1405,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareunicode">skip over this table</a>
+<p class="skip"><a href="#skipcompareunicode">skip over this table</a>
 <table id="compareunicode">
 <tr>
 <th>Notes</th>
@@ -1426,7 +1427,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareunicodeliteral">skip over this table</a>
+<p class="skip"><a href="#skipcompareunicodeliteral">skip over this table</a>
 <table id="compareunicodeliteral">
 <tr>
 <th>Notes</th>
@@ -1454,7 +1455,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparecallable">skip over this table</a>
+<p class="skip"><a href="#skipcomparecallable">skip over this table</a>
 <table id="comparecallable">
 <tr>
 <th>Notes</th>
@@ -1476,7 +1477,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparezip">skip over this table</a>
+<p class="skip"><a href="#skipcomparezip">skip over this table</a>
 <table id="comparezip">
 <tr>
 <th>Notes</th>
@@ -1491,7 +1492,7 @@ a_function(sys.maxsize)</code></pre></td>
 <tr>
 <th>&#x2461;</th>
 <td><code>d.join(zip(a, b, c))</code></td>
-<td><i>unchanged</i></td>
+<td><i>no change</i></td>
 </tr>
 </table>
 
@@ -1504,7 +1505,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparestandarderror">skip over this table</a>
+<p class="skip"><a href="#skipcomparestandarderror">skip over this table</a>
 <table id="comparestandarderror">
 <tr>
 <th>Notes</th>
@@ -1532,7 +1533,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparetypes">skip over this table</a>
+<p class="skip"><a href="#skipcomparetypes">skip over this table</a>
 <table id="comparetypes">
 <tr>
 <th>Notes</th>
@@ -1584,7 +1585,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareisinstance">skip over this table</a>
+<p class="skip"><a href="#skipcompareisinstance">skip over this table</a>
 <table id="compareisinstance">
 <tr>
 <th>Notes</th>
@@ -1606,7 +1607,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparebasestring">skip over this table</a>
+<p class="skip"><a href="#skipcomparebasestring">skip over this table</a>
 <table id="comparebasestring">
 <tr>
 <th>Notes</th>
@@ -1673,7 +1674,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparesys_exc">skip over this table</a>
+<p class="skip"><a href="#skipcomparesys_exc">skip over this table</a>
 <table id="comparesys_exc">
 <tr>
 <th>Notes</th>
@@ -1707,7 +1708,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareparen">skip over this table</a>
+<p class="skip"><a href="#skipcompareparen">skip over this table</a>
 <table id="compareparen">
 <tr>
 <th>Notes</th>
@@ -1729,7 +1730,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparegetcwdu">skip over this table</a>
+<p class="skip"><a href="#skipcomparegetcwdu">skip over this table</a>
 <table id="comparegetcwdu">
 <tr>
 <th>Notes</th>
@@ -1751,7 +1752,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparemetaclass">skip over this table</a>
+<p class="skip"><a href="#skipcomparemetaclass">skip over this table</a>
 <table id="comparemetaclass">
 <tr>
 <th>Notes</th>
@@ -1783,7 +1784,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareset_literal">skip over this table</a>
+<p class="skip"><a href="#skipcompareset_literal">skip over this table</a>
 <table id="compareset_literal">
 <tr>
 <th>Notes</th>
@@ -1817,7 +1818,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparebuffer">skip over this table</a>
+<p class="skip"><a href="#skipcomparebuffer">skip over this table</a>
 <table id="comparebuffer">
 <tr>
 <th>Notes</th>
@@ -1839,7 +1840,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcomparewscomma">skip over this table</a>
+<p class="skip"><a href="#skipcomparewscomma">skip over this table</a>
 <table id="comparewscomma">
 <tr>
 <th>Notes</th>
@@ -1867,7 +1868,7 @@ a_function(sys.maxsize)</code></pre></td>
 
 <p>FIXME intro
 
-<p><a class="skip" href="#skipcompareidioms">skip over this table</a>
+<p class="skip"><a href="#skipcompareidioms">skip over this table</a>
 <table id="compareidioms">
 <tr>
 <th>Notes</th>
@@ -1907,6 +1908,8 @@ do_stuff(a_list)</code></pre></td>
 <li>...
 <li>...
 </ol>
+
+<p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
 
 <footer>
 <p class="c">&copy; 2001-4, 2009 Mark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>

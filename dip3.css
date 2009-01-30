@@ -25,12 +25,14 @@ figure{display:block;text-align:center;margin:1.75em 0}
 figure img{display:block;margin:0 auto}
 section,article,footer{display:block}
 var{font-family:monospace;font-style:normal}
-a.skip{font-size:small;display:block;margin:auto;text-align:right;border:0}
+.skip a,.skip a:hover,.skip a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
+.skip a:active,.skip a:focus{position:static;width:auto;height:auto}
 table{width:100%;border-collapse:collapse}
 th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
 th,td{width:45%;vertical-align:top}
 th:first-child{width:10%;text-align:center}
-.q span,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
+.q span,.note p:first-child,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
+.note p:first-child{float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 0}
 .q span{font-size:large}
 td{border:1px dotted;padding:0 0.5em}
 body{counter-reset:h1}

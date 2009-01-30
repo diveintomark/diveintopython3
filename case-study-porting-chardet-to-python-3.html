@@ -9,7 +9,11 @@ body{counter-reset:h1 19}
 </style>
 </head>
 <body>
-<h1>Case study: porting chardet to Python 3</h1>
+<h1>Case study: porting <code class="filename">chardet</code> to Python 3</h1>
+
+<blockquote class="q">
+<p><span>&#x275D;</span> Words, words.  They're all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
+</blockquote>
 
 <ol>
 <li><a href="#faq">Introducing <code class="filename">chardet</code>: a mini-FAQ</a>
@@ -41,7 +45,7 @@ body{counter-reset:h1 19}
 
 <h2 id="faq">Introducing <code class="filename">chardet</code>: a mini-FAQ</h2>
 
-<p class="fancy">When you think of "text", you probably think of "characters and symbols I see on my computer screen".  But computers don't deal in characters and symbols; they deal in bits and bytes.  Every piece of text you've ever seen on a computer screen is actually stored in a particular <em>character encoding</em>.  There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages.  Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
+<p class="fancy">When you think of "text," you probably think of "characters and symbols I see on my computer screen."  But computers don't deal in characters and symbols; they deal in bits and bytes.  Every piece of text you've ever seen on a computer screen is actually stored in a particular <em>character encoding</em>.  There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages.  Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
 
 <p>In reality, it's more complicated than that.  Many characters are common to multiple encodings, but each encoding may use a different sequence of bytes to actually store those characters in memory or on disk.  So you can think of the character encoding as a kind of decryption key for the text.  Whenever someone gives you a sequence of bytes and claims it's "text", you need to know what character encoding they used so you can decode the bytes into characters and display them (or process them, or whatever).
 
@@ -136,7 +140,7 @@ body{counter-reset:h1 19}
 
 <p>The main <code class="filename">chardet</code> package is split across several different files, all in the same directory.  The <code class="filename">2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class="filename">2to3</code> will convert each of the files in turn.
 
-<p><a href="#skip2to3output" class="skip">skip over this</a>
+<p class="skip"><a href="#skip2to3output">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
@@ -606,7 +610,7 @@ RefactoringTool: chardet\utf8prober.py</samp></pre>
 
 <p id="skip2to3output">Now run the <code class="filename">2to3</code> script on the testing harness, <code class="filename">test.py</code>.
 
-<p><a href="#skip2to3outputtest" class="skip">skip over this</a>
+<p class="skip"><a href="#skip2to3outputtest">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
@@ -646,7 +650,7 @@ RefactoringTool: test.py</samp></pre>
 
 <p>Now for the real test: running the test harness against the test suite.  Since the test suite is designed to cover all the possible code paths, it's a good way to test our ported code to make sure there aren't any bugs lurking anywhere.
 
-<p><a href="#skipinvalidsyntax" class="skip">skip over this</a>
+<p class="skip"><a href="#skipinvalidsyntax">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp class="traceback">Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
@@ -658,7 +662,7 @@ SyntaxError: invalid syntax</samp></pre>
 
 <p id="skipinvalidsyntax">Hmm, a small snag.  In Python 3, <code>False</code> is a reserved word, so you can't use it as a variable name.  Let's look at <code class="filename">constants.py</code> to see where it's defined.  Here's the original version from <code class="filename">constants.py</code>, before the <code class="filename">2to3</code> script changed it:
 
-<p><a href="#skipbuiltincode" class="skip">skip over this</a>
+<p class="skip"><a href="#skipbuiltincode">skip over this</a>
 <pre><code>import __builtin__
 if not hasattr(__builtin__, 'False'):
     False = 0
@@ -685,7 +689,7 @@ else:
 
 <p>Time to run <code class="filename">test.py</code> again and see how far it gets.
 
-<p><a href="#skipnomodulenamedconstants" class="skip">skip over this</a>
+<p class="skip"><a href="#skipnomodulenamedconstants">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp class="traceback">Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
@@ -717,7 +721,7 @@ import sys</code></pre>
 
 <p>FIXME intro
 
-<p><a href="#skipnamefileisnotdefined" class="skip">skip over this</a>
+<p class="skip"><a href="#skipnamefileisnotdefined">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
@@ -737,7 +741,7 @@ NameError: name 'file' is not defined</samp></pre>
 
 <p>FIXME intro
 
-<p><a href="#skipcantuseastringpattern" class="skip">skip over this</a>
+<p class="skip"><a href="#skipcantuseastringpattern">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
@@ -751,7 +755,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 
 <p>First, let's see what <var>self._highBitDetector</var> is.  It's defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
 
-<p><a href="#skiphighbitdetectorcode" class="skip">skip over this</a>
+<p class="skip"><a href="#skiphighbitdetectorcode">skip over this</a>
 <pre><code>class UniversalDetector:
     def __init__(self):
         self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
@@ -762,7 +766,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 
 <p>In Python 2, a string was an array of bytes whose character encoding was tracked separately.  If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead.  But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths).  Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters.  But what we're searching is not a string, it's a byte array.  Looking at the traceback, this error occurred in <code class="filename">universaldetector.py</code>:
 
-<p><a href="#skipfeedhighbitdetectorcode" class="skip">skip over this</a>
+<p class="skip"><a href="#skipfeedhighbitdetectorcode">skip over this</a>
 <pre><code>def feed(self, aBuf):
     .
     .
@@ -772,7 +776,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 
 <p id="skipfeedhighbitdetectorcode">And what is <var>aBuf</var>?  Let's backtrack further to a place that calls <var>UniversalDetector.feed()</var>.  One place that calls it is the test harness, <code class="filename">test.py</code>.
 
-<p><a href="#skiptestharnessfeedcode" class="skip">skip over this</a>
+<p class="skip"><a href="#skiptestharnessfeedcode">skip over this</a>
 <pre><code>u = UniversalDetector()
 .
 .
@@ -804,7 +808,7 @@ for line in open(f, 'rb'):
 
 <p>Curiouser and curiouser...
 
-<p><a href="#skipcantconvertbytesobject" class="skip">skip over this</a>
+<p class="skip"><a href="#skipcantconvertbytesobject">skip over this</a>
 <pre class="screen"><samp class="prompt">C:\home\chardet></samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class="traceback">Traceback (most recent call last):
