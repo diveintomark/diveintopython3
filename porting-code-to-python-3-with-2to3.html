@@ -56,6 +56,7 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#divingin">Diving in</a>
 <li><a href="#print"><code>print</code> statement</a>
 <li><a href="#unicodeliteral">Unicode string literals</a>
+<li><a href="#unicode"><code>unicode()</code> global function</a>
 <li><a href="#long"><code>long</code> data type</a>
 <li><a href="#ne">&lt;> comparison</a>
 <li><a href="#has_key"><code>has_key()</code> dictionary method</a>
@@ -72,11 +73,11 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#import">Relative imports within a package</a>
 <li><a href="#filter"><code>filter()</code> global function</a>
 <li><a href="#map"><code>map()</code> global function</a>
-<li><a href="#reduce"><code>reduce()</code> global function (3.1+)</a>
+<li><a href="#reduce"><code>reduce()</code> global function</a> (3.1+)
 <li><a href="#apply"><code>apply()</code> global function</a>
 <li><a href="#intern"><code>intern()</code> global function</a>
 <li><a href="#exec"><code>exec</code> statement</a>
-<li><a href="#execfile"><code>execfile</code> statement (3.1+)</a>
+<li><a href="#execfile"><code>execfile</code> statement</a> (3.1+)
 <li><a href="#repr"><code>repr</code> literals (backticks)</a>
 <li><a href="#except"><code>try...except</code> statement</a>
 <li><a href="#raise"><code>raise</code> statement</a>
@@ -89,24 +90,23 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <li><a href="#methodattrs">Special method attributes</a>
 <li><a href="#next"><code>next()</code> iterator method</a>
 <li><a href="#nonzero"><code>__nonzero__</code> special class attribute</a>
-<li><a href="#numliterals">Number literals</a>
+<li><a href="#numliterals">Octal literals</a>
 <li><a href="#renames"><code>sys.maxint</code></a>
-<li><a href="#unicode"><code>unicode()</code> global function</a>
 <li><a href="#callable"><code>callable()</code> global function</a>
 <li><a href="#zip"><code>zip()</code> global function</a>
 <li><a href="#standarderror"><code>StandardError()</code> exception</a>
 <li><a href="#types"><code class="filename">types</code> module constants</a>
-<li><a href="#isinstance"><code>isinstance</code> global function (3.1+)</a>
+<li><a href="#isinstance"><code>isinstance()</code> global function</a> (3.1+)
 <li><a href="#basestring"><code>basestring</code> datatype</a>
 <li><a href="#itertools"><code class="filename">itertools</code> module</a>
 <li><a href="#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
 <li><a href="#paren">List comprehensions over tuples</a>
 <li><a href="#getcwdu"><code>os.getcwdu()</code> function</a>
 <li><a href="#metaclass">Metaclasses</a>
-<li><a href="#set_literal"><code>set()</code> literals</a>
-<li><a href="#buffer"><code>buffer()</code> global function</a>
-<li><a href="#wscomma">Whitespace around commas</a>
-<li><a href="#idioms">Common idioms</a>
+<li><a href="#set_literal"><code>set()</code> literals</a> (explicit)
+<li><a href="#buffer"><code>buffer()</code> global function</a> (explicit)
+<li><a href="#wscomma">Whitespace around commas</a> (explicit)
+<li><a href="#idioms">Common idioms</a> (explicit)
 </ol>
 
 <h2 id="divingin">Diving in</h2>
@@ -185,6 +185,28 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 <ol id="skipcompareunicodeliteral">
 <li>Unicode string literals are simply converted into string literals, which, in Python 3, are always Unicode.
 <li>Unicode "raw" strings (in which Python does not auto-escape backslashes) are converted to raw strings.  In Python 3, "raw" strings are also Unicode.
+</ol>
+
+<h2 id="unicode"><code>unicode()</code> global function</h2>
+
+<p>FIXME intro
+
+<p class="skip"><a href="#skipcompareunicode">skip over this table</a>
+<table id="compareunicode">
+<tr>
+<th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr>
+<th>&#x2460;</th>
+<td><code>unicode(anything)</code></td>
+<td><code>str(anything)</code></td>
+</tr>
+</table>
+
+<ol id="skipcompareunicode">
+<li>...
 </ol>
 
 <h2 id="long"><code>long</code> data type</h2>
@@ -740,11 +762,6 @@ except ImportError:
 
 <p>In Python 3, the <code>reduce()</code> function has been removed from the global namespace and placed in the <code class="filename">functools</code> module.
 
-<blockquote class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
-
 <p class="skip"><a href="#skipcomparereduce">skip over this table</a>
 <table id="comparereduce">
 <tr>
@@ -760,7 +777,10 @@ reduce(a, b, c)</code></pre></td>
 </tr>
 </table>
 
-<p id="skipcomparereduce">
+<blockquote id="skipcomparereduce" class="note">
+<p>&#x261E;
+<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
+</blockquote>
 
 <h2 id="apply"><code>apply()</code> global function</h2>
 
@@ -860,11 +880,6 @@ reduce(a, b, c)</code></pre></td>
 
 <p>Like the old <a href="#exec"><code>exec</code> statement</a>, the old <code>execfile</code> statement will execute strings as if they were Python code.  Where <code>exec</code> took a string, <code>execfile</code> took a filename.  In Python 3, the <code>execfile</code> statement has been eliminated.  If you really need to take a file of Python code and execute it (but you're not willing to simply import it), you can accomplish the same thing by opening the file, reading its contents, calling the global <code>compile()</code> function to force the Python interpreter to compile the code, and then call the new <code>exec()</code> function.
 
-<blockquote class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
-
 <p class="skip"><a href="#skipcompareexecfile">skip over this table</a>
 <table id="compareexecfile">
 <tr>
@@ -879,7 +894,10 @@ reduce(a, b, c)</code></pre></td>
 </tr>
 </table>
 
-<p id="skipcompareexecfile">
+<blockquote id="skipcompareexecfile" class="note">
+<p>&#x261E;
+<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
+</blockquote>
 
 <h2 id="repr"><code>repr</code> literals (backticks)</h2>
 
@@ -969,7 +987,7 @@ except:
 
 <blockquote class="note">
 <p>&#x261E;
-<p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times), because it will also catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
+<p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
 </blockquote>
 
 <h2 id="raise"><code>raise</code> statement</h2>
@@ -1370,7 +1388,7 @@ for an_iterator in a_sequence_of_iterators:
 <li>...
 </ol>
 
-<h2 id="numliterals">Number literals</h2>
+<h2 id="numliterals">Octal literals</h2>
 
 <p>FIXME intro
 
@@ -1382,11 +1400,6 @@ for an_iterator in a_sequence_of_iterators:
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
-<td><code>x = 12L</code></td>
-<td><code>x = 12</code></td>
-</tr>
-<tr>
 <th>&#x2461;</th>
 <td><code>x = 0755</code></td>
 <td><code>x = 0o755</code></td>
@@ -1394,7 +1407,6 @@ for an_iterator in a_sequence_of_iterators:
 </table>
 
 <ol id="skipcomparenumliterals">
-<li>...
 <li>...
 </ol>
 
@@ -1425,28 +1437,6 @@ a_function(sys.maxsize)</code></pre></td>
 
 <ol id="skipcomparerenames">
 <li>...
-<li>...
-</ol>
-
-<h2 id="unicode"><code>unicode()</code> global function</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareunicode">skip over this table</a>
-<table id="compareunicode">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>unicode(anything)</code></td>
-<td><code>str(anything)</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareunicode">
 <li>...
 </ol>
 
@@ -1540,54 +1530,42 @@ a_function(sys.maxsize)</code></pre></td>
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
+<th></th>
 <td><code>types.StringType</code></td>
 <td><code>bytes</code></td>
 </tr>
 <tr>
-<th>&#x2461;</th>
+<th></th>
 <td><code>types.DictType</code></td>
 <td><code>dict</code></td>
 </tr>
 <tr>
-<th>&#x2462;</th>
+<th></th>
 <td><code>types.IntType</code></td>
 <td><code>int</code></td>
 </tr>
 <tr>
-<th>&#x2463;</th>
+<th></th>
 <td><code>types.LongType</code></td>
 <td><code>int</code></td>
 </tr>
 <tr>
-<th>&#x2464;</th>
+<th></th>
 <td><code>types.ListType</code></td>
 <td><code>list</code></td>
 </tr>
 <tr>
-<th>&#x2465;</th>
+<th></th>
 <td><code>types.NoneType</code></td>
 <td><code>type(None)</code></td>
 </tr>
 </table>
 
-<ol id="skipcomparetypes">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
+<p id="skipcomparetypes">
 
-<h2 id="isinstance"><code class="filename">isinstance</code> global function (3.1+)</h2>
+<h2 id="isinstance"><code>isinstance()</code> global function (3.1+)</h2>
 
 <p>FIXME intro
-
-<blockquote class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
 
 <p class="skip"><a href="#skipcompareisinstance">skip over this table</a>
 <table id="compareisinstance">
@@ -1603,9 +1581,10 @@ a_function(sys.maxsize)</code></pre></td>
 </tr>
 </table>
 
-<ol id="skipcompareisinstance">
-<li>...
-</ol>
+<blockquote id="skipcompareisinstance" class="note">
+<p>&#x261E;
+<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
+</blockquote>
 
 <h2 id="basestring"><code>basestring</code> datatype</h2>
 
@@ -1619,15 +1598,13 @@ a_function(sys.maxsize)</code></pre></td>
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
+<th></th>
 <td><code>isinstance(x, basestring)</code></td>
 <td><code>isinstance(x, str)</code></td>
 </tr>
 </table>
 
-<ol id="skipcomparebasestring">
-<li>...
-</ol>
+<p id="skipcomparebasestring">
 
 <h2 id="itertools"><code class="filename">itertools</code> module</h2>
 
@@ -1702,11 +1679,7 @@ a_function(sys.maxsize)</code></pre></td>
 </tr>
 </table>
 
-<ol id="skipcomparesys_exc">
-<li>...
-<li>...
-<li>...
-</ol>
+<p id="skipcomparesys_exc">
 
 <h2 id="paren">List comprehensions over tuples</h2>
 
@@ -1720,15 +1693,13 @@ a_function(sys.maxsize)</code></pre></td>
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
+<th></th>
 <td><code>[i for i in 1, 2]</code></td>
 <td><code>[i for i in (1, 2)]</code></td>
 </tr>
 </table>
 
-<ol id="skipcompareparen">
-<li>...
-</ol>
+<p id="skipcompareparen">
 
 <h2 id="getcwdu"><code>os.getcwdu()</code> function</h2>
 
@@ -1742,15 +1713,13 @@ a_function(sys.maxsize)</code></pre></td>
 <th>Python 3</th>
 </tr>
 <tr>
-<th>&#x2460;</th>
+<th></th>
 <td><code>os.getcwdu()</code></td>
 <td><code>os.getcwd()</code></td>
 </tr>
 </table>
 
-<ol id="skipcomparegetcwdu">
-<li>...
-</ol>
+<p id="skipcomparegetcwdu">
 
 <h2 id="metaclass">Metaclasses</h2>
 
@@ -1772,9 +1741,9 @@ a_function(sys.maxsize)</code></pre></td>
 </tr>
 <tr>
 <th>&#x2461;</th>
-<td><pre><code>class Whip(Whipper):
+<td><pre><code>class C(Whipper):
     __metaclass__ = PapayaMeta</code></pre></td>
-<td><pre><code>class Whip(Whipper, metaclass=PapayaMeta):
+<td><pre><code>class C(Whipper, metaclass=PapayaMeta):
     pass</code></pre></td>
 </tr>
 </table>
@@ -1784,9 +1753,14 @@ a_function(sys.maxsize)</code></pre></td>
 <li>...
 </ol>
 
-<h2 id="set_literal"><code>set()</code> literals</h2>
+<h2 id="set_literal"><code>set()</code> literals (explicit)</h2>
 
 <p>FIXME intro
+
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code class="filename">2to3</code> script will not fix <code>set()</code> literals by default.  To enable this fix, specify <code>-f set_literal</code> on the command line when you call <code>2to3</code>.
+</blockquote>
 
 <p class="skip"><a href="#skipcompareset_literal">skip over this table</a>
 <table id="compareset_literal">
@@ -1818,9 +1792,14 @@ a_function(sys.maxsize)</code></pre></td>
 <li>...
 </ol>
 
-<h2 id="buffer"><code>buffer()</code> global function</h2>
+<h2 id="buffer"><code>buffer()</code> global function (explicit)</h2>
 
 <p>FIXME intro
+
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code class="filename">2to3</code> script will not fix the <code>buffer()</code> function by default.  To enable this fix, specify <code>-f buffer</code> on the command line when you call <code>2to3</code>.
+</blockquote>
 
 <p class="skip"><a href="#skipcomparebuffer">skip over this table</a>
 <table id="comparebuffer">
@@ -1840,9 +1819,14 @@ a_function(sys.maxsize)</code></pre></td>
 <li>...
 </ol>
 
-<h2 id="wscomma">Whitespace around commas</h2>
+<h2 id="wscomma">Whitespace around commas (explicit)</h2>
 
 <p>FIXME intro
+
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code class="filename">2to3</code> script will not fix whitespace around commas by default.  To enable this fix, specify <code>-f wscomma</code> on the command line when you call <code>2to3</code>.
+</blockquote>
 
 <p class="skip"><a href="#skipcomparewscomma">skip over this table</a>
 <table id="comparewscomma">
@@ -1868,9 +1852,14 @@ a_function(sys.maxsize)</code></pre></td>
 <li>...
 </ol>
 
-<h2 id="idioms">Common idioms</h2>
+<h2 id="idioms">Common idioms (explicit)</h2>
 
 <p>FIXME intro
+
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code class="filename">2to3</code> script will not fix common idioms by default.  To enable this fix, specify <code>-f idioms</code> on the command line when you call <code>2to3</code>.
+</blockquote>
 
 <p class="skip"><a href="#skipcompareidioms">skip over this table</a>
 <table id="compareidioms">
