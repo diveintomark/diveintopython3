@@ -4,43 +4,34 @@ a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link{color:#1b67c9}
 a:visited{color:darkorchid}
-/*a[href^="http:"]:before,a[href^="https:"]:before{content:"\27A6  "}*/
 h1 a,h2 a,h3 a,#nav a{color:inherit !important}
-abbr,.p{border:0;letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
+abbr{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol,#nav{margin:1.75em 0}
 li ol{margin:0}
 h1,h2,h3{font-size:medium}
 h1{background:papayawhip;color:#000;width:100%;margin:0}
-#index h2{margin-left:1.75em}
-#index h3{margin-left:3.5em}
-pre{white-space:pre-wrap;font-size:medium;line-height:2.154}
-img{border:0}
-.framed{border:1px solid}
-pre{line-height:2.154;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
+pre{white-space:pre-wrap;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
+pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;line-height:2.154}
+kbd{font-weight:bold}
+samp.prompt{color:#667}/*the neighbor of the beast*/
 td pre{margin:0;padding:0;border:0}
-.c/*,.z*/{text-align:center;clear:both;font-size:small}
-/*.z{font-size:xx-large;line-height:0.875em;margin:0;padding:0}*/
+.c{text-align:center;font-size:small}
 p.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 blockquote.q{margin:auto;text-align:right;font-style:oblique}
-figure{display:block;text-align:center;margin:1.75em 0}
-figure img{display:block;margin:0 auto}
-section,article,footer{display:block}
-var{font-family:monospace;font-style:normal}
 .skip a,.skip a:hover,.skip a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
 .skip a:active,.skip a:focus{position:static;width:auto;height:auto}
 table{width:100%;border-collapse:collapse}
 th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
 th,td{width:45%;vertical-align:top}
+td{border:1px dotted;padding:0 0.5em}
 th:first-child{width:10%;text-align:center}
-.q span,.c span,.note p:first-child,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
+.note p:first-child,tr + tr th:first-child,span{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
 .note p:first-child{float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 0}
 .q span{font-size:large}
-td{border:1px dotted;padding:0 0.5em}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
-.appendix h1:before{content:""}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-tr.hover,li.hover{background-color:#efefef;color:inherit}
+tr.hover,li.hover{background:#eee;color:inherit;cursor:default}

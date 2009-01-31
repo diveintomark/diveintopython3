@@ -3,12 +3,1295 @@
 <head>
 <meta charset="utf-8">
 <title>Porting code to Python 3 with 2to3 - Dive into Python 3</title>
+<link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
 <link rel="stylesheet" type="text/css" href="dip3.css">
 <style type="text/css">
 h1:before{counter-increment:h1;content:"Appendix A. "}
 h2:before{counter-increment:h2;content:"A." counter(h2) ". "}
 h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
+td{font-family:monospaced}
 </style>
+</head>
+<body>
+<h1>Porting code to Python 3 with <code>2to3</code></h1>
+<blockquote class="q">
+<p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It&#8217;s the transition that&#8217;s troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
+</blockquote>
+<ol>
+<li><a href="#divingin">Diving in</a>
+<li><a href="#print"><code>print</code> statement</a>
+<li><a href="#unicodeliteral">Unicode string literals</a>
+<li><a href="#unicode"><code>unicode()</code> global function</a>
+<li><a href="#long"><code>long</code> data type</a>
+<li><a href="#ne">&lt;> comparison</a>
+<li><a href="#has_key"><code>has_key()</code> dictionary method</a>
+<li><a href="#dict">Dictionary methods that return lists</a>
+<li><a href="#imports">Modules that have been renamed or reorganized</a>
+<ol>
+<li><a href="#http"><code>http</code></a>
+<li><a href="#urllib"><code>urllib</code></a>
+<li><a href="#dbm"><code>dbm</code></a>
+<li><a href="#xmlrpc"><code>xmlrpc</code></a>
+<li><a href="#othermodules">Other modules</a>
+</ol>
+<li><a href="#import">Relative imports within a package</a>
+<li><a href="#filter"><code>filter()</code> global function</a>
+<li><a href="#map"><code>map()</code> global function</a>
+<li><a href="#reduce"><code>reduce()</code> global function</a> (3.1+)
+<li><a href="#apply"><code>apply()</code> global function</a>
+<li><a href="#intern"><code>intern()</code> global function</a>
+<li><a href="#exec"><code>exec</code> statement</a>
+<li><a href="#execfile"><code>execfile</code> statement</a> (3.1+)
+<li><a href="#repr"><code>repr</code> literals (backticks)</a>
+<li><a href="#except"><code>try...except</code> statement</a>
+<li><a href="#raise"><code>raise</code> statement</a>
+<li><a href="#throw"><code>throw</code> statement</a>
+<li><a href="#xrange"><code>xrange()</code> global function</a>
+<li><a href="#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a>
+<li><a href="#funcattrs"><code>func_*</code> function attributes</a>
+<li><a href="#xreadlines"><code>xreadlines()</code> I/O method</a>
+<li><a href="#tuple_params"><code>lambda</code> functions with multiple parameters</a>
+<li><a href="#methodattrs">Special method attributes</a>
+<li><a href="#next"><code>next()</code> iterator method</a>
+<li><a href="#nonzero"><code>__nonzero__</code> special class attribute</a>
+<li><a href="#numliterals">Octal literals</a>
+<li><a href="#renames"><code>sys.maxint</code></a>
+<li><a href="#callable"><code>callable()</code> global function</a>
+<li><a href="#zip"><code>zip()</code> global function</a>
+<li><a href="#standarderror"><code>StandardError()</code> exception</a>
+<li><a href="#types"><code>types</code> module constants</a>
+<li><a href="#isinstance"><code>isinstance()</code> global function</a> (3.1+)
+<li><a href="#basestring"><code>basestring</code> datatype</a>
+<li><a href="#itertools"><code>itertools</code> module</a>
+<li><a href="#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
+<li><a href="#paren">List comprehensions over tuples</a>
+<li><a href="#getcwdu"><code>os.getcwdu()</code> function</a>
+<li><a href="#metaclass">Metaclasses</a>
+<li><a href="#set_literal"><code>set()</code> literals</a> (explicit)
+<li><a href="#buffer"><code>buffer()</code> global function</a> (explicit)
+<li><a href="#wscomma">Whitespace around commas</a> (explicit)
+<li><a href="#idioms">Common idioms</a> (explicit)
+</ol>
+<h2 id="divingin">Diving in</h2>
+<p class="fancy">Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3.  <a href="case-study-porting-chardet-to-python-3.html#running2to3">Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can't fix automatically.  This appendix documents what it <em>can</em> fix automatically.
+<h2 id="print"><code>print</code> statement</h2>
+<p>In Python 2, <code>print</code> was a statement.  Whatever you wanted to print simply followed the <code>print</code> keyword.  In Python 3, <code>print()</code> is a function &mdash; whatever you want to print is passed to <code>print()</code> like any other function.
+<p class="skip"><a href="#skipcompareprint">skip over this table</a>
+<table id="compareprint">
+<tr>
+<th class="notes">Notes</th>
+<th class="python2">Python 2</th>
+<th class="python3">Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>print</code></td>
+<td><code>print()</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>print 1</code></td>
+<td><code>print(1)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>print 1, 2</code></td>
+<td><code>print(1, 2)</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>print 1, 2,</code></td>
+<td><code>print(1, 2, end=' ')</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>print >>sys.stderr, 1, 2, 3</code></td>
+<td><code>print(1, 2, 3, file=sys.stderr)</code></td></tr>
+</table>
+<ol id="skipcompareprint">
+<li>To print a blank line, call <code>print()</code> without any arguments.
+<li>To print a single value, call <code>print()</code> with one argument
+<li>To print two values separated by a space, call <code>print()</code> with two arguments.
+<li>This one is a little tricky.  In Python 2, if you ended a <code>print</code> statement with a comma, it would print the values separated by spaces, then print a trailing space, then stop without printing a carriage return.  In Python 3, the way to do this is to pass <code>end=' '</code> as a keyword argument to the <code>print()</code> function.  The <code>end</code> argument defaults to <code>'\n'</code> (a carriage return), so overriding it will suppress the carriage return after printing the other arguments.
+<li>In Python 2, you could redirect the output to a pipe &mdash; like <code>sys.stderr</code> &mdash; by using the <code>>>pipe_name</code> syntax.  In Python 3, the way to do this is to pass the pipe in the <code>file</code> keyword argument.  The <code>file</code> argument defaults to <code>sys.stdout</code> (standard out), so overriding it will output to a different pipe instead.
+</ol>
+<h2 id="unicodeliteral">Unicode string literals</h2>
+<p>Python 2 had two string types: Unicode strings and non-Unicode strings.  Python 3 has one string type: Unicode strings.
+<p class="skip"><a href="#skipcompareunicodeliteral">skip over this table</a>
+<table id="compareunicodeliteral">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>u"PapayaWhip"</code></td>
+<td><code>"PapayaWhip"</code></td></tr>
+<tr><th>&#x2460;</th>
+<td><code>ur"PapayaWhip\foo"</code></td>
+<td><code>r"PapayaWhip\foo"</code></td></tr>
+</table>
+<ol id="skipcompareunicodeliteral">
+<li>Unicode string literals are simply converted into string literals, which, in Python 3, are always Unicode.
+<li>Unicode raw strings (in which Python does not auto-escape backslashes) are converted to raw strings.  In Python 3, raw strings are always Unicode.
+</ol>
+<h2 id="unicode"><code>unicode()</code> global function</h2>
+<p>Python 2 had two global functions to coerce objects into strings: <code>unicode()</code> to coerce them into Unicode strings, and <code>str()</code> to coerce them into non-Unicode strings.  Python 3 has only one string type, Unicode strings, so the <code>str()</code> function is all you need.  (The <code>unicode()</code> function no longer exists.)
+<p class="skip"><a href="#skipcompareunicode">skip over this table</a>
+<table id="compareunicode">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>unicode(anything)</code></td>
+<td><code>str(anything)</code></td></tr>
+</table>
+<p id="skipcompareunicode">
+<h2 id="long"><code>long</code> data type</h2>
+<p>Python 2 had separate <code>int</code> and <code>long</code> types for non-floating-point numbers.  An <code>int</code> could not be any larger than <a href="#renames"><code>sys.maxint</code></a>, which varied by platform.  Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints.  In Python 3, there is only one integer type, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2.  Further reading: <a href="http://www.python.org/dev/peps/pep-0237/">PEP 237: Unifying Long Integers and Integers</a>.
+<p>Since there are no longer two types, there is no need for special syntax to distinguish them.
+<p class="skip"><a href="#skipcomparelong">skip over this table</a>
+<table id="comparelong">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>x = 1000000000000L</code></td>
+<td><code>x = 1000000000000</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>x = 0xFFFFFFFFFFFFL</code></td>
+<td><code>x = 0xFFFFFFFFFFFF</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>long(x)</code></td>
+<td><code>int(x)</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>type(x) is long</code></td>
+<td><code>type(x) is int</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>isinstance(x, long)</code></td>
+<td><code>isinstance(x, int)</code></td></tr>
+</table>
+<ol id="skipcomparelong">
+<li>Base 10 long integer literals become base 10 integer literals.
+<li>Base 16 long integer literals become base 16 integer literals.
+<li>In Python 3, the old <code>long()</code> function no longer exists, since longs don't exist.  To coerce a variable to an integer, use the <code>int()</code> function.
+<li>To check whether a variable is an integer, get its type and compare it to <code>int</code>, not <code>long</code>.
+<li>You can also use the <code>isinstance()</code> function to check data types; again, use <code>int</code>, not <code>long</code>, to check for integers.
+</ol>
+<h2 id="ne">&lt;> comparison</h2>
+<p>Python 2 supported <code>&lt;></code> as a synonym for <code>!=</code>, the not-equals comparison operator.  Python 3 supports the <code>!=</code> operator, but not <code>&lt;></code>.
+<p class="skip"><a href="#skipcomparene">skip over this table</a>
+<table id="comparene">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>if x &lt;> y:</code></td>
+<td><code>if x != y:</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>if x &lt;> y &lt;> z:</code></td>
+<td><code>if x != y != z:</code></td></tr>
+</table>
+<ol id="skipcomparene">
+<li>A simple comparison.
+<li>A more complex comparison between three values.
+</ol>
+<h2 id="has_key"><code>has_key()</code> dictionary method</h2>
+<p>In Python 2, dictionaries had a <code>has_key()</code> method to test whether the dictionary had a certain key.  In Python 3, this method no longer exists.  Instead, you need to use the <code>in</code> operator.
+<p class="skip"><a href="#skipcomparehas_key">skip over this table</a>
+<table id="comparehas_key">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>a_dictionary.has_key("PapayaWhip")</code></td>
+<td><code>"PapayaWhip" in a_dictionary</code></td></tr>
+<tr><th>&#x2461;</th >
+<td><code>a_dictionary.has_key(x) or a_dictionary.has_key(y)</code></td>
+<td><code>x in a_dictionary or y in a_dictionary</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>a_dictionary.has_key(x or y)</code></td>
+<td><code>(x or y) in a_dictionary</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>a_dictionary.has_key(x + y)</code></td>
+<td><code>(x + y) in a_dictionary</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>x + a_dictionary.has_key(y)</code></td>
+<td><code>x + (y in a_dictionary)</code></td></tr>
+</table>
+<ol id="skipcomparehas_key">
+<li>The simplest form.
+<li>The <code>or</code> operator takes precedence over the <code>in</code> operator, so there is no need for parentheses here.
+<li>On the other hand, you <em>do</em> need parentheses here, for the same reason &mdash; <code>or</code> takes precedence over <code>in</code>.
+<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form needs parentheses too.
+<li>Again with the parentheses, for the same reason.
+</ol>
+<h2 id="dict">Dictionary methods that return lists</h2>
+<p>In Python 2, many dictionary methods returned lists.  The most frequently used methods were <code>keys()</code>, <code>items()</code>, and <code>values()</code>.  In Python 3, all of these methods return dynamic views.  In some contexts, this is not a problem.  If the method's return value is immediately passed to another function that iterates through the entire sequence, it makes no difference whether the actual type is a list or a view.  In other contexts, it matters a great deal.  If you were expecting a complete list with individually addressable elements, your code will choke, because views do not support indexing.
+<p class="skip"><a href="#skipcomparedict">skip over this table</a>
+<table id="comparedict">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>a_dictionary.keys()</code></td>
+<td><code>list(a_dictionary.keys())</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>a_dictionary.items()</code></td>
+<td><code>list(a_dictionary.items())</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>a_dictionary.iterkeys()</code></td>
+<td><code>iter(a_dictionary.keys())</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>[i for i in a_dictionary.iterkeys()]</code></td>
+<td><code>[i for i in a_dictionary.keys()]</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>min(a_dictionary.keys())</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparedict">
+<li><code>2to3</code> errs on the side of safety, converting the return value from <code>keys()</code> to a static list with the <code>list()</code> function.  This will always work, but it will be less efficient than using a view.  You should examine the converted code to see if a list is absolutely necessary, or if a view would do.
+<li>Another view-to-list conversion, with the <code>items()</code> method.  <code>2to3</code> will do the same thing with the <code>values()</code> method.
+<li>Python 3 does not support the <code>iterkeys()</code> method anymore.  Use <code>keys()</code>, and if necessary, convert the view to an iterator with the <code>iter()</code> function.
+<li><code>2to3</code> recognizes when the <code>iterkeys()</code> method is used inside a list comprehension, and converts it to the <code>keys()</code> method (without wrapping it in an extra call to <code>iter()</code>).  This works because views are iterable.
+<li><code>2to3</code> recognizes that the <code>keys()</code> method is immediately passed to a function which iterates through an entire sequence, so there is no need to convert the return value to a list first.  The <code>min()</code> function will happily iterate through the view instead.  This applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
+</ol>
+<h2 id="imports">Modules that have been renamed or reorganized</h2>
+<p>Several modules in the Python Standard Library have been renamed.  Several other modules which are related to each other have been combined or reorganized to make their association more logical.
+<h3 id="http"><code>http</code> package</h3>
+<p>In Python 3, several related HTTP modules have been combined into a single package, <code>http</code>.
+<p class="skip"><a href="#skipcompareimporthttp">skip over this table</a>
+<table id="compareimporthttp">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>import httplib</code></td>
+<td><code>import http.client</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>import Cookie</code></td>
+<td><code>import http.cookies</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>import cookielib</code></td>
+<td><code>import http.cookiejar</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><pre><code>import BaseHTTPServer
+import SimpleHTTPServer
+import CGIHttpServer</code></pre></td>
+<td><code>import http.server</code></td></tr>
+</table>
+<ol id="skipcompareimporthttp">
+<li>The <code>http.client</code> module implements a low-level library that can request HTTP resources and interpret HTTP responses.
+<li>The <code>http.cookies</code> module provides a Pythonic interface to browser cookies that are sent in a <code>Set-Cookie:</code> HTTP header.
+<li>The <code>http.cookiejar</code> module manipulates the actual files on disk that popular web browsers use to store cookies.
+<li>The <code>http.server</code> module provides a basic HTTP server.
+</ol>
+<h3 id="urllib"><code>urllib</code> package</h3>
+<p>Python 2 had a rat's nest of overlapping modules to parse, encode, and fetch URLs.  In Python 3, these have all been refactored and combined in a single package, <code>urllib</code>.
+<p class="skip"><a href="#skipcompareimporturllib">skip over this table</a>
+<table id="compareimporturllib">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>import urllib</code></td>
+<td><code>import urllib.request, urllib.parse, urllib.error</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>import urllib2</code></td>
+<td><code>import urllib.request, urllib.error</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>import urlparse</code></td>
+<td><code>import urllib.parse</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>import robotparser</code></td>
+<td><code>import urllib.robotparser</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><pre><code>from urllib import FancyURLopener
+from urllib import urlencode</code></pre></td>
+<td><pre><code>from urllib.request import FancyURLopener
+from urllib.parse import urlencode</code></pre></td></tr>
+<tr><th>&#x2465;</th>
+<td><pre><code>from urllib2 import Request
+from urllib2 import HTTPError</code></pre></td>
+<td><pre><code>from urllib.request import Request
+from urllib.error import HTTPError</code></pre></td></tr>
+</table>
+<ol id="skipcompareimporturllib">
+<li>The old <code>urllib</code> module in Python 2 had a variety of functions, including <code>urlopen()</code> for fetching data and <code>splittype()</code>, <code>splithost()</code>, and <code>splituser()</code> for splitting a URL into its constituent parts.  These functions have been reorganized more logically within the new <code>urllib</code> package.  <code>2to3</code> will also change all calls to these functions so they use the new naming scheme.
+<li>The old <code>urllib2</code> module in Python 2 has been folded into into the <code>urllib</code> package in Python 3.  All your <code>urllib2</code> favorites &mdash; the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends &mdash; are still available.
+<li>The <code>urllib.parse</code> module in Python 3 contains all the parsing functions from the old <code>urlparse</code> module in Python 2.
+<li>The <code>urllib.robotparser</code> module parses <a href="http://www.robotstxt.org/"><code>robots.txt</code> files</a>.
+<li>The <code>FancyURLopener</code> class, which handles HTTP redirects and other status codes, is still available in the new <code>urllib.request</code> module.  The <code>urlencode</code> function has moved to <code>urllib.parse</code>.
+<li>The <code>Request</code> object is still available in <code>urllib.request</code>, but constants like <code>HTTPError</code> have been moved to <code>urllib.error</code>.
+</ol>
+<h3 id="dbm"><code>dbm</code> package</h3>
+<p>All the various DBM clones are now in a single package, <code>dbm</code>.  If you need a specific variant like GNU DBM, you can import the appropriate module within the <code>dbm</code> package.
+<p class="skip"><a href="#skipcompareimportdbm">skip over this table</a>
+<table id="compareimportdbm">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>import dbm</code></td>
+<td><code>import dbm.ndbm</code></td></tr>
+<tr><th></th>
+<td><code>import gdbm</code></td>
+<td><code>import dbm.gnu</code></td></tr>
+<tr><th></th>
+<td><code>import dbhash</code></td>
+<td><code>import dbm.bsd</code></td></tr>
+<tr><th></th>
+<td><code>import dumbdbm</code></td>
+<td><code>import dbm.dumb</code></td></tr>
+<tr><th></th>
+<td><pre><code>import anydbm
+import whichdb</code></pre></td>
+<td><code>import dbm</code></td></tr>
+</table>
+<p id="skipcompareimportdbm">
+<h3 id="xmlrpc"><code>xmlrpc</code> package</h3>
+<p>XML-RPC is a lightweight method of performing remote RPC calls over HTTP.  The XML-RPC client library and several XML-RPC server implementations are now combined in a single package, <code>xmlrpc</code>.
+<p class="skip"><a href="#skipcompareimportxmlrpc">skip over this table</a>
+<table id="compareimportxmlrpc">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>import xmlrpclib</code></td>
+<td><code>import xmlrpc.client</code></td></tr>
+<tr><th></th>
+<td><pre><code>import DocXMLRPCServer
+import SimpleXMLRPCServer</code></pre></td>
+<td><code>import xmlrpc.server</code></td></tr>
+</table>
+<p id="skipcompareimportxmlrpc">
+<h3 id="othermodules">Other modules</h3>
+<p class="skip"><a href="#skipcompareimports">skip over this table</a>
+<table id="compareimports">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><pre><code>try:
+    import cStringIO as StringIO
+except ImportError:
+    import StringIO</code></pre></td>
+<td><code>import io</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><pre><code>try:
+    import cPickle as pickle
+except ImportError:
+    import pickle</code></pre></td>
+<td><code>import pickle</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>import __builtin__</code></td>
+<td><code>import builtins</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>import copy_reg</code></td>
+<td><code>import copyreg</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>import Queue</code></td>
+<td><code>import queue</code></td></tr>
+<tr><th>&#x2465;</th>
+<td><code>import SocketServer</code></td>
+<td><code>import socketserver</code></td></tr>
+<tr><th>&#x2466;</th>
+<td><code>import ConfigParser</code></td>
+<td><code>import configparser</code></td></tr>
+<tr><th>&#x2467;</th>
+<td><code>import repr</code></td>
+<td><code>import reprlib</code></td></tr>
+<tr><th>&#x2468;</th>
+<td><code>import commands</code></td>
+<td><code>import subprocess</code></td></tr>
+</table>
+<ol id="skipcompareimports">
+<li>A common idiom in Python 2 was to try to import <code>cStringIO as StringIO</code>, and if that failed, to import <code>StringIO</code> instead.  Do not do this in Python 3; the <code>io</code> module does it for you.  It will find the fastest implementation available and use it automatically.
+<li>A similar idiom was used to import the fastest pickle implementation.  Do not do this in Python 3; the <code>pickle</code> module does it for you.
+<li>The <code>builtins</code> module contains the global functions, classes, and constants used throughout the Python language.  Redefining a function in the <code>builtins</code> module will redefine the global function everywhere.  That is exactly as powerful and scary as it sounds.
+<li>The <code>copyreg</code> module adds pickle support for custom types defined in C.
+<li>The <code>queue</code> module implements a multi-producer, multi-consumer queue.
+<li>The <code>socketserver</code> module provides generic base classes for implementing different kinds of socket servers.
+<li>The <code>configparser</code> module parses INI-style configuration files.
+<li>The <code>reprlib</code> module reimplements the built-in <code>repr()</code> function, but with limits on how many values are represented.
+<li>The <code>subprocess</code> module allows you to spawn processes, connect to their pipes, and obtain their return codes.
+</ol>
+<h2 id="import">Relative imports within a package</h2>
+<p>A package is a group of related modules that function as a single entity.  In Python 2, when modules within a package need to reference each other, you use <code>import foo</code> or <code>from foo import Bar</code>.  The Python 2 interpreter first searches within the current package to find <code>foo.py</code>, and then moves on to the other directories in the Python search path (<code>sys.path</code>).  Python 3 works a bit differently.  Instead of searching the current package, it goes directly to the Python search path.  If you want one module within a package to import another module in the same package, you need to explicitly provide the relative path between the two modules.
+<p>Suppose you had this package, with multiple files in the same directory:
+<p class="skip"><a href="#skippackageart">skip over this ASCII art</a>
+<pre>chardet/
+|
++--__init__.py
+|
++--constants.py
+|
++--mbcharsetprober.py
+|
++--universaldetector.py</pre>
+<p id="skippackageart">Now suppose that <code>universaldetector.py</code> needs to import the entire <code>constants.py</code> file and one class from <code>mbcharsetprober.py</code>.  How do you do it?
+<p class="skip"><a href="#skipcompareimport">skip over this table</a>
+<table id="compareimport">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>import constants</code></td>
+<td><code>from . import constants</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>from mbcharsetprober import MultiByteCharSetProber</code></td>
+<td><code>from .mbcharsetprober import MultiByteCharsetProber</code></td></tr>
+</table>
+<ol id="skipcompareimport">
+<li>When you need to import an entire module from elsewhere in your package, use the new <code>from . import</code> syntax.  The period is actually a relative path from this file (<code>universaldetector.py</code>) to the file you want to import (<code>constants.py</code>).  In this case, they are in the same directory, thus the single period.  You can also import from the parent directory (<code>from .. import anothermodule</code>) or a subdirectory.
+<li>To import a specific class or function from another module directly into your module's namespace, prefix the target module with a relative path, minus the trailing slash.  In this case, <code>mbcharsetprober.py</code> is in the same directory as <code>universaldetector.py</code>, so the path is a single period.  You can also import form the parent directory (<code>from ..anothermodule import AnotherClass</code>) or a subdirectory.
+</ol>
+<h2 id="filter"><code>filter()</code> global function</h2>
+<p>In Python 2, the <code>filter()</code> function returned a list, the result of filtering a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence.  In Python 3, the <code>filter()</code> function returns an interator, not a list.
+<p class="skip"><a href="#skipcomparefilter">skip over this table</a>
+<table id="comparefilter">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>filter(a_function, a_sequence)</code></td>
+<td><code>list(filter(a_function, a_sequence))</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>list(filter(a_function, a_sequence))</code></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>filter(None, a_sequence)</code></td>
+<td><code>[i for i in a_sequence if i]</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>for i in filter(None, a_sequence):</code></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>[i for i in filter(a_function, a_sequence)]</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparefilter">
+<li>In the most basic case, <code>2to3</code> will wrap a call to <code>filter()</code> with a call to <code>list()</code>, which simply iterates through its argument and returns a real list.
+<li>However, if the call to <code>filter()</code> is <em>already</em> wrapped in <code>list()</code>, <code>2to3</code> will do nothing, since the fact that <code>filter()</code> is returning an iterator is irrelevant.
+<li>For the special syntax of <code>filter(None, ...)</code>, <code>2to3</code> will transform the call into a semantically equivalent list comprehension.
+<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
+<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>filter()</code> returns an iterator as if it returns a list.
+</ol>
+<h2 id="map"><code>map()</code> global function</h2>
+<p>In much the same way as <a href="#filter"><code>filter()</code></a>, the <code>map()</code> function now returns an iterator.  (In Python 2, it returned a list.)
+<p class="skip"><a href="#skipcomparemap">skip over this table</a>
+<table id="comparemap">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>map(a_function, 'PapayaWhip')</code></td>
+<td><code>list(map(a_function, 'PapayaWhip'))</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>map(None, 'PapayaWhip')</code></td>
+<td><code>list('PapayaWhip')</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>map(lambda x: x+1, range(42))</code></td>
+<td><code>[x+1 for x in range(42)]</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>for i in map(a_function, a_sequence):</code></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>[i for i in map(a_function, a_sequence)]</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparemap">
+<li>As with <code>filter()</code>, in the most basic case, <code>2to3</code> will wrap a call to <code>map()</code> with a call to <code>list()</code>.
+<li>For the special syntax of <code>map(None, ...)</code>, the identity function, <code>2to3</code> will convert it to an equivalent call to <code>list()</code>.
+<li>If the first argument to <code>map()</code> is a lambda function, <code>2to3</code> will convert it to an equivalent list comprehension.
+<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
+<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>map()</code> returns an iterator as if it returns a list.
+</ol>
+<h2 id="reduce"><code>reduce()</code> global function (3.1+)</h2>
+<p>In Python 3, the <code>reduce()</code> function has been removed from the global namespace and placed in the <code>functools</code> module.
+<p class="skip"><a href="#skipcomparereduce">skip over this table</a>
+<table id="comparereduce">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>reduce(a, b, c)</code></td>
+<td><pre><code>from functtools import reduce
+reduce(a, b, c)</code></pre></td></tr>
+</table>
+<blockquote id="skipcomparereduce" class="note">
+<p>&#x261E;
+<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+</blockquote>
+<h2 id="apply"><code>apply()</code> global function</h2>
+<p>Python 2 had a global function called <code>apply()</code>, which took a function <var>f</var> and a list <code>[a, b, c]</code> and returned <code>f(a, b, c)</code>.  In Python 3, the <code>apply()</code> function no longer exists.  Instead, there is a new function calling syntax that allows you to pass a list and have Python apply the list as the function's arguments.
+<p class="skip"><a href="#skipcompareapply">skip over this table</a>
+<table id="compareapply">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>apply(a_function, a_list_of_args)</code></td>
+<td><code>a_function(*a_list_of_args)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>apply(a_function, a_list_of_args, a_dictionary_of_named_args)</code></td>
+<td><code>a_function(*a_list_of_args, **a_dictionary_of_named_args)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>apply(a_function, a_list_of_args + z)</code></td>
+<td><code>a_function(*a_list_of_args + z)</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>apply(aModule.a_function, a_list_of_args)</code></td>
+<td><code>aModule.a_function(*a_list_of_args)</code></td></tr>
+</table>
+<ol id="skipcompareapply">
+<li>In the simplest form, you can call a function with a list of arguments (an actual list like <code>[a, b, c]</code>) by prepending the list with an asterisk (<code>*</code>).  This is exactly equivalent to the old <code>apply()</code> function in Python 2.
+<li>In Python 2, the <code>apply()</code> function could actually take three parameters: a function, a list of arguments, and a dictionary of named arguments.  In Python 3, you can accomplish the same thing by prepending the list of arguments with an asterisk (<code>*</code>) and the dictionary of named arguments with two asterisks (<code>**</code>).
+<li>The <code>+</code> operator, used here for list concatenation, takes precedence over the <code>*</code> operator, so there is no need for extra parentheses around <code>a_list_of_args + z</code>.
+<li>The <code>2to3</code> script is smart enough to convert complex <code>apply()</code> calls, including calling functions within imported modules.
+</ol>
+<h2 id="intern"><code>intern()</code> global function</h2>
+<p>In Python 2, you could call the <code>intern()</code> function on a string to intern it as a performance optimization.  In Python 3, the <code>intern()</code> function has been moved to the <code>sys</code> module.
+<p class="skip"><a href="#skipcompareintern">skip over this table</a>
+<table id="compareintern">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>intern(aString)</code></td>
+<td><code>sys.intern(aString)</code></td></tr>
+</table>
+<p id="skipcompareintern">
+<h2 id="exec"><code>exec</code> statement</h2>
+<p>Just as <a href="#print">the <code>print</code> statement</a> became a function in Python 3, so too has the <code>exec</code> statement.  The <code>exec()</code> function takes a string which contains arbitrary Python code and executes it as if it were just another statement or expression.
+<p class="skip"><a href="#skipcompareexec">skip over this table</a>
+<table id="compareexec">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>exec codeString</code></td>
+<td><code>exec(codeString)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>exec codeString in a_global_namespace</code></td>
+<td><code>exec(codeString, a_global_namespace)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>exec codeString in a_global_namespace, a_local_namespace</code></td>
+<td><code>exec(codeString, a_global_namespace, a_local_namespace)</code></td></tr>
+</table>
+<ol id="skipcompareexec">
+<li>In the simplest form, the <code>2to3</code> script simply encloses the code-as-a-string in parentheses, since <code>exec()</code> is now a function instead of a statement.
+<li>The old <code>exec</code> statement could take a namespace, a private environment of globals in which the code-as-a-string would be executed.  Python 3 can also do this; just pass the namespace as the second argument to the <code>exec()</code> function.
+<li>Even fancier, the old <code>exec</code> statement could also take a local namespace (like the variables defined within a function).  In Python 3, the <code>exec()</code> function can do that too.
+</ol>
+<h2 id="execfile"><code>execfile</code> statement (3.1+)</h2>
+<p>Like the old <a href="#exec"><code>exec</code> statement</a>, the old <code>execfile</code> statement will execute strings as if they were Python code.  Where <code>exec</code> took a string, <code>execfile</code> took a filename.  In Python 3, the <code>execfile</code> statement has been eliminated.  If you really need to take a file of Python code and execute it (but you're not willing to simply import it), you can accomplish the same thing by opening the file, reading its contents, calling the global <code>compile()</code> function to force the Python interpreter to compile the code, and then call the new <code>exec()</code> function.
+<p class="skip"><a href="#skipcompareexecfile">skip over this table</a>
+<table id="compareexecfile">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>execfile("a_filename")</code></td>
+<td><code>exec(compile(open("a_filename").read(), "a_filename", "exec"))</code></td></tr>
+</table>
+<blockquote id="skipcompareexecfile" class="note">
+<p>&#x261E;
+<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+</blockquote>
+<h2 id="repr"><code>repr</code> literals (backticks)</h2>
+<p>In Python 2, there was a special syntax of wrapping any object in backticks (like <code>`x`</code>) to get a representation of the object.  In Python 3, this capability still exists, but you can no longer use backticks to get it.  Instead, use the global <code>repr()</code> function.
+<p class="skip"><a href="#skipcomparerepr">skip over this table</a>
+<table id="comparerepr">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>`x`</code></td>
+<td><code>repr(x)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>`"PapayaWhip" + `2``</code></td>
+<td><code>repr("PapayaWhip" + repr(2))</code></td></tr>
+</table>
+<ol id="skipcomparerepr">
+<li>Remember, <var>x</var> can be anything &mdash; a class, a function, a module, a primitive data type, etc.  The <code>repr()</code> function works on everything.
+<li>In Python 2, backticks could be nested, leading to this sort of confusing (but valid) expression.  The <code>2to3</code> tool is smart enough to convert this into nested calls to <code>repr()</code>.
+</ol>
+<h2 id="except"><code>try...except</code> statement</h2>
+<p>The syntax for catching exceptions has changed slightly between Python 2 and 3.
+<p class="skip"><a href="#skipcompareexcept">skip over this table</a>
+<table id="compareexcept">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><pre><code>try:
+    import mymodule
+except ImportError, e
+    pass</code></pre></td>
+<td><pre><code>try:
+    import mymodule
+except ImportError as e:
+    pass</code></pre></td></tr>
+<tr><th>&#x2461;</th>
+<td><pre><code>try:
+    import mymodule
+except (RuntimeError, ImportError), e
+    pass</code></pre></td>
+<td><pre><code>try:
+    import mymodule
+except (RuntimeError, ImportError) as e:
+    pass</code></pre></td></tr>
+<tr><th>&#x2462;</th>
+<td><pre><code>try:
+    import mymodule
+except ImportError:
+    pass</code></pre></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2463;</th>
+<td><pre><code>try:
+    import mymodule
+except:
+    pass</code></pre></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcompareexcept">
+<li>Instead of a comma after the exception type, Python 3 uses a new keyword, <code>as</code>.
+<li>The <code>as</code> keyword also works for catching multiple types of exceptions at once.
+<li>If you catch an exception but don't actually care about accessing the exception object itself, the syntax is identical between Python 2 and 3.
+<li>Similarly, if you use a fallback to catch <em>all</em> exceptions, the syntax is identical.
+</ol>
+<blockquote class="note">
+<p>&#x261E;
+<p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
+</blockquote>
+<h2 id="raise"><code>raise</code> statement</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcompareraise">skip over this table</a>
+<table id="compareraise">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>raise MyException, "error message"</code></td>
+<td><code>raise MyException("error message")</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>raise MyException, "error message", a_traceback</code></td>
+<td><code>raise MyException("error message").with_traceback(a_traceback)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>raise "error message"</code></td>
+<td><i>unsupported</i></td></tr>
+</table>
+<ol id="skipcompareraise">
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="throw"><code>throw</code> statement</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparethrow">skip over this table</a>
+<table id="comparethrow">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>aGenerator.throw(MyException)</code></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>aGenerator.throw(MyException, "error message")</code></td>
+<td><code>aGenerator.throw(MyException("error message"))</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>aGenerator.throw("error message")</code></td>
+<td><i>unsupported</i></td></tr>
+</table>
+<ol id="skipcomparethrow">
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="xrange"><code>xrange()</code> global function</h2>
+<p>In Python 2, there were two ways to get a range of numbers: <code>range()</code>, which returned a list, and <code>xrange()</code>, which returned an iterator.  In Python 3, <code>range()</code> returns an iterator, and <code>xrange()</code> doesn't exist.
+<p class="skip"><a href="#skipcomparexrange">skip over this table</a>
+<table id="comparexrange">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>xrange(10)</code></td>
+<td><code>range(10)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>a_list = range(10)</code></td>
+<td><code>a_list = list(range(10))</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>[i for i in xrange(10)]</code></td>
+<td><code>[i for i in range(10)]</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>for i in range(10):</code></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>sum(range(10))</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparexrange">
+<li>In the simplest case, the <code>2to3</code> script will simply convert <code>xrange()</code> to <code>range()</code>.
+<li>If your Python 2 code used <code>range()</code>, the <code>2to3</code> script does not know whether you needed a list, or whether an iterator would do.  It errs on the side of caution and coerces the return value into a list by calling the <code>list()</code> function.
+<li>If the <code>xrange()</code> function was inside a list comprehension, there is no need to coerce the result to a list, since the list comprehension will work just fine with an iterator.
+<li>Similarly, a <code>for</code> loop will work just fine with an iterator, so there is no need to change anything here.
+<li>The <code>sum()</code> function will also work with an iterator, so <code>2to3</code> makes no changes here either.  Like <a href="#dict">dictionary methods that return views instead of lists</a>, this applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
+</ol>
+<h2 id="raw_input"><code>raw_input()</code> and <code>input()</code> global functions</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcompareraw_input">skip over this table</a>
+<table id="compareraw_input">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>raw_input()</code></td>
+<td><code>input()</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>raw_input("prompt")</code></td>
+<td><code>input("prompt")</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>input()</code></td>
+<td><code>eval(input())</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>input("prompt")</code></td>
+<td><code>eval(input("prompt"))</code></td></tr>
+</table>
+<ol id="skipcompareraw_input">
+<li>...
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="funcattrs"><code>func_*</code> function attributes</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparefuncattrs">skip over this table</a>
+<table id="comparefuncattrs">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>a_function.func_closure</code></td>
+<td><code>a_function.__closure__</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>a_function.func_doc</code></td>
+<td><code>a_function.__doc__</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>a_function.func_name</code></td>
+<td><code>a_function.__name__</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>a_function.func_defaults</code></td>
+<td><code>a_function.__defaults__</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>a_function.func_code</code></td>
+<td><code>a_function.__code__</code></td></tr>
+<tr><th>&#x2465;</th>
+<td><code>a_function.func_globals</code></td>
+<td><code>a_function.__globals__</code></td></tr>
+<tr><th>&#x2466;</th>
+<td><code>a_function.func_dict</code></td>
+<td><code>a_function.__dict__</code></td></tr>
+</table>
+<ol id="skipcomparefuncattrs">
+<li>...
+<li>...
+<li>...
+<li>...
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="xreadlines"><code>xreadlines()</code> I/O method</h2>
+<p>In Python 2, file objects had an <code>xreadlines()</code> method which returned an iterator that would read the file one line at a time.  This was useful in <code>for</code> loops, among other places.  In fact, it was so useful, later versions of Python 2 [FIXME exact version?] added the capability to file objects themselves.
+<p class="skip"><a href="#skipcomparexreadlines">skip over this table</a>
+<table id="comparexreadlines">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>for line in a_file.xreadlines():</code></td>
+<td><code>for line in a_file:</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>for line in a_file.xreadlines(5):</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparexreadlines">
+<li>If you used to call <code>xreadlines()</code> with no arguments, <code>2to3</code> will convert it to just the file object.  In Python 3, this will accomplish the same thing: read the file one line at a time and execute the body of the <code>for</code> loop.
+<li>If you used to call <code>xreadlines()</code> with an argument (the number of lines to read at a time), keep doing that.  It still works in Python 3, and <code>2to3</code> will not change it.
+</ol>
+<h2 id="tuple_params"><code>lambda</code> functions with multiple parameters</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparetuple_params">skip over this table</a>
+<table id="comparetuple_params">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>lambda (x,): x + f(x)</code></td>
+<td><code>lambda x1: x1[0] + f(x1[1])</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>lambda (x, y): x + f(y)</code></td>
+<td><code>lambda x_y: x_y[0] + f(x_y[1])</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>lambda (x, (y, z)): x + y + z</code></td>
+<td><code>lambda x_y_z: x_y_z[0] + x_y_z[1][0] + x_y_z[1][1]</code></td></tr>
+</table>
+<ol id="skipcomparetuple_params">
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="methodattrs">Special method attributes</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparemethodattrs">skip over this table</a>
+<table id="comparemethodattrs">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>aClassInstance.aClassMethod.im_func</code></td>
+<td><code>aClassInstance.aClassMethod.__func__</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>aClassInstance.aClassMethod.im_self</code></td>
+<td><code>aClassInstance.aClassMethod.__self__</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>aClassInstance.aClassMethod.im_class</code></td>
+<td><code>aClassInstance.aClassMethod.self.__class__</code></td></tr>
+</table>
+<ol id="skipcomparemethodattrs">
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="next"><code>next()</code> iterator method</h2>
+<p>In Python 2, iterators had a <code>next()</code> method which returned the next item in the sequence.  That's still true in Python 3, but there is now also a global <code>next()</code> function that takes an iterator as an argument.
+<p class="skip"><a href="#skipcomparenext">skip over this table</a>
+<table id="comparenext">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>anIterator.next()</code></td>
+<td><code>next(anIterator)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>a_function_that_returns_an_iterator().next()</code></td>
+<td><code>next(a_function_that_returns_an_iterator())</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><pre><code>class A:
+    def next(self):
+        pass</code></pre></td>
+<td><pre><code>class A:
+    def __next__(self):
+        pass</code></pre></td></tr>
+<tr><th>&#x2463;</th>
+<td><pre><code>class A:
+    def next(self, x, y):
+        pass</code></pre></td>
+<td><i>no change</i></td></tr>
+<tr><th>&#x2464;</th>
+<td><pre><code>next = 42
+for an_iterator in a_sequence_of_iterators:
+    an_iterator.next()</code></pre></td>
+<td><pre><code>next = 42
+for an_iterator in a_sequence_of_iterators:
+    an_iterator.__next__()</code></pre></td></tr>
+</table>
+<ol id="skipcomparenext">
+<li>In the simplest case, instead of calling an iterator's <code>next()</code> method, you now pass the iterator itself to the global <code>next()</code> function.
+<li>If you have a function that returns an iterator, call the function and pass the result to the <code>next()</code> function.  (The <code>2to3</code> script is smart enough to convert this properly.)
+<li>If you define your own class and mean to use it as an iterator, define the <code>__next__()</code> special method.
+<li>If you define your own class and just happen to have a method named <code>next()</code> that takes one or more arguments, <code>2to3</code> will not touch it.  This class can not be used as an iterator, because its <code>next()</code> method takes arguments.
+<li>This one is a bit tricky.  If you have a local variable named <var>next</var>, then it takes precedence over the new global <code>next()</code> function.  In this case, you need to call the iterator's special <code>__next()__</code> method to get the next item in the sequence.  (Alternatively, you could also refactor the code so the local variable wasn't named <var>next</var>, but <code>2to3</code> will not do that for you automatically.)
+</ol>
+<h2 id="nonzero"><code>__nonzero__</code> special class attribute</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparenonzero">skip over this table</a>
+<table id="comparenonzero">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><pre><code>class A:
+    def __nonzero__(self):
+        pass</code></pre></td>
+<td><pre><code>class A:
+    def __bool__(self):
+        pass</code></pre></td></tr>
+<tr><th>&#x2461;</th>
+<td><pre><code>class A:
+    def __nonzero__(self, x, y):
+        pass</code></pre></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparenonzero">
+<li>...
+<li>...
+</ol>
+<h2 id="numliterals">Octal literals</h2>
+<p>The syntax for defining base 8 (octal) numbers has changed slightly between Python 2 and Python 3.
+<p class="skip"><a href="#skipcomparenumliterals">skip over this table</a>
+<table id="comparenumliterals">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>x = 0755</code></td>
+<td><code>x = 0o755</code></td></tr>
+</table>
+<p id="skipcomparenumliterals">
+<h2 id="renames"><code>sys.maxint</code></h2>
+<p>Due to the <a href="#long">integration of the <code>long</code> and <code>int</code> types</a>, the <code>sys.maxint</code> constant is no longer accurate.  Because the value may still be useful in determining platform-specific capabilities, it has been retained but renamed as <code>sys.maxsize</code>.
+<p class="skip"><a href="#skipcomparerenames">skip over this table</a>
+<table id="comparerenames">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>from sys import maxint</code></td>
+<td><code>from sys import maxsize</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>a_function(sys.maxint)</code></td>
+<td><code>a_function(sys.maxsize)</code></td></tr>
+</table>
+<ol id="skipcomparerenames">
+<li><code>maxint</code> becomes <code>maxsize</code>.
+<li>Any usage of <code>sys.maxint</code> becomes <code>sys.maxsize</code>.
+</ol>
+<h2 id="callable"><code>callable()</code> global function</h2>
+<p>In Python 2, you could check whether an object was callable (like a function) with the global <code>callable()</code> function.  In Python 3, this global function has been eliminated.  To check whether an object is callable, check for the existence of the <code>__call__()</code> special method.
+<p class="skip"><a href="#skipcomparecallable">skip over this table</a>
+<table id="comparecallable">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>callable(anything)</code></td>
+<td><code>hasattr(anything, "__call__")</code></td></tr>
+</table>
+<p id="skipcomparecallable">
+<h2 id="zip"><code>zip()</code> global function</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparezip">skip over this table</a>
+<table id="comparezip">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>zip(a, b, c)</code></td>
+<td><code>list(zip(a, b, c))</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>d.join(zip(a, b, c))</code></td>
+<td><i>no change</i></td></tr>
+</table>
+<ol id="skipcomparezip">
+<li>...
+<li>...
+</ol>
+<h2 id="standarderror"><code>StandardError()</code> exception</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparestandarderror">skip over this table</a>
+<table id="comparestandarderror">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>x = StandardError()</code></td>
+<td><code>x = Exception()</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>x = StandardError(a, b, c)</code></td>
+<td><code>x = Exception(a, b, c)</code></td></tr>
+</table>
+<ol id="skipcomparestandarderror">
+<li>...
+<li>...
+</ol>
+<h2 id="types"><code>types</code> module constants</h2>
+<p>The <code>types</code> module contains a variety of constants to help you determine the type of an object.  In Python 2, it contained constants for all primitive types like <code>dict</code> and <code>int</code>.  In Python 3, these constants have been eliminated; just use the primitive type name instead.
+<p class="skip"><a href="#skipcomparetypes">skip over this table</a>
+<table id="comparetypes">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>types.StringType</code></td>
+<td><code>bytes</code></td></tr>
+<tr><th></th>
+<td><code>types.DictType</code></td>
+<td><code>dict</code></td></tr>
+<tr><th></th>
+<td><code>types.IntType</code></td>
+<td><code>int</code></td></tr>
+<tr><th></th>
+<td><code>types.LongType</code></td>
+<td><code>int</code></td></tr>
+<tr><th></th>
+<td><code>types.ListType</code></td>
+<td><code>list</code></td></tr>
+<tr><th></th>
+<td><code>types.NoneType</code></td>
+<td><code>type(None)</code></td></tr>
+</table>
+<p id="skipcomparetypes">
+<h2 id="isinstance"><code>isinstance()</code> global function (3.1+)</h2>
+<p>The <code>isinstance()</code> function checks whether an object is an instance of a particular class or type.  In Python 2, you could pass a tuple of types, and <code>isinstance()</code> would return <code>True</code> if the object was any of those types.  In Python 3, you can still do this, but passing the same type twice is deprecated.
+<p class="skip"><a href="#skipcompareisinstance">skip over this table</a>
+<table id="compareisinstance">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>isinstance(x, (int, float, int))</code></td>
+<td><code>isinstance(x, (int, float))</code></td></tr>
+</table>
+<blockquote id="skipcompareisinstance" class="note">
+<p>&#x261E;
+<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+</blockquote>
+<h2 id="basestring"><code>basestring</code> datatype</h2>
+<p>Python 2 had two string types: Unicode and non-Unicode.  But there was also another type, <code>basestring</code>.  It was an abstract type, a superclass for both the <code>str</code> and <code>unicode</code> types.  It couldn't be called or instantiated directly, but you could pass it to the global <code>isinstance()</code> function to check whether an object was either a Unicode or non-Unicode string.  In Python 3, there is only one string type, so <code>basestring</code> has no reason to exist.
+<p class="skip"><a href="#skipcomparebasestring">skip over this table</a>
+<table id="comparebasestring">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>isinstance(x, basestring)</code></td>
+<td><code>isinstance(x, str)</code></td></tr>
+</table>
+<p id="skipcomparebasestring">
+<h2 id="itertools"><code>itertools</code> module</h2>
+<p>FIXME intro
+<table id="compareitertools">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>itertools.izip(a, b)</code></td>
+<td><code>zip(a, b)</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>itertools.imap(a, b)</code></td>
+<td><code>map(a, b)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>itertools.ifilter(a, b)</code></td>
+<td><code>filter(a, b)</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><code>itertools.ifilterfalse(a, b)</code></td>
+<td><code>filterfalse(a, b)</code></td></tr>
+<tr><th>&#x2464;</th>
+<td><code>from itertools import imap, izip, foo</code></td>
+<td><code>from itertools import foo</code></td></tr>
+</table>
+<ol id="skipcompareitertools">
+<li>...
+<li>...
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></h2>
+<p>Python 2 had three variables in the <code>sys</code> module that you could access while an exception was being handled: <code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code>.  (Actually, these date all the way back to Python 1.)  Ever since Python 1.5, these variables have been deprecated in favor of <code>sys.exc_info</code>, which is a tuple that contains all three values.  In Python 3, these individual variables have finally gone away; you must use <code>sys.exc_info</code>.
+<p class="skip"><a href="#skipcomparesys_exc">skip over this table</a>
+<table id="comparesys_exc">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>sys.exc_type</code></td>
+<td><code>sys.exc_info()[0]</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>sys.exc_value</code></td>
+<td><code>sys.exc_info()[1]</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>sys.exc_traceback</code></td>
+<td><code>sys.exc_info()[2]</code></td></tr>
+</table>
+<p id="skipcomparesys_exc">
+<h2 id="paren">List comprehensions over tuples</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcompareparen">skip over this table</a>
+<table id="compareparen">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>[i for i in 1, 2]</code></td>
+<td><code>[i for i in (1, 2)]</code></td></tr>
+</table>
+<p id="skipcompareparen">
+<h2 id="getcwdu"><code>os.getcwdu()</code> function</h2>
+<p>Python 2 had a function named <code>os.getcwd()</code>, which returned the current working directory as a (non-Unicode) string.  Because modern file systems can handle directory names in any character encoding, Python 2.3 introduced <code>os.getcwdu()</code>.  The <code>os.getcwdu()</code> function returned the current working directory as a Unicode string.  In Python 3, there is only one string type, so <code>os.getcwd()</code> is all you need.
+<p class="skip"><a href="#skipcomparegetcwdu">skip over this table</a>
+<table id="comparegetcwdu">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th></th>
+<td><code>os.getcwdu()</code></td>
+<td><code>os.getcwd()</code></td></tr>
+</table>
+<p id="skipcomparegetcwdu">
+<h2 id="metaclass">Metaclasses</h2>
+<p>FIXME intro
+<p class="skip"><a href="#skipcomparemetaclass">skip over this table</a>
+<table id="comparemetaclass">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><pre><code>class Whip:
+    __metaclass__ = PapayaMeta</code></pre></td>
+<td><pre><code>class Whip(metaclass=PapayaMeta):
+    pass</code></pre></td></tr>
+<tr><th>&#x2461;</th>
+<td><pre><code>class C(Whipper):
+    __metaclass__ = PapayaMeta</code></pre></td>
+<td><pre><code>class C(Whipper, metaclass=PapayaMeta):
+    pass</code></pre></td></tr>
+</table>
+<ol id="skipcomparemetaclass">
+<li>...
+<li>...
+</ol>
+<h2 id="set_literal"><code>set()</code> literals (explicit)</h2>
+<p>FIXME intro
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code>2to3</code> script will not fix <code>set()</code> literals by default.  To enable this fix, specify <kbd>-f set_literal</kbd> on the command line when you call <code>2to3</code>.
+</blockquote>
+<p class="skip"><a href="#skipcompareset_literal">skip over this table</a>
+<table id="compareset_literal">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>set([1, 2, 3])</code></td>
+<td><code>{1, 2, 3}</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>set((1, 2, 3))</code></td>
+<td><code>{1, 2, 3}</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>set([i for i in a_sequence])</code></td>
+<td><code>{i for i in a_sequence}</code></td></tr>
+</table>
+<ol id="skipcompareset_literal">
+<li>...
+<li>...
+<li>...
+</ol>
+<h2 id="buffer"><code>buffer()</code> global function (explicit)</h2>
+<p>FIXME intro
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code>2to3</code> script will not fix the <code>buffer()</code> function by default.  To enable this fix, specify <kbd>-f buffer</kbd> on the command line when you call <code>2to3</code>.
+</blockquote>
+<p class="skip"><a href="#skipcomparebuffer">skip over this table</a>
+<table id="comparebuffer">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>x = buffer(y)</code></td>
+<td><code>x = memoryview(y)</code></td></tr>
+</table>
+<ol id="skipcomparebuffer">
+<li>...
+</ol>
+<h2 id="wscomma">Whitespace around commas (explicit)</h2>
+<p>FIXME intro
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code>2to3</code> script will not fix whitespace around commas by default.  To enable this fix, specify <kbd>-f wscomma</kbd> on the command line when you call <code>2to3</code>.
+</blockquote>
+<p class="skip"><a href="#skipcomparewscomma">skip over this table</a>
+<table id="comparewscomma">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><code>a ,b</code></td>
+<td><code>a, b</code></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>{a :b}</code></td>
+<td><code>{a: b}</code></td></tr>
+</table>
+<ol id="skipcomparewscomma">
+<li>...
+<li>...
+</ol>
+<h2 id="idioms">Common idioms (explicit)</h2>
+<p>FIXME intro
+<blockquote class="note">
+<p>&#x261E;
+<p>The <code>2to3</code> script will not fix common idioms by default.  To enable this fix, specify <kbd>-f idioms</kbd> on the command line when you call <code>2to3</code>.
+</blockquote>
+<p class="skip"><a href="#skipcompareidioms">skip over this table</a>
+<table id="compareidioms">
+<tr><th>Notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+<tr><th>&#x2460;</th>
+<td><pre><code>while 1:
+    do_stuff()</code></pre></td>
+<td><pre><code>while True:
+    do_stuff()</code></pre></td></tr>
+<tr><th>&#x2461;</th>
+<td><code>type(x) == T</code></td>
+<td><code>isinstance(x, T)</code></td></tr>
+<tr><th>&#x2462;</th>
+<td><code>type(x) is T</code></td>
+<td><code>isinstance(x, T)</code></td></tr>
+<tr><th>&#x2463;</th>
+<td><pre><code>a_list = list(a_sequence)
+a_list.sort()
+do_stuff(a_list)</code></pre></td>
+<td><pre><code>a_list = sorted(a_sequence)
+do_stuff(a_list)</code></pre></td></tr>
+</table>
+<ol id="skipcompareidioms">
+<li>...
+<li>...
+<li>...
+<li>...
+</ol>
+<p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
+<p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
 <script type="text/javascript">
 window.onload = function() {
 var arTables = document.getElementsByTagName('table');
@@ -44,1869 +1327,5 @@ for (var i = arTables.length - 1; i >= 0; i--) {
 }
 }
 </script>
-</head>
-<body>
-<h1>Porting code to Python 3 with <code class="filename">2to3</code></h1>
-
-<blockquote class="q">
-<p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It's the transition that's troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
-</blockquote>
-
-<ol>
-<li><a href="#divingin">Diving in</a>
-<li><a href="#print"><code>print</code> statement</a>
-<li><a href="#unicodeliteral">Unicode string literals</a>
-<li><a href="#unicode"><code>unicode()</code> global function</a>
-<li><a href="#long"><code>long</code> data type</a>
-<li><a href="#ne">&lt;> comparison</a>
-<li><a href="#has_key"><code>has_key()</code> dictionary method</a>
-<li><a href="#dict">Dictionary methods that return lists</a>
-<li><a href="#imports">Modules that have been renamed or reorganized</a>
-  <ol>
-  <li><a href="#http"><code>http</code> package</a>
-  <li><a href="#urllib"><code>urllib</code> package</a>
-  <li><a href="#dbm"><code>dbm</code> package</a>
-  <li><a href="#xmlrpc"><code>xmlrpc</code> package</a>
-  <li><a href="#othermodules">Other modules</a>
-  </ol>
-
-<li><a href="#import">Relative imports within a package</a>
-<li><a href="#filter"><code>filter()</code> global function</a>
-<li><a href="#map"><code>map()</code> global function</a>
-<li><a href="#reduce"><code>reduce()</code> global function</a> (3.1+)
-<li><a href="#apply"><code>apply()</code> global function</a>
-<li><a href="#intern"><code>intern()</code> global function</a>
-<li><a href="#exec"><code>exec</code> statement</a>
-<li><a href="#execfile"><code>execfile</code> statement</a> (3.1+)
-<li><a href="#repr"><code>repr</code> literals (backticks)</a>
-<li><a href="#except"><code>try...except</code> statement</a>
-<li><a href="#raise"><code>raise</code> statement</a>
-<li><a href="#throw"><code>throw</code> statement</a>
-<li><a href="#xrange"><code>xrange()</code> global function</a>
-<li><a href="#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a>
-<li><a href="#funcattrs"><code>func_*</code> function attributes</a>
-<li><a href="#xreadlines"><code>xreadlines()</code> I/O method</a>
-<li><a href="#tuple_params"><code>lambda</code> functions with multiple parameters</a>
-<li><a href="#methodattrs">Special method attributes</a>
-<li><a href="#next"><code>next()</code> iterator method</a>
-<li><a href="#nonzero"><code>__nonzero__</code> special class attribute</a>
-<li><a href="#numliterals">Octal literals</a>
-<li><a href="#renames"><code>sys.maxint</code></a>
-<li><a href="#callable"><code>callable()</code> global function</a>
-<li><a href="#zip"><code>zip()</code> global function</a>
-<li><a href="#standarderror"><code>StandardError()</code> exception</a>
-<li><a href="#types"><code class="filename">types</code> module constants</a>
-<li><a href="#isinstance"><code>isinstance()</code> global function</a> (3.1+)
-<li><a href="#basestring"><code>basestring</code> datatype</a>
-<li><a href="#itertools"><code class="filename">itertools</code> module</a>
-<li><a href="#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
-<li><a href="#paren">List comprehensions over tuples</a>
-<li><a href="#getcwdu"><code>os.getcwdu()</code> function</a>
-<li><a href="#metaclass">Metaclasses</a>
-<li><a href="#set_literal"><code>set()</code> literals</a> (explicit)
-<li><a href="#buffer"><code>buffer()</code> global function</a> (explicit)
-<li><a href="#wscomma">Whitespace around commas</a> (explicit)
-<li><a href="#idioms">Common idioms</a> (explicit)
-</ol>
-
-<h2 id="divingin">Diving in</h2>
-
-<p class="fancy">Python 3 comes with a utility script called <code class="filename">2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3.  <a href="case-study-porting-chardet-to-python-3.html#running2to3">Case study: porting <code class="filename">chardet</code> to Python 3</a> describes how to run the <code class="filename">2to3</code> script, then shows some things it can't fix automatically.  This appendix documents what it <em>can</em> fix automatically.
-
-<h2 id="print"><code>print</code> statement</h2>
-
-<p>In Python 2, <code>print</code> was a statement -- whatever you wanted to print simply followed the <code>print</code> keyword.  In Python 3, <code>print()</code> is a function -- whatever you want to print is passed to <code>print()</code> like any other function.
-
-<p class="skip"><a href="#skipcompareprint">skip over this table</a>
-<table id="compareprint">
-<tr>
-<th class="notes">Notes</th>
-<th class="python2">Python 2</th>
-<th class="python3">Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>print</code></td>
-<td><code>print()</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>print 1</code></td>
-<td><code>print(1)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>print 1, 2</code></td>
-<td><code>print(1, 2)</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>print 1, 2,</code></td>
-<td><code>print(1, 2, end=' ')</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>print >>sys.stderr, 1, 2, 3</code></td>
-<td><code>print(1, 2, 3, file=sys.stderr)</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareprint">
-<li>To print a blank line, call <code>print()</code> without any arguments.
-<li>To print a single value, call <code>print()</code> with one argument
-<li>To print two values separated by a space, call <code>print()</code> with two arguments.
-<li>This one is a little tricky.  In Python 2, if you ended a <code>print</code> statement with a comma, it would print the values separated by spaces, then print a trailing space, then stop without printing a carriage return.  In Python 3, the way to do this is to pass <code>end=' '</code> as a keyword argument to the <code>print()</code> function.  The <code>end</code> argument defaults to <code>'\n'</code> (a carriage return), so overriding it will suppress the carriage return after printing the other arguments.
-<li>In Python 2, you could redirect the output to a pipe -- like <code>sys.stderr</code> -- by using the <code>>>pipe_name</code> syntax.  In Python 3, the way to do this is to pass the pipe in the <code>file</code> keyword argument.  The <code>file</code> argument defaults to <code>sys.stdout</code> (standard out), so overriding it will output to a different pipe instead.
-</ol>
-
-<h2 id="unicodeliteral">Unicode string literals</h2>
-
-<p>Python 2 had two string types: Unicode strings and non-Unicode strings.  Python 3 has one string type: Unicode strings.
-
-<p class="skip"><a href="#skipcompareunicodeliteral">skip over this table</a>
-<table id="compareunicodeliteral">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>u"PapayaWhip"</code></td>
-<td><code>"PapayaWhip"</code></td>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>ur"PapayaWhip\foo"</code></td>
-<td><code>r"PapayaWhip\foo"</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareunicodeliteral">
-<li>Unicode string literals are simply converted into string literals, which, in Python 3, are always Unicode.
-<li>Unicode "raw" strings (in which Python does not auto-escape backslashes) are converted to raw strings.  In Python 3, "raw" strings are also Unicode.
-</ol>
-
-<h2 id="unicode"><code>unicode()</code> global function</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareunicode">skip over this table</a>
-<table id="compareunicode">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>unicode(anything)</code></td>
-<td><code>str(anything)</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareunicode">
-<li>...
-</ol>
-
-<h2 id="long"><code>long</code> data type</h2>
-
-<p>Python 2 had separate <code>int</code> and <code>long</code> types for non-floating-point numbers.  An <code>int</code> could not be any larger than <a href="#renames"><code>sys.maxint</code></a>, which varied by platform.  Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints.  In Python 3, there is only one integer type, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2.
-
-<p>Since there are no longer two types, there is no need for special syntax to distinguish them.
-
-<p>Further reading: <a href="http://www.python.org/dev/peps/pep-0237/">PEP 237: Unifying Long Integers and Integers</a>.
-
-<p class="skip"><a href="#skipcomparelong">skip over this table</a>
-<table id="comparelong">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>x = 1000000000000L</code></td>
-<td><code>x = 1000000000000</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>x = 0xFFFFFFFFFFFFL</code></td>
-<td><code>x = 0xFFFFFFFFFFFF</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>long(x)</code></td>
-<td><code>int(x)</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>type(x) is long</code></td>
-<td><code>type(x) is int</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>isinstance(x, long)</code></td>
-<td><code>isinstance(x, int)</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparelong">
-<li>Base 10 long integer literals become base 10 integer literals.
-<li>Base 16 long integer literals become base 16 integer literals.
-<li>In Python 3, the old <code>long()</code> function no longer exists, since longs don't exist.  To coerce a variable to an integer, use the <code>int()</code> function.
-<li>To check whether a variable is an integer, get its type and compare it to <code>int</code>, not <code>long</code>.
-<li>You can also use the <code>isinstance()</code> function to check data types; again, use <code>int</code>, not <code>long</code>, to check for integers.
-</ol>
-
-<h2 id="ne">&lt;> comparison</h2>
-
-<p>Python 2 supported <code>&lt;></code> as a synonym for <code>!=</code>, the not-equals comparison operator.  Python 3 supports the <code>!=</code> operator, but not <code>&lt;></code>.
-
-<p class="skip"><a href="#skipcomparene">skip over this table</a>
-<table id="comparene">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>if x &lt;> y:</code></td>
-<td><code>if x != y:</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>if x &lt;> y &lt;> z:</code></td>
-<td><code>if x != y != z:</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparene">
-<li>A simple comparison.
-<li>A more complex comparison between three values.
-</ol>
-
-<h2 id="has_key"><code>has_key()</code> dictionary method</h2>
-
-<p>In Python 2, dictionaries had a <code>has_key()</code> method to test whether the dictionary had a certain key.  In Python 3, this method no longer exists.  Instead, you need to use the <code>in</code> operator.
-
-<p class="skip"><a href="#skipcomparehas_key">skip over this table</a>
-<table id="comparehas_key">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>a_dictionary.has_key("PapayaWhip")</code></td>
-<td><code>"PapayaWhip" in a_dictionary</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th >
-<td><code>a_dictionary.has_key(x) or a_dictionary.has_key(y)</code></td>
-<td><code>x in a_dictionary or y in a_dictionary</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>a_dictionary.has_key(x or y)</code></td>
-<td><code>(x or y) in a_dictionary</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>a_dictionary.has_key(x + y)</code></td>
-<td><code>(x + y) in a_dictionary</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>x + a_dictionary.has_key(y)</code></td>
-<td><code>x + (y in a_dictionary)</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparehas_key">
-<li>The simplest form.
-<li>The <code>or</code> operator takes precedence over the <code>in</code> operator, so there is no need for parentheses here.
-<li>On the other hand, you <em>do</em> need parentheses here, for the same reason -- <code>or</code> takes precedence over <code>in</code>.
-<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form needs parentheses too.
-<li>Again with the parentheses, for the same reason.
-</ol>
-
-<h2 id="dict">Dictionary methods that return lists</h2>
-
-<p>In Python 2, many dictionary methods returned lists.  The most frequently used methods were <code>keys()</code>, <code>items()</code>, and <code>values()</code>.  In Python 3, all of these methods return dynamic views.  In some contexts, this is not a problem.  If the method's return value is immediately passed to another function that iterates through the entire sequence, it makes no difference whether the actual type is a list or a view.  In other contexts, it matters a great deal.  If you were expecting a complete list with individually addressable elements, your code will choke, because views do not support indexing.
-
-<p class="skip"><a href="#skipcomparedict">skip over this table</a>
-<table id="comparedict">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>a_dictionary.keys()</code></td>
-<td><code>list(a_dictionary.keys())</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>a_dictionary.items()</code></td>
-<td><code>list(a_dictionary.items())</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>a_dictionary.iterkeys()</code></td>
-<td><code>iter(a_dictionary.keys())</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>[i for i in a_dictionary.iterkeys()]</code></td>
-<td><code>[i for i in a_dictionary.keys()]</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>min(a_dictionary.keys())</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparedict">
-<li><code class="filename">2to3</code> errs on the side of safety, converting the return value from <code>keys()</code> to a static list with the <code>list()</code> function.  This will always work, but it will be less efficient than using a view.  You should examine the converted code to see if a list is absolutely necessary, or if a view would do.
-<li>Another view-to-list conversion, with the <code>items()</code> method.  <code class="filename">2to3</code> will do the same thing with the <code>values()</code> method.
-<li>Python 3 does not support the <code>iterkeys()</code> method anymore.  Use <code>keys()</code>, and if necessary, convert the view to an iterator with the <code>iter()</code> function.
-<li><code class="filename">2to3</code> recognizes when the <code>iterkeys()</code> method is used inside a list comprehension, and converts it to the <code>keys()</code> method (without wrapping it in an extra call to <code>iter()</code>).  This works because views are iterable.
-<li><code class="filename">2to3</code> recognizes that the <code>keys()</code> method is immediately passed to a function which iterates through an entire sequence, so there is no need to convert the return value to a list first.  The <code>min()</code> function will happily iterate through the view instead.  This applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
-</ol>
-
-<h2 id="imports">Modules that have been renamed or reorganized</h2>
-
-<p>Several modules in the Python Standard Library have been renamed.  Several other modules which are related to each other have been combined or reorganized to make their association more logical.
-
-<h3 id="http"><code>http</code> package</h3>
-
-<p>In Python 3, several related HTTP modules have been combined into a single package, <code>http</code>.
-
-<p class="skip"><a href="#skipcompareimporthttp">skip over this table</a>
-<table id="compareimporthttp">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import httplib</code></td>
-<td><code>import http.client</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import Cookie</code></td>
-<td><code>import http.cookies</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import cookielib</code></td>
-<td><code>import http.cookiejar</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><pre><code>import BaseHTTPServer
-import SimpleHTTPServer
-import CGIHttpServer</code></pre></td>
-<td><code>import http.server</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimporthttp">
-<li>The <code>http.client</code> module implements a low-level library that can request HTTP resources and interpret HTTP responses.
-<li>The <code>http.cookies</code> module provides a Pythonic interface to "cookies" that are sent in a <code>Set-Cookie:</code> HTTP header.
-<li>The <code>http.cookiejar</code> module manipulates the actual files on disk that popular web browsers use to store cookies.
-<li>The <code>http.server</code> module provides a basic HTTP server.
-</ol>
-
-<h3 id="urllib"><code>urllib</code> package</h3>
-
-<p>Python 2 had a rat's nest of overlapping modules to parse, encode, and fetch URLs.  In Python 3, these have all been refactored and combined in a single package, <code>urllib</code>.
-
-<p class="skip"><a href="#skipcompareimporturllib">skip over this table</a>
-<table id="compareimporturllib">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import urllib</code></td>
-<td><code>import urllib.request, urllib.parse, urllib.error</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>import urllib2</code></td>
-<td><code>import urllib.request, urllib.error</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import urlparse</code></td>
-<td><code>import urllib.parse</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>import robotparser</code></td>
-<td><code>import urllib.robotparser</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><pre><code>from urllib import FancyURLopener
-from urllib import urlencode</code></pre></td>
-<td><pre><code>from urllib.request import FancyURLopener
-from urllib.parse import urlencode</code></pre></td>
-</tr>
-<tr>
-<th>&#x2465;</th>
-<td><pre><code>from urllib2 import Request
-from urllib2 import HTTPError</code></pre></td>
-<td><pre><code>from urllib.request import Request
-from urllib.error import HTTPError</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcompareimporturllib">
-<li>The old <code>urllib</code> module in Python 2 had a variety of functions, including <code>urlopen()</code> for fetching data and <code>splittype()</code>, <code>splithost()</code>, and <code>splituser()</code> for splitting a URL into its constituent parts.  These functions have been reorganized more logically within the new <code>urllib</code> package.  <code class="filename">2to3</code> will also change all calls to these functions so they use the new naming scheme.
-<li>The old <code>urllib2</code> module in Python 2 has been folded into into the <code>urllib</code> package in Python 3.  All your <code>urllib2</code> favorites -- the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends -- are still available.
-<li>The <code>urllib.parse</code> module in Python 3 contains all the parsing functions from the old <code>urlparse</code> module in Python 2.
-<li>The <code>urllib.robotparser</code> module parses <a href="http://www.robotstxt.org/"><code>robots.txt</code> files</a>.
-<li>The <code>FancyURLopener</code> class, which handles HTTP redirects and other status codes, is still available in the new <code>urllib.request</code> module.  The <code>urlencode</code> function has moved to <code>urllib.parse</code>.
-<li>The <code>Request</code> object is still available in <code>urllib.request</code>, but constants like <code>HTTPError</code> have been moved to <code>urllib.error</code>.
-</ol>
-
-<h3 id="dbm"><code>dbm</code> package</h3>
-
-<p>All the various DBM clones are now in a single package, <code>dbm</code>.  If you need a specific variant like GNU DBM, you can import the appropriate module within the <code>dbm</code> package.
-
-<p class="skip"><a href="#skipcompareimportdbm">skip over this table</a>
-<table id="compareimportdbm">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>import dbm</code></td>
-<td><code>import dbm.ndbm</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>import gdbm</code></td>
-<td><code>import dbm.gnu</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>import dbhash</code></td>
-<td><code>import dbm.bsd</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>import dumbdbm</code></td>
-<td><code>import dbm.dumb</code></td>
-</tr>
-<tr>
-<th></th>
-<td><pre><code>import anydbm
-import whichdb</code></pre></td>
-<td><code>import dbm</code></td>
-</tr>
-</table>
-
-<p id="skipcompareimportdbm">
-
-<h3 id="xmlrpc"><code>xmlrpc</code> package</h3>
-
-<p>XML-RPC is a lightweight method of performing remote RPC calls over HTTP.  The XML-RPC client library and several XML-RPC server implementations are now combined in a single package, <code>xmlrpc</code>.
-
-<p class="skip"><a href="#skipcompareimportxmlrpc">skip over this table</a>
-<table id="compareimportxmlrpc">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>import xmlrpclib</code></td>
-<td><code>import xmlrpc.client</code></td>
-</tr>
-<tr>
-<th></th>
-<td><pre><code>import DocXMLRPCServer
-import SimpleXMLRPCServer</code></pre></td>
-<td><code>import xmlrpc.server</code></td>
-</tr>
-</table>
-
-<p id="skipcompareimportxmlrpc">
-
-<h3 id="othermodules">Other modules</h3>
-
-<p class="skip"><a href="#skipcompareimports">skip over this table</a>
-<table id="compareimports">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>try:
-    import cStringIO as StringIO
-except ImportError:
-    import StringIO</code></pre></td>
-<td><code>import io</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>try:
-    import cPickle as pickle
-except ImportError:
-    import pickle</code></pre></td>
-<td><code>import pickle</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>import __builtin__</code></td>
-<td><code>import builtins</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>import copy_reg</code></td>
-<td><code>import copyreg</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>import Queue</code></td>
-<td><code>import queue</code></td>
-</tr>
-<tr>
-<th>&#x2465;</th>
-<td><code>import SocketServer</code></td>
-<td><code>import socketserver</code></td>
-</tr>
-<tr>
-<th>&#x2466;</th>
-<td><code>import ConfigParser</code></td>
-<td><code>import configparser</code></td>
-</tr>
-<tr>
-<th>&#x2467;</th>
-<td><code>import repr</code></td>
-<td><code>import reprlib</code></td>
-</tr>
-<tr>
-<th>&#x2468;</th>
-<td><code>import commands</code></td>
-<td><code>import subprocess</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimports">
-<li>A common idiom in Python 2 was to try to import <code>cStringIO as StringIO</code>, and if that failed, to import <code>StringIO</code> instead.  Do not do this in Python 3; the <code>io</code> module does it for you.  It will find the fastest implementation available and use it automatically.
-<li>A similar idiom was used to import the fastest pickle implementation.  Do not do this in Python 3; the <code>pickle</code> module does it for you.
-<li>The <code>builtins</code> module contains the "global" functions, classes, and constants used throughout the Python language.  Redefining a function in the <code>builtins</code> module will redefine the "global" function everywhere.  That is exactly as powerful and scary as it sounds.
-<li>The <code>copyreg</code> module adds pickle support for custom types defined in C.
-<li>The <code>queue</code> module implements a multi-producer, multi-consumer queue.
-<li>The <code>socketserver</code> module provides generic base classes for implementing different kinds of socket servers.
-<li>The <code>configparser</code> module parses INI-style configuration files.
-<li>The <code>reprlib</code> module reimplements the built-in <code>repr()</code> function, but with limits on how many values are represented.
-<li>The <code>subprocess</code> module allows you to spawn processes, connect to their pipes, and obtain their return codes.
-</ol>
-
-
-<h2 id="import">Relative imports within a package</h2>
-
-<p>A package is a group of related modules that function as a single entity.  In Python 2, when modules within a package need to reference each other, you use <code>import foo</code> or <code>from foo import Bar</code>.  The Python 2 interpreter first searches within the current package to find <code class="filename">foo.py</code>, and then moves on to the other directories in the Python search path (<code>sys.path</code>).  Python 3 works a bit differently.  Instead of searching the current package, it goes directly to the Python search path.  If you want one module within a package to import another module in the same package, you need to explicitly provide the relative path between the two modules.
-
-<p>Suppose you had this package, with multiple files in the same directory:
-
-<p class="skip"><a href="#skippackageart">skip over this ASCII art</a>
-<pre>chardet/
-|
-+--__init__.py
-|
-+--constants.py
-|
-+--mbcharsetprober.py
-|
-+--universaldetector.py</pre>
-
-<p id="skippackageart">Now suppose that <code class="filename">universaldetector.py</code> needs to import the entire <code class="filename">constants.py</code> file and one class from <code class="filename">mbcharsetprober.py</code>.  How do you do it?
-
-<p class="skip"><a href="#skipcompareimport">skip over this table</a>
-<table id="compareimport">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>import constants</code></td>
-<td><code>from . import constants</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>from mbcharsetprober import MultiByteCharSetProber</code></td>
-<td><code>from .mbcharsetprober import MultiByteCharsetProber</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareimport">
-<li>When you need to import an entire module from elsewhere in your package, use the new <code>from . import</code> syntax.  The period is actually a relative path from this file (<code class="filename">universaldetector.py</code>) to the file you want to import (<code class="filename">constants.py</code>).  In this case, they are in the same directory, thus the single period.  You can also import from the parent directory (<code>from .. import anothermodule</code>) or a subdirectory.
-<li>To import a specific class or function from another module directly into your module's namespace, prefix the target module with a relative path, minus the trailing slash.  In this case, <code class="filename">mbcharsetprober.py</code> is in the same directory as <code class="filename">universaldetector.py</code>, so the path is a single period.  You can also import form the parent directory (<code>from ..anothermodule import AnotherClass</code>) or a subdirectory.
-</ol>
-
-<h2 id="filter"><code>filter()</code> global function</h2>
-
-<p>In Python 2, the <code>filter()</code> function returned a list, the result of "filtering" a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence.  In Python 3, the <code>filter()</code> function returns an interator, not a list.
-
-<p class="skip"><a href="#skipcomparefilter">skip over this table</a>
-<table id="comparefilter">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>filter(a_function, a_sequence)</code></td>
-<td><code>list(filter(a_function, a_sequence))</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>list(filter(a_function, a_sequence))</code></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>filter(None, a_sequence)</code></td>
-<td><code>[i for i in a_sequence if i]</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>for i in filter(None, a_sequence):</code></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>[i for i in filter(a_function, a_sequence)]</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparefilter">
-<li>In the most basic case, <code class="filename">2to3</code> will wrap a call to <code>filter()</code> with a call to <code>list()</code>, which simply iterates through its argument and returns a real list.
-<li>However, if the call to <code>filter()</code> is <em>already</em> wrapped in <code>list()</code>, <code class="filename">2to3</code> will do nothing, since the fact that <code>filter()</code> is returning an iterator is irrelevant.
-<li>For the special syntax of <code>filter(None, ...)</code>, <code class="filename">2to3</code> will transform the call into a semantically equivalent list comprehension.
-<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
-<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>filter()</code> returns an iterator as if it returns a list.
-</ol>
-
-<h2 id="map"><code>map()</code> global function</h2>
-
-<p>In much the same way as <a href="#filter"><code>filter()</code></a>, the <code>map()</code> function now returns an iterator.  (In Python 2, it returned a list.)
-
-<p class="skip"><a href="#skipcomparemap">skip over this table</a>
-<table id="comparemap">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>map(a_function, 'PapayaWhip')</code></td>
-<td><code>list(map(a_function, 'PapayaWhip'))</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>map(None, 'PapayaWhip')</code></td>
-<td><code>list('PapayaWhip')</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>map(lambda x: x+1, range(42))</code></td>
-<td><code>[x+1 for x in range(42)]</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>for i in map(a_function, a_sequence):</code></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>[i for i in map(a_function, a_sequence)]</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparemap">
-<li>As with <code>filter()</code>, in the most basic case, <code class="filename">2to3</code> will wrap a call to <code>map()</code> with a call to <code>list()</code>.
-<li>For the special syntax of <code>map(None, ...)</code>, the identity function, <code class="filename">2to3</code> will convert it to an equivalent call to <code>list()</code>.
-<li>If the first argument to <code>map()</code> is a lambda function, <code class="filename">2to3</code> will convert it to an equivalent list comprehension.
-<li>In contexts like <code>for</code> loops, which iterate through the entire sequence anyway, no changes are necessary.
-<li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>map()</code> returns an iterator as if it returns a list.
-</ol>
-
-<h2 id="reduce"><code>reduce()</code> global function (3.1+)</h2>
-
-<p>In Python 3, the <code>reduce()</code> function has been removed from the global namespace and placed in the <code class="filename">functools</code> module.
-
-<p class="skip"><a href="#skipcomparereduce">skip over this table</a>
-<table id="comparereduce">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>reduce(a, b, c)</code></td>
-<td><pre><code>from functtools import reduce
-reduce(a, b, c)</code></pre></td>
-</tr>
-</table>
-
-<blockquote id="skipcomparereduce" class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
-
-<h2 id="apply"><code>apply()</code> global function</h2>
-
-<p>Python 2 had a global function called <code>apply()</code>, which took a function <var>f</var> and a list <code>[a, b, c]</code> and returned <code>f(a, b, c)</code>.  In Python 3, the <code>apply()</code> function no longer exists.  Instead, there is a new function calling syntax that allows you to pass a list and have Python apply the list as the function's arguments.
-
-<p class="skip"><a href="#skipcompareapply">skip over this table</a>
-<table id="compareapply">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>apply(a_function, a_list_of_args)</code></td>
-<td><code>a_function(*a_list_of_args)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>apply(a_function, a_list_of_args, a_dictionary_of_named_args)</code></td>
-<td><code>a_function(*a_list_of_args, **a_dictionary_of_named_args)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>apply(a_function, a_list_of_args + z)</code></td>
-<td><code>a_function(*a_list_of_args + z)</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>apply(aModule.a_function, a_list_of_args)</code></td>
-<td><code>aModule.a_function(*a_list_of_args)</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareapply">
-<li>In the simplest form, you can call a function with a list of arguments (an actual list like <code>[a, b, c]</code>) by prepending the list with an asterisk (<code>*</code>).  This is exactly equivalent to the old <code>apply()</code> function in Python 2.
-<li>In Python 2, the <code>apply()</code> function could actually take three parameters: a function, a list of arguments, and a dictionary of named arguments.  In Python 3, you can accomplish the same thing by prepending the list of arguments with an asterisk (<code>*</code>) and the dictionary of named arguments with two asterisks (<code>**</code>).
-<li>The <code>+</code> operator, used here for list concatenation, takes precedence over the <code>*</code> operator, so there is no need for extra parentheses around <code>a_list_of_args + z</code>.
-<li>The <code class="filename">2to3</code> script is smart enough to convert complex <code>apply()</code> calls, including calling functions within imported modules.
-</ol>
-
-<h2 id="intern"><code>intern()</code> global function</h2>
-
-<p>In Python 2, you could call the <code>intern()</code> function on a string to intern it as a performance optimization.  In Python 3, the <code>intern()</code> function has been moved to the <code class="filename">sys</code> module.
-
-<p class="skip"><a href="#skipcompareintern">skip over this table</a>
-<table id="compareintern">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>intern(aString)</code></td>
-<td><code>sys.intern(aString)</code></td>
-</tr>
-</table>
-
-<p id="skipcompareintern">
-
-<h2 id="exec"><code>exec</code> statement</h2>
-
-<p>Just as <a href="#print">the <code>print</code> statement</a> became a function in Python 3, so too has the <code>exec</code> statement.  The <code>exec()</code> function takes a string which contains arbitrary Python code and executes it as if it were just another statement or expression.
-
-<p class="skip"><a href="#skipcompareexec">skip over this table</a>
-<table id="compareexec">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>exec codeString</code></td>
-<td><code>exec(codeString)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>exec codeString in a_global_namespace</code></td>
-<td><code>exec(codeString, a_global_namespace)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>exec codeString in a_global_namespace, a_local_namespace</code></td>
-<td><code>exec(codeString, a_global_namespace, a_local_namespace)</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareexec">
-<li>In the simplest form, the <code class="filename">2to3</code> script simply encloses the code-as-a-string in parentheses, since <code>exec()</code> is now a function instead of a statement.
-<li>The old <code>exec</code> statement could take a namespace, a private environment of globals in which the code-as-a-string would be executed.  Python 3 can also do this; just pass the namespace as the second argument to the <code>exec()</code> function.
-<li>Even fancier, the old <code>exec</code> statement could also take a local namespace (like the variables defined within a function).  In Python 3, the <code>exec()</code> function can do that too.
-</ol>
-
-<h2 id="execfile"><code>execfile</code> statement (3.1+)</h2>
-
-<p>Like the old <a href="#exec"><code>exec</code> statement</a>, the old <code>execfile</code> statement will execute strings as if they were Python code.  Where <code>exec</code> took a string, <code>execfile</code> took a filename.  In Python 3, the <code>execfile</code> statement has been eliminated.  If you really need to take a file of Python code and execute it (but you're not willing to simply import it), you can accomplish the same thing by opening the file, reading its contents, calling the global <code>compile()</code> function to force the Python interpreter to compile the code, and then call the new <code>exec()</code> function.
-
-<p class="skip"><a href="#skipcompareexecfile">skip over this table</a>
-<table id="compareexecfile">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>execfile("a_filename")</code></td>
-<td><code>exec(compile(open("a_filename").read(), "a_filename", "exec"))</code></td>
-</tr>
-</table>
-
-<blockquote id="skipcompareexecfile" class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
-
-<h2 id="repr"><code>repr</code> literals (backticks)</h2>
-
-<p>In Python 2, there was a special syntax of wrapping any object in backticks (like <code>`x`</code>) to get a representation of the object.  In Python 3, this capability still exists, but you can no longer use backticks to get it.  Instead, use the global <code>repr()</code> function.
-
-<p class="skip"><a href="#skipcomparerepr">skip over this table</a>
-<table id="comparerepr">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>`x`</code></td>
-<td><code>repr(x)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>`"PapayaWhip" + `2``</code></td>
-<td><code>repr("PapayaWhip" + repr(2))</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparerepr">
-<li>Remember, <var>x</var> can be anything -- a class, a function, a module, a primitive data type, etc.  The <code>repr()</code> function works on everything.
-<li>In Python 2, backticks could be nested, leading to this sort of confusing (but valid) expression.  The <code class="filename">2to3</code> tool is smart enough to convert this into nested calls to <code>repr()</code>.
-</ol>
-
-<h2 id="except"><code>try...except</code> statement</h2>
-
-<p>The syntax for catching exceptions has changed slightly between Python 2 and 3.
-
-<p class="skip"><a href="#skipcompareexcept">skip over this table</a>
-<table id="compareexcept">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>try:
-    import mymodule
-except ImportError, e
-    pass</code></pre></td>
-<td><pre><code>try:
-    import mymodule
-except ImportError as e:
-    pass</code></pre></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>try:
-    import mymodule
-except (RuntimeError, ImportError), e
-    pass</code></pre></td>
-<td><pre><code>try:
-    import mymodule
-except (RuntimeError, ImportError) as e:
-    pass</code></pre></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><pre><code>try:
-    import mymodule
-except ImportError:
-    pass</code></pre></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><pre><code>try:
-    import mymodule
-except:
-    pass</code></pre></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcompareexcept">
-<li>Instead of a comma after the exception type, Python 3 uses a new keyword, <code>as</code>.
-<li>The <code>as</code> keyword also works for catching multiple types of exceptions at once.
-<li>If you catch an exception but don't actually care about accessing the exception object itself, the syntax is identical between Python 2 and 3.
-<li>Similarly, if you use a fallback to catch <em>all</em> exceptions, the syntax is identical.
-</ol>
-
-<blockquote class="note">
-<p>&#x261E;
-<p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
-</blockquote>
-
-<h2 id="raise"><code>raise</code> statement</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareraise">skip over this table</a>
-<table id="compareraise">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>raise MyException, "error message"</code></td>
-<td><code>raise MyException("error message")</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>raise MyException, "error message", a_traceback</code></td>
-<td><code>raise MyException("error message").with_traceback(a_traceback)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>raise "error message"</code></td>
-<td><i>unsupported</i></td>
-</tr>
-</table>
-
-<ol id="skipcompareraise">
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="throw"><code>throw</code> statement</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparethrow">skip over this table</a>
-<table id="comparethrow">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>aGenerator.throw(MyException)</code></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>aGenerator.throw(MyException, "error message")</code></td>
-<td><code>aGenerator.throw(MyException("error message"))</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>aGenerator.throw("error message")</code></td>
-<td><i>unsupported</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparethrow">
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="xrange"><code>xrange()</code> global function</h2>
-
-<p>In Python 2, there were two ways to get a range of numbers: <code>range()</code>, which returned a list, and <code>xrange()</code>, which returned an iterator.  In Python 3, <code>range()</code> returns an iterator, and <code>xrange()</code> doesn't exist.
-
-<p class="skip"><a href="#skipcomparexrange">skip over this table</a>
-<table id="comparexrange">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>xrange(10)</code></td>
-<td><code>range(10)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>a_list = range(10)</code></td>
-<td><code>a_list = list(range(10))</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>[i for i in xrange(10)]</code></td>
-<td><code>[i for i in range(10)]</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>for i in range(10):</code></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>sum(range(10))</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparexrange">
-<li>In the simplest case, the <code>2to3</code> script will simply convert <code>xrange()</code> to <code>range()</code>.
-<li>If your Python 2 code used <code>range()</code>, the <code>2to3</code> script does not know whether you needed a list, or whether an iterator would do.  It errs on the side of caution and coerces the return value into a list by calling the <code>list()</code> function.
-<li>If the <code>xrange()</code> function was inside a list comprehension, there is no need to coerce the result to a list, since the list comprehension will work just fine with an iterator.
-<li>Similarly, a <code>for</code> loop will work just fine with an iterator, so there is no need to change anything here.
-<li>The <code>sum()</code> function will also work with an iterator, so <code>2to3</code> makes no changes here either.  Like <a href="#dict">dictionary methods that return views instead of lists</a>, this applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
-</ol>
-
-<h2 id="raw_input"><code>raw_input()</code> and <code>input()</code> global functions</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareraw_input">skip over this table</a>
-<table id="compareraw_input">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>raw_input()</code></td>
-<td><code>input()</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>raw_input("prompt")</code></td>
-<td><code>input("prompt")</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>input()</code></td>
-<td><code>eval(input())</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>input("prompt")</code></td>
-<td><code>eval(input("prompt"))</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareraw_input">
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="funcattrs"><code>func_*</code> function attributes</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparefuncattrs">skip over this table</a>
-<table id="comparefuncattrs">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>a_function.func_closure</code></td>
-<td><code>a_function.__closure__</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>a_function.func_doc</code></td>
-<td><code>a_function.__doc__</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>a_function.func_name</code></td>
-<td><code>a_function.__name__</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>a_function.func_defaults</code></td>
-<td><code>a_function.__defaults__</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>a_function.func_code</code></td>
-<td><code>a_function.__code__</code></td>
-</tr>
-<tr>
-<th>&#x2465;</th>
-<td><code>a_function.func_globals</code></td>
-<td><code>a_function.__globals__</code></td>
-</tr>
-<tr>
-<th>&#x2466;</th>
-<td><code>a_function.func_dict</code></td>
-<td><code>a_function.__dict__</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparefuncattrs">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="xreadlines"><code>xreadlines()</code> I/O method</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparexreadlines">skip over this table</a>
-<table id="comparexreadlines">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>for line in a_file.xreadlines():</code></td>
-<td><code>for line in a_file:</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>for line in a_file.xreadlines(5):</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparexreadlines">
-<li>...
-<li>...
-</ol>
-
-<h2 id="tuple_params"><code>lambda</code> functions with multiple parameters</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparetuple_params">skip over this table</a>
-<table id="comparetuple_params">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>lambda (x,): x + f(x)</code></td>
-<td><code>lambda x1: x1[0] + f(x1[1])</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>lambda (x, y): x + f(y)</code></td>
-<td><code>lambda x_y: x_y[0] + f(x_y[1])</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>lambda (x, (y, z)): x + y + z</code></td>
-<td><code>lambda x_y_z: x_y_z[0] + x_y_z[1][0] + x_y_z[1][1]</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparetuple_params">
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="methodattrs">Special method attributes</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparemethodattrs">skip over this table</a>
-<table id="comparemethodattrs">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>aClassInstance.aClassMethod.im_func</code></td>
-<td><code>aClassInstance.aClassMethod.__func__</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>aClassInstance.aClassMethod.im_self</code></td>
-<td><code>aClassInstance.aClassMethod.__self__</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>aClassInstance.aClassMethod.im_class</code></td>
-<td><code>aClassInstance.aClassMethod.self.__class__</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparemethodattrs">
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="next"><code>next()</code> iterator method</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparenext">skip over this table</a>
-<table id="comparenext">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>anIterator.next()</code></td>
-<td><code>next(anIterator)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>a_function_that_returns_an_iterator().next()</code></td>
-<td><code>next(a_function_that_returns_an_iterator())</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><pre><code>class A:
-    def next(self):
-        pass</code></pre></td>
-<td><pre><code>class A:
-    def __next__(self):
-        pass</code></pre></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><pre><code>class A:
-    def next(self, x, y):
-        pass</code></pre></td>
-<td><i>no change</i></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><pre><code>next = 42
-for an_iterator in a_sequence_of_iterators:
-    an_iterator.next()</code></pre></td>
-<td><pre><code>next = 42
-for an_iterator in a_sequence_of_iterators:
-    an_iterator.__next__()</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcomparenext">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="nonzero"><code>__nonzero__</code> special class attribute</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparenonzero">skip over this table</a>
-<table id="comparenonzero">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>class A:
-    def __nonzero__(self):
-        pass</code></pre></td>
-<td><pre><code>class A:
-    def __bool__(self):
-        pass</code></pre></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>class A:
-    def __nonzero__(self, x, y):
-        pass</code></pre></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparenonzero">
-<li>...
-<li>...
-</ol>
-
-<h2 id="numliterals">Octal literals</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparenumliterals">skip over this table</a>
-<table id="comparenumliterals">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>x = 0755</code></td>
-<td><code>x = 0o755</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparenumliterals">
-<li>...
-</ol>
-
-<h2 id="renames"><code>sys.maxint</code></h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparerenames">skip over this table</a>
-<table id="comparerenames">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>from sys import maxint</code></td>
-<td><code>from sys import maxsize</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>import sys
-a_function(sys.maxint)</code></pre></td>
-<td><pre><code>import sys
-a_function(sys.maxsize)</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcomparerenames">
-<li>...
-<li>...
-</ol>
-
-<h2 id="callable"><code>callable()</code> global function</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparecallable">skip over this table</a>
-<table id="comparecallable">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>callable(anything)</code></td>
-<td><code>hasattr(anything, "__call__")</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparecallable">
-<li>...
-</ol>
-
-<h2 id="zip"><code>zip()</code> global function</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparezip">skip over this table</a>
-<table id="comparezip">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>zip(a, b, c)</code></td>
-<td><code>list(zip(a, b, c))</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>d.join(zip(a, b, c))</code></td>
-<td><i>no change</i></td>
-</tr>
-</table>
-
-<ol id="skipcomparezip">
-<li>...
-<li>...
-</ol>
-
-<h2 id="standarderror"><code>StandardError()</code> exception</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparestandarderror">skip over this table</a>
-<table id="comparestandarderror">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>x = StandardError()</code></td>
-<td><code>x = Exception()</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>x = StandardError(a, b, c)</code></td>
-<td><code>x = Exception(a, b, c)</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparestandarderror">
-<li>...
-<li>...
-</ol>
-
-<h2 id="types"><code class="filename">types</code> module constants</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparetypes">skip over this table</a>
-<table id="comparetypes">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>types.StringType</code></td>
-<td><code>bytes</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>types.DictType</code></td>
-<td><code>dict</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>types.IntType</code></td>
-<td><code>int</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>types.LongType</code></td>
-<td><code>int</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>types.ListType</code></td>
-<td><code>list</code></td>
-</tr>
-<tr>
-<th></th>
-<td><code>types.NoneType</code></td>
-<td><code>type(None)</code></td>
-</tr>
-</table>
-
-<p id="skipcomparetypes">
-
-<h2 id="isinstance"><code>isinstance()</code> global function (3.1+)</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareisinstance">skip over this table</a>
-<table id="compareisinstance">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>isinstance(x, (int, float, int))</code></td>
-<td><code>isinstance(x, (int, float))</code></td>
-</tr>
-</table>
-
-<blockquote id="skipcompareisinstance" class="note">
-<p>&#x261E;
-<p>The version of <code class="filename">2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code class="filename">2to3</code> script that shipped with Python 3.1.
-</blockquote>
-
-<h2 id="basestring"><code>basestring</code> datatype</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparebasestring">skip over this table</a>
-<table id="comparebasestring">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>isinstance(x, basestring)</code></td>
-<td><code>isinstance(x, str)</code></td>
-</tr>
-</table>
-
-<p id="skipcomparebasestring">
-
-<h2 id="itertools"><code class="filename">itertools</code> module</h2>
-
-<p>FIXME intro
-
-<table id="compareitertools">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>itertools.izip(a, b)</code></td>
-<td><code>zip(a, b)</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>itertools.imap(a, b)</code></td>
-<td><code>map(a, b)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>itertools.ifilter(a, b)</code></td>
-<td><code>filter(a, b)</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><code>itertools.ifilterfalse(a, b)</code></td>
-<td><code>filterfalse(a, b)</code></td>
-</tr>
-<tr>
-<th>&#x2464;</th>
-<td><code>from itertools import imap, izip, foo</code></td>
-<td><code>from itertools import foo</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareitertools">
-<li>...
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparesys_exc">skip over this table</a>
-<table id="comparesys_exc">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>sys.exc_type</code></td>
-<td><code>sys.exc_info()[0]</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>sys.exc_value</code></td>
-<td><code>sys.exc_info()[1]</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>sys.exc_traceback</code></td>
-<td><code>sys.exc_info()[2]</code></td>
-</tr>
-</table>
-
-<p id="skipcomparesys_exc">
-
-<h2 id="paren">List comprehensions over tuples</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcompareparen">skip over this table</a>
-<table id="compareparen">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>[i for i in 1, 2]</code></td>
-<td><code>[i for i in (1, 2)]</code></td>
-</tr>
-</table>
-
-<p id="skipcompareparen">
-
-<h2 id="getcwdu"><code>os.getcwdu()</code> function</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparegetcwdu">skip over this table</a>
-<table id="comparegetcwdu">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th></th>
-<td><code>os.getcwdu()</code></td>
-<td><code>os.getcwd()</code></td>
-</tr>
-</table>
-
-<p id="skipcomparegetcwdu">
-
-<h2 id="metaclass">Metaclasses</h2>
-
-<p>FIXME intro
-
-<p class="skip"><a href="#skipcomparemetaclass">skip over this table</a>
-<table id="comparemetaclass">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>class Whip:
-    __metaclass__ = PapayaMeta</code></pre></td>
-<td><pre><code>class Whip(metaclass=PapayaMeta):
-    pass</code></pre></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><pre><code>class C(Whipper):
-    __metaclass__ = PapayaMeta</code></pre></td>
-<td><pre><code>class C(Whipper, metaclass=PapayaMeta):
-    pass</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcomparemetaclass">
-<li>...
-<li>...
-</ol>
-
-<h2 id="set_literal"><code>set()</code> literals (explicit)</h2>
-
-<p>FIXME intro
-
-<blockquote class="note">
-<p>&#x261E;
-<p>The <code class="filename">2to3</code> script will not fix <code>set()</code> literals by default.  To enable this fix, specify <code>-f set_literal</code> on the command line when you call <code>2to3</code>.
-</blockquote>
-
-<p class="skip"><a href="#skipcompareset_literal">skip over this table</a>
-<table id="compareset_literal">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>set([1, 2, 3])</code></td>
-<td><code>{1, 2, 3}</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>set((1, 2, 3))</code></td>
-<td><code>{1, 2, 3}</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>set([i for i in a_sequence])</code></td>
-<td><code>{i for i in a_sequence}</code></td>
-</tr>
-</table>
-
-<ol id="skipcompareset_literal">
-<li>...
-<li>...
-<li>...
-</ol>
-
-<h2 id="buffer"><code>buffer()</code> global function (explicit)</h2>
-
-<p>FIXME intro
-
-<blockquote class="note">
-<p>&#x261E;
-<p>The <code class="filename">2to3</code> script will not fix the <code>buffer()</code> function by default.  To enable this fix, specify <code>-f buffer</code> on the command line when you call <code>2to3</code>.
-</blockquote>
-
-<p class="skip"><a href="#skipcomparebuffer">skip over this table</a>
-<table id="comparebuffer">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>x = buffer(y)</code></td>
-<td><code>x = memoryview(y)</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparebuffer">
-<li>...
-</ol>
-
-<h2 id="wscomma">Whitespace around commas (explicit)</h2>
-
-<p>FIXME intro
-
-<blockquote class="note">
-<p>&#x261E;
-<p>The <code class="filename">2to3</code> script will not fix whitespace around commas by default.  To enable this fix, specify <code>-f wscomma</code> on the command line when you call <code>2to3</code>.
-</blockquote>
-
-<p class="skip"><a href="#skipcomparewscomma">skip over this table</a>
-<table id="comparewscomma">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><code>a ,b</code></td>
-<td><code>a, b</code></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>{a :b}</code></td>
-<td><code>{a: b}</code></td>
-</tr>
-</table>
-
-<ol id="skipcomparewscomma">
-<li>...
-<li>...
-</ol>
-
-<h2 id="idioms">Common idioms (explicit)</h2>
-
-<p>FIXME intro
-
-<blockquote class="note">
-<p>&#x261E;
-<p>The <code class="filename">2to3</code> script will not fix common idioms by default.  To enable this fix, specify <code>-f idioms</code> on the command line when you call <code>2to3</code>.
-</blockquote>
-
-<p class="skip"><a href="#skipcompareidioms">skip over this table</a>
-<table id="compareidioms">
-<tr>
-<th>Notes</th>
-<th>Python 2</th>
-<th>Python 3</th>
-</tr>
-<tr>
-<th>&#x2460;</th>
-<td><pre><code>while 1:
-    do_stuff()</code></pre></td>
-<td><pre><code>while True:
-    do_stuff()</code></pre></td>
-</tr>
-<tr>
-<th>&#x2461;</th>
-<td><code>type(x) == T</code></td>
-<td><code>isinstance(x, T)</code></td>
-</tr>
-<tr>
-<th>&#x2462;</th>
-<td><code>type(x) is T</code></td>
-<td><code>isinstance(x, T)</code></td>
-</tr>
-<tr>
-<th>&#x2463;</th>
-<td><pre><code>a_list = list(a_sequence)
-a_list.sort()
-do_stuff(a_list)</code></pre></td>
-<td><pre><code>a_list = sorted(a_sequence)
-do_stuff(a_list)</code></pre></td>
-</tr>
-</table>
-
-<ol id="skipcompareidioms">
-<li>...
-<li>...
-<li>...
-<li>...
-</ol>
-
-<p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
-
-<footer>
-<p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
-</footer>
-
 </body>
 </html>
