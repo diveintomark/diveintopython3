@@ -9,7 +9,6 @@
 h1:before{counter-increment:h1;content:"Appendix A. "}
 h2:before{counter-increment:h2;content:"A." counter(h2) ". "}
 h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
-td{font-family:monospaced}
 </style>
 </head>
 <body>
@@ -674,7 +673,7 @@ except:
 <p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
 </blockquote>
 <h2 id="raise"><code>raise</code> statement</h2>
-<p>FIXME intro
+<p>The syntax for raising your own exceptions has changed slightly between Python 2 and Python 3.
 <p class="skip"><a href="#skipcompareraise">skip over this table</a>
 <table id="compareraise">
 <tr><th>Notes</th>
@@ -682,19 +681,23 @@ except:
 <th>Python 3</th>
 </tr>
 <tr><th>&#x2460;</th>
+<td><code>raise MyException</code></td>
+<td><i>unchanged</i></td></tr>
+<tr><th>&#x2461;</th>
 <td><code>raise MyException, "error message"</code></td>
 <td><code>raise MyException("error message")</code></td></tr>
-<tr><th>&#x2461;</th>
+<tr><th>&#x2462;</th>
 <td><code>raise MyException, "error message", a_traceback</code></td>
 <td><code>raise MyException("error message").with_traceback(a_traceback)</code></td></tr>
-<tr><th>&#x2462;</th>
+<tr><th>&#x2463;</th>
 <td><code>raise "error message"</code></td>
 <td><i>unsupported</i></td></tr>
 </table>
 <ol id="skipcompareraise">
-<li>...
-<li>...
-<li>...
+<li>In the simplest form, raising an exception without a custom error message, the syntax is unchanged.
+<li>The change becomes noticeable when you want to raise an exception with a custom error message.  Python 2 separated the exception class and the message with a comma; Python 3 passes the error message as a parameter.
+<li>Python 2 supported a more complex syntax to raise an exception with a custom traceback (stack trace).  You can do this in Python 3 as well, but the syntax is quite different.
+<li>In Python 2, you could raise an exception with no exception class, just an error message.  In Python 3, this is no longer possible.  <code>2to3</code> will warn you that it was unable to fix this automatically.
 </ol>
 <h2 id="throw"><code>throw</code> statement</h2>
 <p>FIXME intro
@@ -751,7 +754,7 @@ except:
 <li>The <code>sum()</code> function will also work with an iterator, so <code>2to3</code> makes no changes here either.  Like <a href="#dict">dictionary methods that return views instead of lists</a>, this applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
 </ol>
 <h2 id="raw_input"><code>raw_input()</code> and <code>input()</code> global functions</h2>
-<p>FIXME intro
+<p>Python 2 had two global functions for asking the user for input on the command line.  The first, called <code>input()</code>, expected the user to enter a Python expression (and returned the result).  The second, called <code>raw_input()</code>, just returned whatever the user typed.  This was wildly confusing for beginners and wildly regarded as a &#8220;wart&#8221; in the language.  Python 3 excises this wart by renaming <code>raw_input()</code> to <code>input()</code>, so it works the way everyone naively expects it to work.
 <p class="skip"><a href="#skipcompareraw_input">skip over this table</a>
 <table id="compareraw_input">
 <tr><th>Notes</th>
@@ -767,15 +770,11 @@ except:
 <tr><th>&#x2462;</th>
 <td><code>input()</code></td>
 <td><code>eval(input())</code></td></tr>
-<tr><th>&#x2463;</th>
-<td><code>input("prompt")</code></td>
-<td><code>eval(input("prompt"))</code></td></tr>
 </table>
 <ol id="skipcompareraw_input">
-<li>...
-<li>...
-<li>...
-<li>...
+<li>In the simplest form, <code>raw_input()</code> becomes <code>input()</code>.
+<li>In Python 2, the <code>raw_input()</code> function could take a prompt as a parameter.  This has been retained in Python 3.
+<li>If you actually need to ask the user for a Python expression to evaluate, use the <code>input()</code> function and pass the result to <code>eval()</code>.
 </ol>
 <h2 id="funcattrs"><code>func_*</code> function attributes</h2>
 <p>FIXME intro

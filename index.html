@@ -255,57 +255,61 @@ h3{margin-left:3.5em}
 <h2>...no one will miss you...</h2>
 <div class="appendix">
 <h1 class="appendix">Appendix A. <a href="porting-code-to-python-3-with-2to3.html">Porting code to Python 3 with <code class="filename">2to3</code></a></h1>
-<h2><a href="#divingin">Diving in</a></h2>
-<h2><a href="#print"><code>print</code> statement</a></h2>
-<h2><a href="#ne">&lt;> comparison</a></h2>
-<h2><a href="#has_key"><code>has_key()</code> dictionary method</a></h2>
-<h2><a href="#dict">Dictionary methods that return lists</a></h2>
-<h2><a href="#imports">Modules that have been renamed or reorganized</a></h2>
-<h3><a href="#http"><code>http</code> package</a></h3>
-<h3><a href="#urllib"><code>urllib</code> package</a></h3>
-<h3><a href="#dbm"><code>dbm</code> package</a></h3>
-<h3><a href="#xmlrpc"><code>xmlrpc</code> package</a></h3>
-<h3><a href="#othermodules">Other modules</a></h3>
-<h2><a href="#import">Relative imports within a package</a></h2>
-<h2><a href="#filter"><code>filter()</code> global function</a></h2>
-<h2><a href="#map"><code>map()</code> global function</a></h2>
-<h2><a href="#reduce"><code>reduce()</code> global function (3.1+)</a></h2>
-<h2><a href="#apply"><code>apply()</code> global function</a></h2>
-<h2><a href="#intern"><code>intern()</code> global function</a></h2>
-<h2><a href="#exec"><code>exec</code> statement</a></h2>
-<h2><a href="#execfile"><code>execfile</code> statement (3.1+)</a></h2>
-<h2><a href="#repr"><code>repr</code> literals (backticks)</a></h2>
-<h2><a href="#except"><code>try...except</code> statement</a></h2>
-<h2><a href="#raise"><code>raise</code> statement</a></h2>
-<h2><a href="#throw"><code>throw</code> statement</a></h2>
-<h2><a href="#long"><code>long</code> data type</a></h2>
-<h2><a href="#xrange"><code>xrange()</code> global function</a></h2>
-<h2><a href="#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a></h2>
-<h2><a href="#funcattrs"><code>func_*</code> function attributes</a></h2>
-<h2><a href="#xreadlines"><code>xreadlines()</code> I/O method</a></h2>
-<h2><a href="#tuple_params"><code>lambda</code> functions with multiple parameters</a></h2>
-<h2><a href="#methodattrs">Special method attributes</a></h2>
-<h2><a href="#next"><code>next()</code> iterator method</a></h2>
-<h2><a href="#nonzero"><code>__nonzero__</code> special class attribute</a></h2>
-<h2><a href="#numliterals">Number literals</a></h2>
-<h2><a href="#renames"><code>sys.maxint</code></a></h2>
-<h2><a href="#unicode"><code>unicode()</code> global function</a></h2>
-<h2><a href="#unicodeliteral">Unicode string literals</a></h2>
-<h2><a href="#callable"><code>callable()</code> global function</a></h2>
-<h2><a href="#zip"><code>zip()</code> global function</a></h2>
-<h2><a href="#standarderror"><code>StandardError()</code> exception</a></h2>
-<h2><a href="#types"><code class="filename">types</code> module constants</a></h2>
-<h2><a href="#isinstance"><code>isinstance</code> global function (3.1+)</a></h2>
-<h2><a href="#basestring"><code>basestring</code> datatype</a></h2>
-<h2><a href="#itertools"><code class="filename">itertools</code> module</a></h2>
-<h2><a href="#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a></h2>
-<h2><a href="#paren">List comprehensions over tuples</a></h2>
-<h2><a href="#getcwdu"><code>os.getcwdu()</code> function</a></h2>
-<h2><a href="#metaclass">Metaclasses</a></h2>
-<h2><a href="#set_literal"><code>set()</code> literals</a></h2>
-<h2><a href="#buffer"><code>buffer()</code> global function</a></h2>
-<h2><a href="#wscomma">Whitespace around commas</a></h2>
-<h2><a href="#idioms">Common idioms</a></h2>
+<ol>
+<li><a href="porting-code-to-python-3-with-2to3.html#divingin">Diving in</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#print"><code>print</code> statement</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#unicodeliteral">Unicode string literals</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#unicode"><code>unicode()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#long"><code>long</code> data type</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#ne">&lt;> comparison</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#has_key"><code>has_key()</code> dictionary method</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#dict">Dictionary methods that return lists</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#imports">Modules that have been renamed or reorganized</a>
+<ol>
+<li><a href="porting-code-to-python-3-with-2to3.html#http"><code>http</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#urllib"><code>urllib</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#dbm"><code>dbm</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#xmlrpc"><code>xmlrpc</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#othermodules">Other modules</a>
+</ol>
+<li><a href="porting-code-to-python-3-with-2to3.html#import">Relative imports within a package</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#next"><code>next()</code> iterator method</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#filter"><code>filter()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#map"><code>map()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#reduce"><code>reduce()</code> global function</a> (3.1+)
+<li><a href="porting-code-to-python-3-with-2to3.html#apply"><code>apply()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#intern"><code>intern()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#exec"><code>exec</code> statement</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#execfile"><code>execfile</code> statement</a> (3.1+)
+<li><a href="porting-code-to-python-3-with-2to3.html#repr"><code>repr</code> literals (backticks)</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#except"><code>try...except</code> statement</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#raise"><code>raise</code> statement</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#throw"><code>throw</code> statement</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#xrange"><code>xrange()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#raw_input"><code>raw_input()</code> and <code>input()</code> global functions</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#funcattrs"><code>func_*</code> function attributes</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#xreadlines"><code>xreadlines()</code> I/O method</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#tuple_params"><code>lambda</code> functions with multiple parameters</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#methodattrs">Special method attributes</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#nonzero"><code>__nonzero__</code> special class attribute</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#numliterals">Octal literals</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#renames"><code>sys.maxint</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#callable"><code>callable()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#zip"><code>zip()</code> global function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#standarderror"><code>StandardError()</code> exception</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#types"><code>types</code> module constants</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#isinstance"><code>isinstance()</code> global function</a> (3.1+)
+<li><a href="porting-code-to-python-3-with-2to3.html#basestring"><code>basestring</code> datatype</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#itertools"><code>itertools</code> module</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#sys_exc"><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
+<li><a href="porting-code-to-python-3-with-2to3.html#paren">List comprehensions over tuples</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#getcwdu"><code>os.getcwdu()</code> function</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#metaclass">Metaclasses</a>
+<li><a href="porting-code-to-python-3-with-2to3.html#set_literal"><code>set()</code> literals</a> (explicit)
+<li><a href="porting-code-to-python-3-with-2to3.html#buffer"><code>buffer()</code> global function</a> (explicit)
+<li><a href="porting-code-to-python-3-with-2to3.html#wscomma">Whitespace around commas</a> (explicit)
+<li><a href="porting-code-to-python-3-with-2to3.html#idioms">Common idioms</a> (explicit)
+</ol>
 </div>
 <p class="c">This site is optimized for Lynx just because fuck you.<br>I&#8217;m told it also looks good in graphical browsers.
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
