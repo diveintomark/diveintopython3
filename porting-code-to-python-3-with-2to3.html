@@ -120,7 +120,7 @@ h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 <tr><th>&#x2460;</th>
 <td><code>u"PapayaWhip"</code></td>
 <td><code>"PapayaWhip"</code></td></tr>
-<tr><th>&#x2460;</th>
+<tr><th>&#x2461;</th>
 <td><code>ur"PapayaWhip\foo"</code></td>
 <td><code>r"PapayaWhip\foo"</code></td></tr>
 </table>
@@ -492,7 +492,7 @@ for an_iterator in a_sequence_of_iterators:
 <li>This one is a bit tricky.  If you have a local variable named <var>next</var>, then it takes precedence over the new global <code>next()</code> function.  In this case, you need to call the iterator's special <code>__next()__</code> method to get the next item in the sequence.  (Alternatively, you could also refactor the code so the local variable wasn't named <var>next</var>, but <code>2to3</code> will not do that for you automatically.)
 </ol>
 <h2 id="filter"><code>filter()</code> global function</h2>
-<p>In Python 2, the <code>filter()</code> function returned a list, the result of filtering a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence.  In Python 3, the <code>filter()</code> function returns an interator, not a list.
+<p>In Python 2, the <code>filter()</code> function returned a list, the result of filtering a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence.  In Python 3, the <code>filter()</code> function returns an iterator, not a list.
 <p class="skip"><a href="#skipcomparefilter">skip over this table</a>
 <table id="comparefilter">
 <tr><th>Notes</th>
