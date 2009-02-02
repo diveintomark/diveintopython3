@@ -567,8 +567,7 @@ for an_iterator in a_sequence_of_iterators:
 reduce(a, b, c)</code></pre></td></tr>
 </table>
 <blockquote id="skipcomparereduce" class="note">
-<p>&#x261E;
-<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+<p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id="apply"><code>apply()</code> global function</h2>
 <p>Python 2 had a global function called <code>apply()</code>, which took a function <var>f</var> and a list <code>[a, b, c]</code> and returned <code>f(a, b, c)</code>.  In Python 3, the <code>apply()</code> function no longer exists.  Instead, there is a new function calling syntax that allows you to pass a list and have Python apply the list as the function's arguments.
@@ -646,8 +645,7 @@ reduce(a, b, c)</code></pre></td></tr>
 <td><code>exec(compile(open("a_filename").read(), "a_filename", "exec"))</code></td></tr>
 </table>
 <blockquote id="skipcompareexecfile" class="note">
-<p>&#x261E;
-<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+<p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id="repr"><code>repr</code> literals (backticks)</h2>
 <p>In Python 2, there was a special syntax of wrapping any object in backticks (like <code>`x`</code>) to get a representation of the object.  In Python 3, this capability still exists, but you can no longer use backticks to get it.  Instead, use the global <code>repr()</code> function.
@@ -714,8 +712,7 @@ except:
 <li>Similarly, if you use a fallback to catch <em>all</em> exceptions, the syntax is identical.
 </ol>
 <blockquote class="note">
-<p>&#x261E;
-<p>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
+<p><span>&#x261E;</span>You should never use a fallback to catch <em>all</em> exceptions when importing modules (or most other times).  Doing so will catch things like <code>KeyboardInterrupt</code> (if the user pressed <kbd>Ctrl-C</kbd> to interrupt the program) and can make it more difficult to debug errors.
 </blockquote>
 <h2 id="raise"><code>raise</code> statement</h2>
 <p>The syntax for raising your own exceptions has changed slightly between Python 2 and Python 3.
@@ -1067,8 +1064,7 @@ except:
 <td><code>isinstance(x, (int, float))</code></td></tr>
 </table>
 <blockquote id="skipcompareisinstance" class="note">
-<p>&#x261E;
-<p>The version of <code>2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
+<p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically.  The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id="basestring"><code>basestring</code> datatype</h2>
 <p>Python 2 had two string types: Unicode and non-Unicode.  But there was also another type, <code>basestring</code>.  It was an abstract type, a superclass for both the <code>str</code> and <code>unicode</code> types.  It couldn't be called or instantiated directly, but you could pass it to the global <code>isinstance()</code> function to check whether an object was either a Unicode or non-Unicode string.  In Python 3, there is only one string type, so <code>basestring</code> has no reason to exist.
@@ -1187,8 +1183,7 @@ except:
 <h3 id="set_literal"><code>set()</code> literals (explicit)</h3>
 <p>In Python 2, the only way to define a literal set in your code was to call <code>set(a_sequence)</code>.  This still works in Python 3, but a clearer way of doing it is to use the new set literal notation: curly braces.  (Dictionaries are also defined with curly braces, which makes sense once you think about it, because dictionaries are just sets of key-value pairs.)
 <blockquote class="note">
-<p>&#x261E;
-<p>The <code>2to3</code> script will not fix <code>set()</code> literals by default.  To enable this fix, specify <kbd>-f set_literal</kbd> on the command line when you call <code>2to3</code>.
+<p><span>&#x261E;</span>The <code>2to3</code> script will not fix <code>set()</code> literals by default.  To enable this fix, specify <kbd>-f set_literal</kbd> on the command line when you call <code>2to3</code>.
 </blockquote>
 <p class="skip"><a href="#skipcompareset_literal">skip over this table</a>
 <table id="compareset_literal">
@@ -1210,8 +1205,7 @@ except:
 <h3 id="buffer"><code>buffer()</code> global function (explicit)</h3>
 <p>Python objects implemented in C can export a &#8220;buffer interface,&#8221; which is a block of memory that is directly readable and writeable without copying.  (That is exactly as powerful and scary as it sounds.)  In Python 3, <code>buffer()</code> has been renamed to <code>memoryview()</code>.  (It's a little more complicated than that, but you can almost certainly ignore the differences.)
 <blockquote class="note">
-<p>&#x261E;
-<p>The <code>2to3</code> script will not fix the <code>buffer()</code> function by default.  To enable this fix, specify <kbd>-f buffer</kbd> on the command line when you call <code>2to3</code>.
+<p><span>&#x261E;</span>The <code>2to3</code> script will not fix the <code>buffer()</code> function by default.  To enable this fix, specify <kbd>-f buffer</kbd> on the command line when you call <code>2to3</code>.
 </blockquote>
 <p class="skip"><a href="#skipcomparebuffer">skip over this table</a>
 <table id="comparebuffer">
@@ -1227,8 +1221,7 @@ except:
 <h3 id="wscomma">Whitespace around commas (explicit)</h3>
 <p>Despite being draconian about whitespace for indenting and outdenting, Python is actually quite liberal about whitespace in other areas.  Within lists, tuples, sets, and dictionaries, whitespace can appear before and after commas with no ill effects.  However, the Python style guide states that commas should be preceded by zero spaces and followed by one.  Although this is purely an aesthetic issue (the code works either way, in both Python 2 and Python 3), the <code>2to3</code> script can optionally fix this for you.
 <blockquote class="note">
-<p>&#x261E;
-<p>The <code>2to3</code> script will not fix whitespace around commas by default.  To enable this fix, specify <kbd>-f wscomma</kbd> on the command line when you call <code>2to3</code>.
+<p><span>&#x261E;</span>The <code>2to3</code> script will not fix whitespace around commas by default.  To enable this fix, specify <kbd>-f wscomma</kbd> on the command line when you call <code>2to3</code>.
 </blockquote>
 <p class="skip"><a href="#skipcomparewscomma">skip over this table</a>
 <table id="comparewscomma">
@@ -1247,8 +1240,7 @@ except:
 <h3 id="idioms">Common idioms (explicit)</h3>
 <p>There were a number of common idioms built up in the Python community.  Some, like the <code>while 1:</code> loop, date back to Python 1.  (Python didn't have a true boolean type until version 2.3, so developers used <code>1</code> and <code>0</code> instead.)  Modern Python programmers should train their brains to use modern versions of these idioms instead.
 <blockquote class="note">
-<p>&#x261E;
-<p>The <code>2to3</code> script will not fix common idioms by default.  To enable this fix, specify <kbd>-f idioms</kbd> on the command line when you call <code>2to3</code>.
+<p><span>&#x261E;</span>The <code>2to3</code> script will not fix common idioms by default.  To enable this fix, specify <kbd>-f idioms</kbd> on the command line when you call <code>2to3</code>.
 </blockquote>
 <p class="skip"><a href="#skipcompareidioms">skip over this table</a>
 <table id="compareidioms">

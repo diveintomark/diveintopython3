@@ -5,7 +5,7 @@ a:hover{border-bottom:1px solid}
 a:link{color:#1b67c9}
 a:visited{color:darkorchid}
 h1 a,h2 a,h3 a,#nav a{color:inherit !important}
-abbr{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
+abbr,acronym{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol,#nav{margin:1.75em 0}
 li ol{margin:0}
 h1,h2,h3{font-size:medium}
@@ -25,10 +25,11 @@ th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
 th,td{width:45%;vertical-align:top}
 td{border:1px dotted;padding:0 0.5em}
 th:first-child{width:10%;text-align:center}
-span,.note p:first-child,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
-table.simple th{font-family:inherit !important}
-.note p:first-child{float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 0}
+span,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
 .q span{font-size:large}
+.note{margin-left:4.94em}
+.note span{display:block;float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 -1.22em}
+table.simple th{font-family:inherit !important}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
 h1{counter-reset:h2}
@@ -36,3 +37,5 @@ h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
 tr.hover,li.hover{background:#eee;color:inherit;cursor:default}
+.fr{width:auto;margin-top:4.308em;border:1px dotted}
+.fr h4{margin-top:-1.2em;margin-left:-1em;width:8.5em;border:1px dotted;padding: 3px 3px 3px 13px;background:#fff;color:inherit;position:relative}

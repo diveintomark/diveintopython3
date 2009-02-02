@@ -12,30 +12,16 @@ body{counter-reset:h1 1}
 <body>
 <h1>Your first Python program</h1>
 <blockquote class="q">
-<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; <cite>FIXME</cite>
+<p><span>&#x275D;</span> Don&#8217;t bury your burden in saintly silence.  You have a problem?  Great.  Rejoice, dive in, and investigate. <span>&#x275E;</span><br>&mdash; <cite>Ven. Henepola Gunararatana</cite>
 </blockquote>
 <ol>
 <li><a href="#divingin">Diving in</a>
 <li><a href="#declaringfunctions">Declaring functions</a>
+<li><a href="#documentingfunctions">Documenting functions</a>
 </ol>
 <h2 id="divingin">Diving in</h2>
-<p class="fancy">You know how other books go on and on about programming fundamentals and finally work up to building a complete, working program?  Let's skip all that.
-<p>Here is a complete, working Python program.  It probably makes absolutely no sense to you.  Don't worry about that, because you're going to dissect it line by line.  But read through it first and see what, if anything, you can make of it.
-<pre><code>"""Convert file sizes to human-readable form.
-
-Available functions:
-approximate_size(size, a_kilobyte_is_1024_bytes)
-    takes a file size and returns a human-readable string
-
-Examples:
->>> approximate_size(1024)
-'1.0 KiB'
->>> approximate_size(1000, False)
-'1.0 KB'
-
-"""
-
-SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
+<p class="fancy">You know how other books go on and on about programming fundamentals and finally work up to building something useful?  Let's skip all that.  Here is a complete, working Python program.  It probably makes absolutely no sense to you.  Don't worry about that, because you're going to dissect it line by line.  But read through it first and see what, if anything, you can make of it.
+<pre><code>SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
             1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
@@ -77,13 +63,11 @@ if __name__ == "__main__":
 <p>Note that the keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses.  Multiple arguments are separated with commas.
 <p>Also note that the function doesn't define a return datatype.  Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value.  (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
 <blockquote class="note">
-<p>&#x261E;
-<p>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>.  There are no subroutines in Python.  Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
+<p><span>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>.  There are no subroutines in Python.  Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
 </blockquote>
 <p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype.  (As you might guess from the <code>=True</code> syntax, the second argument is a boolean.  You'll learn what that syntax does in [FIXME xref].)  In Python, variables are never explicitly typed.  Python figures out what type a variable is and keeps track of it internally.
 <blockquote class="note">
-<p>&#x261E;
-<p>In Java, <acronym>C++</acronym>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
+<p><span>&#x261E;</span>In Java, <acronym>C++</acronym>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
 <h3>How Python's Datatypes Compare to Other Programming Languages</h3>
 <p>An erudite reader sent me this explanation of how Python compares to other programming languages:
@@ -108,10 +92,35 @@ if __name__ == "__main__":
 <tr><th>Weakly typed</th><td>C, Objective-C</td><td>JavaScript, Perl 5, PHP</td></tr>
 <tr><th>Strongly typed</th><td>Pascal, Java</td><td>Python, Ruby</td></tr>
 </table>
+<h2 id="documentingfunctions">Documenting functions</h2>
+<p>You can document a Python function by giving it a <code>docstring</code>.  In this program, the <code>approximate_size</code> function has a <code>docstring</code>:
+<pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
+    """Convert a file size to human-readable form.
 
+    Keyword arguments:
+    size -- file size in bytes
+    a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
+                                if False, use multiples of 1000
 
+    Returns: string
 
-
+    """</code></pre>
+<p>Triple quotes signify a multi-line string.  Everything between the start and end quotes is part of a single string, including carriage returns and other quote characters.  You can use them anywhere, but you'll see them most often used when defining a <code>docstring</code>.
+<blockquote class="note">
+<p><span>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
+</blockquote>
+<p>Everything between the triple quotes is the function's <code>docstring</code>, which documents what the function does.  A <code>docstring</code>, if it exists, must be the first thing defined in a function (that is, on the next line after the function declaration).  You don't technically need to give your function a <code>docstring</code>, but you always should.  I know you've heard this in every programming class you've ever taken, but Python gives you an added incentive: the <code>docstring</code> is available at runtime as an attribute of the function.
+<blockquote class="note">
+<p><span>&#x261E;</span>Many Python <acronym>IDE</acronym>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip.  This can be incredibly helpful, but it's only as good as the <code>docstring</code>s you write.
+</blockquote>
+<div class="fr">
+<h4>Further reading</h4>
+<ul>
+<li><a href="http://www.python.org/dev/peps/pep-0257/">PEP 257: Docstring Conventions</a>
+<li><a href="http://www.python.org/dev/peps/pep-0008/">PEP 8: Style Guide for Python Code</a>
+<li><a href="http://docs.python.org/3.0/tutorial/controlflow.html#documentation-strings">Python Tutorial: Documentation Strings</a>
+</ul>
+</div>
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
 </body>
 </html>

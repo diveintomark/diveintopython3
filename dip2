@@ -743,14 +743,14 @@ In fact, every Python function returns a value; if the function ever executes a 
 </dl>
 <p>So Python is both <em>dynamically typed</em> (because it doesn't use explicit datatype declarations) and <em>strongly typed</em> (because once a variable has a datatype, it actually matters).
 <h2 id="odbchelper.docstring">2.3. Documenting Functions</h2>
-<p>You can document a Python function by giving it a <code>doc string</code>.
-<div class="example"><h3 id="odbchelper.triplequotes">Example 2.2. Defining the <code class="function">buildConnectionString</code> Function's <code>doc string</code></h3><pre class="programlisting">
+<p>You can document a Python function by giving it a <code>docstring</code>.
+<div class="example"><h3 id="odbchelper.triplequotes">Example 2.2. Defining the <code class="function">buildConnectionString</code> Function's <code>docstring</code></h3><pre class="programlisting">
 def buildConnectionString(params):
     """Build a connection string from a dictionary of parameters.
 
     Returns string."""</pre><p>Triple quotes signify a multi-line string.  Everything between the start and end quotes is part of a single string, including
    carriage returns and other quote characters.  You can use them anywhere, but you'll see them most often used when defining
-   a <code>doc string</code>.
+   a <code>docstring</code>.
 </div><table id="compare.quoting.perl" class="note" border="0" summary="">
 <tr>
 <td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
@@ -760,31 +760,26 @@ def buildConnectionString(params):
 </td>
 </tr>
 </table>
-<p>Everything between the triple quotes is the function's <code>doc string</code>, which documents what the function does.  A <code>doc string</code>, if it exists, must be the first thing defined in a function (that is, the first thing after the colon).  You don't technically
-need to give your function a <code>doc string</code>, but you always should.  I know you've heard this in every programming class you've ever taken, but Python gives you an added incentive: the <code>doc string</code> is available at runtime as an attribute of the function.<table id="tip.docstring" class="note" border="0" summary="">
+<p>Everything between the triple quotes is the function's <code>docstring</code>, which documents what the function does.  A <code>docstring</code>, if it exists, must be the first thing defined in a function (that is, the first thing after the colon).  You don't technically
+need to give your function a <code>docstring</code>, but you always should.  I know you've heard this in every programming class you've ever taken, but Python gives you an added incentive: the <code>docstring</code> is available at runtime as an attribute of the function.<table id="tip.docstring" class="note" border="0" summary="">
 <tr>
 <td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
 </tr>
 <tr>
-<td colspan="2" align="left" valign="top" width="99%">Many Python <acronym>IDE</acronym>s use the <code>doc string</code> to provide context-sensitive documentation, so that when you type a function name, its <code>doc string</code> appears as a tooltip.  This can be incredibly helpful, but it's only as good as the <code>doc string</code>s you write.
+<td colspan="2" align="left" valign="top" width="99%">Many Python <acronym>IDE</acronym>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip.  This can be incredibly helpful, but it's only as good as the <code>docstring</code>s you write.
 </td>
 </tr>
 </table>
-<div class="itemizedlist">
-<h3>Further Reading on Documenting Functions</h3>
-<ul>
-<li><a href="http://www.python.org/peps/pep-0257.html">PEP 257</a> defines <code>doc string</code> conventions.
 
-<li><a href="http://www.python.org/doc/essays/styleguide.html"><i class="citetitle">Python Style Guide</i></a> discusses how to write a good <code>doc string</code>.
 
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class="citetitle">Python Tutorial</i></a> discusses conventions for <a href="http://www.python.org/doc/current/tut/node6.html#SECTION006750000000000000000">spacing in <code>doc string</code>s</a>.
 
-</ul>
+
+
 <h2 id="odbchelper.objects">2.4. Everything Is an Object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime.
 <p>A function, like everything else in Python, is an object.
 <p>Open your favorite Python <acronym>IDE</acronym> and follow along:
-<div class="example"><h3 id="odbchelper.import">Example 2.3. Accessing the <code class="function">buildConnectionString</code> Function's <code>doc string</code></h3><pre class="screen"><samp class="prompt">>>> </samp>import odbchelper            <img id="odbchelper.objects.1.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
+<div class="example"><h3 id="odbchelper.import">Example 2.3. Accessing the <code class="function">buildConnectionString</code> Function's <code>docstring</code></h3><pre class="screen"><samp class="prompt">>>> </samp>import odbchelper            <img id="odbchelper.objects.1.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
 <samp class="prompt">>>> </samp>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}
 <samp class="prompt">>>> </samp>print odbchelper.buildConnectionString(params) <img id="odbchelper.objects.1.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
 server=mpilgrim;uid=sa;database=master;pwd=secret
@@ -862,7 +857,7 @@ Returns string.</span></pre><div class="calloutlist">
 </tr>
 </table>
 <h3>2.4.2. What's an Object?</h3>
-<p>Everything in Python is an object, and almost everything has attributes and methods.  All functions have a built-in attribute <code>__doc__</code>, which returns the <code>doc string</code> defined in the function's source code.  The <code class="filename">sys</code> module is an object which has (among other things) an attribute called <code class="varname">path</code>.  And so forth.
+<p>Everything in Python is an object, and almost everything has attributes and methods.  All functions have a built-in attribute <code>__doc__</code>, which returns the <code>docstring</code> defined in the function's source code.  The <code class="filename">sys</code> module is an object which has (among other things) an attribute called <code class="varname">path</code>.  And so forth.
 <p>Still, this begs the question.  What is an object?  Different programming languages define &#8220;object&#8221; in different ways.  In some, it means that <em>all</em> objects <em>must</em> have attributes and methods; in others, it means that all objects are subclassable.  In Python, the definition is looser; some objects have neither attributes nor methods (more on this in <a href="#datatypes">Chapter 3</a>), and not all objects are subclassable (more on this in <a href="#fileinfo">Chapter 5</a>).  But everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function
    (more in this in <a href="#apihelper">Chapter 4</a>).
 <p>This is so important that I'm going to repeat it in case you missed it the first few times: <em>everything in Python is an object</em>.  Strings are objects.  Lists are objects.  Functions are objects.  Even modules are objects.
@@ -882,7 +877,7 @@ def buildConnectionString(params):
 
     Returns string."""
     return ";".join(["%s=%s" % (k, v) for k, v in params.items()])</pre><p>Code blocks are defined by their indentation.  By "code block", I mean functions, <code>if</code> statements, <code>for</code> loops, <code>while</code> loops, and so forth.  Indenting starts a block and unindenting ends it.  There are no explicit braces, brackets, or keywords.
-This means that whitespace is significant, and must be consistent.  In this example, the function code (including the <code>doc string</code>) is indented four spaces.  It doesn't need to be four spaces, it just needs to be consistent.  The first line that is not
+This means that whitespace is significant, and must be consistent.  In this example, the function code (including the <code>docstring</code>) is indented four spaces.  It doesn't need to be four spaces, it just needs to be consistent.  The first line that is not
 indented is outside the function.
 <p><a href="#odbchelper.indenting.if" title="Example 2.6. if Statements">Example 2.6, &#8220;if Statements&#8221;</a> shows an example of code indentation with <code>if</code> statements.
 <div class="example"><h3 id="odbchelper.indenting.if">Example 2.6. <code>if</code> Statements</h3><pre class="programlisting">
@@ -2044,9 +2039,9 @@ if __name__ == "__main__":
 
 <li>Writing Python programs and <a href="#odbchelper.testing" title="2.6. Testing Modules">running them from within your <acronym>IDE</acronym></a>, or from the command line
 
-<li><a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string">Importing modules</a> and calling their functions
+<li><a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring">Importing modules</a> and calling their functions
 
-<li><a href="#odbchelper.funcdef" title="2.2. Declaring Functions">Declaring functions</a> and using <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>doc string</code>s</a>, <a href="#odbchelper.vardef" title="3.4. Declaring variables">local variables</a>, and <a href="#odbchelper.indenting" title="2.5. Indenting Code">proper indentation</a>
+<li><a href="#odbchelper.funcdef" title="2.2. Declaring Functions">Declaring functions</a> and using <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>docstring</code>s</a>, <a href="#odbchelper.vardef" title="3.4. Declaring variables">local variables</a>, and <a href="#odbchelper.indenting" title="2.5. Indenting Code">proper indentation</a>
 <li>Defining <a href="#odbchelper.dict" title="3.1. Introducing Dictionaries">dictionaries</a>, <a href="#odbchelper.tuple" title="3.3. Introducing Tuples">tuples</a>, and <a href="#odbchelper.list" title="3.2. Introducing Lists">lists</a>
 <li>Accessing attributes and methods of <a href="#odbchelper.objects" title="2.4. Everything Is an Object">any object</a>, including strings, lists, dictionaries, functions, and modules
 
@@ -2067,7 +2062,7 @@ functions whose names you don't even know ahead of time.
 <div class="example"><h3>Example 4.1. <code class="filename">apihelper.py</code></h3>
 <p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.<pre class="programlisting">
 def info(object, spacing=10, collapse=1): <img id="apihelper.intro.1.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12"> <img id="apihelper.intro.1.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12"> <img id="apihelper.intro.1.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12">
-    """Print methods and doc strings.
+    """Print methods and docstrings.
     
     Takes module, class, list, dictionary, or string."""
     methodList = [method for method in dir(object) if callable(getattr(object, method))]
@@ -2089,7 +2084,7 @@ if __name__ == "__main__":                <img id="apihelper.intro.1.4" src="ima
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.intro.1.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">The <code class="function">info</code> function has a multi-line <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>doc string</code></a> that succinctly describes the function's purpose.  Note that no return value is mentioned; this function will be used solely
+<td valign="top" align="left">The <code class="function">info</code> function has a multi-line <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>docstring</code></a> that succinctly describes the function's purpose.  Note that no return value is mentioned; this function will be used solely
             for its effects, rather than its value.
 </td>
 </tr>
@@ -2103,7 +2098,7 @@ if __name__ == "__main__":                <img id="apihelper.intro.1.4" src="ima
 <td width="12" valign="top" align="left"><a href="#apihelper.intro.1.4"><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
 </td>
 <td valign="top" align="left">The <code>if __name__</code> <a href="#odbchelper.ifnametrick">trick</a> allows this program do something useful when run by itself, without interfering with its use as a module for other programs.
-             In this case, the program simply prints out the <code>doc string</code> of the <code class="function">info</code> function.
+             In this case, the program simply prints out the <code>docstring</code> of the <code class="function">info</code> function.
 </td>
 </tr>
 <tr>
@@ -2114,7 +2109,7 @@ if __name__ == "__main__":                <img id="apihelper.intro.1.4" src="ima
 </tr>
 </table>
 <p>The <code class="function">info</code> function is designed to be used by you, the programmer, while working in the Python <acronym>IDE</acronym>.  It takes any object that has functions or methods (like a module, which has functions, or a list, which has methods) and
-prints out the functions and their <code>doc string</code>s.
+prints out the functions and their <code>docstring</code>s.
 <div class="example"><h3>Example 4.2. Sample Usage of <code class="filename">apihelper.py</code></h3><pre class="screen"><samp class="prompt">>>> </samp>from apihelper import info
 <samp class="prompt">>>> </samp>li = []
 <samp class="prompt">>>> </samp>info(li)
@@ -2126,7 +2121,7 @@ insert     L.insert(index, object) -- insert object before index
 pop        L.pop([index]) -> item -- remove and return item at index (default last)
 remove     L.remove(value) -- remove first occurrence of value
 reverse    L.reverse() -- reverse *IN PLACE*
-sort       L.sort([cmpfunc]) -- sort *IN PLACE*; if given, cmpfunc(x, y) -> -1, 0, 1</span></pre><p>By default the output is formatted to be easy to read.  Multi-line <code>doc string</code>s are collapsed into a single long line, but this option can be changed by specifying <code class="constant">0</code> for the <i class="parameter"><code>collapse</code></i> argument.  If the function names are longer than 10 characters, you can specify a larger value for the <i class="parameter"><code>spacing</code></i> argument to make the output easier to read.
+sort       L.sort([cmpfunc]) -- sort *IN PLACE*; if given, cmpfunc(x, y) -> -1, 0, 1</span></pre><p>By default the output is formatted to be easy to read.  Multi-line <code>docstring</code>s are collapsed into a single long line, but this option can be changed by specifying <code class="constant">0</code> for the <i class="parameter"><code>collapse</code></i> argument.  If the function names are longer than 10 characters, you can specify a larger value for the <i class="parameter"><code>spacing</code></i> argument to make the output easier to read.
 <div class="example"><h3>Example 4.3. Advanced Usage of <code class="filename">apihelper.py</code></h3><pre class="screen"><samp class="prompt">>>> </samp>import odbchelper
 <samp class="prompt">>>> </samp>info(odbchelper)
 buildConnectionString Build a connection string from a dictionary Returns string.
@@ -2307,7 +2302,7 @@ True</pre><div class="calloutlist">
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.builtin.3.3"><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">This is where it really gets interesting. <code class="filename">odbchelper</code> is a module, so <code><code class="function">dir</code>(<code class="filename">odbchelper</code>)</code> returns a list of all kinds of stuff defined in the module, including built-in attributes, like <a href="#odbchelper.ifnametrick"><code>__name__</code></a>, <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>__doc__</code></a>, and whatever other attributes and methods you define.  In this case, <code class="filename">odbchelper</code> has only one user-defined method, the <code class="function">buildConnectionString</code> function described in <a href="#odbchelper">Chapter 2</a>.
+<td valign="top" align="left">This is where it really gets interesting. <code class="filename">odbchelper</code> is a module, so <code><code class="function">dir</code>(<code class="filename">odbchelper</code>)</code> returns a list of all kinds of stuff defined in the module, including built-in attributes, like <a href="#odbchelper.ifnametrick"><code>__name__</code></a>, <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>__doc__</code></a>, and whatever other attributes and methods you define.  In this case, <code class="filename">odbchelper</code> has only one user-defined method, the <code class="function">buildConnectionString</code> function described in <a href="#odbchelper">Chapter 2</a>.
 </td>
 </tr>
 </table>
@@ -2358,7 +2353,7 @@ True
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.builtin.4.5"><img src="images/callouts/5.png" alt="5" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Any callable object may have a <code>doc string</code>.  By using the <code class="function">callable</code> function on each of an object's attributes, you can determine which attributes you care about (methods, functions, classes)
+<td valign="top" align="left">Any callable object may have a <code>docstring</code>.  By using the <code class="function">callable</code> function on each of an object's attributes, you can determine which attributes you care about (methods, functions, classes)
                and which you want to ignore (constants and so on) without knowing anything about the object ahead of time.
 </td>
 </tr>
@@ -2790,7 +2785,7 @@ a	test</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.split.1.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">This is a multiline string, defined by escape characters instead of <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's doc string">triple quotes</a>.  <code>\n</code> is a carriage return, and <code>\t</code> is a tab character.
+<td valign="top" align="left">This is a multiline string, defined by escape characters instead of <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's docstring">triple quotes</a>.  <code>\n</code> is a carriage return, and <code>\t</code> is a tab character.
 </td>
 </tr>
 <tr>
@@ -2802,7 +2797,7 @@ a	test</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.split.1.3"><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can normalize whitespace by splitting a string with <code class="function">split</code> and then rejoining it with <code class="function">join</code>, using a single space as a delimiter.  This is what the <code class="function">info</code> function does to collapse multi-line <code>doc string</code>s into a single line.
+<td valign="top" align="left">You can normalize whitespace by splitting a string with <code class="function">split</code> and then rejoining it with <code class="function">join</code>, using a single space as a delimiter.  This is what the <code class="function">info</code> function does to collapse multi-line <code>docstring</code>s into a single line.
 </td>
 </tr>
 </table>
@@ -2836,7 +2831,7 @@ a	test</samp>
 square brackets.
 <p>Now, let's take it from the end and work backwards.  The <pre class="programlisting">
 for method in methodList</pre><p>shows that this is a <a href="#odbchelper.map" title="3.6. Mapping Lists">list comprehension</a>.  As you know, <code class="varname">methodList</code> is a list of <a href="#apihelper.filter.care">all the methods you care about</a> in <code class="varname">object</code>.  So you're looping through that list with <code class="varname">method</code>.
-<div class="example"><h3>Example 4.22. Getting a <code>doc string</code> Dynamically</h3><pre class="screen"><samp class="prompt">>>> </samp>import odbchelper
+<div class="example"><h3>Example 4.22. Getting a <code>docstring</code> Dynamically</h3><pre class="screen"><samp class="prompt">>>> </samp>import odbchelper
 <samp class="prompt">>>> </samp>object = odbchelper <img id="apihelper.alltogether.1.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
 <samp class="prompt">>>> </samp>method = 'buildConnectionString'      <img id="apihelper.alltogether.1.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
 <samp class="prompt">>>> </samp>getattr(object, method)               <img id="apihelper.alltogether.1.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12">
@@ -2867,12 +2862,12 @@ for method in methodList</pre><p>shows that this is a <a href="#odbchelper.map" 
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.alltogether.1.4"><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Now, printing the actual <code>doc string</code> of the method is easy.
+<td valign="top" align="left">Now, printing the actual <code>docstring</code> of the method is easy.
 </td>
 </tr>
 </table>
-<p>The next piece of the puzzle is the use of <code class="function">str</code> around the <code>doc string</code>.  As you may recall, <code class="function">str</code> is a built-in function that <a href="#apihelper.builtin" title="4.3. Using type, str, dir, and Other Built-In Functions">coerces data into a string</a>.  But a <code>doc string</code> is always a string, so why bother with the <code class="function">str</code> function?  The answer is that not every function has a <code>doc string</code>, and if it doesn't, its <code>__doc__</code> attribute is <code>None</code>.
-<div class="example"><h3>Example 4.23. Why Use <code class="function">str</code> on a <code>doc string</code>?</h3><pre class="screen"><samp class="prompt">>>> </samp>>>> def foo(): print 2
+<p>The next piece of the puzzle is the use of <code class="function">str</code> around the <code>docstring</code>.  As you may recall, <code class="function">str</code> is a built-in function that <a href="#apihelper.builtin" title="4.3. Using type, str, dir, and Other Built-In Functions">coerces data into a string</a>.  But a <code>docstring</code> is always a string, so why bother with the <code class="function">str</code> function?  The answer is that not every function has a <code>docstring</code>, and if it doesn't, its <code>__doc__</code> attribute is <code>None</code>.
+<div class="example"><h3>Example 4.23. Why Use <code class="function">str</code> on a <code>docstring</code>?</h3><pre class="screen"><samp class="prompt">>>> </samp>>>> def foo(): print 2
 <samp class="prompt">>>> </samp>>>> foo()
 2
 <samp class="prompt">>>> </samp>>>> foo.__doc__     <img id="apihelper.alltogether.2.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
@@ -2885,7 +2880,7 @@ True
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.alltogether.2.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can easily define a function that has no <code>doc string</code>, so its <code>__doc__</code> attribute is <code>None</code>.  Confusingly, if you evaluate the <code>__doc__</code> attribute directly, the Python <acronym>IDE</acronym> prints nothing at all, which makes sense if you think about it, but is still unhelpful.
+<td valign="top" align="left">You can easily define a function that has no <code>docstring</code>, so its <code>__doc__</code> attribute is <code>None</code>.  Confusingly, if you evaluate the <code>__doc__</code> attribute directly, the Python <acronym>IDE</acronym> prints nothing at all, which makes sense if you think about it, but is still unhelpful.
 </td>
 </tr>
 <tr>
@@ -2921,7 +2916,7 @@ True
 <tr>
 <td width="12" valign="top" align="left"><a href="#apihelper.alltogether.3.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left"><code class="function">ljust</code> pads the string with spaces to the given length.  This is what the <code class="function">info</code> function uses to make two columns of output and line up all the <code>doc string</code>s in the second column.
+<td valign="top" align="left"><code class="function">ljust</code> pads the string with spaces to the given length.  This is what the <code class="function">info</code> function uses to make two columns of output and line up all the <code>docstring</code>s in the second column.
 </td>
 </tr>
 <tr>
@@ -2931,7 +2926,7 @@ True
 </td>
 </tr>
 </table>
-<p>You're almost finished.  Given the padded method name from the <code class="function">ljust</code> method and the (possibly collapsed) <code>doc string</code> from the call to <code class="varname">processFunc</code>, you concatenate the two and get a single string.  Since you're mapping <code class="varname">methodList</code>, you end up with a list of strings.  Using the <code class="function">join</code> method of the string <code>"\n"</code>, you join this list into a single string, with each element of the list on a separate line, and print the result.
+<p>You're almost finished.  Given the padded method name from the <code class="function">ljust</code> method and the (possibly collapsed) <code>docstring</code> from the call to <code class="varname">processFunc</code>, you concatenate the two and get a single string.  Since you're mapping <code class="varname">methodList</code>, you end up with a list of strings.  Using the <code class="function">join</code> method of the string <code>"\n"</code>, you join this list into a single string, with each element of the list on a separate line, and print the result.
 <div class="example"><h3>Example 4.25. Printing a List</h3><pre class="screen"><samp class="prompt">>>> </samp>li = ['a', 'b', 'c']
 <samp class="prompt">>>> </samp>print "\n".join(li) <img id="apihelper.alltogether.4.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
 <samp class="computeroutput">a
@@ -2954,7 +2949,7 @@ c</span></pre><div class="calloutlist">
 <p>The <code class="filename">apihelper.py</code> program and its output should now make perfect sense.
 <div class="informalexample"><pre class="programlisting">
 def info(object, spacing=10, collapse=1):
-    """Print methods and doc strings.
+    """Print methods and docstrings.
     
     Takes module, class, list, dictionary, or string."""
     methodList = [method for method in dir(object) if callable(getattr(object, method))]
@@ -2998,7 +2993,7 @@ sort       L.sort([cmpfunc]) -- sort *IN PLACE*; if given, cmpfunc(x, y) -> -1, 
 <h2 id="fileinfo">Chapter 5. Objects and Object-Orientation</h2>
 <p>This chapter, and pretty much every chapter after this, deals with object-oriented Python programming.
 <h2 id="fileinfo.divein">5.1. Diving In</h2>
-<p>Here is a complete, working Python program.  Read the <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>doc string</code>s</a> of the module, the classes, and the functions to get an overview of what this program does and how it works.  As usual, don't
+<p>Here is a complete, working Python program.  Read the <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>docstring</code>s</a> of the module, the classes, and the functions to get an overview of what this program does and how it works.  As usual, don't
    worry about the stuff you don't understand; that's what the rest of the chapter is for.
 <div class="example"><h3>Example 5.1. <code class="filename">fileinfo.py</code></h3>
 <p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.<pre class="programlisting">
@@ -3141,7 +3136,7 @@ comment=http://mp3.com/artists/95/vxp</span></pre><h2 id="fileinfo.fromimport">5
 <div class="informalexample">
 <p>Here is the basic <code>from <i class="replaceable">module</i> import</code> syntax:<pre class="programlisting">
 from UserDict import UserDict
-</pre><p>This is similar to the <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>import <i class="replaceable">module</i></code></a> syntax that you know and love, but with an important difference: the attributes and methods of the imported module <code class="filename">types</code> are imported directly into the local namespace, so they are available directly, without qualification by module name.  You
+</pre><p>This is similar to the <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import <i class="replaceable">module</i></code></a> syntax that you know and love, but with an important difference: the attributes and methods of the imported module <code class="filename">types</code> are imported directly into the local namespace, so they are available directly, without qualification by module name.  You
 can import individual items or use <code>from <i class="replaceable">module</i> import *</code> to import everything.<table id="compare.fromimport.perl" class="note" border="0" summary="">
 <tr>
 <td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
@@ -3300,7 +3295,7 @@ class FileInfo(UserDict):
 <tr>
 <td width="12" valign="top" align="left"><a href="#fileinfo.class.2.2"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Classes can (and <a href="#tip.docstring">should</a>) have <code>doc string</code>s too, just like modules and functions.
+<td valign="top" align="left">Classes can (and <a href="#tip.docstring">should</a>) have <code>docstring</code>s too, just like modules and functions.
 </td>
 </tr>
 <tr>
@@ -3418,7 +3413,7 @@ class FileInfo(UserDict):
 <tr>
 <td width="12" valign="top" align="left"><a href="#fileinfo.create.1.3"><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can access the instance's <code>doc string</code> just as with a function or a module.  All instances of a class share the same <code>doc string</code>.
+<td valign="top" align="left">You can access the instance's <code>docstring</code> just as with a function or a module.  All instances of a class share the same <code>docstring</code>.
 </td>
 </tr>
 <tr>
@@ -3991,7 +3986,7 @@ call it directly (even from outside the <code class="filename">fileinfo</code> m
 <td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
 </tr>
 <tr>
-<td colspan="2" align="left" valign="top" width="99%">In Python, all special methods (like <a href="#fileinfo.specialmethods.setitem.example" title="Example 5.13. The __setitem__ Special Method"><code class="function">__setitem__</code></a>) and built-in attributes (like <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>__doc__</code></a>) follow a standard naming convention: they both start with and end with two underscores.  Don't name your own methods and
+<td colspan="2" align="left" valign="top" width="99%">In Python, all special methods (like <a href="#fileinfo.specialmethods.setitem.example" title="Example 5.13. The __setitem__ Special Method"><code class="function">__setitem__</code></a>) and built-in attributes (like <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>__doc__</code></a>) follow a standard naming convention: they both start with and end with two underscores.  Don't name your own methods and
       attributes this way, because it will only confuse you (and others) later.
 </td>
 </tr>
@@ -4025,7 +4020,7 @@ AttributeError: 'MP3FileInfo' instance has no attribute '__parse'</span></pre><d
 <p>Before diving into the next chapter, make sure you're comfortable doing all of these things:
 <div class="itemizedlist">
 <ul>
-<li>Importing modules using either <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>import <i class="replaceable">module</i></code></a> or <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import"><code>from <i class="replaceable">module</i> import</code></a>
+<li>Importing modules using either <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import <i class="replaceable">module</i></code></a> or <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import"><code>from <i class="replaceable">module</i> import</code></a>
 <li><a href="#fileinfo.class" title="5.3. Defining Classes">Defining</a> and <a href="#fileinfo.create" title="5.4. Instantiating Classes">instantiating</a> classes
 
 <li>Defining <a href="#fileinfo.class.example" title="Example 5.4. Defining the FileInfo Class"><code class="function">__init__</code> methods</a> and other <a href="#fileinfo.specialmethods" title="5.6. Special Class Methods">special class methods</a>, and understanding when they are called
@@ -6041,7 +6036,7 @@ they solve.
 <h2 id="dialect">Chapter 8. <acronym>HTML</acronym> Processing</h2>
 <h2 id="dialect.divein">8.1. Diving in</h2>
 <p>I often see questions on <a href="http://groups.google.com/groups?group=comp.lang.python">comp.lang.python</a> like &#8220;How can I list all the [headers|images|links] in my <acronym>HTML</acronym> document?&#8221;  &#8220;How do I parse/translate/munge the text of my <acronym>HTML</acronym> document but leave the tags alone?&#8221;  &#8220;How can I add/remove/quote attributes of all my <acronym>HTML</acronym> tags at once?&#8221;  This chapter will answer all of these questions.
-<p>Here is a complete, working Python program in two parts.  The first part, <code class="filename">BaseHTMLProcessor.py</code>, is a generic tool to help you process <acronym>HTML</acronym> files by walking through the tags and text blocks.  The second part, <code class="filename">dialect.py</code>, is an example of how to use <code class="filename">BaseHTMLProcessor.py</code> to translate the text of an <acronym>HTML</acronym> document but leave the tags alone.  Read the <code>doc string</code>s and comments to get an overview of what's going on.  Most of it will seem like black magic, because it's not obvious how
+<p>Here is a complete, working Python program in two parts.  The first part, <code class="filename">BaseHTMLProcessor.py</code>, is a generic tool to help you process <acronym>HTML</acronym> files by walking through the tags and text blocks.  The second part, <code class="filename">dialect.py</code>, is an example of how to use <code class="filename">BaseHTMLProcessor.py</code> to translate the text of an <acronym>HTML</acronym> document but leave the tags alone.  Read the <code>docstring</code>s and comments to get an overview of what's going on.  Most of it will seem like black magic, because it's not obvious how
 any of these class methods ever get called.  Don't worry, all will be revealed in due time.
 <div class="example"><h3 id="dialect.basehtml.listing">Example 8.1. <code class="filename">BaseHTMLProcessor.py</code></h3>
 <p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.<pre class="programlisting">
@@ -6712,7 +6707,7 @@ from __future__ import nested_scopes</pre></td>
 </table>
 <p>What <code class="function">locals</code> does for the local (function) namespace, <code class="function">globals</code> does for the global (module) namespace.  <code class="function">globals</code> is more exciting, though, because a module's namespace is more exciting.<sup>[<a name="d0e21226" href="#ftn.d0e21226">3</a>]</sup>  Not only does the module's namespace include module-level variables and constants, it includes all the functions and classes
 defined in the module.  Plus, it includes anything that was imported into the module.
-<p>Remember the difference between <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import"><code>from <i class="replaceable">module</i> import</code></a> and <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>import <i class="replaceable">module</i></code></a>?  With <code>import <i class="replaceable">module</i></code>, the module itself is imported, but it retains its own namespace, which is why you need to use the module name to access
+<p>Remember the difference between <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import"><code>from <i class="replaceable">module</i> import</code></a> and <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import <i class="replaceable">module</i></code></a>?  With <code>import <i class="replaceable">module</i></code>, the module itself is imported, but it retains its own namespace, which is why you need to use the module name to access
 any of its functions or attributes: <code><i class="replaceable">module</i>.<i class="replaceable">function</i></code>.  But with <code>from <i class="replaceable">module</i> import</code>, you're actually importing specific functions and attributes from another module into your own namespace, which is why you
 access them directly without referencing the original module they came from.  With the <code class="function">globals</code> function, you can actually see this happen.
 <div class="example"><h3 id="dialect.globals.example">Example 8.11. Introducing <code class="function">globals</code></h3>
@@ -6952,7 +6947,7 @@ at all.  It is this last side effect that you can take advantage of.
 <tr>
 <td width="12" valign="top" align="left"><a href="#dialect.basehtml.3.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Note that the attribute values of the <code>href</code> attributes in the <code class="sgmltag-element">&lt;a></code> tags are not properly quoted.  (Also note that you're using <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's doc string">triple quotes</a> for something other than a <code>doc string</code>.  And directly in the <acronym>IDE</acronym>, no less.  They're very useful.)
+<td valign="top" align="left">Note that the attribute values of the <code>href</code> attributes in the <code class="sgmltag-element">&lt;a></code> tags are not properly quoted.  (Also note that you're using <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's docstring">triple quotes</a> for something other than a <code>docstring</code>.  And directly in the <acronym>IDE</acronym>, no less.  They're very useful.)
 </td>
 </tr>
 <tr>
@@ -7138,7 +7133,7 @@ def translate(url, dialectName="chef"): <img id="dialect.alltogether.1.1" src="i
 <tr>
 <td width="12" valign="top" align="left"><a href="#dialect.alltogether.1.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Hey, wait a minute, there's an <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's doc string"><code>import</code></a> statement in this function!  That's perfectly legal in Python.  You're used to seeing <code>import</code> statements at the top of a program, which means that the imported module is available anywhere in the program.  But you can
+<td valign="top" align="left">Hey, wait a minute, there's an <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import</code></a> statement in this function!  That's perfectly legal in Python.  You're used to seeing <code>import</code> statements at the top of a program, which means that the imported module is available anywhere in the program.  But you can
             also import modules within a function, which means that the imported module is only available within the function.  If you
             have a module that is only ever used in one function, this is an easy way to make your code more modular.  (When you find
             that your weekend hack has turned into an 800-line work of art and decide to split it up into a dozen reusable modules, you'll
@@ -12093,7 +12088,7 @@ FAILED (failures=10, errors=2)     </span><img id="roman.stage1.2.4" src="images
 <tr>
 <td width="12" valign="top" align="left"><a href="#roman.stage1.2.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Running the script runs <code class="function">unittest.main()</code>, which runs each test case, which is to say each method defined in each class within <code class="filename">romantest.py</code>.  For each test case, it prints out the <code>doc string</code> of the method and whether that test passed or failed.  As expected, none of the test cases passed.
+<td valign="top" align="left">Running the script runs <code class="function">unittest.main()</code>, which runs each test case, which is to say each method defined in each class within <code class="filename">romantest.py</code>.  For each test case, it prints out the <code>docstring</code> of the method and whether that test passed or failed.  As expected, none of the test cases passed.
 </td>
 </tr>
 <tr>
@@ -13406,7 +13401,7 @@ OK</span>   <img id="roman.refactoring.3.3" src="images/callouts/3.png" alt="3" 
 <tr>
 <td width="12" valign="top" align="left"><a href="#roman.refactoring.3.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Just a note in passing here: this time, I ran the unit test <em>without</em> the <code class="option">-v</code> option, so instead of the full <code>doc string</code> for each test, you only get a dot for each test that passes.  (If a test failed, you'd get an <code>F</code>, and if it had an error, you'd get an <code>E</code>.  You'd still get complete tracebacks for each failure and error, so you could track down any problems.)
+<td valign="top" align="left">Just a note in passing here: this time, I ran the unit test <em>without</em> the <code class="option">-v</code> option, so instead of the full <code>docstring</code> for each test, you only get a dot for each test that passes.  (If a test failed, you'd get an <code>F</code>, and if it had an error, you'd get an <code>E</code>.  You'd still get complete tracebacks for each failure and error, so you could track down any problems.)
 </td>
 </tr>
 <tr>
