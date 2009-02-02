@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your first Python program - Dive into Python 3</title>
+<link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
+<link rel="stylesheet" type="text/css" href="dip3.css">
+<style type="text/css">
+body{counter-reset:h1 1}
+</style>
+</head>
+<body>
+<h1>Your first Python program</h1>
+<blockquote class="q">
+<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; <cite>FIXME</cite>
+</blockquote>
+<ol>
+<li><a href="#divingin">Diving in</a>
+<li><a href="#declaringfunctions">Declaring functions</a>
+</ol>
+<h2 id="divingin">Diving in</h2>
+<p class="fancy">You know how other books go on and on about programming fundamentals and finally work up to building a complete, working program?  Let's skip all that.
+<p>Here is a complete, working Python program.  It probably makes absolutely no sense to you.  Don't worry about that, because you're going to dissect it line by line.  But read through it first and see what, if anything, you can make of it.
+<pre><code>"""Convert file sizes to human-readable form.
+
+Available functions:
+approximate_size(size, a_kilobyte_is_1024_bytes)
+    takes a file size and returns a human-readable string
+
+Examples:
+>>> approximate_size(1024)
+'1.0 KiB'
+>>> approximate_size(1000, False)
+'1.0 KB'
+
+"""
+
+SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
+            1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}
+
+def approximate_size(size, a_kilobyte_is_1024_bytes=True):
+    """Convert a file size to human-readable form.
+
+    Keyword arguments:
+    size -- file size in bytes
+    a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
+                                if False, use multiples of 1000
+
+    Returns: string
+
+    """
+    if size < 0:
+        raise ValueError('number must be non-negative')
+
+    multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
+    for suffix in SUFFIXES[multiple]:
+        size /= multiple
+        if size < multiple:
+            return "{0:.1f} {1}".format(size, suffix)
+
+    raise ValueError('number too large')
+
+if __name__ == "__main__":
+    print(approximate_size(1000000000000, False))
+    print(approximate_size(1000000000000))</code></pre>
+<p>Now let's run this program on the command line.  On Windows, it will look something like this:
+<pre class="screen"><samp class="prompt">c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
+<samp>1.0 TB
+931.3 GiB</samp></pre>
+<p>On Mac OS X or Linux, it would look something like this:
+<pre class="screen"><samp class="prompt">you@localhost:~$ </samp><kbd>python3 humansize.py</kbd>
+<samp>1.0 TB
+931.3 GiB</samp></pre>
+<h2 id="declaringfunctions">Declaring functions</h2>
+<p>Python has functions like most other languages, but it does not have separate header files like <acronym>C++</acronym> or <code>interface</code>/<code>implementation</code> sections like Pascal.  When you need a function, just declare it, like this:
+<pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<p>Note that the keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses.  Multiple arguments are separated with commas.
+<p>Also note that the function doesn't define a return datatype.  Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value.  (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
+<blockquote class="note">
+<p>&#x261E;
+<p>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>.  There are no subroutines in Python.  Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
+</blockquote>
+<p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype.  (As you might guess from the <code>=True</code> syntax, the second argument is a boolean.  You'll learn what that syntax does in [FIXME xref].)  In Python, variables are never explicitly typed.  Python figures out what type a variable is and keeps track of it internally.
+<blockquote class="note">
+<p>&#x261E;
+<p>In Java, <acronym>C++</acronym>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
+</blockquote>
+<h3>How Python's Datatypes Compare to Other Programming Languages</h3>
+<p>An erudite reader sent me this explanation of how Python compares to other programming languages:
+<dl>
+<dt>statically typed language</dt>
+<dd>A language in which types are fixed at compile time.  Most statically typed languages enforce this by requiring you to declare all variables with their datatypes before using them.  Java and <acronym>C</acronym> are statically typed languages.
+</dd>
+<dt>dynamically typed language</dt>
+<dd>A language in which types are discovered at execution time; the opposite of statically typed.  JavaScript and Python are dynamically typed, because they figure out what type a variable is when you first assign it a value.
+</dd>
+<dt>strongly typed language</dt>
+<dd>A language in which types are always enforced.  Java and Python are strongly typed.  If you have an integer, you can't treat it like a string without explicitly converting it.
+</dd>
+<dt>weakly typed language</dt>
+<dd>A language in which types are &#8220;automagically&#8221; coerced to other types as needed; the opposite of strongly typed.  PHP is weakly typed.  In PHP, you can concatenate the string <code>'12'</code> and the integer <code>3</code> to get the string <code>'123'</code>, then treat that as the integer <code>123</code>, all without any explicit conversion. [FIXME double-check this]
+</dd>
+</dl>
+<p>So Python is both <em>dynamically typed</em> (because it doesn't use explicit datatype declarations) and <em>strongly typed</em> (because once a variable has a datatype, it actually matters).
+<p>If you have experience in other programming languages, this table may help you visualize how Python compares to them:
+<table class="simple">
+<tr><th></th><th>Statically typed</th><th>Dynamically typed</th></tr>
+<tr><th>Weakly typed</th><td>C, Objective-C</td><td>JavaScript, Perl 5, PHP</td></tr>
+<tr><th>Strongly typed</th><td>Pascal, Java</td><td>Python, Ruby</td></tr>
+</table>
+
+
+
+
+<p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
+</body>
+</html>

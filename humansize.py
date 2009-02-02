@@ -1,20 +1,21 @@
 """Convert file sizes to human-readable form.
 
 Available functions:
-human_size(size, a_kilobyte_is_1024_bytes)
+approximate_size(size, a_kilobyte_is_1024_bytes)
     takes a file size and returns a human-readable string
 
 Examples:
->>> human_size(1024)
+>>> approximate_size(1024)
 '1.0 KiB'
->>> human_size(1000, False)
+>>> approximate_size(1000, False)
 '1.0 KB'
+
 """
 
 SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
             1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}
 
-def human_size(size, a_kilobyte_is_1024_bytes=True):
+def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     """Convert a file size to human-readable form.
 
     Keyword arguments:
@@ -27,13 +28,15 @@ def human_size(size, a_kilobyte_is_1024_bytes=True):
     """
     if size < 0:
         raise ValueError('number must be non-negative')
+
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
     for suffix in SUFFIXES[multiple]:
         size /= multiple
         if size < multiple:
             return "{0:.1f} {1}".format(size, suffix)
+
     raise ValueError('number too large')
 
 if __name__ == "__main__":
-    print(human_size(1000000000000, False))
-    print(human_size(1000000000000))
+    print(approximate_size(1000000000000, False))
+    print(approximate_size(1000000000000))

@@ -1,26 +1,28 @@
-- python 2to3.py -w test.py (the -w flag makes a backup then overwrites the original file)
-- python 2to3.py -w chardet/ directory (passing a directory acts on all .py files in the directory)
-  (TODO: need log of this step)
-- global search-and-replace constants.False --> False, constants.True --> True (unnecessary, Python3 always defines a Boolean type)
-- constants.py: remove code for defining True and False
-- universaldetector.py, charsetgroupprober.py, charsetprober.py, escprober.py, eucjpprober.py, mbcharsetprober.py, sbcharsetprober.py, sbcsgroupprober.py, sjisprober.py, utf8prober.py: manually fix import statements that 2to3 missed
+* python 2to3.py -w test.py (the -w flag makes a backup then overwrites the original file)
+* python 2to3.py -w chardet/ directory (passing a directory acts on all .py files in the directory)
+* global search-and-replace constants.False --> False, constants.True --> True (unnecessary, Python3 always defines a Boolean type)
+* constants.py: remove code for defining True and False
+* universaldetector.py, charsetgroupprober.py, charsetprober.py, escprober.py, eucjpprober.py, mbcharsetprober.py, sbcharsetprober.py, sbcsgroupprober.py, sjisprober.py, utf8prober.py: manually fix import statements that 2to3 missed
   old:
     import constants, sys
   new:
     from . import constants
     import sys
-- test.py: change file() to open()
-- universaldetector.py: change r'' strings to b'' byte arrays in self._highBitDetector, self._escDetector regular expressions
+* test.py: change file() to open()
+* universaldetector.py: change r'' strings to b'' byte arrays in self._highBitDetector, self._escDetector regular expressions
+- charsetprober.py: change regular expression-based replace to use b'' byte arrays instead of strings
+
 - universaldetector.py: change self._mLastChar from a r'' string to a b'' byte array
+- mbcharsetprober.py: change self._mLastChar from a list of two 1-character strings to a list of two ints
 - universaldetector.py: getting a single element from a byte array yields an integer, not a byte, so change syntax to make sure we self._mLastChar is always a byte
   old:
     self._mLastChar = aBuf[-1]
   new:
     self._mLastChar = aBuf[-1:]
-- jpcntx.py, chardistribution.py (editorial): global search-and-replace "aStr" --> "aBuf" to make it clear that we're passing around a byte array
+
 - jpcntx.py, chardistribution.py: change 1-character strings to ints and hex ints, since we're just comparing ints to ints anyway
 - jpcntx.py, chardistribution.py: change ord(aBuf[0]) to aBuf[0] since it's already an int (iterating through a byte array)
-- mbcharsetprober.py: change self._mLastChar from a list of two 1-character strings to a list of two ints
-- charsetprober.py: change regular expression-based replace to use b'' byte arrays instead of strings
+- jpcntx.py, chardistribution.py (editorial): global search-and-replace "aStr" --> "aBuf" to make it clear that we're passing around a byte array
 - sbcharsetprober.py, latin1prober.py: change ord(c) to c since it's already an int (iterating through a byte array)
+
 - latin1prober.py: refactor reduce(operator.add, ...) to use a for loop instead
