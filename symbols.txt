@@ -19,3 +19,6 @@ http://www.alanwood.net/unicode/dingbats.html
 &#x203D; - interrobang
 &#x275D; - heavy double turned left comma quotation mark ornament
 &#x275E; - heavy double turned right comma quotation mark ornament
+
+http://docs.python.org/dev/library/turtle.html
+http://svn.python.org/projects/python/trunk/Demo/turtle/
