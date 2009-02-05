@@ -8,12 +8,14 @@
 <link rel="shortcut icon" href="data:image/ico,">
 <link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
 <style type="text/css">
-body{counter-reset:h1 19}
+body{counter-reset:h1 20}
 </style>
 </head>
 <body>
 <p class="skip"><a href="#divingin">skip to main content</a>
-<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div><p>You are here: <a href="/">Dive Into Python 3</a> <span>&#8227;</span></p> <h1>Case study: porting <code>chardet</code> to Python 3</h1></form>
+<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div></form>
+<p class="nav">You are here: <a href="/">Dive Into Python 3</a> <span>&#8227;</span>
+<h1>Case study: porting <code>chardet</code> to Python 3</h1>
 <blockquote class="q">
 <p><span>&#x275D;</span> Words, words.  They&#8217;re all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
 </blockquote>
@@ -26,7 +28,7 @@ body{counter-reset:h1 19}
   <li><a href="#faq.yippie">Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</a>
   <li><a href="#faq.why">Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</a>
   </ol>
-<li><a href="#divingin">Diving in</a>
+<li><a href="#divingin2">Diving in</a>
   <ol>
   <li><a href="#how.bom"><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
   <li><a href="#how.esc">Escaped encodings</a>
@@ -67,7 +69,7 @@ body{counter-reset:h1 19}
 <h3 id="faq.why">Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</h3>
 <p>Sometimes you receive text with verifiably inaccurate encoding information.  Or text without any encoding information, and the specified default encoding doesn&#8217;t work.  There are also some poorly designed standards that have no way to specify encoding at all.
 <p>If following the relevant standards gets you nowhere, <em>and</em> you decide that processing the text is more important than maintaining interoperability, then you can try to auto-detect the character encoding as a last resort.  An example is my <a href="http://feedparser.org/">Universal Feed Parser</a>, which calls this auto-detection library <a href="http://feedparser.org/docs/character-encoding.html">only after exhausting all other options</a>.
-<h2 id="divingin">Diving in</h2>
+<h2 id="divingin2">Diving in</h2>
 <p>This is a brief guide to navigating the code itself.
 <p>The main entry point for the detection algorithm is <code class="filename">universaldetector.py</code>, which has one class, <code>UniversalDetector</code>.  (You might think the main entry point is the <code>detect</code> function in <code class="filename">chardet/__init__.py</code>, but that&#8217;s really just a convenience function that creates a <code>UniversalDetector</code> object, calls it, and returns its result.)
 <p>There are 5 categories of encodings that <code>UniversalDetector</code> handles:
