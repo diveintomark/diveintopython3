@@ -8,7 +8,7 @@
 <style type="text/css">
 body{counter-reset:h1 0}
 </style>
-<script type="text/javascript" src="dip3.js"></script>
+<script type="text/javascript" src="dip3.packed.js"></script>
 </head>
 <body>
 <p class="skip"><a href="#divingin">skip to main content</a>
@@ -22,7 +22,6 @@ body{counter-reset:h1 0}
 <li><a href="#declaringfunctions">Declaring functions</a>
 <li><a href="#readability">Writing readable code</a>
 <ol>
-<li><a href="#whybother">Why bother?</a>
 <li><a href="#docstrings">Docstrings</a>
 <li><a href="#functionannotations">Function annotations</a>
 <li><a href="#styleconventions">Style conventions</a>
@@ -37,7 +36,7 @@ body{counter-reset:h1 0}
 </ol>
 <h2 id="divingin">Diving in</h2>
 <p class="fancy">You know how other books go on and on about programming fundamentals and finally work up to building something useful?  Let's skip all that.  Here is a complete, working Python program.  It probably makes absolutely no sense to you.  Don't worry about that, because you're going to dissect it line by line.  But read through it first and see what, if anything, you can make of it.
-<pre><code>SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
+<pre><code class="python">SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
             1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
@@ -109,8 +108,7 @@ if __name__ == "__main__":
 <tr><th>Strongly typed</th><td>Pascal, Java</td><td>Python, Ruby</td></tr>
 </table>
 <h2 id="readability">Writing readable code</h2>
-<h3 id="whybother">Why bother?</h3>
-<p>FIXME
+<p>I won't bore you with a long finger-wagging speech about the importance of documenting your code.  Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you've forgotten everything but need to fix something).  Python makes it easy to write readable code, so take advantage of it.  You'll thank me in six months.
 <h3 id="docstrings">Documentation strings</h3>
 <p>You can document a Python function by giving it a documentation string (<code>docstring</code> for short).  In this program, the <code>approximate_size</code> function has a <code>docstring</code>:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
