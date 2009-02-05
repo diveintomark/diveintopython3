@@ -8,7 +8,7 @@ a:visited{color:darkorchid}
 h1 a,h2 a,h3 a,#nav a{color:inherit !important}
 abbr,acronym{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
-h1,.nav{display:inline}
+h1{background:papayawhip;width:100%}
 h2,h3{clear:both}
 form div{float:right}
 pre{white-space:pre-wrap;padding-left:2.154em;line-height:1.75;border-left:1px dotted}
