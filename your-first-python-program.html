@@ -5,7 +5,7 @@
 <title>Your first Python program - Dive into Python 3</title>
 <script type="text/javascript" src="dip3.packed.js"></script>
 <link rel="stylesheet" type="text/css" href="dip3.css">
-<link rel="shortcut icon" href="data:">
+<link rel="shortcut icon" href="data:image/ico,">
 <link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
 <style type="text/css">
 body{counter-reset:h1 0}
@@ -50,13 +50,13 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     Returns: string
 
     """
-    if size < 0:
+    if size &lt; 0:
         raise ValueError('number must be non-negative')
 
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
     for suffix in SUFFIXES[multiple]:
         size /= multiple
-        if size < multiple:
+        if size &lt; multiple:
             return "{0:.1f} {1}".format(size, suffix)
 
     raise ValueError('number too large')
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <h2 id="declaringfunctions">Declaring functions</h2>
-<p>Python has functions like most other languages, but it does not have separate header files like <acronym>C++</acronym> or <code>interface</code>/<code>implementation</code> sections like Pascal.  When you need a function, just declare it, like this:
+<p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal.  When you need a function, just declare it, like this:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 <p>Note that the keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses.  Multiple arguments are separated with commas.
 <p>Also note that the function doesn't define a return datatype.  Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value.  (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
@@ -82,13 +82,13 @@ if __name__ == "__main__":
 </blockquote>
 <p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype.  (As you might guess from the <code>=True</code> syntax, the second argument is a boolean.  You'll learn what that syntax does in [FIXME xref-was-#apihelper].)  In Python, variables are never explicitly typed.  Python figures out what type a variable is and keeps track of it internally.
 <blockquote class="note compare-java compare-cplusplus">
-<p><span>&#x261E;</span>In Java, <acronym>C++</acronym>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
+<p><span>&#x261E;</span>In Java, <abbr>C++</abbr>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
 <h3>How Python's Datatypes Compare to Other Programming Languages</h3>
 <p>An erudite reader sent me this explanation of how Python compares to other programming languages:
 <dl>
 <dt>statically typed language</dt>
-<dd>A language in which types are fixed at compile time.  Most statically typed languages enforce this by requiring you to declare all variables with their datatypes before using them.  Java and <acronym>C</acronym> are statically typed languages.
+<dd>A language in which types are fixed at compile time.  Most statically typed languages enforce this by requiring you to declare all variables with their datatypes before using them.  Java and <abbr>C</abbr> are statically typed languages.
 </dd>
 <dt>dynamically typed language</dt>
 <dd>A language in which types are discovered at execution time; the opposite of statically typed.  JavaScript and Python are dynamically typed, because they figure out what type a variable is when you first assign it a value.
@@ -128,7 +128,7 @@ if __name__ == "__main__":
 </blockquote>
 <p>Everything between the triple quotes is the function's <code>docstring</code>, which documents what the function does.  A <code>docstring</code>, if it exists, must be the first thing defined in a function (that is, on the next line after the function declaration).  You don't technically need to give your function a <code>docstring</code>, but you always should.  I know you've heard this in every programming class you've ever taken, but Python gives you an added incentive: the <code>docstring</code> is available at runtime as an attribute of the function.
 <blockquote class="note">
-<p><span>&#x261E;</span>Many Python <acronym>IDE</acronym>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip.  This can be incredibly helpful, but it's only as good as the <code>docstring</code>s you write.
+<p><span>&#x261E;</span>Many Python <abbr>IDE</abbr>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip.  This can be incredibly helpful, but it's only as good as the <code>docstring</code>s you write.
 </blockquote>
 <h3 id="functionannotations">Function annotations</h3>
 <p>FIXME
@@ -180,7 +180,7 @@ if __name__ == "__main__":
 <ol>
 <li>Importing the <code>sys</code> module makes all of its functions and attributes available.
 <li><code>sys.path</code> is a list of directory names that constitute the current search path.  (Yours will look different, depending on your operating system, what version of Python you're running, and where it was originally installed.)  Python will look through these directories (in this order) for a <code>.py</code> file whose name matches what you're trying to import.
-<li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files.  Some, like the <code>sys</code> module, are "built-in modules"; they are actually baked right into Python itself.  Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python!  (The <code>sys</code> module is written in <acronym>C</acronym>.)
+<li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files.  Some, like the <code>sys</code> module, are "built-in modules"; they are actually baked right into Python itself.  Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python!  (The <code>sys</code> module is written in <abbr>C</abbr>.)
 <li>You can add a new directory to Python's search path at runtime by appending the directory name to <code>sys.path</code>, and then Python will look in that directory as well, whenever you try to import a module.  The effect lasts as long as Python is running.  (You'll learn more about <code>append()</code> and other list methods in [FIXME xref-was-#datatypes].)
 </ol>
 <h3 id="whatsanobject">What's an object?</h3>
@@ -198,13 +198,13 @@ if __name__ == "__main__":
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops.  The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
 <pre><code>
 <a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span>&#x2460;</span></a>
-<a>    if size < 0:                                            <span>&#x2461;</span></a>
+<a>    if size &lt; 0:                                            <span>&#x2461;</span></a>
 <a>        raise ValueError('number must be non-negative')     <span>&#x2462;</span></a>
 <a>                                                            <span>&#x2463;</span></a>
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
 <a>    for suffix in SUFFIXES[multiple]:                       <span>&#x2464;</span></a>
         size /= multiple
-        if size < multiple:
+        if size &lt; multiple:
             return "{0:.1f} {1}".format(size, suffix)
 
     raise ValueError('number too large')</code></pre>
@@ -217,7 +217,7 @@ if __name__ == "__main__":
 </ol>
 <p>After some initial protests and several snide analogies to Fortran, you will make peace with this and start seeing its benefits.  One major benefit is that all Python programs look similar, since indentation is a language requirement and not a matter of style.  This makes it easier to read and understand other people's Python code.
 <blockquote class="note compare-java">
-<p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks.  <acronym>C++</acronym> and Java use semicolons to separate statements and curly braces to separate code blocks.
+<p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks.  <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
 </blockquote>
 <div class="fr">
 <h4>Further reading</h4>
@@ -232,7 +232,7 @@ if __name__ == "__main__":
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
 <blockquote class="note compare-c">
-<p><span>&#x261E;</span>Like <acronym>C</acronym>, Python uses <code>==</code> for comparison and <code>=</code> for assignment.  Unlike <acronym>C</acronym>, Python does not support in-line assignment, so there's no chance of accidentally assigning the value you thought you were comparing.
+<p><span>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment.  Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there's no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>.  A module's <code>__name__</code> depends on how you're using the module.  If you <code>import</code> the module, then <code>__name__</code> is the module's filename, without a directory path or file extension.
 <pre class="screen"><samp class="prompt">>>> </samp><kbd>import humansize</kbd>
