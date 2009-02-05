@@ -7,14 +7,16 @@ a:visited{color:darkorchid}
 h1 a,h2 a,h3 a,#nav a{color:inherit !important}
 abbr,acronym{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
 h1,h2,h3,p,ul,ol,#search{margin:1.75em 0}
-#search div{float:right}
+form div{float:right}
 li ol{margin:0}
-h1,h2,h3{font-size:medium}
+h1,h2,h3{font-size:medium;clear:both}
 h1{background:papayawhip;color:#000;width:100%;margin:0}
 pre{white-space:pre-wrap;margin:2.154em 0;padding:0 0 0 2.154em;border-left:1px dotted}
-pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;line-height:2.154}
+pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;line-height:2.154;word-spacing:0}
+pre a{display:inline;padding:0.4375em 0;border:0}
+pre a:hover{border:0}
 kbd{font-weight:bold}
-samp.prompt{color:#667}/*the neighbor of the beast*/
+.prompt{color:#667}/*the neighbor of the beast*/
 td pre{margin:0;padding:0;border:0}
 .c{text-align:center;font-size:small}
 p.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
@@ -31,9 +33,9 @@ span,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style
 .note{margin-left:4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 -1.22em}
 table.simple th{font-family:inherit !important}
-.fr{width:auto;margin-top:4.308em;border:1px dotted}
+.fr{width:100%;margin:2.154em 0;border:1px dotted}
 .fr h4{margin-top:-1.2em;margin-left:-1em;width:8.5em;border:1px dotted;padding: 3px 3px 3px 13px;background:#fff;color:inherit;position:relative}
-tr.hover,li.hover{background:#eee;color:inherit;cursor:default}
+.hover{background:#eee;color:inherit;cursor:default}
 body{counter-reset:h1}
 h1:before{counter-increment:h1;content:counter(h1) ". "}
 h1{counter-reset:h2}

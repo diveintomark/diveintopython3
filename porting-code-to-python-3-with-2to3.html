@@ -10,10 +10,11 @@ h1:before{counter-increment:h1;content:"Appendix A. "}
 h2:before{counter-increment:h2;content:"A." counter(h2) ". "}
 h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 </style>
+<script type="text/javascript" src="dip3.js"></script>
 </head>
 <body>
 <p class="skip"><a href="#divingin">skip to main content</a>
-<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div><p>You are here: <a href="index.html">Dive Into Python 3</a> <span>&#8227;</span> <b>Appendix A</b></form>
+<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div><p>You are here: <a href="index.html">Dive Into Python 3</a> <span>&#8227;</span> <b>Appendix A</b></p></form>
 <h1>Porting code to Python 3 with <code>2to3</code></h1>
 <blockquote class="q">
 <p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It&#8217;s the transition that&#8217;s troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
@@ -144,8 +145,8 @@ h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 </table>
 <p id="skipcompareunicode">
 <h2 id="long"><code>long</code> data type</h2>
-<p>Python 2 had separate <code>int</code> and <code>long</code> types for non-floating-point numbers.  An <code>int</code> could not be any larger than <a href="#renames"><code>sys.maxint</code></a>, which varied by platform.  Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints.  In Python 3, there is only one integer type, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2.  Further reading: <a href="http://www.python.org/dev/peps/pep-0237/">PEP 237: Unifying Long Integers and Integers</a>.
-<p>Since there are no longer two types, there is no need for special syntax to distinguish them.
+<p>Python 2 had separate <code>int</code> and <code>long</code> types for non-floating-point numbers.  An <code>int</code> could not be any larger than <a href="#renames"><code>sys.maxint</code></a>, which varied by platform.  Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints.  In Python 3, there is only one integer type, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2.  Since there are no longer two types, there is no need for special syntax to distinguish them.
+<p>Further reading: <a href="http://www.python.org/dev/peps/pep-0237/">PEP 237: Unifying Long Integers and Integers</a>.
 <p class="skip"><a href="#skipcomparelong">skip over this table</a>
 <table id="comparelong">
 <tr><th>Notes</th>
@@ -1271,40 +1272,5 @@ do_stuff(a_list)</code></pre></td></tr>
 <p id="skipcompareidioms">
 <p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
-<script type="text/javascript">
-window.onload = function() {
-var arTables = document.getElementsByTagName('table');
-for (var i = arTables.length - 1; i >= 0; i--) {
-    var elmTable = arTables[i];
-    var olNotes = document.getElementById("skip" + elmTable.id);
-    if (!olNotes) { continue; }
-    var arNotes = olNotes.getElementsByTagName('li');
-    var arTableRows = elmTable.getElementsByTagName('tr');
-    if (arNotes.length == 0) { continue; }
-    for (var j = arTableRows.length - 1; j >= 1; j--) {
-        var elmTableRow = arTableRows[j];
-        var elmNote = arNotes[j - 1];
-        elmTableRow._li = elmNote;
-        elmNote._tr = elmTableRow;
-        elmTableRow.onmouseover = function() {
-           this.className = 'hover';
-           this._li.className = 'hover';
-        };
-        elmNote.onmouseover = function() {
-           this.className = 'hover';
-           this._tr.className = 'hover';
-        };
-        elmTableRow.onmouseout = function() {
-           this.className = '';
-           this._li.className = '';
-        };
-        elmNote.onmouseout = function() {
-           this.className = '';
-           this._tr.className = '';
-        };
-    }
-}
-}
-</script>
 </body>
 </html>
