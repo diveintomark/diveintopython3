@@ -39,6 +39,7 @@ table.simple th{font-family:inherit !important}
 .fr{width:100%;border:1px dotted}
 .fr h4{margin-top:-1.2em;margin-left:-1em;width:8.5em;border:1px dotted;padding: 3px 3px 3px 13px;background:#fff;color:inherit;position:relative}
 .hover{background:#eee;color:inherit;cursor:default}
+i.baa{font-family:Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L','URW Bookman L',serif}/* "baa" = "best available ampersand" http://simplebits.com/notebook/2008/08/14/ampersands.html */
 body{counter-reset:h1}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
