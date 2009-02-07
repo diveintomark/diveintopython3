@@ -22,6 +22,9 @@ body{counter-reset:h1 1}
 <ol>
 <li><a href="#divingin">Diving in</a>
 <li><a href="#declaringfunctions">Declaring functions</a>
+<ol>
+<li><a href="#datatypes">How Python's datatypes compare to other programming languages</a>
+</ol>
 <li><a href="#readability">Writing readable code</a>
 <ol>
 <li><a href="#docstrings">Docstrings</a>
@@ -80,7 +83,7 @@ if __name__ == "__main__":
 <h2 id="declaringfunctions">Declaring functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal.  When you need a function, just declare it, like this:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
-<p>Note that the keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses.  Multiple arguments are separated with commas.
+<p>The keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses.  Multiple arguments are separated with commas.
 <p>Also note that the function doesn't define a return datatype.  Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value.  (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
 <blockquote class="note">
 <p><span>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>.  There are no subroutines in Python.  Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
@@ -89,7 +92,7 @@ if __name__ == "__main__":
 <blockquote class="note compare-java compare-cplusplus">
 <p><span>&#x261E;</span>In Java, <abbr>C++</abbr>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
-<h3>How Python's Datatypes Compare to Other Programming Languages</h3>
+<h3 id="datatypes">How Python's datatypes compare to other programming languages</h3>
 <p>An erudite reader sent me this explanation of how Python compares to other programming languages:
 <dl>
 <dt>statically typed language</dt>

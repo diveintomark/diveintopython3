@@ -13,7 +13,7 @@ body{counter-reset:h1 2}
 </head>
 <body>
 <p class="skip"><a href="#divingin">skip to main content</a>
-<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div></form>
+<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="root" value="Search"></div></form>
 <p class="nav">You are here: <a href="/">Home</a> <span>&#8227;</span> <a href="table-of-contents.html">Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Native datatypes</h1>
 <blockquote class="q">
@@ -23,6 +23,7 @@ body{counter-reset:h1 2}
 <li><a href="#divingin">Diving in</a>
 <li><a href="#booleans">Booleans</a>
 <li><a href="#numbers">Numbers</a>
+<!--
   <ol>
   <li><a href="#integers">Integers</a>
   <li><a href="#floats">Floating point numbers</a>
@@ -31,13 +32,32 @@ body{counter-reset:h1 2}
   <li><a href="#numberoperations">Common operations on numbers</a>
   <li><a href="#math">The <code>math</code> module</a>
   </ol>
+-->
 <li><a href="#lists">Lists</a>
+<!--
+    <ol>
+    <li>Creating new a list
+    <li>Modifying a list
+    <li>Searching a list
+    <li>Deleting elements from a list
+    <li>Common operations on lists
+    </ol>
+-->
 <li><a href="#sets">Sets</a>
+<!--
+    <ol>
+    <li>Creating a new set
+    <li>Modifying a set
+    <li>Deleting elements from a set
+    <li>Common operations on sets (union, intersection, and difference)
+    <li>Frozen sets
+    </ol>
+-->
 <li><a href="#dictionaries">Dictionaries
 <li><a href="#none"><code>None</code></a>
 </ol>
 <h2 id="divingin">Diving in</h2>
-<p class="fancy">A short digression is in order.  Put aside <a href="your-first-python-program.html">your first Python program</a> for just a minute, and let's talk about Python's native datatypes.  These types are the foundation on which you will build all your future Python programs.
+<p class="fancy">A short digression is in order.  Put aside <a href="your-first-python-program.html">your first Python program</a> for just a minute, and let's talk about datatypes.  <a href="your-first-python-program.html#datatypes">Every variable has a datatype</a>, even though you don't declare it explicitly.  Based on each variable's original assignment, Python figures out what type it is and keeps tracks of that internally.
 <p>Python has many native datatypes.  Here are the important ones:
 <ol>
 <li><b>Booleans</b> are either <code>True</code> or <code>False</code>.
@@ -67,19 +87,80 @@ body{counter-reset:h1 2}
 <samp class="prompt">>>> </samp><kbd>size &lt; 0</kbd>
 <samp>True</samp></pre>
 <h2 id="numbers">Numbers</h2>
-
-<h3 id="integers">Integers</h3>
-
-<h3 id="floats">Floating point numbers</h3>
-
-<h3 id="fractions">Fractions</h3>
-
-<h3 id="complexnumbers">Complex numbers</h3>
-
-<h3 id="numberoperations">Common operations on numbers</h3>
-
-<h3 id="math">The <code>math</code> module</h3>
-
+<p>FIXME
+<h2 id="lists">Lists</h2>
+<p>FIXME
+<h2 id="sets">Sets</h2>
+<p>FIXME
+<h2 id="dictionaries">Dictionaries</h2>
+<p>One of Python's most important datatypes is the dictionary, which defines one-to-one relationships between keys and values.
+<blockquote class="note compare-perl5">
+<p><span>&#x261E;</span>A dictionary in Python is like a hash in Perl 5.  In Perl 5, variables that store hashes always start with a <code>%</code> character.  In Python, variables can be named anything, and Python keeps track of the datatype internally.
+</blockquote>
+<p>Creating a dictionary is easy.  The syntax is similar to <a href="#sets">sets</a>, but instead of values, you have key-value pairs.  Once you have a dictionary, you can look up values by their key.
+<pre class="screen">
+<a><samp class="prompt">>>> </samp><kbd>a_dict = {"server":"db.diveintopython3.org", "database":"mysql"}</kbd>  <span>&#x2460;</span></a>
+<samp class="prompt">>>> </samp><kbd>a_dict</kbd>
+<samp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
+<a><samp class="prompt">>>> </samp><kbd>a_dict["server"]</kbd>                                                  <span>&#x2461;</span></a>
+'db.diveintopython3.org'
+<a><samp class="prompt">>>> </samp><kbd>a_dict["database"]</kbd>                                                <span>&#x2462;</span></a>
+'mysql'
+<a><samp class="prompt">>>> </samp><kbd>a_dict["db.diveintopython3.org"]</kbd>                                  <span>&#x2463;</span></a>
+<samp class="traceback">Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 'db.diveintopython3.org'</samp></pre>
+<ol>
+<li>First, you create a new dictionary with two elements and assign it to the variable <var>a_dict</var>.  Each element is a key-value pair, and the whole set of elements is enclosed in curly braces.
+<li><code>'server'</code> is a key, and its associated value, referenced by <code>a_dict["server"]</code>, is <code>'db.diveintopython3.org'</code>.
+<li><code>'database'</code> is a key, and its associated value, referenced by <code>a_dict["database"]</code>, is <code>'mysql'</code>.
+<li>You can get values by key, but you can't get keys by value.  So <code>a_dict["server"]</code> is <code>'db.diveintopython3.org'</code>, but <code>a_dict["db.diveintopython3.org"]</code> raises an exception, because <code>'db.diveintopython3.org'</code> is not a key.
+</ol>
+<p>Dictionaries do not have any predefined size limit.  You can add new key-value pairs to a dictionary at any time, or you can modify the value of an existing key.  Continuing from the previous example:
+<pre class="screen">
+<samp class="prompt">>>> </samp><kbd>a_dict</kbd>
+<samp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
+<a><samp class="prompt">>>> </samp><kbd>a_dict["database"] = "blog"</kbd>  <span>&#x2460;</span></a>
+<samp class="prompt">>>> </samp><kbd>a_dict</kbd>
+<samp>{'server': 'db.diveintopython3.org', 'database': 'blog'}</samp>
+<a><samp class="prompt">>>> </samp><kbd>a_dict["user"] = "mark"</kbd>      <span>&#x2461;</span></a>
+<a><samp class="prompt">>>> </samp><kbd>a_dict</kbd>                       <span>&#x2462;</span></a>
+<samp>{'server': 'db.diveintopython3.org', 'user': 'mark', 'database': 'blog'}</samp>
+<a><samp class="prompt">>>> </samp><kbd>a_dict["user"] = "dora"</kbd>      <span>&#x2463;</span></a>
+samp class="prompt">>>> </samp><kbd>a_dict</kbd>
+<samp>{'server': 'db.diveintopython3.org', 'user': 'dora', 'database': 'blog'}</samp>
+<a><samp class="prompt">>>> </samp><kbd>a_dict["User"] = "mark"</kbd>      <span>&#x2464;</span></a>
+<samp class="prompt">>>> </samp><kbd>a_dict</kbd>
+<samp>{'User': 'mark', 'server': 'db.diveintopython3.org', 'user': 'dora', 'database': 'blog'}</samp></pre>
+<ol>
+<li>You can not have duplicate keys in a dictionary.  Assigning a value to an existing key will wipe out the old value.
+<li>You can add new key-value pairs at any time.  This syntax is identical to modifying existing values.
+<li>The new dictionary item (key <code>'user'</code>, value <code>'mark'</code>) appears to be in the middle.  In fact, it was just a coincidence that the elements appeared to be in order in the first example; it is just as much a coincidence that they appear to be out of order now.
+<li>Assigning a value to an existing dictionary key simply replaces the old value with the new one.
+<li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely &mdash; that's a capital <kbd>U</kbd> in <kbd>"User"</kbd>.  Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one.  It may look similar to you, but as far as Python is concerned, it's completely different.
+</ol>
+<p>Dictionaries aren't just for strings.  Dictionary values can be any datatype, including integers, booleans, arbitrary objects, or even other dictionaries.  And within a single dictionary, the values don't all need to be the same type; you can mix and match as needed.  Dictionary keys are more restricted, but they can be strings, integers, and a few other types.  You can also mix and match key datatypes within a dictionary.
+<p>In fact, you've already seen a dictionary with non-string keys and values, in <a href="your-first-python-program.html#divingin">your first Python program</a>.
+<pre><code>SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
+            1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}</code></pre>
+<p>Let's tear that apart in the interactive shell.
+<pre class="screen">
+<samp class="prompt">>>> </samp><kbd>SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),</kbd>
+<samp class="prompt">... </samp><kbd>            1024: ('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')}</kbd>
+<a><samp class="prompt">>>> </samp><kbd>len(SUFFIXES)</kbd>      <span>&#x2460;</span></a>
+<samp>2</samp>
+<a><samp class="prompt">>>> </samp><kbd>SUFFIXES[1000]</kbd>     <span>&#x2461;</span></a>
+<samp>('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')</samp>
+<a><samp class="prompt">>>> </samp><kbd>SUFFIXES[1024]</kbd>     <span>&#x2462;</span></a>
+<samp>('KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB')</samp>
+<a><samp class="prompt">>>> </samp><kbd>SUFFIXES[1000][3]</kbd>  <span>&#x2463;</span></a>
+<samp>'TB'</samp></pre>
+<ol>
+<li>As with <a href="#lists">lists</a> and <a href="#sets">sets</a>, the <code>len()</code> function gives you the number of items in a dictionary.
+<li><code>1000</code> is a key in the <code>SUFFIXES</code> dictionary; its value is a tuple of eight items (eight strings, to be precise).
+<li>Similarly, <code>1024</code> is a key in the <code>SUFFIXES</code> dictionary; its value is also a tuple of eight items.
+<li>Since <code>SUFFIXES[1000]</code> is a tuple, you can address individual items in the tuple by their 0-based index.
+</ol>
 <h2 id="none"><code>None</code></h2>
 <p><code>None</code> is a special constant in Python.  It is a null value.  <code>None</code> is not <code>False</code>; it is not <code>0</code>; it is not an empty string.  Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
 <p><code>None</code> is the only null value.  It has its own datatype (<code>NoneType</code>).  You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects.  All variables whose value is <code>None</code> are equal to each other.
@@ -101,193 +182,6 @@ body{counter-reset:h1 2}
 <samp class="prompt">>>> </samp><kbd>x == y</kbd>
 <samp>True</samp>
 </pre>
-<!--
-<h2 id="odbchelper.dict">3.1. Introducing Dictionaries</h2>
-<p>One of Python's built-in datatypes is the dictionary, which defines one-to-one relationships between keys and values.<table id="compare.dict.perl" class="note" border="0" summary="">
-<tr>
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
-</tr>
-<tr>
-<td colspan="2" align="left" valign="top" width="99%">A dictionary in Python is like a hash in Perl.  In Perl, variables that store hashes always start with a <code>%</code> character.  In Python, variables can be named anything, and Python keeps track of the datatype internally.
-</td>
-</tr>
-</table><table id="compare.dict.java" class="note" border="0" summary="">
-<tr>
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
-</tr>
-<tr>
-<td colspan="2" align="left" valign="top" width="99%">A dictionary in Python is like an instance of the <code>Hashtable</code> class in Java.
-</td>
-</tr>
-</table><table id="compare.dict.vb" class="note" border="0" summary="">
-<tr>
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
-</tr>
-<tr>
-<td colspan="2" align="left" valign="top" width="99%">A dictionary in Python is like an instance of the <code>Scripting.Dictionary</code> object in Visual Basic.
-</td>
-</tr>
-</table>
-<h3>3.1.1. Defining Dictionaries</h3>
-<div class="example"><h3 id="odbchelper.dict.define">Example 3.1. Defining a Dictionary</h3><pre class="screen"><samp class="prompt">>>> </samp>d = {"server":"mpilgrim", "database":"master"} <img id="odbchelper.dict.1.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'database': 'master'}
-<samp class="prompt">>>> </samp>d["server"]<img id="odbchelper.dict.1.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
-'mpilgrim'
-<samp class="prompt">>>> </samp>d["database"]                <img id="odbchelper.dict.1.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12">
-'master'
-<samp class="prompt">>>> </samp>d["mpilgrim"]                <img id="odbchelper.dict.1.4" src="images/callouts/4.png" alt="4" border="0" width="12" height="12">
-<samp class="traceback">Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-KeyError: mpilgrim</span></pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.1.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">First, you create a new dictionary with two elements and assign it to the variable <var>d</var>.  Each element is a key-value pair, and the whole set of elements is enclosed in curly braces.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.1.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>'server'</code> is a key, and its associated value, referenced by <code>d["server"]</code>, is <code>'mpilgrim'</code>.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.1.3"><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>'database'</code> is a key, and its associated value, referenced by <code>d["database"]</code>, is <code>'master'</code>.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.1.4"><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">You can get values by key, but you can't get keys by value.  So <code>d["server"]</code> is <code>'mpilgrim'</code>, but <code>d["mpilgrim"]</code> raises an exception, because <code>'mpilgrim'</code> is not a key.
-</td>
-</tr>
-</table>
-<h3>3.1.2. Modifying Dictionaries</h3>
-<div class="example"><h3 id="odbchelper.dict.modify">Example 3.2. Modifying a Dictionary</h3><pre class="screen"><samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'database': 'master'}
-<samp class="prompt">>>> </samp>d["database"] = "pubs" <img id="odbchelper.dict.2.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'database': 'pubs'}
-<samp class="prompt">>>> </samp>d["uid"] = "sa"        <img id="odbchelper.dict.2.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'uid': 'sa', 'database': 'pubs'}</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.2.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">You can not have duplicate keys in a dictionary.  Assigning a value to an existing key will wipe out the old value.</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.2.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">You can add new key-value pairs at any time.  This syntax is identical to modifying existing values.  (Yes, this will annoy
-            you someday when you think you are adding new values but are actually just modifying the same value over and over because
-            your key isn't changing the way you think it is.)
-</td>
-</tr>
-</table>
-<p>Note that the new element (key <code>'uid'</code>, value <code>'sa'</code>) appears to be in the middle.  In fact, it was just a coincidence that the elements appeared to be in order in the first
-   example; it is just as much a coincidence that they appear to be out of order now.<table id="tip.dictorder" class="note" border="0" summary="">
-<tr>
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"></td>
-</tr>
-<tr>
-<td colspan="2" align="left" valign="top" width="99%">Dictionaries have no concept of order among elements.  It is incorrect to say that the elements are &#8220;out of order&#8221;; they are simply unordered.  This is an important distinction that will annoy you when you want to access the elements of
-         a dictionary in a specific, repeatable order (like alphabetical order by key).  There are ways of doing this, but they're
-         not built into the dictionary.
-</td>
-</tr>
-</table>
-<p>When working with dictionaries, you need to be aware that dictionary keys are case-sensitive.
-<div class="example"><h3 id="odbchelper.dict.case">Example 3.3. Dictionary Keys Are Case-Sensitive</h3><pre class="screen">
-<samp class="prompt">>>> </samp>d = {}
-<samp class="prompt">>>> </samp>d["key"] = "value"
-<samp class="prompt">>>> </samp>d["key"] = "other value" <img id="odbchelper.dict.5.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'key': 'other value'}
-<samp class="prompt">>>> </samp>d["Key"] = "third value" <img id="odbchelper.dict.5.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'Key': 'third value', 'key': 'other value'}
-</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.5.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Assigning a value to an existing dictionary key simply replaces the old value with a new one.</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.5.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">This is not assigning a value to an existing dictionary key, because strings in Python are case-sensitive, so <code>'key'</code> is not the same as <code>'Key'</code>.  This creates a new key/value pair in the dictionary; it may look similar to you, but as far as Python is concerned, it's completely different.
-</td>
-</tr>
-</table>
-<div class="example"><h3 id="odbchelper.dictionarytypes">Example 3.4. Mixing Datatypes in a Dictionary</h3><pre class="screen"><samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'uid': 'sa', 'database': 'pubs'}
-<samp class="prompt">>>> </samp>d["retrycount"] = 3 <img id="odbchelper.dict.3.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'uid': 'sa', 'database': 'master', 'retrycount': 3}
-<samp class="prompt">>>> </samp>d[42] = "douglas"   <img id="odbchelper.dict.3.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-<samp class="computeroutput">{'server': 'mpilgrim', 'uid': 'sa', 'database': 'master',
-42: 'douglas', 'retrycount': 3}</span></pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.3.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Dictionaries aren't just for strings.  Dictionary values can be any datatype, including strings, integers, objects, or even
-            other dictionaries.  And within a single dictionary, the values don't all need to be the same type; you can mix and match
-            as needed.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.3.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Dictionary keys are more restricted, but they can be strings, integers, and a few other types.  You can also mix and match
-            key datatypes within a dictionary.
-</td>
-</tr>
-</table>
-<h3>3.1.3. Deleting Items From Dictionaries</h3>
-<div class="example"><h3 id="odbchelper.dict.del">Example 3.5. Deleting Items from a Dictionary</h3><pre class="screen"><samp class="prompt">>>> </samp>d
-<samp class="computeroutput">{'server': 'mpilgrim', 'uid': 'sa', 'database': 'master',
-42: 'douglas', 'retrycount': 3}</samp>
-<samp class="prompt">>>> </samp>del d[42] <img id="odbchelper.dict.4.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{'server': 'mpilgrim', 'uid': 'sa', 'database': 'master', 'retrycount': 3}
-<samp class="prompt">>>> </samp>d.clear() <img id="odbchelper.dict.4.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12">
-<samp class="prompt">>>> </samp>d
-{}</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.4.1"><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>del</code> lets you delete individual items from a dictionary by key.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href="#odbchelper.dict.4.2"><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>clear</code> deletes all items from a dictionary.  Note that the set of empty curly braces signifies a dictionary without any items.
-</td>
-</tr>
-</table>
-<div class="itemizedlist">
-<h3>Further Reading on Dictionaries</h3>
-<ul>
-<li><a href="http://www.ibiblio.org/obp/thinkCSpy/" title="Python book for computer science majors"><i class="citetitle">How to Think Like a Computer Scientist</i></a> teaches about dictionaries and shows how to <a href="http://www.ibiblio.org/obp/thinkCSpy/chap10.htm">use dictionaries to model sparse matrices</a>.
-
-<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> has a lot of <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/541">example code using dictionaries</a>.
-
-<li><a href="http://www.activestate.com/ASPN/Python/Cookbook/" title="growing archive of annotated code samples">Python Cookbook</a> discusses <a href="http://www.activestate.com/ASPN/Python/Cookbook/Recipe/52306">how to sort the values of a dictionary by key</a>.
-
-<li><a href="http://www.python.org/doc/current/lib/"><i class="citetitle">Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/typesmapping.html">all the dictionary methods</a>.
-</ul>
--->
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
 </body>
 </html>
