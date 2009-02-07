@@ -3,6 +3,6 @@ FileETag MTime Size
 Options -Indexes
 DirectoryIndex index.html
 AddType text/plain .txt
-AddType text/plain .py
+AddType application/x-python .py
 AddType image/x-icon .ico
 AddDefaultCharset utf-8

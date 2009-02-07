@@ -15,7 +15,7 @@ pre{white-space:pre-wrap;padding-left:2.154em;line-height:1.75;border-left:1px d
 pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;word-spacing:0}
 pre a{padding:0.4375em 0;border:0}
 pre a:hover{border:0}
-.widgets,.widgets a{font-size:small}
+.widgets,.widgets a,.download{font-size:small}
 .widgets a{color:#1b67c9;text-decoration:underline;padding:0}
 kbd{font-weight:bold}
 .prompt{color:#667}/*the neighbor of the beast*/

@@ -60,7 +60,16 @@ for (var i = arPre.length - 1; i >= 0; i--) {
 	    id = "autopre" + i;
 	    elmPre.id = id;
 	}
-	elmPre.innerHTML = '<div id="' + id + 'widgets" class="widgets">[<a id="' + id + 'toggle" class="toggle" href="javascript:toggleBlock(\'' + id + '\')">hide</a>] [<a id="' + id + 'plaintext" href="javascript:plainTextOnClick(\'' + id + '\')">open in new window</a>]</div><div id="' + id + 'block">' + elmPre.innerHTML + '</div>';
+	var usDownload = '';
+	var elmDownload = elmPre.previousSibling;
+	while (elmDownload && (elmDownload.nodeType != 1)) {
+	    elmDownload = elmDownload.previousSibling;
+	}
+	if (elmDownload && (elmDownload.nodeName.toLowerCase() == 'p') && (elmDownload.className == 'download')) {
+	    usDownload = ' ' + elmDownload.innerHTML;
+	    elmDownload.parentNode.removeChild(elmDownload);
+	}
+	elmPre.innerHTML = '<div id="' + id + 'widgets" class="widgets">[<a id="' + id + 'toggle" class="toggle" href="javascript:toggleBlock(\'' + id + '\')">hide</a>] [<a id="' + id + 'plaintext" href="javascript:plainTextOnClick(\'' + id + '\')">open in new window</a>]' + usDownload + '</div><div id="' + id + 'block">' + elmPre.innerHTML + '</div>';
     }
   
 }
