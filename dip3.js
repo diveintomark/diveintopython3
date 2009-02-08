@@ -1,4 +1,6 @@
+/*
 var COMPARISON_LANGUAGES = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 'C'};
+*/
 var TOGGLE_BLOCK_TEXT = {'visible': 'hide', 'hidden': 'show'};
 
 google.load("jquery", "1");
@@ -56,11 +58,13 @@ $(document).ready(function() {
 }); /* document.ready */
 }); /* google.setOnLoadCallback */
 
+/*
 function toggleComparisonNotes(lang) {
   // FIXME: save state in cookie, pass state to toggle(), reset text accordingly
   $("blockquote." + lang + " div.block").toggle(false);
   $("blockquote." + lang + " div.widgets a.toggle").text("show " + COMPARISON_LANGUAGES[lang] + " notes");
 }
+*/
 
 function toggleCodeBlock(id) {
   $("#" + id).find("div.block").toggle();
