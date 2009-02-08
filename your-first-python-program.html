@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <title>Your first Python program - Dive into Python 3</title>
 <link rel="stylesheet" type="text/css" href="dip3.css">
-<script type="text/javascript" src="dip3.packed.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="dip3.js"></script>
 <link rel="shortcut icon" href="data:image/ico,">
 <link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
 <style type="text/css">
@@ -89,8 +90,8 @@ if __name__ == "__main__":
 <p><span>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>.  There are no subroutines in Python.  Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
 </blockquote>
 <p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype.  (As you might guess from the <code>=True</code> syntax, the second argument is a boolean.  You'll learn what that syntax does in [FIXME xref-was-#apihelper].)  In Python, variables are never explicitly typed.  Python figures out what type a variable is and keeps track of it internally.
-<blockquote class="note compare-java compare-cplusplus">
-<p><span>&#x261E;</span>In Java, <abbr>C++</abbr>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
+<blockquote class="note compare java">
+<p><span>&#x261E;</span>In Java and other statically-typed languages, you must specify the datatype of the function return value and each function argument.  In Python, you never explicitly specify the datatype of anything.  Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
 <h3 id="datatypes">How Python's datatypes compare to other programming languages</h3>
 <p>An erudite reader sent me this explanation of how Python compares to other programming languages:
@@ -131,7 +132,7 @@ if __name__ == "__main__":
 
     """</code></pre>
 <p>Triple quotes signify a multi-line string.  Everything between the start and end quotes is part of a single string, including carriage returns, leading white space, and other quote characters.  You can use them anywhere, but you'll see them most often used when defining a <code>docstring</code>.
-<blockquote class="note compare-perl">
+<blockquote class="note compare perl5">
 <p><span>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
 </blockquote>
 <p>Everything between the triple quotes is the function's <code>docstring</code>, which documents what the function does.  A <code>docstring</code>, if it exists, must be the first thing defined in a function (that is, on the next line after the function declaration).  You don't technically need to give your function a <code>docstring</code>, but you always should.  I know you've heard this in every programming class you've ever taken, but Python gives you an added incentive: the <code>docstring</code> is available at runtime as an attribute of the function.
@@ -142,14 +143,6 @@ if __name__ == "__main__":
 <p>FIXME
 <h3 id="styleconventions">Style conventions</h3>
 <p>FIXME
-<div class="fr">
-<h4>Further reading</h4>
-<ul>
-<li><a href="http://www.python.org/dev/peps/pep-0257/">PEP 257: Docstring Conventions</a>
-<li><a href="http://www.python.org/dev/peps/pep-0008/">PEP 8: Style Guide for Python Code</a>
-<li><a href="http://docs.python.org/3.0/tutorial/controlflow.html#documentation-strings">Python Tutorial: Documentation Strings</a>
-</ul>
-</div>
 <h2 id="everythingisanobject">Everything is an object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime.  A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
@@ -173,7 +166,7 @@ if __name__ == "__main__":
 <li>When you want to use functions defined in imported modules, you need to include the module name.  So you can't just say <code>approximate_size</code>; it must be <code>humansize.approximate_size</code>.  If you've used classes in Java, this should feel vaguely familiar.
 <li>Instead of calling the function as you would expect to, you asked for one of the function's attributes, <code>__doc__</code>.
 </ol>
-<blockquote class="note compare-perl">
+<blockquote class="note compare perl5">
 <p><span>&#x261E;</span><code>import</code> in Python is like <code>require</code> in Perl.  Once you <code>import</code> a Python module, you access its functions with <code><var>module</var>.<var>function</var></code>; once you <code>require</code> a Perl module, you access its functions with <code><var>module</var>::<var>function</var></code>.
 </blockquote>
 <h3 id="importsearchpath">The <code>import</code> search path</h3>
@@ -195,12 +188,6 @@ if __name__ == "__main__":
 <p>Everything in Python is an object, and almost everything has attributes and methods.  All functions have a built-in attribute <code>__doc__</code>, which returns the <var>docstring</var> defined in the function's source code.  The <code>sys</code> module is an object which has (among other things) an attribute called <var>path</var>.  And so forth.
 <p>Still, this doesn't answer the more fundamental question: what is an object?  Different programming languages define &#8220;object&#8221; in different ways.  In some, it means that <em>all</em> objects <em>must</em> have attributes and methods; in others, it means that all objects are subclassable.  In Python, the definition is looser; some objects have neither attributes nor methods (more on this in [FIXME xref-was-#datatypes]), and not all objects are subclassable (more on this in [FIXME xref-was-#fileinfo]).  But everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function (more in this in [FIXME xref-was-#apihelp]).
 <p>This is so important that I'm going to repeat it in case you missed it the first few times: <em>everything in Python is an object</em>.  Strings are objects.  Lists are objects.  Functions are objects.  Even modules are objects.
-<div class="fr">
-<h4>Further reading</h4>
-<ul>
-<li><a href="http://docs.python.org/3.0/reference/"><cite>Python Reference Manual</cite></a> explains exactly what it means to say that <a href="http://docs.python.org/3.0/reference/datamodel.html#objects-values-and-types">everything in Python is an object</a>, because some people are pedantic and like to discuss this sort of thing at great length.
-</ul>
-</div>
 <h2 id="indentingcode">Indenting code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops.  The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
 <pre><code>
@@ -223,22 +210,16 @@ if __name__ == "__main__":
 <li>The <code>for</code> loop also marks the start of a code block.  Code blocks can contain multiple lines, as long as they are all indented the same amount.  This <code>for</code> loop has three lines of code in it.  There is no other special syntax for multi-line code blocks.  Just indent and get on with your life.
 </ol>
 <p>After some initial protests and several snide analogies to Fortran, you will make peace with this and start seeing its benefits.  One major benefit is that all Python programs look similar, since indentation is a language requirement and not a matter of style.  This makes it easier to read and understand other people's Python code.
-<blockquote class="note compare-java">
+<blockquote class="note compare java">
 <p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks.  <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
 </blockquote>
-<div class="fr">
-<h4>Further reading</h4>
-<ul>
-<li><a href="http://www.python.org/dev/peps/pep-0008/">PEP 8: Style Guide for Python Code</a> discusses good indentation style.
-</ul>
-</div>
 <h2 id="runningscripts">Running scripts</h2>
 <p>Python modules are objects and have several useful attributes.  You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line.  Take the last few lines of <code>humansize.py</code>:
 <pre><code>
 if __name__ == "__main__":
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
-<blockquote class="note compare-c">
+<blockquote class="note compare clang">
 <p><span>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment.  Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there's no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>.  A module's <code>__name__</code> depends on how you're using the module.  If you <code>import</code> the module, then <code>__name__</code> is the module's filename, without a directory path or file extension.
@@ -249,6 +230,15 @@ if __name__ == "__main__":
 <pre class="screen"><samp class="prompt">c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
+<div class="fr">
+<h4>Further reading</h4>
+<ul>
+<li><a href="http://www.python.org/dev/peps/pep-0257/">PEP 257: Docstring Conventions</a> explains what distinguishes a good <code>docstring</code> from a great <code>docstring</code>.
+<li><a href="http://docs.python.org/3.0/tutorial/controlflow.html#documentation-strings">Python Tutorial: Documentation Strings</a> also touches on the subject.
+<li><a href="http://www.python.org/dev/peps/pep-0008/">PEP 8: Style Guide for Python Code</a> discusses good indentation style.
+<li><a href="http://docs.python.org/3.0/reference/"><cite>Python Reference Manual</cite></a> explains what it means to say that <a href="http://docs.python.org/3.0/reference/datamodel.html#objects-values-and-types">everything in Python is an object</a>, because some people are pedantic and like to discuss that sort of thing at great length.
+</ul>
+</div>
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
 </body>
 </html>

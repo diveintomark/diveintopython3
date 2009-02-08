@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <title>Native datatypes - Dive into Python 3</title>
 <link rel="stylesheet" type="text/css" href="dip3.css">
-<script type="text/javascript" src="dip3.packed.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="dip3.js"></script>
 <link rel="shortcut icon" href="data:image/ico,">
 <link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
 <style type="text/css">
@@ -87,14 +88,37 @@ body{counter-reset:h1 2}
 <samp class="prompt">>>> </samp><kbd>size &lt; 0</kbd>
 <samp>True</samp></pre>
 <h2 id="numbers">Numbers</h2>
-<p>FIXME
+<p>Numbers are awesome.  There are so many to choose from.  Python supports both integers and floating point numbers.
+<pre class="screen">
+<a><samp class="prompt">>>> </samp><kbd>type(1)</kbd>                 <span>&#x2460;</span></a>
+<samp>&lt;class 'int'></samp>
+<a><samp class="prompt">>>> </samp><kbd>1 + 1</kbd>                   <span>&#x2461;</span></a>
+<samp>2</samp>
+<a><samp class="prompt">>>> </samp><kbd>1 + 1.0</kbd>                 <span>&#x2462;</span></a>
+<samp>2.0</samp>
+<samp class="prompt">>>> </samp><kbd>type(2.0)</kbd>
+<samp>&lt;class 'float'></samp>
+<a><samp class="prompt">>>> </samp><kbd>1.12345678901234567890</kbd>  <span>&#x2463;</span></a>
+<samp>1.1234567890123457</samp>
+<a><samp class="prompt">>>> </samp><kbd>type(1000000000000000)</kbd>  <span>&#x2464;</span></a>
+<samp>&lt;class 'int'></samp></pre>
+<ol>
+<li>
+<li>
+<li>
+<li>
+<li>Integers can be arbitrarily large.
+</ol>
+<blockquote class="note compare python2">
+<p><span>&#x261E;</span>Python 2 had separate types for <code>int</code> and <code>long</code>.  The <code>int</code> datatype was limited by <code>sys.maxint</code>, which varied by platform but was usually <code>2<sup>32</sup>-1</code>.  Python 3 has just one integer type, which behaves mostly like the old <code>long</code> type from Python 2.
+</blockquote>
 <h2 id="lists">Lists</h2>
 <p>FIXME
 <h2 id="sets">Sets</h2>
 <p>FIXME
 <h2 id="dictionaries">Dictionaries</h2>
 <p>One of Python's most important datatypes is the dictionary, which defines one-to-one relationships between keys and values.
-<blockquote class="note compare-perl5">
+<blockquote class="note compare perl5">
 <p><span>&#x261E;</span>A dictionary in Python is like a hash in Perl 5.  In Perl 5, variables that store hashes always start with a <code>%</code> character.  In Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
 <p>Creating a dictionary is easy.  The syntax is similar to <a href="#sets">sets</a>, but instead of values, you have key-value pairs.  Once you have a dictionary, you can look up values by their key.
