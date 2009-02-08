@@ -1,17 +1,17 @@
 /*
-var COMPARISON_LANGUAGES = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 'C'};
+var LANGS = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 'C'};
 */
-var TOGGLE_BLOCK_TEXT = {'visible': 'hide', 'hidden': 'show'};
+var HIDESHOW = {'visible': 'hide', 'hidden': 'show'};
 
-google.load("jquery", "1");
+google.load("jquery", "1.3");
 google.setOnLoadCallback(function() {
 $(document).ready(function() {
 /*
   // toggle-able language comparisons
-  for (var lang in COMPARISON_LANGUAGES) {
+  for (var lang in LANGS) {
     $("blockquote.compare").filter("blockquote." + lang).each(function(i) {
       $(this).wrapInner('<div class="block"></div>');
-      $(this).prepend('<div class="widgets">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + COMPARISON_LANGUAGES[lang] + ' notes</a> ]</div>');
+      $(this).prepend('<div class="widgets">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + LANGS[lang] + ' notes</a> ]</div>');
     });
   }
 */
@@ -26,7 +26,7 @@ $(document).ready(function() {
   $("pre.code, pre.screen").each(function(i) {
     this.id = "autopre" + i;
     $(this).wrapInner('<div class="block"></div>');
-    $(this).prepend('<div class="widgets">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + TOGGLE_BLOCK_TEXT['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
+    $(this).prepend('<div class="widgets">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HIDESHOW['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 
     $(this).prev("p.download").each(function(i) {
       $(this).next("pre").find("div.widgets").append(" " + $(this).html());
@@ -62,14 +62,14 @@ $(document).ready(function() {
 function toggleComparisonNotes(lang) {
   // FIXME: save state in cookie, pass state to toggle(), reset text accordingly
   $("blockquote." + lang + " div.block").toggle(false);
-  $("blockquote." + lang + " div.widgets a.toggle").text("show " + COMPARISON_LANGUAGES[lang] + " notes");
+  $("blockquote." + lang + " div.widgets a.toggle").text("show " + LANGS[lang] + " notes");
 }
 */
 
 function toggleCodeBlock(id) {
   $("#" + id).find("div.block").toggle();
   var a = $("#" + id).find("a.toggle");
-  a.text(a.text() == TOGGLE_BLOCK_TEXT['visible'] ? TOGGLE_BLOCK_TEXT['hidden'] : TOGGLE_BLOCK_TEXT['visible']);
+  a.text(a.text() == HIDESHOW['visible'] ? HIDESHOW['hidden'] : HIDESHOW['visible']);
 }
 
 function plainTextOnClick(id) {
