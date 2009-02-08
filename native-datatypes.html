@@ -88,7 +88,7 @@ body{counter-reset:h1 2}
 <samp class="prompt">>>> </samp><kbd>size &lt; 0</kbd>
 <samp>True</samp></pre>
 <h2 id="numbers">Numbers</h2>
-<p>Numbers are awesome.  There are so many to choose from.  Python supports both integers and floating point numbers.
+<p>Numbers are awesome.  There are so many to choose from.  Python supports both integers and floating point numbers.  There's no type declaration to distinguish them; Python tells them apart by the presence or absence of a decimal point.
 <pre class="screen">
 <a><samp class="prompt">>>> </samp><kbd>type(1)</kbd>                 <span>&#x2460;</span></a>
 <samp>&lt;class 'int'></samp>
@@ -97,21 +97,64 @@ body{counter-reset:h1 2}
 <a><samp class="prompt">>>> </samp><kbd>1 + 1.0</kbd>                 <span>&#x2462;</span></a>
 <samp>2.0</samp>
 <samp class="prompt">>>> </samp><kbd>type(2.0)</kbd>
-<samp>&lt;class 'float'></samp>
-<a><samp class="prompt">>>> </samp><kbd>1.12345678901234567890</kbd>  <span>&#x2463;</span></a>
+<samp>&lt;class 'float'></samp></pre>
+<ol>
+<li>You can use the <code>type()</code> function to check the type of any value or variable.  As you might expect, <code>1</code> is an <code>int</code>.
+<li>Adding an <code>int</code> to an <code>int</code> yields an <code>int</code>.
+<li>Adding an <code>int</code> to a <code>float</code> yields a <code>float</code>.  Python coerces the <code>int</code> into a <code>float</code> to perform the addition, then returns a <code>float</code> as the result.
+</ol>
+<p>As you just saw, some operators (like addition) will coerce integers to floating point numbers as needed.  You can also coerce them by yourself.
+<pre class="screen">
+<a><samp class="prompt">>>> </samp><kbd>float(2)</kbd>                <span>&#x2460;</span></a>
+<samp>2.0</samp>
+<a><samp class="prompt">>>> </samp><kbd>int(2.0)</kbd>                <span>&#x2461;</span></a>
+<samp>2</samp>
+<a><samp class="prompt">>>> </samp><kbd>int(2.5)</kbd>                <span>&#x2462;</span></a>
+<samp>2</samp>
+<a><samp class="prompt">>>> </samp><kbd>int(-2.5)</kbd>               <span>&#x2463;</span></a>
+<samp>-2</samp>
+<a><samp class="prompt">>>> </samp><kbd>1.12345678901234567890</kbd>  <span>&#x2464;</span></a>
 <samp>1.1234567890123457</samp>
-<a><samp class="prompt">>>> </samp><kbd>type(1000000000000000)</kbd>  <span>&#x2464;</span></a>
+<a><samp class="prompt">>>> </samp><kbd>type(1000000000000000)</kbd>  <span>&#x2465;</span></a>
 <samp>&lt;class 'int'></samp></pre>
 <ol>
-<li>
-<li>
-<li>
-<li>
+<li>You can explicitly coerce an <code>int</code> to a <code>float</code> by calling the <code>float()</code> function.
+<li>Unsurprisingly, you can also coerce a <code>float</code> to an <code>int</code> by calling <code>int()</code>.
+<li>The <code>int()</code> function will truncate, not round.
+<li>The <code>int()</code> function truncates negative numbers towards <code>0</code>.  It's a true truncate function, not a a floor function.
+<li>Floating point numbers are accurate to 15 decimal places.
 <li>Integers can be arbitrarily large.
 </ol>
 <blockquote class="note compare python2">
-<p><span>&#x261E;</span>Python 2 had separate types for <code>int</code> and <code>long</code>.  The <code>int</code> datatype was limited by <code>sys.maxint</code>, which varied by platform but was usually <code>2<sup>32</sup>-1</code>.  Python 3 has just one integer type, which behaves mostly like the old <code>long</code> type from Python 2.
+<p><span>&#x261E;</span>Python 2 had separate types for <code>int</code> and <code>long</code>.  The <code>int</code> datatype was limited by <code>sys.maxint</code>, which varied by platform but was usually <code>2<sup>32</sup>-1</code>.  Python 3 has just one integer type, which behaves mostly like the old <code>long</code> type from Python 2.  See <a href="http://www.python.org/dev/peps/pep-0237">PEP 237</a> for details.
 </blockquote>
+<p>You can do all kinds of things with numbers.
+<pre class="screen">
+<a><samp class="prompt">>>> </samp><kbd>11 / 2</kbd>      <span>&#x2460;</span></a>
+<samp>5.5</samp>
+<a><samp class="prompt">>>> </samp><kbd>11 // 2</kbd>     <span>&#x2461;</span></a>
+<samp>5</samp>
+<a><samp class="prompt">>>> </samp><kbd>&minus;11 // 2</kbd>    <span>&#x2463;</span></a>
+<samp>&minus;6</samp>
+<a><samp class="prompt">>>> </samp><kbd>11.0 // 2</kbd>   <span>&#x2462;</span></a>
+<samp>5.0</samp>
+<a><samp class="prompt">>>> </samp><kbd>11 ** 2</kbd>     <span>&#x2464;</span></a>
+<samp>121</samp>
+<a><samp class="prompt">>>> </samp><kbd>11 % 2</kbd>      <span>&#x2465;</span></a>
+<samp>1</samp>
+</pre>
+<ol>
+<li>The <code>/</code> operator performs floating point division.  It returns a <code>float</code> even if both the numerator and denominator are <code>int</code>s.
+<li>The <code>//</code> operator performs a quirky kind of integer division.  When the result is positive, you can think of it as truncating (not rounding) to <code>0</code> decimal places, but be careful with that.
+<li>When integer-dividing negative numbers, the <code>//</code> operator rounds &#8220;up&#8221; to the nearest integer.  Mathematically speaking, it's rounding &#8220;down&#8221; since <code>&minus;6</code> is less than <code>&minus;5</code>, but it could trip you up if you expecting it to truncate to <code>&minus;5</code>.
+<li>The <code>//</code> operator doesn't always return an integer.  If either the numerator or denominator is a <code>float</code>, it will still round to the nearest integer, but the actual return value will be a <code>float</code>.
+<li>The <code>**</code> operator means &#8220;raised to the power of.&#8221;  <code>11<sup>2</sup></code> is <code>121</code>.
+<li>The <code>%</code> operator gives the remainder after performing integer division.  <code>11</code> divided by <code>2</code> is <code>5</code> with a remainder of <code>1</code>, so the result here is <code>1</code>.
+</ol>
+<blockquote class="note compare python2">
+<p><span>&#x261E;</span>In Python 2, the <code>/</code> operator usually meant integer division, but you could make it behave like floating point division by including a special directive in your code.  In Python 3, the <code>/</code> operator always means floating point division.  See <a href="http://www.python.org/dev/peps/pep-0238/">PEP 238</a> for details.
+</blockquote>
+<p>FIXME fractions, math module, numbers in a boolean context
 <h2 id="lists">Lists</h2>
 <p>FIXME
 <h2 id="sets">Sets</h2>
@@ -206,6 +249,17 @@ samp class="prompt">>>> </samp><kbd>a_dict</kbd>
 <samp class="prompt">>>> </samp><kbd>x == y</kbd>
 <samp>True</samp>
 </pre>
+<div class="fr">
+<h4>Further reading (FIXME)</h4>
+<ul>
+<li>fractions
+<li>math module
+<li>PEP 237
+<li>PEP 238
+<li>links to appendix
+<li>...etc...
+</ul>
+</div>
 <p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>
 </body>
 </html>
