@@ -20,7 +20,7 @@ pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:me
 pre a,.widgets a{padding:0.4375em 0;border:0}
 pre a:hover{border:0}
 kbd{font-weight:bold}
-.prompt{color:#667}/*the neighbor of the beast*/
+.prompt{color:#667}
 td pre{margin:0;padding:0;border:0}
 li ol{margin:0}
 .c{text-align:center}
@@ -41,7 +41,7 @@ table.simple th{font-family:inherit !important}
 .fr{width:100%;border:1px dotted;margin-top:3.5em}
 .fr h4{margin-top:-1.2em;margin-left:-1em;width:8.5em;border:1px dotted;padding: 3px 3px 3px 13px;background:#fff;color:inherit;position:relative}
 .hover{background:#eee;color:inherit;cursor:default}
-i.baa{font-family:Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L','URW Bookman L',serif}/* "baa" = "best available ampersand" http://simplebits.com/notebook/2008/08/14/ampersands.html */
+i.baa{font-family:Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L','URW Bookman L',serif}
 body{counter-reset:h1}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
