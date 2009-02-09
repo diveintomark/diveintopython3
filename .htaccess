@@ -5,4 +5,8 @@ DirectoryIndex index.html
 AddType text/plain .txt
 AddType application/x-python .py
 AddType image/x-icon .ico
+AddType text/javascript .js
+AddType text/css .css
 AddDefaultCharset utf-8
+ExpiresActive on
+ExpiresByType text/html M86400
