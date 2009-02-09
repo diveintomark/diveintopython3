@@ -235,34 +235,6 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li>Optimizing string manipulation
   <li>Summary
   </ol>
-<li><a href="case-study-porting-chardet-to-python-3.html">Case study: porting <code>chardet</code> to Python 3</a>
-  <ol>
-  <li><a href="case-study-porting-chardet-to-python-3.html#divingin">Introducing <code class="filename">chardet</code>: a mini-FAQ</a>
-    <ol>
-    <li><a href="case-study-porting-chardet-to-python-3.html#faq.what">What is character encoding auto-detection?</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#faq.impossible">Isn't that impossible?</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#faq.who">Who wrote this detection algorithm?</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#faq.yippie">Yippie!  Screw the standards, I'll just auto-detect everything!</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#faq.why">Why bother with auto-detection if it's slow, inaccurate, and non-standard?</a>
-    </ol>
-  <li><a href="case-study-porting-chardet-to-python-3.html#divingin2">Diving in</a>
-    <ol>
-    <li><a href="case-study-porting-chardet-to-python-3.html#how.bom"><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#how.esc">Escaped encodings</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#how.mb">Multi-byte encodings</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#how.sb">Single-byte encodings</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#how.windows1252"><code>windows-1252</code></a>
-    </ol>
-  <li><a href="case-study-porting-chardet-to-python-3.html#running2to3">Running <code class="filename">2to3</code></a>
-  <li><a href="case-study-porting-chardet-to-python-3.html#manual">Fixing what <code class="filename">2to3</code> can't</a>
-    <ol>
-    <li><a href="case-study-porting-chardet-to-python-3.html#falseisinvalidsyntax"><code>False</code> is invalid syntax</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#nomodulenamedconstants">No module named <code class="filename">constants</code></a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#namefileisnotdefined">Name '<var>file</var>' is not defined</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#cantuseastringpattern">Can't use a string pattern on a bytes-like object</a>
-    <li><a href="case-study-porting-chardet-to-python-3.html#cantconvertbytesobject">Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
-    </ol>
-  </ol>
 <li>Packaging Python libraries
 <!-- http://pypi.python.org/pypi -->
   <ol>
@@ -292,6 +264,34 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li>Jython
   <li>PyPy
   <li>Stackless Python
+  </ol>
+<li><a href="case-study-porting-chardet-to-python-3.html">Case study: porting <code>chardet</code> to Python 3</a>
+  <ol>
+  <li><a href="case-study-porting-chardet-to-python-3.html#divingin">Introducing <code class="filename">chardet</code>: a mini-FAQ</a>
+    <ol>
+    <li><a href="case-study-porting-chardet-to-python-3.html#faq.what">What is character encoding auto-detection?</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#faq.impossible">Isn't that impossible?</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#faq.who">Who wrote this detection algorithm?</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#faq.yippie">Yippie!  Screw the standards, I'll just auto-detect everything!</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#faq.why">Why bother with auto-detection if it's slow, inaccurate, and non-standard?</a>
+    </ol>
+  <li><a href="case-study-porting-chardet-to-python-3.html#divingin2">Diving in</a>
+    <ol>
+    <li><a href="case-study-porting-chardet-to-python-3.html#how.bom"><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#how.esc">Escaped encodings</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#how.mb">Multi-byte encodings</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#how.sb">Single-byte encodings</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#how.windows1252"><code>windows-1252</code></a>
+    </ol>
+  <li><a href="case-study-porting-chardet-to-python-3.html#running2to3">Running <code class="filename">2to3</code></a>
+  <li><a href="case-study-porting-chardet-to-python-3.html#manual">Fixing what <code class="filename">2to3</code> can't</a>
+    <ol>
+    <li><a href="case-study-porting-chardet-to-python-3.html#falseisinvalidsyntax"><code>False</code> is invalid syntax</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#nomodulenamedconstants">No module named <code class="filename">constants</code></a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#namefileisnotdefined">Name '<var>file</var>' is not defined</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#cantuseastringpattern">Can't use a string pattern on a bytes-like object</a>
+    <li><a href="case-study-porting-chardet-to-python-3.html#cantconvertbytesobject">Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
+    </ol>
   </ol>
 </ol>
 <ul>
