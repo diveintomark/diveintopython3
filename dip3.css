@@ -1,47 +1,63 @@
+/* fonts and margins */
 html{background:#fff;color:#000}
 body{margin:28px}
-body,.widgets a{font:normal medium 'Gill Sans','Gill Sans MT','Ikarius ADF',Candara,Jara,sans-serif;line-height:1.75;word-spacing:0.1em}
+body,.widgets a{font:normal medium 'Gill Sans','Gill Sans MT',Candara,Jara,sans-serif;line-height:1.75;word-spacing:0.1em}
+pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;word-spacing:0}
+abbr{font:small-caps large inherit;letter-spacing:0.1em;text-transform:lowercase}
+
+/* header */
+#search div{float:right}
+
+/* table of contents */
+li ol{margin:0}
+
+/* footer */
+.c{text-align:center;font-size:small;line-height:2.154;margin:2.154em 0}
+
+/* links */
 a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link,.widgets a{color:#1b67c9}
 a:visited{color:darkorchid}
-.widgets a{text-decoration:underline;border:0}
-.widgets,.widgets a,.download,.c{font-size:small}
-blockquote .widgets{float:left}
-blockquote .block{clear:left}
-h1 a,h2 a,h3 a,#nav a{color:inherit !important}
-abbr,acronym{letter-spacing:0.1em;text-transform:lowercase;font-variant:small-caps}
-h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
-h1{background:papayawhip;width:100%}
-h2,h3{clear:both}
-form div{float:right}
-pre{white-space:pre-wrap;padding-left:2.154em;line-height:1.75;border-left:1px dotted}
-pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;word-spacing:0}
+.skip a,.skip a:hover,.skip a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
+.skip a:active,.skip a:focus{position:static;width:auto;height:auto}
+
+/* code blocks */
+pre{white-space:pre-wrap;padding-left:2.154em;line-height:2.154;border-left:1px dotted}
+.widgets{float:left}
+.widgets,.widgets a,.download{font-size:small;line-height:2.154}
+.block{clear:left}
 pre a,.widgets a{padding:0.4375em 0;border:0}
+.widgets a{text-decoration:underline}
 pre a:hover{border:0}
 kbd{font-weight:bold}
 .prompt{color:#667}
-td pre{margin:0;padding:0;border:0}
-li ol{margin:0}
-.c{text-align:center}
-p.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
-blockquote.q{margin:auto;text-align:right;font-style:oblique}
-.skip a,.skip a:hover,.skip a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
-.skip a:active,.skip a:focus{position:static;width:auto;height:auto}
+
+/* headers */
+h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
+h1{background:papayawhip;width:100%}
+h1,h2,h3{clear:both}
+
+/* tables */
 table{width:100%;border-collapse:collapse}
-th{text-align:left;padding:0 0.5em;vertical-align:baseline;border:1px dotted}
-th,td{width:45%;vertical-align:top}
-td{border:1px dotted;padding:0 0.5em}
+th,td{width:45%;margin:0;padding:0 0.5em}
+th{text-align:left;vertical-align:baseline}
+td{vertical-align:top}
 th:first-child{width:10%;text-align:center}
-span,tr + tr th:first-child{font-family:'Arial Unicode MS',sans-serif;font-style:normal}
+.simple th{font-family:inherit !important}
+.hover{background:#eee;color:inherit;cursor:default}
+td pre{margin:0;padding:0;border:0}
+
+/* typographical flourishes */
+.q{margin:auto;text-align:right;font-style:oblique}
+.fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
+.q span,pre span,tr + tr th:first-child{font:normal medium 'Arial Unicode MS',sans-serif}
 .q span{font-size:large}
 .note{margin-left:4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 -1.22em}
-table.simple th{font-family:inherit !important}
-.fr{width:100%;border:1px dotted;margin-top:3.5em}
-.fr h4{margin-top:-1.2em;margin-left:-1em;width:8.5em;border:1px dotted;padding: 3px 3px 3px 13px;background:#fff;color:inherit;position:relative}
-.hover{background:#eee;color:inherit;cursor:default}
-i.baa{font-family:Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L','URW Bookman L',serif}
+.baa{font:oblique large Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L',serif}
+
+/* section counters */
 body{counter-reset:h1}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
