@@ -1,11 +1,10 @@
 /*
 var LANGS = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 'C'};
 */
-var HIDESHOW = {'visible': 'hide', 'hidden': 'show'};
-
-google.load("jquery", "1.3");
-google.setOnLoadCallback(function() {
+//google.load("jquery", "1.3");
+//google.setOnLoadCallback(function() {
 $(document).ready(function() {
+  var HS = {'visible': 'hide', 'hidden': 'show'};
 /*
   // toggle-able language comparisons
   for (var lang in LANGS) {
@@ -26,7 +25,7 @@ $(document).ready(function() {
   $("pre.code, pre.screen").each(function(i) {
     this.id = "autopre" + i;
     $(this).wrapInner('<div class="block"></div>');
-    $(this).prepend('<div class="widgets">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HIDESHOW['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
+    $(this).prepend('<div class="widgets">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 
     $(this).prev("p.download").each(function(i) {
       $(this).next("pre").find("div.widgets").append(" " + $(this).html());
@@ -57,7 +56,7 @@ $(document).ready(function() {
   });
 
 }); /* document.ready */
-}); /* google.setOnLoadCallback */
+//}); /* google.setOnLoadCallback */
 
 /*
 function toggleComparisonNotes(lang) {
@@ -70,7 +69,7 @@ function toggleComparisonNotes(lang) {
 function toggleCodeBlock(id) {
   $("#" + id).find("div.block").toggle();
   var a = $("#" + id).find("a.toggle");
-  a.text(a.text() == HIDESHOW['visible'] ? HIDESHOW['hidden'] : HIDESHOW['visible']);
+  a.text(a.text() == HS['visible'] ? HS['hidden'] : HS['visible']);
 }
 
 function plainTextOnClick(id) {

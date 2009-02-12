@@ -1,106 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-<meta charset="utf-8">
+<meta charset=utf-8>
 <title>Case study: porting chardet to Python 3 - Dive into Python 3</title>
-<link rel="stylesheet" type="text/css" href="dip3.css">
-<link rel="shortcut icon" href="data:image/ico,">
-<link rel="alternate" type="application/atom+xml" href="http://hg.diveintopython3.org/atom-log">
-<style type="text/css">
+<link rel=stylesheet type=text/css href=dip3.css>
+<link rel="shortcut icon" href=data:image/ico,>
+<link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
+<style type=text/css>
 body{counter-reset:h1 20}
 </style>
 </head>
-<body>
-<p class="skip"><a href="#divingin">skip to main content</a>
-<form action="http://www.google.com/cse" id="search"><div><input type="hidden" name="cx" value="014021643941856155761:l5eihuescdw"><input type="hidden" name="ie" value="UTF-8">&nbsp;<input name="q" size="31">&nbsp;<input type="submit" name="sa" value="Search"></div></form>
-<p class="nav">You are here: <a href="/">Home</a> <span>&#8227;</span> <a href="table-of-contents.html">Dive Into Python 3</a> <span>&#8227;</span>
+<p class=skip><a href=#divingin>skip to main content</a>
+<form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Case study: porting <code>chardet</code> to Python 3</h1>
-<blockquote class="q">
-<p><span>&#x275D;</span> Words, words.  They&#8217;re all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
+<blockquote class=q>
+<p><span>&#x275D;</span> Words, words. They&#8217;re all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
 </blockquote>
 <ol>
-<li><a href="#divingin">Introducing <code class="filename">chardet</code></a>
+<li><a href=#divingin>Introducing <code class=filename>chardet</code></a>
   <ol>
-  <li><a href="#faq.what">What is character encoding auto-detection?</a>
-  <li><a href="#faq.impossible">Isn&#8217;t that impossible?</a>
-  <li><a href="#faq.who">Who wrote this detection algorithm?</a>
-  <li><a href="#faq.yippie">Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</a>
-  <li><a href="#faq.why">Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</a>
+  <li><a href=#faq.what>What is character encoding auto-detection?</a>
+  <li><a href=#faq.impossible>Isn&#8217;t that impossible?</a>
+  <li><a href=#faq.who>Who wrote this detection algorithm?</a>
+  <li><a href=#faq.yippie>Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</a>
+  <li><a href=#faq.why>Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</a>
   </ol>
-<li><a href="#divingin2">Diving in</a>
+<li><a href=#divingin2>Diving in</a>
   <ol>
-  <li><a href="#how.bom"><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
-  <li><a href="#how.esc">Escaped encodings</a>
-  <li><a href="#how.mb">Multi-byte encodings</a>
-  <li><a href="#how.sb">Single-byte encodings</a>
-  <li><a href="#how.windows1252"><code>windows-1252</code></a>
+  <li><a href=#how.bom><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
+  <li><a href=#how.esc>Escaped encodings</a>
+  <li><a href=#how.mb>Multi-byte encodings</a>
+  <li><a href=#how.sb>Single-byte encodings</a>
+  <li><a href=#how.windows1252><code>windows-1252</code></a>
   </ol>
-<li><a href="#running2to3">Running <code class="filename">2to3</code></a>
-<li><a href="#manual">Fixing what <code class="filename">2to3</code> can&#8217;t</a>
+<li><a href=#running2to3>Running <code class=filename>2to3</code></a>
+<li><a href=#manual>Fixing what <code class=filename>2to3</code> can&#8217;t</a>
   <ol>
-  <li><a href="#falseisinvalidsyntax"><code>False</code> is invalid syntax</a>
-  <li><a href="#nomodulenamedconstants">No module named <code class="filename">constants</code></a>
-  <li><a href="#namefileisnotdefined">Name '<var>file</var>' is not defined</a>
-  <li><a href="#cantuseastringpattern">Can&#8217;t use a string pattern on a bytes-like object</a>
-  <li><a href="#cantconvertbytesobject">Can&#8217;t convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
+  <li><a href=#falseisinvalidsyntax><code>False</code> is invalid syntax</a>
+  <li><a href=#nomodulenamedconstants>No module named <code class=filename>constants</code></a>
+  <li><a href=#namefileisnotdefined>Name '<var>file</var>' is not defined</a>
+  <li><a href=#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
+  <li><a href=#cantconvertbytesobject>Can&#8217;t convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
   </ol>
 </ol>
-<h2 id="divingin">Introducing <code class="filename">chardet</code>: a mini-FAQ</h2>
-<p class="fancy">When you think of &#8220;text,&#8221; you probably think of &#8220;characters and symbols I see on my computer screen.&#8221;  But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes.  Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <em>character encoding</em>.  There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages.  Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
-<p>In reality, it&#8217;s more complicated than that.  Many characters are common to multiple encodings, but each encoding may use a different sequence of bytes to actually store those characters in memory or on disk.  So you can think of the character encoding as a kind of decryption key for the text.  Whenever someone gives you a sequence of bytes and claims it&#8217;s &#8220;text&#8221;, you need to know what character encoding they used so you can decode the bytes into characters and display them (or process them, or whatever).
-<h3 id="faq.what">What is character encoding auto-detection?</h3>
-<p>It means taking a sequence of bytes in an unknown character encoding, and attempting to determine the encoding so you can read the text.  It&#8217;s like cracking a code when you don&#8217;t have the decryption key.
-<h3 id="faq.impossible">Isn&#8217;t that impossible?</h3>
-<p>In general, yes.  However, some encodings are optimized for specific languages, and languages are not random.  Some character sequences pop up all the time, while other sequences make no sense.  A person fluent in English who opens a newspaper and finds &#8220;txzqJv 2!dasd0a QqdKjvz&#8221; will instantly recognize that that isn&#8217;t English (even though it is composed entirely of English letters).  By studying lots of &#8220;typical&#8221; text, a computer algorithm can simulate this kind of fluency and make an educated guess about a text&#8217;s language.
+<h2 id=divingin>Introducing <code class=filename>chardet</code>: a mini-FAQ</h2>
+<p class=fancy>When you think of &#8220;text,&#8221; you probably think of &#8220;characters and symbols I see on my computer screen.&#8221;  But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes. Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <em>character encoding</em>. There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages. Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
+<p>In reality, it&#8217;s more complicated than that. Many characters are common to multiple encodings, but each encoding may use a different sequence of bytes to actually store those characters in memory or on disk. So you can think of the character encoding as a kind of decryption key for the text. Whenever someone gives you a sequence of bytes and claims it&#8217;s &#8220;text&#8221;, you need to know what character encoding they used so you can decode the bytes into characters and display them (or process them, or whatever).
+<h3 id=faq.what>What is character encoding auto-detection?</h3>
+<p>It means taking a sequence of bytes in an unknown character encoding, and attempting to determine the encoding so you can read the text. It&#8217;s like cracking a code when you don&#8217;t have the decryption key.
+<h3 id=faq.impossible>Isn&#8217;t that impossible?</h3>
+<p>In general, yes. However, some encodings are optimized for specific languages, and languages are not random. Some character sequences pop up all the time, while other sequences make no sense. A person fluent in English who opens a newspaper and finds &#8220;txzqJv 2!dasd0a QqdKjvz&#8221; will instantly recognize that that isn&#8217;t English (even though it is composed entirely of English letters). By studying lots of &#8220;typical&#8221; text, a computer algorithm can simulate this kind of fluency and make an educated guess about a text&#8217;s language.
 <p>In other words, encoding detection is really language detection, combined with knowledge of which languages tend to use which character encodings.
-<h3 id="faq.who">Who wrote this detection algorithm?</h3>
-<p>This library is a port of <a href="http://lxr.mozilla.org/seamonkey/source/extensions/universalchardet/src/base/">the auto-detection code in Mozilla</a>.  I have attempted to maintain as much of the original structure as possible (mostly for selfish reasons, to make it easier to maintain the port as the original code evolves).  I have also retained the original authors&#8217; comments, which are quite extensive and informative.
-<p>You may also be interested in the research paper which led to the Mozilla implementation, <a href="http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html">A composite approach to language/encoding detection</a>.
-<h3 id="faq.yippie">Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</h3>
-<p>Don&#8217;t do that.  Virtually every format and protocol contains a method for specifying character encoding.
+<h3 id=faq.who>Who wrote this detection algorithm?</h3>
+<p>This library is a port of <a href=http://lxr.mozilla.org/seamonkey/source/extensions/universalchardet/src/base/>the auto-detection code in Mozilla</a>. I have attempted to maintain as much of the original structure as possible (mostly for selfish reasons, to make it easier to maintain the port as the original code evolves). I have also retained the original authors&#8217; comments, which are quite extensive and informative.
+<p>You may also be interested in the research paper which led to the Mozilla implementation, <a href=http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html>A composite approach to language/encoding detection</a>.
+<h3 id=faq.yippie>Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</h3>
+<p>Don&#8217;t do that. Virtually every format and protocol contains a method for specifying character encoding.
 <ul>
 <li>HTTP can define a <code>charset</code> parameter in the <code>Content-type</code> header.
 <li>HTML documents can define a <code>&lt;meta http-equiv="content-type"&gt;</code> element in the <code>&lt;head&gt;</code> of a web page.
 <li>XML documents can define an <code>encoding</code> attribute in the XML prolog.
 </ul>
-<p>If text comes with explicit character encoding information, you should use it.  If the text has no explicit information, but the relevant standard defines a default encoding, you should use that.  (This is harder than it sounds, because standards can overlap.  If you fetch an XML document over HTTP, you need to support both standards <em>and</em> figure out which one wins if they give you conflicting information.)
-<p>Despite the complexity, it&#8217;s worthwhile to follow standards and <a href="http://www.w3.org/2001/tag/doc/mime-respect">respect explicit character encoding information</a>.  It will almost certainly be faster and more accurate than trying to auto-detect the encoding.  It will also make the world a better place, since your program will interoperate with other programs that follow the same standards.
-<h3 id="faq.why">Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</h3>
-<p>Sometimes you receive text with verifiably inaccurate encoding information.  Or text without any encoding information, and the specified default encoding doesn&#8217;t work.  There are also some poorly designed standards that have no way to specify encoding at all.
-<p>If following the relevant standards gets you nowhere, <em>and</em> you decide that processing the text is more important than maintaining interoperability, then you can try to auto-detect the character encoding as a last resort.  An example is my <a href="http://feedparser.org/">Universal Feed Parser</a>, which calls this auto-detection library <a href="http://feedparser.org/docs/character-encoding.html">only after exhausting all other options</a>.
-<h2 id="divingin2">Diving in</h2>
+<p>If text comes with explicit character encoding information, you should use it. If the text has no explicit information, but the relevant standard defines a default encoding, you should use that. (This is harder than it sounds, because standards can overlap. If you fetch an XML document over HTTP, you need to support both standards <em>and</em> figure out which one wins if they give you conflicting information.)
+<p>Despite the complexity, it&#8217;s worthwhile to follow standards and <a href=http://www.w3.org/2001/tag/doc/mime-respect>respect explicit character encoding information</a>. It will almost certainly be faster and more accurate than trying to auto-detect the encoding. It will also make the world a better place, since your program will interoperate with other programs that follow the same standards.
+<h3 id=faq.why>Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</h3>
+<p>Sometimes you receive text with verifiably inaccurate encoding information. Or text without any encoding information, and the specified default encoding doesn&#8217;t work. There are also some poorly designed standards that have no way to specify encoding at all.
+<p>If following the relevant standards gets you nowhere, <em>and</em> you decide that processing the text is more important than maintaining interoperability, then you can try to auto-detect the character encoding as a last resort. An example is my <a href=http://feedparser.org/>Universal Feed Parser</a>, which calls this auto-detection library <a href=http://feedparser.org/docs/character-encoding.html>only after exhausting all other options</a>.
+<h2 id=divingin2>Diving in</h2>
 <p>This is a brief guide to navigating the code itself.
-<p>The main entry point for the detection algorithm is <code class="filename">universaldetector.py</code>, which has one class, <code>UniversalDetector</code>.  (You might think the main entry point is the <code>detect</code> function in <code class="filename">chardet/__init__.py</code>, but that&#8217;s really just a convenience function that creates a <code>UniversalDetector</code> object, calls it, and returns its result.)
+<p>The main entry point for the detection algorithm is <code class=filename>universaldetector.py</code>, which has one class, <code>UniversalDetector</code>. (You might think the main entry point is the <code>detect</code> function in <code class=filename>chardet/__init__.py</code>, but that&#8217;s really just a convenience function that creates a <code>UniversalDetector</code> object, calls it, and returns its result.)
 <p>There are 5 categories of encodings that <code>UniversalDetector</code> handles:
 <ol>
-<li><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr>.  This includes <code>UTF-8</code>, both <abbr title="Big Endian">BE</abbr> and <abbr title="Little Endian">LE</abbr> variants of <code>UTF-16</code>, and all 4 byte-order variants of <code>UTF-32</code>.
-<li>Escaped encodings, which are entirely 7-bit <abbr>ASCII</abbr> compatible, where non-<abbr>ASCII</abbr> characters start with an escape sequence.  Examples: <code>ISO-2022-JP</code> (Japanese) and <code>HZ-GB-2312</code> (Chinese).
-<li>Multi-byte encodings, where each character is represented by a variable number of bytes.  Examples: <code>Big5</code> (Chinese), <code>SHIFT_JIS</code> (Japanese), <code>EUC-KR</code> (Korean), and <code>UTF-8</code> without a <abbr title="Byte Order Mark">BOM</abbr>.
-<li>Single-byte encodings, where each character is represented by one byte.  Examples: <code>KOI8-R</code> (Russian), <code>windows-1255</code> (Hebrew), and <code>TIS-620</code> (Thai).
+<li><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr>. This includes <code>UTF-8</code>, both <abbr title="Big Endian">BE</abbr> and <abbr title="Little Endian">LE</abbr> variants of <code>UTF-16</code>, and all 4 byte-order variants of <code>UTF-32</code>.
+<li>Escaped encodings, which are entirely 7-bit <abbr>ASCII</abbr> compatible, where non-<abbr>ASCII</abbr> characters start with an escape sequence. Examples: <code>ISO-2022-JP</code> (Japanese) and <code>HZ-GB-2312</code> (Chinese).
+<li>Multi-byte encodings, where each character is represented by a variable number of bytes. Examples: <code>Big5</code> (Chinese), <code>SHIFT_JIS</code> (Japanese), <code>EUC-KR</code> (Korean), and <code>UTF-8</code> without a <abbr title="Byte Order Mark">BOM</abbr>.
+<li>Single-byte encodings, where each character is represented by one byte. Examples: <code>KOI8-R</code> (Russian), <code>windows-1255</code> (Hebrew), and <code>TIS-620</code> (Thai).
 <li><code>windows-1252</code>, which is used primarily on Microsoft Windows by middle managers who wouldn&#8217;t know a character encoding from a hole in the ground.
 </ol>
-<h3 id="how.bom"><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></h3>
-<p>If the text starts with a <abbr title="Byte Order Mark">BOM</abbr>, we can reasonably assume that the text is encoded in <code>UTF-8</code>, <code>UTF-16</code>, or <code>UTF-32</code>.  (The <abbr title="Byte Order Mark">BOM</abbr> will tell us exactly which one; that&#8217;s what it&#8217;s for.)  This is handled inline in <code>UniversalDetector</code>, which returns the result immediately without any further processing.
-<h3 id="how.esc">Escaped encodings</h3>
-<p>If the text contains a recognizable escape sequence that might indicate an escaped encoding, <code>UniversalDetector</code> creates an <code>EscCharSetProber</code> (defined in <code class="filename">escprober.py</code>) and feeds it the text.
-<p><code>EscCharSetProber</code> creates a series of state machines, based on models of <code>HZ-GB-2312</code>, <code>ISO-2022-CN</code>, <code>ISO-2022-JP</code>, and <code>ISO-2022-KR</code> (defined in <code class="filename">escsm.py</code>).  <code>EscCharSetProber</code> feeds the text to each of these state machines, one byte at a time.  If any state machine ends up uniquely identifying the encoding, <code>EscCharSetProber</code> immediately returns the positive result to <code>UniversalDetector</code>, which returns it to the caller.  If any state machine hits an illegal sequence, it is dropped and processing continues with the other state machines.
-<h3 id="how.mb">Multi-byte encodings</h3>
-<p>Assuming no <abbr title="Byte Order Mark">BOM</abbr>, <code>UniversalDetector</code> checks whether the text contains any high-bit characters.  If so, it creates a series of &#8220;probers&#8221; for detecting multi-byte encodings, single-byte encodings, and as a last resort, <code>windows-1252</code>.
-<p>The multi-byte encoding prober, <code>MBCSGroupProber</code> (defined in <code class="filename">mbcsgroupprober.py</code>), is really just a shell that manages a group of other probers, one for each multi-byte encoding: <code>Big5</code>, <code>GB2312</code>, <code>EUC-TW</code>, <code>EUC-KR</code>, <code>EUC-JP</code>, <code>SHIFT_JIS</code>, and <code>UTF-8</code>.  <code>MBCSGroupProber</code> feeds the text to each of these encoding-specific probers and checks the results.  If a prober reports that it has found an illegal byte sequence, it is dropped from further processing (so that, for instance, any subsequent calls to <code>UniversalDetector</code>.<code>feed()</code> will skip that prober).  If a prober reports that it is reasonably confident that it has detected the encoding, <code>MBCSGroupProber</code> reports this positive result to <code>UniversalDetector</code>, which reports the result to the caller.
-<p>Most of the multi-byte encoding probers are inherited from <code>MultiByteCharSetProber</code> (defined in <code class="filename">mbcharsetprober.py</code>), and simply hook up the appropriate state machine and distribution analyzer and let <code>MultiByteCharSetProber</code> do the rest of the work.  <code>MultiByteCharSetProber</code> runs the text through the encoding-specific state machine, one byte at a time, to look for byte sequences that would indicate a conclusive positive or negative result.  At the same time, <code>MultiByteCharSetProber</code> feeds the text to an encoding-specific distribution analyzer.
-<p>The distribution analyzers (each defined in <code class="filename">chardistribution.py</code>) use language-specific models of which characters are used most frequently.  Once <code>MultiByteCharSetProber</code> has fed enough text to the distribution analyzer, it calculates a confidence rating based on the number of frequently-used characters, the total number of characters, and a language-specific distribution ratio.  If the confidence is high enough, <code>MultiByteCharSetProber</code> returns the result to <code>MBCSGroupProber</code>, which returns it to <code>UniversalDetector</code>, which returns it to the caller.
-<p>The case of Japanese is more difficult.  Single-character distribution analysis is not always sufficient to distinguish between <code>EUC-JP</code> and <code>SHIFT_JIS</code>, so the <code>SJISProber</code> (defined in <code class="filename">sjisprober.py</code>) also uses 2-character distribution analysis.  <code>SJISContextAnalysis</code> and <code>EUCJPContextAnalysis</code> (both defined in <code class="filename">jpcntx.py</code> and both inheriting from a common <code>JapaneseContextAnalysis</code> class) check the frequency of Hiragana syllabary characters within the text.  Once enough text has been processed, they return a confidence level to <code>SJISProber</code>, which checks both analyzers and returns the higher confidence level to <code>MBCSGroupProber</code>.
-<h3 id="how.sb">Single-byte encodings</h3>
-<p>The single-byte encoding prober, <code>SBCSGroupProber</code> (defined in <code class="filename">sbcsgroupprober.py</code>), is also just a shell that manages a group of other probers, one for each combination of single-byte encoding and language: <code>windows-1251</code>, <code>KOI8-R</code>, <code>ISO-8859-5</code>, <code>MacCyrillic</code>, <code>IBM855</code>, and <code>IBM866</code> (Russian); <code>ISO-8859-7</code> and <code>windows-1253</code> (Greek); <code>ISO-8859-5</code> and <code>windows-1251</code> (Bulgarian); <code>ISO-8859-2</code> and <code>windows-1250</code> (Hungarian); <code>TIS-620</code> (Thai); <code>windows-1255</code> and <code>ISO-8859-8</code> (Hebrew).
-<p><code>SBCSGroupProber</code> feeds the text to each of these encoding+language-specific probers and checks the results.  These probers are all implemented as a single class, <code>SingleByteCharSetProber</code> (defined in <code class="filename">sbcharsetprober.py</code>), which takes a language model as an argument.  The language model defines how frequently different 2-character sequences appear in typical text.  <code>SingleByteCharSetProber</code> processes the text and tallies the most frequently used 2-character sequences.  Once enough text has been processed, it calculates a confidence level based on the number of frequently-used sequences, the total number of characters, and a language-specific distribution ratio.
-<p>Hebrew is handled as a special case.  If the text appears to be Hebrew based on 2-character distribution analysis, <code>HebrewProber</code> (defined in <code class="filename">hebrewprober.py</code>) tries to distinguish between Visual Hebrew (where the source text actually stored "<span class="quote">backwards</span>" line-by-line, and then displayed verbatim so it can be read from right to left) and Logical Hebrew (where the source text is stored in reading order and then rendered right-to-left by the client).  Because certain characters are encoded differently based on whether they appear in the middle of or at the end of a word, we can make a reasonable guess about direction of the source text, and return the appropriate encoding (<code>windows-1255</code> for Logical Hebrew, or <code>ISO-8859-8</code> for Visual Hebrew).
-<h3 id="how.windows1252"><code>windows-1252</code></h3>
-<p>If <code>UniversalDetector</code> detects a high-bit character in the text, but none of the other multi-byte or single-byte encoding probers return a confident result, it creates a <code>Latin1Prober</code> (defined in <code class="filename">latin1prober.py</code>) to try to detect English text in a <code>windows-1252</code> encoding.  This detection is inherently unreliable, because English letters are encoded in the same way in many different encodings.  The only way to distinguish <code>windows-1252</code> is through commonly used symbols like smart quotes, curly apostrophes, copyright symbols, and the like.  <code>Latin1Prober</code> automatically reduces its confidence rating to allow more accurate probers to win if at all possible.
-<h2 id="running2to3">Running <code class="filename">2to3</code></h2>
-<p>We&#8217;re going to migrate the <code class="filename">chardet</code> module from Python 2 to Python 3.  Python 3 comes with a utility script called <code class="filename">2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3.  In some cases this is easy -- a function was renamed or moved to a different modules -- but in other cases it can get pretty complex.  To get a sense of all that it <em>can</em> do, refer to the appendix, <a href="porting-code-to-python-3-with-2to3.html">Porting code to Python 3 with <code class="filename">2to3</code></a>.  In this chapter, we&#8217;ll start by running <code class="filename">2to3</code> on the <code class="filename">chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
-<p>The main <code class="filename">chardet</code> package is split across several different files, all in the same directory.  The <code class="filename">2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class="filename">2to3</code> will convert each of the files in turn.
-<p class="skip"><a href="#skip2to3output">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
+<h3 id=how.bom><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></h3>
+<p>If the text starts with a <abbr title="Byte Order Mark">BOM</abbr>, we can reasonably assume that the text is encoded in <code>UTF-8</code>, <code>UTF-16</code>, or <code>UTF-32</code>. (The <abbr title="Byte Order Mark">BOM</abbr> will tell us exactly which one; that&#8217;s what it&#8217;s for.)  This is handled inline in <code>UniversalDetector</code>, which returns the result immediately without any further processing.
+<h3 id=how.esc>Escaped encodings</h3>
+<p>If the text contains a recognizable escape sequence that might indicate an escaped encoding, <code>UniversalDetector</code> creates an <code>EscCharSetProber</code> (defined in <code class=filename>escprober.py</code>) and feeds it the text.
+<p><code>EscCharSetProber</code> creates a series of state machines, based on models of <code>HZ-GB-2312</code>, <code>ISO-2022-CN</code>, <code>ISO-2022-JP</code>, and <code>ISO-2022-KR</code> (defined in <code class=filename>escsm.py</code>). <code>EscCharSetProber</code> feeds the text to each of these state machines, one byte at a time. If any state machine ends up uniquely identifying the encoding, <code>EscCharSetProber</code> immediately returns the positive result to <code>UniversalDetector</code>, which returns it to the caller. If any state machine hits an illegal sequence, it is dropped and processing continues with the other state machines.
+<h3 id=how.mb>Multi-byte encodings</h3>
+<p>Assuming no <abbr title="Byte Order Mark">BOM</abbr>, <code>UniversalDetector</code> checks whether the text contains any high-bit characters. If so, it creates a series of &#8220;probers&#8221; for detecting multi-byte encodings, single-byte encodings, and as a last resort, <code>windows-1252</code>.
+<p>The multi-byte encoding prober, <code>MBCSGroupProber</code> (defined in <code class=filename>mbcsgroupprober.py</code>), is really just a shell that manages a group of other probers, one for each multi-byte encoding: <code>Big5</code>, <code>GB2312</code>, <code>EUC-TW</code>, <code>EUC-KR</code>, <code>EUC-JP</code>, <code>SHIFT_JIS</code>, and <code>UTF-8</code>. <code>MBCSGroupProber</code> feeds the text to each of these encoding-specific probers and checks the results. If a prober reports that it has found an illegal byte sequence, it is dropped from further processing (so that, for instance, any subsequent calls to <code>UniversalDetector</code>.<code>feed()</code> will skip that prober). If a prober reports that it is reasonably confident that it has detected the encoding, <code>MBCSGroupProber</code> reports this positive result to <code>UniversalDetector</code>, which reports the result to the caller.
+<p>Most of the multi-byte encoding probers are inherited from <code>MultiByteCharSetProber</code> (defined in <code class=filename>mbcharsetprober.py</code>), and simply hook up the appropriate state machine and distribution analyzer and let <code>MultiByteCharSetProber</code> do the rest of the work. <code>MultiByteCharSetProber</code> runs the text through the encoding-specific state machine, one byte at a time, to look for byte sequences that would indicate a conclusive positive or negative result. At the same time, <code>MultiByteCharSetProber</code> feeds the text to an encoding-specific distribution analyzer.
+<p>The distribution analyzers (each defined in <code class=filename>chardistribution.py</code>) use language-specific models of which characters are used most frequently. Once <code>MultiByteCharSetProber</code> has fed enough text to the distribution analyzer, it calculates a confidence rating based on the number of frequently-used characters, the total number of characters, and a language-specific distribution ratio. If the confidence is high enough, <code>MultiByteCharSetProber</code> returns the result to <code>MBCSGroupProber</code>, which returns it to <code>UniversalDetector</code>, which returns it to the caller.
+<p>The case of Japanese is more difficult. Single-character distribution analysis is not always sufficient to distinguish between <code>EUC-JP</code> and <code>SHIFT_JIS</code>, so the <code>SJISProber</code> (defined in <code class=filename>sjisprober.py</code>) also uses 2-character distribution analysis. <code>SJISContextAnalysis</code> and <code>EUCJPContextAnalysis</code> (both defined in <code class=filename>jpcntx.py</code> and both inheriting from a common <code>JapaneseContextAnalysis</code> class) check the frequency of Hiragana syllabary characters within the text. Once enough text has been processed, they return a confidence level to <code>SJISProber</code>, which checks both analyzers and returns the higher confidence level to <code>MBCSGroupProber</code>.
+<h3 id=how.sb>Single-byte encodings</h3>
+<p>The single-byte encoding prober, <code>SBCSGroupProber</code> (defined in <code class=filename>sbcsgroupprober.py</code>), is also just a shell that manages a group of other probers, one for each combination of single-byte encoding and language: <code>windows-1251</code>, <code>KOI8-R</code>, <code>ISO-8859-5</code>, <code>MacCyrillic</code>, <code>IBM855</code>, and <code>IBM866</code> (Russian); <code>ISO-8859-7</code> and <code>windows-1253</code> (Greek); <code>ISO-8859-5</code> and <code>windows-1251</code> (Bulgarian); <code>ISO-8859-2</code> and <code>windows-1250</code> (Hungarian); <code>TIS-620</code> (Thai); <code>windows-1255</code> and <code>ISO-8859-8</code> (Hebrew).
+<p><code>SBCSGroupProber</code> feeds the text to each of these encoding+language-specific probers and checks the results. These probers are all implemented as a single class, <code>SingleByteCharSetProber</code> (defined in <code class=filename>sbcharsetprober.py</code>), which takes a language model as an argument. The language model defines how frequently different 2-character sequences appear in typical text. <code>SingleByteCharSetProber</code> processes the text and tallies the most frequently used 2-character sequences. Once enough text has been processed, it calculates a confidence level based on the number of frequently-used sequences, the total number of characters, and a language-specific distribution ratio.
+<p>Hebrew is handled as a special case. If the text appears to be Hebrew based on 2-character distribution analysis, <code>HebrewProber</code> (defined in <code class=filename>hebrewprober.py</code>) tries to distinguish between Visual Hebrew (where the source text actually stored "<span class=quote>backwards</span>" line-by-line, and then displayed verbatim so it can be read from right to left) and Logical Hebrew (where the source text is stored in reading order and then rendered right-to-left by the client). Because certain characters are encoded differently based on whether they appear in the middle of or at the end of a word, we can make a reasonable guess about direction of the source text, and return the appropriate encoding (<code>windows-1255</code> for Logical Hebrew, or <code>ISO-8859-8</code> for Visual Hebrew).
+<h3 id=how.windows1252><code>windows-1252</code></h3>
+<p>If <code>UniversalDetector</code> detects a high-bit character in the text, but none of the other multi-byte or single-byte encoding probers return a confident result, it creates a <code>Latin1Prober</code> (defined in <code class=filename>latin1prober.py</code>) to try to detect English text in a <code>windows-1252</code> encoding. This detection is inherently unreliable, because English letters are encoded in the same way in many different encodings. The only way to distinguish <code>windows-1252</code> is through commonly used symbols like smart quotes, curly apostrophes, copyright symbols, and the like. <code>Latin1Prober</code> automatically reduces its confidence rating to allow more accurate probers to win if at all possible.
+<h2 id=running2to3>Running <code class=filename>2to3</code></h2>
+<p>We&#8217;re going to migrate the <code class=filename>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code class=filename>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy -- a function was renamed or moved to a different modules -- but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code class=filename>2to3</code></a>. In this chapter, we&#8217;ll start by running <code class=filename>2to3</code> on the <code class=filename>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
+<p>The main <code class=filename>chardet</code> package is split across several different files, all in the same directory. The <code class=filename>2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class=filename>2to3</code> will convert each of the files in turn.
+<p class=skip><a href=#skip2to3output>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
 RefactoringTool: Skipping implicit fixer: set_literal
@@ -566,9 +565,9 @@ RefactoringTool: chardet\sbcsgroupprober.py
 RefactoringTool: chardet\sjisprober.py
 RefactoringTool: chardet\universaldetector.py
 RefactoringTool: chardet\utf8prober.py</samp></pre>
-<p id="skip2to3output">Now run the <code class="filename">2to3</code> script on the testing harness, <code class="filename">test.py</code>.
-<p class="skip"><a href="#skip2to3outputtest">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
+<p id=skip2to3output>Now run the <code class=filename>2to3</code> script on the testing harness, <code class=filename>test.py</code>.
+<p class=skip><a href=#skip2to3outputtest>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
 RefactoringTool: Skipping implicit fixer: idioms
 RefactoringTool: Skipping implicit fixer: set_literal
@@ -598,21 +597,21 @@ RefactoringTool: Skipping implicit fixer: ws_comma
 +print(count, 'tests')
 RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
-<p id="skip2to3outputtest">Well, that wasn&#8217;t so hard.  Just a few imports and print statements to convert.  Time to run the new version.  Do you think it&#8217;ll work?
-<h2 id="manual">Fixing what <code class="filename">2to3</code> can&#8217;t</h2>
-<h3 id="falseisinvalidsyntax"><code>False</code> is invalid syntax</h3>
-<p>Now for the real test: running the test harness against the test suite.  Since the test suite is designed to cover all the possible code paths, it&#8217;s a good way to test our ported code to make sure there aren&#8217;t any bugs lurking anywhere.
-<p class="skip"><a href="#skipinvalidsyntax">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
-<samp class="traceback">Traceback (most recent call last):
+<p id=skip2to3outputtest>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Time to run the new version. Do you think it&#8217;ll work?
+<h2 id=manual>Fixing what <code class=filename>2to3</code> can&#8217;t</h2>
+<h3 id=falseisinvalidsyntax><code>False</code> is invalid syntax</h3>
+<p>Now for the real test: running the test harness against the test suite. Since the test suite is designed to cover all the possible code paths, it&#8217;s a good way to test our ported code to make sure there aren&#8217;t any bugs lurking anywhere.
+<p class=skip><a href=#skipinvalidsyntax>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
     from chardet.universaldetector import UniversalDetector
   File "C:\home\chardet\chardet\universaldetector.py", line 51
     self.done = constants.False
                               ^
 SyntaxError: invalid syntax</samp></pre>
-<p id="skipinvalidsyntax">Hmm, a small snag.  In Python 3, <code>False</code> is a reserved word, so you can&#8217;t use it as a variable name.  Let&#8217;s look at <code class="filename">constants.py</code> to see where it&#8217;s defined.  Here&#8217;s the original version from <code class="filename">constants.py</code>, before the <code class="filename">2to3</code> script changed it:
-<p class="skip"><a href="#skipbuiltincode">skip over this</a>
+<p id=skipinvalidsyntax>Hmm, a small snag. In Python 3, <code>False</code> is a reserved word, so you can&#8217;t use it as a variable name. Let&#8217;s look at <code class=filename>constants.py</code> to see where it&#8217;s defined. Here&#8217;s the original version from <code class=filename>constants.py</code>, before the <code class=filename>2to3</code> script changed it:
+<p class=skip><a href=#skipbuiltincode>skip over this</a>
 <pre><code>import __builtin__
 if not hasattr(__builtin__, 'False'):
     False = 0
@@ -620,84 +619,84 @@ if not hasattr(__builtin__, 'False'):
 else:
     False = __builtin__.False
     True = __builtin__.True</code></pre>
-<p id="skipbuiltincode">This piece of code is designed to allow this library to run under older versions of Python 2.  Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>Boolean</code> type.  This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.
-<p>However, Python 3 will always have a <code>Boolean</code> type, so this entire code snippet is unnecessary.  The simplest solution is to replace all instances of <code>constants.True</code> and <code>constants.False</code> with <code>True</code> and <code>False</code>, respectively, then delete this dead code from <code class="filename">constants.py</code>.
-<p>So this line in <code class="filename">universaldetector.py</code>:
+<p id=skipbuiltincode>This piece of code is designed to allow this library to run under older versions of Python 2. Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>Boolean</code> type. This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.
+<p>However, Python 3 will always have a <code>Boolean</code> type, so this entire code snippet is unnecessary. The simplest solution is to replace all instances of <code>constants.True</code> and <code>constants.False</code> with <code>True</code> and <code>False</code>, respectively, then delete this dead code from <code class=filename>constants.py</code>.
+<p>So this line in <code class=filename>universaldetector.py</code>:
 <pre><code>self.done = constants.False</code></pre>
 <p>Becomes
 <pre><code>self.done = False</code></pre>
 <p>Ah, wasn&#8217;t that satisfying?  The code is shorter and more readable already.
-<h3 id="nomodulenamedconstants">No module named <code class="filename">constants</code></h3>
-<p>Time to run <code class="filename">test.py</code> again and see how far it gets.
-<p class="skip"><a href="#skipnomodulenamedconstants">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
-<samp class="traceback">Traceback (most recent call last):
+<h3 id=nomodulenamedconstants>No module named <code class=filename>constants</code></h3>
+<p>Time to run <code class=filename>test.py</code> again and see how far it gets.
+<p class=skip><a href=#skipnomodulenamedconstants>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 1, in &lt;module>
     from chardet.universaldetector import UniversalDetector
   File "C:\home\chardet\chardet\universaldetector.py", line 29, in &lt;module>
     import constants, sys
 ImportError: No module named constants</samp></pre>
-<p id="skipnomodulenamedconstants">What&#8217;s that you say?  No module named <code class="filename">constants</code>?  Of course there&#8217;s a module named <code class="filename">constants</code>. ... Oh wait, no there isn&#8217;t.  Remember when the <code class="filename">2to3</code> script fixed up all those import statements?  This library has a lot of relative imports -- that is, modules that import other modules within the library.  In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328].  To do relative imports, you need to do something like this instead:
+<p id=skipnomodulenamedconstants>What&#8217;s that you say?  No module named <code class=filename>constants</code>?  Of course there&#8217;s a module named <code class=filename>constants</code>. ... Oh wait, no there isn&#8217;t. Remember when the <code class=filename>2to3</code> script fixed up all those import statements?  This library has a lot of relative imports -- that is, modules that import other modules within the library. In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328]. To do relative imports, you need to do something like this instead:
 <pre><code>from . import constants</code></pre>
-<p>But wait.  Wasn&#8217;t the <code class="filename">2to3</code> script supposed to take care of these for you?  Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code class="filename">constants</code> module within the library, and an absolute import of the <code class="filename">sys</code> module that is pre-installed in the Python standard library.  In Python 2, you could combine these into one import statement.  In Python 3, you can&#8217;t, and the <code class="filename">2to3</code> script is not smart enough to split the import statement into two.
-<p>The solution is to split the import statement manually.  So this two-in-one import:
+<p>But wait. Wasn&#8217;t the <code class=filename>2to3</code> script supposed to take care of these for you?  Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code class=filename>constants</code> module within the library, and an absolute import of the <code class=filename>sys</code> module that is pre-installed in the Python standard library. In Python 2, you could combine these into one import statement. In Python 3, you can&#8217;t, and the <code class=filename>2to3</code> script is not smart enough to split the import statement into two.
+<p>The solution is to split the import statement manually. So this two-in-one import:
 <pre><code>import constants, sys</code></pre>
 <p>Needs to become two separate imports:
 <pre><code>from . import constants
 import sys</code></pre>
-<p>There are variations of this problem scattered throughout the <code class="filename">chardet</code> library.  In some places it&#8217;s "<code>import constants, sys</code>"; in other places, it&#8217;s "<code>import constants, re</code>".  The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
+<p>There are variations of this problem scattered throughout the <code class=filename>chardet</code> library. In some places it&#8217;s "<code>import constants, sys</code>"; in other places, it&#8217;s "<code>import constants, re</code>". The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
 <p>Onward!
-<h3 id="namefileisnotdefined">Name '<var>file</var>' is not defined</h3>
+<h3 id=namefileisnotdefined>Name '<var>file</var>' is not defined</h3>
 <p>FIXME intro
-<p class="skip"><a href="#skipnamefileisnotdefined">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<p class=skip><a href=#skipnamefileisnotdefined>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
-<samp class="traceback">Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 9, in &lt;module>
     for line in file(f, 'rb'):
 NameError: name 'file' is not defined</samp></pre>
-<p id="skipnamefileisnotdefined">This one surprised me, because I&#8217;ve been using this idiom as long as I can remember.  In Python 2, the global <var>file()</var> function was an alias for <var>open()</var>, which was the standard way of opening files for reading.  In Python 3, the entire system for reading and writing files has been refactored into the <code class="filename">io</code> module. [FIXME-LINK PEP 3116]  I&#8217;ll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <var>file()</var> function no longer exists.  However, the <var>open()</var> function does still exist.  (Technically, it&#8217;s an alias for <var>io.open()</var>, but never mind that right now.)
+<p id=skipnamefileisnotdefined>This one surprised me, because I&#8217;ve been using this idiom as long as I can remember. In Python 2, the global <var>file()</var> function was an alias for <var>open()</var>, which was the standard way of opening files for reading. In Python 3, the entire system for reading and writing files has been refactored into the <code class=filename>io</code> module. [FIXME-LINK PEP 3116]  I&#8217;ll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <var>file()</var> function no longer exists. However, the <var>open()</var> function does still exist. (Technically, it&#8217;s an alias for <var>io.open()</var>, but never mind that right now.)
 <p>Thus, the simplest solution to the problem of the missing <var>file()</var> is to call <var>open()</var> instead:
 <pre><code>for line in open(f, 'rb'):</code></pre>
 <p>And that&#8217;s all I have to say about that.
-<h3 id="cantuseastringpattern">Can&#8217;t use a string pattern on a bytes-like object</h3>
+<h3 id=cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</h3>
 <p>FIXME intro
-<p class="skip"><a href="#skipcantuseastringpattern">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<p class=skip><a href=#skipcantuseastringpattern>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
-<samp class="traceback">Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 10, in &lt;module>
     u.feed(line)
   File "C:\home\chardet\chardet\universaldetector.py", line 98, in feed
     if self._highBitDetector.search(aBuf):
 TypeError: can't use a string pattern on a bytes-like object</samp></pre>
-<p id="skipcantuseastringpattern">Now things are starting to get interesting.  And by &#8220;interesting,&#8221; I mean &#8220;confusing as all hell.&#8221;
-<p>First, let&#8217;s see what <var>self._highBitDetector</var> is.  It&#8217;s defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
-<p class="skip"><a href="#skiphighbitdetectorcode">skip over this</a>
+<p id=skipcantuseastringpattern>Now things are starting to get interesting. And by &#8220;interesting,&#8221; I mean &#8220;confusing as all hell.&#8221;
+<p>First, let&#8217;s see what <var>self._highBitDetector</var> is. It&#8217;s defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
+<p class=skip><a href=#skiphighbitdetectorcode>skip over this</a>
 <pre><code>class UniversalDetector:
     def __init__(self):
         self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
-<p id="skiphighbitdetectorcode">This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF).  Wait, that&#8217;s not quite right; I need to be more precise with my terminology.  This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.
+<p id=skiphighbitdetectorcode>This pre-compiles a regular expression designed to find non-ASCII characters in the range 128-255 (0x80-0xFF). Wait, that&#8217;s not quite right; I need to be more precise with my terminology. This pattern is designed to find non-ASCII <em>bytes</em> in the range 128-255.
 <p>And therein lies the problem.
-<p>In Python 2, a string was an array of bytes whose character encoding was tracked separately.  If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead.  But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths).  Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters.  But what we&#8217;re searching is not a string, it&#8217;s a byte array.  Looking at the traceback, this error occurred in <code class="filename">universaldetector.py</code>:
-<p class="skip"><a href="#skipfeedhighbitdetectorcode">skip over this</a>
+<p>In Python 2, a string was an array of bytes whose character encoding was tracked separately. If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead. But in Python 3, a string is always what Python 2 called a Unicode string -- that is, an array of Unicode characters (of possibly varying byte lengths). Since this regular expression is defined by a string pattern, it can only be used to search a string -- again, an array of characters. But what we&#8217;re searching is not a string, it&#8217;s a byte array. Looking at the traceback, this error occurred in <code class=filename>universaldetector.py</code>:
+<p class=skip><a href=#skipfeedhighbitdetectorcode>skip over this</a>
 <pre><code>def feed(self, aBuf):
     .
     .
     .
     if self._mInputState == ePureAscii:
         if self._highBitDetector.search(aBuf):</code></pre>
-<p id="skipfeedhighbitdetectorcode">And what is <var>aBuf</var>?  Let&#8217;s backtrack further to a place that calls <var>UniversalDetector.feed()</var>.  One place that calls it is the test harness, <code class="filename">test.py</code>.
-<p class="skip"><a href="#skiptestharnessfeedcode">skip over this</a>
+<p id=skipfeedhighbitdetectorcode>And what is <var>aBuf</var>?  Let&#8217;s backtrack further to a place that calls <var>UniversalDetector.feed()</var>. One place that calls it is the test harness, <code class=filename>test.py</code>.
+<p class=skip><a href=#skiptestharnessfeedcode>skip over this</a>
 <pre><code>u = UniversalDetector()
 .
 .
 .
 for line in open(f, 'rb'):
     u.feed(line)</code></pre>
-<p id="skiptestharnessfeedcode">And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk.  Look carefully at the parameters used to open the file: <code>'rb'</code>.  <code>'r'</code> is for &#8220;read&#8221;; OK, big deal, we&#8217;re reading the file.  Ah, but <code>'b'</code> is for &#8220;binary.&#8221;  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding.  (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes.  That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters.  But we don&#8217;t have characters; we have bytes.  Oops.
+<p id=skiptestharnessfeedcode>And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk. Look carefully at the parameters used to open the file: <code>'rb'</code>. <code>'r'</code> is for &#8220;read&#8221;; OK, big deal, we&#8217;re reading the file. Ah, but <code>'b'</code> is for &#8220;binary.&#8221;  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding. (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes. That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters. But we don&#8217;t have characters; we have bytes. Oops.
 <p>What we need this regular expression to search is not an array of characters, but an array of bytes.
-<p>Once you realize that, the solution is not difficult.  Regular expressions defined with strings can search strings.  Regular expressions defined with byte arrays can search byte arrays.  To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array.  So instead of this:
+<p>Once you realize that, the solution is not difficult. Regular expressions defined with strings can search strings. Regular expressions defined with byte arrays can search byte arrays. To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array. So instead of this:
 <pre><code>self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
 <p>We now have this:
 <pre><code>self._highBitDetector = re.compile(b'[\x80-\xFF]')</code></pre>
@@ -705,20 +704,18 @@ for line in open(f, 'rb'):
 <pre><code>self._escDetector = re.compile(r'(\033|~{)')</code></pre>
 <p>Again, this is going to be used to search a byte array (the same <var>aBuf</var> variable, in fact), so the regular expression pattern needs to be defined as a byte array:
 <pre><code>self._escDetector = re.compile(b'(\033|~{)')</code></pre>
-<h3 id="cantconvertbytesobject">Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</h3>
+<h3 id=cantconvertbytesobject>Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</h3>
 <p>Curiouser and curiouser...
-<p class="skip"><a href="#skipcantconvertbytesobject">skip over this</a>
-<pre class="screen"><samp class="prompt">C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<p class=skip><a href=#skipcantconvertbytesobject>skip over this</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
-<samp class="traceback">Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 10, in &lt;module>
     u.feed(line)
   File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
     elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
-<p id="skipcantconvertbytesobject">...
-<p class="c">&copy; 2001-4, 2009 <span>&#x2133;</span>ark Pilgrim, <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript" src="dip3.js"></script>
-</body>
-</html>
+<p id=skipcantconvertbytesobject>...
+<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
+<script type=text/javascript src=jquery.js></script>
+<script type=text/javascript src=dip3.js></script>
