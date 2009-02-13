@@ -1,14 +1,12 @@
 #!/bin/sh
 
-set -x
-
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
 cp *.html *.py *.txt .htaccess *.js *.css build/
 
 # replace local jquery reference with Google API loader
-sed -i -e "s|jquery\.hs|http://www.google.com/jsapi|g" build/*.html
+sed -i -e "s|jquery\.js|http://www.google.com/jsapi|g" build/*.html
 sed -i -e "s|//google\.|google.|g" build/dip3.js
 sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
 
@@ -25,5 +23,5 @@ sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" bui
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
 
 # and push to production
-#rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js diveintomark.org:~/web/wearehugh.com/dip3/
-#rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/
