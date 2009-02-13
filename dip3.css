@@ -2,8 +2,8 @@
 html{background:#fff;color:#000}
 body{margin:28px}
 body,.widgets a{font:normal medium 'Gill Sans','Gill Sans MT',Candara,Jara,sans-serif;line-height:1.75;word-spacing:0.1em}
-pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace;font-size:medium;word-spacing:0}
-abbr{font:small-caps large inherit;letter-spacing:0.1em;text-transform:lowercase}
+pre,kbd,code,samp{font-family:Consolas,Inconsolata,Monaco,monospace !important;font-size:medium !important;word-spacing:0 !important}
+abbr{font-variant:small-caps;font-size:large;letter-spacing:0.1em;text-transform:lowercase}
 
 /* header */
 #search div{float:right}
@@ -51,7 +51,7 @@ td pre{margin:0;padding:0;border:0}
 /* typographical flourishes */
 .q{margin:auto;text-align:right;font-style:oblique}
 .fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
-.q span,pre span,tr + tr th:first-child{font:normal medium 'Arial Unicode MS',sans-serif}
+span,tr + tr th:first-child{font:normal medium 'Arial Unicode MS',sans-serif !important}
 .q span{font-size:large}
 .note{margin-left:4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875em;margin:0 0.22em 0 -1.22em}
