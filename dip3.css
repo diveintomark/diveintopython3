@@ -1,9 +1,9 @@
 /* typography */
 body,.widgets a{font:normal medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
 pre,kbd,code,samp{font:normal medium Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
-span,tr + tr th:first-child{font:normal medium FreeSerif,OpenSymbol,'DejaVu Sans','Arial Unicode MS',sans-serif}
-pre span{font:normal medium 'DejaVu Sans',FreeSerif,OpenSymbol,'Arial Unicode MS',sans-serif}
-.baa{font:oblique large Baskerville,Constantia,Palatino,'Palatino Linotype','URW Palladio L',serif}
+span,tr + tr th:first-child{font:normal medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
+pre span{font:normal medium 'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
+.baa{font:oblique large Constantia,Baskerville,Palatino,'Palatino Linotype','URW Palladio L',serif}
 abbr{font-variant:small-caps;letter-spacing:0.1em;text-transform:lowercase}
 .q{margin:auto;text-align:right;font-style:oblique}
 .fancy:first-letter{float:left;background:transparent;color:gainsboro;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
