@@ -878,6 +878,7 @@ except:
 <li>If you used to call <code>xreadlines()</code> with no arguments, <code>2to3</code> will convert it to just the file object. In Python 3, this will accomplish the same thing: read the file one line at a time and execute the body of the <code>for</code> loop.
 <li>If you used to call <code>xreadlines()</code> with an argument (the number of lines to read at a time), keep doing that. It still works in Python 3, and <code>2to3</code> will not change it.
 </ol>
+<p class=c><span style="font-size:56px;line-height:0.88">&#x2603;</span>
 <h2 id=tuple_params><code>lambda</code> functions with multiple parameters</h2>
 <p>In Python 2, you could define anonymous <code>lambda</code> functions which took multiple parameters by defining the function as taking a tuple with a specific number of items. In effect, Python 2 would &#8220;unpack&#8221; the tuple into named arguments, which you could then reference (by name) within the <code>lambda</code> function. In Python 3, you can still pass a tuple to a <code>lambda</code> function, but the Python interpreter will not unpack the tuple into named arguments. Instead, you will need to reference each argument by its positional index.
 <p class=skip><a href=#skipcomparetuple_params>skip over this table</a>
