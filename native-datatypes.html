@@ -21,36 +21,19 @@ body{counter-reset:h1 2}
 <li><a href=#divingin>Diving in</a>
 <li><a href=#booleans>Booleans</a>
 <li><a href=#numbers>Numbers</a>
-<!--
-  <ol>
-  <li><a href=#integers>Integers</a>
-  <li><a href=#floats>Floating point numbers</a>
-  <li><a href=#fractions>Fractions</a>
-  <li><a href=#complexnumbers>Complex numbers</a>
-  <li><a href=#numberoperations>Common operations on numbers</a>
-  <li><a href=#math>The <code>math</code> module</a>
-  </ol>
--->
 <li><a href=#lists>Lists</a>
   <ol>
-  <li><a href=#creatinglists>Creating lists</a>
-  <li><a href=#slicinglists>Slicing lists</a>
+  <li><a href=#creatinglists>Creating a list</a>
+  <li><a href=#slicinglists>Slicing a list</a>
+  <li><a href=#extendinglists>Adding items to a list</a>
+  <li><a href=#searchinglists>Searching for values in a list</a>
   </ol>
-<!--
-    <ol>
-    <li>Creating new a list
-    <li>Modifying a list
-    <li>Searching a list
-    <li>Deleting elements from a list
-    <li>Common operations on lists
-    </ol>
--->
 <li><a href=#sets>Sets</a>
 <!--
     <ol>
     <li>Creating a new set
     <li>Modifying a set
-    <li>Deleting elements from a set
+    <li>Deleting items from a set
     <li>Common operations on sets (union, intersection, and difference)
     <li>Frozen sets
     </ol>
@@ -158,17 +141,17 @@ body{counter-reset:h1 2}
 </blockquote>
 <p>FIXME fractions, math module, numbers in a boolean context
 <h2 id=lists>Lists</h2>
-<p>Lists are Python's workhorse datatype. When I say "list," you might be thinking "array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c." Don't think that. Lists are much cooler than that.
+<p>Lists are Python's workhorse datatype. When I say &#8220;list,&#8221; you might be thinking &#8220;array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c.&#8221; Don't think that. Lists are much cooler than that.
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>A list in Python is like an array in Perl 5. In Perl 5, variables that store arrays always start with the <code>@</code> character; in Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>A list in Python is much more than an array in Java (although it can be used as one if that's really all you want out of life). A better analogy would be to the <code>ArrayList</code> class, which can hold arbitrary objects and can expand dynamically as new items are added.
 </blockquote>
-<h3 id=creatinglists>Creating lists</h3>
+<h3 id=creatinglists>Creating a list</h3>
 <p>Creating a list is easy: use square brackets to wrap a comma-separated list of values.
 <pre class=screen>
-<a><samp class=prompt>>>> </samp><kbd>a_list = ["a", "b", "mpilgrim", "z", "example"]</kbd>  <span>&#x2460;</span></a>
+<a><samp class=prompt>>>> </samp><kbd>a_list = ['a', 'b', 'mpilgrim', 'z', 'example']</kbd>  <span>&#x2460;</span></a>
 <samp class=prompt>>>> </samp><kbd>a_list</kbd>
 ['a', 'b', 'mpilgrim', 'z', 'example']
 <a><samp class=prompt>>>> </samp><kbd>a_list[0]</kbd>                                        <span>&#x2461;</span></a>
@@ -181,12 +164,12 @@ body{counter-reset:h1 2}
 <samp>'mpilgrim'</samp></pre>
 <ol>
 <li>First, you define a list of five items. Note that they retain their original order. This is not an accident. A list is an ordered set of items.
-<li>A list can be used like a zero-based array. The first element of any non-empty list is always <code>a_list[0]</code>.
-<li>The last element of this five-element list is <code>a_list[4]</code>, because lists are always zero-based.
-<li>A negative index accesses elements from the end of the list counting backwards. The last element of any non-empty list is always <code>a_list[-1]</code>.
+<li>A list can be used like a zero-based array. The first item of any non-empty list is always <code>a_list[0]</code>.
+<li>The last item of this five-item list is <code>a_list[4]</code>, because lists are always zero-based.
+<li>A negative index accesses items from the end of the list counting backwards. The last item of any non-empty list is always <code>a_list[-1]</code>.
 <li>If the negative index is confusing to you, think of it this way: <code>a_list[-<var>n</var>] == a_list[len(a_list) - <var>n</var>]</code>. So in this list, <code>a_list[-3] == a_list[5 - 3] == a_list[2]</code>.
 </ol>
-<h3 id=slicinglists>Slicing lists</h3>
+<h3 id=slicinglists>Slicing a list</h3>
 <p>Once you've defined a list, you can get any part of it as a new list. This is called <i>slicing</i> the list.
 <pre class=screen>
 <samp class=prompt>>>> </samp><kbd>a_list</kbd>
@@ -204,169 +187,93 @@ body{counter-reset:h1 2}
 <a><samp class=prompt>>>> </samp><kbd>a_list[:]</kbd>              <span>&#x2465;</span></a>
 ['a', 'b', 'mpilgrim', 'z', 'example']</pre>
 <ol>
-<li>You can get a part of a list, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new list containing all the elements of the list, in order, starting with the first slice index (in this case <code>a_list[1]</code>), up to but not including the second slice index (in this case <code>a_list[3]</code>).
-<li>Slicing works if one or both of the slice indices is negative. If it helps, you can think of it this way: reading the list from left to right, the first slice index specifies the first element you want, and the second slice index specifies the first element you don't want. The return value is everything in between.
-<li>Lists are zero-based, so <code>a_list[0:3]</code> returns the first three elements of the list, starting at <code>a_list[0]</code>, up to but not including <code>a_list[3]</code>.
+<li>You can get a part of a list, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new list containing all the items of the list, in order, starting with the first slice index (in this case <code>a_list[1]</code>), up to but not including the second slice index (in this case <code>a_list[3]</code>).
+<li>Slicing works if one or both of the slice indices is negative. If it helps, you can think of it this way: reading the list from left to right, the first slice index specifies the first item you want, and the second slice index specifies the first item you don't want. The return value is everything in between.
+<li>Lists are zero-based, so <code>a_list[0:3]</code> returns the first three items of the list, starting at <code>a_list[0]</code>, up to but not including <code>a_list[3]</code>.
 <li>If the left slice index is <code>0</code>, you can leave it out, and <code>0</code> is implied. So <code>a_list[:3]</code> is the same as <code>a_list[0:3]</code>, because the starting <code>0</code> is implied.
-<li>Similarly, if the right slice index is the length of the list, you can leave it out. So <code>a_list[3:]</code> is the same as <code>a_list[3:5]</code>, because this list has five elements.  There is a pleasing symmetry here. In this five-element list, <code>a_list[:3]</code> returns the first 3 elements, and <code>a_list[3:]</code> returns the last two elements. In fact, <code>a_list[:<var>n</var>]</code> will always return the first <var>n</var> elements, and <code>a_list[<var>n</var>:]</code> will return the rest, regardless of the length of the list.
-<li>If both slice indices are left out, all elements of the list are included. But this is not the same as the original <var>a_list</var> variable. It is a new list that happens to have all the same elements. <code>a_list[:]</code> is shorthand for making a complete copy of a list.
+<li>Similarly, if the right slice index is the length of the list, you can leave it out. So <code>a_list[3:]</code> is the same as <code>a_list[3:5]</code>, because this list has five items.  There is a pleasing symmetry here. In this five-item list, <code>a_list[:3]</code> returns the first 3 items, and <code>a_list[3:]</code> returns the last two items. In fact, <code>a_list[:<var>n</var>]</code> will always return the first <var>n</var> items, and <code>a_list[<var>n</var>:]</code> will return the rest, regardless of the length of the list.
+<li>If both slice indices are left out, all items of the list are included. But this is not the same as the original <var>a_list</var> variable. It is a new list that happens to have all the same items. <code>a_list[:]</code> is shorthand for making a complete copy of a list.
+</ol>
+<h3 id=extendinglists>Adding items to a list</h3>
+<p>Lists are implemented as classes.  &#8220;Creating&#8221; a list is really instantiating a class.  As such, a list has methods that operate on it.
+<pre class=screen><samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'mpilgrim', 'z', 'example']</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.append('new')</kbd>             <span>&#x2460;</span></a>
+<samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'mpilgrim', 'z', 'example', 'new']</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.insert(2, 'new')</kbd>          <span>&#x2461;</span></a>
+<samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new']</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.extend(['two', 'items'])</kbd>  <span>&#x2462;</span></a>
+<samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'items']</samp></pre>
+<ol>
+<li>The <code>append()</code> method adds a single item to the end of the list.
+<li>The <code>insert()</code> method inserts a single item into a list. The numeric argument is the index of the first item that gets bumped out of position. List items do not need to be unique; for example, there are now two separate items with the value <code>'new'</code>, <code>a_list[2]</code> and <code>a_list[6]</code>.
+<li>The <code>extend()</code> method concatenates lists. You do not call <code>extend()</code> with multiple arguments; you call it with one argument, a list. In this case, that list has two items.
+</ol>
+<p>That last bit is subtle but important. Let's look closer at the difference between <code>extend()</code> and <code>append()</code>.
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>a_list = ['a', 'b', 'c']</kbd>
+<a><samp class=prompt>>>> </samp><kbd>a_list.extend(['d', 'e', 'f'])</kbd>  <span>&#x2460;</span></a>
+<samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'c', 'd', 'e', 'f']</samp>
+<a><samp class=prompt>>>> </samp><kbd>len(a_list)</kbd>                     <span>&#x2461;</span></a>
+<samp>6</samp>
+<samp class=prompt>>>> </samp><kbd>a_list[-1]</kbd>
+<samp>'f'</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.append(['g', 'h', 'i'])</kbd>  <span>&#x2462;</span></a>
+<samp class=prompt>>>> </samp><kbd>a_list</kbd>
+<samp>['a', 'b', 'c', 'd', 'e', 'f', ['g', 'h', 'i']]</samp>
+<a><samp class=prompt>>>> </samp><kbd>len(a_list)</kbd>                     <span>&#x2463;</span></a>
+<samp>4</samp>
+<samp class=prompt>>>> </samp><kbd>a_list[-1]</kbd>
+<samp>['g', 'h', 'i']</samp></pre>
+<ol>
+<li>The <code>extend()</code> method takes a single argument, which is always a list, and adds each of the items of that list to <var>a_list</var>.
+<li>If you start with a list of three items and extend it with a list of another three items, you end up with a list of six items.
+<li>On the other hand, the <code>append()</code> method takes any number of arguments, each of which can be any datatype.  Here, you're calling the <code>append()</code> method with a single argument, a list of three items.
+<li>If you start with a list of six items and append a list onto it, you end up with... a list of seven items. Why seven? Because the last item (which you just appended) <em>is itself a list</em>. Lists can contain any type of data, including other lists. That may be what you want, or it may not. But it's what you asked for, and it's what you got.
+</ol>
+<h3 id=searchinglists>Searching for values in a list</h3>
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
+<a><samp class=prompt>>>> </samp><kbd>'mpilgrim' in a_list</kbd>      <span>&#x2460;</span></a>
+<samp>True</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.index('mpilgrim')</kbd>  <span>&#x2461;</span></a>
+<samp>3</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.index('new')</kbd>       <span>&#x2462;</span></a>
+<samp>2</samp>
+<a><samp class=prompt>>>> </samp><kbd>'c' in a_list</kbd>             <span>&#x2463;</span></a>
+<samp>False</samp>
+<a><samp class=prompt>>>> </samp><kbd>a_list.index('c')</kbd>         <span>&#x2464;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+ValueError: list.index(x): x not in list</samp></pre>
+<ol>
+<li>To test whether a value is in the list, use the <code>in</code> operator.  It returns <code>True</code> if the value is in the list, or <code>False</code> if it is not. It will not tell you where in the list the value is.
+<li>If you need to know exactly where in the list a value is, call the <code>index()</code> method. By default it will search the entire list, although you can specify a second argument of the (<code>0</code>-based) index to start from, and even a third argument of the (<code>0</code>-based) index to stop searching.
+<li>As you might expect, this will return <code>False</code>, because <code>'c'</code> is not a value in <var>a_list</var>.
+<li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
+<li>As you might <em>not</em> expect, if the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later.
 </ol>
 <!--
-<h3>3.2.2. Adding Elements to Lists</h3>
-<div class="example"><h3>Example 3.10. Adding Elements to a List</h3><pre class=screen><samp class=prompt>>>> </samp>li
-['a', 'b', 'mpilgrim', 'z', 'example']
-<samp class=prompt>>>> </samp>li.append("new")               <img id=odbchelper.list.5.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'mpilgrim', 'z', 'example', 'new']
-<samp class=prompt>>>> </samp>li.insert(2, "new")            <img id=odbchelper.list.5.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new']
-<samp class=prompt>>>> </samp>li.extend(["two", "elements"]) <img id=odbchelper.list.5.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'elements']</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.1><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>append</code> adds a single element to the end of the list.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>insert</code> inserts a single element into a list. The numeric argument is the index of the first element that gets bumped out of position.
-                Note that list elements do not need to be unique; there are now two separate elements with the value <code>'new'</code>, <code>a_list[2]</code> and <code>a_list[6]</code>.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.3><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>extend</code> concatenates lists. Note that you do not call <code>extend</code> with multiple arguments; you call it with one argument, a list. In this case, that list has two elements.
-</td>
-</tr>
-</table>
-<div class="example"><h3 id=odbchelper.list.append.vs.extend>Example 3.11. The Difference between <code>extend</code> and <code>append</code></h3><pre class=screen>
-<samp class=prompt>>>> </samp>a_list = ['a', 'b', 'c']
-<samp class=prompt>>>> </samp>li.extend(['d', 'e', 'f']) <img id=odbchelper.list.5.4" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'c', 'd', 'e', 'f']
-<samp class=prompt>>>> </samp>len(li)  <img id=odbchelper.list.5.5" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
-6
-<samp class=prompt>>>> </samp>a_list[-1]
-'f'
-<samp class=prompt>>>> </samp>a_list = ['a', 'b', 'c']
-<samp class=prompt>>>> </samp>li.append(['d', 'e', 'f']) <img id=odbchelper.list.5.6" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'c', ['d', 'e', 'f']]
-<samp class=prompt>>>> </samp>len(li)  <img id=odbchelper.list.5.7" src="images/callouts/4.png" alt="4" border="0" width="12" height="12>
-4
-<samp class=prompt>>>> </samp>a_list[-1]
-['d', 'e', 'f']
-</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.4><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Lists have two methods, <code>extend</code> and <code>append</code>, that look like they do the same thing, but are in fact completely different. <code>extend</code> takes a single argument, which is always a list, and adds each of the elements of that list to the original list.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.5><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Here you started with a list of three elements (<code>'a'</code>, <code>'b'</code>, and <code>'c'</code>), and you extended the list with a list of another three elements (<code>'d'</code>, <code>'e'</code>, and <code>'f'</code>), so you now have a list of six elements.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.6><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">On the other hand, <code>append</code> takes one argument, which can be any data type, and simply adds it to the end of the list. Here, you're calling the <code>append</code> method with a single argument, which is a list of three elements.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.5.7><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">Now the original list, which started as a list of three elements, contains four elements. Why four?  Because the last element
-               that you just appended <em>is itself a list</em>. Lists can contain any type of data, including other lists. That may be what you want, or maybe not. Don't use <code>append</code> if you mean <code>extend</code>.
-</td>
-</tr>
-</table>
-<h3>3.2.3. Searching Lists</h3>
-<div class="example"><h3 id=odbchelper.list.search>Example 3.12. Searching a List</h3><pre class=screen><samp class=prompt>>>> </samp>li
-['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'elements']
-<samp class=prompt>>>> </samp>li.index("example") <img id=odbchelper.list.6.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
-5
-<samp class=prompt>>>> </samp>li.index("new")     <img id=odbchelper.list.6.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
-2
-<samp class=prompt>>>> </samp>li.index("c")       <img id=odbchelper.list.6.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
-<samp class="traceback">Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-ValueError: list.index(x): x not in list</samp>
-<samp class=prompt>>>> </samp>"c" in a_list           <img id=odbchelper.list.6.4" src="images/callouts/4.png" alt="4" border="0" width="12" height="12>
-False</pre><div class="calloutlist">
-<table border="0" summary="Callout list">
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.6.1><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>index</code> finds the first occurrence of a value in the list and returns the index.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.6.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left"><code>index</code> finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[6]</code>, but <code>index</code> will return only the first index, <code>2</code>.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.6.3><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">If the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index. While this may
-               seem annoying, it is a good thing, because it means your program will crash at the source of the problem, rather than later
-               on when you try to use the invalid index.
-</td>
-</tr>
-<tr>
-<td width="12" valign="top" align="left"><a href=#odbchelper.list.6.4><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
-</td>
-<td valign="top" align="left">To test whether a value is in the list, use <code>in</code>, which returns <code>True</code> if the value is found or <code>False</code> if it is not.
-</td>
-</tr>
-</table>
-</div><table id=tip.boolean" class="note" border="0" summary=">
-<tr>
-<td colspan="2" align="left" valign="top" width="99%">Before version 2.2.1, Python had no separate boolean datatype. To compensate for this, Python accepted almost anything in a boolean context (like an <code>if</code> statement), according to the following rules:
-<div class="itemizedlist">
-<ul>
-<li><code>0</code> is false; all other numbers are true.
-
-<li>An empty string (<code>""</code>) is false, all other strings are true.
-
-<li>An empty list (<code>[]</code>) is false; all other lists are true.
-
-<li>An empty tuple (<code>()</code>) is false; all other tuples are true.
-
-<li>An empty dictionary (<code>{}</code>) is false; all other dictionaries are true.
-
-</ul>
-</div>These rules still apply in Python 2.2.1 and beyond, but now you can also use an actual boolean, which has a value of <code>True</code> or <code>False</code>. Note the capitalization; these values, like everything else in Python, are case-sensitive.
-</td>
-</tr>
-</table>
-<h3>3.2.4. Deleting List Elements</h3>
-<div class="example"><h3 id=odbchelper.list.removingelements>Example 3.13. Removing Elements from a List</h3><pre class=screen><samp class=prompt>>>> </samp>li
-['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'elements']
-<samp class=prompt>>>> </samp>li.remove("z")   <img id=odbchelper.list.7.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'new', 'mpilgrim', 'example', 'new', 'two', 'elements']
-<samp class=prompt>>>> </samp>li.remove("new") <img id=odbchelper.list.7.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
-['a', 'b', 'mpilgrim', 'example', 'new', 'two', 'elements']
-<samp class=prompt>>>> </samp>li.remove("c")   <img id=odbchelper.list.7.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
+<h3>3.2.4. Deleting List Items</h3>
+<div class="example"><h3 id=odbchelper.list.removingitems>Example 3.13. Removing Items from a List</h3><pre class=screen><samp class=prompt>>>> </samp>a_list
+['a', 'b', 'new', 'mpilgrim', 'z', 'example', 'new', 'two', 'items']
+<samp class=prompt>>>> </samp>a_list.remove("z")   <img id=odbchelper.list.7.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
+<samp class=prompt>>>> </samp>a_list
+['a', 'b', 'new', 'mpilgrim', 'example', 'new', 'two', 'items']
+<samp class=prompt>>>> </samp>a_list.remove("new") <img id=odbchelper.list.7.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
+<samp class=prompt>>>> </samp>a_list
+['a', 'b', 'mpilgrim', 'example', 'new', 'two', 'items']
+<samp class=prompt>>>> </samp>a_list.remove("c")   <img id=odbchelper.list.7.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
 <samp class="traceback">Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
 ValueError: list.remove(x): x not in list</samp>
-<samp class=prompt>>>> </samp>li.pop()         <img id=odbchelper.list.7.4" src="images/callouts/4.png" alt="4" border="0" width="12" height="12>
-'elements'
-<samp class=prompt>>>> </samp>li
+<samp class=prompt>>>> </samp>a_list.pop()         <img id=odbchelper.list.7.4" src="images/callouts/4.png" alt="4" border="0" width="12" height="12>
+'items'
+<samp class=prompt>>>> </samp>a_list
 ['a', 'b', 'mpilgrim', 'example', 'new', 'two']</pre><div class="calloutlist">
 <table border="0" summary="Callout list">
 <tr>
@@ -378,7 +285,7 @@ ValueError: list.remove(x): x not in list</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.list.7.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left"><code>remove</code> removes <em>only</em> the first occurrence of a value. In this case, <code>'new'</code> appeared twice in the list, but <code>li.remove("new")</code> removed only the first occurrence.
+<td valign="top" align="left"><code>remove</code> removes <em>only</em> the first occurrence of a value. In this case, <code>'new'</code> appeared twice in the list, but <code>a_list.remove("new")</code> removed only the first occurrence.
 </td>
 </tr>
 <tr>
@@ -390,21 +297,21 @@ ValueError: list.remove(x): x not in list</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.list.7.4><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left"><code>pop</code> is an interesting beast. It does two things: it removes the last element of the list, and it returns the value that it removed.
-                Note that this is different from <code>a_list[-1]</code>, which returns a value but does not change the list, and different from <code>li.remove(<var>value</var>)</code>, which changes the list but does not return a value.
+<td valign="top" align="left"><code>pop</code> is an interesting beast. It does two things: it removes the last item of the list, and it returns the value that it removed.
+                Note that this is different from <code>a_list[-1]</code>, which returns a value but does not change the list, and different from <code>a_list.remove(<var>value</var>)</code>, which changes the list but does not return a value.
 </td>
 </tr>
 </table>
 <h3>3.2.5. Using List Operators</h3>
 <div class="example"><h3 id=odbchelper.list.operators>Example 3.14. List Operators</h3><pre class=screen><samp class=prompt>>>> </samp>a_list = ['a', 'b', 'mpilgrim']
 <samp class=prompt>>>> </samp>a_list = a_list + ['example', 'new'] <img id=odbchelper.list.8.1" src="images/callouts/1.png" alt="1" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
+<samp class=prompt>>>> </samp>a_list
 ['a', 'b', 'mpilgrim', 'example', 'new']
 <samp class=prompt>>>> </samp>a_list += ['two']                <img id=odbchelper.list.8.2" src="images/callouts/2.png" alt="2" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
+<samp class=prompt>>>> </samp>a_list
 ['a', 'b', 'mpilgrim', 'example', 'new', 'two']
 <samp class=prompt>>>> </samp>a_list = [1, 2] * 3              <img id=odbchelper.list.8.3" src="images/callouts/3.png" alt="3" border="0" width="12" height="12>
-<samp class=prompt>>>> </samp>li
+<samp class=prompt>>>> </samp>a_list
 [1, 2, 1, 2, 1, 2]</pre><div class="calloutlist">
 <table border="0" summary="Callout list">
 <tr>
@@ -416,7 +323,7 @@ ValueError: list.remove(x): x not in list</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.list.8.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">Python supports the <code>+=</code> operator. <code>a_list += ['two']</code> is equivalent to <code>li.extend(['two'])</code>. The <code>+=</code> operator works for lists, strings, and integers, and it can be overloaded to work for user-defined classes as well. (More
+<td valign="top" align="left">Python supports the <code>+=</code> operator. <code>a_list += ['two']</code> is equivalent to <code>a_list.extend(['two'])</code>. The <code>+=</code> operator works for lists, strings, and integers, and it can be overloaded to work for user-defined classes as well. (More
                on classes in <a href=#fileinfo>Chapter 5</a>.)
 </td>
 </tr>
@@ -454,15 +361,15 @@ ValueError: list.remove(x): x not in list</samp>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.1.1><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">A tuple is defined in the same way as a list, except that the whole set of elements is enclosed in parentheses instead of
+<td valign="top" align="left">A tuple is defined in the same way as a list, except that the whole set of items is enclosed in parentheses instead of
             square brackets.
 </td>
 </tr>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.1.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">The elements of a tuple have a defined order, just like a list. Tuples indices are zero-based, just like a list, so the first
-            element of a non-empty tuple is always <code>t[0]</code>.
+<td valign="top" align="left">The items of a tuple have a defined order, just like a list. Tuples indices are zero-based, just like a list, so the first
+            item of a non-empty tuple is always <code>t[0]</code>.
 </td>
 </tr>
 <tr>
@@ -498,25 +405,25 @@ True</pre><div class="calloutlist">
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.2.1><img src="images/callouts/1.png" alt="1" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can't add elements to a tuple. Tuples have no <code>append</code> or <code>extend</code> method.
+<td valign="top" align="left">You can't add items to a tuple. Tuples have no <code>append</code> or <code>extend</code> method.
 </td>
 </tr>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.2.2><img src="images/callouts/2.png" alt="2" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can't remove elements from a tuple. Tuples have no <code>remove</code> or <code>pop</code> method.
+<td valign="top" align="left">You can't remove items from a tuple. Tuples have no <code>remove</code> or <code>pop</code> method.
 </td>
 </tr>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.2.3><img src="images/callouts/3.png" alt="3" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can't find elements in a tuple. Tuples have no <code>index</code> method.
+<td valign="top" align="left">You can't find items in a tuple. Tuples have no <code>index</code> method.
 </td>
 </tr>
 <tr>
 <td width="12" valign="top" align="left"><a href=#odbchelper.tuple.2.4><img src="images/callouts/4.png" alt="4" border="0" width="12" height="12"></a> 
 </td>
-<td valign="top" align="left">You can, however, use <code>in</code> to see if an element exists in the tuple.
+<td valign="top" align="left">You can, however, use <code>in</code> to see if an item exists in the tuple.
 </td>
 </tr>
 </table>
@@ -536,7 +443,7 @@ True</pre><div class="calloutlist">
 </ul>
 </div><table id=tip.tuple" class="note" border="0" summary=">
 <tr>
-<td colspan="2" align="left" valign="top" width="99%">Tuples can be converted into lists, and vice-versa. The built-in <code>tuple</code> function takes a list and returns a tuple with the same elements, and the <code>list</code> function takes a tuple and returns a list. In effect, <code>tuple</code> freezes a list, and <code>list</code> thaws a tuple.
+<td colspan="2" align="left" valign="top" width="99%">Tuples can be converted into lists, and vice-versa. The built-in <code>tuple</code> function takes a list and returns a tuple with the same items, and the <code>list</code> function takes a tuple and returns a list. In effect, <code>tuple</code> freezes a list, and <code>list</code> thaws a tuple.
 </td>
 </tr>
 </table>
@@ -547,7 +454,7 @@ True</pre><div class="calloutlist">
 
 <li><a href=http://www.faqts.com/knowledge-base/index.phtml/fid/199/>Python Knowledge Base</a> shows how to <a href=http://www.faqts.com/knowledge-base/view.phtml/aid/4553/fid/587>sort a tuple</a>.
 
-<li><a href=http://www.python.org/doc/current/tut/tut.html><i class="citetitle">Python Tutorial</i></a> shows how to <a href=http://www.python.org/doc/current/tut/node7.html#SECTION007300000000000000000>define a tuple with one element</a>.
+<li><a href=http://www.python.org/doc/current/tut/tut.html><i class="citetitle">Python Tutorial</i></a> shows how to <a href=http://www.python.org/doc/current/tut/node7.html#SECTION007300000000000000000>define a tuple with one item</a>.
 
 </ul>
 -->
@@ -572,7 +479,7 @@ True</pre><div class="calloutlist">
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'db.diveintopython3.org'</samp></pre>
 <ol>
-<li>First, you create a new dictionary with two elements and assign it to the variable <var>a_dict</var>. Each element is a key-value pair, and the whole set of elements is enclosed in curly braces.
+<li>First, you create a new dictionary with two items and assign it to the variable <var>a_dict</var>. Each item is a key-value pair, and the whole set of items is enclosed in curly braces.
 <li><code>'server'</code> is a key, and its associated value, referenced by <code>a_dict["server"]</code>, is <code>'db.diveintopython3.org'</code>.
 <li><code>'database'</code> is a key, and its associated value, referenced by <code>a_dict["database"]</code>, is <code>'mysql'</code>.
 <li>You can get values by key, but you can't get keys by value. So <code>a_dict["server"]</code> is <code>'db.diveintopython3.org'</code>, but <code>a_dict["db.diveintopython3.org"]</code> raises an exception, because <code>'db.diveintopython3.org'</code> is not a key.
@@ -596,7 +503,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <ol>
 <li>You can not have duplicate keys in a dictionary. Assigning a value to an existing key will wipe out the old value.
 <li>You can add new key-value pairs at any time. This syntax is identical to modifying existing values.
-<li>The new dictionary item (key <code>'user'</code>, value <code>'mark'</code>) appears to be in the middle. In fact, it was just a coincidence that the elements appeared to be in order in the first example; it is just as much a coincidence that they appear to be out of order now.
+<li>The new dictionary item (key <code>'user'</code>, value <code>'mark'</code>) appears to be in the middle. In fact, it was just a coincidence that the items appeared to be in order in the first example; it is just as much a coincidence that they appear to be out of order now.
 <li>Assigning a value to an existing dictionary key simply replaces the old value with the new one.
 <li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely &mdash; that's a capital <kbd>U</kbd> in <kbd>"User"</kbd>. Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one. It may look similar to you, but as far as Python is concerned, it's completely different.
 </ol>
