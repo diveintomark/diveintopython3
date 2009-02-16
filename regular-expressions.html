@@ -209,7 +209,7 @@ characters. If you've used regular expressions in other languages (like Perl), t
 <h3 id=tensandones>Checking for tens and ones</h3>
 <p>Now let's expand the Roman numeral regular expression to cover the tens and ones place. This example shows the check for tens.
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>pattern = '^M?M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$'</kbd>
+<samp class=prompt>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$'</kbd>
 <a><samp class=prompt>>>> </samp><kbd>re.search(pattern, 'MCMXL')</kbd>     <span>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=prompt>>>> </samp><kbd>re.search(pattern, 'MCML')</kbd>      <span>&#x2461;</span></a>
@@ -229,10 +229,10 @@ characters. If you've used regular expressions in other languages (like Perl), t
 </ol>
 <p>The expression for the ones place follows the same pattern. I'll spare you the details and show you the end result.
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>pattern = '^M?M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$'</kbd>
+<samp class=prompt>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$'</kbd>
 </pre><p>So what does that look like using this alternate <code>{n,m}</code> syntax?  This example shows the new syntax.
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>pattern = '^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$'</kbd>
+<samp class=prompt>>>> </samp><kbd>pattern = '^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$'</kbd>
 <a><samp class=prompt>>>> </samp><kbd>re.search(pattern, 'MDLV')</kbd>              <span>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=prompt>>>> </samp><kbd>re.search(pattern, 'MMDCLXVI')</kbd>          <span>&#x2461;</span></a>
@@ -259,15 +259,15 @@ characters. If you've used regular expressions in other languages (like Perl), t
 <p>This will be more clear with an example. Let's revisit the compact regular expression you've been working with, and make it a verbose regular expression. This example shows how.
 <pre class=screen>
 <samp class=prompt>>>> </samp><kbd>pattern = """
-    ^ # beginning of string
-    M{0,4}              # thousands - 0 to 4 M's
+    ^                   # beginning of string
+    M{0,3}              # thousands - 0 to 3 M's
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
-      #            or 500-800 (D, followed by 0 to 3 C's)
+                        #            or 500-800 (D, followed by 0 to 3 C's)
     (XC|XL|L?X{0,3})    # tens - 90 (XC), 40 (XL), 0-30 (0 to 3 X's),
-      #        or 50-80 (L, followed by 0 to 3 X's)
+                        #        or 50-80 (L, followed by 0 to 3 X's)
     (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 I's),
-      #        or 5-8 (V, followed by 0 to 3 I's)
-    $ # end of string
+                        #        or 5-8 (V, followed by 0 to 3 I's)
+    $                   # end of string
     """</kbd>
 <a><samp class=prompt>>>> </samp><kbd>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
