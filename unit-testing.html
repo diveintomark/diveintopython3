@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>Unit testing - Dive into Python 3</title>
+<link rel=stylesheet type=text/css href=dip3.css>
+<link rel="shortcut icon" href=data:image/ico,>
+<link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
+<style type=text/css>
+body{counter-reset:h1 7}
+</style>
+</head>
+<p class=skip><a href=#divingin>skip to main content</a>
+<form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span>&#8227;</span>
+<h1>Unit testing</h1>
+<blockquote class=q>
+<p><span>&#x275D;</span> Certitude is not the test of certainty. We have been cocksure of many things that were not so. <span>&#x275E;</span><br>&mdash; <cite>Oliver Wendell Holmes, Jr.</cite>
+</blockquote>
+<ol>
+<li><a href=#divingin>(Not) diving in</a>
+<li><a href=#romantest1><code>romantest1.py</code></a>
+<li><a href=#romantest2><code>romantest2.py</code></a>
+<li>...
+</ol>
+<h2 id=divingin>(Not) diving in</h2>
+<p class=fancy>In previous chapters, you &#8220;dived in&#8221; by immediately looking at code and trying to understand it as quickly as possible. Now that you have some Python under your belt, you're going to step back and look at the steps that happen <em>before</em> the code gets written.
+<p>In this chapter, you're going to write, debug, and optimize a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now let's step back and consider what it would take to expand that into a two-way utility.
+<p><a href="regular-expressions.html#romannumerals">The rules for Roman numerals</a> lead to a number of interesting observations:
+<ol>
+<li>There is only one correct way to represent a particular number as Roman numerals.
+<li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number (that is, it can only be read one way).
+<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. (The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>, but you're not going to deal with that. For the purposes of this chapter, let's stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.)
+<li>There is no way to represent <code>0</code> in Roman numerals.
+<li>There is no way to represent negative numbers in Roman numerals.
+<li>There is no way to represent fractions or non-integer numbers in Roman numerals.
+</ol>
+<p>Let's start mapping out what a <code>roman.py</code> module should do.  It will have two main functions, <code>to_roman()</code> and <code>from_roman()</code>. The <code>to_roman()</code> function should take an integer from <code>1</code> to <code>3999</code> and return the Roman numeral representation as a string&hellip;</p>
+<p>Stop right there. Now let's do something a little unexpected: write a test case that checks whether the <code>to_roman()</code> function does what you want it to. You read that right: you're going to write code that tests code that you haven't written yet.
+<p>This is called <i>unit testing</i>.  The set of two conversion functions &mdash; <code>to_roman()</code>, and later <code>from_roman()</code> &mdash; can be written and tested as a unit, separate from any larger program that imports them. Python has a framework for unit testing, the appropriately-named <code>unittest</code> module.
+<p>Unit testing is an important part of an overall testing-centric development strategy. If you write unit tests, it is important to write them early (preferably before writing the code that they test), and to keep them updated as code and requirements change. Unit testing is not a replacement for higher-level functional or system testing, but it is important in all phases of development:
+<ul>
+<li>Before writing code, it forces you to detail your requirements in a useful fashion.
+<li>While writing code, it keeps you from over-coding. When all the test cases pass, the function is complete.
+<li>When refactoring code, it assures you that the new version behaves the same way as the old version.
+<li>When maintaining code, it helps you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
+<li>When writing code in a team, it increases confidence that the code you're about to commit isn't going to break someone else's code, because you can run their unit tests first. (I've seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn't play well with others.)
+</ul>
+<h2 id=romantest1><code>romantest1.py</code></h2>
+<p>A test case answers a single question about the code it is testing. A test case should be able to...
+<ul>
+<li>...run completely by itself, without any human input. Unit testing is about automation.
+<li>...determine by itself whether the function it is testing has passed or failed, without a human interpreting the results.
+<li>...run in isolation, separate from any other test cases (even if they test the same functions). Each test case is an island.
+</ul>
+<p>Given that, let's build a test case for the first requirement:
+<ol>
+<li>The <code>to_roman()</code> function should return the Roman numeral representation for all integers <code>1</code> to <code>3999</code>.
+</ol>
+<p>It is not immediately obvious how this code does&hellip; well, <em>anything</em>. It defines a class which has no <code>__init__()</code> method. The class <em>does</em> have another method, but it is never called. The entire script has a <code>__main__</code> block, but it doesn't reference the class or its method. But it does do something, I promise.
+<p class=download>[<a href=romantest1.py>download <code>romantest1.py</code></a>]
+<pre><code>import roman1
+import unittest
+
+<a>class KnownValues(unittest.TestCase):               <span>&#x2460;</span></a>
+    known_values = ( (1, 'I'),
+                     (2, 'II'),
+                     (3, 'III'),
+                     (4, 'IV'),
+                     (5, 'V'),
+                     (6, 'VI'),
+                     (7, 'VII'),
+                     (8, 'VIII'),
+                     (9, 'IX'),
+                     (10, 'X'),
+                     (50, 'L'),
+                     (100, 'C'),
+                     (500, 'D'),
+                     (1000, 'M'),
+                     (31, 'XXXI'),
+                     (148, 'CXLVIII'),
+                     (294, 'CCXCIV'),
+                     (312, 'CCCXII'),
+                     (421, 'CDXXI'),
+                     (528, 'DXXVIII'),
+                     (621, 'DCXXI'),
+                     (782, 'DCCLXXXII'),
+                     (870, 'DCCCLXX'),
+                     (941, 'CMXLI'),
+                     (1043, 'MXLIII'),
+                     (1110, 'MCX'),
+                     (1226, 'MCCXXVI'),
+                     (1301, 'MCCCI'),
+                     (1485, 'MCDLXXXV'),
+                     (1509, 'MDIX'),
+                     (1607, 'MDCVII'),
+                     (1754, 'MDCCLIV'),
+                     (1832, 'MDCCCXXXII'),
+                     (1993, 'MCMXCIII'),
+                     (2074, 'MMLXXIV'),
+                     (2152, 'MMCLII'),
+                     (2212, 'MMCCXII'),
+                     (2343, 'MMCCCXLIII'),
+                     (2499, 'MMCDXCIX'),
+                     (2574, 'MMDLXXIV'),
+                     (2646, 'MMDCXLVI'),
+                     (2723, 'MMDCCXXIII'),
+                     (2892, 'MMDCCCXCII'),
+                     (2975, 'MMCMLXXV'),
+                     (3051, 'MMMLI'),
+                     (3185, 'MMMCLXXXV'),
+                     (3250, 'MMMCCL'),
+                     (3313, 'MMMCCCXIII'),
+                     (3408, 'MMMCDVIII'),
+                     (3501, 'MMMDI'),
+                     (3610, 'MMMDCX'),
+                     (3743, 'MMMDCCXLIII'),
+                     (3844, 'MMMDCCCXLIV'),
+                     (3888, 'MMMDCCCLXXXVIII'),
+                     (3940, 'MMMCMXL'),
+<a>                     (3999, 'MMMCMXCIX'))           <span>&#x2461;</span></a>
+
+<a>    def test_to_roman_known_values(self):           <span>&#x2462;</span></a>
+        """to_roman should give known result with known input"""
+        for integer, numeral in self.known_values:
+<a>            result = roman1.to_roman(integer)       <span>&#x2463;</span></a>
+<a>            self.assertEqual(numeral, result)       <span>&#x2464;</span></a>
+
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+<ol>
+<li>To write a test case, first subclass the <code>TestCase</code> class of the <code>unittest</code> module. This class provides many useful methods which you can use in your test case to test specific conditions.
+<li>This is a list of integer/numeral pairs that I verified manually. It includes the lowest ten numbers, the highest number, every number that translates to a single-character Roman numeral, and a random sampling of other valid numbers. The point of a unit test is not to test every possible input, but to test a representative sample.
+<li>Every individual test is its own method, which must take no parameters and return no value. If the method exits normally without raising an exception, the test is considered passed; if the method raises an exception, the test is considered failed.
+<li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn't be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <acronym>API</acronym> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <acronym>API</acronym> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn't raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
+<li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>testToRomanKnownValues</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
+</ol>
+<p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you've written any code, you're doing it wrong &mdash; your tests aren't testing your code at all! Write a test that fails, then code until it passes.
+<pre><code># roman1.py
+
+function to_roman(n):
+    """convert integer to Roman numeral"""
+<a>    pass                                   <span>&#x2460;</span></a></code></pre>
+<ol>
+<li>At this stage, you want to define the <acronym>API</acronym> of the <code>to_roman()</code> function, but you don't want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.</a>.
+</ol>
+<p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what's going on as each test case runs. With any luck, your output should look like this:
+<pre class=screen>
+<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
+<samp><a>to_roman should give known result with known input ... FAIL            <span>&#x2460;</span></a>
+
+======================================================================
+FAIL: to_roman should give known result with known input
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest1.py", line 73, in test_to_roman_known_values
+    self.assertEqual(numeral, result)
+<a>AssertionError: 'I' != None                                            <span>&#x2461;</span></a>
+
+----------------------------------------------------------------------
+<a>Ran 1 test in 0.016s                                                   <span>&#x2462;</span></a>
+
+<a>FAILED (failures=1)                                                    <span>&#x2463;</span></a></samp></pre>
+<ol>
+<li>Running the script runs <code>unittest.main()</code>, which runs each test case. Each test case is a method within each class in <code>romantest.py</code> that inherits from <code>unittest.TestCase</code>. For each test case, the <code>unittest</code> module will print out the <code>docstring</code> of the method and whether that test passed or failed. As expected, this test case fails.
+<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>"I"</code>, but it didn't. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
+<li>After the detail of each test, <code>unittest</code> displays a summary of how many tests were performed and how long it took.
+<li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn't pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you're testing or the unit test case itself.
+</ol>
+<p><em>Now</em>, finally, you can write the <code>to_roman()</code> function.
+<p class=download>[<a href=roman1.py>download <code>roman1.py</code></a>]
+<pre><code>roman_numeral_map = (('M',  1000),
+                     ('CM', 900),
+                     ('D',  500),
+                     ('CD', 400),
+                     ('C',  100),
+                     ('XC', 90),
+                     ('L',  50),
+                     ('XL', 40),
+                     ('X',  10),
+                     ('IX', 9),
+                     ('V',  5),
+                     ('IV', 4),
+<a>                     ('I',  1))                 <span>&#x2460;</span></a>
+
+def to_roman(n):
+    """convert integer to Roman numeral"""
+    result = ""
+    for numeral, integer in roman_numeral_map:
+<a>        while n >= integer:                     <span>&#x2461;</span></a>
+            result += numeral
+            n -= integer
+    return result</code></pre>
+<ol>
+<li><var>roman_numeral_map</var> is a tuple of tuples which defines three things: the character representations of the most basic Roman numerals; the order of the Roman numerals (in descending value order, from <code>M</code> all the way down to <code>I</code>); the value of each Roman numeral. Each inner tuple is a pair of <code>(<var>numeral</var>, <var>value</var>)</code>. It's not just single-character Roman numerals; it also defines two-character pairs like <code>CM</code> (&#8220;one hundred less than one thousand&#8221;). This makes the <code>to_roman()</code> function code simpler.
+<li>Here's where the rich data structure of <var>roman_numeral_map</var> pays off, because you don't need any special logic to handle the subtraction rule. To convert to Roman numerals, simply iterate through <var>roman_numeral_map</var> looking for the largest integer value less than or equal to the input. Once found, add the Roman numeral representation to the end of the output, subtract the corresponding integer value from the input, lather, rinse, repeat.
+</ol>
+<p>If you're still not clear how the <code>to_roman()</code> function works, add a <code>print()</code> call to the end of the <code>while</code> loop:
+<pre><code>
+while n >= integer:
+    result += numeral
+    n -= integer
+    print('subtracting {0} from input, adding {1} to output'.format(integer, numeral))</code></pre>
+<p>With the debug <code>print()</code> statements, the output looks like this:
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>import roman1</kbd>
+<samp class=prompt>>>> </samp><kbd>roman1.to_roman(1424)</kbd>
+<samp>subtracting 1000 from input, adding M to output
+subtracting 400 from input, adding CD to output
+subtracting 10 from input, adding X to output
+subtracting 10 from input, adding X to output
+subtracting 4 from input, adding IV to output
+'MCDXXIV'</samp></pre>
+<p>So the <code>to_roman()</code> function appears to work, at least in this manual spot check. But will it pass the test case you wrote?
+<pre class=screen>
+<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
+<samp>to_roman should give known result with known input ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+OK</samp></pre>
+<ol>
+<li>Hooray! The <code>to_roman()</code> function passes the &#8220;known values&#8221; test case. It's not comprehensive, but it does put the function through its paces with a variety of inputs, including inputs that produce every single-character Roman numeral, the largest possible input (<code>3999</code>), and the input that produces the longest possible Roman numeral (<code>3888</code>). At this point, you can be reasonably confident that the function works for any good input value you could throw at it.
+</ol>
+<p>&#8220;Good&#8221; input? Hmm. What about bad input?
+<h2 id=romantest2><code>romantest2.py</code></h2>
+<p>It is not enough to test that functions succeed when given good input; you must also test that they fail when given bad input. And not just any sort of failure; they must fail in the way you expect.
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>import roman1</kbd>
+<a><samp class=prompt>>>> </samp><kbd>roman1.to_roman(4000)</kbd>  <span>&#x2460;</span></a>
+<samp>'MMMM'</samp>
+<samp class=prompt>>>> </samp><kbd>roman1.to_roman(5000)</kbd>
+<samp>'MMMMM'</samp>
+<samp class=prompt>>>> </samp><kbd>roman1.to_roman(9999)</kbd>
+<samp>'MMMMMMMMMCMXCIX'</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+<p>The question to ask yourself is, &#8220;How can I express this as a testable requirement?&#8221; How's this for starters:
+<blockquote>
+<p>The <code>to_roman()</code> function should fail when given an integer greater than <code>3999</code>.
+</blockquote>
+<p>What would that test look like?
+<p class=download>[<a href=romantest2.py>download <code>romantest2.py</code></a>]
+<pre><code>class ToRomanBadInput(unittest.TestCase):
+    def test_too_large(self):
+        """to_roman should fail with large input"""
+        self.assertRaises(roman2.OutOfRangeError, roman2.to_roman, 4000)</code></pre>
+<!-- FIXME callouts -->
+<p>...
+<!--
+For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman()</code> should only accept uppercase input&#8221;) was an error, because the call to <code>numeral.upper()</code> raised an <code>AttributeError</code> exception, because <code>to_roman()</code> was supposed to return a string but didn't. But <code>testZero</code> (&#8220;<code>to_roman()</code> should fail with 0 input&#8221;) was a failure, because the call to <code>from_roman()</code> did not raise the <code>InvalidRomanNumeral</code> exception that <code>assertRaises</code> was looking for.
+-->
+
+
+<!--
+<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertRaises</code> (also called <code>failUnlessRaises</code>) raised an <code>AssertionError</code> because it was expecting <code>to_roman()</code> to raise an <code>OutOfRangeError</code> and it didn't.
+-->
+
+
+<!--
+<p>Given all of this, what would you expect out of a set of functions to convert to and from Roman numerals?
+<ol>
+<li><code>to_roman</code> should return the Roman numeral representation for all integers <code>1</code> to <code>3999</code>.
+<li><code>to_roman</code> should fail when given an integer outside the range <code>1</code> to <code>3999</code>.
+<li><code>to_roman</code> should fail when given a non-integer number.
+<li><code>from_roman</code> should take a valid Roman numeral and return the number that it represents.
+<li><code>from_roman</code> should fail when given an invalid Roman numeral.
+<li>If you take a number, convert it to Roman numerals, then convert that back to a number, you should end up with the number
+      you started with. So <code>from_roman(to_roman(n)) == n</code> for all <var>n</var> in <code>1..3999</code>.
+<li><code>to_roman</code> should always return a Roman numeral using uppercase letters.
+<li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><acronym>i.e.</acronym></i> it should fail when given lowercase input).
+</ol>
+-->
+<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
+<script type=text/javascript src=jquery.js></script>
+<script type=text/javascript src=dip3.js></script>

@@ -31,7 +31,3 @@ def to_roman(n):
             result += numeral
             n -= integer
     return result
-
-def from_roman(s):
-    """convert Roman numeral to integer"""
-    pass

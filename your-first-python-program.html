@@ -40,7 +40,7 @@ body{counter-reset:h1 1}
 </ol>
 <h2 id=divingin>Diving in</h2>
 <p class=fancy>You know how other books go on and on about programming fundamentals and finally work up to building something useful?  Let's skip all that. Here is a complete, working Python program. It probably makes absolutely no sense to you. Don't worry about that, because you're going to dissect it line by line. But read through it first and see what, if anything, you can make of it.
-<p class=download>[<a href=humansize.py>download</a>]</p>
+<p class=download>[<a href=humansize.py>download <code>humansize.py</code></a>]</p>
 <pre><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
@@ -70,11 +70,13 @@ if __name__ == "__main__":
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
 <p>Now let's run this program on the command line. On Windows, it will look something like this:
-<pre class=screen><samp class=prompt>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
+<pre class=screen>
+<samp class=prompt>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <p>On Mac OS X or Linux, it would look something like this:
-<pre class=screen><samp class=prompt>you@localhost:~$ </samp><kbd>python3 humansize.py</kbd>
+<pre class=screen>
+<samp class=prompt>you@localhost:~$ </samp><kbd>python3 humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <!-- FIXME: this would be a good place to explain what the program, you know, actually does -->
@@ -103,14 +105,14 @@ if __name__ == "__main__":
 <dd>A language in which types are always enforced. Java and Python are strongly typed. If you have an integer, you can't treat it like a string without explicitly converting it.
 </dd>
 <dt>weakly typed language</dt>
-<dd>A language in which types are &#8220;automagically&#8221; coerced to other types as needed; the opposite of strongly typed. PHP is weakly typed. In PHP, you can concatenate the string <code>'12'</code> and the integer <code>3</code> to get the string <code>'123'</code>, then treat that as the integer <code>123</code>, all without any explicit conversion. [FIXME double-check this]
+<dd>A language in which types are &#8220;automagically&#8221; coerced to other types as needed; the opposite of strongly typed. <abbr>PHP</abbr> is weakly typed. In <abbr>PHP</abbr>, you can concatenate the string <code>'12'</code> and the integer <code>3</code> to get the string <code>'123'</code>, then treat that as the integer <code>123</code>, all without any explicit conversion. [FIXME double-check this]
 </dd>
 </dl>
 <p>So Python is both <em>dynamically typed</em> (because it doesn't use explicit datatype declarations) and <em>strongly typed</em> (because once a variable has a datatype, it actually matters).
 <p>If you have experience in other programming languages, this table may help you visualize how Python compares to them:
 <table class=simple>
 <tr><th></th><th>Statically typed</th><th>Dynamically typed</th></tr>
-<tr><th>Weakly typed</th><td>C, Objective-C</td><td>JavaScript, Perl 5, PHP</td></tr>
+<tr><th>Weakly typed</th><td>C, Objective-C</td><td>JavaScript, Perl 5, <abbr>PHP</abbr></td></tr>
 <tr><th>Strongly typed</th><td>Pascal, Java</td><td>Python, Ruby</td></tr>
 </table>
 <h2 id=readability>Writing readable code</h2>
@@ -220,11 +222,13 @@ if __name__ == "__main__":
 <p><span>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment. Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there's no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>. A module's <code>__name__</code> depends on how you're using the module. If you <code>import</code> the module, then <code>__name__</code> is the module's filename, without a directory path or file extension.
-<pre class=screen><samp class=prompt>>>> </samp><kbd>import humansize</kbd>
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>import humansize</kbd>
 <samp class=prompt>>>> </samp><kbd>humansize.__name__</kbd>
 <samp>'humansize'</samp></pre>
 <p>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
-<pre class=screen><samp class=prompt>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
+<pre class=screen>
+<samp class=prompt>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <h2 id=furtherreading>Further reading</h2>

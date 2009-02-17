@@ -30,7 +30,7 @@ a:visited{color:darkorchid}
 pre{white-space:pre-wrap;padding-left:2.154em;line-height:2.154;border-left:1px dotted}
 .widgets{float:left}
 .widgets,.widgets a,.download{font-size:small;line-height:2.154}
-.block{clear:left}
+.block,ol{clear:left}
 pre a,.widgets a{padding:0.4375em 0;border:0}
 .widgets a{text-decoration:underline}
 pre a:hover{border:0}

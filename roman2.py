@@ -22,8 +22,8 @@ roman_numeral_map = (('M',  1000),
 
 def to_roman(n):
     """convert integer to Roman numeral"""
-    if n > 3999:
-        raise OutOfRangeError("number out of range (must be less than 3999)")
+#    if n > 3999:
+#        raise OutOfRangeError("number out of range (must be less than 3999)")
 
     result = ""
     for numeral, integer in roman_numeral_map:
@@ -31,7 +31,3 @@ def to_roman(n):
             result += numeral
             n -= integer
     return result
-
-def from_roman(s):
-    """convert Roman numeral to integer"""
-    pass
