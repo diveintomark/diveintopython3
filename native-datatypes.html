@@ -28,8 +28,8 @@ body{counter-reset:h1 2}
   <li><a href=#extendinglists>Adding items to a list</a>
   <li><a href=#searchinglists>Searching for values in a list</a>
   </ol>
-<li><a href=#sets>Sets</a>
 <!--
+<li><a href=#sets>Sets</a>
     <ol>
     <li>Creating a new set
     <li>Modifying a set
@@ -43,7 +43,7 @@ body{counter-reset:h1 2}
 <li><a href=#furtherreading>Further reading</a>
 </ol>
 <h2 id=divingin>Diving in</h2>
-<p class=fancy>A short digression is in order. Put aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let's talk about datatypes. <a href=your-first-python-program.html#datatypes>Every variable has a datatype</a>, even though you don't declare it explicitly. Based on each variable's original assignment, Python figures out what type it is and keeps tracks of that internally.
+<p class=fancy>Cast aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let's talk about datatypes. In Python, <a href=your-first-python-program.html#datatypes>every variable has a datatype</a>, but you don't need to declare it explicitly. Based on each variable's original assignment, Python figures out what type it is and keeps tracks of that internally.
 <p>Python has many native datatypes. Here are the important ones:
 <ol>
 <li><b>Booleans</b> are either <code>True</code> or <code>False</code>.
@@ -261,8 +261,10 @@ ValueError: list.index(x): x not in list</samp></pre>
 <li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
 <li>As you might <em>not</em> expect, if the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later.
 </ol>
+<!--
 <h2 id=sets>Sets</h2>
 <p>FIXME
+-->
 <h2 id=dictionaries>Dictionaries</h2>
 <p>One of Python's most important datatypes is the dictionary, which defines one-to-one relationships between keys and values.
 <blockquote class="note compare perl5">
