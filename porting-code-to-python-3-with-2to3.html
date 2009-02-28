@@ -14,7 +14,7 @@ h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 </head>
 <p class=skip><a href=#divingin>skip to main content</a>
 <form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span>&#8227;</span>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#porting-code-to-python-3-with-2to3>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Porting code to Python 3 with <code>2to3</code></h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It&#8217;s the transition that&#8217;s troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
@@ -81,6 +81,7 @@ h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
 <p class=fancy>Virtually all Python 2 programs will need at least some tweaking to run properly under Python 3. To help with this transition, Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. <a href=case-study-porting-chardet-to-python-3.html#running2to3>Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can't fix automatically. This appendix documents what it <em>can</em> fix automatically.
 <h2 id=print><code>print</code> statement</h2>
 <p>In Python 2, <code>print</code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function &mdash; whatever you want to print is passed to <code>print()</code> like any other function.
+<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <p class=skip><a href=#skipcompareprint>skip over this table</a>
 <table id=compareprint>
 <tr>
@@ -1272,5 +1273,5 @@ do_stuff(a_list)</code></pre></td></tr>
 <p id=skipcompareidioms>
 <p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
 <p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
-<script type=text/javascript src=jquery.js></script>
-<script type=text/javascript src=dip3.js></script>
+<script src=jquery.js></script>
+<script src=dip3.js></script>

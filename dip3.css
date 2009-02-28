@@ -37,14 +37,9 @@ pre a:hover{border:0}
 kbd{font-weight:bold}
 .prompt{color:#667}
 
-/* headers */
-h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
-h1{background:papayawhip;width:100%}
-h1,h2,h3{clear:both}
-
 /* tables */
 table{width:100%;border-collapse:collapse}
-th,td{width:45%;margin:0;padding:0 0.5em}
+th,td{width:45%;margin:0;padding:0 0.5em;border:1px solid #bbb}
 th{text-align:left;vertical-align:baseline}
 td{vertical-align:top}
 th:first-child{width:10%;text-align:center}
@@ -52,7 +47,10 @@ th:first-child{width:10%;text-align:center}
 .hover{background:#eee;color:inherit;cursor:default}
 td pre{margin:0;padding:0;border:0}
 
-/* section counters */
+/* headers */
+h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
+h1,#noscript{background:papayawhip;width:100%}
+h1,h2,h3{clear:both}
 body{counter-reset:h1}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}

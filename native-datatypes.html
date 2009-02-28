@@ -12,7 +12,7 @@ body{counter-reset:h1 2}
 </head>
 <p class=skip><a href=#divingin>skip to main content</a>
 <form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
-<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span>&#8227;</span>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#native-datatypes>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Native datatypes</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> Wonder is the foundation of all philosophy, research its progress, ignorance its end. <span>&#x275E;</span><br>&mdash; <cite>Michel de Montaigne</cite>
@@ -59,6 +59,7 @@ body{counter-reset:h1 2}
 <h2 id=booleans>Booleans</h2>
 <p>Booleans are either true or false. Python has two constants, <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <pre><code>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
 <p><var>size</var> is an integer, <code>0</code> is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:
@@ -365,5 +366,5 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li>...etc...
 </ul>
 <p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
-<script type=text/javascript src=jquery.js></script>
-<script type=text/javascript src=dip3.js></script>
+<script src=jquery.js></script>
+<script src=dip3.js></script>

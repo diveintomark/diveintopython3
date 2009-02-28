@@ -12,7 +12,7 @@ body{counter-reset:h1 20}
 </head>
 <p class=skip><a href=#divingin>skip to main content</a>
 <form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span>&#8227;</span>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#case-study-porting-chardet-to-python-3>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Case study: porting <code>chardet</code> to Python 3</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> Words, words. They&#8217;re all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
@@ -98,6 +98,7 @@ body{counter-reset:h1 20}
 <h2 id=running2to3>Running <code class=filename>2to3</code></h2>
 <p>We&#8217;re going to migrate the <code class=filename>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code class=filename>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy -- a function was renamed or moved to a different modules -- but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code class=filename>2to3</code></a>. In this chapter, we&#8217;ll start by running <code class=filename>2to3</code> on the <code class=filename>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
 <p>The main <code class=filename>chardet</code> package is split across several different files, all in the same directory. The <code class=filename>2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code class=filename>2to3</code> will convert each of the files in turn.
+<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <p class=skip><a href=#skip2to3output>skip over this</a>
 <pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
@@ -717,5 +718,5 @@ for line in open(f, 'rb'):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
 <p id=skipcantconvertbytesobject>...
 <p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
-<script type=text/javascript src=jquery.js></script>
-<script type=text/javascript src=dip3.js></script>
+<script src=jquery.js></script>
+<script src=dip3.js></script>
