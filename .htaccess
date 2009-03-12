@@ -1,4 +1,3 @@
-SecFilterEngine off
 FileETag MTime Size
 Options -Indexes
 DirectoryIndex index.html
