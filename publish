@@ -14,8 +14,6 @@ sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
 java -jar yuicompressor-2.4.2.jar build/dip3.js > build/dip3.$revision.min.js
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/dip3.$revision.min.css
-#rm build/dip3.js
-#rm build/dip3.css
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/dip3.${revision}.min.js|g" build/*.html
 sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" build/*.html
 
@@ -23,5 +21,5 @@ sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" bui
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
 
 # and push to production
-rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
 rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/

@@ -3,6 +3,7 @@
 <head>
 <meta charset=utf-8>
 <title>Case study: porting chardet to Python 3 - Dive into Python 3</title>
+<!--[if IE]><script src="html5.js"></script><![endif]-->
 <link rel=stylesheet type=text/css href=dip3.css>
 <link rel="shortcut icon" href=data:image/ico,>
 <link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
@@ -42,6 +43,8 @@ body{counter-reset:h1 20}
   <li><a href=#namefileisnotdefined>Name '<var>file</var>' is not defined</a>
   <li><a href=#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
   <li><a href=#cantconvertbytesobject>Can&#8217;t convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
+  <li><a href=#unsupportedoperandtypeforplus>TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</a>
+  <li><a href=#ordexpectedstring>TypeError: ord() expected string of length 1, but int found</a>
   </ol>
 </ol>
 <h2 id=divingin>Introducing <code class=filename>chardet</code>: a mini-<abbr>FAQ</abbr></h2>
@@ -111,8 +114,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  __version__ = "1.0.1"
 
  def detect(aBuf):
--    import universaldetector
-+    from . import universaldetector
+<del>-    import universaldetector</del>
+<ins>+    from . import universaldetector</ins>
      u = universaldetector.UniversalDetector()
      u.reset()
      u.feed(aBuf)
@@ -122,14 +125,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import Big5DistributionAnalysis
--from mbcssm import Big5SMModel
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import Big5DistributionAnalysis
-+from .mbcssm import Big5SMModel
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import Big5DistributionAnalysis</del>
+<del>-from mbcssm import Big5SMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import Big5DistributionAnalysis</ins>
+<ins>+from .mbcssm import Big5SMModel</ins>
 
  class Big5Prober(MultiByteCharSetProber):
      def __init__(self):
@@ -139,18 +142,18 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
--from euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO
--from euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO
--from gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO
--from big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO
--from jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO
-+from . import constants
-+from .euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO
-+from .euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO
-+from .gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO
-+from .big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO
-+from .jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO
+<del>-import constants</del>
+<del>-from euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO</del>
+<ins>+from . import constants</ins>
+<ins>+from .euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO</ins>
 
  ENOUGH_DATA_THRESHOLD = 1024
  SURE_YES = 0.99
@@ -160,8 +163,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from charsetprober import CharSetProber
-+from .charsetprober import CharSetProber
+<del>-from charsetprober import CharSetProber</del>
+<ins>+from .charsetprober import CharSetProber</ins>
 
  class CharSetGroupProber(CharSetProber):
      def __init__(self):
@@ -171,8 +174,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from constants import eStart, eError, eItsMe
-+from .constants import eStart, eError, eItsMe
+<del>-from constants import eStart, eError, eItsMe</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
 
  class CodingStateMachine:
      def __init__(self, sm):
@@ -182,28 +185,28 @@ RefactoringTool: Skipping implicit fixer: ws_comma
 
  SHORTCUT_THRESHOLD = 0.95
 
--import __builtin__
-+import builtins
+<del>-import __builtin__</del>
+<ins>+import builtins</ins>
  if not hasattr(__builtin__, 'False'):
      False = 0
      True = 1
  else:
--    False = __builtin__.False
--    True = __builtin__.True
-+    False = builtins.False
-+    True = builtins.True
+<del>-    False = __builtin__.False</del>
+<del>-    True = __builtin__.True</del>
+<ins>+    False = builtins.False</ins>
+<ins>+    True = builtins.True</ins>
 --- chardet\escprober.py (original)
 +++ chardet\escprober.py (refactored)
 @@ -26,9 +26,9 @@
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel
--from charsetprober import CharSetProber
--from codingstatemachine import CodingStateMachine
-+from .escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel
-+from .charsetprober import CharSetProber
-+from .codingstatemachine import CodingStateMachine
+<del>-from escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel</del>
+<del>-from charsetprober import CharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<ins>+from .escsm import HZSMModel, ISO2022CNSMModel, ISO2022JPSMModel, ISO2022KRSMModel</ins>
+<ins>+from .charsetprober import CharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
 
  class EscCharSetProber(CharSetProber):
      def __init__(self):
@@ -213,8 +216,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from constants import eStart, eError, eItsMe
-+from .constants import eStart, eError, eItsMe
+<del>-from constants import eStart, eError, eItsMe</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
 
  HZ_cls = ( \
  1,0,0,0,0,0,0,0,  # 00 - 07
@@ -224,18 +227,18 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from constants import eStart, eError, eItsMe
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import EUCJPDistributionAnalysis
--from jpcntx import EUCJPContextAnalysis
--from mbcssm import EUCJPSMModel
-+from .constants import eStart, eError, eItsMe
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import EUCJPDistributionAnalysis
-+from .jpcntx import EUCJPContextAnalysis
-+from .mbcssm import EUCJPSMModel
+<del>-from constants import eStart, eError, eItsMe</del>
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import EUCJPDistributionAnalysis</del>
+<del>-from jpcntx import EUCJPContextAnalysis</del>
+<del>-from mbcssm import EUCJPSMModel</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import EUCJPDistributionAnalysis</ins>
+<ins>+from .jpcntx import EUCJPContextAnalysis</ins>
+<ins>+from .mbcssm import EUCJPSMModel</ins>
 
  class EUCJPProber(MultiByteCharSetProber):
      def __init__(self):
@@ -245,14 +248,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import EUCKRDistributionAnalysis
--from mbcssm import EUCKRSMModel
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import EUCKRDistributionAnalysis
-+from .mbcssm import EUCKRSMModel
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import EUCKRDistributionAnalysis</del>
+<del>-from mbcssm import EUCKRSMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import EUCKRDistributionAnalysis</ins>
+<ins>+from .mbcssm import EUCKRSMModel</ins>
 
  class EUCKRProber(MultiByteCharSetProber):
      def __init__(self):
@@ -262,14 +265,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import EUCTWDistributionAnalysis
--from mbcssm import EUCTWSMModel
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import EUCTWDistributionAnalysis
-+from .mbcssm import EUCTWSMModel
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import EUCTWDistributionAnalysis</del>
+<del>-from mbcssm import EUCTWSMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import EUCTWDistributionAnalysis</ins>
+<ins>+from .mbcssm import EUCTWSMModel</ins>
 
  class EUCTWProber(MultiByteCharSetProber):
      def __init__(self):
@@ -279,14 +282,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import GB2312DistributionAnalysis
--from mbcssm import GB2312SMModel
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import GB2312DistributionAnalysis
-+from .mbcssm import GB2312SMModel
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import GB2312DistributionAnalysis</del>
+<del>-from mbcssm import GB2312SMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import GB2312DistributionAnalysis</ins>
+<ins>+from .mbcssm import GB2312SMModel</ins>
 
  class GB2312Prober(MultiByteCharSetProber):
      def __init__(self):
@@ -296,10 +299,10 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from charsetprober import CharSetProber
--import constants
-+from .charsetprober import CharSetProber
-+from . import constants
+<del>-from charsetprober import CharSetProber</del>
+<del>-import constants</del>
+<ins>+from .charsetprober import CharSetProber</ins>
+<ins>+from . import constants</ins>
 
  # This prober doesn't actually recognize a language or a charset.
  # It is a helper prober for the use of the Hebrew model probers
@@ -309,8 +312,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  NUM_OF_CATEGORY = 6
  DONT_KNOW = -1
@@ -320,8 +323,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # 255: Control characters that usually does not exist in any text
  # 254: Carriage/Return
@@ -331,8 +334,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # KOI8-R language model
  # Character Mapping Table:
@@ -342,8 +345,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # 255: Control characters that usually does not exist in any text
  # 254: Carriage/Return
@@ -353,8 +356,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # 255: Control characters that usually does not exist in any text
  # 254: Carriage/Return
@@ -364,8 +367,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # 255: Control characters that usually does not exist in any text
  # 254: Carriage/Return
@@ -375,8 +378,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--import constants
-+from . import constants
+<del>-import constants</del>
+<ins>+from . import constants</ins>
 
  # 255: Control characters that usually does not exist in any text
  # 254: Carriage/Return
@@ -386,10 +389,10 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from charsetprober import CharSetProber
--import constants
-+from .charsetprober import CharSetProber
-+from . import constants
+<del>-from charsetprober import CharSetProber</del>
+<del>-import constants</del>
+<ins>+from .charsetprober import CharSetProber</ins>
+<ins>+from . import constants</ins>
  import operator
 
  FREQ_CAT_NUM = 4
@@ -399,10 +402,10 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from constants import eStart, eError, eItsMe
--from charsetprober import CharSetProber
-+from .constants import eStart, eError, eItsMe
-+from .charsetprober import CharSetProber
+<del>-from constants import eStart, eError, eItsMe</del>
+<del>-from charsetprober import CharSetProber</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
+<ins>+from .charsetprober import CharSetProber</ins>
 
  class MultiByteCharSetProber(CharSetProber):
      def __init__(self):
@@ -412,22 +415,22 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from charsetgroupprober import CharSetGroupProber
--from utf8prober import UTF8Prober
--from sjisprober import SJISProber
--from eucjpprober import EUCJPProber
--from gb2312prober import GB2312Prober
--from euckrprober import EUCKRProber
--from big5prober import Big5Prober
--from euctwprober import EUCTWProber
-+from .charsetgroupprober import CharSetGroupProber
-+from .utf8prober import UTF8Prober
-+from .sjisprober import SJISProber
-+from .eucjpprober import EUCJPProber
-+from .gb2312prober import GB2312Prober
-+from .euckrprober import EUCKRProber
-+from .big5prober import Big5Prober
-+from .euctwprober import EUCTWProber
+<del>-from charsetgroupprober import CharSetGroupProber</del>
+<del>-from utf8prober import UTF8Prober</del>
+<del>-from sjisprober import SJISProber</del>
+<del>-from eucjpprober import EUCJPProber</del>
+<del>-from gb2312prober import GB2312Prober</del>
+<del>-from euckrprober import EUCKRProber</del>
+<del>-from big5prober import Big5Prober</del>
+<del>-from euctwprober import EUCTWProber</del>
+<ins>+from .charsetgroupprober import CharSetGroupProber</ins>
+<ins>+from .utf8prober import UTF8Prober</ins>
+<ins>+from .sjisprober import SJISProber</ins>
+<ins>+from .eucjpprober import EUCJPProber</ins>
+<ins>+from .gb2312prober import GB2312Prober</ins>
+<ins>+from .euckrprober import EUCKRProber</ins>
+<ins>+from .big5prober import Big5Prober</ins>
+<ins>+from .euctwprober import EUCTWProber</ins>
 
  class MBCSGroupProber(CharSetGroupProber):
      def __init__(self):
@@ -437,8 +440,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from constants import eStart, eError, eItsMe
-+from .constants import eStart, eError, eItsMe
+<del>-from constants import eStart, eError, eItsMe</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
 
  # BIG5
 
@@ -448,8 +451,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from charsetprober import CharSetProber
-+from .charsetprober import CharSetProber
+<del>-from charsetprober import CharSetProber</del>
+<ins>+from .charsetprober import CharSetProber</ins>
 
  SAMPLE_SIZE = 64
  SB_ENOUGH_REL_THRESHOLD = 1024
@@ -459,24 +462,24 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from charsetgroupprober import CharSetGroupProber
--from sbcharsetprober import SingleByteCharSetProber
--from langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model
--from langgreekmodel import Latin7GreekModel, Win1253GreekModel
--from langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel
--from langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel
--from langthaimodel import TIS620ThaiModel
--from langhebrewmodel import Win1255HebrewModel
--from hebrewprober import HebrewProber
-+from .charsetgroupprober import CharSetGroupProber
-+from .sbcharsetprober import SingleByteCharSetProber
-+from .langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model
-+from .langgreekmodel import Latin7GreekModel, Win1253GreekModel
-+from .langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel
-+from .langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel
-+from .langthaimodel import TIS620ThaiModel
-+from .langhebrewmodel import Win1255HebrewModel
-+from .hebrewprober import HebrewProber
+<del>-from charsetgroupprober import CharSetGroupProber</del>
+<del>-from sbcharsetprober import SingleByteCharSetProber</del>
+<del>-from langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model</del>
+<del>-from langgreekmodel import Latin7GreekModel, Win1253GreekModel</del>
+<del>-from langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel</del>
+<del>-from langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel</del>
+<del>-from langthaimodel import TIS620ThaiModel</del>
+<del>-from langhebrewmodel import Win1255HebrewModel</del>
+<del>-from hebrewprober import HebrewProber</del>
+<ins>+from .charsetgroupprober import CharSetGroupProber</ins>
+<ins>+from .sbcharsetprober import SingleByteCharSetProber</ins>
+<ins>+from .langcyrillicmodel import Win1251CyrillicModel, Koi8rModel, Latin5CyrillicModel, MacCyrillicModel, Ibm866Model, Ibm855Model</ins>
+<ins>+from .langgreekmodel import Latin7GreekModel, Win1253GreekModel</ins>
+<ins>+from .langbulgarianmodel import Latin5BulgarianModel, Win1251BulgarianModel</ins>
+<ins>+from .langhungarianmodel import Latin2HungarianModel, Win1250HungarianModel</ins>
+<ins>+from .langthaimodel import TIS620ThaiModel</ins>
+<ins>+from .langhebrewmodel import Win1255HebrewModel</ins>
+<ins>+from .hebrewprober import HebrewProber</ins>
 
  class SBCSGroupProber(CharSetGroupProber):
      def __init__(self):
@@ -486,19 +489,19 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  # 02110-1301  USA
  ######################### END LICENSE BLOCK #########################
 
--from mbcharsetprober import MultiByteCharSetProber
--from codingstatemachine import CodingStateMachine
--from chardistribution import SJISDistributionAnalysis
--from jpcntx import SJISContextAnalysis
--from mbcssm import SJISSMModel
-+from .mbcharsetprober import MultiByteCharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .chardistribution import SJISDistributionAnalysis
-+from .jpcntx import SJISContextAnalysis
-+from .mbcssm import SJISSMModel
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import SJISDistributionAnalysis</del>
+<del>-from jpcntx import SJISContextAnalysis</del>
+<del>-from mbcssm import SJISSMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import SJISDistributionAnalysis</ins>
+<ins>+from .jpcntx import SJISContextAnalysis</ins>
+<ins>+from .mbcssm import SJISSMModel</ins>
  import constants, sys
--from constants import eStart, eError, eItsMe
-+from .constants import eStart, eError, eItsMe
+<del>-from constants import eStart, eError, eItsMe</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
 
  class SJISProber(MultiByteCharSetProber):
      def __init__(self):
@@ -508,14 +511,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from latin1prober import Latin1Prober # windows-1252
--from mbcsgroupprober import MBCSGroupProber # multi-byte character sets
--from sbcsgroupprober import SBCSGroupProber # single-byte character sets
--from escprober import EscCharSetProber # ISO-2122, etc.
-+from .latin1prober import Latin1Prober # windows-1252
-+from .mbcsgroupprober import MBCSGroupProber # multi-byte character sets
-+from .sbcsgroupprober import SBCSGroupProber # single-byte character sets
-+from .escprober import EscCharSetProber # ISO-2122, etc.
+<del>-from latin1prober import Latin1Prober # windows-1252</del>
+<del>-from mbcsgroupprober import MBCSGroupProber # multi-byte character sets</del>
+<del>-from sbcsgroupprober import SBCSGroupProber # single-byte character sets</del>
+<del>-from escprober import EscCharSetProber # ISO-2122, etc.</del>
+<ins>+from .latin1prober import Latin1Prober # windows-1252</ins>
+<ins>+from .mbcsgroupprober import MBCSGroupProber # multi-byte character sets</ins>
+<ins>+from .sbcsgroupprober import SBCSGroupProber # single-byte character sets</ins>
+<ins>+from .escprober import EscCharSetProber # ISO-2122, etc.</ins>
  import re
 
  MINIMUM_THRESHOLD = 0.20
@@ -525,14 +528,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  ######################### END LICENSE BLOCK #########################
 
  import constants, sys
--from constants import eStart, eError, eItsMe
--from charsetprober import CharSetProber
--from codingstatemachine import CodingStateMachine
--from mbcssm import UTF8SMModel
-+from .constants import eStart, eError, eItsMe
-+from .charsetprober import CharSetProber
-+from .codingstatemachine import CodingStateMachine
-+from .mbcssm import UTF8SMModel
+<del>-from constants import eStart, eError, eItsMe</del>
+<del>-from charsetprober import CharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from mbcssm import UTF8SMModel</del>
+<ins>+from .constants import eStart, eError, eItsMe</ins>
+<ins>+from .charsetprober import CharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .mbcssm import UTF8SMModel</ins>
 
  ONE_CHAR_PROB = 0.5
 
@@ -579,8 +582,8 @@ RefactoringTool: Skipping implicit fixer: ws_comma
  count = 0
  u = UniversalDetector()
  for f in glob.glob(sys.argv[1]):
--    print f.ljust(60),
-+    print(f.ljust(60), end=' ')
+<del>-    print f.ljust(60),</del>
+<ins>+    print(f.ljust(60), end=' ')</ins>
      u.reset()
      for line in file(f, 'rb'):
          u.feed(line)
@@ -588,14 +591,14 @@ RefactoringTool: Skipping implicit fixer: ws_comma
      u.close()
      result = u.result
      if result['encoding']:
--        print result['encoding'], 'with confidence', result['confidence']
-+        print(result['encoding'], 'with confidence', result['confidence'])
+<del>-        print result['encoding'], 'with confidence', result['confidence']</del>
+<ins>+        print(result['encoding'], 'with confidence', result['confidence'])</ins>
      else:
--        print '******** no result'
-+        print('******** no result')
+<del>-        print '******** no result'</del>
+<ins>+        print('******** no result')</ins>
      count += 1
--print count, 'tests'
-+print(count, 'tests')
+<del>-print count, 'tests'</del>
+<ins>+print(count, 'tests')</ins>
 RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
 <p id=skip2to3outputtest>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Time to run the new version. Do you think it&#8217;ll work?
@@ -648,7 +651,7 @@ import sys</code></pre>
 <p>There are variations of this problem scattered throughout the <code class=filename>chardet</code> library. In some places it&#8217;s "<code>import constants, sys</code>"; in other places, it&#8217;s "<code>import constants, re</code>". The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
 <p>Onward!
 <h3 id=namefileisnotdefined>Name '<var>file</var>' is not defined</h3>
-<p>FIXME intro
+<p>And here we go again, running <code>test.py</code> to try to execute our test cases&hellip;</p>
 <p class=skip><a href=#skipnamefileisnotdefined>skip over this</a>
 <pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
@@ -661,7 +664,7 @@ NameError: name 'file' is not defined</samp></pre>
 <pre><code>for line in open(f, 'rb'):</code></pre>
 <p>And that&#8217;s all I have to say about that.
 <h3 id=cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</h3>
-<p>FIXME intro
+<p>Now things are starting to get interesting. And by &#8220;interesting,&#8221; I mean &#8220;confusing as all hell.&#8221;
 <p class=skip><a href=#skipcantuseastringpattern>skip over this</a>
 <pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
@@ -671,8 +674,8 @@ NameError: name 'file' is not defined</samp></pre>
   File "C:\home\chardet\chardet\universaldetector.py", line 98, in feed
     if self._highBitDetector.search(aBuf):
 TypeError: can't use a string pattern on a bytes-like object</samp></pre>
-<p id=skipcantuseastringpattern>Now things are starting to get interesting. And by &#8220;interesting,&#8221; I mean &#8220;confusing as all hell.&#8221;
-<p>First, let&#8217;s see what <var>self._highBitDetector</var> is. It&#8217;s defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
+<p id=skipcantuseastringpattern>
+<p>To debug this, let&#8217;s see what <var>self._highBitDetector</var> is. It&#8217;s defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
 <p class=skip><a href=#skiphighbitdetectorcode>skip over this</a>
 <pre><code>class UniversalDetector:
     def __init__(self):
@@ -687,7 +690,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
     .
     if self._mInputState == ePureAscii:
         if self._highBitDetector.search(aBuf):</code></pre>
-<p id=skipfeedhighbitdetectorcode>And what is <var>aBuf</var>?  Let&#8217;s backtrack further to a place that calls <var>UniversalDetector.feed()</var>. One place that calls it is the test harness, <code class=filename>test.py</code>.
+<p id=skipfeedhighbitdetectorcode>And what is <var>aBuf</var>?  Let&#8217;s backtrack further to a place that calls <code>UniversalDetector.feed()</code>. One place that calls it is the test harness, <code class=filename>test.py</code>.
 <p class=skip><a href=#skiptestharnessfeedcode>skip over this</a>
 <pre><code>u = UniversalDetector()
 .
@@ -695,7 +698,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
 .
 for line in open(f, 'rb'):
     u.feed(line)</code></pre>
-<p id=skiptestharnessfeedcode>And here we find our answer: in the <var>UniversalDetector.feed()</var> method, <var>aBuf</var> is a line read from a file on disk. Look carefully at the parameters used to open the file: <code>'rb'</code>. <code>'r'</code> is for &#8220;read&#8221;; OK, big deal, we&#8217;re reading the file. Ah, but <code>'b'</code> is for &#8220;binary.&#8221;  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding. (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes. That byte array gets passed to <var>UniversalDetector.feed()</var>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters. But we don&#8217;t have characters; we have bytes. Oops.
+<p id=skiptestharnessfeedcode>And here we find our answer: in the <code>UniversalDetector.feed()</code> method, <var>aBuf</var> is a line read from a file on disk. Look carefully at the parameters used to open the file: <code>'rb'</code>. <code>'r'</code> is for &#8220;read&#8221;; OK, big deal, we&#8217;re reading the file. Ah, but <code>'b'</code> is for &#8220;binary.&#8221;  Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string -- an array of Unicode characters -- according to the system default character encoding. (You could override the system encoding with another parameter to <var>open()</var>, but never mind that for now.)  But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes. That byte array gets passed to <code>UniversalDetector.feed()</code>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit... characters. But we don&#8217;t have characters; we have bytes. Oops.
 <p>What we need this regular expression to search is not an array of characters, but an array of bytes.
 <p>Once you realize that, the solution is not difficult. Regular expressions defined with strings can search strings. Regular expressions defined with byte arrays can search byte arrays. To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array. So instead of this:
 <pre><code>self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
@@ -716,7 +719,202 @@ for line in open(f, 'rb'):
   File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
     elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
-<p id=skipcantconvertbytesobject>...
+
+<p id=skipcantconvertbytesobject>There's an unfortunate clash of coding style and Python interpreter here. The <code>TypeError</code> could be anywhere on that line, but the traceback doesn't tell you exactly where it is. It could be in the first conditional or the second, and the traceback would look the same. To narrow it down, you should split the line in half, like this:
+
+<p class=skip><a href=#skip-split-conditional>skip over this code listing</a>
+<pre><code>elif (self._mInputState == ePureAscii) and \
+    self._escDetector.search(self._mLastChar + aBuf):</code></pre>
+
+<p id=skip-split-conditional>And re-run the test:</p>
+
+<p class=skip><a href=#skip-cant-convert-bytes-object-2>skip over this command output listing</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
+    self._escDetector.search(self._mLastChar + aBuf):
+TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
+
+<p id=skip-over-cant-convert-bytes-object-2>Aha! The problem was not in the first conditional (<code>self._mInputState == ePureAscii</code>) but in the second one. So what could cause a <code>TypeError</code> there? Perhaps you're thinking that the <code>search()</code> method is expecting a value of a different type, but that wouldn't generate this traceback. Python functions can take any value; if you pass the right number of arguments, the function will execute. It may <em>crash</em> if you pass it a value of a different type than it's expecting, but if that happened, the traceback would point to somewhere inside the function. But this traceback says it never got as far as calling the <code>search()</code> method. So the problem must be in that <code>+</code> operation, as it's trying to construct the value that it will eventually pass to the <code>search()</code> method.
+
+<p>We know from <a href="#cantuseastringpattern">previous debugging</a> that <var>aBuf</var> is a byte array. So what is <code>self._mLastChar</code>? It's an instance variable, defined in the <code>reset()</code> method, which is actually called from the <code>__init__()</code> method.
+
+<p class=skip><a href=#skip-mlastchar-declaration>skip over this code listing</a>
+<pre><code>class UniversalDetector:
+    def __init__(self):
+        self._highBitDetector = re.compile(b'[\x80-\xFF]')
+        self._escDetector = re.compile(b'(\033|~{)')
+        self._mEscCharSetProber = None
+        self._mCharSetProbers = []
+<mark>        self.reset()</mark>
+
+    def reset(self):
+        self.result = {'encoding': None, 'confidence': 0.0}
+        self.done = False
+        self._mStart = True
+        self._mGotData = False
+        self._mInputState = ePureAscii
+<mark>        self._mLastChar = ''</mark></code></pre>
+
+<p id=skip-mlastchar-declaration>And now we have our answer. Do you see it? <var>self._mLastChar</var> is a string, but <var>aBuf</var> is a byte array. And you can't concatenate a string to a byte array &mdash; not even a zero-length string.
+
+<p>So what is <var>self._mLastChar</var> anyway? The answer is in the <code>feed()</code> method, just a few lines down from where the trackback occurred.
+
+<p class=skip><a href=#skip-mlastchar-set>skip over this code listing</a>
+<pre><code>if self._mInputState == ePureAscii:
+    if self._highBitDetector.search(aBuf):
+        self._mInputState = eHighbyte
+    elif (self._mInputState == ePureAscii) and \
+            self._escDetector.search(self._mLastChar + aBuf):
+        self._mInputState = eEscAscii
+
+<mark>self._mLastChar = aBuf[-1]</mark></code></pre>
+
+<p>The calling function calls this <code>feed()</code> method over and over again with a few bytes at a time. The method processes the bytes it was given (passed in as <var>aBuf</var>), then stores the last byte in <var>self._mLastChar</var> in case it's needed during the next call. (In a multi-byte encoding, the <code>feed()</code> method might get called with half of a character, then called again with the other half.)  But because <var>aBuf</var> is now a byte array instead of a string, <var>self._mLastChar</var> needs to be a byte array as well. Thus:
+
+<pre><code>  def reset(self):
+      .
+      .
+      .
+<del>-     self._mLastChar = ''</del>
+<ins>+     self._mLastChar = b''</ins></code></pre>
+
+<h3 id=unsupportedoperandtypeforplus>TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</h3>
+
+<p>I have good news, and I have bad news. The good news is we're making progress&hellip;
+
+<p class=skip><a href=#skip-unsupported-operand-types>skip over this command listing</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
+    self._escDetector.search(self._mLastChar + aBuf):
+TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
+
+<p id=skip-unsupported-operand-types>&hellip;The bad news is it doesn't always feel like progress.
+
+<p>But this is progress! Really! Even though the traceback calls out the same line of code, it's a different error than it used to be. Progress! So what's the problem now? The last time I checked, this line of code didn't try to concatenate an <code>int</code> with a byte array (<code>bytes</code>). In fact, you just spent a lot of time <a href="#cantconvertbytesobject">ensuring that <var>self._mLastChar</var> was a byte array</a>. How did it turn into an <code>int</code>?
+
+<p>The answer lies not in the previous lines of code, but in the following lines.
+
+<p class=skip><a href=#skip-mlastchar-highlight>skip over this code listing</a>
+<pre><code>if self._mInputState == ePureAscii:
+    if self._highBitDetector.search(aBuf):
+        self._mInputState = eHighbyte
+    elif (self._mInputState == ePureAscii) and \
+            self._escDetector.search(self._mLastChar + aBuf):
+        self._mInputState = eEscAscii
+
+<mark>self._mLastChar = aBuf[-1]</mark></code></pre>
+
+<p id=skip-mlastchar-highlight>This error doesn't occur the first time the <code>feed()</code> method gets called; it occurs the <em>second time</em>, after <var>self._mLastChar</var> has been set to the last byte of <var>aBuf</var>. Well, what's the problem with that? Getting a single element from a byte array yields an integer, not a byte array. To see the difference, follow me to the interactive shell:
+
+<p class=skip><a href=#skip-mlastchar-interactive>skip over this interpreter listing</a>
+<pre class=screen>
+<a><samp class=prompt>>>> </samp><kbd>aBuf = b'\xEF\xBB\xBF'</kbd>         <span>&#x2460;</span></a>
+<samp class=prompt>>>> </samp><kbd>len(aBuf)</kbd>
+<samp>3</samp>
+<samp class=prompt>>>> </samp><kbd>mLastChar = aBuf[-1]</kbd>
+<a><samp class=prompt>>>> </samp><kbd>mLastChar</kbd>                      <span>&#x2461;</span></a>
+<samp>191</samp>
+<a><samp class=prompt>>>> </samp><kbd>type(mLastChar)</kbd>                <span>&#x2462;</span></a>
+<samp>&lt;class 'int'></samp>
+<a><samp class=prompt>>>> </samp><kbd>mLastChar + aBuf</kbd>               <span>&#x2463;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "<stdin>", line 1, in &lt;module>
+TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp>
+<a><samp class=prompt>>>> </samp><kbd>mLastChar = aBuf[-1:]</kbd>          <span>&#x2464;</span></a>
+<samp class=prompt>>>> </samp><kbd>mLastChar</kbd>
+<samp>b'\xbf'</samp>
+<a><samp class=prompt>>>> </samp><kbd>mLastChar + aBuf</kbd>               <span>&#x2465;</span></a>
+<samp>b'\xbf\xef\xbb\xbf'</samp></pre>
+<ol id=skip-mlastchar-interactive>
+<li>Define a byte array of 3 bytes.
+<li>The last element of the byte array is 191.
+<li>That's an integer.
+<li>Concatenating an integer with a byte array doesn't work. You've now replicated the error you just found in <code>universaldetector.py</code>.
+<li>Ah, here's the fix. Instead of taking the last element of the byte array, use <a href=native-datatypes.html#slicinglists>list slicing</a> to create a new byte array containing just the last element. That is, start with the last element and continue the slice until the end of the byte array. Now <var>mLastChar</var> is a byte array of length 1.
+<li>Concatenating a byte array of length 1 with a byte array of length 3 returns a new byte array of length 4.
+</ol>
+
+<p>So, to ensure that the <code>feed()</code> method in <code>universaldetector.py</code> continues to work no matter how often it's called, you need to <a href=#cantconvertbytesobject>initialize <var>self._mLastChar</var> as a 0-length byte array</a>, then <em>make sure it stays a byte array</em>.
+
+<pre><code>              self._escDetector.search(self._mLastChar + aBuf):
+          self._mInputState = eEscAscii
+
+<del>- self._mLastChar = aBuf[-1]</del>
+<ins>+ self._mLastChar = aBuf[-1:]</ins></code></pre>
+
+<h3 id=ordexpectedstring>TypeError: ord() expected string of length 1, but int found</h3>
+
+<p>Tired yet? You're almost there&hellip;
+
+<p class=skip><a href=#skip-ord-expected-string>skip over this command output listing</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 116, in feed
+    if prober.feed(aBuf) == constants.eFoundIt:
+  File "C:\home\chardet\chardet\charsetgroupprober.py", line 60, in feed
+    st = prober.feed(aBuf)
+  File "C:\home\chardet\chardet\utf8prober.py", line 53, in feed
+    codingState = self._mCodingSM.next_state(c)
+  File "C:\home\chardet\chardet\codingstatemachine.py", line 43, in next_state
+    byteCls = self._mModel['classTable'][ord(c)]
+TypeError: ord() expected string of length 1, but int found</samp></pre>
+
+<p id=skip-ord-expected-string>FIXME
+
+<p class=skip><a href=#skip-next-state>skip over this code listing</a>
+<pre><code># codingstatemachine.py
+def next_state(self, c):
+    # for each byte we get its class
+    # if it is first byte, we also get byte length
+    byteCls = self._mModel['classTable'][ord(c)]</code></pre>
+
+<p id=skip-next-state>FIXME [<var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. IOW, there's no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!]
+
+<p class=skip><a href=#skip-utf8prober-feed>skip over this code listing</a>
+<pre><code># utf8prober.py
+def feed(self, aBuf):
+    for c in aBuf:
+        codingState = self._mCodingSM.next_state(c)</code></pre>
+
+<p id=skip-utf8prober-feed>FIXME [wrapup or deleteme]
+
+<h3 id=unorderabletypes>TypeError: unorderable types: int() >= str()</h3>
+
+<p>FIXME [let's go again]
+
+<p class=skip><a href=#skip-unorderable-types-screen>skip over this command output listing</a>
+<pre class=screen><samp class=prompt>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml</samp>
+<samp>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 116, in feed
+    if prober.feed(aBuf) == constants.eFoundIt:
+  File "C:\home\chardet\chardet\charsetgroupprober.py", line 60, in feed
+    st = prober.feed(aBuf)
+  File "C:\home\chardet\chardet\sjisprober.py", line 68, in feed
+    self._mContextAnalyzer.feed(self._mLastChar[2 - charLen :], charLen)
+  File "C:\home\chardet\chardet\jpcntx.py", line 145, in feed
+    order, charLen = self.get_order(aBuf[i:i+2])
+  File "C:\home\chardet\chardet\jpcntx.py", line 176, in get_order
+    if ((aStr[0] >= '\x81') and (aStr[0] <= '\x9F')) or \
+TypeError: unorderable types: int() >= str()</samp></pre>
+
+<p id=skip-unorderable-types-screen>FIXME
+
 <p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>

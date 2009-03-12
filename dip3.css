@@ -27,15 +27,19 @@ a:visited{color:darkorchid}
 .skip a:active,.skip a:focus{position:static;width:auto;height:auto}
 
 /* code blocks */
-pre{white-space:pre-wrap;padding-left:2.154em;line-height:2.154;border-left:1px dotted}
+pre{white-space:pre-wrap;padding-left:2.154em;line-height:2.154;border-left:1px solid gainsboro}
 .widgets{float:left}
 .widgets,.widgets a,.download{font-size:small;line-height:2.154}
-.block,ol{clear:left}
+.block,ol,p,blockquote{clear:left}
 pre a,.widgets a{padding:0.4375em 0;border:0}
 .widgets a{text-decoration:underline}
 pre a:hover{border:0}
 kbd{font-weight:bold}
 .prompt{color:#667}
+ins,del,mark{text-decoration:none;font-style:normal;display:inline-block;width:100%;line-height:2.154}
+del{background:salmon}
+ins{background:palegreen}
+mark{background:#ffff80}
 
 /* tables */
 table{width:100%;border-collapse:collapse}
@@ -45,7 +49,7 @@ td{vertical-align:top}
 th:first-child{width:10%;text-align:center}
 .simple th{font-family:inherit !important}
 .hover{background:#eee;color:inherit;cursor:default}
-td pre{margin:0;padding:0;border:0}
+td pre{margin:0;padding:0;border:0;background:inherit}
 
 /* headers */
 h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
@@ -57,3 +61,6 @@ h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
+
+/* HTML 5 support */
+article,aside,dialog,footer,header,section{display:block}

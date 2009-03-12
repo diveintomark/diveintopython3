@@ -3,6 +3,7 @@
 <head>
 <meta charset=utf-8>
 <title>Unit testing - Dive into Python 3</title>
+<!--[if IE]><script src="html5.js"></script><![endif]-->
 <link rel=stylesheet type=text/css href=dip3.css>
 <link rel="shortcut icon" href=data:image/ico,>
 <link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
@@ -134,7 +135,7 @@ if __name__ == "__main__":
 <li>To write a test case, first subclass the <code>TestCase</code> class of the <code>unittest</code> module. This class provides many useful methods which you can use in your test case to test specific conditions.
 <li>This is a list of integer/numeral pairs that I verified manually. It includes the lowest ten numbers, the highest number, every number that translates to a single-character Roman numeral, and a random sampling of other valid numbers. The point of a unit test is not to test every possible input, but to test a representative sample.
 <li>Every individual test is its own method, which must take no parameters and return no value. If the method exits normally without raising an exception, the test is considered passed; if the method raises an exception, the test is considered failed.
-<li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn't be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <acronym>API</acronym> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <acronym>API</acronym> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn't raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
+<li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn't be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <abbr>API</abbr> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <abbr>API</abbr> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn't raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
 <li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>testToRomanKnownValues</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
 </ol>
 <p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you've written any code, you're doing it wrong &mdash; your tests aren't testing your code at all! Write a test that fails, then code until it passes.
@@ -144,7 +145,7 @@ function to_roman(n):
     """convert integer to Roman numeral"""
 <a>    pass                                   <span>&#x2460;</span></a></code></pre>
 <ol>
-<li>At this stage, you want to define the <acronym>API</acronym> of the <code>to_roman()</code> function, but you don't want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.</a>.
+<li>At this stage, you want to define the <abbr>API</abbr> of the <code>to_roman()</code> function, but you don't want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.
 </ol>
 <p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what's going on as each test case runs. With any luck, your output should look like this:
 <pre class=screen>
@@ -289,7 +290,7 @@ FAILED (errors=1)</samp></pre>
 <p>Now run the test suite again.
 <pre class=screen>
 <samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
-to_roman should give known result with known input ... ok
+<samp>to_roman should give known result with known input ... ok
 <a>to_roman should fail with large input ... FAIL                          <span>&#x2460;</span></a>
 
 ======================================================================
@@ -360,7 +361,7 @@ For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman
 <li>If you take a number, convert it to Roman numerals, then convert that back to a number, you should end up with the number
       you started with. So <code>from_roman(to_roman(n)) == n</code> for all <var>n</var> in <code>1..3999</code>.
 <li><code>to_roman</code> should always return a Roman numeral using uppercase letters.
-<li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><acronym>i.e.</acronym></i> it should fail when given lowercase input).
+<li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><abbr>i.e.</abbr></i> it should fail when given lowercase input).
 </ol>
 -->
 <p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim, <a href=http://creativecommons.org/licenses/by-sa/3.0/ rel=license>CC-BY-SA-3.0</a>

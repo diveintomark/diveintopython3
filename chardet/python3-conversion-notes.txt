@@ -10,11 +10,9 @@
     import sys
 * test.py: change file() to open()
 * universaldetector.py: change r'' strings to b'' byte arrays in self._highBitDetector, self._escDetector regular expressions
-- charsetprober.py: change regular expression-based replace to use b'' byte arrays instead of strings
 
-- universaldetector.py: change self._mLastChar from a r'' string to a b'' byte array
-- mbcharsetprober.py: change self._mLastChar from a list of two 1-character strings to a list of two ints
-- universaldetector.py: getting a single element from a byte array yields an integer, not a byte, so change syntax to make sure we self._mLastChar is always a byte
+* universaldetector.py: change self._mLastChar from a '' string to a b'' byte array
+* universaldetector.py: getting a single element from a byte array yields an integer, not a byte, so change syntax to make sure we self._mLastChar is always a byte
   old:
     self._mLastChar = aBuf[-1]
   new:
@@ -24,5 +22,9 @@
 - jpcntx.py, chardistribution.py: change ord(aBuf[0]) to aBuf[0] since it's already an int (iterating through a byte array)
 - jpcntx.py, chardistribution.py (editorial): global search-and-replace "aStr" --> "aBuf" to make it clear that we're passing around a byte array
 - sbcharsetprober.py, latin1prober.py: change ord(c) to c since it's already an int (iterating through a byte array)
+
+- (not sure where this fits) mbcharsetprober.py: change self._mLastChar from a list of two 1-character strings to a list of two ints
+
+- (not sure where this fits) charsetprober.py: change regular expression-based replace to use b'' byte arrays instead of strings
 
 - latin1prober.py: refactor reduce(operator.add, ...) to use a for loop instead
