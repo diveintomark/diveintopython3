@@ -1263,7 +1263,7 @@ NameError: global name 'reduce' is not defined</samp></pre>
           return 0.01
   
 <del>-     total = reduce(operator.add, self._mFreqCounter)</del>
-<ins>+     total = 0
+<ins>+     total = 0</ins>
 <ins>+     for frequency in self._mFreqCounter:</ins>
 <ins>+         total += frequency</ins></code></pre>
 
