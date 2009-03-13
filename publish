@@ -3,7 +3,10 @@
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
-cp *.html *.py *.txt .htaccess *.js *.css build/
+cp *.py robots.txt .htaccess *.js *.css build/
+for f in *.html; do
+  python htmlminimizer.py "$f" build/"$f"
+done
 
 # replace local jquery reference with Google API loader
 sed -i -e "s|jquery\.js|http://www.google.com/jsapi|g" build/*.html
@@ -17,6 +20,7 @@ java -jar yuicompressor-2.4.2.jar build/dip3.css > build/dip3.$revision.min.css
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/dip3.${revision}.min.js|g" build/*.html
 sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" build/*.html
 sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
+sed -i -e "s|=http:|=|g" build/*.html
 
 # set file permissions for public consumption
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
