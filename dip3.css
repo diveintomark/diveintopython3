@@ -34,7 +34,7 @@ pre{white-space:pre-wrap;padding-left:2.154em;line-height:2.154;border-left:1px 
 pre a,.widgets a{padding:0.4375em 0;border:0}
 .widgets a{text-decoration:underline}
 pre a:hover{border:0}
-kbd{font-weight:bold}
+kbd,mark{font-weight:bold}
 .prompt{color:#667}
 ins,del,mark{text-decoration:none;font-style:normal;display:inline-block;width:100%;line-height:2.154}
 del{background:salmon}

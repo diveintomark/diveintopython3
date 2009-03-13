@@ -123,7 +123,7 @@ class Latin1Prober(CharSetProber):
         if self.get_state() == constants.eNotMe:
             return 0.01
   
-        total = 0.0
+        total = 0
         for frequency in self._mFreqCounter:
             total += frequency
         if total < 0.01:

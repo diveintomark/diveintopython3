@@ -16,6 +16,7 @@ java -jar yuicompressor-2.4.2.jar build/dip3.js > build/dip3.$revision.min.js
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/dip3.$revision.min.css
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/dip3.${revision}.min.js|g" build/*.html
 sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" build/*.html
+sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
 
 # set file permissions for public consumption
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
