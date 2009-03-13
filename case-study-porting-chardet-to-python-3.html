@@ -11,7 +11,6 @@
 body{counter-reset:h1 20}
 </style>
 </head>
-<body>
 <p class=skip><a href=#divingin>skip to main content</a>
 <form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#case-study-porting-chardet-to-python-3>Dive Into Python 3</a> <span>&#8227;</span>
@@ -46,7 +45,7 @@ body{counter-reset:h1 20}
   <li><a href=#cantconvertbytesobject>Can&#8217;t convert <code>'bytes'</code> object to <code>str</code> implicitly</a>
   <li><a href=#unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></a>
   <li><a href=#ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</a>
-  <li><a href=#=unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></a>
+  <li><a href=#unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></a>
   <li><a href=#reduceisnotdefined>Global name <code>'reduce'</code> is not defined</a>
   </ol>
 <li><a href=#summary>Summary</a>
@@ -873,7 +872,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
 <samp>&lt;class 'int'></samp>
 <a><samp class=prompt>>>> </samp><kbd>mLastChar + aBuf</kbd>               <span>&#x2463;</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "<stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 1, in &lt;module>
 TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp>
 <a><samp class=prompt>>>> </samp><kbd>mLastChar = aBuf[-1:]</kbd>          <span>&#x2464;</span></a>
 <samp class=prompt>>>> </samp><kbd>mLastChar</kbd>
@@ -961,14 +960,14 @@ def feed(self, aBuf):
 
 <p id=skip-sbcharsetprober-code>&hellip;and <code>latin1prober.py</code>&hellip;
 
-<p class=skip><a href=#skip-latin1prober-code>skip over this code listing</a>
+<p class=skip><a href=#skip-latin1prober-code-2>skip over this code listing</a>
 <pre><code># latin1prober.py
 def feed(self, aBuf):
     aBuf = self.filter_with_english_letters(aBuf)
     for c in aBuf:
 <mark>        charClass = Latin1_CharToClass[ord(c)]</mark></code></pre>
 
-<p id=skip-sbcharsetprober-code><var>c</var> is iterating over <var>aBuf</var>, which means it is an integer, not a 1-character string.  The solution is the same: change <code>ord(c)</code> to just plain <code>c</code>.
+<p id=skip-sbcharsetprober-code-2><var>c</var> is iterating over <var>aBuf</var>, which means it is an integer, not a 1-character string.  The solution is the same: change <code>ord(c)</code> to just plain <code>c</code>.
 
 <p class=skip><a href=#unorderabletypes>skip over this code listing</a>
 <pre><code>  # sbcharsetprober.py
@@ -1010,7 +1009,7 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\jpcntx.py", line 145, in feed
     order, charLen = self.get_order(aBuf[i:i+2])
   File "C:\home\chardet\chardet\jpcntx.py", line 176, in get_order
-    if ((aStr[0] >= '\x81') and (aStr[0] <= '\x9F')) or \
+    if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \
 TypeError: unorderable types: int() >= str()</samp></pre>
 
 <p id=skip-unorderable-types-screen>Did you notice? This time around, the code passed the first test case (<code>tests\ascii\howto.diveintomark.org.xml</code>). You're making real progress here.
@@ -1036,7 +1035,7 @@ TypeError: unorderable types: int() >= str()</samp></pre>
     .
     .
     i = self._mNeedToSkipCharNum
-    while i < aLen:
+    while i &lt; aLen:
 <mark>        order, charLen = self.get_order(aBuf[i:i+2])</mark></code></pre>
 
 <p id=skip-unorderable-types-2>Oh look, it's our old friend, <var>aBuf</var>. As you might have guessed from every other issue we've encountered in this chapter, <var>aBuf</var> is a byte array. Here, the <code>feed()</code> method isn't just passing it on wholesale; it's slicing it. But as you saw <a href=#unsupportedoperandtypeforplus>earlier in this chapter</a>, slicing a byte array returns a byte array, so the <var>aStr</var> parameter that gets passed to the <code>get_order()</code> method is still a byte array.
