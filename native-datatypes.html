@@ -12,7 +12,7 @@ body{counter-reset:h1 2}
 </style>
 </head>
 <p class=skip><a href=#divingin>skip to main content</a>
-<form action=http://www.google.com/cse id=search><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
 <p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#native-datatypes>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Native datatypes</h1>
 <blockquote class=q>
@@ -170,7 +170,7 @@ body{counter-reset:h1 2}
 <a><samp class=prompt>>>> </samp><kbd>x * 2</kbd>                         <span>&#x2462;</span></a>
 <samp>Fraction(2, 3)</samp>
 <a><samp class=prompt>>>> </samp><kbd>fractions.Fraction(6, 4)</kbd>      <span>&#x2463;</span></a>
-<samp>Fraction(3, 2)</samp></code></pre>
+<samp>Fraction(3, 2)</samp></pre>
 <ol>
 <li>To start using fractions, import the <code>fractions</code> module.
 <li>To define a fraction, create a <code>Fraction</code> object and pass in the numerator and denominator.
@@ -346,7 +346,7 @@ ValueError: list.index(x): x not in list</samp></pre>
 <h3 id=lists-in-a-boolean-context>Lists in a boolean context</h3>
 <p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
 <pre class=screen>
-<a><samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>  <span>&#x2460;</span></a>
+<samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>
 <samp class=prompt>... </samp><kbd>  if anything:</kbd>
 <samp class=prompt>... </samp><kbd>    print("yes, it's true")</kbd>
 <samp class=prompt>... </samp><kbd>  else:</kbd>
@@ -439,15 +439,15 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <h3 id=dictionaries-in-a-boolean-context>Dictionaries in a boolean context</h3>
 <p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
 <pre class=screen>
-<a><samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>  <span>&#x2460;</span></a>
+<samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>
 <samp class=prompt>... </samp><kbd>  if anything:</kbd>
 <samp class=prompt>... </samp><kbd>    print("yes, it's true")</kbd>
 <samp class=prompt>... </samp><kbd>  else:</kbd>
 <samp class=prompt>... </samp><kbd>    print("no, it's false")</kbd>
 <samp class=prompt>...</samp>
-<a><samp class=prompt>>>> </samp><kbd>is_it_true({})</kbd>             <span>&#x2461;</span></a>
+<a><samp class=prompt>>>> </samp><kbd>is_it_true({})</kbd>             <span>&#x2460;</span></a>
 <samp>no, it's false</samp>
-<a><samp class=prompt>>>> </samp><kbd>is_it_true({'a': 1})</kbd>       <span>&#x2462;</span></a>
+<a><samp class=prompt>>>> </samp><kbd>is_it_true({'a': 1})</kbd>       <span>&#x2461;</span></a>
 <samp>yes, it's true</samp></pre>
 <ol>
 <li>In a boolean context, an empty dictionary is false.
@@ -477,15 +477,15 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <h3 id=none-in-a-boolean-context><code>None</code> in a boolean context</h3>
 <p>In <a href=#booleans>a boolean context</a>, <code>None</code> is false and <code>not None</code> is true.
 <pre class=screen>
-<a><samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>
+<samp class=prompt>>>> </samp><kbd>def is_it_true(anything):</kbd>
 <samp class=prompt>... </samp><kbd>  if anything:</kbd>
 <samp class=prompt>... </samp><kbd>    print("yes, it's true")</kbd>
 <samp class=prompt>... </samp><kbd>  else:</kbd>
 <samp class=prompt>... </samp><kbd>    print("no, it's false")</kbd>
 <samp class=prompt>...</samp>
-<a><samp class=prompt>>>> </samp><kbd>is_it_true(None)</kbd>
+<samp class=prompt>>>> </samp><kbd>is_it_true(None)</kbd>
 <samp>no, it's false</samp>
-<a><samp class=prompt>>>> </samp><kbd>is_it_true(not None)</kbd>
+<samp class=prompt>>>> </samp><kbd>is_it_true(not None)</kbd>
 <samp>yes, it's true</samp></pre>
 <h2 id=furtherreading>Further reading</h2>
 <ul>
