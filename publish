@@ -28,5 +28,5 @@ sed -i -e "s|=http:|=|g" build/*.html
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
 
 # and push to production
-#rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-#rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/
