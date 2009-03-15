@@ -3,7 +3,7 @@
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
-cp *.py robots.txt .htaccess *.js *.css build/
+cp *.py robots.txt *.js *.css build/
 for f in *.html; do
   python htmlminimizer.py "$f" build/"$f"
 done
@@ -15,18 +15,19 @@ sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
 
 # minimize JS and CSS
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
-java -jar yuicompressor-2.4.2.jar build/dip3.js > build/dip3.$revision.min.js
-java -jar yuicompressor-2.4.2.jar build/dip3.css > build/dip3.$revision.min.css
-css=`cat build/dip3.$revision.min.css`
-sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/dip3.${revision}.min.js|g" build/*.html
-#sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/dip3.${revision}.min.css|g" build/*.html
+java -jar yuicompressor-2.4.2.jar build/dip3.js > build/$revision.js
+java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
+sed -i -e "s|;}|}|g" build/$revision.css
+css=`cat build/$revision.css`
+sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
+#sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/${revision}.css|g" build/*.html
 sed -i -e "s|<link rel=stylesheet type=text/css href=dip3.css>|<style>${css}</style>|g" -e "s|</style><style>||g" build/*.html
 sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
 sed -i -e "s|=http:|=|g" build/*.html
 
 # set file permissions for public consumption
-chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt build/.htaccess
+chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt
 
 # and push to production
-rsync -essh -avzP --delete --delete-after build/*.min.css build/*.min.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-rsync -essh -avzP build/*.html build/*.py build/*.txt build/.htaccess diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/
