@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>Strings - Dive into Python 3</title>
+<!--[if IE]><script src=html5.js></script><![endif]-->
+<link rel="shortcut icon" href=data:image/ico,>
+<link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
+<link rel=stylesheet type=text/css href=dip3.css>
+<style>
+body{counter-reset:h1 3}
+</style>
+</head>
+<p class=skip><a href=#divingin>skip to main content</a>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&#xa0;<input name=q size=31>&#xa0;<input type=submit name=sa value=Search></div></form>
+<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span>&#8227;</span>
+<h1>Strings</h1>
+<blockquote class=q>
+<p><span>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
+My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; <cite>Dr. Seuss, On Beyond Zebra!</cite>
+</blockquote>
+<ol>
+<li><a href=#divingin>Diving in</a>
+<li><a href=#one-ring-to-rule-them-all>Unicode</a>
+  <ol>
+  <li>How strings are stored in memory
+  <li>Converting between different character encodings
+  <li><a href=#py-encoding>Specifying character encoding in <code>.py</code> files</a>
+  </ol>
+<li>Strings in Python 3
+<li>Common string operations
+<li>Formatting strings
+<li><a href=#string-module>The <code>string</code> module</a>
+<li><a href=#byte-arrays>Strings vs. bytes</a>
+<li><a href=#furtherreading>Further reading</a>
+</ol>
+<h2 id=divingin>Diving in</h2>
+<p class=fancy>Chinese has thousands of characters. The <a href="http://en.wikipedia.org/wiki/Rotokas_alphabet">Rotokas alphabet</a> of <a href="http://en.wikipedia.org/wiki/Bougainville_Province">Bougainville</a> is the smallest alphabet in the world, with just 12 letters. English has 26, plus a handful of punctuation marks. Python 3 can handle all of these languages, and more.
+
+<p>When people talk about &#8220;text,&#8221; they&#8217;re thinking of &#8220;characters and symbols on the computer screen.&#8221;  But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes. Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <i>character encoding</i>. There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages. Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
+
+<p>In reality, it&#8217;s more complicated than that. Many characters are common to multiple encodings, but each encoding may use a different sequence of bytes to actually store those characters in memory or on disk. So you can think of the character encoding as a kind of decryption key. Whenever someone gives you a sequence of bytes &mdash; a file, a web page, whatever &mdash; and claims it&#8217;s &#8220;text,&#8221; you need to know what character encoding they used so you can decode the bytes into characters. If they give you the wrong key or no key at all, you&#8217;re left with the unenviable task of cracking the code yourself. Chances are you&#8217;ll get it wrong, and the result will be gibberish.
+
+<p>Surely you&#8217;ve seen web pages like this, with strange question-mark-like characters where apostrophes should be. That usually means the page author didn&#8217;t declare their character encoding correctly, your browser was left guessing, and the result was a mix of expected and unexpected characters. In English it&#8217;s merely annoying; in other languages, the result can be completely unreadable.
+
+<p>As I mentioned, there are separate character encodings for each major language in the world, and a lot of minor ones. Since each language is different, and disk space has historically been expensive, each character encoding is optimized for a particular language. By that, I mean each encoding using the same numbers (0&ndash;255) to represent that language&#8217;s characters. <abbr>ASCII</abbr>, for instance, stores English characters as numbers ranging from 0 to 127. (65 is capital &#8220;A&#8221;, 97 is lowercase &#8220;a&#8221;, and so forth.)  English has a very simple alphabet, so it can be completely expressed in less than 128 numbers. For those of you who can count in base 2, that&#8217;s 7 out of the 8 bits in a byte.
+
+<p>Western European languages like French, Spanish, and German have more letters than English. Or, more precisely, they have letters combined with various diacritical marks. The most common encoding for these languages is CP-1252, also called &#8220;windows-1252&#8221; because it is widely used on Microsoft Windows. The CP-1252 encoding shares characters with <abbr>ASCII</abbr> in the 0&ndash;127 range, but then extends into the 128&ndash;255 range for characters like n-with-a-tilde-over-it (241), u-with-two-dots-over-it (252), and so on. It&#8217;s still a single-byte encoding, though; the highest possible number, 255, still fits in one byte.
+
+<p>Then there are languages like Chinese, Japanese, and Korean, which have so many characters that they require multiple-byte character sets. That is, each &#8220;character&#8221; is represented by a two-byte number from 0&ndash;65535. But different multi-byte encodings still share the same problem as different single-byte encodings, namely that they each use the same numbers to mean different things. It&#8217;s just that the range of numbers is broader, because there are many more characters to represent.
+
+<p>That was mostly OK in a non-networked world, where &#8220;text&#8221; was something you typed yourself and occasionally printed. There wasn&#8217;t much &#8220;plain text&#8221; &mdash; your word processor had its own format with stored character encoding information, rich styling, and so on. Word processors were customized for each language, so they automatically used the most appropriate character encoding in the Russian edition and in the English edition and in the Spanish edition. People who read these documents were using the same word processing program as the original author, so everything worked, more or less.
+
+<p>Now think about the rise of global networks like email and the web. Lots of &#8220;plain text&#8221; flying around the globe, being authored on one computer, transmitted through a second computer, and received and displayed by a third computer. Computers can only see numbers, but the numbers could mean different things. Oh no! What to do? Well, systems had to be designed to carry encoding information along with every piece of &#8220;plain text.&#8221; Remember, it&#8217;s the decryption key that maps computer-readable numbers to human-readable characters. A missing decryption key means garbled text, gibberish, or worse.
+
+<p>Now think about trying to store multiple pieces of text in the same place, like in the same database table that holds all the email you&#8217;ve ever received. You still need to store the character encoding alongside each piece of text so you can display it properly. Think that&#8217;s hard? Try searching your email database,  which means converting between multiple encodings on the fly. Doesn&#8217;t that sound fun?
+
+<p>Now think about the possibility of multilingual documents, where characters from several languages are next to each other in the same document. (Hint: programs that tried to do this typically used escape codes to switch &#8220;modes.&#8221; Poof, you&#8217;re in Russian koi8-r mode, so 241 means this character; poof, now you&#8217;re in Mac Greek mode, so 241 means some other character.) And of course you&#8217;ll want to search <em>those</em> documents, too.
+
+<p>Now cry a lot, because everything you thought you knew about strings is wrong, and there ain&#8217;t no such thing as &#8220;plain text.&#8221;
+
+<hr>
+
+<p><b>Nothing below this line is really done yet. Thanks for reading this far! Stop now!</b>
+
+<h2 id=one-ring-to-rule-them-all>Unicode</h2>
+
+<p><i>Enter Unicode.</i>
+
+<p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number, from 0&ndash;4294967295. (That's 2<sup>32</sup>&minus;1.) Each 4-byte number represents a unique character used in at least one of the world's languages. Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn't be sufficient. Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; Unicode data is never ambiguous.
+
+<p>Right away, problems leap out at you. 4 bytes? For every single character<span>&#8253;</span> [FIXME incomplete paragraph]
+
+<p>Of course, there is still the matter of all those legacy encoding systems. [FIXME incomplete paragraph]
+
+<p>[FIXME stuff about UTF-32, UTF-16, and finally UTF-8]
+<!--
+<p>UTF-8 uses the same characters as 7-bit <abbr>ASCII</abbr> for 0 through 127
+
+
+
+
+<p>When dealing with Unicode data, you may at some point need to convert the data back into one of these other legacy encoding
+systems. For instance, to integrate with some other computer system which expects its data in a specific 1-byte encoding
+scheme, or to print it to a non-Unicode-aware terminal or printer.
+
+
+
+
+FIXME: update for Python 3
+
+<p>Python has had Unicode support throughout the language since version 2.0. The <abbr>XML</abbr> package uses Unicode to store all parsed <abbr>XML</abbr> data, but you can use Unicode anywhere.
+<div class=example><h3>Example 9.13. Introducing Unicode</h3><pre class=screen>
+<samp class=prompt>>>> </samp><kbd>s = u'Dive in'</kbd>            <span>&#x2460;</span>
+<samp class=prompt>>>> </samp><kbd>s</kbd>
+u'Dive in'
+<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
+Dive in</pre><div class=calloutlist>
+<ol>
+<li>To create a Unicode string instead of a regular <abbr>ASCII</abbr> string, add the letter &#8220;<code>u</code>&#8221; before the string. Note that this particular string doesn't have any non-<abbr>ASCII</abbr> characters. That's fine; Unicode is a superset of <abbr>ASCII</abbr> (a very large superset at that), so any regular <abbr>ASCII</abbr> string can also be stored as Unicode.
+<li>When printing a string, Python will attempt to convert it to your default encoding, which is usually <abbr>ASCII</abbr>. (More on this in a minute.)  Since this Unicode string is made up of characters that are also <abbr>ASCII</abbr> characters, printing it has the same result as printing a normal <abbr>ASCII</abbr> string; the conversion is seamless, and if you didn't know that <var>s</var> was a Unicode string, you'd never notice the difference.
+<div class=example><h3>Example 9.14. Storing non-<abbr>ASCII</abbr> characters</h3><pre class=screen>
+<samp class=prompt>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>         <span>&#x2460;</span>
+<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+UnicodeError: ASCII encoding error: ordinal not in range(128)</samp>
+<samp class=prompt>>>> </samp><kbd>print s.encode('latin-1')</kbd> <span>&#x2462;</span>
+La Pe&ntilde;a</pre><div class=calloutlist>
+<ol>
+<li>The real advantage of Unicode, of course, is its ability to store non-<abbr>ASCII</abbr> characters, like the Spanish &#8220;<code>&ntilde;</code>&#8221; (<code>n</code> with a tilde over it). The Unicode character code for the tilde-n is <code>0xf1</code> in hexadecimal (241 in decimal), which you can type like this: <code>\xf1</code>.
+<li>Remember I said that the <code>print</code> function attempts to convert a Unicode string to <abbr>ASCII</abbr> so it can print it?  Well, that's not going to work here, because your Unicode string contains non-<abbr>ASCII</abbr> characters, so Python raises a <samp>UnicodeError</samp> error.
+<li>Here's where the conversion-from-Unicode-to-other-encoding-schemes comes in. <var>s</var> is a Unicode string, but <code>print</code> can only print a regular string. To solve this problem, you call the <code>encode</code> method, available on every Unicode string, to convert the Unicode string to a regular string in the given encoding scheme,
+            which you pass as a parameter. In this case, you're using <code>latin-1</code> (also known as <code>iso-8859-1</code>), which includes the tilde-n (whereas the default <abbr>ASCII</abbr> encoding scheme did not, since it only includes characters numbered 0 through 127).
+
+
+
+
+
+
+
+
+
+
+-->
+<h3 id=py-encoding>Specifying character encoding in <code>.py</code> files</h3>
+
+<!--
+http://www.python.org/dev/peps/pep-0263/ - HOWTO specify encoding in .py files
+http://www.python.org/dev/peps/pep-3120/ - UTF-8 is now the default encoding (Python 2 defaulted to US-ASCII)
+-->
+
+<p>[FIXME this appears to be mostly the same in Python 3, except the default encoding is now UTF-8, not ASCII.]
+
+<p>If you are going to be storing non-ASCII strings within your Python code, you'll need to specify the encoding of each individual <code>.py</code> file by putting an encoding declaration at the top of each file. This declaration defines the <code>.py</code> file to be UTF-8:<pre><code>
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-</code></pre>
+
+<p>[FIXME maybe some examples here]
+
+<h2 id=formatting-strings>Formatting strings</h2>
+
+<p>[FIXME this is all completely different in Python 3. Cover the new way, then maybe show some examples from the old way? Or maybe not. Hey, maybe just point to the original "Dive Into Python".]
+
+<p>Python supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is
+   to insert values into a string with the <code>%s</code> placeholder.
+
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>k = "uid"</kbd>
+<samp class=prompt>>>> </samp><kbd>v = "sa"</kbd>
+<samp class=prompt>>>> </samp><kbd>"%s=%s" % (k, v)</kbd> <span>&#x2460;</span>
+<samp>'uid=sa'</samp></pre>
+<ol>
+<li>The whole expression evaluates to a string. The first <code>%s</code> is replaced by the value of <var>k</var>; the second <code>%s</code> is replaced by the value of <var>v</var>. All other characters in the string (in this case, the equal sign) stay as they are.
+</ol>
+
+<p>Note that <code>(k, v)</code> is a tuple. I told you they were good for something.
+
+<p>You might be thinking that this is a lot of work just to do simple string concatentation, and you would be right, except that
+string formatting isn't just concatenation. It's not even just formatting. It's also type coercion.
+
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>uid = "sa"</kbd>
+<samp class=prompt>>>> </samp><kbd>pwd = "secret"</kbd>
+<samp class=prompt>>>> </samp><kbd>print pwd + " is not a good password for " + uid</kbd>      <span>&#x2460;</span>
+secret is not a good password for sa
+<samp class=prompt>>>> </samp><kbd>print "%s is not a good password for %s" % (pwd, uid)</kbd> <span>&#x2461;</span>
+secret is not a good password for sa
+<samp class=prompt>>>> </samp><kbd>userCount = 6</kbd>
+<samp class=prompt>>>> </samp><kbd>print "Users connected: %d" % (userCount, )</kbd>           <span>&#x2462;</span> <span>&#x2463;</span>
+Users connected: 6
+<samp class=prompt>>>> </samp><kbd>print "Users connected: " + userCount</kbd>                 <span>&#x2464;</span>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+TypeError: cannot concatenate 'str' and 'int' objects</samp></pre>
+<ol>
+<li><code>+</code> is the string concatenation operator.
+<li>In this trivial case, string formatting accomplishes the same result as concatentation.
+<li><code>(userCount, )</code> is a tuple with one element. Yes, the syntax is a little strange, but there's a good reason for it: it's unambiguously a tuple. In fact, you can always include a comma after the last element when defining a list, tuple, or dictionary, but the comma is required when defining a tuple with one element. If the comma weren't required, Python wouldn't know whether <code>(userCount)</code> was a tuple with one element or just the value of <var>userCount</var>.
+<li>String formatting works with integers by specifying <code>%d</code> instead of <code>%s</code>.
+<li>Trying to concatenate a string with a non-string raises an exception. Unlike string formatting, string concatenation works only when everything is already a string.
+</ol>
+
+<p>As with <code>printf</code> in <abbr>C</abbr>, string formatting in Python is like a Swiss Army knife. There are options galore, and modifier strings to specially format many different types of values.
+
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %f" % 50.4625</kbd>   <span>&#x2460;</span>
+<samp>50.462500</samp>
+<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %.2f" % 50.4625</kbd> <span>&#x2461;</span>
+<samp>50.46</samp>
+<samp class=prompt>>>> </samp><kbd>print "Change since yesterday: %+.2f" % 1.5</kbd> <span>&#x2462;</span>
+<samp>+1.50</samp></pre>
+<ol>
+<li>The <code>%f</code> string formatting option treats the value as a decimal, and prints it to six decimal places.
+<li>The ".2" modifier of the <code>%f</code> option truncates the value to two decimal places.
+<li>You can even combine modifiers. Adding the <code>+</code> modifier displays a plus or minus sign before the value.  Note that the ".2" modifier is still in place, and is padding the value to exactly two decimal places.
+</ol>
+
+<h2 id=common-string-operations>Common string operations</h2>
+
+<p>[FIXME is it worth keeping this section on joining lists / splitting strings? All the examples are from an old code sample that isn't used at all anymore.]
+
+<p>You have a list of key-value pairs in the form <code><var>key</var>=<var>value</var></code>, and you want to join them into a single string. To join any list of strings into a single string, use the <code>join</code> method of a string object.
+
+<p>Here is an example of joining a list from the <code>buildConnectionString</code> function:
+
+<pre><code>return ";".join(["%s=%s" % (k, v) for k, v in params.items()])</code></pre>
+
+<p>One interesting note before you continue. I keep repeating that functions are objects, strings are objects... everything
+is an object. You might have thought I meant that string <em>variables</em> are objects. But no, look closely at this example and you'll see that the string <code>";"</code> itself is an object, and you are calling its <code>join</code> method.
+<p>The <code>join</code> method joins the elements of the list into a single string, with each element separated by a semi-colon. The delimiter doesn't need to be a semi-colon; it doesn't even need to be a single character. It can be any string.
+
+<!--<code>join</code> works only on lists of strings; it does not do any type coercion. Joining a list that has one or more non-string elements will raise an exception.-->
+
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+<samp class=prompt>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd>
+['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
+<samp class=prompt>>>> </samp><kbd>";".join(["%s=%s" % (k, v) for k, v in params.items()])</kbd>
+'server=mpilgrim;uid=sa;database=master;pwd=secret'</pre>
+
+<p>This string is then returned from the <code>odbchelper</code> function and printed by the calling block, which gives you the output that you marveled at when you started reading this chapter.
+
+<p>You're probably wondering if there's an analogous method to split a string into a list. And of course there is, and it's called <code>split</code>.
+
+<pre class=screen>
+<samp class=prompt>>>> </samp><kbd>li = ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</kbd>
+<samp class=prompt>>>> </samp><kbd>s = ";".join(li)</kbd>
+<samp class=prompt>>>> </samp><kbd>s</kbd>
+'server=mpilgrim;uid=sa;database=master;pwd=secret'
+<samp class=prompt>>>> </samp><kbd>s.split(";")</kbd>    <span>&#x2460;</span>
+['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
+<samp class=prompt>>>> </samp><kbd>s.split(";", 1)</kbd> <span>&#x2461;</span>
+['server=mpilgrim', 'uid=sa;database=master;pwd=secret']</pre>
+<ol>
+<li><code>split</code> reverses <code>join</code> by splitting a string into a multi-element list. Note that the delimiter (&#8220;<code>;</code>&#8221;) is stripped out completely; it does not appear in any of the elements of the returned list.
+<li><code>split</code> takes an optional second argument, which is the number of times to split. (&#8220;Oooooh, optional arguments...&#8221;  You'll learn how to do this in your own functions in the next chapter.)
+</ol>
+
+<!--<code><var>anystring</var>.<code>split</code>(<var>delimiter</var>, 1)</code> is a useful technique when you want to search a string for a substring and then work with everything before the substring (which ends up in the first element of the returned list) and everything after it (which ends up in the second element).-->
+
+<h2 id=string-module>The <code>string</code> module</h2>
+
+<p>[FIXME is this worth keeping? The module still exists in 3.0; check if it's going away in 3.1 or something.]
+
+<p>When I first learned Python, I expected <code>join</code> to be a method of a list, which would take the delimiter as an argument. Many people feel the same way, and there's a story behind the <code>join</code> method. Prior to Python 1.6, strings didn't have all these useful methods. There was a separate <code>string</code> module that contained all the string functions; each function took a string as its first argument. The functions were deemed important enough to put onto the strings themselves, which made sense for functions like <code>lower</code>, <code>upper</code>, and <code>split</code>. But many hard-core Python programmers objected to the new <code>join</code> method, arguing that it should be a method of the list instead, or that it shouldn't move at all but simply stay a part of the old <code>string</code> module (which still has a lot of useful stuff in it). I use the new <code>join</code> method exclusively, but you will see code written either way, and if it really bothers you, you can use the old <code>string.join</code> function instead.
+
+<h2 id=byte-arrays>Strings vs. bytes</h2>
+
+<h2 id=furtherreading>Further reading</h2>
+
+<p>FIXME proper links
+
+<pre>
+http://docs.python.org/dev/3.0/howto/unicode.html - Unicode HOWTO
+http://docs.python.org/dev/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit - changes in Python 3
+http://blog.whatwg.org/the-road-to-html-5-character-encoding
+http://www.joelonsoftware.com/articles/Unicode.html
+http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode
+http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings
+http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF
+http://www.w3.org/People/Dürst/papers.html
+http://rishida.net/scripts/chinese/
+</pre>
+
+<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim &#8226; <a href=about.html>open standards &#8226; open content &#8226; open source</a>
+<script src=jquery.js></script>
+<script src=dip3.js></script>

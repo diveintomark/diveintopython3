@@ -23,50 +23,10 @@
 <li><a href="#install.summary">1.9. Summary</a>
 </ul>
 
-<li><a href="#odbchelper">2. Your First Python Program</a><ul>
-<li><a href="#odbchelper.divein">2.1. Diving in</a>
-<li><a href="#odbchelper.funcdef">2.2. Declaring Functions</a><ul>
-<li><a href="#d0e4188">2.2.1. How Python's Datatypes Compare to Other Programming Languages</a>
-</ul>
-
-<li><a href="#odbchelper.docstring">2.3. Documenting Functions</a>
-<li><a href="#odbchelper.objects">2.4. Everything Is an Object</a><ul>
-<li><a href="#d0e4550">2.4.1. The Import Search Path</a>
-<li><a href="#d0e4665">2.4.2. What's an Object?</a>
-</ul>
-
-<li><a href="#odbchelper.indenting">2.5. Indenting Code</a>
-<li><a href="#odbchelper.testing">2.6. Testing Modules</a>
-</ul>
-
-<li><a href="#datatypes">3. Native Datatypes</a><ul>
-<li><a href="#odbchelper.dict">3.1. Introducing Dictionaries</a><ul>
-<li><a href="#d0e5174">3.1.1. Defining Dictionaries</a>
-<li><a href="#d0e5269">3.1.2. Modifying Dictionaries</a>
-<li><a href="#d0e5450">3.1.3. Deleting Items From Dictionaries</a>
-</ul>
-
-<li><a href="#odbchelper.list">3.2. Introducing Lists</a><ul>
-<li><a href="#d0e5623">3.2.1. Defining Lists</a>
-<li><a href="#d0e5887">3.2.2. Adding Elements to Lists</a>
-<li><a href="#d0e6115">3.2.3. Searching Lists</a>
-<li><a href="#d0e6277">3.2.4. Deleting List Elements</a>
-<li><a href="#d0e6392">3.2.5. Using List Operators</a>
-</ul>
-
 <li><a href="#odbchelper.tuple">3.3. Introducing Tuples</a>
 <li><a href="#odbchelper.vardef">3.4. Declaring variables</a><ul>
 <li><a href="#d0e6873">3.4.1. Referencing Variables</a>
 <li><a href="#odbchelper.multiassign">3.4.2. Assigning Multiple Values at Once</a>
-</ul>
-
-<li><a href="#odbchelper.stringformatting">3.5. Formatting Strings</a>
-<li><a href="#odbchelper.map">3.6. Mapping Lists</a>
-<li><a href="#odbchelper.join">3.7. Joining Lists and Splitting Strings</a><ul>
-<li><a href="#d0e7982">3.7.1. Historical Note on String Methods</a>
-</ul>
-
-<li><a href="#odbchelper.summary">3.8. Summary</a>
 </ul>
 
 <li><a href="#apihelper">4. The Power Of Introspection</a><ul>
@@ -138,23 +98,6 @@
 <li><a href="#fileinfo.summary2">6.7. Summary</a>
 </ul>
 
-<li><a href="#re">7. Regular Expressions</a><ul>
-<li><a href="#re.intro">7.1. Diving In</a>
-<li><a href="#re.matching">7.2. Case Study: Street Addresses</a>
-<li><a href="#re.roman">7.3. Case Study: Roman Numerals</a><ul>
-<li><a href="#d0e17592">7.3.1. Checking for Thousands</a>
-<li><a href="#d0e17785">7.3.2. Checking for Hundreds</a>
-</ul>
-
-<li><a href="#re.nm">7.4. Using the {n,m} Syntax</a><ul>
-<li><a href="#d0e18326">7.4.1. Checking for Tens and Ones</a>
-</ul>
-
-<li><a href="#re.verbose">7.5. Verbose Regular Expressions</a>
-<li><a href="#re.phone">7.6. Case study: Parsing Phone Numbers</a>
-<li><a href="#re.summary">7.7. Summary</a>
-</ul>
-
 <li><a href="#dialect">8. HTML Processing</a><ul>
 <li><a href="#dialect.divein">8.1. Diving in</a>
 <li><a href="#dialect.sgmllib">8.2. Introducing sgmllib.py</a>
@@ -172,7 +115,6 @@
 <li><a href="#kgp.divein">9.1. Diving in</a>
 <li><a href="#kgp.packages">9.2. Packages</a>
 <li><a href="#kgp.parse">9.3. Parsing XML</a>
-<li><a href="#kgp.unicode">9.4. Unicode</a>
 <li><a href="#kgp.search">9.5. Searching for elements</a>
 <li><a href="#kgp.attributes">9.6. Accessing element attributes</a>
 <li><a href="#kgp.segue">9.7. Segue</a>
@@ -207,23 +149,6 @@
 <li><a href="#oa.gzip">11.8. Handling compressed data</a>
 <li><a href="#oa.alltogether">11.9. Putting it all together</a>
 <li><a href="#oa.summary">11.10. Summary</a>
-</ul>
-
-<li><a href="#soap">12. SOAP Web Services</a><ul>
-<li><a href="#soap.divein">12.1. Diving In</a>
-<li><a href="#soap.install">12.2. Installing the SOAP Libraries</a><ul>
-<li><a href="#d0e29967">12.2.1. Installing PyXML</a>
-<li><a href="#d0e30070">12.2.2. Installing fpconst</a>
-<li><a href="#d0e30171">12.2.3. Installing SOAPpy</a>
-</ul>
-
-<li><a href="#soap.firststeps">12.3. First Steps with SOAP</a>
-<li><a href="#soap.debug">12.4. Debugging SOAP Web Services</a>
-<li><a href="#soap.wsdl">12.5. Introducing WSDL</a>
-<li><a href="#soap.introspection">12.6. Introspecting SOAP Web Services with WSDL</a>
-<li><a href="#soap.google">12.7. Searching Google</a>
-<li><a href="#soap.troubleshooting">12.8. Troubleshooting SOAP Web Services</a>
-<li><a href="#soap.summary">12.9. Summary</a>
 </ul>
 
 <li><a href="#roman">13. Unit Testing</a><ul>
@@ -614,74 +539,9 @@ hello world
 <p>You should now have a version of Python installed that works for you.
 <p>Depending on your platform, you may have more than one version of Python intsalled. If so, you need to be aware of your paths. If simply typing <kbd>python</kbd> on the command line doesn't run the version of Python that you want to use, you may need to enter the full pathname of your preferred version.
 <p>Congratulations, and welcome to Python.
-<div class=chapter>
-<h2 id="odbchelper">Chapter 2. Your First Python Program</h2>
-<p>You know how other books go on and on about programming fundamentals and finally work up to building a complete, working program?
-Let's skip all that.
-<h2 id="odbchelper.divein">2.1. Diving in</h2>
-<p>Here is a complete, working Python program.
-<p>It probably makes absolutely no sense to you. Don't worry about that, because you're going to dissect it line by line. But
-read through it first and see what, if anything, you can make of it.
-<div class=example><h3>Example 2.1. <code>odbchelper.py</code></h3>
-<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
-<pre><code>
-def buildConnectionString(params):
-    """Build a connection string from a dictionary of parameters.
 
-    Returns string."""
-    return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
 
-if __name__ == "__main__":
-    myParams = {"server":"mpilgrim", \
-                "database":"master", \
-                "uid":"sa", \
-                "pwd":"secret" \
-                }
-    print buildConnectionString(myParams)</pre><p>Now run this program and see what happens.
-<table id="tip.run.windows" class=tip border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/tip.png" alt="Tip" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">In the ActivePython <abbr>IDE</abbr> on Windows, you can run the Python program you're editing by choosing
-File->Run... (<kbd class=shortcut>Ctrl-R</kbd>). Output is displayed in the interactive window.
-<table id="tip.run.mac" class=tip border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/tip.png" alt="Tip" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">In the Python <abbr>IDE</abbr> on Mac OS, you can run a Python program with
-Python->Run window... (<kbd class=shortcut>Cmd-R</kbd>), but there is an important option you must set first. Open the <code>.py</code> file in the <abbr>IDE</abbr>, pop up the options menu by clicking the black triangle in the upper-right corner of the window, and make sure the Run as __main__ option is checked. This is a per-file setting, but you'll only need to do it once per file.
-<table id="tip.run.unix" class=tip border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/tip.png" alt="Tip" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">On <abbr>UNIX</abbr>-compatible systems (including Mac OS X), you can run a Python program from the command line: <kbd>python <code>odbchelper.py</code></kbd><p>The id="odbchelper.output" output of <code>odbchelper.py</code> will look like this:<pre class=screen>server=mpilgrim;uid=sa;database=master;pwd=secret</pre><h2 id="odbchelper.funcdef">2.2. Declaring Functions</h2>
-<p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
-<pre><code>
-def buildConnectionString(params):</pre><p>Note that the keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses. Multiple arguments
-(not shown here) are separated with commas.
-<p>Also note that the function doesn't define a return datatype. Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value.
-In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.
-<table id="compare.funcdef.vb" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">In Visual Basic, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>. There are no subroutines in Python. Everything is a function, all functions return a value (even if it's <code>None</code>), and all functions start with <code>def</code>.
-<p>The argument, <code>params</code>, doesn't specify a datatype. In Python, variables are never explicitly typed. Python figures out what type a variable is and keeps track of it internally.
-<table id="compare.funcdef.java" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">In Java, <abbr>C++</abbr>, and other statically-typed languages, you must specify the datatype of the function return value and each function argument.
-       In Python, you never explicitly specify the datatype of anything. Based on what value you assign, Python keeps track of the datatype internally.
-<h3>2.2.1. How Python's Datatypes Compare to Other Programming Languages</h3>
-<p>An erudite reader sent me this explanation of how Python compares to other programming languages:
-<div class=variablelist>
-<dl>
-<dt>statically typed language</dt>
-<dd>A language in which types are fixed at compile time. Most statically typed languages enforce this by requiring you to declare
-         all variables with their datatypes before using them. Java and <abbr>C</abbr> are statically typed languages.
-</dd>
-<dt>dynamically typed language</dt>
-<dd>A language in which types are discovered at execution time; the opposite of statically typed. VBScript and Python are dynamically typed, because they figure out what type a variable is when you first assign it a value.
-</dd>
-<dt>strongly typed language</dt>
-<dd>A language in which types are always enforced. Java and Python are strongly typed. If you have an integer, you can't treat it like a string without explicitly converting it.
-</dd>
-<dt>weakly typed language</dt>
-<dd>A language in which types may be ignored; the opposite of strongly typed. VBScript is weakly typed. In VBScript, you can concatenate the string <code>'12'</code> and the integer <code>3</code> to get the string <code>'123'</code>, then treat that as the integer <code>123</code>, all without any explicit conversion.
-</dd>
-</dl>
-<p>So Python is both <em>dynamically typed</em> (because it doesn't use explicit datatype declarations) and <em>strongly typed</em> (because once a variable has a datatype, it actually matters).
 <h2 id="odbchelper.docstring">2.3. Documenting Functions</h2>
 <p>You can document a Python function by giving it a <code>docstring</code>.
 <div class=example><h3 id="odbchelper.triplequotes">Example 2.2. Defining the <code>buildConnectionString</code> Function's <code>docstring</code></h3><pre><code>
@@ -729,9 +589,18 @@ them into a larger program.
 <li><a href="http://www.python.org/doc/current/ref/"><i class=citetitle>Python Reference Manual</i></a> discusses the low-level details of <a href="http://www.python.org/doc/current/ref/import.html">importing modules</a>.
 
 </ul>
-<div class=chapter>
-<h2 id="datatypes">Chapter 3. Native Datatypes</h2>
-<h2 id="odbchelper.list">3.2. Introducing Lists</h2>
+
+
+
+
+
+
+
+
+
+
+
+
 <h2 id="odbchelper.vardef">3.4. Declaring variables</h2>
 <p>Now that you know something about dictionaries, tuples, and lists (oh my!), let's get back to the sample program from <a href="#odbchelper">Chapter 2</a>, <code>odbchelper.py</code>.
 <p>Python has local and global variables like most other languages, but it has no explicit variable declarations. Variables spring
@@ -796,65 +665,6 @@ NameError: There is no variable named 'x'</samp>
 <li><a href="http://www.ibiblio.org/obp/thinkCSpy/" title="Python book for computer science majors"><i class=citetitle>How to Think Like a Computer Scientist</i></a> shows how to use multi-variable assignment to <a href="http://www.ibiblio.org/obp/thinkCSpy/chap09.htm">swap the values of two variables</a>.
 
 </ul>
-<h2 id="odbchelper.stringformatting">3.5. Formatting Strings</h2>
-<p>Python supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is
-   to insert values into a string with the <code>%s</code> placeholder.
-<table id="compare.stringformatting.c" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">String formatting in Python uses the same syntax as the <code>sprintf</code> function in <abbr>C</abbr>.
-<div class=example><h3>Example 3.21. Introducing String Formatting</h3><pre class=screen><samp class=prompt>>>> </samp><kbd>k = "uid"</kbd>
-<samp class=prompt>>>> </samp><kbd>v = "sa"</kbd>
-<samp class=prompt>>>> </samp><kbd>"%s=%s" % (k, v)</kbd> <span>&#x2460;</span>
-'uid=sa'</pre><div class=calloutlist>
-<ol>
-<li>The whole expression evaluates to a string. The first <code>%s</code> is replaced by the value of <var>k</var>; the second <code>%s</code> is replaced by the value of <var>v</var>. All other characters in the string (in this case, the equal sign) stay as they are.
-<p>Note that <code>(k, v)</code> is a tuple. I told you they were good for something.
-<p>You might be thinking that this is a lot of work just to do simple string concatentation, and you would be right, except that
-string formatting isn't just concatenation. It's not even just formatting. It's also type coercion.
-<div class=example><h3 id="odbchelper.stringformatting.coerce">Example 3.22. String Formatting vs. Concatenating</h3><pre class=screen><samp class=prompt>>>> </samp><kbd>uid = "sa"</kbd>
-<samp class=prompt>>>> </samp><kbd>pwd = "secret"</kbd>
-<samp class=prompt>>>> </samp><kbd>print pwd + " is not a good password for " + uid</kbd>      <span>&#x2460;</span>
-secret is not a good password for sa
-<samp class=prompt>>>> </samp><kbd>print "%s is not a good password for %s" % (pwd, uid)</kbd> <span>&#x2461;</span>
-secret is not a good password for sa
-<samp class=prompt>>>> </samp><kbd>userCount = 6</kbd>
-<samp class=prompt>>>> </samp><kbd>print "Users connected: %d" % (userCount, )</kbd>           <span>&#x2462;</span> <span>&#x2463;</span>
-Users connected: 6
-<samp class=prompt>>>> </samp><kbd>print "Users connected: " + userCount</kbd>                 <span>&#x2464;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-TypeError: cannot concatenate 'str' and 'int' objects</span></pre><div class=calloutlist>
-<ol>
-<li><code>+</code> is the string concatenation operator.
-<li>In this trivial case, string formatting accomplishes the same result as concatentation.
-<li><code>(userCount, )</code> is a tuple with one element. Yes, the syntax is a little strange, but there's a good reason for it: it's unambiguously a
-            tuple. In fact, you can always include a comma after the last element when defining a list, tuple, or dictionary, but the
-            comma is required when defining a tuple with one element. If the comma weren't required, Python wouldn't know whether <code>(userCount)</code> was a tuple with one element or just the value of <var>userCount</var>.
-<li>String formatting works with integers by specifying <code>%d</code> instead of <code>%s</code>.
-<li>Trying to concatenate a string with a non-string raises an exception. Unlike string formatting, string concatenation works
-            only when everything is already a string.
-<p>As with <code>printf</code> in <abbr>C</abbr>, string formatting in Python is like a Swiss Army knife. There are options galore, and modifier strings to specially format many different types of values.
-<div class=example><h3 id="odbchelper.stringformatting.numbers">Example 3.23. Formatting Numbers</h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %f" % 50.4625</kbd>   <span>&#x2460;</span>
-50.462500
-<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %.2f" % 50.4625</kbd> <span>&#x2461;</span>
-50.46
-<samp class=prompt>>>> </samp><kbd>print "Change since yesterday: %+.2f" % 1.5</kbd> <span>&#x2462;</span>
-+1.50
-</pre><div class=calloutlist>
-<ol>
-<li>The <code>%f</code> string formatting option treats the value as a decimal, and prints it to six decimal places.
-<li>The ".2" modifier of the <code>%f</code> option truncates the value to two decimal places.
-<li>You can even combine modifiers. Adding the <code>+</code> modifier displays a plus or minus sign before the value.  Note that the ".2" modifier is still in place, and is padding
-            the value to exactly two decimal places.
-<div class=itemizedlist>
-<h3>Further Reading on String Formatting</h3>
-<ul>
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/typesseq-strings.html">all the string formatting format characters</a>.
-
-<li><a href="http://www-gnats.gnu.org:8080/cgi-bin/info2www?(gawk)Top"><i class=citetitle>Effective <abbr>AWK</abbr> Programming</i></a> discusses <a href="http://www-gnats.gnu.org:8080/cgi-bin/info2www?(gawk)Control+Letters">all the format characters</a> and advanced string formatting techniques like <a href="http://www-gnats.gnu.org:8080/cgi-bin/info2www?(gawk)Format+Modifiers">specifying width, precision, and zero-padding</a>.
-
-</ul>
 <h2 id="odbchelper.map">3.6. Mapping Lists</h2>
 <p>One of the most powerful features of Python is the list comprehension, which provides a compact way of mapping a list into another list by applying a function to each
    of the elements of the list.
@@ -909,75 +719,23 @@ as <code><var>params</var>.<code>items</code>()</code>, but each element in the 
 <li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> shows how to <a href="http://www.python.org/doc/current/tut/node7.html#SECTION007140000000000000000">do nested list comprehensions</a>.
 
 </ul>
-<h2 id="odbchelper.join">3.7. Joining Lists and Splitting Strings</h2>
-<p>You have a list of key-value pairs in the form <code><var>key</var>=<var>value</var></code>, and you want to join them into a single string. To join any list of strings into a single string, use the <code>join</code> method of a string object.
 
-<p>Here is an example of joining a list from the <code>buildConnectionString</code> function:<pre><code>
-    return ";".join(["%s=%s" % (k, v) for k, v in params.items()])</pre><p>One interesting note before you continue. I keep repeating that functions are objects, strings are objects... everything
-is an object. You might have thought I meant that string <em>variables</em> are objects. But no, look closely at this example and you'll see that the string <code>";"</code> itself is an object, and you are calling its <code>join</code> method.
-<p>The <code>join</code> method joins the elements of the list into a single string, with each element separated by a semi-colon. The delimiter doesn't
-need to be a semi-colon; it doesn't even need to be a single character. It can be any string.
-<table id="tip.join" class=caution border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/caution.png" alt="Caution" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code>join</code> works only on lists of strings; it does not do any type coercion. Joining a list that has one or more non-string elements
-      will raise an exception.
-<div class=example><h3 id="odbchelper.join.example">Example 3.27. Output of <code>odbchelper.py</code></h3><pre class=screen><samp class=prompt>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
-<samp class=prompt>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd>
-['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=prompt>>>> </samp><kbd>";".join(["%s=%s" % (k, v) for k, v in params.items()])</kbd>
-'server=mpilgrim;uid=sa;database=master;pwd=secret'</pre><p>This string is then returned from the <code>odbchelper</code> function and printed by the calling block, which gives you the output that you marveled at when you started reading this
-chapter.
-<p>You're probably wondering if there's an analogous method to split a string into a list. And of course there is, and it's
-called <code>split</code>.
-<div class=example><h3 id="odbchelper.split.example">Example 3.28. Splitting a String</h3><pre class=screen><samp class=prompt>>>> </samp><kbd>li = ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</kbd>
-<samp class=prompt>>>> </samp><kbd>s = ";".join(li)</kbd>
-<samp class=prompt>>>> </samp><kbd>s</kbd>
-'server=mpilgrim;uid=sa;database=master;pwd=secret'
-<samp class=prompt>>>> </samp><kbd>s.split(";")</kbd>    <span>&#x2460;</span>
-['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=prompt>>>> </samp><kbd>s.split(";", 1)</kbd> <span>&#x2461;</span>
-['server=mpilgrim', 'uid=sa;database=master;pwd=secret']</pre><div class=calloutlist>
-<ol>
-<li><code>split</code> reverses <code>join</code> by splitting a string into a multi-element list. Note that the delimiter (&#8220;<code>;</code>&#8221;) is stripped out completely; it does not appear in any of the elements of the returned list.
-<li><code>split</code> takes an optional second argument, which is the number of times to split. (&#8220;Oooooh, optional arguments...&#8221;  You'll learn how to do this in your own functions in the next chapter.)
-<table id="tip.split" class=tip border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/tip.png" alt="Tip" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code><var>anystring</var>.<code>split</code>(<var>delimiter</var>, 1)</code> is a useful technique when you want to search a string for a substring and then work with everything before the substring
-      (which ends up in the first element of the returned list) and everything after it (which ends up in the second element).
-<div class=itemizedlist>
-<h3>Further Reading on String Methods</h3>
-<ul>
-<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/480">common questions about strings</a> and has a lot of <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/539">example code using strings</a>.
 
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/string-methods.html">all the string methods</a>.
 
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> documents the <a href="http://www.python.org/doc/current/lib/module-string.html"><code>string</code> module</a>.
 
-<li><a href="http://www.python.org/doc/FAQ.html"><i class=citetitle>The Whole Python <abbr>FAQ</abbr></i></a> explains <a href="http://www.python.org/cgi-bin/faqw.py?query=4.96&amp;querytype=simple&amp;casefold=yes&amp;req=search">why <code>join</code> is a string method</a> instead of a list method.
 
-</ul>
-<h3>3.7.1. Historical Note on String Methods</h3>
-<p>When I first learned Python, I expected <code>join</code> to be a method of a list, which would take the delimiter as an argument. Many people feel the same way, and there's a story
-   behind the <code>join</code> method. Prior to Python 1.6, strings didn't have all these useful methods. There was a separate <code>string</code> module that contained all the string functions; each function took a string as its first argument. The functions were deemed
-   important enough to put onto the strings themselves, which made sense for functions like <code>lower</code>, <code>upper</code>, and <code>split</code>. But many hard-core Python programmers objected to the new <code>join</code> method, arguing that it should be a method of the list instead, or that it shouldn't move at all but simply stay a part of
-   the old <code>string</code> module (which still has a lot of useful stuff in it). I use the new <code>join</code> method exclusively, but you will see code written either way, and if it really bothers you, you can use the old <code>string.join</code> function instead.
-<h2 id="odbchelper.summary">3.8. Summary</h2>
-<p>The <code>odbchelper.py</code> program and its output should now make perfect sense.
-<pre><code>
-def buildConnectionString(params):
-    """Build a connection string from a dictionary of parameters.
+(String splitting stuff was here)
 
-    Returns string."""
-    return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
 
-if __name__ == "__main__":
-    myParams = {"server":"mpilgrim", \
-                "database":"master", \
-                "uid":"sa", \
-                "pwd":"secret" \
-                }
-    print buildConnectionString(myParams)</pre>
-<p>Here is the output of <code>odbchelper.py</code>:<pre class=screen>server=mpilgrim;uid=sa;database=master;pwd=secret</pre><div class=highlights>
+
+
+
+
+
+
+
 <p>Before diving into the next chapter, make sure you're comfortable doing all of these things:
 <div class=itemizedlist>
 <ul>
@@ -4162,53 +3920,21 @@ u'0'</pre><div class=calloutlist>
 <li>You can even use the <code>toxml</code> method here, deeply nested within the document.
 <li>The <code>p</code> element has only one child node (you can't tell that from this example, but look at <code>pNode.childNodes</code> if you don't believe me), and it is a <code>Text</code> node for the single character <code>'0'</code>.
 <li>The <code>.data</code> attribute of a <code>Text</code> node gives you the actual string that the text node represents. But what is that <code>'u'</code> in front of the string?  The answer to that deserves its own section.
-<h2 id="kgp.unicode">9.4. Unicode</h2>
-<p>Unicode is a system to represent characters from all the world's different languages. When Python parses an <abbr>XML</abbr> document, all data is stored in memory as unicode.
-<p>You'll get to all that in a minute, but first, some background.
-<p><b>Historical note. </b>Before unicode, there were separate character encoding systems for each language, each using the same numbers (0-255) to represent
-that language's characters. Some languages (like Russian) have multiple conflicting standards about how to represent the
-same characters; other languages (like Japanese) have so many characters that they require multiple-byte character sets. 
-Exchanging documents between systems was difficult because there was no way for a computer to tell for certain which character
-encoding scheme the document author had used; the computer only saw numbers, and the numbers could mean different things.
-Then think about trying to store these documents in the same place (like in the same database table); you would need to store
-the character encoding alongside each piece of text, and make sure to pass it around whenever you passed the text around.
-Then think about multilingual documents, with characters from multiple languages in the same document. (They typically used
-escape codes to switch modes; poof, you're in Russian koi8-r mode, so character 241 means this; poof, now you're in Mac Greek
-mode, so character 241 means something else. And so on.)  These are the problems which unicode was designed to solve.
-<p>To solve these problems, unicode represents each character as a 2-byte number, from 0 to 65535.
-<sup>[<a name="d0e23786" href="#ftn.d0e23786">5</a>]</sup>  Each 2-byte number represents a unique character used in at least one of the world's languages. (Characters that are used
-in multiple languages have the same numeric code.)  There is exactly 1 number per character, and exactly 1 character per number.
-Unicode data is never ambiguous.
-<p>Of course, there is still the matter of all these legacy encoding systems. 7-bit <abbr>ASCII</abbr>, for instance, which stores English characters as numbers ranging from 0 to 127. (65 is capital &#8220;<code>A</code>&#8221;, 97 is lowercase &#8220;<code>a</code>&#8221;, and so forth.)  English has a very simple alphabet, so it can be completely expressed in 7-bit <abbr>ASCII</abbr>. Western European languages like French, Spanish, and German all use an encoding system called ISO-8859-1 (also called &#8220;latin-1&#8221;), which uses the 7-bit <abbr>ASCII</abbr> characters for the numbers 0 through 127, but then extends into the 128-255 range for characters like n-with-a-tilde-over-it
-(241), and u-with-two-dots-over-it (252). And unicode uses the same characters as 7-bit <abbr>ASCII</abbr> for 0 through 127, and the same characters as ISO-8859-1 for 128 through 255, and then extends from there into characters
-for other languages with the remaining numbers, 256 through 65535.
-<p>When dealing with unicode data, you may at some point need to convert the data back into one of these other legacy encoding
-systems. For instance, to integrate with some other computer system which expects its data in a specific 1-byte encoding
-scheme, or to print it to a non-unicode-aware terminal or printer. Or to store it in an <abbr>XML</abbr> document which explicitly specifies the encoding scheme.
-<p>And on that note, let's get back to Python.
-<p>Python has had unicode support throughout the language since version 2.0. The <abbr>XML</abbr> package uses unicode to store all parsed <abbr>XML</abbr> data, but you can use unicode anywhere.
-<div class=example><h3>Example 9.13. Introducing unicode</h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>s = u'Dive in'</kbd>            <span>&#x2460;</span>
-<samp class=prompt>>>> </samp><kbd>s</kbd>
-u'Dive in'
-<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
-Dive in</pre><div class=calloutlist>
-<ol>
-<li>To create a unicode string instead of a regular <abbr>ASCII</abbr> string, add the letter &#8220;<code>u</code>&#8221; before the string. Note that this particular string doesn't have any non-<abbr>ASCII</abbr> characters. That's fine; unicode is a superset of <abbr>ASCII</abbr> (a very large superset at that), so any regular <abbr>ASCII</abbr> string can also be stored as unicode.
-<li>When printing a string, Python will attempt to convert it to your default encoding, which is usually <abbr>ASCII</abbr>. (More on this in a minute.)  Since this unicode string is made up of characters that are also <abbr>ASCII</abbr> characters, printing it has the same result as printing a normal <abbr>ASCII</abbr> string; the conversion is seamless, and if you didn't know that <var>s</var> was a unicode string, you'd never notice the difference.
-<div class=example><h3>Example 9.14. Storing non-<abbr>ASCII</abbr> characters</h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>         <span>&#x2460;</span>
-<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-UnicodeError: ASCII encoding error: ordinal not in range(128)</samp>
-<samp class=prompt>>>> </samp><kbd>print s.encode('latin-1')</kbd> <span>&#x2462;</span>
-La Pe&ntilde;a</pre><div class=calloutlist>
-<ol>
-<li>The real advantage of unicode, of course, is its ability to store non-<abbr>ASCII</abbr> characters, like the Spanish &#8220;<code>&ntilde;</code>&#8221; (<code>n</code> with a tilde over it). The unicode character code for the tilde-n is <code>0xf1</code> in hexadecimal (241 in decimal), which you can type like this: <code>\xf1</code>.
-<li>Remember I said that the <code>print</code> function attempts to convert a unicode string to <abbr>ASCII</abbr> so it can print it?  Well, that's not going to work here, because your unicode string contains non-<abbr>ASCII</abbr> characters, so Python raises a <samp>UnicodeError</samp> error.
-<li>Here's where the conversion-from-unicode-to-other-encoding-schemes comes in. <var>s</var> is a unicode string, but <code>print</code> can only print a regular string. To solve this problem, you call the <code>encode</code> method, available on every unicode string, to convert the unicode string to a regular string in the given encoding scheme,
-            which you pass as a parameter. In this case, you're using <code>latin-1</code> (also known as <code>iso-8859-1</code>), which includes the tilde-n (whereas the default <abbr>ASCII</abbr> encoding scheme did not, since it only includes characters numbered 0 through 127).
+
+
+
+
+
+
+(Unicode stuff was here)
+
+
+
+
+
+
+
+
 <p>Remember I said Python usually converted unicode to <abbr>ASCII</abbr> whenever it needed to make a regular string out of a unicode string?  Well, this default encoding scheme is an option which
 you can customize.
 <div class=example><h3>Example 9.15. <code>sitecustomize.py</code></h3><pre><code>
@@ -4233,57 +3959,19 @@ La Pe&ntilde;a</pre><div class=calloutlist>
 <li>This example assumes that you have made the changes listed in the previous example to your <code>sitecustomize.py</code> file, and restarted Python. If your default encoding still says <code>'ascii'</code>, you didn't set up your <code>sitecustomize.py</code> properly, or you didn't restart Python. The default encoding can only be changed during Python startup; you can't change it later. (Due to some wacky programming tricks that I won't get into right now, you can't even
             call <code>sys.setdefaultencoding</code> after Python has started up. Dig into <code>site.py</code> and search for &#8220;<code>setdefaultencoding</code>&#8221; to find out how.)
 <li>Now that the default encoding scheme includes all the characters you use in your string, Python has no problem auto-coercing the string and printing it.
-<div class=example><h3>Example 9.17. Specifying encoding in <code>.py</code> files</h3>
-<p>If you are going to be storing non-ASCII strings within your Python code, you'll need to specify the encoding of each individual <code>.py</code> file by putting an encoding declaration at the top of each file. This declaration defines the <code>.py</code> file to be UTF-8:<pre><code>
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-</pre><p>Now, what about <abbr>XML</abbr>?  Well, every <abbr>XML</abbr> document is in a specific encoding. Again, ISO-8859-1 is a popular encoding for data in Western European languages. KOI8-R
-is popular for Russian texts. The encoding, if specified, is in the header of the <abbr>XML</abbr> document.
-<div class=example><h3>Example 9.18. <code>russiansample.xml</code></h3><pre class=screen><samp>
-&lt;?xml version="1.0" encoding="koi8-r"?>       </span><span>&#x2460;</span><samp>
-&lt;preface>
-&lt;title>&#1055;&#1088;&#1077;&#1076;&#1080;&#1089;&#1083;&#1086;&#1074;&#1080;&#1077;&lt;/title>  </span><span>&#x2461;</span><samp>
-&lt;/preface></span></pre><div class=calloutlist>
-<ol>
-<li>This is a sample extract from a real Russian <abbr>XML</abbr> document; it's part of a Russian translation of this very book. Note the encoding, <code>koi8-r</code>, specified in the header.
-<li>These are Cyrillic characters which, as far as I know, spell the Russian word for &#8220;Preface&#8221;. If you open this file in a regular text editor, the characters will most likely like gibberish, because they're encoded
-            using the <code>koi8-r</code> encoding scheme, but they're being displayed in <code>iso-8859-1</code>.
-<div class=example><h3>Example 9.19. Parsing <code>russiansample.xml</code></h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>from xml.dom import minidom</kbd>
-<samp class=prompt>>>> </samp><kbd>xmldoc = minidom.parse('russiansample.xml')</kbd> <span>&#x2460;</span>
-<samp class=prompt>>>> </samp><kbd>title = xmldoc.getElementsByTagName('title')[0].firstChild.data</kbd>
-<samp class=prompt>>>> </samp><kbd>title</kbd>   <span>&#x2461;</span>
-u'\u041f\u0440\u0435\u0434\u0438\u0441\u043b\u043e\u0432\u0438\u0435'
-<samp class=prompt>>>> </samp><kbd>print title</kbd>               <span>&#x2462;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-UnicodeError: ASCII encoding error: ordinal not in range(128)</samp>
-<samp class=prompt>>>> </samp><kbd>convertedtitle = title.encode('koi8-r')</kbd>     <span>&#x2463;</span>
-<samp class=prompt>>>> </samp><kbd>convertedtitle</kbd>
-'\xf0\xd2\xc5\xc4\xc9\xd3\xcc\xcf\xd7\xc9\xc5'
-<samp class=prompt>>>> </samp><kbd>print convertedtitle</kbd>      <span>&#x2464;</span>
-&#1055;&#1088;&#1077;&#1076;&#1080;&#1089;&#1083;&#1086;&#1074;&#1080;&#1077;</pre><div class=calloutlist>
-<ol>
-<li>I'm assuming here that you saved the previous example as <code>russiansample.xml</code> in the current directory. I am also, for the sake of completeness, assuming that you've changed your default encoding back
-            to <code>'ascii'</code> by removing your <code>sitecustomize.py</code> file, or at least commenting out the <code>setdefaultencoding</code> line.
-<li>Note that the text data of the <code>title</code> tag (now in the <var>title</var> variable, thanks to that long concatenation of Python functions which I hastily skipped over and, annoyingly, won't explain until the next section) -- the text data inside the
-<abbr>XML</abbr> document's <code>title</code> element is stored in unicode.
-<li>Printing the title is not possible, because this unicode string contains non-<abbr>ASCII</abbr> characters, so Python can't convert it to <abbr>ASCII</abbr> because that doesn't make sense.
-<li>You can, however, explicitly convert it to <code>koi8-r</code>, in which case you get a (regular, not unicode) string of single-byte characters (<code>f0</code>, <code>d2</code>, <code>c5</code>, and so forth) that are the <code>koi8-r</code>-encoded versions of the characters in the original unicode string.
-<li>Printing the <code>koi8-r</code>-encoded string will probably show gibberish on your screen, because your Python <abbr>IDE</abbr> is interpreting those characters as <code>iso-8859-1</code>, not <code>koi8-r</code>. But at least they do print. (And, if you look carefully, it's the same gibberish that you saw when you opened the original
-<abbr>XML</abbr> document in a non-unicode-aware text editor. Python converted it from <code>koi8-r</code> into unicode when it parsed the <abbr>XML</abbr> document, and you've just converted it back.)
-<p>To sum up, unicode itself is a bit intimidating if you've never seen it before, but unicode data is really very easy to handle
-in Python. If your <abbr>XML</abbr> documents are all 7-bit <abbr>ASCII</abbr> (like the examples in this chapter), you will literally never think about unicode. Python will convert the <abbr>ASCII</abbr> data in the <abbr>XML</abbr> documents into unicode while parsing, and auto-coerce it back to <abbr>ASCII</abbr> whenever necessary, and you'll never even notice. But if you need to deal with that in other languages, Python is ready.
-<div class=itemizedlist>
-<h3>Further reading</h3>
-<ul>
-<li><a href="http://www.unicode.org/">Unicode.org</a> is the home page of the unicode standard, including a brief <a href="http://www.unicode.org/standard/principles.html">technical introduction</a>.
 
-<li><a href="http://www.reportlab.com/i18n/python_unicode_tutorial.html">Unicode Tutorial</a> has some more examples of how to use Python's unicode functions, including how to force Python to coerce unicode into <abbr>ASCII</abbr> even when it doesn't really want to.
 
-<li><a href="http://www.python.org/peps/pep-0263.html">PEP 263</a> goes into more detail about how and when to define a character encoding in your <code>.py</code> files.
 
-</ul>
+
+
+(More Unicode stuff was here)
+
+
+
+
+
+
+
 <h2 id="kgp.search">9.5. Searching for elements</h2>
 <p>Traversing <abbr>XML</abbr> documents by stepping through each node can be tedious. If you're looking for something in particular, buried deep within
    your <abbr>XML</abbr> document, there is a shortcut you can use to find it quickly: <code>getElementsByTagName</code>.
