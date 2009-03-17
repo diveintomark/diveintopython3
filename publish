@@ -37,5 +37,5 @@ sed -i -e "s|href=index.html|href=/|g" build/*.html
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt
 
 # ship it!
-#rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-#rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/
