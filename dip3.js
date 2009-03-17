@@ -11,7 +11,7 @@ $(document).ready(function() {
   for (var lang in LANGS) {
     $("blockquote.compare").filter("blockquote." + lang).each(function(i) {
       $(this).wrapInner('<div class="block"></div>');
-      $(this).prepend('<div class="widgets">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + LANGS[lang] + ' notes</a> ]</div>');
+      $(this).prepend('<div class="w">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + LANGS[lang] + ' notes</a> ]</div>');
     });
   }
 */
@@ -26,10 +26,10 @@ $(document).ready(function() {
   $("pre.code, pre.screen").each(function(i) {
     this.id = "autopre" + i;
     $(this).wrapInner('<div class="block"></div>');
-    $(this).prepend('<div class="widgets">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
+    $(this).prepend('<div class="w">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 
     $(this).prev("p.download").each(function(i) {
-      $(this).next("pre").find("div.widgets").append(" " + $(this).html());
+      $(this).next("pre").find("div.w").append(" " + $(this).html());
       this.parentNode.removeChild(this);
     });
   });
@@ -39,8 +39,8 @@ $(document).ready(function() {
     $(this).find("a:not([href])").each(function(i) {
       var a = $(this);
       var li = a.parents("pre").next("ol").find("li:nth-child(" + (i+1) + ")");
-      li.add(a).hover(function() { a.addClass("hover"); li.addClass("hover"); },
-                      function() { a.removeClass("hover"); li.removeClass("hover"); });
+      li.add(a).hover(function() { a.addClass("h"); li.addClass("h"); },
+                      function() { a.removeClass("h"); li.removeClass("h"); });
     });
   });
 
@@ -50,8 +50,8 @@ $(document).ready(function() {
       var tr = $(this);
       var li = tr.parents("table").next("ol").find("li:nth-child(" + (i+1) + ")");
       if (li.length > 0) {
-        li.add(tr).hover(function() { tr.addClass("hover"); li.addClass("hover"); },
-                         function() { tr.removeClass("hover"); li.removeClass("hover"); });
+        li.add(tr).hover(function() { tr.addClass("h"); li.addClass("h"); },
+                         function() { tr.removeClass("h"); li.removeClass("h"); });
       }
     });
   });
@@ -63,7 +63,7 @@ $(document).ready(function() {
 function toggleComparisonNotes(lang) {
   // FIXME: save state in cookie, pass state to toggle(), reset text accordingly
   $("blockquote." + lang + " div.block").toggle(false);
-  $("blockquote." + lang + " div.widgets a.toggle").text("show " + LANGS[lang] + " notes");
+  $("blockquote." + lang + " div.w a.toggle").text("show " + LANGS[lang] + " notes");
 }
 */
 
@@ -75,7 +75,7 @@ function toggleCodeBlock(id) {
 
 function plainTextOnClick(id) {
   var clone = $("#" + id).clone();
-  clone.find("div.widgets, span").remove();
+  clone.find("div.w, span").remove();
   var win = window.open("about:blank", "plaintext", "toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=600,height=400,left=35,top=75");
   win.document.open();
   win.document.write('<pre>' + clone.html());

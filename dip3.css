@@ -1,16 +1,16 @@
 /* typography */
-body,.widgets a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
+body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
 pre,kbd,code,samp{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
-span,tr + tr th:first-child{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
+span{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 pre span{font-family:'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
 .baa{font:oblique large Constantia,Baskerville,Palatino,'Palatino Linotype','URW Palladio L',serif}
 abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
-.q{margin:auto;text-align:right;font-style:oblique}
+.q{text-align:right;font-style:oblique}
 .q span{font-size:large}
 .note{margin-left:4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em}
-.c,pre,.widgets,.widgets a,.download,ins,del,mark{line-height:2.154}
-.fancy:first-letter{float:left;color:#ddd;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
+.c,pre,.w,.w a,.download{line-height:2.154}
+.f:first-letter{float:left;color:#ddd;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
 
 /* basics */
@@ -22,46 +22,34 @@ form div{float:right}
 /* links */
 a{background:transparent;text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
-a:link,.widgets a{color:#26c}
+a:link,.w a{color:#26c}
 a:visited{color:#93c}
-.skip a,.skip a:hover,.skip a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
-.skip a:active,.skip a:focus{position:static;width:auto;height:auto}
+
+/* skip links */
+.s a,.s a:hover,.s a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
+.s a:active,.s a:focus{position:static;width:auto;height:auto}
 
 /* code blocks */
 pre{white-space:pre-wrap;padding-left:2.154em;border-left:1px solid #ddd}
-.widgets{float:left}
-.c,.widgets,.widgets a,.download{font-size:small}
+.w{float:left}
+.c,.w,.w a,.download{font-size:small}
 .block,ol,p,blockquote,h1,h2,h3{clear:left}
-pre a,.widgets a{padding:0.4375em 0}
-.widgets a{text-decoration:underline}
-kbd,mark{font-weight:bold}
-.prompt{color:#667}
-ins,del,mark{text-decoration:none;font-style:normal;display:inline-block;width:100%}
-del{background:#f87}
-ins{background:#9f9}
-mark{background:#ff8}
+pre a,.w a{padding:0.4375em 0}
+.w a{text-decoration:underline}
+kbd{font-weight:bold}
+.p{color:#667}
 
-/* tables */
-table{width:100%;border-collapse:collapse}
-th,td{width:45%;padding:0 0.5em;border:1px solid #bbb}
-th{text-align:left;vertical-align:baseline}
-td{vertical-align:top}
-th:first-child{width:10%;text-align:center}
-.simple th{font-family:inherit !important}
-.hover{background:#eee;cursor:default}
+/* hover effect for table rows, list items, and lines in code blocks */
+.h{background:#eee;cursor:default}
 
 /* overrides */
-th,td,td pre,li ol{margin:0}
-td pre{padding:0}
-pre a,.widgets a,pre a:hover,td pre{border:0}
+li ol,.q{margin:0}
+pre a,.w a,pre a:hover{border:0}
 
 /* headers */
-h1,#noscript{background:PapayaWhip;width:100%}
+h1,#noscript{background:PapayaWhip;width:100%} /* all hail PapayaWhip */
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h2{counter-reset:h3}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-
-/* HTML 5 support */
-article,aside,dialog,footer,header,section{display:block}

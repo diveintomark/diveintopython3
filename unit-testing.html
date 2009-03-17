@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang=en>
 <head>
 <meta charset=utf-8>
 <title>Unit testing - Dive into Python 3</title>
 <!--[if IE]><script src=html5.js></script><![endif]-->
 <link rel="shortcut icon" href=data:image/ico,>
-<link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
 body{counter-reset:h1 7}
 </style>
 </head>
-<p class=skip><a href=#divingin>skip to main content</a>
-<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&#xa0;<input name=q size=31>&#xa0;<input type=submit name=root value=Search></div></form>
-<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#unit-testing>Dive Into Python 3</a> <span>&#8227;</span>
+<p class=s><a href=#divingin>skip to main content</a>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#unit-testing>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Unit testing</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> Certitude is not the test of certainty. We have been cocksure of many things that were not so. <span>&#x275E;</span><br>&mdash; <cite>Oliver Wendell Holmes, Jr.</cite>
@@ -26,7 +24,7 @@ body{counter-reset:h1 7}
 <li>...
 </ol>
 <h2 id=divingin>(Not) diving in</h2>
-<p class=fancy>How do you know that the code you wrote yesterday still works after the changes you made today? Every seasoned programmer has war stories of an &#8220;innocent&#8221; change that couldn't <em>possibly</em> have affected that other &#8220;unrelated&#8221; module&hellip; If this sounds familiar, this chapter is for you.
+<p class=f>How do you know that the code you wrote yesterday still works after the changes you made today? Every seasoned programmer has war stories of an &#8220;innocent&#8221; change that couldn't <em>possibly</em> have affected that other &#8220;unrelated&#8221; module&hellip; If this sounds familiar, this chapter is for you.
 <p>In this chapter, you're going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
 <p><a href="regular-expressions.html#romannumerals">The rules for Roman numerals</a> lead to a number of interesting observations:
 <ol>
@@ -149,7 +147,7 @@ function to_roman(n):
 </ol>
 <p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what's going on as each test case runs. With any luck, your output should look like this:
 <pre class=screen>
-<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
 <samp><a>to_roman should give known result with known input ... FAIL            <span>&#x2460;</span></a>
 
 ======================================================================
@@ -206,8 +204,8 @@ while n >= integer:
     print('subtracting {0} from input, adding {1} to output'.format(integer, numeral))</code></pre>
 <p>With the debug <code>print()</code> statements, the output looks like this:
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>import roman1</kbd>
-<samp class=prompt>>>> </samp><kbd>roman1.to_roman(1424)</kbd>
+<samp class=p>>>> </samp><kbd>import roman1</kbd>
+<samp class=p>>>> </samp><kbd>roman1.to_roman(1424)</kbd>
 <samp>subtracting 1000 from input, adding M to output
 subtracting 400 from input, adding CD to output
 subtracting 10 from input, adding X to output
@@ -216,7 +214,7 @@ subtracting 4 from input, adding IV to output
 'MCDXXIV'</samp></pre>
 <p>So the <code>to_roman()</code> function appears to work, at least in this manual spot check. But will it pass the test case you wrote?
 <pre class=screen>
-<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 
 ----------------------------------------------------------------------
@@ -230,12 +228,12 @@ OK</samp></pre>
 <h2 id=romantest2>&#8220;Halt and catch fire&#8221;</h2>
 <p>It is not enough to test that functions succeed when given good input; you must also test that they fail when given bad input. And not just any sort of failure; they must fail in the way you expect.
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>import roman1</kbd>
-<samp class=prompt>>>> </samp><kbd>roman1.to_roman(4000)</kbd>
+<samp class=p>>>> </samp><kbd>import roman1</kbd>
+<samp class=p>>>> </samp><kbd>roman1.to_roman(4000)</kbd>
 <samp>'MMMM'</samp>
-<samp class=prompt>>>> </samp><kbd>roman1.to_roman(5000)</kbd>
+<samp class=p>>>> </samp><kbd>roman1.to_roman(5000)</kbd>
 <samp>'MMMMM'</samp>
-<a><samp class=prompt>>>> </samp><kbd>roman1.to_roman(9000)</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>roman1.to_roman(9000)</kbd>  <span>&#x2460;</span></a>
 <samp>'MMMMMMMMM'</samp></pre>
 <ol>
 <li>That's definitely not what you wanted &mdash; that's not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better that it fail quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
@@ -260,7 +258,7 @@ OK</samp></pre>
 <p>Also note that you're passing the <code>to_roman()</code> function itself as an argument; you're not calling it, and you're not passing the name of it as a string. Have I mentioned recently how handy it is that <a href="your-first-python-program.html#everythingisanobject">everything in Python is an object</a>?
 <p>So what happens when you run the test suite with this new test?
 <pre class=screen>
-<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 <a>to_roman should fail with large input ... ERROR                         <span>&#x2460;</span></a>
 
@@ -289,7 +287,7 @@ FAILED (errors=1)</samp></pre>
 </ol>
 <p>Now run the test suite again.
 <pre class=screen>
-<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 <a>to_roman should fail with large input ... FAIL                          <span>&#x2460;</span></a>
 
@@ -327,7 +325,7 @@ FAILED (failures=1)</samp></pre>
 </ol>
 <p>Does this make the test pass? Let's find out.
 <pre class=screen>
-<samp class=prompt>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 <a>to_roman should fail with large input ... ok                            <span>&#x2460;</span></a>
 
@@ -364,6 +362,6 @@ For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman
 <li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><abbr>i.e.</abbr></i> it should fail when given lowercase input).
 </ol>
 -->
-<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim &#8226; <a href=about.html>open standards &#8226; open content &#8226; open source</a>
+<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim &bull; <a href=about.html>open standards &bull; open content &bull; open source</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>

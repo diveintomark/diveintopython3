@@ -4,11 +4,13 @@
 rm -rf build
 mkdir build
 cp *.py robots.txt *.js *.css build/
+
+# minimize HTML (note: this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
   python htmlminimizer.py "$f" build/"$f"
 done
 
-# replace local jquery reference with Google API loader
+# jQuery will be served by Google AJAX Libraries API
 sed -i -e "s|jquery\.js|http://www.google.com/jsapi|g" build/*.html
 sed -i -e "s|//google\.|google.|g" build/dip3.js
 sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
@@ -18,16 +20,22 @@ revision=`hg log|grep changeset|cut -d":" -f3|head -1`
 java -jar yuicompressor-2.4.2.jar build/dip3.js > build/$revision.js
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
 sed -i -e "s|;}|}|g" build/$revision.css
-css=`cat build/$revision.css`
-sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
-#sed -i -e "s|dip3\.css|http://wearehugh.com/dip3/${revision}.css|g" build/*.html
-sed -i -e "s|<link rel=stylesheet type=text/css href=dip3.css>|<style>${css}</style>|g" -e "s|</style><style>||g" build/*.html
-sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
-sed -i -e "s|=http:|=|g" build/*.html
 
-# set file permissions for public consumption
+# put CSS inline
+css=`cat build/$revision.css`
+sed -i -e "s|<link rel=stylesheet type=text/css href=dip3.css>|<style>${css}</style>|g" -e "s|</style><style>||g" build/*.html
+
+# JS will be served from a separate domain
+sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
+sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
+
+# minimize URLs
+sed -i -e "s|=http:|=|g" build/*.html
+sed -i -e "s|href=index.html|href=/|g" build/*.html
+
+# set file permissions (hg resets these, don't know why)
 chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt
 
-# and push to production
-rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/
+# ship it!
+#rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
+#rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/

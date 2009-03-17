@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang=en>
 <head>
 <meta charset=utf-8>
 <title>Strings - Dive into Python 3</title>
 <!--[if IE]><script src=html5.js></script><![endif]-->
 <link rel="shortcut icon" href=data:image/ico,>
-<link rel=alternate type=application/atom+xml href=http://hg.diveintopython3.org/atom-log>
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
 body{counter-reset:h1 3}
 </style>
 </head>
-<p class=skip><a href=#divingin>skip to main content</a>
-<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&#xa0;<input name=q size=31>&#xa0;<input type=submit name=sa value=Search></div></form>
-<p class=nav>You are here: <a href=/>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span>&#8227;</span>
+<p class=s><a href=#divingin>skip to main content</a>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Strings</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
@@ -35,7 +33,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; <c
 <li><a href=#furtherreading>Further reading</a>
 </ol>
 <h2 id=divingin>Diving in</h2>
-<p class=fancy>Chinese has thousands of characters. The <a href="http://en.wikipedia.org/wiki/Rotokas_alphabet">Rotokas alphabet</a> of <a href="http://en.wikipedia.org/wiki/Bougainville_Province">Bougainville</a> is the smallest alphabet in the world, with just 12 letters. English has 26, plus a handful of punctuation marks. Python 3 can handle all of these languages, and more.
+<p class=f>Chinese has thousands of characters. The <a href="http://en.wikipedia.org/wiki/Rotokas_alphabet">Rotokas alphabet</a> of <a href="http://en.wikipedia.org/wiki/Bougainville_Province">Bougainville</a> is the smallest alphabet in the world, with just 12 letters. English has 26, plus a handful of punctuation marks. Python 3 can handle all of these languages, and more.
 
 <p>When people talk about &#8220;text,&#8221; they&#8217;re thinking of &#8220;characters and symbols on the computer screen.&#8221;  But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes. Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <i>character encoding</i>. There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages. Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk.
 
@@ -91,21 +89,21 @@ FIXME: update for Python 3
 
 <p>Python has had Unicode support throughout the language since version 2.0. The <abbr>XML</abbr> package uses Unicode to store all parsed <abbr>XML</abbr> data, but you can use Unicode anywhere.
 <div class=example><h3>Example 9.13. Introducing Unicode</h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>s = u'Dive in'</kbd>            <span>&#x2460;</span>
-<samp class=prompt>>>> </samp><kbd>s</kbd>
+<samp class=p>>>> </samp><kbd>s = u'Dive in'</kbd>            <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>s</kbd>
 u'Dive in'
-<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
 Dive in</pre><div class=calloutlist>
 <ol>
 <li>To create a Unicode string instead of a regular <abbr>ASCII</abbr> string, add the letter &#8220;<code>u</code>&#8221; before the string. Note that this particular string doesn't have any non-<abbr>ASCII</abbr> characters. That's fine; Unicode is a superset of <abbr>ASCII</abbr> (a very large superset at that), so any regular <abbr>ASCII</abbr> string can also be stored as Unicode.
 <li>When printing a string, Python will attempt to convert it to your default encoding, which is usually <abbr>ASCII</abbr>. (More on this in a minute.)  Since this Unicode string is made up of characters that are also <abbr>ASCII</abbr> characters, printing it has the same result as printing a normal <abbr>ASCII</abbr> string; the conversion is seamless, and if you didn't know that <var>s</var> was a Unicode string, you'd never notice the difference.
 <div class=example><h3>Example 9.14. Storing non-<abbr>ASCII</abbr> characters</h3><pre class=screen>
-<samp class=prompt>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>         <span>&#x2460;</span>
-<samp class=prompt>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>         <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
 UnicodeError: ASCII encoding error: ordinal not in range(128)</samp>
-<samp class=prompt>>>> </samp><kbd>print s.encode('latin-1')</kbd> <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>print s.encode('latin-1')</kbd> <span>&#x2462;</span>
 La Pe&ntilde;a</pre><div class=calloutlist>
 <ol>
 <li>The real advantage of Unicode, of course, is its ability to store non-<abbr>ASCII</abbr> characters, like the Spanish &#8220;<code>&ntilde;</code>&#8221; (<code>n</code> with a tilde over it). The Unicode character code for the tilde-n is <code>0xf1</code> in hexadecimal (241 in decimal), which you can type like this: <code>\xf1</code>.
@@ -146,9 +144,9 @@ http://www.python.org/dev/peps/pep-3120/ - UTF-8 is now the default encoding (Py
    to insert values into a string with the <code>%s</code> placeholder.
 
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>k = "uid"</kbd>
-<samp class=prompt>>>> </samp><kbd>v = "sa"</kbd>
-<samp class=prompt>>>> </samp><kbd>"%s=%s" % (k, v)</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>k = "uid"</kbd>
+<samp class=p>>>> </samp><kbd>v = "sa"</kbd>
+<samp class=p>>>> </samp><kbd>"%s=%s" % (k, v)</kbd> <span>&#x2460;</span>
 <samp>'uid=sa'</samp></pre>
 <ol>
 <li>The whole expression evaluates to a string. The first <code>%s</code> is replaced by the value of <var>k</var>; the second <code>%s</code> is replaced by the value of <var>v</var>. All other characters in the string (in this case, the equal sign) stay as they are.
@@ -160,16 +158,16 @@ http://www.python.org/dev/peps/pep-3120/ - UTF-8 is now the default encoding (Py
 string formatting isn't just concatenation. It's not even just formatting. It's also type coercion.
 
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>uid = "sa"</kbd>
-<samp class=prompt>>>> </samp><kbd>pwd = "secret"</kbd>
-<samp class=prompt>>>> </samp><kbd>print pwd + " is not a good password for " + uid</kbd>      <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>uid = "sa"</kbd>
+<samp class=p>>>> </samp><kbd>pwd = "secret"</kbd>
+<samp class=p>>>> </samp><kbd>print pwd + " is not a good password for " + uid</kbd>      <span>&#x2460;</span>
 secret is not a good password for sa
-<samp class=prompt>>>> </samp><kbd>print "%s is not a good password for %s" % (pwd, uid)</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>print "%s is not a good password for %s" % (pwd, uid)</kbd> <span>&#x2461;</span>
 secret is not a good password for sa
-<samp class=prompt>>>> </samp><kbd>userCount = 6</kbd>
-<samp class=prompt>>>> </samp><kbd>print "Users connected: %d" % (userCount, )</kbd>           <span>&#x2462;</span> <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd>userCount = 6</kbd>
+<samp class=p>>>> </samp><kbd>print "Users connected: %d" % (userCount, )</kbd>           <span>&#x2462;</span> <span>&#x2463;</span>
 Users connected: 6
-<samp class=prompt>>>> </samp><kbd>print "Users connected: " + userCount</kbd>                 <span>&#x2464;</span>
+<samp class=p>>>> </samp><kbd>print "Users connected: " + userCount</kbd>                 <span>&#x2464;</span>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
 TypeError: cannot concatenate 'str' and 'int' objects</samp></pre>
@@ -184,11 +182,11 @@ TypeError: cannot concatenate 'str' and 'int' objects</samp></pre>
 <p>As with <code>printf</code> in <abbr>C</abbr>, string formatting in Python is like a Swiss Army knife. There are options galore, and modifier strings to specially format many different types of values.
 
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %f" % 50.4625</kbd>   <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>print "Today's stock price: %f" % 50.4625</kbd>   <span>&#x2460;</span>
 <samp>50.462500</samp>
-<samp class=prompt>>>> </samp><kbd>print "Today's stock price: %.2f" % 50.4625</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>print "Today's stock price: %.2f" % 50.4625</kbd> <span>&#x2461;</span>
 <samp>50.46</samp>
-<samp class=prompt>>>> </samp><kbd>print "Change since yesterday: %+.2f" % 1.5</kbd> <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>print "Change since yesterday: %+.2f" % 1.5</kbd> <span>&#x2462;</span>
 <samp>+1.50</samp></pre>
 <ol>
 <li>The <code>%f</code> string formatting option treats the value as a decimal, and prints it to six decimal places.
@@ -213,10 +211,10 @@ is an object. You might have thought I meant that string <em>variables</em> are 
 <!--<code>join</code> works only on lists of strings; it does not do any type coercion. Joining a list that has one or more non-string elements will raise an exception.-->
 
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
-<samp class=prompt>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd>
+<samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+<samp class=p>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd>
 ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=prompt>>>> </samp><kbd>";".join(["%s=%s" % (k, v) for k, v in params.items()])</kbd>
+<samp class=p>>>> </samp><kbd>";".join(["%s=%s" % (k, v) for k, v in params.items()])</kbd>
 'server=mpilgrim;uid=sa;database=master;pwd=secret'</pre>
 
 <p>This string is then returned from the <code>odbchelper</code> function and printed by the calling block, which gives you the output that you marveled at when you started reading this chapter.
@@ -224,13 +222,13 @@ is an object. You might have thought I meant that string <em>variables</em> are 
 <p>You're probably wondering if there's an analogous method to split a string into a list. And of course there is, and it's called <code>split</code>.
 
 <pre class=screen>
-<samp class=prompt>>>> </samp><kbd>li = ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</kbd>
-<samp class=prompt>>>> </samp><kbd>s = ";".join(li)</kbd>
-<samp class=prompt>>>> </samp><kbd>s</kbd>
+<samp class=p>>>> </samp><kbd>li = ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</kbd>
+<samp class=p>>>> </samp><kbd>s = ";".join(li)</kbd>
+<samp class=p>>>> </samp><kbd>s</kbd>
 'server=mpilgrim;uid=sa;database=master;pwd=secret'
-<samp class=prompt>>>> </samp><kbd>s.split(";")</kbd>    <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>s.split(";")</kbd>    <span>&#x2460;</span>
 ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=prompt>>>> </samp><kbd>s.split(";", 1)</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>s.split(";", 1)</kbd> <span>&#x2461;</span>
 ['server=mpilgrim', 'uid=sa;database=master;pwd=secret']</pre>
 <ol>
 <li><code>split</code> reverses <code>join</code> by splitting a string into a multi-element list. Note that the delimiter (&#8220;<code>;</code>&#8221;) is stripped out completely; it does not appear in any of the elements of the returned list.
@@ -263,6 +261,6 @@ http://www.w3.org/People/Dürst/papers.html
 http://rishida.net/scripts/chinese/
 </pre>
 
-<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim &#8226; <a href=about.html>open standards &#8226; open content &#8226; open source</a>
+<p class=c>&copy; 2001&ndash;4, 2009 <span>&#x2133;</span>ark Pilgrim &bull; <a href=about.html>open standards &bull; open content &bull; open source</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>
