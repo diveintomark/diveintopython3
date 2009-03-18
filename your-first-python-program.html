@@ -10,7 +10,6 @@ body{counter-reset:h1 1}
 th{font-family:inherit !important}
 </style>
 </head>
-<p class=s><a href=#divingin>skip to main content</a>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#your-first-python-program>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Your first Python program</h1>
@@ -41,7 +40,6 @@ th{font-family:inherit !important}
 <h2 id=divingin>Diving in</h2>
 <p class=f>Books about programming usually start with a bunch of boring chapters about fundamentals and eventually work up to building something useful. Let's skip all that. Here is a complete, working Python program. It probably makes absolutely no sense to you. Don't worry about that, because you're going to dissect it line by line. But read through it first and see what, if anything, you can make of it.
 <p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
-<p class=s><a href=#skip-humansize-py>skip over this code listing</a>
 <p class=download>[<a href=humansize.py>download <code>humansize.py</code></a>]
 <pre><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
@@ -71,8 +69,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 if __name__ == "__main__":
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
-<p id=skip-humansize-py>Now let's run this program on the command line. On Windows, it will look something like this:
-<p class=s><a href=#skip-humansize-screen>skip over this command output listing</a>
+<p>Now let's run this program on the command line. On Windows, it will look something like this:
 <pre class=screen>
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
@@ -82,7 +79,7 @@ if __name__ == "__main__":
 <samp class=p>you@localhost:~$ </samp><kbd>python3 humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
-<p id=skip-humansize-screen>FIXME: this would be a good place to explain what the program, you know, actually does.
+<p>FIXME: this would be a good place to explain what the program, you know, actually does.
 <h2 id=declaringfunctions>Declaring functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
@@ -122,7 +119,6 @@ if __name__ == "__main__":
 <p>I won't bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you've forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You'll thank me in six months.
 <h3 id=docstrings>Documentation strings</h3>
 <p>You can document a Python function by giving it a documentation string (<code>docstring</code> for short). In this program, the <code>approximate_size</code> function has a <code>docstring</code>:
-<p class=s><a href=#skip-approximate-size>skip over this code listing</a>
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     """Convert a file size to human-readable form.
 
@@ -134,7 +130,7 @@ if __name__ == "__main__":
     Returns: string
 
     """</code></pre>
-<p id=skip-approximate-size>Triple quotes signify a multi-line string. Everything between the start and end quotes is part of a single string, including carriage returns, leading white space, and other quote characters. You can use them anywhere, but you'll see them most often used when defining a <code>docstring</code>.
+<p>Triple quotes signify a multi-line string. Everything between the start and end quotes is part of a single string, including carriage returns, leading white space, and other quote characters. You can use them anywhere, but you'll see them most often used when defining a <code>docstring</code>.
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
 </blockquote>
@@ -149,7 +145,6 @@ if __name__ == "__main__":
 <h2 id=everythingisanobject>Everything is an object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
-<p class=s><a href=#skip-everything-is-an-object-screen>skip over this interpreter listing</a>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>import humansize</kbd>                               <span>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size(4096, True))</kbd>  <span>&#x2461;</span></a>
@@ -165,7 +160,7 @@ if __name__ == "__main__":
     Returns: string
 
 </samp></pre>
-<ol id=skip-everything-is-an-object-screen>
+<ol>
 <li>The first line imports the <code>humansize</code> program as a module -- a chunk of code that you can use interactively, or from a larger Python program. (You'll see examples of multi-module Python programs in [FIXME xref].)  Once you import a module, you can reference any of its public functions, classes, or attributes. Modules can do this to access functionality in other modules, and you can do it in the Python interactive shell too. This is an important concept, and you'll see a lot more of it throughout this book.
 <li>When you want to use functions defined in imported modules, you need to include the module name. So you can't just say <code>approximate_size</code>; it must be <code>humansize.approximate_size</code>. If you've used classes in Java, this should feel vaguely familiar.
 <li>Instead of calling the function as you would expect to, you asked for one of the function's attributes, <code>__doc__</code>.
@@ -175,7 +170,6 @@ if __name__ == "__main__":
 </blockquote>
 <h3 id=importsearchpath>The <code>import</code> search path</h3>
 <p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You'll learn more about lists later in this chapter.)
-<p class=s><a href=#skip-import-search-path-screen>skip over this interpreter listing</a>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>import sys</kbd>                       <span>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd>sys.path</kbd>                         <span>&#x2461;</span></a>
@@ -183,7 +177,7 @@ if __name__ == "__main__":
 <a><samp class=p>>>> </samp><kbd>sys</kbd>                              <span>&#x2462;</span></a>
 <samp>&lt;module 'sys' (built-in)></samp>
 <a><samp class=p>>>> </samp><kbd>sys.path.append('/my/new/path')</kbd>  <span>&#x2463;</span></a></pre>
-<ol id=skip-import-search-path-screen>
+<ol>
 <li>Importing the <code>sys</code> module makes all of its functions and attributes available.
 <li><code>sys.path</code> is a list of directory names that constitute the current search path. (Yours will look different, depending on your operating system, what version of Python you're running, and where it was originally installed.)  Python will look through these directories (in this order) for a <code>.py</code> file whose name matches what you're trying to import.
 <li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files. Some, like the <code>sys</code> module, are "built-in modules"; they are actually baked right into Python itself. Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python!  (The <code>sys</code> module is written in <abbr>C</abbr>.)
@@ -195,7 +189,6 @@ if __name__ == "__main__":
 <p>This is so important that I'm going to repeat it in case you missed it the first few times: <em>everything in Python is an object</em>. Strings are objects. Lists are objects. Functions are objects. Even modules are objects.
 <h2 id=indentingcode>Indenting code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
-<p class=s><a href=#skip-indenting-code>skip over this code listing</a>
 <pre><code>
 <a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span>&#x2460;</span></a>
 <a>    if size &lt; 0:                                            <span>&#x2461;</span></a>
@@ -208,7 +201,7 @@ if __name__ == "__main__":
             return "{0:.1f} {1}".format(size, suffix)
 
     raise ValueError('number too large')</code></pre>
-<ol id=skip-indenting-code>
+<ol>
 <li>Code blocks are defined by their indentation. By "code block," I mean functions, <code>if</code> statements, <code>for</code> loops, <code>while</code> loops, and so forth. Indenting starts a block and unindenting ends it. There are no explicit braces, brackets, or keywords. This means that whitespace is significant, and must be consistent. In this example, the function code is indented four spaces. It doesn't need to be four spaces, it just needs to be consistent. The first line that is not indented marks the end of the function.
 <li>In Python, an <code>if</code> statement is followed by a code block. If the <code>if</code> expression evaluates to true, the indented block is executed, otherwise it falls to the <code>else</code> block (if any). (Note the lack of parentheses around the expression.)
 <li>This line is inside the <code>if</code> code block. This <code>raise</code> statement will raise an exception (of type <code>ValueError</code>), but only if <code>size &lt; 0</code>.
@@ -221,22 +214,19 @@ if __name__ == "__main__":
 </blockquote>
 <h2 id=runningscripts>Running scripts</h2>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
-<p class=s><a href=#skip-running-scripts>skip over this code listing</a>
 <pre><code>
 if __name__ == "__main__":
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
-<blockquote class="note compare clang" id=skip-running-scripts>
+<blockquote class="note compare clang">
 <p><span>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment. Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there's no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>. A module's <code>__name__</code> depends on how you're using the module. If you <code>import</code> the module, then <code>__name__</code> is the module's filename, without a directory path or file extension.
-<p class=s><a href=#skip-import-humansize>skip over this interpreter listing</a>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
 <samp class=p>>>> </samp><kbd>humansize.__name__</kbd>
 <samp>'humansize'</samp></pre>
-<p id=skip-import-humansize>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
-<p class=s><a href=#furtherreading>skip over this command output listing</a>
+<p>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
 <pre class=screen>
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB

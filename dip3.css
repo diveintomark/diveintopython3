@@ -26,10 +26,6 @@ a:link,.w a{color:#26c}
 a:visited{color:#93c}
 .c a{color:inherit}
 
-/* skip links */
-.s a,.s a:hover,.s a:visited{position:absolute;left:0px;top:-500px;width:1px;height:1px;overflow:hidden}
-.s a:active,.s a:focus{position:static;width:auto;height:auto}
-
 /* code blocks */
 pre{white-space:pre-wrap;padding-left:2.154em;border-left:1px solid #ddd}
 .w{float:left}
