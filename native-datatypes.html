@@ -31,7 +31,6 @@ body{counter-reset:h1 2}
 <h2 id=booleans>Booleans</h2>
 <p>Booleans are either true or false. Python has two constants, <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
-<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <pre><code>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
 <p><var>size</var> is an integer, <code>0</code> is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:

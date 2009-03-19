@@ -23,7 +23,6 @@ body{counter-reset:h1 4}
 </blockquote>
 <h2 id=streetaddresses>Case study: street addresses</h2>
 <p>This series of examples was inspired by a real-life problem I had in my day job several years ago, when I needed to scrub and standardize street addresses exported from a legacy system before importing them into a newer system. (See, I don&#8217;t just make this stuff up; it&#8217;s actually useful.)  This example shows how I approached the problem.
-<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>s = '100 NORTH MAIN ROAD'</kbd>
 <a><samp class=p>>>> </samp><kbd>s.replace('ROAD', 'RD.')</kbd>                <span>&#x2460;</span></a>

@@ -28,7 +28,6 @@ td pre{padding:0;border:0}
 <p class=f>Virtually all Python 2 programs will need at least some tweaking to run properly under Python 3. To help with this transition, Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. <a href=case-study-porting-chardet-to-python-3.html#running2to3>Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can't fix automatically. This appendix documents what it <em>can</em> fix automatically.
 <h2 id=print><code>print</code> statement</h2>
 <p>In Python 2, <code>print</code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function &mdash; whatever you want to print is passed to <code>print()</code> like any other function.
-<p id=noscript>[The code examples will be easier to follow if you enable Javascript, but whatever.]
 <table>
 <tr>
 <th class=notes>Notes</th>

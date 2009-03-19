@@ -4,7 +4,6 @@ var LANGS = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 
 //google.load("jquery", "1.3");
 //google.setOnLoadCallback(function() {
 $(document).ready(function() {
-  $("#noscript").hide();
   var HS = {'visible': 'hide', 'hidden': 'show'};
 /*
   // toggle-able language comparisons
