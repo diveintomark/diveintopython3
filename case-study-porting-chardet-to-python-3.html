@@ -18,36 +18,7 @@ mark{background:#ff8;font-weight:bold}
 <blockquote class=q>
 <p><span>&#x275D;</span> Words, words. They&#8217;re all we have to go on. <span>&#x275E;</span><br>&mdash; <cite>Rosencrantz and Guildenstern are Dead</cite>
 </blockquote>
-<ol>
-<li><a href=#divingin>Diving in</a>
-<li><a href=#faq.what>What is character encoding auto-detection?</h2>
-  <ol>
-  <li><a href=#faq.impossible>Isn&#8217;t that impossible?</a>
-  <li><a href=#faq.who>Does such an algorithm exist?</a>
-  </ol>
-<li><a href=#divingin2>Diving in</a>
-  <ol>
-  <li><a href=#how.bom><code>UTF-n</code> with a <abbr title="Byte Order Mark">BOM</abbr></a>
-  <li><a href=#how.esc>Escaped encodings</a>
-  <li><a href=#how.mb>Multi-byte encodings</a>
-  <li><a href=#how.sb>Single-byte encodings</a>
-  <li><a href=#how.windows1252><code>windows-1252</code></a>
-  </ol>
-<li><a href=#running2to3>Running <code>2to3</code></a>
-<li><a href=#manual>Fixing what <code>2to3</code> can&#8217;t</a>
-  <ol>
-  <li><a href=#falseisinvalidsyntax><code>False</code> is invalid syntax</a>
-  <li><a href=#nomodulenamedconstants>No module named <code>constants</code></a>
-  <li><a href=#namefileisnotdefined>Name <var>'file'</var> is not defined</a>
-  <li><a href=#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
-  <li><a href=#cantconvertbytesobject>Can&#8217;t convert <code>'bytes'</code> object to <code>str</code> implicitly</a>
-  <li><a href=#unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></a>
-  <li><a href=#ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</a>
-  <li><a href=#unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></a>
-  <li><a href=#reduceisnotdefined>Global name <code>'reduce'</code> is not defined</a>
-  </ol>
-<li><a href=#summary>Summary</a>
-</ol>
+<p id=toc>&nbsp;
 <h2 id=divingin>Diving in</h2>
 <p class=f>Unknown or incorrect character encoding is the #1 cause of gibberish text on the web, in your inbox, and indeed across every computer system ever written. In <a href=strings.html>Chapter 3</a>, I talked about the history of character encoding and the creation of Unicode, the &#8220;one encoding to rule them all.&#8221; I&#8217;d love it if I never had to see a gibberish character on a web page again, because all authoring systems stored accurate encoding information, all transfer protocols were Unicode-aware, and every system that handled text maintained perfect fidelity when converting between encodings.
 <p>I&#8217;d also like a pony.

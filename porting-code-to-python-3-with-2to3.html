@@ -23,64 +23,7 @@ td pre{padding:0;border:0}
 <blockquote class=q>
 <p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It&#8217;s the transition that&#8217;s troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
 </blockquote>
-<ol>
-<li><a href=#divingin>Diving in</a>
-<li><a href=#print><code>print</code> statement</a>
-<li><a href=#unicodeliteral>Unicode string literals</a>
-<li><a href=#unicode><code>unicode()</code> global function</a>
-<li><a href=#long><code>long</code> data type</a>
-<li><a href=#ne>&lt;> comparison</a>
-<li><a href=#has_key><code>has_key()</code> dictionary method</a>
-<li><a href=#dict>Dictionary methods that return lists</a>
-<li><a href=#imports>Modules that have been renamed or reorganized</a>
-<ol>
-<li><a href=#http><code>http</code></a>
-<li><a href=#urllib><code>urllib</code></a>
-<li><a href=#dbm><code>dbm</code></a>
-<li><a href=#xmlrpc><code>xmlrpc</code></a>
-<li><a href=#othermodules>Other modules</a>
-</ol>
-<li><a href=#import>Relative imports within a package</a>
-<li><a href=#next><code>next()</code> iterator method</a>
-<li><a href=#filter><code>filter()</code> global function</a>
-<li><a href=#map><code>map()</code> global function</a>
-<li><a href=#reduce><code>reduce()</code> global function</a> (3.1+)
-<li><a href=#apply><code>apply()</code> global function</a>
-<li><a href=#intern><code>intern()</code> global function</a>
-<li><a href=#exec><code>exec</code> statement</a>
-<li><a href=#execfile><code>execfile</code> statement</a> (3.1+)
-<li><a href=#repr><code>repr</code> literals (backticks)</a>
-<li><a href=#except><code>try...except</code> statement</a>
-<li><a href=#raise><code>raise</code> statement</a>
-<li><a href=#throw><code>throw</code> method on generators</a>
-<li><a href=#xrange><code>xrange()</code> global function</a>
-<li><a href=#raw_input><code>raw_input()</code> and <code>input()</code> global functions</a>
-<li><a href=#funcattrs><code>func_*</code> function attributes</a>
-<li><a href=#xreadlines><code>xreadlines()</code> I/O method</a>
-<li><a href=#tuple_params><code>lambda</code> functions with multiple parameters</a>
-<li><a href=#methodattrs>Special method attributes</a>
-<li><a href=#nonzero><code>__nonzero__</code> special class attribute</a>
-<li><a href=#numliterals>Octal literals</a>
-<li><a href=#renames><code>sys.maxint</code></a>
-<li><a href=#callable><code>callable()</code> global function</a>
-<li><a href=#zip><code>zip()</code> global function</a>
-<li><a href=#standarderror><code>StandardError()</code> exception</a>
-<li><a href=#types><code>types</code> module constants</a>
-<li><a href=#isinstance><code>isinstance()</code> global function</a> (3.1+)
-<li><a href=#basestring><code>basestring</code> datatype</a>
-<li><a href=#itertools><code>itertools</code> module</a>
-<li><a href=#sys_exc><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
-<li><a href=#paren>List comprehensions over tuples</a>
-<li><a href=#getcwdu><code>os.getcwdu()</code> function</a>
-<li><a href=#metaclass>Metaclasses</a>
-<li><a href=#nitpick>Matters of style</a>
-<ol>
-<li><a href=#set_literal><code>set()</code> literals</a>
-<li><a href=#buffer><code>buffer()</code> global function</a>
-<li><a href=#wscomma>Whitespace around commas</a>
-<li><a href=#idioms>Common idioms</a>
-</ol>
-</ol>
+<p id=toc>&nbsp;
 <h2 id=divingin>Diving in</h2>
 <p class=f>Virtually all Python 2 programs will need at least some tweaking to run properly under Python 3. To help with this transition, Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. <a href=case-study-porting-chardet-to-python-3.html#running2to3>Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can't fix automatically. This appendix documents what it <em>can</em> fix automatically.
 <h2 id=print><code>print</code> statement</h2>
