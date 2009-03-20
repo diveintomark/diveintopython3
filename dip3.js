@@ -15,7 +15,7 @@ $(document).ready(function() {
   }
 */
 
-  $("#toc").html('<a href="javascript:showTOC()">table of contents</a>');
+  hideTOC();
 
   // "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks
   $("pre > code").each(function(i) {
@@ -83,6 +83,10 @@ function plainTextOnClick(id) {
   win.document.close();
 }
 
+function hideTOC() {
+  $("#toc").html('<span>&#8227;</span> <a href="javascript:showTOC()">show table of contents</a>');
+}
+
 function showTOC() {
   var toc = '';
   var old_level = 1;
@@ -100,5 +104,5 @@ function showTOC() {
     toc += '</ol>';
     level -= 1;
   }
-  $("#toc").html(toc);
+  $("#toc").html('<span>&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a>' + toc);
 }
