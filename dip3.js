@@ -84,7 +84,8 @@ function plainTextOnClick(id) {
 }
 
 function hideTOC() {
-  $("#toc").html('<span>&#8227;</span> <a href="javascript:showTOC()">show table of contents</a>');
+  var toc = '<span>&#8227;</span> <a href="javascript:showTOC()">show table of contents</a>';
+  $("#toc").html(toc);
 }
 
 function showTOC() {
@@ -104,5 +105,6 @@ function showTOC() {
     toc += '</ol>';
     level -= 1;
   }
-  $("#toc").html('<span>&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a>' + toc);
+  toc = '<span>&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a>' + toc;
+  $("#toc").html(toc);
 }

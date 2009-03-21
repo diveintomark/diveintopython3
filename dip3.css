@@ -42,6 +42,7 @@ kbd{font-weight:bold}
 /* overrides */
 li ol,.q{margin:0}
 pre a,.w a,pre a:hover{border:0}
+.s{text-decoration:line-through}
 
 /* headers */
 h1,#noscript{background:PapayaWhip;width:100%} /* all hail PapayaWhip */
