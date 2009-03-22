@@ -153,8 +153,45 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
-<samp class=p>>>> </samp><kbd></kbd>
+<a><samp class=p>>>> </samp><kbd>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>si_suffixes</kbd>
+<samp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
+<a><samp class=p>>>> </samp><kbd>"1000{0[0]} = 1{0[1]}".format(si_suffixes)</kbd>  <span>&#x2461;</span></a>
+<samp>'1000KB = 1MB'</samp>
 </pre>
+<ol>
+<li>Rather than calling any function in the <code>humansize</code> module, you'll just grab one of the data structures it defines: the list of "SI" (powers-of-1000) suffixes.
+<li>This looks complicated, but it's not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{1[0]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
+</ol>
+
+<p>What this example shows is that <em>format specifers can access items and properties of data structures using (almost) Python syntax</em>. The following things "just work":
+
+<ul>
+<li>Passing a list, and accessing an item of the list by index (as in the previous example)
+<li>Passing a dictionary, and accessing a value of the dictionary by key
+<li>Passing a module, and accessing its variables and functions by name
+<li>Passing a class instance, and accessing its properties and methods by name
+<li><em>Any combination of the above</em>
+</ul>
+
+<p>Just to blow your mind, here's an example that combines all of the above:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import humansize</kbd>
+<samp class=p>>>> </samp><kbd>import sys</kbd>
+<a><samp class=p>>>> </samp><kbd>"1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}".format(sys)</kbd>
+<samp>'1MB = 1000KB'</samp></pre>
+
+<p>Here's how it works:
+
+<ul>
+<li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the format specifier <code>{0}</code> refers to the <code>sys</code> module.
+<li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the format specifier <code>{0.modules}</code> refers to the dictionary of imported modules.
+<li><code>sys.modules["humansize"]</code> is the <code>humansize</code> module which you just imported. The format specifier <code>{0.modules[humansize]}</code> refers the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>"humansize"</code>). But within a format specifier, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>).
+<li><code>sys.modules["humansize"].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The format specifier <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
+<li><code>sys.modules["humansize"].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the format specifier <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
+<lI><code>sys.modules["humansize"].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete format specifier <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
+</ul>
 
 <div class=s>
 <p>Note that <code>(k, v)</code> is a tuple. I told you they were good for something.
