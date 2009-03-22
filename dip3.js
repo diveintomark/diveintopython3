@@ -4,20 +4,10 @@ var LANGS = {'python2': 'Python 2', 'java': 'Java', 'perl5': 'Perl 5', 'clang': 
 //google.load("jquery", "1.3");
 //google.setOnLoadCallback(function() {
 $(document).ready(function() {
-  var HS = {'visible': 'hide', 'hidden': 'show'};
-/*
-  // toggle-able language comparisons
-  for (var lang in LANGS) {
-    $("blockquote.compare").filter("blockquote." + lang).each(function(i) {
-      $(this).wrapInner('<div class="block"></div>');
-      $(this).prepend('<div class="w">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + LANGS[lang] + ' notes</a> ]</div>');
-    });
-  }
-*/
-
   hideTOC();
 
-  // "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks
+  /* "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks */
+  var HS = {'visible': 'hide', 'hidden': 'show'};
   $("pre > code").each(function(i) {
     var pre = $(this.parentNode);
     if (pre.parents("table").length == 0) {
@@ -26,22 +16,39 @@ $(document).ready(function() {
   });
   $("pre.code, pre.screen").each(function(i) {
     this.id = "autopre" + i;
-    $(this).wrapInner('<div class="block"></div>');
+    $(this).wrapInner('<div class="b"></div>');
     $(this).prepend('<div class="w">[<a class="toggle" href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 
-    $(this).prev("p.download").each(function(i) {
+    $(this).prev("p.d").each(function(i) {
       $(this).next("pre").find("div.w").append(" " + $(this).html());
       this.parentNode.removeChild(this);
     });
+
+    /* create skip links */
+    var postelm = $(this).next().get(0);
+    var postid = postelm.id || ("postautopre" + i);
+    postelm.id = postid;
+    $(this).before('<p class=skip><a href=#' + postid + '>skip over this code listing</a>');
+  });
+
+  /* make skip links disappear until you tab to them */
+  $(".skip a").blur(function() {
+    $(this).css({'position':'absolute','left':'0px','top':'-500px','width':'1px','height':'1px','overflow':'hidden'});
+  });
+  $(".skip a").blur();
+  $(".skip a").focus(function() {
+    $(this).css({'position':'static','width':'auto','height':'auto'});
   });
 
   // synchronized highlighting on callouts and their associated lines within code & screen blocks
+  var hip = {'background-color':'#eee','cursor':'default'};
+  var unhip = {'background-color':'inherit','cursor':'inherit'};
   $("pre.code, pre.screen").each(function() {
     $(this).find("a:not([href])").each(function(i) {
       var a = $(this);
       var li = a.parents("pre").next("ol").find("li:nth-child(" + (i+1) + ")");
-      li.add(a).hover(function() { a.addClass("h"); li.addClass("h"); },
-                      function() { a.removeClass("h"); li.removeClass("h"); });
+      li.add(a).hover(function() { a.css(hip); li.css(hip); },
+                      function() { a.css(unhip); li.css(unhip); });
     });
   });
 
@@ -57,6 +64,16 @@ $(document).ready(function() {
     });
   });
 
+/*
+  // toggle-able language comparisons
+  for (var lang in LANGS) {
+    $("blockquote.compare").filter("blockquote." + lang).each(function(i) {
+      $(this).wrapInner('<div class="block"></div>');
+      $(this).prepend('<div class="w">[ <a href="#" onclick="toggleComparisonNotes(\'' + lang + '\');return false" class="toggle">hide ' + LANGS[lang] + ' notes</a> ]</div>');
+    });
+  }
+*/
+
 }); /* document.ready */
 //}); /* google.setOnLoadCallback */
 
@@ -69,7 +86,7 @@ function toggleComparisonNotes(lang) {
 */
 
 function toggleCodeBlock(id) {
-  $("#" + id).find("div.block").toggle();
+  $("#" + id).find("div.b").toggle();
   var a = $("#" + id).find("a.toggle");
   a.text(a.text() == HS['visible'] ? HS['hidden'] : HS['visible']);
 }

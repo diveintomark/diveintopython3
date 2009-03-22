@@ -4,12 +4,12 @@ pre,kbd,code,samp{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','B
 span{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 pre span{font-family:'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
 .baa{font:oblique large Constantia,Baskerville,Palatino,'Palatino Linotype','URW Palladio L',serif}
-abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
+abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:1px}
 .q{text-align:right;font-style:oblique}
 .q span{font-size:large}
 .note{margin-left:4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em}
-.c,pre,.w,.w a,.download{line-height:2.154}
+.c,pre,.w,.w a,.d{line-height:2.154}
 .f:first-letter{float:left;color:#ddd;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 h1,h2,h3,p,ul,ol{margin:1.75em 0;font-size:medium}
 
@@ -20,7 +20,7 @@ form div{float:right}
 .c{text-align:center;margin:2.154em 0}
 
 /* links */
-a{background:transparent;text-decoration:none;border-bottom:1px dotted}
+a{text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link,.w a{color:#26c}
 a:visited{color:#93c}
@@ -29,23 +29,19 @@ a:visited{color:#93c}
 /* code blocks */
 pre{white-space:pre-wrap;padding-left:2.154em;border-left:1px solid #ddd}
 .w{float:left}
-.c,.w,.w a,.download{font-size:small}
-.block,ol,p,blockquote,h1,h2,h3{clear:left}
+.c,.w,.w a,.d{font-size:small}
+.b,ol,p,blockquote,h1,h2,h3{clear:left}
 pre a,.w a{padding:0.4375em 0}
 .w a{text-decoration:underline}
 kbd{font-weight:bold}
 .p{color:#667}
 
-/* hover effect for table rows, list items, and lines in code blocks */
-.h{background:#eee;cursor:default}
-
 /* overrides */
 li ol,.q{margin:0}
 pre a,.w a,pre a:hover{border:0}
-.s{text-decoration:line-through}
 
 /* headers */
-h1,#noscript{background:PapayaWhip;width:100%} /* all hail PapayaWhip */
+h1{background:PapayaWhip;width:100%} /* all hail PapayaWhip */
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
