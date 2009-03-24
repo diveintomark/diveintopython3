@@ -1,3 +1,59 @@
+/*
+
+"Dive Into Python 3" stylesheet
+
+vv-- begin MIT open source license --vv
+
+Copyright (c) 2009, Mark Pilgrim, All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+^^-- end MIT open source license --^^
+
+
+Classname Legend
+
+.w = "widgets"  = wrapper block for hide/open/download links dynamically inserted into code listings
+.b = "block"    = internal block dynamically inserted into code listings
+.d = "download" = download link for code listings
+.p = "prompt"   = command-line or interactive shell prompt within code listings
+.q = "quote"    = quote at beginning of each chapter
+.f = "fancy"    = first paragraph of each chapter (gets a fancy drop-cap)
+.c = "centered" = centered footer text
+
+.note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
+.baa  = "best available ampersand" = wrapper block for ampersands
+
+
+Acknowledgements & Inspirations
+
+"The Elements of Typographic Style Applied to the Web" ... http://webtypography.net/toc/
+"Setting Type on the Web to a Baseline Grid" ............. http://www.alistapart.com/articles/settingtypeontheweb
+"Compose to a Vertical Rhythm" ........................... http://24ways.org/2006/compose-to-a-vertical-rhythm
+"Use the Best Available Ampersand" ....................... http://simplebits.com/notebook/2008/08/14/ampersands.html
+"Unicode Support in HTML, Fonts, and Web Browsers" ....... http://alanwood.net/unicode/
+
+*/
+
 /* typography */
 body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
 pre,kbd,code,samp{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}

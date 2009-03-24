@@ -146,10 +146,10 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
 <li>No, my password is not really <kbd>PapayaWhip</kbd>.
-<li>There's a lot going on here. First, that's a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>format specifiers</i>, which are replaced by the arguments passed to the <code>format()</code> method.
+<li>There's a lot going on here. First, that's a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code>format()</code> method.
 </ol>
 
-<p>The previous example shows the simplest case, where the format specifiers are simply integers. Integer format specifiers are treated as positional indices into the argument list of the <code>format()</code> method. That means that <code>{0}</code> is replaced by the first argument (<var>username</var> in this case), <code>{1}</code> is replaced by the second argument (<var>password</var>), <i class=baa>&amp;</i>c. You can have as many positional indices as you have arguments, and you can have as many arguments as you want. But format specifiers are much more powerful than that.
+<p>The previous example shows the simplest case, where the replacement fields are simply integers. Integer replacement fields are treated as positional indices into the argument list of the <code>format()</code> method. That means that <code>{0}</code> is replaced by the first argument (<var>username</var> in this case), <code>{1}</code> is replaced by the second argument (<var>password</var>), <i class=baa>&amp;</i>c. You can have as many positional indices as you have arguments, and you can have as many arguments as you want. But replacement fields are much more powerful than that.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
@@ -179,19 +179,38 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
 <samp class=p>>>> </samp><kbd>import sys</kbd>
-<a><samp class=p>>>> </samp><kbd>"1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}".format(sys)</kbd>
+<samp class=p>>>> </samp><kbd>"1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}".format(sys)</kbd>
 <samp>'1MB = 1000KB'</samp></pre>
 
 <p>Here's how it works:
 
 <ul>
-<li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the format specifier <code>{0}</code> refers to the <code>sys</code> module.
-<li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the format specifier <code>{0.modules}</code> refers to the dictionary of imported modules.
-<li><code>sys.modules["humansize"]</code> is the <code>humansize</code> module which you just imported. The format specifier <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>"humansize"</code>). But within a format specifier, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>).
-<li><code>sys.modules["humansize"].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The format specifier <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
-<li><code>sys.modules["humansize"].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the format specifier <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
-<lI><code>sys.modules["humansize"].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete format specifier <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
+<li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the replacement field <code>{0}</code> refers to the <code>sys</code> module.
+<li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the replacement field <code>{0.modules}</code> refers to the dictionary of imported modules.
+<li><code>sys.modules["humansize"]</code> is the <code>humansize</code> module which you just imported. The replacement field <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>"humansize"</code>). But within a replacement field, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>).
+<li><code>sys.modules["humansize"].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The replacement field <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
+<li><code>sys.modules["humansize"].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the replacement field <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
+<lI><code>sys.modules["humansize"].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete replacement field <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
 </ul>
+
+<p>But wait! There's more! Let's take another look at that strange line of code from <code>humansize.py</code>:
+
+<pre><code>if size < multiple:
+    return "{0:.1f} {1}".format(size, suffix)</code></pre>
+
+<p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It's two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don't. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
+
+<blockquote class="note compare clang">
+<p><span>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
+</blockquote>
+
+<p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>"{0:.1f} {1}".format(698.25, 'GB')</kbd>
+<samp>'698.3 GB'</samp></pre>
+
+<p>For all the gory details on presentation types, check the <a href="http://docs.python.org/dev/3.0/library/string.html#format-specification-mini-language">Format Specification Mini-Language</a> in the official Python documentation.
 
 <div class=s>
 <p>Note that <code>(k, v)</code> is a tuple. I told you they were good for something.
@@ -340,6 +359,15 @@ is an object. You might have thought I meant that string <em>variables</em> are 
 <ul>
 <li><a href="http://feedparser.org/docs/character-encoding.html">Character encoding in XML</a>
 <li><a href="http://blog.whatwg.org/the-road-to-html-5-character-encoding">Character encoding in HTML</a>
+</ul>
+
+<p>On strings and string formatting:
+
+<ul>
+<li><a href="http://docs.python.org/dev/3.0/library/string.html"><code>string</code> &mdash; Common string operations</a>
+<li><a href="http://docs.python.org/dev/3.0/library/string.html#formatstrings">Format String Syntax</a>
+<li><a href="http://docs.python.org/dev/3.0/library/string.html#format-specification-mini-language">Format Specification Mini-Language</a>
+<li><a href="http://www.python.org/dev/peps/pep-3101/"><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
 </ul>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html><span>&#x2133;</span>ark Pilgrim</a>

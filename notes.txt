@@ -19,6 +19,9 @@ http://www.alanwood.net/unicode/dingbats.html
 &#x203D; - interrobang
 &#x275D; - heavy double turned left comma quotation mark ornament
 &#x275E; - heavy double turned right comma quotation mark ornament
+&#x25C9; - fisheye
+&#x2365; - APL FUNCTIONAL SYMBOL CIRCLE DIAERESIS
+&#x203B; - reference mark
 
 http://docs.python.org/dev/library/turtle.html
 http://svn.python.org/projects/python/trunk/Demo/turtle/
