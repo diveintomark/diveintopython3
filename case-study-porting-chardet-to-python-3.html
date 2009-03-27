@@ -659,8 +659,8 @@ for line in open(f, 'rb'):
 <p>Once you realize that, the solution is not difficult. Regular expressions defined with strings can search strings. Regular expressions defined with byte arrays can search byte arrays. To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array. (There is one other case of this same problem, on the very next line.)
 <pre><code>  class UniversalDetector:
       def __init__(self):
-<del>-         self._highBitDetector = re.compile(b'[\x80-\xFF]')</del>
-<del>-         self._escDetector = re.compile(b'(\033|~{)')</del>
+<del>-         self._highBitDetector = re.compile(r'[\x80-\xFF]')</del>
+<del>-         self._escDetector = re.compile(r'(\033|~{)')</del>
 <ins>+         self._highBitDetector = re.compile(b'[\x80-\xFF]')</ins>
 <ins>+         self._escDetector = re.compile(b'(\033|~{)')</ins>
           self._mEscCharSetProber = None
@@ -1108,22 +1108,24 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\latin1prober.py", line 126, in get_confidence
     total = reduce(operator.add, self._mFreqCounter)
 NameError: global name 'reduce' is not defined</samp></pre>
-<p>According to the official <a href=http://docs.python.org/dev/3.0/whatsnew/3.0.html#builtins>What's New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: "Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable."
-<p>OK then, let's refactor it to use a <code>for</code> loop.
+<p>According to the official <a href=http://docs.python.org/dev/3.0/whatsnew/3.0.html#builtins>What's New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: "Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable." You can read more about the decision from Guido van Rossum's weblog: <a href=http://www.artima.com/weblogs/viewpost.jsp?thread=98196>The fate of reduce() in Python 3000</a>.
 <pre><code>def get_confidence(self):
     if self.get_state() == constants.eNotMe:
         return 0.01
   
 <mark>    total = reduce(operator.add, self._mFreqCounter)</mark></code></pre>
-<p>The <code>reduce()</code> function takes two arguments &mdash; a function and a list (strictly speaking, any iterable object will do) &mdash; and applies the function cumulatively to each item of the list. In other words, this is a fancy and roundabout way of adding up all the items in a list and returning the result. It looks much more readable as a <code>for</code> loop.
+<p>The <code>reduce()</code> function takes two arguments &mdash; a function and a list (strictly speaking, any iterable object will do) &mdash; and applies the function cumulatively to each item of the list. In other words, this is a fancy and roundabout way of adding up all the items in a list and returning the result.
+<p>This monstrosity was so common in Python 2 that Python 3 added a global <code>sum()</code> function.
 <pre><code>  def get_confidence(self):
       if self.get_state() == constants.eNotMe:
           return 0.01
   
 <del>-     total = reduce(operator.add, self._mFreqCounter)</del>
-<ins>+     total = 0</ins>
-<ins>+     for frequency in self._mFreqCounter:</ins>
-<ins>+         total += frequency</ins></code></pre>
+<ins>+     total = sum(self._mFreqCounter)</ins></code></pre>
+<p>Since you're no longer using the <code>operator</code> module, you can remove that <code>import</code> from the top of the file as well.
+<pre><code>  from .charsetprober import CharSetProber
+  from . import constants
+<del>- import operator</del></code></pre>
 <p>I CAN HAZ TESTZ?
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
