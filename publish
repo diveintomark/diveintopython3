@@ -3,7 +3,8 @@
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
-cp *.py robots.txt *.js *.css build/
+cp robots.txt *.js *.css build/
+cp -R examples build/
 
 # minimize HTML (note: this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
@@ -34,8 +35,8 @@ sed -i -e "s|=http:|=|g" build/*.html
 sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
-chmod 644 build/*.html build/*.css build/*.js build/*.py build/*.txt
+chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples/*.txt build/*.txt
 
 # ship it!
 rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-rsync -essh -avzP build/*.html build/*.py build/*.txt diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/

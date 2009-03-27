@@ -36,7 +36,7 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=your-first-python-program.html#everythingisanobject>Everything is an object</a>
   <ol>
   <li><a href=your-first-python-program.html#importsearchpath>The <code>import</code> search path</a>
-  <li><a href=your-first-python-program.html#whatsanobject>What's an object?</a>
+  <li><a href=your-first-python-program.html#whatsanobject>What&#8217;s an object?</a>
   </ol>
   <li><a href=your-first-python-program.html#indentingcode>Indenting code</a>
   <li><a href=your-first-python-program.html#runningscripts>Running scripts</a>
@@ -178,6 +178,25 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li>Handling errors (exceptions)
   <li>Writing to files
   </ol>
+<li id=iterators-and-generators><a href=iterators-and-generators.html>Iterators <i class=baa>&amp;</i> generators</a>
+  <ol>
+  <li><a href=iterators-and-generators.html#divingin>Diving in</a>
+  <li><a href=iterators-and-generators.html#i-know>I know, let&#8217;s use regular expressions!</a>
+  <li><a href=iterators-and-generators.html#a-list-of-functions>A list of functions</a>
+  <li><a href=iterators-and-generators.html#a-list-of-patterns>A list of patterns</a>
+  <li><a href=iterators-and-generators.html#a-file-of-patterns>A file of patterns</a>
+  <li><a href=iterators-and-generators.html#generators>Generators</a>
+    <ol>
+    <li><a href=iterators-and-generators.html#a-fibonacci-generator>A Fibonacci generator</a>
+    <li><a href=iterators-and-generators.html#a-plural-rule-generator>A plural rule generator</a>
+    </ol>
+  <li><a href=iterators-and-generators.html#iterators>Iterators</a>
+    <ol>
+    <li><a href=iterators-and-generators.html#a-fibonacci-iterator>A Fibonacci iterator</a>
+    <li><a href=iterators-and-generators.html#a-plural-rule-iterator>A plural rule iterator</a>
+    </ol>
+  <li><a href=iterators-and-generators.html#furtherreading>Further reading</a>
+  </ol>
 <li>HTML processing
   <ol>
   <li>Diving in
@@ -220,17 +239,6 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li>Handling redirects
   <li>Handling compressed data
   <li>Putting it all together
-  <li>Summary
-  </ol>
-<li>Dynamic functions
-  <ol>
-  <li>Diving in
-  <li>plural.py, stage 1
-  <li>plural.py, stage 2
-  <li>plural.py, stage 3
-  <li>plural.py, stage 4
-  <li>plural.py, stage 5
-  <li>plural.py, stage 6
   <li>Summary
   </ol>
 <li>Metaclasses
@@ -282,10 +290,10 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=case-study-porting-chardet-to-python-3.html#divingin>Introducing <code>chardet</code>: a mini-<abbr>FAQ</abbr></a>
     <ol>
     <li><a href=case-study-porting-chardet-to-python-3.html#faq.what>What is character encoding auto-detection?</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.impossible>Isn't that impossible?</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#faq.impossible>Isn&#8217;t that impossible?</a>
     <li><a href=case-study-porting-chardet-to-python-3.html#faq.who>Who wrote this detection algorithm?</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.yippie>Yippie!  Screw the standards, I'll just auto-detect everything!</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.why>Why bother with auto-detection if it's slow, inaccurate, and non-standard?</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#faq.yippie>Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#faq.why>Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</a>
     </ol>
   <li><a href=case-study-porting-chardet-to-python-3.html#divingin2>Diving in</a>
     <ol>
@@ -296,13 +304,13 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
     <li><a href=case-study-porting-chardet-to-python-3.html#how.windows1252><code>windows-1252</code></a>
     </ol>
   <li><a href=case-study-porting-chardet-to-python-3.html#running2to3>Running <code>2to3</code></a>
-  <li><a href=case-study-porting-chardet-to-python-3.html#manual>Fixing what <code>2to3</code> can't</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#manual>Fixing what <code>2to3</code> can&#8217;t</a>
     <ol>
     <li><a href=case-study-porting-chardet-to-python-3.html#falseisinvalidsyntax><code>False</code> is invalid syntax</a>
     <li><a href=case-study-porting-chardet-to-python-3.html#nomodulenamedconstants>No module named <code>constants</code></a>
     <li><a href=case-study-porting-chardet-to-python-3.html#namefileisnotdefined>Name '<var>file</var>' is not defined</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#cantuseastringpattern>Can't use a string pattern on a bytes-like object</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#cantconvertbytesobject>Can't convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#cantconvertbytesobject>Can&#8217;t convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
     </ol>
   </ol>
 </ol>

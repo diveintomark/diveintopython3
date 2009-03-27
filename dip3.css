@@ -2,8 +2,6 @@
 
 "Dive Into Python 3" stylesheet
 
-vv-- begin MIT open source license --vv
-
 Copyright (c) 2009, Mark Pilgrim, All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -26,8 +24,6 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
-
-^^-- end MIT open source license --^^
 
 
 Classname Legend
@@ -56,14 +52,14 @@ Acknowledgements & Inspirations
 
 /* typography */
 body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
-pre,kbd,code,samp{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
+pre,kbd,samp,code,var{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
 span{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 pre span{font-family:'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
 .baa{font:oblique large Constantia,Baskerville,Palatino,'Palatino Linotype','URW Palladio L',serif}
-abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:1px}
+abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 .q{text-align:right;font-style:oblique}
 .q span{font-size:large}
-.note{margin-left:4.94em}
+.note{margin:3.5em 4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em}
 .c,pre,.w,.w a,.d{line-height:2.154}
 .f:first-letter{float:left;color:#ddd;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}

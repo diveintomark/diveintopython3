@@ -9,9 +9,9 @@ body{counter-reset:h1 7}
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=root value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#unit-testing>Dive Into Python 3</a> <span>&#8227;</span>
-<h1>Unit testing</h1>
+<h1>Unit Testing</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> Certitude is not the test of certainty. We have been cocksure of many things that were not so. <span>&#x275E;</span><br>&mdash; <cite>Oliver Wendell Holmes, Jr.</cite>
+<p><span>&#x275D;</span> Certitude is not the test of certainty. We have been cocksure of many things that were not so. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Oliver_Wendell_Holmes,_Jr.>Oliver Wendell Holmes, Jr.</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>(Not) diving in</h2>
@@ -49,7 +49,7 @@ body{counter-reset:h1 7}
 <li>The <code>to_roman()</code> function should return the Roman numeral representation for all integers <code>1</code> to <code>3999</code>.
 </ol>
 <p>It is not immediately obvious how this code does&hellip; well, <em>anything</em>. It defines a class which has no <code>__init__()</code> method. The class <em>does</em> have another method, but it is never called. The entire script has a <code>__main__</code> block, but it doesn't reference the class or its method. But it does do something, I promise.
-<p class=d>[<a href=romantest1.py>download <code>romantest1.py</code></a>]
+<p class=d>[<a href=examples/romantest1.py>download <code>romantest1.py</code></a>]
 <pre><code>import roman1
 import unittest
 
@@ -159,7 +159,7 @@ Traceback (most recent call last):
 <li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn't pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you're testing or the unit test case itself.
 </ol>
 <p><em>Now</em>, finally, you can write the <code>to_roman()</code> function.
-<p class=d>[<a href=roman1.py>download <code>roman1.py</code></a>]
+<p class=d>[<a href=examples/roman1.py>download <code>roman1.py</code></a>]
 <pre><code>roman_numeral_map = (('M',  1000),
                      ('CM', 900),
                      ('D',  500),
@@ -233,7 +233,7 @@ OK</samp></pre>
 <p>The <code>to_roman()</code> function should raise an <code>OutOfRangeError</code> when given an integer greater than <code>3999</code>.
 </blockquote>
 <p>What would that test look like?
-<p class=d>[<a href=romantest2.py>download <code>romantest2.py</code></a>]
+<p class=d>[<a href=examples/romantest2.py>download <code>romantest2.py</code></a>]
 <pre><code>
 <a>class ToRomanBadInput(unittest.TestCase):                                 <span>&#x2460;</span></a>
 <a>    def test_too_large(self):                                             <span>&#x2461;</span></a>
@@ -298,7 +298,7 @@ FAILED (failures=1)</samp></pre>
 <li>Of course, the <code>to_roman()</code> function isn't raising the <code>OutOfRangeError</code> exception you just defined, because you haven't told it to do that yet. That's excellent news! It means this is a valid test case &mdash; it fails before you write the code to make it pass.
 </ol>
 <p>Now you can write the code to make this test pass.
-<p class=d>[<a href=roman2.py>download <code>roman2.py</code></a>]
+<p class=d>[<a href=examples/roman2.py>download <code>roman2.py</code></a>]
 <pre><code>def to_roman(n):
     """convert integer to Roman numeral"""
     if n > 3999:

@@ -19,7 +19,7 @@ td pre{padding:0;border:0}
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=31>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#porting-code-to-python-3-with-2to3>Dive Into Python 3</a> <span>&#8227;</span>
-<h1>Porting code to Python 3 with <code>2to3</code></h1>
+<h1>Porting Code to Python 3 with <code>2to3</code></h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> Life is pleasant. Death is peaceful. It&#8217;s the transition that&#8217;s troublesome. <span>&#x275E;</span><br>&mdash; Isaac Asimov (attributed)
 </blockquote>
@@ -495,6 +495,7 @@ for an_iterator in a_sequence_of_iterators:
 reduce(a, b, c)</code></pre></td></tr>
 </table>
 <blockquote>
+<!-- FIXME reduce() removal from Guido: http://www.artima.com/weblogs/viewpost.jsp?thread=98196 -->
 <p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id=apply><code>apply()</code> global function</h2>

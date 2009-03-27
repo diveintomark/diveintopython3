@@ -5,7 +5,7 @@ experienced programmers.  Visit http://diveintopython3.org/ for the
 latest version.
 """
 
-import roman4
+import roman5
 import unittest
 
 class KnownValues(unittest.TestCase):
@@ -69,25 +69,62 @@ class KnownValues(unittest.TestCase):
     def test_to_roman_known_values(self):
         """to_roman should give known result with known input"""
         for integer, numeral in self.known_values:
-            result = roman4.to_roman(integer)
+            result = roman5.to_roman(integer)
             self.assertEqual(numeral, result)
+
+    def test_from_roman_known_values(self):
+        """from_roman should give known result with known input"""
+        for integer, numeral in self.known_values:
+            result = roman5.from_roman(numeral)
+            self.assertEqual(integer, result)
 
 class ToRomanBadInput(unittest.TestCase):
     def test_too_large(self):
         """to_roman should fail with large input"""
-        self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, 4000)
+        self.assertRaises(roman5.OutOfRangeError, roman5.to_roman, 4000)
 
     def test_zero(self):
         """to_roman should fail with 0 input"""
-        self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, 0)
+        self.assertRaises(roman5.OutOfRangeError, roman5.to_roman, 0)
 
     def test_negative(self):
         """to_roman should fail with negative input"""
-        self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, -1)
+        self.assertRaises(roman5.OutOfRangeError, roman5.to_roman, -1)
 
     def test_non_integer(self):
         """to_roman should fail with non-integer input"""
-        self.assertRaises(roman4.NotIntegerError, roman4.to_roman, 0.5)
+        self.assertRaises(roman5.NotIntegerError, roman5.to_roman, 0.5)
+
+class SanityCheck(unittest.TestCase):
+    def testSanity(self):
+        """from_roman(to_roman(n))==n for all n"""
+        for integer in range(1, 4000):
+            numeral = roman5.to_roman(integer)
+            result = roman5.from_roman(numeral)
+            self.assertEqual(integer, result)
 
 if __name__ == "__main__":
     unittest.main()
+
+# Copyright (c) 2009, Mark Pilgrim, All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+# 
+# * Redistributions of source code must retain the above copyright notice,
+#   this list of conditions and the following disclaimer.
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
