@@ -163,7 +163,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 </pre>
 <ol>
 <li>Rather than calling any function in the <code>humansize</code> module, you're just grabbing one of the data structures it defines: the list of "SI" (powers-of-1000) suffixes.
-<li>This looks complicated, but it's not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{1[0]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
+<li>This looks complicated, but it's not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
 </ol>
 
 <p>What this example shows is that <em>format specifers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names "just work":
