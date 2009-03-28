@@ -509,7 +509,7 @@ rules = LazyRules()</code></pre>
 
 <p>Moving backwards&hellip;
 
-<pre><code><a>    def __next__(self):
+<pre><code>    def __next__(self):
         .
         .
         .
@@ -528,7 +528,7 @@ rules = LazyRules()</code></pre>
 
 <p>Moving backwards all the way to the start of the <code>__next__()</code> method&hellip;
 
-<pre><code><a>    def __next__(self):
+<pre><code>    def __next__(self):
         self.cache_index += 1
         if len(self.cache) >= self.cache_index:
 <a>            return self.cache[self.cache_index - 1]     <span>&#x2460;</span></a>
