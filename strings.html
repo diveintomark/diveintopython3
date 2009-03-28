@@ -120,13 +120,13 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     Returns: string
 
 <a>    """                                                                     <span>&#x2462;</span></a>
-    if size < 0:
+    if size &lt; 0:
 <a>        raise ValueError('number must be non-negative')                     <span>&#x2463;</span></a>
 
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
     for suffix in SUFFIXES[multiple]:
         size /= multiple
-        if size < multiple:
+        if size &lt; multiple:
 <a>            return "{0:.1f} {1}".format(size, suffix)                       <span>&#x2464;</span></a>
 
     raise ValueError('number too large')</code></pre>
@@ -203,7 +203,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>But wait! There's more! Let's take another look at that strange line of code from <code>humansize.py</code>:
 
-<pre><code>if size < multiple:
+<pre><code>if size &lt; multiple:
     return "{0:.1f} {1}".format(size, suffix)</code></pre>
 
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It's two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don't. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
