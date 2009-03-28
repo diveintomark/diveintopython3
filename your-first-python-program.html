@@ -15,7 +15,7 @@ th{font-family:inherit !important}
 <p><span>&#x275D;</span> Don&#8217;t bury your burden in saintly silence. You have a problem?  Great. Rejoice, dive in, and investigate. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Buddhism>Ven. Henepola Gunaratana</a>
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>Diving in</h2>
+<h2 id=divingin>Diving In</h2>
 <p class=f>Books about programming usually start with a bunch of boring chapters about fundamentals and eventually work up to building something useful. Let's skip all that. Here is a complete, working Python program. It probably makes absolutely no sense to you. Don't worry about that, because you're going to dissect it line by line. But read through it first and see what, if anything, you can make of it.
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
 <pre><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -57,9 +57,10 @@ if __name__ == "__main__":
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <p>FIXME: this would be a good place to explain what the program, you know, actually does.
-<h2 id=declaringfunctions>Declaring functions</h2>
+<h2 id=declaringfunctions>Declaring Functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<aside>When you need a function, just declare it.</aside>
 <p>The keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses. Multiple arguments are separated with commas.
 <p>Also note that the function doesn't define a return datatype. Python functions do not specify the datatype of their return value; they don't even specify whether or not they return a value. (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
 <blockquote class=note>
@@ -69,7 +70,7 @@ if __name__ == "__main__":
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>In Java and other statically-typed languages, you must specify the datatype of the function return value and each function argument. In Python, you never explicitly specify the datatype of anything. Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
-<h3 id=datatypes>How Python's datatypes compare to other programming languages</h3>
+<h3 id=datatypes>How Python's Datatypes Compare to Other Programming Languages</h3>
 <p>An erudite reader sent me this explanation of how Python compares to other programming languages:
 <dl>
 <dt>statically typed language</dt>
@@ -92,9 +93,9 @@ if __name__ == "__main__":
 <tr><th>Weakly typed</th><td>C, Objective-C</td><td>JavaScript, Perl 5, <abbr>PHP</abbr></td></tr>
 <tr><th>Strongly typed</th><td>Pascal, Java</td><td>Python, Ruby</td></tr>
 </table>
-<h2 id=readability>Writing readable code</h2>
+<h2 id=readability>Writing Readable Code</h2>
 <p>I won't bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you've forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You'll thank me in six months.
-<h3 id=docstrings>Documentation strings</h3>
+<h3 id=docstrings>Documentation Strings</h3>
 <p>You can document a Python function by giving it a documentation string (<code>docstring</code> for short). In this program, the <code>approximate_size</code> function has a <code>docstring</code>:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     """Convert a file size to human-readable form.
@@ -107,6 +108,7 @@ if __name__ == "__main__":
     Returns: string
 
     """</code></pre>
+<aside>Every function deserves a decent docstring.</aside>
 <p>Triple quotes signify a multi-line string. Everything between the start and end quotes is part of a single string, including carriage returns, leading white space, and other quote characters. You can use them anywhere, but you'll see them most often used when defining a <code>docstring</code>.
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
@@ -115,11 +117,13 @@ if __name__ == "__main__":
 <blockquote class=note>
 <p><span>&#x261E;</span>Many Python <abbr>IDE</abbr>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip. This can be incredibly helpful, but it's only as good as the <code>docstring</code>s you write.
 </blockquote>
-<h3 id=functionannotations>Function annotations</h3>
+<!--
+<h3 id=functionannotations>Function Annotations</h3>
 <p>FIXME
-<h3 id=styleconventions>Style conventions</h3>
+<h3 id=styleconventions>Style Conventions</h3>
 <p>FIXME
-<h2 id=everythingisanobject>Everything is an object</h2>
+-->
+<h2 id=everythingisanobject>Everything Is An Object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
 <pre class=screen>
@@ -145,7 +149,7 @@ if __name__ == "__main__":
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span><code>import</code> in Python is like <code>require</code> in Perl. Once you <code>import</code> a Python module, you access its functions with <code><var>module</var>.<var>function</var></code>; once you <code>require</code> a Perl module, you access its functions with <code><var>module</var>::<var>function</var></code>.
 </blockquote>
-<h3 id=importsearchpath>The <code>import</code> search path</h3>
+<h3 id=importsearchpath>The <code>import</code> Search Path</h3>
 <p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You'll learn more about lists later in this chapter.)
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>import sys</kbd>                       <span>&#x2460;</span></a>
@@ -160,11 +164,11 @@ if __name__ == "__main__":
 <li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files. Some, like the <code>sys</code> module, are "built-in modules"; they are actually baked right into Python itself. Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python!  (The <code>sys</code> module is written in <abbr>C</abbr>.)
 <li>You can add a new directory to Python's search path at runtime by appending the directory name to <code>sys.path</code>, and then Python will look in that directory as well, whenever you try to import a module. The effect lasts as long as Python is running. (You'll learn more about <code>append()</code> and other list methods in [FIXME xref-was-#datatypes].)
 </ol>
-<h3 id=whatsanobject>What's an object?</h3>
+<h3 id=whatsanobject>What's An Object?</h3>
 <p>Everything in Python is an object, and almost everything has attributes and methods. All functions have a built-in attribute <code>__doc__</code>, which returns the <var>docstring</var> defined in the function's source code. The <code>sys</code> module is an object which has (among other things) an attribute called <var>path</var>. And so forth.
 <p>Still, this doesn't answer the more fundamental question: what is an object?  Different programming languages define &#8220;object&#8221; in different ways. In some, it means that <em>all</em> objects <em>must</em> have attributes and methods; in others, it means that all objects are subclassable. In Python, the definition is looser; some objects have neither attributes nor methods (more on this in [FIXME xref-was-#datatypes]), and not all objects are subclassable (more on this in [FIXME xref-was-#fileinfo]). But everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function (more in this in [FIXME xref-was-#apihelp]).
 <p>This is so important that I'm going to repeat it in case you missed it the first few times: <em>everything in Python is an object</em>. Strings are objects. Lists are objects. Functions are objects. Even modules are objects.
-<h2 id=indentingcode>Indenting code</h2>
+<h2 id=indentingcode>Indenting Code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
 <pre><code>
 <a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span>&#x2460;</span></a>
@@ -189,7 +193,8 @@ if __name__ == "__main__":
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks. <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
 </blockquote>
-<h2 id=runningscripts>Running scripts</h2>
+<h2 id=runningscripts>Running Scripts</h2>
+<aside>Everything in Python is an object.</aside>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
 <pre><code>
 if __name__ == "__main__":
@@ -208,7 +213,7 @@ if __name__ == "__main__":
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
-<h2 id=furtherreading>Further reading</h2>
+<h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href=http://www.python.org/dev/peps/pep-0257/>PEP 257: Docstring Conventions</a> explains what distinguishes a good <code>docstring</code> from a great <code>docstring</code>.
 <li><a href=http://docs.python.org/3.0/tutorial/controlflow.html#documentation-strings>Python Tutorial: Documentation Strings</a> also touches on the subject.

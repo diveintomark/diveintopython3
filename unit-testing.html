@@ -14,7 +14,7 @@ body{counter-reset:h1 7}
 <p><span>&#x275D;</span> Certitude is not the test of certainty. We have been cocksure of many things that were not so. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Oliver_Wendell_Holmes,_Jr.>Oliver Wendell Holmes, Jr.</a>
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>(Not) diving in</h2>
+<h2 id=divingin>(Not) Diving In</h2>
 <p class=f>How do you know that the code you wrote yesterday still works after the changes you made today? Every seasoned programmer has war stories of an &#8220;innocent&#8221; change that couldn't <em>possibly</em> have affected that other &#8220;unrelated&#8221; module&hellip; If this sounds familiar, this chapter is for you.
 <p>In this chapter, you're going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
 <p><a href="regular-expressions.html#romannumerals">The rules for Roman numerals</a> lead to a number of interesting observations:
@@ -37,7 +37,8 @@ body{counter-reset:h1 7}
 <li>When maintaining code, it helps you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
 <li>When writing code in a team, it increases confidence that the code you're about to commit isn't going to break someone else's code, because you can run their unit tests first. (I've seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn't play well with others.)
 </ul>
-<h2 id=romantest1>A single question</h2>
+<h2 id=romantest1>A Single Question</h2>
+<aside>Every test is an island.</aside>
 <p>A test case answers a single question about the code it is testing. A test case should be able to...
 <ul>
 <li>...run completely by itself, without any human input. Unit testing is about automation.
@@ -126,6 +127,7 @@ if __name__ == "__main__":
 <li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn't be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <abbr>API</abbr> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <abbr>API</abbr> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn't raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
 <li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>testToRomanKnownValues</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
 </ol>
+<aside>Write a test that fails, then code until it passes.</aside>
 <p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you've written any code, you're doing it wrong &mdash; your tests aren't testing your code at all! Write a test that fails, then code until it passes.
 <pre><code># roman1.py
 
@@ -215,7 +217,8 @@ OK</samp></pre>
 <li>Hooray! The <code>to_roman()</code> function passes the &#8220;known values&#8221; test case. It's not comprehensive, but it does put the function through its paces with a variety of inputs, including inputs that produce every single-character Roman numeral, the largest possible input (<code>3999</code>), and the input that produces the longest possible Roman numeral (<code>3888</code>). At this point, you can be reasonably confident that the function works for any good input value you could throw at it.
 </ol>
 <p>&#8220;Good&#8221; input? Hmm. What about bad input?
-<h2 id=romantest2>&#8220;Halt and catch fire&#8221;</h2>
+<h2 id=romantest2>&#8220;Halt And Catch Fire&#8221;</h2>
+<aside>The Pythonic way to halt and catch fire is to raise an exception.</aside>
 <p>It is not enough to test that functions succeed when given good input; you must also test that they fail when given bad input. And not just any sort of failure; they must fail in the way you expect.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import roman1</kbd>
@@ -326,7 +329,7 @@ OK</samp></pre>
 <ol>
 <li>Hooray! Both tests pass. Because you worked iteratively, bouncing back and forth between testing and coding, you can be sure that the two lines of code you just wrote were the cause of that one test going from &#8220;fail&#8221; to &#8220;pass.&#8221; That kind of confidence doesn't come cheap, but it will pay for itself over the lifetime of your code.
 </ol>
-<h2 id=romantest3>More halting, more fire</h2>
+<h2 id=romantest3>More Halting, More Fire</h2>
 <p>...
 <!--
 For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman()</code> should only accept uppercase input&#8221;) was an error, because the call to <code>numeral.upper()</code> raised an <code>AttributeError</code> exception, because <code>to_roman()</code> was supposed to return a string but didn't. But <code>testZero</code> (&#8220;<code>to_roman()</code> should fail with 0 input&#8221;) was a failure, because the call to <code>from_roman()</code> did not raise the <code>InvalidRomanNumeral</code> exception that <code>assertRaises</code> was looking for.

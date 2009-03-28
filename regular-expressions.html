@@ -14,14 +14,14 @@ body{counter-reset:h1 4}
 <p><span>&#x275D;</span> Some people, when confronted with a problem, think &#8220;I know, I&#8217;ll use regular expressions.&#8221;  Now they have two problems. <span>&#x275E;</span><br>&mdash; <a href=http://www.jwz.org/hacks/marginal.html>Jamie Zawinski</a>
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>Diving in</h2>
+<h2 id=divingin>Diving In</h2>
 <p class=f>Every modern programming language has built-in functions for working with strings. In Python, strings have methods for searching and replacing: <code>index()</code>, <code>find()</code>, <code>split()</code>, <code>count()</code>, <code>replace()</code>, <i class=baa>&amp;</i>c. But these methods are limited to the simplest of cases. For example, the <code>index()</code> method looks for a single, hard-coded substring, and the search is always case-sensitive. To do case-insensitive searches of a string <var>s</var>, you must call <code>s.lower()</code> or <code>s.upper()</code> and make sure your search strings are the appropriate case to match. The <code>replace()</code> and <code>split()</code> methods have the same limitations.
 <p>If your goal can be accomplished with string methods, you should use them. They&#8217;re fast and simple and easy to read, and there&#8217;s a lot to be said for fast, simple, readable code. But if you find yourself using a lot of different string functions with <code>if</code> statements to handle special cases, or if you&#8217;re chaining calls to <code>split()</code> and <code>join()</code> to slice-and-dice your strings, you may need to move up to regular expressions.
 <p>Regular expressions are a powerful and (mostly) standardized way of searching, replacing, and parsing text with complex patterns of characters. Although the regular expression syntax is tight and unlike normal code, the result can end up being <em>more</em> readable than a hand-rolled solution that uses a long chain of string functions. There are even ways of embedding comments within regular expressions, so you can include fine-grained documentation within them.
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>If you&#8217;ve used regular expressions in other languages (like Perl 5), Python&#8217;s syntax will be very familiar. Read the summary of the <a href=http://docs.python.org/dev/library/re.html#module-contents><code>re</code> module</a> to get an overview of the available functions and their arguments.
 </blockquote>
-<h2 id=streetaddresses>Case study: street addresses</h2>
+<h2 id=streetaddresses>Case Study: Street Addresses</h2>
 <p>This series of examples was inspired by a real-life problem I had in my day job several years ago, when I needed to scrub and standardize street addresses exported from a legacy system before importing them into a newer system. (See, I don&#8217;t just make this stuff up; it&#8217;s actually useful.)  This example shows how I approached the problem.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>s = '100 NORTH MAIN ROAD'</kbd>
@@ -42,6 +42,7 @@ body{counter-reset:h1 4}
 <li>It&#8217;s time to move up to regular expressions. In Python, all functionality related to regular expressions is contained in the <code>re</code> module.
 <li>Take a look at the first parameter: <code>'ROAD$'</code>. This is a simple regular expression that matches <code>'ROAD'</code> only when it occurs at the end of a string. The <code>$</code> means &#8220;end of the string.&#8221; (There is a corresponding character, the caret <code>^</code>, which means &#8220;beginning of the string.&#8221;) Using the <code>re.sub</code> function, you search the string <var>s</var> for the regular expression <code>'ROAD$'</code> and replace it with <code>'RD.'</code>. This matches the <code>ROAD</code> at the end of the string <var>s</var>, but does <em>not</em> match the <code>ROAD</code> that&#8217;s part of the word <code>BROAD</code>, because that&#8217;s in the middle of <var>s</var>.
 </ol>
+<aside>^ matches the start of a string. $ matches the end of a string.</aside>
 <p>Continuing with my story of scrubbing addresses, I soon discovered that the previous example, matching <code>'ROAD'</code> at the end of the address, was not good enough, because not all addresses included a street designation at all. Some addresses simply ended with the street name. I got away with it most of the time, but if the street name was <code>'BROAD'</code>, then the regular expression would match <code>'ROAD'</code> at the end of the string as part of the word <code>'BROAD'</code>, which is not what I wanted.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>s = '100 BROAD'</kbd>
@@ -62,7 +63,7 @@ body{counter-reset:h1 4}
 <li><em>*sigh*</em>  Unfortunately, I soon found more cases that contradicted my logic. In this case, the street address contained the word <code>'ROAD'</code> as a whole word by itself, but it wasn&#8217;t at the end, because the address had an apartment number after the street designation. Because <code>'ROAD'</code> isn&#8217;t at the very end of the string, it doesn&#8217;t match, so the entire call to <code>re.sub</code> ends up replacing nothing at all, and you get the original string back, which is not what you want.
 <li>To solve this problem, I removed the <code>$</code> character and added another <code>\b</code>. Now the regular expression reads &#8220;match <code>'ROAD'</code> when it&#8217;s a whole word by itself anywhere in the string,&#8221; whether at the end, the beginning, or somewhere in the middle.
 </ol>
-<h2 id=romannumerals>Case study: Roman numerals</h2>
+<h2 id=romannumerals>Case Study: Roman Numerals</h2>
 <p>You&#8217;ve most likely seen Roman numerals, even if you didn&#8217;t recognize them. You may have seen them in copyrights of old movies and television shows (&#8220;Copyright <code>MCMXLVI</code>&#8221; instead of &#8220;Copyright <code>1946</code>&#8221;), or on the dedication walls of libraries or universities (&#8220;established <code>MDCCCLXXXVIII</code>&#8221; instead of &#8220;established <code>1888</code>&#8221;). You may also have seen them in outlines and bibliographical references. It&#8217;s a system of representing numbers that really does date back to the ancient Roman empire (hence the name).
 <p>In Roman numerals, there are seven characters that are repeated and combined in various ways to represent numbers.
 <ul>
@@ -82,7 +83,7 @@ body{counter-reset:h1 4}
 <li>The fives characters can not be repeated. The number <code>10</code> is always represented as <code>X</code>, never as <code>VV</code>. The number <code>100</code> is always <code>C</code>, never <code>LL</code>.
 <li>Roman numerals are always written highest to lowest, and read left to right, so the order the of characters matters very much. <code>DC</code> is <code>600</code>; <code>CD</code> is a completely different number (<code>400</code>, <code>100</code> less than <code>500</code>). <code>CI</code> is <code>101</code>; <code>IC</code> is not even a valid Roman numeral (because you can&#8217;t subtract <code>1</code> directly from <code>100</code>; you would need to write it as <code>XCIX</code>, for <code>10</code> less than <code>100</code>, then <code>1</code> less than <code>10</code>).
 </ul>
-<h3 id=thousands>Checking for thousands</h3>
+<h3 id=thousands>Checking For Thousands</h3>
 <p>What would it take to validate that an arbitrary string is a valid Roman numeral?  Let&#8217;s take it one digit at a time. Since Roman numerals are always written highest to lowest, let&#8217;s start with the highest: the thousands place. For numbers 1000 and higher, the thousands are represented by a series of <code>M</code> characters.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
@@ -104,7 +105,8 @@ body{counter-reset:h1 4}
 <li><code>'MMMM'</code> does not match. All three <code>M</code> characters match, but then the regular expression insists on the string ending (because of the <code>$</code> character), and the string doesn&#8217;t end yet (because of the fourth <code>M</code>). So <code>search()</code> returns <code>None</code>.
 <li>Interestingly, an empty string also matches this regular expression, since all the <code>M</code> characters are optional.
 </ol>
-<h3 id=hundreds>Checking for hundreds</h3>
+<h3 id=hundreds>Checking For Hundreds</h3>
+<aside>? makes a pattern optional.</aside>
 <p>The hundreds place is more difficult than the thousands, because there are several mutually exclusive ways it could be expressed, depending on its value.
 <ul>
 <li><code>100 = C</code>
@@ -150,7 +152,8 @@ body{counter-reset:h1 4}
 <li>Interestingly, an empty string still matches this pattern, because all the <code>M</code> characters are optional and ignored, and the empty string matches the <code>D?C?C?C?</code> pattern where all the characters are optional and ignored.
 </ol>
 <p>Whew! See how quickly regular expressions can get nasty?  And you&#8217;ve only covered the thousands and hundreds places of Roman numerals. But if you followed all that, the tens and ones places are easy, because they&#8217;re exactly the same pattern. But let&#8217;s look at another way to express the pattern.
-<h2 id=nmsyntax>Using the <code>{n,m}</code> Syntax</h2>
+<h2 id=nmsyntax>Using The <code>{n,m}</code> Syntax</h2>
+<aside>{1,4} matches between 1 and 4 occurrences of a pattern.</aside>
 <p>In the previous section, you were dealing with a pattern where the same character could be repeated up to three times. There is another way to express this in regular expressions, which some people find more readable. First look at the method we already used in the previous example.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
@@ -188,7 +191,7 @@ body{counter-reset:h1 4}
 <li>This matches the start of the string, then three <code>M</code> out of a possible three, then the end of the string.
 <li>This matches the start of the string, then three <code>M</code> out of a possible three, but then <em>does not match</em> the end of the string. The regular expression allows for up to only three <code>M</code> characters before the end of the string, but you have four, so the pattern does not match and returns <code>None</code>.
 </ol>
-<h3 id=tensandones>Checking for tens and ones</h3>
+<h3 id=tensandones>Checking For Tens And Ones</h3>
 <p>Now let&#8217;s expand the Roman numeral regular expression to cover the tens and ones place. This example shows the check for tens.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$'</kbd>
@@ -209,6 +212,7 @@ body{counter-reset:h1 4}
 <li>This matches the start of the string, then the first optional <code>M</code>, then <code>CM</code>, then the optional <code>L</code> and all three optional <code>X</code> characters, then the end of the string. <code>MCMLXXX</code> is the Roman numeral representation of <code>1980</code>.
 <li>This matches the start of the string, then the first optional <code>M</code>, then <code>CM</code>, then the optional <code>L</code> and all three optional <code>X</code> characters, then <em>fails to match</em> the end of the string because there is still one more <code>X</code> unaccounted for. So the entire pattern fails to match, and returns <code>None</code>. <code>MCMLXXXX</code> is not a valid Roman numeral.
 </ol>
+<aside>(A|B) matches either pattern A or pattern B.</aside>
 <p>The expression for the ones place follows the same pattern. I&#8217;ll spare you the details and show you the end result.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$'</kbd>
@@ -264,7 +268,8 @@ body{counter-reset:h1 4}
 <li>This matches the start of the string, then four of a possible four <code>M</code>, then <code>D</code> and three of a possible three <code>C</code>, then <code>L</code> and three of a possible three <code>X</code>, then <code>V</code> and three of a possible three <code>I</code>, then the end of the string.
 <li>This does not match. Why?  Because it doesn&#8217;t have the <code>re.VERBOSE</code> flag, so the <code>re.search</code> function is treating the pattern as a compact regular expression, with significant whitespace and literal hash marks. Python can&#8217;t auto-detect whether a regular expression is verbose or not. Python assumes every regular expression is compact unless you explicitly state that it is verbose.
 </ol>
-<h2 id=phonenumbers>Case study: parsing phone numbers</h2>
+<h2 id=phonenumbers>Case study: Parsing Phone Numbers</h2>
+<aside>\d matches any numeric digit (0&ndash;9). \D matches anything but digits.</aside>
 <p>So far you&#8217;ve concentrated on matching whole patterns. Either the pattern matches, or it doesn&#8217;t. But regular expressions are much more powerful than that. When a regular expression <em>does</em> match, you can pick out specific pieces of it. You can find out what matched where.
 <p>This example came from another real-world problem I encountered, again from a previous day job. The problem: parsing an American phone number. The client wanted to be able to enter the number free-form (in a single field), but then wanted to store the area code, trunk, number, and optionally an extension separately in the company&#8217;s database. I scoured the Web and found many examples of regular expressions that purported to do this, but none of them were permissive enough.
 <p>Here are the phone numbers I needed to be able to accept:

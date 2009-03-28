@@ -14,7 +14,7 @@ body{counter-reset:h1 2}
 <p><span>&#x275D;</span> Wonder is the foundation of all philosophy, inquiry its progress, ignorance its end. <span>&#x275E;</span><br>&mdash; Michel de Montaigne
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>Diving in</h2>
+<h2 id=divingin>Diving In</h2>
 <p class=f>Cast aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let's talk about datatypes. In Python, <a href=your-first-python-program.html#datatypes>every variable has a datatype</a>, but you don't need to declare it explicitly. Based on each variable's original assignment, Python figures out what type it is and keeps tracks of that internally.
 <p>Python has many native datatypes. Here are the important ones:
 <ol>
@@ -29,6 +29,7 @@ body{counter-reset:h1 2}
 <p>Of course, there are a lot more types than these seven. <a href=your-first-python-program.html#everythingisanobject>Everything is an object</a> in Python, so there are types like <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, and even <i>compiled code</i>. You've already seen some of these: <a href=your-first-python-program.html#runningscripts>modules have names</a>, <a href=your-first-python-program.html#docstrings>functions have <code>docstrings</code></a>, <i class=baa>&amp;</i>c. You'll learn about classes in [FIXME xref] and files in [FIXME xref].
 <p>Strings and bytes are important enough &mdash; and complicated enough &mdash; that they get their own chapter. Let's look at the others first.
 <h2 id=booleans>Booleans</h2>
+<aside>You can use virtually any expression in a boolean context.</aside>
 <p>Booleans are either true or false. Python has two constants, <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 <pre><code>if size &lt; 0:
@@ -60,7 +61,7 @@ body{counter-reset:h1 2}
 <li>Adding an <code>int</code> to an <code>int</code> yields an <code>int</code>.
 <li>Adding an <code>int</code> to a <code>float</code> yields a <code>float</code>. Python coerces the <code>int</code> into a <code>float</code> to perform the addition, then returns a <code>float</code> as the result.
 </ol>
-<h3 id=number-coercion>Coercing integers to floats and vice-versa</h3>
+<h3 id=number-coercion>Coercing Integers To Floats And Vice-Versa</h3>
 <p>As you just saw, some operators (like addition) will coerce integers to floating point numbers as needed. You can also coerce them by yourself.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>float(2)</kbd>                <span>&#x2460;</span></a>
@@ -86,7 +87,7 @@ body{counter-reset:h1 2}
 <blockquote class="note compare python2">
 <p><span>&#x261E;</span>Python 2 had separate types for <code>int</code> and <code>long</code>. The <code>int</code> datatype was limited by <code>sys.maxint</code>, which varied by platform but was usually <code>2<sup>32</sup>-1</code>. Python 3 has just one integer type, which behaves mostly like the old <code>long</code> type from Python 2. See <a href=http://www.python.org/dev/peps/pep-0237><abbr>PEP</abbr> 237</a> for details.
 </blockquote>
-<h3 id=common-numerical-operations>Common numerical operations</h3>
+<h3 id=common-numerical-operations>Common Numerical Operations</h3>
 <p>You can do all kinds of things with numbers.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>11 / 2</kbd>      <span>&#x2460;</span></a>
@@ -145,7 +146,8 @@ body{counter-reset:h1 2}
 <li>The <code>math</code> module has all the basic trigonometric functions, including <code>sin()</code>, <code>cos()</code>, <code>tan()</code>, and variants like <code>asin()</code>.
 <li>Note, however, that Python does not have infinite precision. <code>tan(&pi; / 4)</code> should return <code>1.0</code>, not <code>0.99999999999999989</code>.
 </ol>
-<h3 id=numbers-in-a-boolean-context>Numbers in a boolean context</h3>
+<h3 id=numbers-in-a-boolean-context>Numbers In A Boolean Context</h3>
+<aside>Zero values are false, and non-zero values are true.</aside>
 <p>You can use numbers <a href="#booleans">in a boolean context</a>, such as an <code>if</code> statement. Zero values are false, and non-zero values are true.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>def is_it_true(anything):</kbd>             <span>&#x2460;</span></a>
@@ -183,7 +185,7 @@ body{counter-reset:h1 2}
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>A list in Python is much more than an array in Java (although it can be used as one if that's really all you want out of life). A better analogy would be to the <code>ArrayList</code> class, which can hold arbitrary objects and can expand dynamically as new items are added.
 </blockquote>
-<h3 id=creatinglists>Creating a list</h3>
+<h3 id=creatinglists>Creating A List</h3>
 <p>Creating a list is easy: use square brackets to wrap a comma-separated list of values.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>a_list = ['a', 'b', 'mpilgrim', 'z', 'example']</kbd>  <span>&#x2460;</span></a>
@@ -204,7 +206,8 @@ body{counter-reset:h1 2}
 <li>A negative index accesses items from the end of the list counting backwards. The last item of any non-empty list is always <code>a_list[-1]</code>.
 <li>If the negative index is confusing to you, think of it this way: <code>a_list[-<var>n</var>] == a_list[len(a_list) - <var>n</var>]</code>. So in this list, <code>a_list[-3] == a_list[5 - 3] == a_list[2]</code>.
 </ol>
-<h3 id=slicinglists>Slicing a list</h3>
+<h3 id=slicinglists>Slicing A List</h3>
+<aside>a_list[0] is the first item of a_list.</aside>
 <p>Once you've defined a list, you can get any part of it as a new list. This is called <i>slicing</i> the list.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list</kbd>
@@ -229,7 +232,7 @@ body{counter-reset:h1 2}
 <li>Similarly, if the right slice index is the length of the list, you can leave it out. So <code>a_list[3:]</code> is the same as <code>a_list[3:5]</code>, because this list has five items.  There is a pleasing symmetry here. In this five-item list, <code>a_list[:3]</code> returns the first 3 items, and <code>a_list[3:]</code> returns the last two items. In fact, <code>a_list[:<var>n</var>]</code> will always return the first <var>n</var> items, and <code>a_list[<var>n</var>:]</code> will return the rest, regardless of the length of the list.
 <li>If both slice indices are left out, all items of the list are included. But this is not the same as the original <var>a_list</var> variable. It is a new list that happens to have all the same items. <code>a_list[:]</code> is shorthand for making a complete copy of a list.
 </ol>
-<h3 id=extendinglists>Adding items to a list</h3>
+<h3 id=extendinglists>Adding Items To A List</h3>
 <p>There are four ways to add items to a list.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a']</kbd>
@@ -265,7 +268,7 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd>a_list</kbd>
 <samp>['a', 'b', 'c', 'd', 'e', 'f', ['g', 'h', 'i']]</samp>
 <a><samp class=p>>>> </samp><kbd>len(a_list)</kbd>                     <span>&#x2463;</span></a>
-<samp>4</samp>
+<samp>7</samp>
 <samp class=p>>>> </samp><kbd>a_list[-1]</kbd>
 <samp>['g', 'h', 'i']</samp></pre>
 <ol>
@@ -274,7 +277,7 @@ body{counter-reset:h1 2}
 <li>On the other hand, the <code>append()</code> method takes any number of arguments, each of which can be any datatype.  Here, you're calling the <code>append()</code> method with a single argument, a list of three items.
 <li>If you start with a list of six items and append a list onto it, you end up with... a list of seven items. Why seven? Because the last item (which you just appended) <em>is itself a list</em>. Lists can contain any type of data, including other lists. That may be what you want, or it may not. But it's what you asked for, and it's what you got.
 </ol>
-<h3 id=searchinglists>Searching for values in a list</h3>
+<h3 id=searchinglists>Searching For Values In A List</h3>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
 <a><samp class=p>>>> </samp><kbd>'mpilgrim' in a_list</kbd>      <span>&#x2460;</span></a>
@@ -296,7 +299,8 @@ ValueError: list.index(x): x not in list</samp></pre>
 <li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
 <li>As you might <em>not</em> expect, if the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later.
 </ol>
-<h3 id=lists-in-a-boolean-context>Lists in a boolean context</h3>
+<h3 id=lists-in-a-boolean-context>Lists In A Boolean Context</h3>
+<aside>Empty lists are false; all other lists are true.</aside>
 <p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>def is_it_true(anything):</kbd>
@@ -322,7 +326,7 @@ ValueError: list.index(x): x not in list</samp></pre>
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>A dictionary in Python is like a hash in Perl 5. In Perl 5, variables that store hashes always start with a <code>%</code> character. In Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
-<h3 id=creating-dictionaries>Creating a dictionary</h3>
+<h3 id=creating-dictionaries>Creating A Dictionary</h3>
 <p>Creating a dictionary is easy. The syntax is similar to <a href=#sets>sets</a>, but instead of values, you have key-value pairs. Once you have a dictionary, you can look up values by their key.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>a_dict = {"server":"db.diveintopython3.org", "database":"mysql"}</kbd>  <span>&#x2460;</span></a>
@@ -342,7 +346,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li><code>'database'</code> is a key, and its associated value, referenced by <code>a_dict["database"]</code>, is <code>'mysql'</code>.
 <li>You can get values by key, but you can't get keys by value. So <code>a_dict["server"]</code> is <code>'db.diveintopython3.org'</code>, but <code>a_dict["db.diveintopython3.org"]</code> raises an exception, because <code>'db.diveintopython3.org'</code> is not a key.
 </ol>
-<h3 id=modifying-dictionaries>Modifying a dictionary</h3>
+<h3 id=modifying-dictionaries>Modifying A Dictionary</h3>
 <p>Dictionaries do not have any predefined size limit. You can add new key-value pairs to a dictionary at any time, or you can modify the value of an existing key. Continuing from the previous example:
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_dict</kbd>
@@ -366,7 +370,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li>Assigning a value to an existing dictionary key simply replaces the old value with the new one.
 <li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely &mdash; that's a capital <kbd>U</kbd> in <kbd>"User"</kbd>. Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one. It may look similar to you, but as far as Python is concerned, it's completely different.
 </ol>
-<h3 id=mixed-value-dictionaries>Mixed-value dictionaries</h3>
+<h3 id=mixed-value-dictionaries>Mixed-Value Dictionaries</h3>
 <p>Dictionaries aren't just for strings. Dictionary values can be any datatype, including integers, booleans, arbitrary objects, or even other dictionaries. And within a single dictionary, the values don't all need to be the same type; you can mix and match as needed. Dictionary keys are more restricted, but they can be strings, integers, and a few other types. You can also mix and match key datatypes within a dictionary.
 <p>In fact, you've already seen a dictionary with non-string keys and values, in <a href=your-first-python-program.html#divingin>your first Python program</a>.
 <pre><code>SUFFIXES = {1000: ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'),
@@ -389,8 +393,9 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li>Similarly, <code>1024</code> is a key in the <code>SUFFIXES</code> dictionary; its value is also a list of eight items.
 <li>Since <code>SUFFIXES[1000]</code> is a list, you can address individual items in the list by their 0-based index.
 </ol>
-<h3 id=dictionaries-in-a-boolean-context>Dictionaries in a boolean context</h3>
-<p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+<h3 id=dictionaries-in-a-boolean-context>Dictionaries In A Boolean Context</h3>
+<aside>Empty dictionaries are false; all other dictionaries are true.</aside>
+<p>You can also use a dictionary in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd>  if anything:</kbd>
@@ -427,7 +432,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp class=p>>>> </samp><kbd>x == y</kbd>
 <samp>True</samp>
 </pre>
-<h3 id=none-in-a-boolean-context><code>None</code> in a boolean context</h3>
+<h3 id=none-in-a-boolean-context><code>None</code> In A Boolean Context</h3>
 <p>In <a href=#booleans>a boolean context</a>, <code>None</code> is false and <code>not None</code> is true.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>def is_it_true(anything):</kbd>
@@ -440,7 +445,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp>no, it's false</samp>
 <samp class=p>>>> </samp><kbd>is_it_true(not None)</kbd>
 <samp>yes, it's true</samp></pre>
-<h2 id=furtherreading>Further reading</h2>
+<h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href="http://docs.python.org/dev/3.0/library/fractions.html">The <code>fractions</code> module</a>
 <li><a href="http://docs.python.org/dev/3.0/library/math.html">The <code>math</code> module</a>

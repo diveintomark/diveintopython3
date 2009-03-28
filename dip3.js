@@ -100,6 +100,6 @@ function showTOC() {
 	toc += '</ol>';
 	level -= 1;
     }
-    toc = '<span>&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a>' + toc;
+    toc = '<span>&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a><ol start=0><li><a href=table-of-contents.html><span>&uarr;</span> Full table of contents</a></li>' + toc.substring(4);
     $("#toc").html(toc);
 }
