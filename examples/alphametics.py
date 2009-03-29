@@ -28,7 +28,8 @@ if __name__ == '__main__':
     import sys
     for puzzle in sys.argv[1:]:
         print(puzzle)
-        for solution in solve(puzzle):
+        solution = solve(puzzle)
+        if solution:
             print(solution)
 
 # Copyright (c) 2009, Raymond Hettinger, All rights reserved.
