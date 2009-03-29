@@ -1,3 +1,11 @@
+Python 3.1:
+  OrderedDict
+  "".format() auto-numbered format specifiers
+  unittest: assertRaises context block (?)
+  importlib
+  (possibly) yield from
+  (possibly) IP address library
+
 http://www.alanwood.net/unicode/general_punctuation.html
 http://www.alanwood.net/unicode/arrows.html
 http://www.alanwood.net/unicode/miscellaneous_technical.html
