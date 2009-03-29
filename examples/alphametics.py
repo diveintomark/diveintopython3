@@ -1,13 +1,13 @@
+"""Find solutions to alphametic equations.
+
+>>> alphametics.solve('SEND + MORE == MONEY')
+'9567 + 1085 == 10652'
+"""
+
 import re
 import itertools
 
 def solve(puzzle):
-    '''Find solutions to alphametic equations.
-
-    >>> solve('SEND + MORE == MONEY')
-    9567 + 1085 == 10652
-
-    '''
     words = re.findall('[A-Z]+', puzzle)
     unique_characters = set(''.join(words))
     assert len(unique_characters) <= 10
