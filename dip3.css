@@ -60,13 +60,13 @@ abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 .q{text-align:right;font-style:oblique}
 .q span{font-size:large}
 .note{margin:3.5em 4.94em}
-.note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em}
+.note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em;color:steelblue}
 .c,pre,.w,.w a,.d{line-height:2.154}
 .f:first-letter{float:left;color:lightblue;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 p,ul,ol{margin:1.75em 0;font-size:medium}
 
 /* basics */
-html{background:#fff;color:#333}
+html{background:white;color:darkslategray}
 body{margin:1.75em 28px}
 form div{float:right}
 .c{text-align:center;margin:2.154em 0}
@@ -75,7 +75,7 @@ form div{float:right}
 a{text-decoration:none;border-bottom:1px dotted}
 a:hover{border-bottom:1px solid}
 a:link,.w a{color:steelblue}
-a:visited{color:#93c}
+a:visited{color:darkorchid}
 .c a{color:inherit}
 
 /* code blocks */
@@ -103,8 +103,9 @@ h1{border-bottom:4px double;width:100%;margin:1em 0}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
-h2{counter-reset:h3;border-top:1px dotted;margin-top:1.75em;padding-top:1.75em}
+h2{counter-reset:h3;border-top:1px dotted;padding-top:1.75em}
+h2,h3{margin-top:1.75em}
 #toc + h2{border:0;margin:0;padding:0}
 #toc + h2:before{content:""}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
+aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue url(bsb.png) repeat-x;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
