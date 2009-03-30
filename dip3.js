@@ -1,10 +1,10 @@
+var HS = {'visible': 'hide', 'hidden': 'show'};
 //google.load("jquery", "1.3");
 //google.setOnLoadCallback(function() {
 $(document).ready(function() {
 	hideTOC();
 	
 	/* "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks */
-	var HS = {'visible': 'hide', 'hidden': 'show'};
 	$("pre > code").each(function(i) {
 		var pre = $(this.parentNode);
 		if (pre.parents("table").length == 0) {
