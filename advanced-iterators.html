@@ -17,11 +17,289 @@ body{counter-reset:h1 6}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
+<p class=d>[<a href=examples/alphametics.py>download <code>alphametics.py</code></a>]
+<pre><code>import re
+import itertools
+
+def solve(puzzle):
+    words = re.findall('[A-Z]+', puzzle.upper())
+    unique_characters = {c for c in ''.join(words)}
+    assert len(unique_characters) <= 10
+    first_letters = {word[0] for word in words}
+    n = len(first_letters)
+    sorted_characters = ''.join(first_letters) + \
+        ''.join(unique_characters - first_letters)
+    characters = tuple(ord(c) for c in sorted_characters)
+    digits = tuple(ord(c) for c in '0123456789')
+    zero = digits[0]
+    for guess in itertools.permutations(digits, len(characters)):
+        if zero not in guess[:n]:
+            equation = puzzle.translate(dict(zip(characters, guess)))
+            if eval(equation):
+                return equation
+
+if __name__ == '__main__':
+    import sys
+    for puzzle in sys.argv[1:]:
+        print(puzzle)
+        solution = solve(puzzle)
+        if solution:
+            print(solution)</code></pre>
+
+<pre class=screen>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "SEND + MORE == MONEY"</kbd>
+<samp>SEND + MORE == MONEY
+9567 + 1085 == 10652</samp>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "I + LOVE + YOU == DORA"</kbd>
+<samp>I + LOVE + YOU == DORA
+1 + 2784 + 975 == 3760</samp></pre>
+
+<h2 id=re-findall>Finding all occurrences of a pattern</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import re</kbd>
+<samp class=p>>>> </samp><kbd>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>
+<samp>['SEND', 'MORE', 'MONEY']</samp></pre>
+
+<p>FIXME
+
+<h2 id=unique-items>Finding the unique items in a sequence</h2>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
+<samp class=p>>>> </samp><kbd>{c for c in a_list}</kbd>
+<samp>{'a', 'c', 'b', 'd'}</samp>
+<samp class=p>>>> </samp><kbd>a_string = 'EAST IS EAST'</kbd>
+<samp class=p>>>> </samp><kbd>{c for c in a_string}</kbd>
+<samp>{'A', ' ', 'E', 'I', 'S', 'T'}</samp>
+<samp class=p>>>> </samp><kbd>words = ['SEND', 'MORE', 'MONEY']</kbd>
+<samp class=p>>>> </samp><kbd>''.join(words)</kbd>
+<samp>'SENDMOREMONEY'</samp>
+<samp class=p>>>> </samp><kbd>{c for c in ''.join(words)}</kbd>
+<samp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
+
+<p>FIXME
+
+<h2 id=assert>Making assertions</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>assert 1 + 1 = 2</kbd>
+<samp class=p>>>> </samp><kbd>assert 1 + 1 = 3</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in <module>
+AssertionError</samp></pre>
+
+<p>FIXME
+
+<pre><code>assert len(unique_characters) <= 10</code></pre>
+
+<p>&hellip;is equivalent to&hellip;
+
+<pre><code>if len(unique_characters) > 10:
+    raise AssertionError</code></pre>
+
+<h2 id=generator-objects>Generator objects</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp>>>> </samp><kbd>unique_characters = {'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</kbd>
+<samp>>>> </samp><kbd>gen = (ord(c) for c in unique_characters)</kbd>
+<samp>>>> </samp><kbd>gen</kbd>
+<samp>&lt;generator object &lt;genexpr> at 0x00BADC10></samp>
+<samp>>>> </samp><kbd>next(gen)</kbd>
+<samp>69</samp>
+<samp>>>> </samp><kbd>next(gen)</kbd>
+<samp>68</samp>
+<samp>>>> </samp><kbd>tuple(ord(c) for c in unique_characters)</kbd>
+<samp>(69, 68, 77, 79, 78, 83, 82, 89)</samp></pre>
+
+<p>FIXME
+
+<h2 id=permutations>Calculating Permutations&hellip; The Lazy Way!</h2>
+
+<p>FIXME what are permutations?
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import itertools</kbd>
+<samp class=p>>>> </samp><kbd>perms = itertools.permutations([1, 2, 3], 2)</kbd>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(1, 2)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(1, 3)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(2, 1)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(2, 3)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(3, 1)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>(3, 2)</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in <module>
+StopIteration</samp></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import itertools</kbd>
+<samp class=p>>>> </samp><kbd>perms = itertools.permutations('ABC', 3)</kbd>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('A', 'B', 'C')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('A', 'C', 'B')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('B', 'A', 'C')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('B', 'C', 'A')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('C', 'A', 'B')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp>('C', 'B', 'A')</samp>
+<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in <module>
+StopIteration</samp>
+<samp class=p>>>> </samp><kbd>list(itertools.permutations('ABC', 3))</kbd>
+<samp>[('A', 'B', 'C'), ('A', 'C', 'B'),
+ ('B', 'A', 'C'), ('B', 'C', 'A'),
+ ('C', 'A', 'B'), ('C', 'B', 'A')]</samp></pre>
+
+<p>FIXME
+
+<h3 id=more-itertools>Other Fun Stuff In The <code>itertools</code> Module</h3>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import itertools</kbd>
+<samp class=p>>>> </samp><kbd>list(itertools.product('ABC', '123'))</kbd>
+<samp>[('A', '1'), ('A', '2'), ('A', '3'), 
+ ('B', '1'), ('B', '2'), ('B', '3'), 
+ ('C', '1'), ('C', '2'), ('C', '3')]</samp>
+<samp class=p>>>> </samp><kbd>list(itertools.combinations('ABC', 2))</kbd>
+<samp>[('A', 'B'), ('A', 'C'), ('B', 'C')]</samp></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>names = list(open('examples/favorite-people.txt'))</kbd>
+<samp class=p>>>> </samp><kbd>names</kbd>
+<samp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
+'Mike\n', 'Chris\n', 'Sarah\n', 'Alex\n', 'Lizzie\n']</samp>
+<samp class=p>>>> </samp><kbd>names = [name[:-1] for name in names]</kbd>
+<samp class=p>>>> </samp><kbd>names</kbd>
+<samp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
+'Mike', 'Chris', 'Sarah', 'Alex', 'Lizzie']</samp>
+<samp class=p>>>> </samp><kbd>names = sorted(names)</kbd>
+<samp class=p>>>> </samp><kbd>names</kbd>
+<samp>['Alex', 'Anne', 'Chris', 'Dora', 'Ethan',
+'John', 'Lizzie', 'Mike', 'Sarah', 'Wesley']</samp>
+<samp class=p>>>> </samp><kbd>names = sorted(names, key=len)</kbd>
+<samp class=p>>>> </samp><kbd>names</kbd>
+<samp>['Alex', 'Anne', 'Dora', 'John', 'Mike',
+'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']</samp>
+<samp class=p>>>> </samp><kbd>import itertools</kbd>
+<samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>
+<samp class=p>>>> </samp><kbd>groups</kbd>
+<samp>&lt;itertools.groupby object at 0x00BB20C0></samp>
+<samp class=p>>>> </samp><kbd>list(groups)</kbd>
+<samp>[(4, &lt;itertools._grouper object at 0x00BA8BF0>),
+ (5, &lt;itertools._grouper object at 0x00BB4050>),
+ (6, &lt;itertools._grouper object at 0x00BB4030>)]</samp>
+<samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>
+<samp class=p>>>> </samp><kbd>for name_length, name_iter in groups:</kbd>
+<samp class=p>... </samp><kbd>    print('Names with {0:d} letters:'.format(name_length))</kbd>
+<samp class=p>... </samp><kbd>    for name in name_iter:</kbd>
+<samp class=p>... </samp><kbd>        print(name)</kbd>
+<samp class=p>... </samp>
+<samp>Names with 4 letters:
+Alex
+Anne
+Dora
+John
+Mike
+Names with 5 letters:
+Chris
+Ethan
+Sarah
+Names with 6 letters:
+Lizzie
+Wesley</samp></pre>
+
+<p>FIXME
+
+<h2 id=zip>Combining Iterators</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>list(range(0, 3))</kbd>
+<samp>[0, 1, 2]</samp>
+<samp class=p>>>> </samp><kbd>list(range(10, 13))</kbd>
+<samp>[10, 11, 12]</samp>
+<samp class=p>>>> </samp><kbd>list(itertools.chain(range(0, 3), range(10, 13)))</kbd>
+<samp>[0, 1, 2, 10, 11, 12]</samp>
+<samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 13)))</kbd>
+<samp>[(0, 10), (1, 11), (2, 12)]</samp>
+<samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 14)))</kbd>
+<samp>[(0, 10), (1, 11), (2, 12)]</samp>
+<samp class=p>>>> </samp><kbd>list(itertools.zip_longest(range(0, 3), range(10, 14)))</kbd>
+<samp>[(0, 10), (1, 11), (2, 12), (None, 13)]</samp></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
+<samp class=p>>>> </samp><kbd>guess = ('1', '2', '0', '3', '4', '5', '6', '7')</kbd>
+<samp class=p>>>> </samp><kbd>tuple(zip(characters, guess))</kbd>
+<samp>(('S', '1'), ('M', '2'), ('E', '0'), ('D', '3'),
+ ('O', '4'), ('N', '5'), ('R', '6'), ('Y', '7'))</samp>
+<samp class=p>>>> </samp><kbd>dict(zip(characters, guess))</kbd>
+<samp>{'E': '0', 'D': '3', 'M': '2', 'O': '4',
+ 'N': '5', 'S': '1', 'R': '6', 'Y': '7'}</samp></pre>
+
+<h2 id=new-kind-of-string-manipulation>A New Kind Of String Manipulation</h2>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>
+<samp class=p>>>> </samp><kbd>characters</kbd>
+<samp>(83, 77, 69, 68, 79, 78, 82, 89)</samp>
+<samp class=p>>>> </samp><kbd>digits = tuple(ord(c) for c in '0123456789')</kbd>
+<samp class=p>>>> </samp><kbd>digits</kbd>
+<samp>(48, 49, 50, 51, 52, 53, 54, 55, 56, 57)</samp>
+<samp class=p>>>> </samp><kbd>guess = (49, 50, 48, 51, 52, 53, 54, 55)</kbd>
+<samp class=p>>>> </samp><kbd>translation_table = dict(zip(characters, guess))</kbd>
+<samp class=p>>>> </samp><kbd>translation_table</kbd>
+<samp>{68: 51, 69: 48, 77: 50, 78: 53, 79: 52, 82: 54, 83: 49, 89: 55}</samp>
+<samp class=p>>>> </samp><kbd>"SEND + MORE == MONEY".translate(translation_table)</kbd>
+<samp>'1053 + 2460 == 24507'</samp></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>translation_table = {ord("A"): ord("O")}</kbd>
+<samp class=p>>>> </samp><kbd>translation_table</kbd>
+<samp>{65: 79}</samp>
+<samp class=p>>>> </samp><kbd>'MARK'.translate(translation_table)</kbd>
+<samp>'MORK'</samp></pre>
+
+<p>FIXME
+
+<h2 id=eval>Evaluating Arbitrary Strings As Python Expressions</h2>
+
+<p>FIXME
+
+<h2 id=alphametics-finale>Putting It All Together</h2>
+
+<p>FIXME
+
 <h2 id=furtherreading>Further Reading</h2>
-<ul>
-</ul>
+
+<p>FIXME
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html><span>&#x2133;</span>ark Pilgrim</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>
-

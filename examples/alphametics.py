@@ -8,18 +8,20 @@ import re
 import itertools
 
 def solve(puzzle):
-    words = re.findall('[A-Z]+', puzzle)
-    unique_characters = set(''.join(words))
+    words = re.findall('[A-Z]+', puzzle.upper())
+    unique_characters = {c for c in ''.join(words)}
     assert len(unique_characters) <= 10
-    first_letters = set(word[0] for word in words)
+    first_letters = {word[0] for word in words}
     n = len(first_letters)
     sorted_characters = ''.join(first_letters) + \
         ''.join(unique_characters - first_letters)
-    characters = tuple(map(ord, sorted_characters))
-    digits = tuple(map(ord, '0123456789'))
+    characters = tuple(ord(c) for c in sorted_characters)
+    digits = tuple(ord(c) for c in '0123456789')
     zero = digits[0]
     for guess in itertools.permutations(digits, len(characters)):
         if zero not in guess[:n]:
+            print(guess)
+            return
             equation = puzzle.translate(dict(zip(characters, guess)))
             if eval(equation):
                 return equation
