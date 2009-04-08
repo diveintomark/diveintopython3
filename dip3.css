@@ -47,7 +47,8 @@ Acknowledgements & Inspirations
 "Compose to a Vertical Rhythm" ........................... http://24ways.org/2006/compose-to-a-vertical-rhythm
 "Use the Best Available Ampersand" ....................... http://simplebits.com/notebook/2008/08/14/ampersands.html
 "Unicode Support in HTML, Fonts, and Web Browsers" ....... http://alanwood.net/unicode/
-
+"Return of the Mobile Style Sheet" ....................... http://www.alistapart.com/articles/returnofthemobilestylesheet
+"Optimizing Web Content Using Conditional CSS" ........... http://developer.apple.com/safari/library/documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/chapter_3_section_2.html
 */
 
 /* typography */
@@ -108,4 +109,49 @@ h2,h3{margin-top:1.75em}
 #toc + h2{border:0;margin:0;padding:0}
 #toc + h2:before{content:""}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue url(bsb.png) repeat-x;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
+aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
+
+/* mobile stylesheet for iPhone, Android, and other small-screen devices */
+@media screen and (max-device-width:480px){
+
+/* typography */
+body,.c{font-size:12px;font-family:sans-serif;word-spacing:0}
+pre,kbd,samp,code,var{font-size:12px;font-family:monospace}
+span,pre span{font-size:12px;font-family:Arial,sans-serif}
+.c,pre{line-height:1.75}
+.baa{font-size:12px;font-family:serif}
+abbr{font-variant:normal;text-transform:none;letter-spacing:0}
+.note,p,ul,ol{font-size:12px;margin:1.75em 0}
+
+/* basics */
+html{color:#000}
+body{margin:0}
+.c{margin:1.75em 0}
+
+/* links */
+a{text-decoration:underline;border-bottom:0}
+a:hover{border-bottom:0}
+pre a{text-decoration:none}
+
+/* code blocks */
+pre{padding:0;border:0}
+
+/* headers and pullquotes */
+h1,h2,h3{padding:0;border:0;letter-spacing:0;font-variant:normal}
+h1{margin:0;background:steelblue;color:white;border-bottom:1px solid gainsboro}
+h2,h3{margin:1.75em 0}
+h1,h1 code{font-size:18px}
+h2,h2 code{font-size:16px}
+h3,h3 code{font-size:14px}
+h1:before{content:counter(h1) ". "}
+h1{counter-reset:h2}
+h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
+h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
+
+/* overrides */
+.nm,.w,aside,form,form + p,.note span,ol li li{display:none}
+ol{padding-left:24px}
+ul{list-style:none;margin:0;padding:0}
+dd{margin:0 0 0 1.75em}
+/*}*/
+/* end mobile stylesheet */
