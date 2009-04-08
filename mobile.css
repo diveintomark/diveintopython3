@@ -24,7 +24,7 @@ pre{padding:0;border:0}
 
 /* headers and pullquotes */
 h1,h2,h3{padding:0;border:0;letter-spacing:0;font-variant:normal}
-h1{margin:0;background:steelblue;color:white;border-bottom:1px solid gainsboro}
+h1{margin:0;border-bottom:4px solid gainsboro;width:auto}
 h2,h3{margin:1.75em 0}
 h1,h1 code{font-size:18px}
 h2,h2 code{font-size:16px}
