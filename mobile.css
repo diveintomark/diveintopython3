@@ -35,7 +35,7 @@ h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
 
 /* overrides */
-.nm,.w,aside,form,form + p,.note span,ol li li{display:none}
+.nm,.w,aside,form,form + p,.note span,ol li li,.q span{display:none}
 ol{padding-left:24px}
 ul{list-style:none;margin:0;padding:0}
 dd{margin:0 0 0 1.75em}
