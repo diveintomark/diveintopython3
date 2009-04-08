@@ -1,7 +1,8 @@
 /* mobile stylesheet for iPhone, Android, and other small-screen devices */
 
 /* typography */
-body,.c,pre,kbd,samp,code,var,span,pre span,.baa{font-size:12px;word-spacing:0}
+body,.c,span,pre span,.baa{font-size:12px;word-spacing:0}
+pre,kbd,samp,code,var{font-size:12px;font-family:'Droid Sans Mono',monospace}
 .c,pre{line-height:1.75}
 .baa{font-family:serif}
 abbr{font-variant:normal;text-transform:none;letter-spacing:0}
