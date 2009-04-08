@@ -1,18 +1,15 @@
 /* mobile stylesheet for iPhone, Android, and other small-screen devices */
 
 /* typography */
-body,.c{font-size:12px;font-family:sans-serif;word-spacing:0}
-pre,kbd,samp,code,var{font-size:12px;font-family:monospace}
-span,pre span{font-size:12px;font-family:Arial,sans-serif}
+body,.c,pre,kbd,samp,code,var,span,pre span,.baa{font-size:12px;word-spacing:0}
 .c,pre{line-height:1.75}
-.baa{font-size:12px;font-family:serif}
+.baa{font-family:serif}
 abbr{font-variant:normal;text-transform:none;letter-spacing:0}
-.note,p,ul,ol{font-size:12px;margin:1.75em 0}
+.c,.note,p,ul,ol{font-size:12px;margin:1.75em 0}
 
 /* basics */
 html{color:#000}
 body{margin:0}
-.c{margin:1.75em 0}
 
 /* links */
 a{text-decoration:underline;border-bottom:0}
