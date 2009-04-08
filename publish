@@ -3,7 +3,7 @@
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
-cp robots.txt *.js *.css *.png build/
+cp robots.txt *.js *.css build/
 cp -R examples build/
 
 # minimize HTML (note: this script is quite fragile and relies on knowledge of how I write HTML)
@@ -20,26 +20,28 @@ sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
 java -jar yuicompressor-2.4.2.jar build/dip3.js > build/$revision.js
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
+java -jar yuicompressor-2.4.2.jar build/mobile.css > build/m-$revision.css
 sed -i -e "s|;}|}|g" build/$revision.css
 
 # put CSS inline
 css=`cat build/$revision.css`
 sed -i -e "s|<link rel=stylesheet type=text/css href=dip3.css>|<style>${css}</style>|g" -e "s|</style><style>||g" build/*.html
+sed -i -e "s|href=mobile.css|href=http://wearehugh.com/dip3/m-${revision}.css|g" build/*.html
 
 # JS will be served from a separate domain
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
 sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
 
 # images will be served from a separate domain
-sed -i -e "s|bsb.png|http://wearehugh.com/dip3/bsb.png|g" build/*.html
+#sed -i -e "s|bsb.png|http://wearehugh.com/dip3/bsb.png|g" build/*.html
 
 # minimize URLs
 sed -i -e "s|=http:|=|g" build/*.html
 sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
-chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples/*.txt build/*.txt build/*.png
+chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples/*.txt build/*.txt
 
 # ship it!
-rsync -essh -avzP build/$revision.js build/html5.js build/*.png diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/$revision.js build/html5.js build/m-$revision.css diveintomark.org:~/web/wearehugh.com/dip3/
 rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/
