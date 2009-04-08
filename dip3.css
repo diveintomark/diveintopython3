@@ -153,5 +153,5 @@ h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h
 ol{padding-left:24px}
 ul{list-style:none;margin:0;padding:0}
 dd{margin:0 0 0 1.75em}
-/*}*/
+}
 /* end mobile stylesheet */
