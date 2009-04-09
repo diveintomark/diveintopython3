@@ -11,6 +11,12 @@ for f in *.html; do
   python htmlminimizer.py "$f" build/"$f"
 done
 
+# add evil tracking code
+for f in build/*.html; do
+  cat "$f" ga.js > build/tmp
+  mv build/tmp "$f"
+done
+
 # jQuery will be served by Google AJAX Libraries API
 sed -i -e "s|jquery\.js|http://www.google.com/jsapi|g" build/*.html
 sed -i -e "s|//google\.|google.|g" build/dip3.js
