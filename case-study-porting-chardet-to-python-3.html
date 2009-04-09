@@ -1115,7 +1115,7 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\latin1prober.py", line 126, in get_confidence
     total = reduce(operator.add, self._mFreqCounter)
 NameError: global name 'reduce' is not defined</samp></pre>
-<p>According to the official <a href=http://docs.python.org/dev/3.0/whatsnew/3.0.html#builtins>What's New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: "Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable." You can read more about the decision from Guido van Rossum's weblog: <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=98196">The fate of reduce() in Python 3000</a>.
+<p>According to the official <a href=http://docs.python.org/3.0/whatsnew/3.0.html#builtins>What's New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: "Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable." You can read more about the decision from Guido van Rossum's weblog: <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=98196">The fate of reduce() in Python 3000</a>.
 <pre><code>def get_confidence(self):
     if self.get_state() == constants.eNotMe:
         return 0.01
