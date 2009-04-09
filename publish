@@ -22,6 +22,7 @@ java -jar yuicompressor-2.4.2.jar build/dip3.js > build/$revision.js
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
 java -jar yuicompressor-2.4.2.jar build/mobile.css > build/m-$revision.css
 sed -i -e "s|;}|}|g" build/$revision.css
+sed -i -e "s|;}|}|g" build/m-$revision.css
 
 # put CSS inline
 css=`cat build/$revision.css`
