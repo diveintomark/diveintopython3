@@ -50,57 +50,48 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number, from 0&ndash;4294967295. (That's 2<sup>32</sup>&minus;1.) Each 4-byte number represents a unique character used in at least one of the world's languages. Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn't be sufficient. Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn't have an <code>'A'</code> in it.
 
-<p>Right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than 256 numbers to express every possible character. [FIXME incomplete paragraph]
+<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it's wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
 
-<p>Of course, there is still the matter of all those legacy encoding systems. [FIXME incomplete paragraph]
+<p>There is a Unicode encoding that uses four bytes per character. It's called UTF-32, because 32 bits = 4 bytes. UTF-32 is a straightforward encoding; it takes each Unicode character (a 4-byte number) and represents the character with that same number. This has some advantages, the most important being that you can find the <var>Nth</var> character of a string in constant time, because the <var>Nth</var> character starts at the <var>4&times;Nth</var> byte. It also has several disadvantages, the most obvious being that it takes four freaking bytes to store every freaking character.
 
-<p>[FIXME stuff about UTF-32, UTF-16, and finally UTF-8]
+<p>Even though there are a lot of Unicode characters, it turns out that most people will never use anything beyond the first 65535. Thus, there is another Unicode encoding, called UTF-16 (because 16 bits = 2 bytes). UTF-16 encodes every character from 0&ndash;65535 as two bytes, then uses some dirty hacks if you actually need to represent the rarely-used &#8220;astral plane&#8221; Unicode characters beyond 65535. Most obvious advantage: UTF-16 is twice as space-efficient as UTF-32, because every character requires only two bytes to store instead of four bytes (except for the ones that don't). And you can still easily find the <var>Nth</var> character of a string in constant time, if you assume that the string doesn't include any astral plane characters, which is a good assumption right up until the moment that it's not.
 
-<p>[FIXME FIXME FIXME, damn it!]
+<p>But there are also non-obvious disadvantages to both UTF-32 and UTF-16. Different computer systems store individual bytes in different ways. That means that the character <code>U+4E2D</code> could be stored in UTF-16 as either <code>4E 2D</code> or <code>2D 4E</code>, depending on whether the system is big-endian or little-endian. (For UTF-32, there are even more possible byte orderings.) As long as your documents never leave your computer, you're safe &mdash; different applications on the same computer will all use the same byte order. But the minute you want to transfer documents between systems, perhaps on a world wide web of some sort, you're going to need a way to indicate which order your bytes are stored. Otherwise, the receiving system has no way of knowing whether the two-byte sequence <code>4E 2D</code> means <code>U+4E2D</code> or <code>U+2D4E</code>.
 
-<div class=s title="ignore this, it's just notes for myself">
-<p>UTF-8 uses the same characters as 7-bit <abbr>ASCII</abbr> for 0 through 127
+<p>To solve <em>this</em> problem, the multi-byte Unicode encodings define a &#8220;Byte Order Mark,&#8221; which is a special non-printable character that you can include at the beginning of your document to indicate what order your bytes are in. For UTF-16, the Byte Order Mark is <code>U+FEFF</code>. If you receive a UTF-16 document that starts with the bytes <code>FF FE</code>, you know the byte ordering is one way; if it starts with <code>FE FF</code>, you know the byte ordering is reversed.
 
+<p>Still, UTF-16 isn't exactly ideal, especially if you're dealing with a lot of <abbr>ASCII</abbr> characters. If you think about it, even a Chinese web page is going to contain a lot of <abbr>ASCII</abbr> characters &mdash; all the elements and attributes surrounding the printable Chinese characters. Being able to find the <var>Nth</var> character in O(1) time is nice, but there's still the nagging problem of those astral plane characters, which mean that you can't <em>guarantee</em> that every character is exactly two bytes, so you can't <em>really</em> find the <var>Nth</var> character in O(1) time unless you maintain a separate index. And boy, there sure is a lot of <abbr>ASCII</abbr> text in the world&hellip;
 
+<p>Other people pondered these questions, and they came up with a solution:
 
+<p class=c style="font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0">UTF-8
 
-<p>When dealing with Unicode data, you may at some point need to convert the data back into one of these other legacy encoding
-systems. For instance, to integrate with some other computer system which expects its data in a specific 1-byte encoding
-scheme, or to print it to a non-Unicode-aware terminal or printer.
+<p>UTF-8 is a <em>variable-length</em> encoding system for Unicode. That is, different characters take up a different number of bytes. For <abbr>ASCII</abbr> characters (A-Z, <i class=baa>&amp;</i>c.) UTF-8 uses just one byte per character. In fact, it uses the exact same bytes; the first 128 characters (0&ndash;127) in UTF-8 are indistinguishable from <abbr>ASCII</abbr>. &#8220;Extended Latin&#8221; characters like &ntilde; and &ouml; end up taking two bytes. (The bytes are not simply the Unicode code point like they would be in UTF-16; there is some serious bit-twiddling involved.) Chinese characters like &#x4E2D; end up taking three bytes. The rarely-used &#8220;astral plane&#8221; characters take four bytes.
 
+<p>Disadvantages: because each character can take a different number of bytes, finding the <var>Nth</var> character is an O(N) operation. Also, there is bit-twiddling involved to encode characters into bytes and decode bytes into characters.
 
-
-
-FIXME: update for Python 3
-
-<p>Python has had Unicode support throughout the language since version 2.0. The <abbr>XML</abbr> package uses Unicode to store all parsed <abbr>XML</abbr> data, but you can use Unicode anywhere.
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>s = u'Dive in'</kbd>            <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>s</kbd>
-u'Dive in'
-<samp class=p>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
-Dive in</pre>
-<ol>
-<li>To create a Unicode string instead of a regular <abbr>ASCII</abbr> string, add the letter &#8220;<code>u</code>&#8221; before the string. Note that this particular string doesn't have any non-<abbr>ASCII</abbr> characters. That's fine; Unicode is a superset of <abbr>ASCII</abbr> (a very large superset at that), so any regular <abbr>ASCII</abbr> string can also be stored as Unicode.
-<li>When printing a string, Python will attempt to convert it to your default encoding, which is usually <abbr>ASCII</abbr>. (More on this in a minute.)  Since this Unicode string is made up of characters that are also <abbr>ASCII</abbr> characters, printing it has the same result as printing a normal <abbr>ASCII</abbr> string; the conversion is seamless, and if you didn't know that <var>s</var> was a Unicode string, you'd never notice the difference.
-</ol>
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>         <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>print s</kbd> <span>&#x2461;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-UnicodeError: ASCII encoding error: ordinal not in range(128)</samp>
-<samp class=p>>>> </samp><kbd>print s.encode('latin-1')</kbd> <span>&#x2462;</span>
-La Pe&ntilde;a</pre>
-<ol>
-<li>The real advantage of Unicode, of course, is its ability to store non-<abbr>ASCII</abbr> characters, like the Spanish &#8220;<code>&ntilde;</code>&#8221; (<code>n</code> with a tilde over it). The Unicode character code for the tilde-n is <code>0xf1</code> in hexadecimal (241 in decimal), which you can type like this: <code>\xf1</code>.
-<li>Remember I said that the <code>print</code> function attempts to convert a Unicode string to <abbr>ASCII</abbr> so it can print it?  Well, that's not going to work here, because your Unicode string contains non-<abbr>ASCII</abbr> characters, so Python raises a <samp>UnicodeError</samp> error.
-<li>Here's where the conversion-from-Unicode-to-other-encoding-schemes comes in. <var>s</var> is a Unicode string, but <code>print</code> can only print a regular string. To solve this problem, you call the <code>encode</code> method, available on every Unicode string, to convert the Unicode string to a regular string in the given encoding scheme,
-            which you pass as a parameter. In this case, you're using <code>latin-1</code> (also known as <code>iso-8859-1</code>), which includes the tilde-n (whereas the default <abbr>ASCII</abbr> encoding scheme did not, since it only includes characters numbered 0 through 127).
-</ol>
-</div>
+<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you'll have to trust me on this, because I'm not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in UTF-8 uses the exact same stream of bytes on any computer.
 
 <h2 id=divingin>Diving In</h2>
+
+<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. "Is this string UTF-8?" is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>s = '深入 Python'</kbd>    <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(s)</kbd>               <span>&#x2461;</span></a>
+<samp>9</samp>
+<a><samp class=p>>>> </samp><kbd>s[0]</kbd>                 <span>&#x2462;</span></a>
+<samp>'深'</samp>
+<a><samp class=p>>>> </samp><kbd>s + ' 3'</kbd>             <span>&#x2463;</span></a>
+<samp>'深入 Python 3'</samp></pre>
+<ol>
+<li>To create a string, enclose it in quotes. Python strings can be defined with either single quotes (<code>'</code>) or double quotes (<code>"</code>).<!--"-->
+<li>The built-in <code>len()</code> function returns the length of the string, <i>i.e.</i> the number of characters. This is the same function you use to <a href=native-datatypes.html#extendinglists>find the length of a list</a>. A string is like a list of characters.
+<li>Just like getting individual items out of a list, you can get individual characters out of a string using index notation.
+<li>Just like lists, you can concatenate strings using the <code>+</code> operator.
+</ol>
+
+<h2 id=formatting-strings>Formatting Strings</h2>
 
 <aside>Strings can be defined with either single or double quotes.</aside>
 <p>Let's take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
@@ -132,14 +123,12 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
     raise ValueError('number too large')</code></pre>
 <ol>
-<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; those are each strings. Python strings can be defined with either single quotes (<code>'</code>) or double quotes (<code>"</code>).<!--"-->
+<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; those are each strings.
 <li>Function docstrings are strings. This docstring spans multiple lines, so it uses three-in-a-row quotes to start and end the string.
 <li>These three-in-a-row quotes end the docstring.
 <li>There's another string, being passed to the exception as a human-readable error message.
 <li>There's a&hellip; whoa, what the heck is that?
 </ol>
-
-<h2 id=formatting-strings>Formatting Strings</h2>
 
 <p>Python 3 supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with single placeholder.
 
@@ -249,98 +238,90 @@ experience of years.</samp>
 <li>The <code>count()</code> method counts the number of occurrences of a substring. Yes, there really are six &#8220;f&#8221;s in that sentence!
 </ol>
 
-<!--
-<p>What else can strings do? Here's a common idiom I use for getting bits of data out of semi-structured strings.
+<p>Here's another common case. Let's say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import subprocess</kbd>
-<samp class=p>>>> </samp><kbd>df = subprocess.getoutput('df -x tmpfs')</kbd>
-<samp class=p>>>> </samp><kbd>print(df)</kbd>
-<samp>Filesystem           1K-blocks      Used Available Use% Mounted on
-/dev/sda1            461215812  73256908 364529712  17% /
-/dev/sdb1            721075720 620495832  63951288  91% /backup</samp>
-<samp class=p>>>> </samp><kbd>
--->
+<samp class=p>>>> </samp><kbd>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
+<a><samp class=p>>>> </samp><kbd>a_list = query.split('&amp;')</kbd>                            <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>a_list</kbd>
+<samp>['user=pilgrim', 'database=master', 'password=PapayaWhip']</samp>
+<a><samp class=p>>>> </samp><kbd>a_list_of_lists = [v.split('=', 1) for v in a_list]</kbd>  <span>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd>a_list_of_lists</kbd>
+<samp>[['user', 'pilgrim'], ['database', 'master'], ['password', 'PapayaWhip']]</samp>
+<a><samp class=p>>>> </samp><kbd>a_dict = dict(a_list_of_lists)</kbd>                       <span>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd>a_dict</kbd>
+<samp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 
-<!--
-['capitalize', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
--->
-
-<!--
-<p>[FIXME is it worth keeping this section on joining lists / splitting strings? All the examples are from an old code sample that isn't used at all anymore.]
-
-<div class=s>
-<p>You have a list of key-value pairs in the form <code><var>key</var>=<var>value</var></code>, and you want to join them into a single string. To join any list of strings into a single string, use the <code>join</code> method of a string object.
-
-<p>Here is an example of joining a list from the <code>buildConnectionString</code> function:
-
-<pre><code>return ";".join(["%s=%s" % (k, v) for k, v in params.items()])</code></pre>
-
-<p>One interesting note before you continue. I keep repeating that functions are objects, strings are objects... everything
-is an object. You might have thought I meant that string <em>variables</em> are objects. But no, look closely at this example and you'll see that the string <code>";"</code> itself is an object, and you are calling its <code>join</code> method.
-<p>The <code>join</code> method joins the elements of the list into a single string, with each element separated by a semi-colon. The delimiter doesn't need to be a semi-colon; it doesn't even need to be a single character. It can be any string.
-
-
-
-
-<code>join</code> works only on lists of strings; it does not do any type coercion. Joining a list that has one or more non-string elements will raise an exception.
-
-
-
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
-<samp class=p>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd>
-['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=p>>>> </samp><kbd>";".join(["%s=%s" % (k, v) for k, v in params.items()])</kbd>
-'server=mpilgrim;uid=sa;database=master;pwd=secret'</pre>
-
-<p>This string is then returned from the <code>odbchelper</code> function and printed by the calling block, which gives you the output that you marveled at when you started reading this chapter.
-
-<p>You're probably wondering if there's an analogous method to split a string into a list. And of course there is, and it's called <code>split</code>.
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>li = ['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</kbd>
-<samp class=p>>>> </samp><kbd>s = ";".join(li)</kbd>
-<samp class=p>>>> </samp><kbd>s</kbd>
-'server=mpilgrim;uid=sa;database=master;pwd=secret'
-<samp class=p>>>> </samp><kbd>s.split(";")</kbd>    <span>&#x2460;</span>
-['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']
-<samp class=p>>>> </samp><kbd>s.split(";", 1)</kbd> <span>&#x2461;</span>
-['server=mpilgrim', 'uid=sa;database=master;pwd=secret']</pre>
 <ol>
-<li><code>split</code> reverses <code>join</code> by splitting a string into a multi-element list. Note that the delimiter (&#8220;<code>;</code>&#8221;) is stripped out completely; it does not appear in any of the elements of the returned list.
-<li><code>split</code> takes an optional second argument, which is the number of times to split. (&#8220;Oooooh, optional arguments...&#8221;  You'll learn how to do this in your own functions in the next chapter.)
+<li>The <code>split()</code> string method takes one argument, a delimiter, and split a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
+<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We want to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
+<li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
 </ol>
-
-
-
-
-<code><var>anystring</var>.<code>split</code>(<var>delimiter</var>, 1)</code> is a useful technique when you want to search a string for a substring and then work with everything before the substring (which ends up in the first element of the returned list) and everything after it (which ends up in the second element).
-
-
-
-</div>
--->
-
-<h2 id=string-module>The <code>string</code> Module</h2>
-
-<p>[FIXME is this worth keeping? The module still exists in 3.0; check if it's going away in 3.1 or something.]
-
-<div class=s>
-<p>When I first learned Python, I expected <code>join</code> to be a method of a list, which would take the delimiter as an argument. Many people feel the same way, and there's a story behind the <code>join</code> method. Prior to Python 1.6, strings didn't have all these useful methods. There was a separate <code>string</code> module that contained all the string functions; each function took a string as its first argument. The functions were deemed important enough to put onto the strings themselves, which made sense for functions like <code>lower</code>, <code>upper</code>, and <code>split</code>. But many hard-core Python programmers objected to the new <code>join</code> method, arguing that it should be a method of the list instead, or that it shouldn't move at all but simply stay a part of the old <code>string</code> module (which still has a lot of useful stuff in it). I use the new <code>join</code> method exclusively, but you will see code written either way, and if it really bothers you, you can use the old <code>string.join</code> function instead.
-</div>
 
 <h2 id=byte-arrays>Strings vs. Bytes</h2>
 
-<p>FIXME
+<p>Bytes are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
 
-<h2 id=py-encoding>Character Encoding Of Python Source Code</h2>
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>  <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>by</kbd>
+b'abcde'</kbd>
+<a><samp class=p>>>> </samp><kbd>type(by)</kbd>          <span>&#x2461;</span></a>
+<samp>&lt;class 'bytes'></samp>
+<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span>&#x2462;</span></a>
+<samp>5</samp>
+<a><samp class=p>>>> </samp><kbd>by += b'\xff'</kbd>     <span>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd>by</kbd>
+<samp>b'abcde\xff'</samp>
+<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span>&#x2464;</span></a>
+<samp>6</samp>
+<a><samp class=p>>>> </samp><kbd>by[0]</kbd>             <span>&#x2465;</span></a>
+<samp>97</samp>
+<a><samp class=p>>>> </samp><kbd>by[0] = 102</kbd>       <span>&#x2466;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in <module>
+TypeError: 'bytes' object does not support item assignment</samp></pre>
+<ol>
+<li>To define a <code>bytes</code> object, use the <code>b''</code> &#8220;byte literal&#8221; syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
+<li>The type of a <code>bytes</code> object is <code>bytes</code>.
+<li>Just like lists and strings, you can get the length of a <code>bytes</code> object with the built-in <code>len()</code> function.
+<li>Just like lists and strings, you can use the <code>+</code> operator to concatenate <code>bytes</code> objects. The result is a new <code>bytes</code> object.
+<li>Concatenating a 5-byte <code>bytes</code> object and a 1-byte <code>bytes</code> object gives you a 6-byte <code>bytes</code> object.
+<li>Just like lists and strings, you can use index notation to get individual bytes in a <code>bytes</code> object. The items of a string are strings; the items of a <code>bytes</code> object are integers. Specifically, integers between 0&ndash;255.
+<li>A <code>bytes</code> object is immutable; you can not assign individual bytes. If you need to change individual bytes, you can either use slicing methods (which work the same as strings) and concatenation operators (which also work the same as strings), or you can convert the <code>bytes</code> object into a <code>bytearray</code> object.
+</ol>
 
-<p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in <abbr>UTF-8</abbr>.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>
+<a><samp class=p>>>> </samp><kbd>barr = bytearray(by)</kbd>  <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>barr</kbd>
+<samp>bytearray(b'abcde')</samp>
+<a><samp class=p>>>> </samp><kbd>len(barr)</kbd>             <span>&#x2461;</span></a>
+<samp>5</samp>
+<a><samp class=p>>>> </samp><kbd>barr[0] = 102</kbd>         <span>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd>barr</kbd>
+<samp>bytearray(b'fbcde')</samp></pre>
+<ol>
+<li>To convert an <code>bytes</code> object into a mutable <code>bytearray</code> object, use the built-in <code>bytearray()</code> function.
+<li>All the methods and operations you can do on a <code>bytes</code> object, you can do on a <code>bytearray</code> object too.
+<li>The one difference is that, with the <code>bytearray</code> object, you can assign individual bytes using index notation. The assigned value must be an integer between 0&ndash;255.
+</ol>
+
+<p>OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
+
+<p>FIXME examples/chinese.txt
+<!--
+When dealing with strings (sequences of Unicode characters), you may at some point need to convert the data back into one of these other legacy encoding
+systems. For instance, to integrate with some other computer system which expects its data in a specific 1-byte encoding
+scheme, or to print it to a non-Unicode-aware terminal or printer.
+-->
+
+<h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
+
+<p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in UTF-8.
 
 <blockquote class="note compare python2">
-<p><span>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href="http://www.python.org/dev/peps/pep-3120/">the default encoding is <abbr>UTF-8</abbr></a>.
+<p><span>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href="http://www.python.org/dev/peps/pep-3120/">the default encoding is UTF-8</a>.
 </blockquote>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
