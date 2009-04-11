@@ -265,7 +265,7 @@ experience of years.</samp>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>  <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
-b'abcde'</kbd>
+<samp>b'abcde'</samp>
 <a><samp class=p>>>> </samp><kbd>type(by)</kbd>          <span>&#x2461;</span></a>
 <samp>&lt;class 'bytes'></samp>
 <a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span>&#x2462;</span></a>
@@ -279,7 +279,7 @@ b'abcde'</kbd>
 <samp>97</samp>
 <a><samp class=p>>>> </samp><kbd>by[0] = 102</kbd>       <span>&#x2466;</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in <module>
+  File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'bytes' object does not support item assignment</samp></pre>
 <ol>
 <li>To define a <code>bytes</code> object, use the <code>b''</code> &#8220;byte literal&#8221; syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
