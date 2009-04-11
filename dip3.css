@@ -65,7 +65,7 @@ abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 p,ul,ol{margin:1.75em 0;font-size:medium}
 
 /* basics */
-html{background:white;color:darkslategray}
+html{background:#fff;color:#333}
 body{margin:1.75em 28px}
 form div{float:right}
 .c{text-align:center;margin:2.154em 0}

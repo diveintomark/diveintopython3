@@ -58,5 +58,4 @@ h1:before{content:""}
 
 /* overrides */
 .nm,.w,aside,form,form+p,.note span,.q span{display:none}
-ol,ul{margin:0;padding:0 0 0 24px}
 dd{margin:0 0 0 1.75em}

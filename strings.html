@@ -50,7 +50,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number, from 0&ndash;4294967295. (That's 2<sup>32</sup>&minus;1.) Each 4-byte number represents a unique character used in at least one of the world's languages. Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn't be sufficient. Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn't have an <code>'A'</code> in it.
 
-<p>Right away, problems leap out at you. 4 bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for English and Spanish, which need less than 256 numbers to express every possible character. [FIXME incomplete paragraph]
+<p>Right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than 256 numbers to express every possible character. [FIXME incomplete paragraph]
 
 <p>Of course, there is still the matter of all those legacy encoding systems. [FIXME incomplete paragraph]
 
