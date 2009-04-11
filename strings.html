@@ -307,13 +307,64 @@ TypeError: 'bytes' object does not support item assignment</samp></pre>
 <li>The one difference is that, with the <code>bytearray</code> object, you can assign individual bytes using index notation. The assigned value must be an integer between 0&ndash;255.
 </ol>
 
-<p>OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
+<p>The one thing you <em>can never do</em> is mix bytes and strings.
 
-<p>FIXME examples/chinese.txt
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>by = b'd'</kbd>
+<samp class=p>>>> </samp><kbd>s = 'abcde'</kbd>
+<a><samp class=p>>>> </samp><kbd>by + s</kbd>                       <span>&#x2460;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: can't concat bytes to str</samp>
+<a><samp class=p>>>> </samp><kbd>s.count(by)</kbd>                  <span>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: Can't convert 'bytes' object to str implicitly</samp>
+<a><samp class=p>>>> </samp><kbd>s.count(by.decode('ascii'))</kbd>  <span>&#x2462;</span></a>
+<samp>1</samp></pre>
+<ol>
+<li>You can't concatenate bytes and strings. They are two different data types.
+<li>You can't count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you'll need to say that explicitly. Python 3 won't implicitly convert bytes to strings or strings to bytes.
+<li>By an amazing coincidence, this line of code says &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in this particular character encoding.&#8221;
+</ol>
+
+<p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code>decode()</code> method that takes a character encoding and returns a string, and strings have an <code>encode()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward &mdash; converting a sequence of bytes n the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string &mdash; even legacy (non-Unicode) encodings.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>a_string = '深入 Python'</kbd>         <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>len(a_string)</kbd>
+<samp>9</samp>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('utf-8')</kbd>    <span>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd>by</kbd>
+<samp>b'\xe6\xb7\xb1\xe5\x85\xa5 Python'</samp>
+<samp class=p>>>> </samp><kbd>len(by)</kbd>
+<samp>13</samp>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('gb18030')</kbd>  <span>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd>by</kbd>
+<samp>b'\xc9\xee\xc8\xeb Python'</samp>
+<samp class=p>>>> </samp><kbd>len(by)</kbd>
+<samp>11</samp>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('big5')</kbd>     <span>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd>by</kbd>
+<samp>b'\xb2`\xa4J Python'</samp>
+<samp class=p>>>> </samp><kbd>len(by)</kbd>
+<samp>11</samp>
+<a><samp class=p>>>> </samp><kbd>roundtrip = by.decode('big5')</kbd>    <span>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd>roundtrip</kbd>
+<samp>'深入 Python'</samp>
+<samp class=p>>>> </samp><kbd>a_string == roundtrip</kbd>
+<samp>True</samp></pre>
+<ol>
+<li>This is a string. It has nine characters.
+<li>This is a <code>bytes</code> object. It has 13 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in UTF-8.
+<li>This is a <code>bytes</code> object. It has 11 bytes. It is the sequence of bytes you get when you take encode <var>a_string</var> in the GB18030 encoding.
+<li>This is a <code>bytes</code> object. It has 11 bytes. It is an <em>entirely different sequence of bytes</em> that you get by encoding <var>a_string</var> with the Big5 encoding algorithm.
+<li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
+</ol>
+
 <!--
-When dealing with strings (sequences of Unicode characters), you may at some point need to convert the data back into one of these other legacy encoding
-systems. For instance, to integrate with some other computer system which expects its data in a specific 1-byte encoding
-scheme, or to print it to a non-Unicode-aware terminal or printer.
+FIXME: move this to the intro of the upcoming files chapter?
+<p>OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
 -->
 
 <h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
