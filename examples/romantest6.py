@@ -98,7 +98,7 @@ class ToRomanBadInput(unittest.TestCase):
 class FromRomanBadInput(unittest.TestCase):
     def test_too_many_repeated_numerals(self):
         """from_roman should fail with too many repeated numerals"""
-        for s in ('MMMMM', 'DD', 'CCCC', 'LL', 'XXXX', 'VV', 'IIII'):
+        for s in ('MMMM', 'DD', 'CCCC', 'LL', 'XXXX', 'VV', 'IIII'):
             self.assertRaises(roman6.InvalidRomanNumeralError, roman6.from_roman, s)
 
     def test_repeated_pairs(self):
@@ -112,8 +112,8 @@ class FromRomanBadInput(unittest.TestCase):
                   'MCMC', 'XCX', 'IVI', 'LM', 'LD', 'LC'):
             self.assertRaises(roman6.InvalidRomanNumeralError, roman6.from_roman, s)
 
-class SanityCheck(unittest.TestCase):
-    def testSanity(self):
+class RoundtripCheck(unittest.TestCase):
+    def test_roundtrip(self):
         """from_roman(to_roman(n))==n for all n"""
         for integer in range(1, 4000):
             numeral = roman6.to_roman(integer)

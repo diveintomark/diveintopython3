@@ -5,7 +5,6 @@
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
 body{counter-reset:h1 8}
-mark{background:#ff8;font-weight:bold;line-height:2.154;text-decoration:none;font-style:normal;display:inline-block;width:100%}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 </head>
@@ -544,6 +543,16 @@ For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman
 <li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><abbr>i.e.</abbr></i> it should fail when given lowercase input).
 </ol>
 -->
+
+
+<!--
+<ol>
+<li>The <code>re.compile</code> function can take an optional second argument, which is a set of one or more flags that control various options about the
+            compiled regular expression. Here you're specifying the <code>re.VERBOSE</code> flag, which tells Python that there are in-line comments within the regular expression itself. The comments and all the whitespace around them are
+<em>not</em> considered part of the regular expression; the <code>re.compile</code> function simply strips them all out when it compiles the expression. This new, &#8220;verbose&#8221; version is identical to the old version, but it is infinitely more readable.
+</ol>
+-->
+
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>

@@ -65,7 +65,7 @@ abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 p,ul,ol{margin:1.75em 0;font-size:medium}
 
 /* basics */
-html{background:#fff;color:#333}
+html{background:#fff;color:#222}
 body{margin:1.75em 28px}
 form div{float:right}
 .c{text-align:center;margin:2.154em 0}
@@ -84,7 +84,8 @@ pre{white-space:pre-wrap;padding-left:2.154em;border-left:1px solid #ddd}
 .b,ol,p,blockquote,h1,h2,h3{clear:left}
 pre a,.w a{padding:0.4375em 0}
 .w a{text-decoration:underline}
-kbd{font-weight:bold}
+kbd,mark{font-weight:bold}
+mark{display:inline-block;width:100%;background:#ff8}
 .p{color:#667}
 
 /* overrides */
