@@ -12,14 +12,14 @@ body{counter-reset:h1 10}
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#refactoring>Dive Into Python 3</a> <span>&#8227;</span>
 <h1>Refactoring</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+<p><span>&#x275D;</span> After one has played a vast quantity of notes and more notes, it is simplicity that emerges as the crowning reward of art. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin>Frédéric Chopin</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
 <p class=f>Despite your best efforts to write comprehensive unit tests, bugs happen. What do I mean by &#8220;bug&#8221;?  A bug is a test case you haven't written yet.
 
-<pre class=screen><samp class=p>>>> </samp><kbd>import roman6</kbd>
-<a><samp class=p>>>> </samp><kbd>roman6.from_roman("")</kbd> <span>&#x2460;</span></a>
+<pre class=screen><samp class=p>>>> </samp><kbd>import roman7</kbd>
+<a><samp class=p>>>> </samp><kbd>roman7.from_roman("")</kbd> <span>&#x2460;</span></a>
 <samp>0</samp></pre>
 <ol>
 <li>Remember in the [FIXME-xref] previous section when you kept seeing that an empty string would match the regular expression you were using to check for valid Roman numerals? Well, it turns out that this is still true for the final version of the regular expression. And that's a bug; you want an empty string to raise an <code>InvalidRomanNumeralError</code> exception just like any other sequence of characters that don't represent a valid Roman numeral.
