@@ -70,33 +70,49 @@ if __name__ == '__main__':
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
+<p>This section has nothing to do with iterators, but it's put to good use in the alphametics solver. Set comprehensions make it trivial to find the unique items in a sequence.
+
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
-<samp class=p>>>> </samp><kbd>{c for c in a_list}</kbd>
+<a><samp class=p>>>> </samp><kbd>{c for c in a_list}</kbd>                      <span>&#x2460;</span></a>
 <samp>{'a', 'c', 'b', 'd'}</samp>
 <samp class=p>>>> </samp><kbd>a_string = 'EAST IS EAST'</kbd>
-<samp class=p>>>> </samp><kbd>{c for c in a_string}</kbd>
+<a><samp class=p>>>> </samp><kbd>{c for c in a_string}</kbd>                    <span>&#x2461;</span></a>
 <samp>{'A', ' ', 'E', 'I', 'S', 'T'}</samp>
 <samp class=p>>>> </samp><kbd>words = ['SEND', 'MORE', 'MONEY']</kbd>
-<samp class=p>>>> </samp><kbd>''.join(words)</kbd>
+<a><samp class=p>>>> </samp><kbd>''.join(words)</kbd>                           <span>&#x2462;</span></a>
 <samp>'SENDMOREMONEY'</samp>
-<samp class=p>>>> </samp><kbd>{c for c in ''.join(words)}</kbd>
+<a><samp class=p>>>> </samp><kbd>{c for c in ''.join(words)}</kbd>              <span>&#x2463;</span></a>
 <samp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
+<ol>
+<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth &mdash; wait, that's in the set already, so it only gets listed once. Fifth. Sixth &mdash; again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn't even need to be sorted first.
+<li>The same technique works with strings, since a string is just a sequence of characters.
+<li>Given a list of strings, <code>''.join(<var>a_list</var>)</code> concatenates all the strings together into one.
+<li>So, given a list of strings, this set comprehension returns all the unique characters across all the strings, with no duplicates.
+</ol>
 
-<p>FIXME
+<p>The alphametics solver uses this technique to get a list of all the unique characters in the puzzle.
+
+<pre><code>unique_characters = {c for c in ''.join(words)}</code></pre>
+
+<p>This list is later used to assign digits to characters as the solver iterates through the possible solutions.
 
 <h2 id=assert>Making assertions</h2>
 
-<p>FIXME
+<p>Another quick note about a useful debugging tool that's not specific to iterators or generators. Like many programming languages, Python has an <code>assert</code> statement. Here's how it works.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>assert 1 + 1 = 2</kbd>
-<samp class=p>>>> </samp><kbd>assert 1 + 1 = 3</kbd>
+<a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 2</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 3</kbd>  <span>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in <module>
 AssertionError</samp></pre>
+<ol>
+<li>The <code>assert</code> statement is followed by any valid Python expression. In this case, the expression <code>1 + 1 == 2</code> evaluates to <code>True</code>, so the <code>assert</code> statement does nothing.
+<li>However, if the Python expression evaluates to <code>False</code>, the <code>assert</code> statement will raise an <code>AssertionError</code>.
+</ol>
 
-<p>FIXME
+<p>Therefore, this line of code:
 
 <pre><code>assert len(unique_characters) <= 10</code></pre>
 
@@ -104,6 +120,10 @@ AssertionError</samp></pre>
 
 <pre><code>if len(unique_characters) > 10:
     raise AssertionError</code></pre>
+
+<p>But a bit easier to read and write.
+
+<p>The alphametics solver uses this exact <code>assert</code> statement to bail out early if the puzzle contains more than ten unique letters. Since each letter is assigned a unique digit, and there are only ten digits, a puzzle with more than ten unique letters is unsolvable.
 
 <h2 id=generator-objects>Generator objects</h2>
 
@@ -204,7 +224,7 @@ StopIteration</samp>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
 'Mike\n', 'Chris\n', 'Sarah\n', 'Alex\n', 'Lizzie\n']</samp>
-<samp class=p>>>> </samp><kbd>names = [name[:-1] for name in names]</kbd>
+<samp class=p>>>> </samp><kbd>names = [name.strip() for name in names]</kbd>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
 'Mike', 'Chris', 'Sarah', 'Alex', 'Lizzie']</samp>
