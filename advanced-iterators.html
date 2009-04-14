@@ -18,8 +18,6 @@ body{counter-reset:h1 6}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
-<p><a href="http://code.activestate.com/recipes/576615/">original recipe by Raymond Hettinger</a>, ported to Python 3 and used as the basis for this chapter with his permission.
-
 <p class=d>[<a href=examples/alphametics.py>download <code>alphametics.py</code></a>]
 <pre><code>import re
 import itertools
@@ -70,7 +68,7 @@ if __name__ == '__main__':
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
-<p>This section has nothing to do with iterators, but it's put to good use in the alphametics solver. Set comprehensions make it trivial to find the unique items in a sequence.
+<p>This section has nothing to do with iterators, but it's put to good use in the alphametics solver. Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I'm going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
@@ -207,37 +205,51 @@ StopIteration</samp>
 <li>Since the <code>permutations()</code> function always returns an iterator, an easy way to debug permutations is to pass that iterator to the built-in <code>list()</code> function to see all the permutations immediately.
 </ol>
 
-<h3 id=more-itertools>Other Fun Stuff in the <code>itertools</code> Module</h3>
+<h2 id=more-itertools>Other Fun Stuff in the <code>itertools</code> Module</h2>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import itertools</kbd>
-<samp class=p>>>> </samp><kbd>list(itertools.product('ABC', '123'))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(itertools.product('ABC', '123'))</kbd>   <span>&#x2460;</span></a>
 <samp>[('A', '1'), ('A', '2'), ('A', '3'), 
  ('B', '1'), ('B', '2'), ('B', '3'), 
  ('C', '1'), ('C', '2'), ('C', '3')]</samp>
-<samp class=p>>>> </samp><kbd>list(itertools.combinations('ABC', 2))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(itertools.combinations('ABC', 2))</kbd>  <span>&#x2461;</span></a>
 <samp>[('A', 'B'), ('A', 'C'), ('B', 'C')]</samp></pre>
+<ol>
+<li>The <code>itertools.product()</code> function returns an iterator containing the Cartesian product of two sequences.
+<li>The <code>itertools.combinations()</code> function returns an iterator containing all the possible combinations of the given sequence of the given length. This is like the <code>itertools.permutations()</code> function, except combinations don't include items that are duplicates of other items in a different order. So <code>itertools.permutations('ABC', 2)</code> will return both <code>('A', 'B')</code> and <code>('B', 'A')</code> (among others), but <code>itertools.combinations('ABC', 2)</code> will not return <code>('B', 'A')</code> because it is a duplicate of <code>('A', 'B')</code> in a different order.
+</ol>
 
-<p>FIXME
-
+<p class=d>[<a href=examples/favorite-people.txt>download <code>favorite-people.txt</code></a>]
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>names = list(open('examples/favorite-people.txt'))</kbd>
+<a><samp class=p>>>> </samp><kbd>names = list(open('examples/favorite-people.txt'))</kbd>  <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
 'Mike\n', 'Chris\n', 'Sarah\n', 'Alex\n', 'Lizzie\n']</samp>
-<samp class=p>>>> </samp><kbd>names = [name.strip() for name in names]</kbd>
+<a><samp class=p>>>> </samp><kbd>names = [name.rstrip() for name in names]</kbd>           <span>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
 'Mike', 'Chris', 'Sarah', 'Alex', 'Lizzie']</samp>
-<samp class=p>>>> </samp><kbd>names = sorted(names)</kbd>
+<a><samp class=p>>>> </samp><kbd>names = sorted(names)</kbd>                               <span>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Alex', 'Anne', 'Chris', 'Dora', 'Ethan',
 'John', 'Lizzie', 'Mike', 'Sarah', 'Wesley']</samp>
-<samp class=p>>>> </samp><kbd>names = sorted(names, key=len)</kbd>
+<a><samp class=p>>>> </samp><kbd>names = sorted(names, key=len)</kbd>                      <span>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd>names</kbd>
 <samp>['Alex', 'Anne', 'Dora', 'John', 'Mike',
-'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']</samp>
+'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']</samp></pre>
+<ol>
+<li>This idiom returns a list of the lines in a text file.
+<li>Unfortunately (for this example), the <code>list(open(<var>filename</var>))</code> idiom also includes the carriage returns at the end of each line. This list comprehension uses the <code>rstrip()</code> string method to strip trailing whitespace from each line.
+<li>The <code>sorted()</code> function takes a list and returns it sorted. By default, it sorts alphabetically.
+<li>But the <code>sorted()</code> function can also take a function as the <var>key</var> parameter, and it sorts by that key. In this case, the sort function is <code>len()</code>, so it sorts by <code>len(<var>each item</var>)</code>. Shorter names come first, then longer, then longest.
+</ol>
+
+<p>What does this have to do with the <code>itertools</code> module? I'm glad you asked.
+
+<pre class=screen>
+<p>&hellip;continuing from the previous interactive shell&hellip;
 <samp class=p>>>> </samp><kbd>import itertools</kbd>
-<samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>
+<a><samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>  <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>groups</kbd>
 <samp>&lt;itertools.groupby object at 0x00BB20C0></samp>
 <samp class=p>>>> </samp><kbd>list(groups)</kbd>
@@ -245,7 +257,7 @@ StopIteration</samp>
  (5, &lt;itertools._grouper object at 0x00BB4050>),
  (6, &lt;itertools._grouper object at 0x00BB4030>)]</samp>
 <samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>
-<samp class=p>>>> </samp><kbd>for name_length, name_iter in groups:</kbd>
+<a><samp class=p>>>> </samp><kbd>for name_length, name_iter in groups:</kbd>    <span>&#x2461;</span></a>
 <samp class=p>... </samp><kbd>    print('Names with {0:d} letters:'.format(name_length))</kbd>
 <samp class=p>... </samp><kbd>    for name in name_iter:</kbd>
 <samp class=p>... </samp><kbd>        print(name)</kbd>
@@ -263,40 +275,60 @@ Sarah
 Names with 6 letters:
 Lizzie
 Wesley</samp></pre>
-
-<p>FIXME
-
-<h2 id=zip>Combining Iterators</h2>
-
-<p>FIXME
-
+<ol>
+<li>The <code>itertools.groupby()</code> function takes a sequence and a key function, and returns an iterator that generates pairs. Each pair contains the result of <code>key_function(<var>each item</var>)</code> and another iterator containing all the items that shared that key result.
+<li>In this example, given a list of names sorted by length, <code>itertools.groupby(names, len)</code> will put all the 4-letter names in one iterator, all the 5-letter names in another iterator, and so on. The <code>groupby()</code> function is completely generic; it could group strings by first letter, numbers by their number of factors, or any other key function you can think of.
+</ol>
+<!-- YO DAWG, WE HEARD YOU LIKE LOOPING, SO WE PUT AN ITERATOR IN YOUR ITERATOR SO YOU CAN LOOP WHILE YOU LOOP. -->
+<p>Are you watching closely?
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>list(range(0, 3))</kbd>
 <samp>[0, 1, 2]</samp>
 <samp class=p>>>> </samp><kbd>list(range(10, 13))</kbd>
 <samp>[10, 11, 12]</samp>
-<samp class=p>>>> </samp><kbd>list(itertools.chain(range(0, 3), range(10, 13)))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(itertools.chain(range(0, 3), range(10, 13)))</kbd>        <span>&#x2460;</span></a>
 <samp>[0, 1, 2, 10, 11, 12]</samp>
-<samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 13)))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 13)))</kbd>                    <span>&#x2461;</span></a>
 <samp>[(0, 10), (1, 11), (2, 12)]</samp>
-<samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 14)))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 14)))</kbd>                    <span>&#x2462;</span></a>
 <samp>[(0, 10), (1, 11), (2, 12)]</samp>
-<samp class=p>>>> </samp><kbd>list(itertools.zip_longest(range(0, 3), range(10, 14)))</kbd>
+<a><samp class=p>>>> </samp><kbd>list(itertools.zip_longest(range(0, 3), range(10, 14)))</kbd>  <span>&#x2463;</span></a>
 <samp>[(0, 10), (1, 11), (2, 12), (None, 13)]</samp></pre>
+<ol>
+<li>The <code>itertools.chain()</code> function takes two iterators and returns an iterator that contains all the items from the first iterator, followed by all the items from the second iterator. (Actually, it can take any number of iterators, and it chains them all in the order they were passed to the function.)
+<li>The <code>zip()</code> function does something prosaic that turns out to be extremely useful: it any number of sequences and returns an iterator with the first items of each sequence, then the second items of each, then the third, and so on.
+<li>The <code>zip()</code> function stops at the end of the shortest sequence. <code>range(10, 14)</code> has 4 items (10, 11, 12, and 13), but <code>range(0, 3)</code> only has 3, so the <code>zip()</code> function returns an iterator of 3 items.
+<li>On the other hand, the <code>itertools.zip_longest()</code> function stops at the end of the <em>longest</em> sequence, inserting <code>None</code> values for items past the end of the shorter sequences.
+</ol>
 
-<p>FIXME
+<p>OK, that was all very interesting, but how does it relate to the alphametics solver? Here's how:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
 <samp class=p>>>> </samp><kbd>guess = ('1', '2', '0', '3', '4', '5', '6', '7')</kbd>
-<samp class=p>>>> </samp><kbd>tuple(zip(characters, guess))</kbd>
+<a><samp class=p>>>> </samp><kbd>tuple(zip(characters, guess))</kbd>  <span>&#x2460;</span></a>
 <samp>(('S', '1'), ('M', '2'), ('E', '0'), ('D', '3'),
  ('O', '4'), ('N', '5'), ('R', '6'), ('Y', '7'))</samp>
-<samp class=p>>>> </samp><kbd>dict(zip(characters, guess))</kbd>
+<a><samp class=p>>>> </samp><kbd>dict(zip(characters, guess))</kbd>   <span>&#x2461;</span></a>
 <samp>{'E': '0', 'D': '3', 'M': '2', 'O': '4',
  'N': '5', 'S': '1', 'R': '6', 'Y': '7'}</samp></pre>
+<ol>
+<li>Given a list of letters and a list of digits (each represented here as 1-character strings), the <code>zip</code> function will create a pairing of letters and digits, in order.
+<li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no "order" per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
+</ol>
 
-<h2 id=new-kind-of-string-manipulation>A New Kind Of String Manipulation</h2>
+<p>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
+
+<pre><code>characters = tuple(ord(c) for c in sorted_characters)
+digits = tuple(ord(c) for c in '0123456789')
+...
+for guess in itertools.permutations(digits, len(characters)):
+    ...
+<mark>    equation = puzzle.translate(dict(zip(characters, guess)))</mark></code></pre>
+
+<p>But what is this <code>translate()</code> method? Ah, now you're getting to the <em>really</em> fun part.
+
+<h2 id=string-translate>A New Kind Of String Manipulation</h2>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>
@@ -329,11 +361,33 @@ Wesley</samp></pre>
 
 <h2 id=alphametics-finale>Putting It All Together</h2>
 
-<p>FIXME
+<p>To recap: the solver solves alphametic puzzles by brute force, <i>i.e.</i> through an exhaustive search of all possible solutions. To do this, it&hellip;
+
+<ol>
+<li><a href=#re-findall>Finds all the letters in the puzzle</a> with the <code>re.findall()</code> function
+<li><a href=#unique-items>Find all the <em>unique</em> letters in the puzzle</a> with set comprehensions
+<li><a href=#assert>Checks if there are more than 10 unique letters</a> (meaning the puzzle is definitely unsolvable) with an <code>assert</code> statement
+<li>FIXME sorts the letters with a set difference operation
+<li><a href=#generator-objects>Converts the letters to their ASCII equivalents</a> with a generator object
+<li><a href=#permutations>Calculates all the possible solutions</a> with the <code>itertools.permutations()</code> function
+<li><a href=#string-translate>Converts each possible solution to a Python expression</a> with the <code>translate()</code> string method
+<li><a href=#eval>Tests each possible solution by evaluating the Python expression</a> with the <code>eval()</code> function
+<li>Returns the first solution that evaluates to <code>True</code>
+</ol>
+
+<p>&hellip;in 14 lines of code.
 
 <h2 id=furtherreading>Further Reading</h2>
 
-<p>FIXME
+<ul>
+<li><a href="http://blip.tv/file/1947373/">Watch Raymond Hettinger's "Easy AI with Python" talk</a> at PyCon 2009
+<li><a href="http://code.activestate.com/recipes/576615/">Recipe 576615: Alphametics solver</a>, Raymond Hettinger's original alphametics solver for Python 2
+<li><a href="http://code.activestate.com/recipes/users/178123/">More of Raymond Hettinger's recipes</a> in the ActiveState Code repository
+<li><a href="http://en.wikipedia.org/wiki/Verbal_arithmetic">Alphametics on Wikipedia</a>
+<li><a href="http://www.tkcs-collins.com/truman/alphamet/index.shtml">Alphametics Index</a>, including <a href="http://www.tkcs-collins.com/truman/alphamet/alphamet.shtml">lots of puzzles</a> and <a href="http://www.tkcs-collins.com/truman/alphamet/alpha_gen.shtml">a generator to make your own</a>
+</ul>
+
+<p>Many, many thanks to Raymond Hettinger for agreeing to relicense his code so I could port it to Python 3 and use it as the basis for this chapter.
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
