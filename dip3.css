@@ -34,10 +34,11 @@ Classname Legend
 .p = "prompt"   = command-line or interactive shell prompt within code listings
 .q = "quote"    = quote at beginning of each chapter
 .f = "fancy"    = first paragraph of each chapter (gets a fancy drop-cap)
-.c = "centered" = centered footer text
+.c = "centered" = centered footer text (also clears floats)
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
+.nav  = "navigation"               = prev/next navigation links (not breadcrumbs)
 
 
 Acknowledgements & Inspirations
@@ -60,14 +61,14 @@ abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 .q span{font-size:large}
 .note{margin:3.5em 4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em;color:steelblue}
-.c,pre,.w,.w a,.d{line-height:2.154;clear:both}
+.c,pre,.w,.w a,.d{line-height:2.154}
 .f:first-letter{float:left;color:lightblue;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 p,ul,ol{margin:1.75em 0;font-size:medium}
 
 /* basics */
 html{background:#fff;color:#222}
 body{margin:1.75em 28px}
-.c{text-align:center;margin:2.154em 0}
+.c{clear:both;text-align:center;margin:2.154em 0}
 form div{float:right}
 .todo{color:#ddd}
 
