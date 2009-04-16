@@ -20,8 +20,6 @@ def solve(puzzle):
     zero = digits[0]
     for guess in itertools.permutations(digits, len(characters)):
         if zero not in guess[:n]:
-            print(guess)
-            return
             equation = puzzle.translate(dict(zip(characters, guess)))
             if eval(equation):
                 return equation

@@ -16,7 +16,29 @@ body{counter-reset:h1 6}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>FIXME
+<p class=f>G<code>OYA + INGRES + RENOIR + SARGENT = ARTISTS</code>. Or, to put it another way, <code>8643 + 598712 + 719657 + 2378190 = 3705202</code>.
+
+<p>It might make more sense if I line it up for you.
+
+<pre><code>GOYA + INGRES + RENOIR + SARGENT = ARTISTS
+8643 + 598712 + 719657 + 2378190 = 3705202
+
+G = 8
+O = 6
+Y = 4
+A = 3
+I = 5
+N = 9
+R = 7
+E = 1
+S = 2
+T = 0</code></pre>
+
+<p>This kind of puzzle is called <i>cryptarithm</i> or <i>alphametics</i>. The letters spell out actual words, but if you replace each letter with a digit from <code>0&ndash;9</code>, it also &#8220;spells&#8221; an arithmetic equation. The trick is to figure out which letter maps to each digit. All the occurrences of each letter must map to the same digit, no digit can be repeated, and no &#8220;word&#8221; can start with the digit <code>0</code>.
+
+<p>The most well-known alphametic puzzle is <code>SEND + MORE = MONEY</code>.
+
+<p>In this chapter, we'll dive into an incredible Python program originally written by Raymond Hettinger. This program solves alphametic puzzles <em>in just 14 lines of code</em>.
 
 <p class=d>[<a href=examples/alphametics.py>download <code>alphametics.py</code></a>]
 <pre><code>import re
@@ -48,12 +70,15 @@ if __name__ == '__main__':
             print(solution)</code></pre>
 
 <pre class=screen>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "SEND + MORE == MONEY"</kbd>
-<samp>SEND + MORE == MONEY
-9567 + 1085 == 10652</samp>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "GOYA + INGRES + RENOIR + SARGENT = ARTISTS"</kbd>
+<samp>GOYA + INGRES + RENOIR + SARGENT = ARTISTS
+8643 + 598712 + 719657 + 2378190 = 3705202</samp>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "I + LOVE + YOU == DORA"</kbd>
 <samp>I + LOVE + YOU == DORA
-1 + 2784 + 975 == 3760</samp></pre>
+1 + 2784 + 975 == 3760</samp>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "SEND + MORE == MONEY"</kbd>
+<samp>SEND + MORE == MONEY
+9567 + 1085 == 10652</samp></pre>
 
 <h2 id=re-findall>Finding all occurrences of a pattern</h2>
 
@@ -68,7 +93,7 @@ if __name__ == '__main__':
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
-<p>This section has nothing to do with iterators, but it's put to good use in the alphametics solver. Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I'm going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
+<p>Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I'm going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
@@ -97,7 +122,7 @@ if __name__ == '__main__':
 
 <h2 id=assert>Making assertions</h2>
 
-<p>Another quick note about a useful debugging tool that's not specific to iterators or generators. Like many programming languages, Python has an <code>assert</code> statement. Here's how it works.
+<p>Like many programming languages, Python has an <code>assert</code> statement. Here's how it works.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 2</kbd>  <span>&#x2460;</span></a>
@@ -330,6 +355,7 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <h2 id=string-translate>A New Kind Of String Manipulation</h2>
 
+<p>Strings have a powerful
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>
 <samp class=p>>>> </samp><kbd>characters</kbd>
@@ -361,7 +387,7 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <h2 id=alphametics-finale>Putting It All Together</h2>
 
-<p>To recap: the solver solves alphametic puzzles by brute force, <i>i.e.</i> through an exhaustive search of all possible solutions. To do this, it&hellip;
+<p>To recap: this program solves alphametic puzzles by brute force, <i>i.e.</i> through an exhaustive search of all possible solutions. To do this, it&hellip;
 
 <ol>
 <li><a href=#re-findall>Finds all the letters in the puzzle</a> with the <code>re.findall()</code> function
@@ -375,7 +401,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <li>Returns the first solution that evaluates to <code>True</code>
 </ol>
 
-<p>&hellip;in 14 lines of code.
+<p>&hellip;in just 14 lines of code.
 
 <h2 id=furtherreading>Further Reading</h2>
 
