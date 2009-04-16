@@ -60,7 +60,7 @@ abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
 .q span{font-size:large}
 .note{margin:3.5em 4.94em}
 .note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em;color:steelblue}
-.c,pre,.w,.w a,.d{line-height:2.154}
+.c,pre,.w,.w a,.d{line-height:2.154;clear:both}
 .f:first-letter{float:left;color:lightblue;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
 p,ul,ol{margin:1.75em 0;font-size:medium}
 
@@ -110,3 +110,10 @@ h2,h3{margin-top:1.75em}
 #toc + h2:before{content:""}
 h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
 aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
+
+/* previous/next navigation links */
+
+.nav a{text-decoration:none;border:0;display:block}
+.nav a:first-child{float:left}
+.nav a:last-child{float:right}
+.nav span{font-size:1000%;line-height:1;margin:0}

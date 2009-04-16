@@ -59,3 +59,4 @@ h1:before{content:""}
 /* overrides */
 .nm,.w,aside,form,form+p,.note span,.q span{display:none}
 dd{margin:0 0 0 1.75em}
+.nav span{font-size:200%}

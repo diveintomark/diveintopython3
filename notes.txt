@@ -15,7 +15,9 @@ http://www.alanwood.net/unicode/dingbats.html
 
 &#x26A0; - white warning sign (triangle with exclamation point inside)
 &#x263A; - white smiling face
+&#x261C; - white left pointing index
 &#x261E; - white right pointing index
+&#x261A; - black left pointing index
 &#x261B; - black right pointing index
 &#x2620; - skull and crossbones
 &#x2611; - ballot box with checkmark
