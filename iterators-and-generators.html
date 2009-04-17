@@ -300,22 +300,22 @@ def plural(noun):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>def make_counter(x):</kbd>
-<samp class=p>... </samp><kbd>print 'entering make_counter'</kbd>
-<samp class=p>... </samp><kbd>while True:</kbd>
-<a><samp class=p>... </samp><kbd>    yield x</kbd>                    <span>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>    print 'incrementing x'</kbd>
-<samp class=p>... </samp><kbd>    x = x + 1</kbd>
+<samp class=p>... </samp><kbd>    print 'entering make_counter'</kbd>
+<samp class=p>... </samp><kbd>    while True:</kbd>
+<a><samp class=p>... </samp><kbd>        yield x</kbd>                    <span>&#x2460;</span></a>
+<samp class=p>... </samp><kbd>        print 'incrementing x'</kbd>
+<samp class=p>... </samp><kbd>        x = x + 1</kbd>
 <samp class=p>... </samp>
-<a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>      <span>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>counter</kbd>                        <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>          <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>counter</kbd>                            <span>&#x2462;</span></a>
 &lt;generator object at 0x001C9C10>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                  <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2463;</span></a>
 <samp>entering make_counter
 2</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                  <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2464;</span></a>
 <samp>incrementing x
 3</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                  <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2465;</span></a>
 <samp>incrementing x
 4</samp></pre>
 <ol>
