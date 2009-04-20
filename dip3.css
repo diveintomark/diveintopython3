@@ -101,7 +101,7 @@ h1,h2{letter-spacing:-1px}
 h1,h1 code{font-size:xx-large}
 h2,h2 code{font-size:x-large}
 h3,h3 code{font-size:large}
-h1{border-bottom:4px double;width:100%;margin:1em 0}
+h1{border-bottom:4px double;width:100%;margin:1em 0;text-shadow:gainsboro 1px 1px 1px}
 h1:before{content:"Chapter " counter(h1) ". "}
 h1{counter-reset:h2}
 h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}

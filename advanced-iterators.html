@@ -4,7 +4,7 @@
 <title>Advanced Iterators - Dive into Python 3</title>
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
-body{counter-reset:h1 6}
+body{counter-reset:h1 7}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 </head>
@@ -16,21 +16,22 @@ body{counter-reset:h1 6}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>G<code>OYA + INGRES + RENOIR + SARGENT = ARTISTS</code>. Or, to put it another way, <code>8643 + 598712 + 719657 + 2378190 = 3705202</code>. Am I speaking in tongues? No, it's just a puzzle. Here, let me line it up for you.
+<p class=f>H<code>AWAII + IDAHO + IOWA + OHIO = STATES</code>. Or, to put it another way, <code>510199 + 98153 + 9301 + 3593 == 621246</code>. Am I speaking in tongues? No, it's just a puzzle.
 
-<pre><code>GOYA + INGRES + RENOIR + SARGENT = ARTISTS
-8643 + 598712 + 719657 + 2378190 = 3705202
+<p>Let me spell it out for you.
 
-G = 8
-O = 6
-Y = 4
-A = 3
-I = 5
-N = 9
-R = 7
-E = 1
-S = 2
-T = 0</code></pre>
+<pre><code>HAWAII + IDAHO + IOWA + OHIO = STATES
+510199 + 98153 + 9301 + 3593 == 621246
+
+H = 5
+A = 1
+W = 0
+I = 9
+D = 8
+O = 3
+S = 6
+T = 2
+E = 4</code></pre>
 
 <p>Puzzles like this are called <i>cryptarithms</i> or <i>alphametics</i>. The letters spell out actual words, but if you replace each letter with a digit from <code>0&ndash;9</code>, it also &#8220;spells&#8221; an arithmetic equation. The trick is to figure out which letter maps to each digit. All the occurrences of each letter must map to the same digit, no digit can be repeated, and no &#8220;word&#8221; can start with the digit <code>0</code>.
 
@@ -68,9 +69,9 @@ if __name__ == '__main__':
             print(solution)</code></pre>
 
 <pre class=screen>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "GOYA + INGRES + RENOIR + SARGENT = ARTISTS"</kbd>
-<samp>GOYA + INGRES + RENOIR + SARGENT = ARTISTS
-8643 + 598712 + 719657 + 2378190 = 3705202</samp>
+<samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "HAWAII + IDAHO + IOWA + OHIO = STATES"</kbd>
+<samp>HAWAII + IDAHO + IOWA + OHIO = STATES
+510199 + 98153 + 9301 + 3593 == 621246</samp>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 alphametics.py "I + LOVE + YOU == DORA"</kbd>
 <samp>I + LOVE + YOU == DORA
 1 + 2784 + 975 == 3760</samp>
@@ -146,7 +147,7 @@ AssertionError</samp></pre>
 
 <p>The alphametics solver uses this exact <code>assert</code> statement to bail out early if the puzzle contains more than ten unique letters. Since each letter is assigned a unique digit, and there are only ten digits, a puzzle with more than ten unique letters is unsolvable.
 
-<h2 id=generator-objects>Generator objects</h2>
+<h2 id=generator-expressions>Generator expressions</h2>
 
 <p>FIXME
 
@@ -414,7 +415,7 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <p>Many, many thanks to Raymond Hettinger for agreeing to relicense his code so I could port it to Python 3 and use it as the basis for this chapter.
 
-<p class=nav><a rel=prev href=iterators-and-generators.html title="back to &#8220;Iterators &amp; Generators&#8221;"><span>&#x261C;</a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=nav><a rel=prev href=iterators.html title="back to &#8220;Iterators&#8221;"><span>&#x261C;</a> <a rel=next href=unit-testing.html title="onward to &#8220;Unit Testing&#8221;"><span>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>

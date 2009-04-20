@@ -1,6 +1,6 @@
 """Fibonacci iterator"""
 
-class fib:
+class Fib:
     def __init__(self, max):
         self.max = max
 

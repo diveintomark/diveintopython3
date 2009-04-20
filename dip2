@@ -1495,25 +1495,13 @@ NameError: There is no variable named 'FunctionType'</samp>
 <li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses advanced import techniques, including <a href="http://www.python.org/doc/current/tut/node8.html#SECTION008410000000000000000"><code>from <var>module</var> import *</code></a>.
 
 </ul>
-<h2 id="fileinfo.class">5.3. Defining Classes</h2>
-<p>Python is fully object-oriented: you can define your own classes, inherit from your own or built-in classes, and instantiate the
-   classes you've defined.
-<p>Defining a class in Python is simple. As with functions, there is no separate interface definition. Just define the class and start coding. A Python class starts with the reserved word <code>class</code>, followed by the class name. Technically, that's all that's required, since a class doesn't need to inherit from any other
-class.
-<div class=example><h3 id="fileinfo.class.simplest">Example 5.3. The Simplest Python Class</h3><pre><code>
-class Loaf: <span>&#x2460;</span>
-    pass    <span>&#x2461;</span> <span>&#x2462;</span></pre><div class=calloutlist>
-<ol>
-<li>The name of this class is <code>Loaf</code>, and it doesn't inherit from any other class. Class names are usually capitalized, <code>EachWordLikeThis</code>, but this is only a convention, not a requirement.
-<li>This class doesn't define any methods or attributes, but syntactically, there needs to be something in the definition, so
-            you use <code>pass</code>. This is a Python reserved word that just means &#8220;move along, nothing to see here&#8221;. It's a statement that does nothing, and it's a good placeholder when you're stubbing out functions or classes.
-<li>You probably guessed this, but everything in a class is indented, just like the code within a function, <code>if</code> statement, <code>for</code> loop, and so forth. The first thing not indented is not in the class.
-<table id="compare.pass.java" class=note border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">The <code>pass</code> statement in Python is like an empty set of braces (<code>{}</code>) in Java or <abbr>C</abbr>.
-<p>Of course, realistically, most classes will be inherited from other classes, and they will define their own class methods
-and attributes. But as you've just seen, there is nothing that a class absolutely must have, other than a name. In particular,
-<abbr>C++</abbr> programmers may find it odd that Python classes don't have explicit constructors and destructors. Python classes do have something similar to a constructor: the <code>__init__</code> method.
+
+
+[classes stuff was here]
+
+
+
 <div class=example><h3 id="fileinfo.class.example">Example 5.4. Defining the <code>FileInfo</code> Class</h3><pre><code>
 from UserDict import UserDict
 

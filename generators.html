@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset=utf-8>
-<title>Iterators &amp; generators - Dive into Python 3</title>
+<title>Generators - Dive into Python 3</title>
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
 body{counter-reset:h1 5}
@@ -9,16 +9,16 @@ body{counter-reset:h1 5}
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#iterators-and-generators>Dive Into Python 3</a> <span>&#8227;</span>
-<h1>Iterators <i class=baa>&amp;</i> Generators</h1>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#generators>Dive Into Python 3</a> <span>&#8227;</span>
+<h1>Generators</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> East is East, and West is West, and never the twain shall meet. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Rudyard_Kipling>Rudyard Kipling</a>
+<p><span>&#x275D;</span> My spelling is Wobbly. It's good spelling but it Wobbles, and the letters get in the wrong places. <span>&#x275E;</span><br>&mdash; Winnie-the-Pooh
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
 <p class=f>For reasons passing all understanding, I have always been fascinated by languages. Not programming languages. Well yes, programming languages, but also natural languages. Take English. English is a schizophrenic language that borrows words from German, French, Spanish, and Latin (to name a few). Actually, &#8220;borrows&#8221; is the wrong word; &#8220;pillages&#8221; is more like it. Or perhaps &#8220;assimilates&#8221; &mdash; like the Borg. Yes, I like that.
 <p class=c><code>We are the Borg. Your linguistic and etymological distinctiveness will be added to our own. Resistance is futile.</code>
-<p>In this chapter, you&#8217;re going to learn about plural nouns. Also, functions that return other functions, advanced regular expressions, iterators, and generators. But first, let&#8217;s talk about how to make plural nouns. (If you haven&#8217;t read <a href=regular-expressions.html>the chapter on regular expressions</a>, now would be a good time. This chapter assumes you understand the basics of regular expressions, and it quickly descends into more advanced uses.)
+<p>In this chapter, you&#8217;re going to learn about plural nouns. Also, functions that return other functions, advanced regular expressions, and generators. But first, let&#8217;s talk about how to make plural nouns. (If you haven&#8217;t read <a href=regular-expressions.html>the chapter on regular expressions</a>, now would be a good time. This chapter assumes you understand the basics of regular expressions, and it quickly descends into more advanced uses.)
 <p>If you grew up in an English-speaking country or learned English in a formal school setting, you&#8217;re probably familiar with the basic rules:
 <ul>
 <li>If a word ends in S, X, or Z, add ES. <i>Bass</i> becomes <i>basses</i>, <i>fax</i> becomes <i>faxes</i>, and <i>waltz</i> becomes <i>waltzes</i>.
@@ -363,7 +363,7 @@ def plural(noun):
 <p>Let&#8217;s go back to <code>plural5.py</code> and see how this version of the <code>plural()</code> function works.
 
 <pre><code>def rules():
-<a>    for line in open('plural5-rules.txt'):                               <span>&#x2460;</span></a>
+    for line in open('plural5-rules.txt'):
 <a>        pattern, search, replace = line.split(None, 3)                   <span>&#x2461;</span></a>
 <a>        yield build_match_and_apply_functions(pattern, search, replace)  <span>&#x2462;</span></a>
 
@@ -372,7 +372,6 @@ def plural(noun):
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
-<li>As you&#8217;ve seen, <code>for line in open(...)</code> is a common idiom for reading from a file one line at a time. But here&#8217;s what you might not know: the reason this idiom works is because <em><code>open()</code> actually returns an iterator, and calling <code>next()</code> on this iterator returns the next line of the file.</em>
 <li>No magic here. Remember that the lines of the rules file have three values separated by whitespace, so you use <code>line.split(None, 3)</code> to get the three &#8220;columns&#8221; and assign them to three local variables.
 <li><em>And then you yield.</em> What do you yield? Two functions, built dynamically with your old friend, <code>build_match_and_apply_functions()</code>, which is identical to the previous examples. In other words, <code>rules()</code> is a generator that spits out match and apply functions <em>on demand</em>.
 <li>Since <code>rules()</code> is a generator, you can use it directly in a <code>for</code> loop. The first time through the <code>for</code> loop, you will call the <code>rules()</code> function, which will open the pattern file, read the first line, dynamically build a match function and an apply function from the patterns on that line, and yield the dynamically built functions. The second time through the <code>for</code> loop, you will pick up exactly where you left off in <code>rules()</code> (which was in the middle of the <code>for line in file(...)</code> loop). The first thing it will do is read the next line of the file (which is still open), dynamically build another match and apply function based on the patterns on that line in the file, and yield the two functions.
@@ -384,195 +383,14 @@ def plural(noun):
 
 <p>What if you could have the best of both worlds: minimal startup cost (don&#8217;t execute any code on <code>import</code>), <em>and</em> maximum performance (don&#8217;t build the same functions over and over again). Oh, and you still want to keep the rules in a separate file (because code is code and data is data), just as long as you never have to read the same line twice.
 
-<h2 id=iterators>Iterators</h2>
-
-<p>In truth, generators are special case of <i>iterators</i>. A function that <code>yield</code>s values is a nice, compact way of building an iterator without building an iterator. Let me show you what I mean by that.
-
-<h3 id=a-fibonacci-iterator>A Fibonacci Iterator</h3>
-
-<p>Remember <a href=a-fibonacci-generator>the Fibonacci generator</a>? Here it is as a built-from-scratch iterator:
-
-<p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
-<pre><code><a>class fib:                                        <span>&#x2460;</span></a>
-<a>    def __init__(self, max):                      <span>&#x2461;</span></a>
-        self.max = max
-
-<a>    def __iter__(self):                           <span>&#x2462;</span></a>
-        self.a, self.b = 0, 1
-        return self
-
-<a>    def __next__(self):                           <span>&#x2463;</span></a>
-        fib = self.a
-        if fib > self.max:
-<a>            raise StopIteration                   <span>&#x2464;</span></a>
-        self.a, self.b = self.b, self.a + self.b
-<a>        return fib                                <span>&#x2465;</span></a></code></pre>
-<ol>
-<li>To build an iterator from scratch, <code>fib</code> needs to be a class, not a function.
-<li>&#8220;Calling&#8221; <code>fib(max)</code> is really creating an instance of this class and calling its <code>__init__()</code> method with <var>max</var>. The <code>__init__()</code> method saves the maximum value as an instance variable so other methods can refer to it later.
-<li>The <code>__iter__()</code> method is called whenever someone calls <code>iter(fib)</code>. (As you&#8217;ll see in a minute, a <code>for</code> loop will call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration initialization (in this case, resetting <code>self.a</code> and <code>self.b</code>, our two counters), the <code>__iter__()</code> method can return any object that implements a <code>__next__()</code> method. In this case (and in most cases), <code>__iter__()</code> simply returns <code>self</code>, since this class implements its own <code>__next__()</code> method.
-<li>The <code>__next__()</code> method is called whenever someone calls <code>next()</code> on an iterator of an instance of a class. That will make more sense in a minute.
-<li>When the <code>__next__()</code> method raises a <code>StopIteration</code> exception, this signals to the caller that the iteration is over; no more values are available. If the caller is a <code>for</code> loop, it will notice this <code>StopIteration</code> exception and gracefully exit the loop. (In other words, it will swallow the exception.) This little bit of magic is actually the key to using iterators in <code>for</code> loops.
-<li>To spit out the next value, an iterator&#8217;s <code>__next__()</code> method simply <code>return</code>s the value. Do not use <code>yield</code> here; that&#8217;s a bit of syntactic sugar that only applies when you&#8217;re using generators. Here you&#8217;re creating your own iterator from scratch; use <code>return</code> instead.
-</ol>
-
-<p>Thoroughly confused yet? Excellent. Let&#8217;s see how to call this iterator:</p>
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>from fibonacci2 import fib</kbd>
-<samp class=p>>>> </samp><kbd>for n in fib(1000):</kbd>
-<samp class=p>... </samp><kbd>    print(n, end=' ')</kbd>
-<samp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
-
-<p>Why, it&#8217;s exactly the same! Byte for byte identical to how you called Fibonacci-as-a-generator! But how?
-
-<p>I told you there was a bit of magic involved in <code>for</code> loops. Here&#8217;s what happens:
-
-<ul>
-<li>The <code>for</code> loop calls <code>fib(1000)</code>, as shown. This returns an instance of the <code>fib</code> class. Call this <var>fib_inst</var>.
-<li>Secretly, and quite cleverly, the <code>for</code> loop calls <code>iter(fib_inst)</code>, which returns an iterator object. Call this <var>fib_iter</var>. In this case, <var>fib_iter</var> == <var>fib_inst</var>, because the <code>__iter__()</code> method returns <code>self</code>, but the <code>for</code> loop doesn&#8217;t know (or care) about that.
-<li>To &#8220;loop through&#8221; the iterator, the <code>for</code> loop calls <code>next(fib_iter)</code>, which calls the <code>__next__()</code> method on the <code>fib_iter</code> object, which does the next-Fibonacci-number calculations and returns a value. The <code>for</code> loop takes this value and assigns it to <var>n</var>, then executes the body of the <code>for</code> loop for that value of <var>n</var>.
-<li>How does the <code>for</code> loop know when to stop? I&#8217;m glad you asked! When <code>next(fib_iter)</code> raises a <code>StopIteration</code> exception, the <code>for</code> loop will swallow the exception and gracefully exit. (Any other exception will pass through and be raised as usual.) And where have you seen a <code>StopIteration</code> exception? In the <code>__next__()</code> method, of course!
-</ul>
-
-<h3 id=a-plural-rule-iterator>A Plural Rule Iterator</h3>
-
-<aside>iter(f) calls f.__iter__<br>next(f) calls f.__next__</aside>
-<p>Now it&#8217;s time for the finale.
-
-<p class=d>[<a href=examples/plural6.py>download <code>plural6.py</code></a>]
-<pre><code>class LazyRules:
-    def __init__(self):
-        self.pattern_file = open('plural6-rules.txt')
-        self.cache = []
-
-    def __iter__(self):
-        self.cache_index = 0
-        return self
-
-    def __next__(self):
-        self.cache_index += 1
-        if len(self.cache) >= self.cache_index:
-            return self.cache[self.cache_index - 1]
-
-        if self.pattern_file.closed:
-            raise StopIteration
-
-        line = self.pattern_file.readline()
-        if not line:
-            self.pattern_file.close()
-            raise StopIteration
-
-        pattern, search, replace = line.split(None, 3)
-        funcs = build_match_and_apply_functions(
-            pattern, search, replace)
-        self.cache.append(funcs)
-        return funcs
-
-rules = LazyRules()</code></pre>
-
-<p>So this is a class that implements <code>__iter__()</code> and <code>__next__()</code>, so it can be used as an iterator. Then, you instantiate the class and assign it to <var>rules</var>. This happens just once, on import.
-
-<p>Let&#8217;s take the class one bite at a time.
-
-<pre><code>class LazyRules:
-<a>    def __init__(self):                                <span>&#x2460;</span></a>
-<a>        self.pattern_file = open('plural6-rules.txt')  <span>&#x2462;</span></a>
-<a>        self.cache = []                                <span>&#x2461;</span></a></code></pre>
-<ol>
-<li>The <code>__init__()</code> method is only going to be called once, when you instantiate the class and assign it to <var>rules</var>.
-<li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. You&#8217;ll read it later; no point doing more than you absolutely have to until absolutely necessary!
-<li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
-</ol>
-
-<pre><code><a>    def __iter__(self):       <span>&#x2460;</span></a>
-<a>        self.cache_index = 0  <span>&#x2461;</span></a>
-<a>        return self           <span>&#x2462;</span></a>
-</code></pre>
-<ol>
-<li>The <code>__iter__()</code> method will be called every time someone &mdash; say, a <code>for</code> loop &mdash; calls <code>iter(rules)</code>.
-<li>This is the place to reset the counter that we&#8217;re going to use to retrieve items from the cache (that we haven&#8217;t built yet &mdash; patience, grasshopper).
-<li>Finally, the <code>__iter__()</code> method returns <code>self</code>, which signals that this class will take care of returning its own values throughout an iteration.
-</ol>
-
-<pre><code><a>    def __next__(self):                                 <span>&#x2460;</span></a>
-        .
-        .
-        .
-        pattern, search, replace = line.split(None, 3)
-<a>        funcs = build_match_and_apply_functions(        <span>&#x2461;</span></a>
-            pattern, search, replace)
-<a>        self.cache.append(funcs)                        <span>&#x2462;</span></a>
-        return funcs</code></pre>
-<ol>
-<li>The <code>__next__()</code> method gets called whenever someone &mdash; say, a <code>for</code> loop &mdash; calls <code>next(rules)</code>. This method will only make sense if we start at the end and work backwards. So let&#8217;s do that.
-<li>The last part of this function should look familiar, at least. The <code>build_match_and_apply_functions()</code> function hasn&#8217;t changed; it&#8217;s the same as it ever was. <em>Each line of the pattern file will be read exactly once, as late as possible.</em>
-<li>The only difference is that, before returning the match and apply functions (which are stored in the tuple <var>funcs</var>), we&#8217;ve going to save them in <code>self.cache</code>. <em>Each match and apply function will be built exactly once, as late as possible, then cached.</em>
-</ol>
-
-<p>Moving backwards&hellip;
-
-<pre><code>    def __next__(self):
-        .
-        .
-        .
-<a>        line = self.pattern_file.readline()  <span>&#x2460;</span></a>
-<a>        if not line:                         <span>&#x2461;</span></a>
-            self.pattern_file.close()
-<a>            raise StopIteration              <span>&#x2462;</span></a>
-        .
-        .
-        .</code></pre>
-<ol>
-<li>A bit of advanced file trickery here. The <code>readline()</code> method (note: singular, not the plural <code>readlines()</code>) reads exactly one line from an open file. Specifically, the next line. (<em>File objects are iterators too! It&#8217;s iterators all the way down&hellip;</em>)
-<li>If there was a line for <code>readline()</code> to read, <var>line</var> will not be an empty string. Even if the file contained a blank line, <var>line</var> would end up as the one-character string <code>'\n'</code> (a carriage return). If <var>line</var> is really an empty string, that means there are no more lines to read from the file.
-<li>When we reach the end of the file, we should close the file and raise the magic <code>StopIteration</code> exception. Remember, we got to this point because we needed a match and apply function for the next rule. The next rule comes from the next line of the file&hellip; but there is no next line! Therefore, we have no value to return. The iteration is over. (<span>&#x266B;</span> The party&#8217;s over&hellip; <span>&#x266B;</span>)
-</ol>
-
-<p>Moving backwards all the way to the start of the <code>__next__()</code> method&hellip;
-
-<pre><code>    def __next__(self):
-        self.cache_index += 1
-        if len(self.cache) >= self.cache_index:
-<a>            return self.cache[self.cache_index - 1]     <span>&#x2460;</span></a>
-
-        if self.pattern_file.closed:
-<a>            raise StopIteration                         <span>&#x2461;</span></a>
-        .
-        .
-        .</code></pre>
-<ol>
-<li><code>self.cache</code> will be a list of the functions we need to match and apply individual rules. (At least <em>that</em> should sound familiar!) <code>self.cache_index</code> keeps track of which cached item we should return next. If we haven&#8217;t exhausted the cache yet (<i>i.e.</i> if the length of <code>self.cache</code> is greater than <code>self.cache_index</code>), then we have a cache hit! Hooray! We can return the match and apply functions from the cache instead of building them from scratch.
-<li>On the other hand, if we don&#8217;t get a hit from the cache, <em>and</em> the file object has been closed (which could happen, further down the method, as you saw in the previous code snippet), then there&#8217;s nothing more we can do. If the file is closed, it means we&#8217;ve exhausted it &mdash; we&#8217;ve already read through every line from the pattern file, and we&#8217;ve already built and cached the match and apply functions for each pattern. The file is exhausted; the cache is exhausted; I&#8217;m exhausted. Wait, what? Hang in there, we&#8217;re almost done.
-</ol>
-
-<p>Putting it all together, here&#8217;s what happens when:
-
-<ul>
-<li>When the module is imported, it creates a single instance of the <code>LazyRules</code> class, called <var>rules</var>, which opens the pattern file but does not read from it.
-<li>When asked for the first match and apply function, it checks its cache but finds the cache is empty. So it reads a single line from the pattern file, builds the match and apply functions from those patterns, and caches them.
-<li>Let&#8217;s say, for the sake of argument, that the very first rule matched. If so, no further match and apply functions are built, and no further lines are read from the pattern file.
-<li>Furthermore, for the sake of argument, suppose that the caller calls the <code>plural()</code> function <em>again</em> to pluralize a different word. The <code>for</code> loop in the <code>plural()</code> function will call <code>iter(rules)</code>, which will reset the cache index but will not reset the open file object.
-<li>The first time through, the <code>for</code> loop will ask for a value from <var>rules</var>, which will invoke its <code>__next__()</code> method. This time, however, the cache is primed with a single pair of match and apply functions, corresponding to the patterns in the first line of the pattern file. Since they were built and cached in the course of pluralizing the previous word, they&#8217;re retrieved from the cache. The cache index increments, and the open file is never touched.
-<li>Let&#8217;s say, for the sake of argument, that the first rule does <em>not</em> match this time around. So the <code>for</code> loop comes around again and asks for another value from <var>rules</var>. This invokes the <code>__next__()</code> method a second time. This time, the cache is exhausted &mdash; it only contained one item, and we&#8217;re asking for a second &mdash; so the <code>__next__()</code> method continues. It reads another line from the open file, builds match and apply functions out of the patterns, and caches them.
-<li>This read-build-and-cache process will continue as long as the rules being read from the pattern file don&#8217;t match the word we&#8217;re trying to pluralize. If we do find a matching rule before the end of the file, we simply use it and stop, with the file still open. The file pointer will stay wherever we stopped reading, waiting for the next <code>readline()</code> command. In the meantime, the cache now has more items in it, and if we start all over again trying to pluralize a new word, each of those items in the cache will be tried before reading the next line from the pattern file.
-</ul>
-
-<p>Thus, we have achieved our combined goal:
-
-<ol>
-<li><strong>Minimal startup cost.</strong> The only thing that happens on <code>import</code> is instantiating a single class and opening a file (but not reading from it).
-<li><strong>Maximum performance.</strong> The previous example would read through the file and build functions dynamically every time you wanted to pluralize a word. This version will cache functions as soon as they&#8217;re built, and in the worst case, it will only read through the pattern file once, no matter how many words you pluralize.
-<li><strong>Separation of code and data.</strong> All the patterns are stored in a separate file. Code is code, and data is data, and never the twain shall meet.
-</ol>
+<p>To do that, you&#8217;ll need to build your own iterator. But before you do <em>that</em>, you need to learn about Python classes.
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
-<li><a href=http://www.python.org/dev/peps/pep-0234/>PEP 234: Iterators</a>
 <li><a href=http://www.python.org/dev/peps/pep-0255/>PEP 255: Simple Generators</a>
 </ul>
 
-<p class=nav><a rel=prev href=regular-expressions.html title="back to &#8220;Regular Expressions&#8221;"><span>&#x261C;</a> <a rel=next href=advanced-iterators.html title="onward to &#8220;Advanced Iterators&#8221;"><span>&#x261E;</span></a>
+<p class=nav><a rel=prev href=regular-expressions.html title="back to &#8220;Regular Expressions&#8221;"><span>&#x261C;</a> <a rel=next href=iterators.html title="onward to &#8220;Iterators&#8221;"><span>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
