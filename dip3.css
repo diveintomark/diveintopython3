@@ -69,7 +69,7 @@ p,ul,ol{margin:1.75em 0;font-size:medium}
 html{background:#fff;color:#222}
 body{margin:1.75em 28px}
 .c{clear:both;text-align:center;margin:2.154em 0}
-form div{float:right}
+form div,#level{float:right}
 .todo{color:#ddd}
 
 /* links */

@@ -10,13 +10,16 @@ body{counter-reset:h1 6}
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#iterators>Dive Into Python 3</a> <span>&#8227;</span>
+<p id=level title=intermediate>Difficulty level: <span>&#x2666;</span><span>&#x2666;</span><span>&#x2666;</span><span>&#x2662;</span><span>&#x2662;</span>
 <h1>Iterators</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> East is East, and West is West, and never the twain shall meet. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Rudyard_Kipling>Rudyard Kipling</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>Generators are really just a special case of <i>iterators</i>. A function that <code>yield</code>s values is a nice, compact way of building an iterator without building an iterator. Remember <a href=generators.html#a-fibonacci-generator>the Fibonacci generator</a>? Here it is as a built-from-scratch iterator:
+<p class=f>Generators are really just a special case of <i>iterators</i>. A function that <code>yield</code>s values is a nice, compact way of building an iterator without building an iterator. Let me show you what I mean by that.
+
+<p>Remember <a href=generators.html#a-fibonacci-generator>the Fibonacci generator</a>? Here it is as a built-from-scratch iterator:
 
 <p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
 <pre><code>class Fib:
@@ -48,10 +51,11 @@ body{counter-reset:h1 6}
 
 <pre><code>
 class PapayaWhip:  <span>&#x2460;</span>
-    pass           <span>&#x2461;</span></pre>
+    pass           <span>&#x2461;</span></code></pre>
 <ol>
 <li>The name of this class is <code>PapayaWhip</code>, and it doesn't inherit from any other class. Class names are usually capitalized, <code>EachWordLikeThis</code>, but this is only a convention, not a requirement.
 <li>You probably guessed this, but everything in a class is indented, just like the code within a function, <code>if</code> statement, <code>for</code> loop, or any other block of code. The first line not indented is outside the class.
+</ol>
 
 <p>This <code>PapayaWhip</code> class doesn't define any methods or attributes, but syntactically, there needs to be something in the definition, thus the <code>pass</code> statement. This is a Python reserved word that just means &#8220;move along, nothing to see here&#8221;. It's a statement that does nothing, and it's a good placeholder when you're stubbing out functions or classes.
 

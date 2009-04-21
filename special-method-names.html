@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<head>
+<meta charset=utf-8>
+<title>Special Method Names - Dive into Python 3</title>
+<!--[if IE]><script src=html5.js></script><![endif]-->
+<link rel=stylesheet type=text/css href=dip3.css>
+<style>
+body{counter-reset:h1 11}
+</style>
+<link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
+</head>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#special-method-names>Dive Into Python 3</a> <span>&#8227;</span>
+<p id=level title=advanced>Difficulty level: <span>&#x2666;</span><span>&#x2666;</span><span>&#x2666;</span><span>&#x2666;</span><span>&#x2662;</span>
+<h1>Special Method Names</h1>
+<blockquote class=q>
+<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>FIXME
+
+<p class=d>[<a href=examples/ordereddict.py>download <code>ordereddict.py</code></a>]
+<pre><code>import collections
+import itertools
+ 
+class OrderedDict(dict, collections.MutableMapping):
+
+    def __init__(self, *args, **kwds):
+        if len(args) > 1:
+            raise TypeError('expected at most 1 arguments')
+        if not hasattr(self, '_keys'):
+            self._keys = []
+        self.update(*args, **kwds)
+
+    def clear(self):
+        del self._keys[:]
+        dict.clear(self)
+
+    def __setitem__(self, key, value):
+        if key not in self:
+            self._keys.append(key)
+        dict.__setitem__(self, key, value)
+
+    def __delitem__(self, key):
+        dict.__delitem__(self, key)
+        self._keys.remove(key)
+
+    def __iter__(self):
+        return iter(self._keys)
+
+    def __reversed__(self):
+        return reversed(self._keys)
+
+    def popitem(self):
+        if not self:
+            raise KeyError('dictionary is empty')
+        key = self._keys.pop()
+        value = dict.pop(self, key)
+        return key, value
+
+    def __reduce__(self):
+        items = [[k, self[k]] for k in self]
+        inst_dict = vars(self).copy()
+        inst_dict.pop('_keys', None)
+        return (self.__class__, (items,), inst_dict)
+
+    setdefault = MutableMapping.setdefault
+    update = MutableMapping.update
+    pop = MutableMapping.pop
+    keys = MutableMapping.keys
+    values = MutableMapping.values
+    items = MutableMapping.items
+
+    def __repr__(self):
+        if not self:
+            return '%s()' % (self.__class__.__name__,)
+        return '%s(%r)' % (self.__class__.__name__, list(self.items()))
+
+    def copy(self):
+        return self.__class__(self)
+
+    @classmethod
+    def fromkeys(cls, iterable, value=None):
+        d = cls()
+        for key in iterable:
+            d[key] = value
+        return d
+
+    def __eq__(self, other):
+        if isinstance(other, OrderedDict):
+            return all(p==q for p, q in itertools.zip_longest(self.items(), other.items()))
+        return dict.__eq__(self, other)</code></pre>
+
+<!--
+
+Basics:
+
+__init__
+__repr__
+__str__
+__bytes__ (*)
+__format__
+
+Rich comparisons:
+
+__lt__
+__le__
+__eq__
+__ne__
+__gt__
+__ge__
+__bool__
+__cmp__ (*)
+
+Custom attributes:
+
+__getattr__
+__getattribute__
+__setattr__
+__delattr__
+__dir__
+
+Acts like a function:
+
+__call__
+
+Acts like a list:
+
+__len__
+__reversed__
+__contains__
+__index__
+__getslice__ (*)
+
+Acts like a dictionary:
+
+__getitem__
+__setitem__
+__delitem__
+__missing__ (*)
+
+Acts like an iterator:
+
+__iter__ (*)
+__next__ (*)
+
+Acts like a number:
+
+__add__
+__sub__
+__mul__
+__truediv__
+__floordiv__
+__mod__
+__divmod__
+__pow__
+__lshift__
+__rshift__
+__and__
+__xor__
+__or__
+__radd__
+__rsub__
+__rmul__
+__rtruediv__
+__rfloordiv__
+__rmod__
+__rpow__
+__rlshift__
+__rrshift__
+__rand__
+__rxor__
+__ror__
+__iadd__
+__isub__
+__imul__
+__itruediv__
+__ifloordiv__
+__imod__
+__ipow__
+__ilshift__
+__irshift__
+__iand__
+__ixor__
+__ior__
+__neg__
+__pos__
+__abs__
+__invert__
+__complex__
+__int__
+__float__
+__long__ (*)
+__round__
+__ceil__ (*)
+__floor__ (*)
+__trunc__ (*)
+
+Support for pickling, see http://docs.python.org/3.0/library/pickle.html:
+
+__copy__ (*)
+__deepcopy__ (*)
+__getnewargs__ (*)
+__getinitargs__ (*)
+__getstate__ (*)
+__setstate__ (*)
+__reduce__ (*)
+__reduce_ex__ (*)
+
+Really weird stuff:
+
+__new__
+__del__
+__slots__
+__hash__
+__get__
+__set__
+__delete__
+__enter__ see http://docs.python.org/3.0/library/stdtypes.html#typecontextmanager
+__exit__
+__subclasshook__ (*) see http://docs.python.org/3.0/library/abc.html
+__instancecheck__ (*) see http://www.ibm.com/developerworks/linux/library/l-python3-2/
+__subclasscheck__ (*)
+
+-->
+
+<p class=nav><a rel=prev class=todo><span>&#x261C;</a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
+<script src=jquery.js></script>
+<script src=dip3.js></script>
