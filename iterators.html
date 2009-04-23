@@ -23,11 +23,14 @@ body{counter-reset:h1 6}
 
 <p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
 <pre><code>class Fib:
+    """iterator that yields numbers in the Fibanocci sequence"""
+
     def __init__(self, max):
         self.max = max
 
     def __iter__(self):
-        self.a, self.b = 0, 1
+        self.a = 0
+        self.b = 1
         return self
 
     def __next__(self):
@@ -63,37 +66,88 @@ class PapayaWhip:  <span>&#x2460;</span>
 <p><span>&#x261E;</span>The <code>pass</code> statement in Python is like a empty set of curly braces (<code>{}</code>) in Java or C.
 </blockquote>
 
-<p>Many classes are inherited from other classes, but this one is not. Many classes define methods, but this one does not. There is nothing that a Python class absolutely must have, other than a name. In particular, C++ programmers may find it odd that Python classes don't have explicit constructors and destructors. Although it's not required, Python classes <em>can</em> have something similar to a constructor: the <code>__init__</code> method.
+<p>Many classes are inherited from other classes, but this one is not. Many classes define methods, but this one does not. There is nothing that a Python class absolutely must have, other than a name. In particular, C++ programmers may find it odd that Python classes don't have explicit constructors and destructors. Although it's not required, Python classes <em>can</em> have something similar to a constructor: the <code>__init__()</code> method.
 
 <h3 id=init-method>The <code>__init__()</code> Method</h3>
 
-<p>FIXME - port from DiP
+<p>This example shows the initialization of the <code>Fib</code> class using the <code>__init__</code> method.
 
-<h3 id=self-and-init>Know When To Use <code>self</code> and <code>__init__</code></h3>
+<pre><code>
+class Fib:
+<a>    """iterator that yields numbers in the Fibanocci sequence"""  <span>&#x2460;</span></a>
 
-<p>FIXME - port from DiP
+<a>    def __init__(self, max):                                      <span>&#x2461;</span></code></pre>
+<ol>
+<li>Classes can (and should) have <code>docstring</code>s too, just like modules and functions.
+<li>The <code>__init__()</code> method is called immediately after an instance of the class is created. It would be tempting but incorrect to call this the constructor of the class. It's tempting, because it looks like a constructor (by convention, the <code>__init__()</code> method is the first method defined for the class), acts like one (it's the first piece of code executed in a newly created instance of the class), and even sounds like one. Incorrect, because the object has already been constructed by the time the <code>__init__()</code> method is called, and you already have a valid reference to the new instance of the class.
+</ol>
+
+<p>The first argument of every class method, including the <code>__init__()</code> method, is always a reference to the current instance of the class. By convention, this argument is named <var>self</var>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <var>self</var> is not a reserved word in Python, merely a naming convention. Nonetheless, please don't call it anything but <var>self</var>; this is a very strong convention.
+
+<p>In the <code>__init__()</code> method, <var>self</var> refers to the newly created object; in other class methods, it refers to the instance whose method was called. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
 
 <h2 id=instantiating-classes>Instantiating Classes</h2>
 
-<p>FIXME - port from DiP
+<p>Instantiating classes in Python is straightforward. To instantiate a class, simply call the class as if it were a function, passing the arguments that the <code>__init__()</code> method requires. The return value will be the newly created object.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import fibonacci2</kbd>
+<a><samp class=p>>>> </samp><kbd>fib = fibonacci2.Fib(100)</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>fib</kbd>                        <span>&#x2461;</span></a>
+<samp>&lt;fibonacci2.Fib object at 0x00DB8810></samp>
+<a><samp class=p>>>> </samp><kbd>fib.__class__</kbd>              <span>&#x2462;</span></a>
+<samp>&lt;class 'fibonacci2.Fib'></samp>
+<a><samp class=p>>>> </samp><kbd>fib.__doc__</kbd>                <span>&#x2463;</span></a>
+<samp>'iterator that yields numbers in the Fibanocci sequence'</samp></code></pre>
+<ol>
+<li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>'s <code>__init__()</code> method.
+<li><var>fib</var> is now an instance of the <code>Fib</code> class.
+<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object's class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName</code> and <code>getSuperclass</code> to get metadata information about an object. In Python, this kind of metadata is available directly on the object itself through attributes like <code>__class__</code>, <code>__name__</code>, and <code>__bases__</code>.
+<li>You can access the instance's <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
+</ol>
 
-<h3 id=gc>A Note About Garbage Collection</h3>
+<blockquote class="note compare java">
+<p><span>&#x261E;</span>In Python, simply call a class as if it were a function to create a new instance of the class. There is no explicit <code>new</code> operator like <abbr>C++</abbr> or Java.
+</blockquote>
 
-<p>FIXME - port from DiP, verify it's still true
+<h2 id=instance-variables>Instance Variables</h2>
 
-<h2 id=special-method-names>Special Method Names</h2>
+<p>On to the next line:
 
-<p>FIXME - port from DiP, link to http://docs.python.org/3.0/reference/datamodel.html#special-method-names
+<pre><code>class Fib:
+    def __init__(self, max):
+<a>        self.max = max        <span>&#x2460;</span></a></code></pre>
+<ol>
+<li>What is <var>self.max</var>? It's an instance variable. It is completely separate from <var>max</var>, which was passed into the <code>__init__()</code> method as an argument. <var>self.max</var> is &#8220;global&#8221; to the instance. That means that you can access it from other methods.
+</ol>
 
-<p>FIXME - do we want to make an appendix out of some of the special methods? The organization in the Python docs is somewhat haphazard and most names have no examples at all
+<pre><code>class Fib:
+    def __init__(self, max):
+<a>        self.max = max        <span>&#x2460;</span></a>
+    .
+    .
+    .
+    def __next__(self):
+        fib = self.a
+<a>        if fib > self.max:    <span>&#x2461;</span></a></code></pre>
+<ol>
+<li><var>self.max</var> is defined in the <code>__init__()</code> method&hellip;
+<li>&hellip;and referenced in the <code>__next__()</code> method.
+</ol>
 
-<h2 id=class-attributes>Class Attributes</h2>
+<p>Instance variables are specific to one instance of a class. For example, if you create two <code>Fib</code> instances with different maximum values, they will each remember their own values.
 
-<p>FIXME
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import fibonacci2</kbd>
+<samp class=p>>>> </samp><kbd>fib1 = fibonacci2.Fib(100)</kbd>
+<samp class=p>>>> </samp><kbd>fib2 = fibonacci2.Fib(200)</kbd>
+<samp class=p>>>> </samp><kbd>fib1.max</kbd>
+<samp>100</samp>
+<samp class=p>>>> </samp><kbd>fib2.max</kbd>
+<samp>200</samp></pre>
 
 <h2 id=a-fibonacci-iterator>A Fibonacci Iterator</h2>
 
-<p>FIXME
+<p><em>Now</em> you're ready to learn how to build an iterator. An iterator is just a class that defines an <code>__iter__()</code> method.
 
 <p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
 <pre><code><a>class Fib:                                        <span>&#x2460;</span></a>
@@ -112,8 +166,8 @@ class PapayaWhip:  <span>&#x2460;</span>
 <a>        return fib                                <span>&#x2465;</span></a></code></pre>
 <ol>
 <li>To build an iterator from scratch, <code>fib</code> needs to be a class, not a function.
-<li>&#8220;Calling&#8221; <code>fib(max)</code> is really creating an instance of this class and calling its <code>__init__()</code> method with <var>max</var>. The <code>__init__()</code> method saves the maximum value as an instance variable so other methods can refer to it later.
-<li>The <code>__iter__()</code> method is called whenever someone calls <code>iter(fib)</code>. (As you&#8217;ll see in a minute, a <code>for</code> loop will call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration initialization (in this case, resetting <code>self.a</code> and <code>self.b</code>, our two counters), the <code>__iter__()</code> method can return any object that implements a <code>__next__()</code> method. In this case (and in most cases), <code>__iter__()</code> simply returns <code>self</code>, since this class implements its own <code>__next__()</code> method.
+<li>&#8220;Calling&#8221; <code>Fib(max)</code> is really creating an instance of this class and calling its <code>__init__()</code> method with <var>max</var>. The <code>__init__()</code> method saves the maximum value as an instance variable so other methods can refer to it later.
+<li>The <code>__iter__()</code> method is called whenever someone calls <code>iter(fib)</code>. (As you&#8217;ll see in a minute, a <code>for</code> loop will call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration initialization (in this case, resetting <code>self.a</code> and <code>self.b</code>, our two counters), the <code>__iter__()</code> method can return any object that implements a <code>__next__()</code> method. In this case (and in most cases), <code>__iter__()</code> simply returns <var>self</var>, since this class implements its own <code>__next__()</code> method.
 <li>The <code>__next__()</code> method is called whenever someone calls <code>next()</code> on an iterator of an instance of a class. That will make more sense in a minute.
 <li>When the <code>__next__()</code> method raises a <code>StopIteration</code> exception, this signals to the caller that the iteration is over; no more values are available. If the caller is a <code>for</code> loop, it will notice this <code>StopIteration</code> exception and gracefully exit the loop. (In other words, it will swallow the exception.) This little bit of magic is actually the key to using iterators in <code>for</code> loops.
 <li>To spit out the next value, an iterator&#8217;s <code>__next__()</code> method simply <code>return</code>s the value. Do not use <code>yield</code> here; that&#8217;s a bit of syntactic sugar that only applies when you&#8217;re using generators. Here you&#8217;re creating your own iterator from scratch; use <code>return</code> instead.
@@ -133,12 +187,12 @@ class PapayaWhip:  <span>&#x2460;</span>
 
 <ul>
 <li>The <code>for</code> loop calls <code>Fib(1000)</code>, as shown. This returns an instance of the <code>Fib</code> class. Call this <var>fib_inst</var>.
-<li>Secretly, and quite cleverly, the <code>for</code> loop calls <code>iter(fib_inst)</code>, which returns an iterator object. Call this <var>fib_iter</var>. In this case, <var>fib_iter</var> == <var>fib_inst</var>, because the <code>__iter__()</code> method returns <code>self</code>, but the <code>for</code> loop doesn&#8217;t know (or care) about that.
+<li>Secretly, and quite cleverly, the <code>for</code> loop calls <code>iter(fib_inst)</code>, which returns an iterator object. Call this <var>fib_iter</var>. In this case, <var>fib_iter</var> == <var>fib_inst</var>, because the <code>__iter__()</code> method returns <var>self</var>, but the <code>for</code> loop doesn&#8217;t know (or care) about that.
 <li>To &#8220;loop through&#8221; the iterator, the <code>for</code> loop calls <code>next(fib_iter)</code>, which calls the <code>__next__()</code> method on the <code>fib_iter</code> object, which does the next-Fibonacci-number calculations and returns a value. The <code>for</code> loop takes this value and assigns it to <var>n</var>, then executes the body of the <code>for</code> loop for that value of <var>n</var>.
 <li>How does the <code>for</code> loop know when to stop? I&#8217;m glad you asked! When <code>next(fib_iter)</code> raises a <code>StopIteration</code> exception, the <code>for</code> loop will swallow the exception and gracefully exit. (Any other exception will pass through and be raised as usual.) And where have you seen a <code>StopIteration</code> exception? In the <code>__next__()</code> method, of course!
 </ul>
 
-<h3 id=a-plural-rule-iterator>A Plural Rule Iterator</h3>
+<h2 id=a-plural-rule-iterator>A Plural Rule Iterator</h2>
 
 <aside>iter(f) calls f.__iter__<br>next(f) calls f.__next__</aside>
 <p>Now it&#8217;s time for the finale. Let's rewrite the <a href=generators.html>plural rules generator</a> as an iterator.
@@ -181,14 +235,42 @@ rules = LazyRules()</code></pre>
 <p>Let&#8217;s take the class one bite at a time.
 
 <pre><code>class LazyRules:
-<a>    def __init__(self):                                <span>&#x2460;</span></a>
-<a>        self.pattern_file = open('plural6-rules.txt')  <span>&#x2462;</span></a>
-<a>        self.cache = []                                <span>&#x2461;</span></a></code></pre>
+    rules_f = 'plural6-rules.txt'
+
+<a>    def __init__(self):                         <span>&#x2460;</span></a>
+<a>        self.pattern_file = open(self.rules_f)  <span>&#x2462;</span></a>
+<a>        self.cache = []                         <span>&#x2461;</span></a></code></pre>
 <ol>
 <li>The <code>__init__()</code> method is only going to be called once, when you instantiate the class and assign it to <var>rules</var>.
 <li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. You&#8217;ll read it later; no point doing more than you absolutely have to until absolutely necessary!
 <li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
 </ol>
+
+<p>Before we continue, let's take a closer look at <var>rules_f</var>. It's not defined within the <code>__init__()</code> method. In fact, it's not defined within <em>any</em> method. It's defined at the class level. It's a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_f</var>), it is shared across all instances of the <code>LazyRules</code> class.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import plural6</kbd>
+<samp class=p>>>> </samp><kbd>r1 = plural6.LazyRules()</kbd>
+<samp class=p>>>> </samp><kbd>r2 = plural6.LazyRules()</kbd>
+<samp class=p>>>> </samp><kbd>r1.rules_f</kbd>                               <span>&#x2460;</span>
+<samp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd>r2.rules_f</kbd>
+<samp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd>r1.__class__.rules_f</kbd>                     <span>&#x2461;</span>
+<samp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd>r1.__class__.rules_f = 'papayawhip.txt'</kbd>  <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>r1.rules_f</kbd>
+<samp>'papayawhip.txt'</samp>
+<samp class=p>>>> </samp><kbd>r2.rules_f</kbd>                               <span>&#x2463;</span>
+<samp>'papayawhip.txt'</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+</ol>
+
+<p>And now back to our show.
 
 <pre><code><a>    def __iter__(self):       <span>&#x2460;</span></a>
 <a>        self.cache_index = 0  <span>&#x2461;</span></a>
@@ -197,7 +279,7 @@ rules = LazyRules()</code></pre>
 <ol>
 <li>The <code>__iter__()</code> method will be called every time someone &mdash; say, a <code>for</code> loop &mdash; calls <code>iter(rules)</code>.
 <li>This is the place to reset the counter that we&#8217;re going to use to retrieve items from the cache (that we haven&#8217;t built yet &mdash; patience, grasshopper).
-<li>Finally, the <code>__iter__()</code> method returns <code>self</code>, which signals that this class will take care of returning its own values throughout an iteration.
+<li>Finally, the <code>__iter__()</code> method returns <var>self</var>, which signals that this class will take care of returning its own values throughout an iteration.
 </ol>
 
 <pre><code><a>    def __next__(self):                                 <span>&#x2460;</span></a>
@@ -282,3 +364,34 @@ rules = LazyRules()</code></pre>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>
+
+<!--
+FIXME some good stuff here about calling ancestor's methods explicitly. need to find where to put it once we have an example of a class that inherits from something else.
+
+<li>Some pseudo-object-oriented languages like Powerbuilder have a concept of &#8220;extending&#8221; constructors and other events, where the ancestor's method is called automatically before the descendant's method is executed. Python does not do this; you must always explicitly call the appropriate method in the ancestor class.
+<li>I told you that this class acts like a dictionary, and here is the first sign of it. You're assigning the argument <var>filename</var> as the value of this object's <code>name</code> key.
+<li>Note that the <code>__init__</code> method never returns a value.
+
+<h3>5.3.2. Knowing When to Use <var>self</var> and <code>__init__</code></h3>
+<p>When defining your class methods, you <em>must</em> explicitly list <var>self</var> as the first argument for each method, including <code>__init__</code>. When you call a method of an ancestor class from within your class, you <em>must</em> include the <var>self</var> argument. But when you call your class method from outside, you do not specify anything for the <var>self</var> argument; you skip it entirely, and Python automatically adds the instance reference for you. I am aware that this is confusing at first; it's not really inconsistent,
+   but it may appear inconsistent because it relies on a distinction (between bound and unbound methods) that you don't know
+   about yet.
+<p>Whew. I realize that's a lot to absorb, but you'll get the hang of it. All Python classes work the same way, so once you learn one, you've learned them all. If you forget everything else, remember this
+   one thing, because I promise it will trip you up:<table id="tip.initoptional" class=note border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code>__init__</code> methods are optional, but when you define one, you must remember to explicitly call the ancestor's <code>__init__</code> method (if it defines one). This is more generally true: whenever a descendant wants to extend the behavior of the ancestor,
+         the descendant method must explicitly call the ancestor method at the proper time, with the proper arguments.
+<div class=itemizedlist>
+<h3>Further Reading on Python Classes</h3>
+<ul>
+<li><a href="http://www.freenetpages.co.uk/hp/alan.gauld/" title="Python book for first-time programmers"><i class=citetitle>Learning to Program</i></a> has a gentler <a href="http://www.freenetpages.co.uk/hp/alan.gauld/tutclass.htm">introduction to classes</a>.
+
+<li><a href="http://www.ibiblio.org/obp/thinkCSpy/" title="Python book for computer science majors"><i class=citetitle>How to Think Like a Computer Scientist</i></a> shows how to <a href="http://www.ibiblio.org/obp/thinkCSpy/chap12.htm">use classes to model compound datatypes</a>.
+
+<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> has an in-depth look at <a href="http://www.python.org/doc/current/tut/node11.html">classes, namespaces, and inheritance</a>.
+
+<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/242">common questions about classes</a>.
+
+</ul>
+
+-->

@@ -432,7 +432,7 @@ Type "help", "copyright", "credits", or "license" for more information.</samp>
 <samp class=p>>>> </samp><kbd>[press Ctrl+D to exit]</kbd>
 <samp class=p>[root@localhost root]# </samp>which python2.3 <span>&#x2462;</span>
 /usr/bin/python2.3
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Whoops!  Just typing <kbd>python</kbd> gives you the older version of Python -- the one that was installed by default. That's not the one you want.
 <li>At the time of this writing, the newest version is called <kbd>python2.3</kbd>. You'll probably want to change the path on the first line of the sample scripts to point to the newer version.
@@ -525,7 +525,7 @@ hello world
 <samp class=p>>>> </samp><kbd>y = 2</kbd>
 <samp class=p>>>> </samp><kbd>x + y</kbd>
 3
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The Python interactive shell can evaluate arbitrary Python expressions, including any basic arithmetic expression.
 <li>The interactive shell can execute arbitrary Python statements, including the <kbd>print</kbd> statement.
@@ -632,7 +632,7 @@ NameError: There is no variable named 'x'</samp>
 <samp class=p>>>> </samp><kbd>y</kbd>
 'b'
 <samp class=p>>>> </samp><kbd>z</kbd>
-'e'</pre><div class=calloutlist>
+'e'</pre>
 <ol>
 <li><var>v</var> is a tuple of three elements, and <code>(x, y, z)</code> is a tuple of three variables. Assigning one to the other assigns each of the values of <var>v</var> to each of the variables, in order.
 <p>This has all sorts of uses. I often want to assign names to a range of values. In <abbr>C</abbr>, you would use <code>enum</code> and manually list each constant and its associated value, which seems especially tedious when the values are consecutive.
@@ -645,7 +645,7 @@ NameError: There is no variable named 'x'</samp>
 <samp class=p>>>> </samp><kbd>TUESDAY</kbd>
 1
 <samp class=p>>>> </samp><kbd>SUNDAY</kbd>
-6</pre><div class=calloutlist>
+6</pre>
 <ol>
 <li>The built-in <code>range</code> function returns a list of integers. In its simplest form, it takes an upper limit and returns a zero-based list counting
                up to but not including the upper limit. (If you like, you can pass other parameters to specify a base other than <code>0</code> and a step other than <code>1</code>. You can <code>print range.__doc__</code> for details.)
@@ -671,7 +671,7 @@ NameError: There is no variable named 'x'</samp>
 [1, 9, 8, 4]
 <samp class=p>>>> </samp><kbd>li = [elem*2 for elem in li]</kbd> <span>&#x2462;</span>
 <samp class=p>>>> </samp><kbd>li</kbd>
-[2, 18, 16, 8]</pre><div class=calloutlist>
+[2, 18, 16, 8]</pre>
 <ol>
 <li>To make sense of this, look at it from right to left. <var>li</var> is the list you're mapping. Python loops through <var>li</var> one element at a time, temporarily assigning the value of each element to the variable <var>elem</var>. Python then applies the function <code><var>elem</var>*2</code> and appends that result to the returned list.
 <li>Note that list comprehensions do not change the original list.
@@ -685,7 +685,7 @@ NameError: There is no variable named 'x'</samp>
 <samp class=p>>>> </samp><kbd>params.values()</kbd> <span>&#x2461;</span>
 ['mpilgrim', 'sa', 'master', 'secret']
 <samp class=p>>>> </samp><kbd>params.items()</kbd>  <span>&#x2462;</span>
-[('server', 'mpilgrim'), ('uid', 'sa'), ('database', 'master'), ('pwd', 'secret')]</pre><div class=calloutlist>
+[('server', 'mpilgrim'), ('uid', 'sa'), ('database', 'master'), ('pwd', 'secret')]</pre>
 <ol>
 <li>The <code>keys</code> method of a dictionary returns a list of all the keys. The list is not in the order in which the dictionary was defined
             (remember that elements in a dictionary are unordered), but it is a list.
@@ -701,7 +701,7 @@ as <code><var>params</var>.<code>items</code>()</code>, but each element in the 
 <samp class=p>>>> </samp><kbd>[v for k, v in params.items()]</kbd>                <span>&#x2461;</span>
 ['mpilgrim', 'sa', 'master', 'secret']
 <samp class=p>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd> <span>&#x2462;</span>
-['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</pre><div class=calloutlist>
+['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</pre>
 <ol>
 <li>Note that you're using two variables to iterate through the <code>params.items()</code> list. This is another use of <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a>. The first element of <code>params.items()</code> is <code>('server', 'mpilgrim')</code>, so in the first iteration of the list comprehension, <var>k</var> will get <code>'server'</code> and <var>v</var> will get <code>'mpilgrim'</code>. In this case, you're ignoring the value of <var>v</var> and only including the value of <var>k</var> in the returned list, so this list comprehension ends up being equivalent to <code><var>params</var>.<code>keys</code>()</code>.
 <li>Here you're doing the same thing, but ignoring the value of <var>k</var>, so this list comprehension ends up being equivalent to <code><var>params</var>.<code>values</code>()</code>.
@@ -774,7 +774,7 @@ def info(object, spacing=10, collapse=1): <span>&#x2460;</span> <span>&#x2461;</
    for method in methodList])
 
 if __name__ == "__main__":                <span>&#x2463;</span> <span>&#x2464;</span>
-    print info.__doc__</pre><div class=calloutlist>
+    print info.__doc__</pre>
 <ol>
 <li>This module has one function, <code>info</code>. According to its <a href="#odbchelper.funcdef" title="2.2. Declaring Functions">function declaration</a>, it takes three parameters: <var>object</var>, <var>spacing</var>, and <var>collapse</var>. The last two are actually optional parameters, as you'll see shortly.
 <li>The <code>info</code> function has a multi-line <a href="#odbchelper.docstring" title="2.3. Documenting Functions"><code>docstring</code></a> that succinctly describes the function's purpose. Note that no return value is mentioned; this function will be used solely
@@ -818,7 +818,7 @@ Python, arguments can be specified by name, in any order.
 info(odbchelper)  <span>&#x2460;</span>
 info(odbchelper, 12)                <span>&#x2461;</span>
 info(odbchelper, collapse=0)        <span>&#x2462;</span>
-info(spacing=15, object=odbchelper) <span>&#x2463;</span></pre><div class=calloutlist>
+info(spacing=15, object=odbchelper) <span>&#x2463;</span></pre>
 <ol>
 <li>With only one argument, <var>spacing</var> gets its default value of <code>10</code> and <var>collapse</var> gets its default value of <code>1</code>.
 <li>With two arguments, <var>collapse</var> gets its default value of <code>1</code>.
@@ -852,7 +852,7 @@ time, you'll call functions the &#8220;normal&#8221; way, but you always have th
 &lt;type 'module'>
 <samp class=p>>>> </samp><kbd>import types</kbd>      <span>&#x2463;</span>
 <samp class=p>>>> </samp><kbd>type(odbchelper) == types.ModuleType</kbd>
-True</pre><div class=calloutlist>
+True</pre>
 <ol>
 <li><code>type</code> takes anything -- and I mean anything -- and returns its datatype. Integers, strings, lists, dictionaries, tuples, functions,
                classes, modules, even types are acceptable.
@@ -873,7 +873,7 @@ True</pre><div class=calloutlist>
 <samp class=p>>>> </samp><kbd>str(odbchelper)</kbd> <span>&#x2462;</span>
 "&lt;module 'odbchelper' from 'c:\\docbook\\dip\\py\\odbchelper.py'>"
 <samp class=p>>>> </samp><kbd>str(None)</kbd>       <span>&#x2463;</span>
-'None'</pre><div class=calloutlist>
+'None'</pre>
 <ol>
 <li>For simple datatypes like integers, you would expect <code>str</code> to work, because almost every language has a function to convert an integer to a string.
 <li>However, <code>str</code> works on any object of any type. Here it works on a list which you've constructed in bits and pieces.
@@ -891,7 +891,7 @@ True</pre><div class=calloutlist>
 ['clear', 'copy', 'get', 'has_key', 'items', 'keys', 'setdefault', 'update', 'values']
 <samp class=p>>>> </samp><kbd>import odbchelper</kbd>
 <samp class=p>>>> </samp><kbd>dir(odbchelper)</kbd>   <span>&#x2462;</span>
-['__builtins__', '__doc__', '__file__', '__name__', 'buildConnectionString']</pre><div class=calloutlist>
+['__builtins__', '__doc__', '__file__', '__name__', 'buildConnectionString']</pre>
 <ol>
 <li><var>li</var> is a list, so <code><code>dir</code>(<var>li</var>)</code> returns a list of all the methods of a list. Note that the returned list contains the names of the methods as strings, not
                the methods themselves.
@@ -915,7 +915,7 @@ True
     intervening occurrences of sep. The default separator is a
     single space.
 
-    (joinfields and join are synonymous)</span></pre><div class=calloutlist>
+    (joinfields and join are synonymous)</span></pre>
 <ol>
 <li>The functions in the <code>string</code> module are deprecated (although many people still use the <code>join</code> function), but the module contains a lot of useful constants like this <var>string.punctuation</var>, which contains all the standard punctuation characters.
 <li><a href="#odbchelper.join" title="3.7. Joining Lists and Splitting Strings"><code>string.join</code></a> is a function that joins a list of strings.
@@ -966,7 +966,7 @@ IOError              I/O operation failed.
 <samp class=p>>>> </samp><kbd>getattr((), "pop")</kbd>           <span>&#x2464;</span>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
-AttributeError: 'tuple' object has no attribute 'pop'</span></pre><div class=calloutlist>
+AttributeError: 'tuple' object has no attribute 'pop'</span></pre>
 <ol>
 <li>This gets a reference to the <code>pop</code> method of the list. Note that this is not calling the <code>pop</code> method; that would be <code>li.pop()</code>. This is the method itself.
 <li>This also returns a reference to the <code>pop</code> method, but this time, the method name is specified as a string argument to the <code>getattr</code> function. <code>getattr</code> is an incredibly useful built-in function that returns any attribute of any object. In this case, the object is a list,
@@ -991,7 +991,7 @@ AttributeError: 'tuple' object has no attribute 'pop'</span></pre><div class=cal
 <samp class=p>>>> </samp><kbd>type(getattr(object, method)) == types.FunctionType</kbd>
 True
 <samp class=p>>>> </samp><kbd>callable(getattr(object, method))</kbd>            <span>&#x2464;</span>
-True</pre><div class=calloutlist>
+True</pre>
 <ol>
 <li>This returns a reference to the <code>buildConnectionString</code> function in the <code>odbchelper</code> module, which you studied in <a href="#odbchelper" title="Chapter 2. Your First Python Program">Chapter 2, <i>Your First Python Program</i></a>. (The hex address you see is specific to my machine; your output will be different.)
 <li>Using <code>getattr</code>, you can get the same reference to the same function. In general, <code><code>getattr</code>(<var>object</var>, "<var>attribute</var>")</code> is equivalent to <code><var>object</var>.<var>attribute</var></code>. If <var><code>object</code></var> is a module, then <var><code>attribute</code></var> can be anything defined in the module: a function, class, or global variable.
@@ -1009,7 +1009,7 @@ import statsout
 def output(data, format="text"):            <span>&#x2460;</span>
     output_function = getattr(statsout, "output_%s" % format) <span>&#x2461;</span>
     return output_function(data)            <span>&#x2462;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The <code>output</code> function takes one required argument, <var>data</var>, and one optional argument, <var>format</var>. If <var>format</var> is not specified, it defaults to <code>text</code>, and you will end up calling the plain text output function.
 <li>You concatenate the <var>format</var> argument with "output_" to produce a function name, and then go get that function from the <code>statsout</code> module. This allows you to easily extend the program later to support other output formats, without changing this dispatch
@@ -1025,7 +1025,7 @@ import statsout
 def output(data, format="text"):
     output_function = getattr(statsout, "output_%s" % format, statsout.output_text)
     return output_function(data) <span>&#x2460;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This function call is guaranteed to work, because you added a third argument to the call to <code>getattr</code>. The third argument is a default value that is returned if the attribute or method specified by the second argument wasn't
                found.
@@ -1042,7 +1042,7 @@ so they are never put through the mapping expression and are not included in the
 <samp class=p>>>> </samp><kbd>[elem for elem in li if elem != "b"]</kbd>         <span>&#x2461;</span>
 ['a', 'mpilgrim', 'foo', 'c', 'd', 'd']
 <samp class=p>>>> </samp><kbd>[elem for elem in li if li.count(elem) == 1]</kbd> <span>&#x2462;</span>
-['a', 'mpilgrim', 'foo', 'c']</pre><div class=calloutlist>
+['a', 'mpilgrim', 'foo', 'c']</pre>
 <ol>
 <li>The mapping expression here is simple (it just returns the value of each element), so concentrate on the filter expression.
              As Python loops through the list, it runs each element through the filter expression. If the filter expression is true, the element
@@ -1075,7 +1075,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 <samp class=p>>>> </samp><kbd>'' and 'b'</kbd>          <span>&#x2461;</span>
 ''
 <samp class=p>>>> </samp><kbd>'a' and 'b' and 'c'</kbd> <span>&#x2462;</span>
-'c'</pre><div class=calloutlist>
+'c'</pre>
 <ol>
 <li>When using <code>and</code>, values are evaluated in a boolean context from left to right. <code>0</code>, <code>''</code>, <code>[]</code>, <code>()</code>, <code>{}</code>, and <code>None</code> are false in a boolean context; everything else is true. Well, almost everything. By default, instances of classes are
             true in a boolean context, but you can define special methods in your class to make an instance evaluate to false. You'll
@@ -1092,7 +1092,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 <samp class=p>...    </samp>print "in sidefx()"
 <samp class=p>...    </samp>return 1
 <samp class=p>>>> </samp><kbd>'a' or sidefx()</kbd>     <span>&#x2463;</span>
-'a'</pre><div class=calloutlist>
+'a'</pre>
 <ol>
 <li>When using <code>or</code>, values are evaluated in a boolean context from left to right, just like <code>and</code>. If any value is true, <code>or</code> returns that value immediately. In this case, <code>'a'</code> is the first true value.
 <li><code>or</code> evaluates <code>''</code>, which is false, then <code>'b'</code>, which is true, and returns <code>'b'</code>.
@@ -1107,7 +1107,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 'first'
 <samp class=p>>>> </samp><kbd>0 and a or b</kbd> <span>&#x2461;</span>
 'second'
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This syntax looks similar to the <code><var>bool</var> ? <var>a</var> : <var>b</var></code> expression in <abbr>C</abbr>. The entire expression is evaluated from left to right, so the <code>and</code> is evaluated first. <code>1 and 'first'</code> evalutes to <code>'first'</code>, then <code>'first' or 'second'</code> evalutes to <code>'first'</code>.
 <li><code>0 and 'first'</code> evalutes to <code>False</code>, and then <code>0 or 'second'</code> evaluates to <code>'second'</code>.
@@ -1116,7 +1116,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 <div class=example><h3>Example 4.18. When the <code>and-or</code> Trick Fails</h3><pre class=screen><samp class=p>>>> </samp><kbd>a = ""</kbd>
 <samp class=p>>>> </samp><kbd>b = "second"</kbd>
 <samp class=p>>>> </samp><kbd>1 and a or b</kbd>         <span>&#x2460;</span>
-'second'</pre><div class=calloutlist>
+'second'</pre>
 <ol>
 <li>Since <var>a</var> is an empty string, which Python considers false in a boolean context, <code>1 and ''</code> evalutes to <code>''</code>, and then <code>'' or 'second'</code> evalutes to <code>'second'</code>. Oops!  That's not what you wanted.
 <p>The <code>and-or</code> trick, <code><var>bool</var> and <var>a</var> or <var>b</var></code>, will not work like the <abbr>C</abbr> expression <code><var>bool</var> ? <var>a</var> : <var>b</var></code> when <var>a</var> is false in a boolean context.
@@ -1124,7 +1124,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 <div class=example><h3>Example 4.19. Using the <code>and-or</code> Trick Safely</h3><pre class=screen><samp class=p>>>> </samp><kbd>a = ""</kbd>
 <samp class=p>>>> </samp><kbd>b = "second"</kbd>
 <samp class=p>>>> </samp><kbd>(1 and [a] or [b])[0]</kbd> <span>&#x2460;</span>
-''</pre><div class=calloutlist>
+''</pre>
 <ol>
 <li>Since <code>[<var>a</var>]</code> is a non-empty list, it is never false. Even if <var>a</var> is <code>0</code> or <code>''</code> or some other false value, the list <code>[<var>a</var>]</code> is true because it has one element.
 <p>By now, this trick may seem like more trouble than it's worth. You could, after all, accomplish the same thing with an <code>if</code> statement, so why go through all this fuss?  Well, in many cases, you are choosing between two constant values, so you can
@@ -1147,7 +1147,7 @@ the <code>pop</code> method of a list) and user-defined (like the <code>buildCon
 <samp class=p>>>> </samp><kbd>g(3)</kbd>
 6
 <samp class=p>>>> </samp><kbd>(lambda x: x*2)(3)</kbd> <span>&#x2461;</span>
-6</pre><div class=calloutlist>
+6</pre>
 <ol>
 <li>This is a <code>lambda</code> function that accomplishes the same thing as the normal function above it. Note the abbreviated syntax here: there are no
             parentheses around the argument list, and the <code>return</code> keyword is missing (it is implied, since the entire function can only be one expression). Also, the function has no name,
@@ -1173,7 +1173,7 @@ a	test</samp>
 <samp class=p>>>> </samp><kbd>print s.split()</kbd>           <span>&#x2461;</span>
 ['this', 'is', 'a', 'test']
 <samp class=p>>>> </samp><kbd>print " ".join(s.split())</kbd> <span>&#x2462;</span>
-'this is a test'</pre><div class=calloutlist>
+'this is a test'</pre>
 <ol>
 <li>This is a multiline string, defined by escape characters instead of <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's docstring">triple quotes</a>. <code>\n</code> is a carriage return, and <code>\t</code> is a tab character.
 <li><code>split</code> without any arguments splits on whitespace. So three spaces, a carriage return, and a tab character are all the same.
@@ -1216,7 +1216,7 @@ for method in methodList</pre><p>shows that this is a <a href="#odbchelper.map" 
 <samp class=p>>>> </samp><kbd>print getattr(object, method).__doc__</kbd> <span>&#x2463;</span>
 <samp>Build a connection string from a dictionary of parameters.
 
-    Returns string.</span></pre><div class=calloutlist>
+    Returns string.</span></pre>
 <ol>
 <li>In the <code>info</code> function, <var>object</var> is the object you're getting help on, passed in as an argument.
 <li>As you're looping through <var>methodList</var>, <var>method</var> is the name of the current method.
@@ -1231,7 +1231,7 @@ for method in methodList</pre><p>shows that this is a <a href="#odbchelper.map" 
 True
 <samp class=p>>>> </samp><kbd>str(foo.__doc__)</kbd>    <span>&#x2462;</span>
 'None'
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>You can easily define a function that has no <code>docstring</code>, so its <code>__doc__</code> attribute is <code>None</code>. Confusingly, if you evaluate the <code>__doc__</code> attribute directly, the Python <abbr>IDE</abbr> prints nothing at all, which makes sense if you think about it, but is still unhelpful.
 <li>You can verify that the value of the <code>__doc__</code> attribute is actually <code>None</code> by comparing it directly.
@@ -1245,7 +1245,7 @@ True
 <samp class=p>>>> </samp><kbd>s.ljust(30)</kbd> <span>&#x2460;</span>
 'buildConnectionString         '
 <samp class=p>>>> </samp><kbd>s.ljust(20)</kbd> <span>&#x2461;</span>
-'buildConnectionString'</pre><div class=calloutlist>
+'buildConnectionString'</pre>
 <ol>
 <li><code>ljust</code> pads the string with spaces to the given length. This is what the <code>info</code> function uses to make two columns of output and line up all the <code>docstring</code>s in the second column.
 <li>If the given length is smaller than the length of the string, <code>ljust</code> will simply return the string unchanged. It never truncates the string.
@@ -1254,7 +1254,7 @@ True
 <samp class=p>>>> </samp><kbd>print "\n".join(li)</kbd> <span>&#x2460;</span>
 <samp>a
 b
-c</span></pre><div class=calloutlist>
+c</span></pre>
 <ol>
 <li>This is also a useful debugging trick when you're working with lists. And in Python, you're always working with lists.
 <p>That's the last piece of the puzzle. You should now understand this code.
@@ -1391,7 +1391,7 @@ def listDirectory(directory, fileExtList):
 if __name__ == "__main__":
     for info in listDirectory("/music/_singles/", [".mp3"]): <span>&#x2460;</span>
         print "\n".join(["%s=%s" % (k, v) for k, v in info.items()])
-        print</pre><div class=calloutlist>
+        print</pre>
 <ol>
 <li>This program's output depends on the files on your hard drive. To get meaningful output, you'll need to change the directory
             path to point to a directory of MP3 files on your own machine.
@@ -1466,7 +1466,7 @@ can import individual items or use <code>from <var>module</var> import *</code> 
 NameError: There is no variable named 'FunctionType'</samp>
 <samp class=p>>>> </samp><kbd>from types import FunctionType</kbd> <span>&#x2462;</span>
 <samp class=p>>>> </samp><kbd>FunctionType</kbd> <span>&#x2463;</span>
-&lt;type 'function'></pre><div class=calloutlist>
+&lt;type 'function'></pre>
 <ol>
 <li>The <code>types</code> module contains no methods; it just has attributes for each Python object type. Note that the attribute, <code>FunctionType</code>, must be qualified by the module name, <code>types</code>.
 <li><code>FunctionType</code> by itself has not been defined in this namespace; it exists only in the context of <code>types</code>.
@@ -1505,7 +1505,7 @@ NameError: There is no variable named 'FunctionType'</samp>
 <div class=example><h3 id="fileinfo.class.example">Example 5.4. Defining the <code>FileInfo</code> Class</h3><pre><code>
 from UserDict import UserDict
 
-class FileInfo(UserDict): <span>&#x2460;</span></pre><div class=calloutlist>
+class FileInfo(UserDict): <span>&#x2460;</span></pre>
 <ol>
 <li>In Python, the ancestor of a class is simply listed in parentheses immediately after the class name. So the <code>FileInfo</code> class is inherited from the <code>UserDict</code> class (which was <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import">imported from the <code>UserDict</code> module</a>). <code>UserDict</code> is a class that acts like a dictionary, allowing you to essentially subclass the dictionary datatype and add your own behavior.
              (There are similar classes <code>UserList</code> and <code>UserString</code> which allow you to subclass lists and strings.)  There is a bit of black magic behind this, which you will demystify later
@@ -1517,84 +1517,14 @@ class FileInfo(UserDict): <span>&#x2460;</span></pre><div class=calloutlist>
 <p>Python supports multiple inheritance. In the parentheses following the class name, you can list as many ancestor classes as you
 like, separated by commas.
 <h3>5.3.1. Initializing and Coding Classes</h3>
-<p>This example shows the initialization of the <code>FileInfo</code> class using the <code>__init__</code> method.
-<div class=example><h3 id="fileinfo.init.example">Example 5.5. Initializing the <code>FileInfo</code> Class</h3><pre><code>
-class FileInfo(UserDict):
-    "store file metadata"              <span>&#x2460;</span>
-    def __init__(self, filename=None): <span>&#x2461;</span> <span>&#x2462;</span> <span>&#x2463;</span></pre><div class=calloutlist>
-<ol>
-<li>Classes can (and <a href="#tip.docstring">should</a>) have <code>docstring</code>s too, just like modules and functions.
-<li><code>__init__</code> is called immediately after an instance of the class is created. It would be tempting but incorrect to call this the constructor
-               of the class. It's tempting, because it looks like a constructor (by convention, <code>__init__</code> is the first method defined for the class), acts like one (it's the first piece of code executed in a newly created instance
-               of the class), and even sounds like one (&#8220;init&#8221; certainly suggests a constructor-ish nature). Incorrect, because the object has already been constructed by the time <code>__init__</code> is called, and you already have a valid reference to the new instance of the class. But <code>__init__</code> is the closest thing you're going to get to a constructor in Python, and it fills much the same role.
-<li>The first argument of every class method, including <code>__init__</code>, is always a reference to the current instance of the class. By convention, this argument is always named <code>self</code>. In the <code>__init__</code> method, <code>self</code> refers to the newly created object; in other class methods, it refers to the instance whose method was called. Although
-               you need to specify <code>self</code> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
-<li><code>__init__</code> methods can take any number of arguments, and just like functions, the arguments can be defined with default values, making
-               them optional to the caller. In this case, <var>filename</var> has a default value of <code>None</code>, which is the Python null value.
-<table id="compare.self.java" class=note border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">By convention, the first argument of any Python class method (the reference to the current instance) is called <code>self</code>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <code>self</code> is not a reserved word in Python, merely a naming convention. Nonetheless, please don't call it anything but <code>self</code>; this is a very strong convention.
-<div class=example><h3 id="fileinfo.init.code.example">Example 5.6. Coding the <code>FileInfo</code> Class</h3><pre><code>
-class FileInfo(UserDict):
-    "store file metadata"
-    def __init__(self, filename=None):
-        UserDict.__init__(self)        <span>&#x2460;</span>
-        self["name"] = filename        <span>&#x2461;</span>
-<span>&#x2462;</span></pre><div class=calloutlist>
-<ol>
-<li>Some pseudo-object-oriented languages like Powerbuilder have a concept of &#8220;extending&#8221; constructors and other events, where the ancestor's method is called automatically before the descendant's method is executed.
-                Python does not do this; you must always explicitly call the appropriate method in the ancestor class.
-<li>I told you that this class acts like a dictionary, and here is the first sign of it. You're assigning the argument <var>filename</var> as the value of this object's <code>name</code> key.
-<li>Note that the <code>__init__</code> method never returns a value.
-<h3>5.3.2. Knowing When to Use <code>self</code> and <code>__init__</code></h3>
-<p>When defining your class methods, you <em>must</em> explicitly list <code>self</code> as the first argument for each method, including <code>__init__</code>. When you call a method of an ancestor class from within your class, you <em>must</em> include the <code>self</code> argument. But when you call your class method from outside, you do not specify anything for the <code>self</code> argument; you skip it entirely, and Python automatically adds the instance reference for you. I am aware that this is confusing at first; it's not really inconsistent,
-   but it may appear inconsistent because it relies on a distinction (between bound and unbound methods) that you don't know
-   about yet.
-<p>Whew. I realize that's a lot to absorb, but you'll get the hang of it. All Python classes work the same way, so once you learn one, you've learned them all. If you forget everything else, remember this
-   one thing, because I promise it will trip you up:<table id="tip.initoptional" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code>__init__</code> methods are optional, but when you define one, you must remember to explicitly call the ancestor's <code>__init__</code> method (if it defines one). This is more generally true: whenever a descendant wants to extend the behavior of the ancestor,
-         the descendant method must explicitly call the ancestor method at the proper time, with the proper arguments.
-<div class=itemizedlist>
-<h3>Further Reading on Python Classes</h3>
-<ul>
-<li><a href="http://www.freenetpages.co.uk/hp/alan.gauld/" title="Python book for first-time programmers"><i class=citetitle>Learning to Program</i></a> has a gentler <a href="http://www.freenetpages.co.uk/hp/alan.gauld/tutclass.htm">introduction to classes</a>.
-
-<li><a href="http://www.ibiblio.org/obp/thinkCSpy/" title="Python book for computer science majors"><i class=citetitle>How to Think Like a Computer Scientist</i></a> shows how to <a href="http://www.ibiblio.org/obp/thinkCSpy/chap12.htm">use classes to model compound datatypes</a>.
-
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> has an in-depth look at <a href="http://www.python.org/doc/current/tut/node11.html">classes, namespaces, and inheritance</a>.
-
-<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/242">common questions about classes</a>.
-
-</ul>
-<h2 id="fileinfo.create">5.4. Instantiating Classes</h2>
-<p>Instantiating classes in Python is straightforward. To instantiate a class, simply call the class as if it were a function, passing the arguments that the
-<code>__init__</code> method defines. The return value will be the newly created object.
-<div class=example><h3>Example 5.7. Creating a <code>FileInfo</code> Instance</h3><pre class=screen><samp class=p>>>> </samp><kbd>import fileinfo</kbd>
-<samp class=p>>>> </samp><kbd>f = fileinfo.FileInfo("/music/_singles/kairo.mp3")</kbd> <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>f.__class__</kbd>    <span>&#x2461;</span>
-&lt;class fileinfo.FileInfo at 010EC204>
-<samp class=p>>>> </samp><kbd>f.__doc__</kbd>      <span>&#x2462;</span>
-'store file metadata'
-<samp class=p>>>> </samp><kbd>f</kbd>              <span>&#x2463;</span>
-{'name': '/music/_singles/kairo.mp3'}</pre><div class=calloutlist>
-<ol>
-<li>You are creating an instance of the <code>FileInfo</code> class (defined in the <code>fileinfo</code> module) and assigning the newly created instance to the variable <var>f</var>. You are passing one parameter, <code>/music/_singles/kairo.mp3</code>, which will end up as the <var>filename</var> argument in <code>FileInfo</code>'s <code>__init__</code> method.
-<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object's class. (Note that the representation of this includes the physical address of the instance on my
-            machine; your representation will be different.)  Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName</code> and <code>getSuperclass</code> to get metadata information about an object. In Python, this kind of metadata is available directly on the object itself through attributes like <code>__class__</code>, <code>__name__</code>, and <code>__bases__</code>.
-<li>You can access the instance's <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
-<li>Remember when the <code>__init__</code> method <a href="#fileinfo.class.example" title="Example 5.4. Defining the FileInfo Class">assigned its <var>filename</var> argument to <code>self["name"]</code></a>?  Well, here's the result. The arguments you pass when you create the class instance get sent right along to the <code>__init__</code> method (along with the object reference, <code>self</code>, which Python adds for free).
-<table id="compare.new.java" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">In Python, simply call a class as if it were a function to create a new instance of the class. There is no explicit <code>new</code> operator like <abbr>C++</abbr> or Java.
-<h3>5.4.1. Garbage Collection</h3>
 <p>If creating new instances is easy, destroying them is even easier. In general, there is no need to explicitly free instances,
    because they are freed automatically when the variables assigned to them go out of scope. Memory leaks are rare in Python.
 <div class=example><h3 id="fileinfo.scope">Example 5.8. Trying to Implement a Memory Leak</h3><pre class=screen><samp class=p>>>> </samp><kbd>def leakmem():</kbd>
 <samp class=p>...    </samp>f = fileinfo.FileInfo('/music/_singles/kairo.mp3') <span>&#x2460;</span>
 <samp class=p>...    </samp>
 <samp class=p>>>> </samp><kbd>for i in range(100):</kbd>
-<samp class=p>...    </samp>leakmem()      <span>&#x2461;</span></pre><div class=calloutlist>
+<samp class=p>...    </samp>leakmem()      <span>&#x2461;</span></pre>
 <ol>
 <li>Every time the <code>leakmem</code> function is called, you are creating an instance of <code>FileInfo</code> and assigning it to the variable <var>f</var>, which is a local variable within the function. Then the function ends without ever freeing <var>f</var>, so you would expect a memory leak, but you would be wrong. When the function ends, the local variable <var>f</var> goes out of scope. At this point, there are no longer any references to the newly created instance of <code>FileInfo</code> (since you never assigned it to anything other than <var>f</var>), so Python destroys the instance for us.
 <li>No matter how many times you call the <code>leakmem</code> function, it will never leak memory, because every time, Python will destroy the newly created <code>FileInfo</code> class before returning from <code>leakmem</code>.
@@ -1623,14 +1553,14 @@ class UserDict:              <span>&#x2460;</span>
     def __init__(self, dict=None):             <span>&#x2461;</span>
         self.data = {}       <span>&#x2462;</span>
         if dict is not None: self.update(dict) <span>&#x2463;</span> <span>&#x2464;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Note that <code>UserDict</code> is a base class, not inherited from any other class.
 <li>This is the <code>__init__</code> method that you <a href="#fileinfo.class.example" title="Example 5.4. Defining the FileInfo Class">overrode in the <code>FileInfo</code> class</a>. Note that the argument list in this ancestor class is different than the descendant. That's okay; each subclass can have
             its own set of arguments, as long as it calls the ancestor with the correct arguments. Here the ancestor class has a way
             to define initial values (by passing a dictionary in the <var>dict</var> argument) which the <code>FileInfo</code> does not use.
 <li>Python supports data attributes (called &#8220;instance variables&#8221; in Java and Powerbuilder, and &#8220;member variables&#8221; in <abbr>C++</abbr>). Data attributes are pieces of data held by a specific instance of a class. In this case, each instance of <code>UserDict</code> will have a data attribute <var>data</var>. To reference this attribute from code outside the class, you qualify it with the instance name, <code><var>instance</var>.data</code>, in the same way that you qualify a function with its module name. To reference a data attribute from within the class,
-            you use <code>self</code> as the qualifier. By convention, all data attributes are initialized to reasonable values in the <code>__init__</code> method. However, this is not required, since data attributes, like local variables, <a href="#odbchelper.vardef" title="3.4. Declaring variables">spring into existence</a> when they are first assigned a value.
+            you use <var>self</var> as the qualifier. By convention, all data attributes are initialized to reasonable values in the <code>__init__</code> method. However, this is not required, since data attributes, like local variables, <a href="#odbchelper.vardef" title="3.4. Declaring variables">spring into existence</a> when they are first assigned a value.
 <li>The <code>update</code> method is a dictionary duplicator: it copies all the keys and values from one dictionary to another. This does <em>not</em> clear the target dictionary first; if the target dictionary already has some keys, the ones from the source dictionary will
             be overwritten, but others will be left untouched. Think of <code>update</code> as a merge function, not a copy function.
 <li>This is a syntax you may not have seen before (I haven't used it in the examples in this book). It's an <code>if</code> statement, but instead of having an indented block starting on the next line, there is just a single statement on the same
@@ -1661,14 +1591,14 @@ class UserDict:              <span>&#x2460;</span>
     def keys(self): return self.data.keys()     <span>&#x2464;</span>
     def items(self): return self.data.items()  
     def values(self): return self.data.values()
-</pre><div class=calloutlist>
+</pre>
 <ol>
-<li><code>clear</code> is a normal class method; it is publicly available to be called by anyone at any time. Notice that <code>clear</code>, like all class methods, has <code>self</code> as its first argument. (Remember that you don't include <code>self</code> when you call the method; it's something that Python adds for you.)  Also note the basic technique of this wrapper class: store a real dictionary (<var>data</var>) as a data attribute, define all the methods that a real dictionary has, and have each class method redirect to the corresponding
+<li><code>clear</code> is a normal class method; it is publicly available to be called by anyone at any time. Notice that <code>clear</code>, like all class methods, has <var>self</var> as its first argument. (Remember that you don't include <var>self</var> when you call the method; it's something that Python adds for you.)  Also note the basic technique of this wrapper class: store a real dictionary (<var>data</var>) as a data attribute, define all the methods that a real dictionary has, and have each class method redirect to the corresponding
             method on the real dictionary. (In case you'd forgotten, a dictionary's <code>clear</code> method <a href="#odbchelper.dict.del" title="Example 3.5. Deleting Items from a Dictionary">deletes all of its keys</a> and their associated values.)
 <li>The <code>copy</code> method of a real dictionary returns a new dictionary that is an exact duplicate of the original (all the same key-value pairs).
-             But <code>UserDict</code> can't simply redirect to <code>self.data.copy</code>, because that method returns a real dictionary, and what you want is to return a new instance that is the same class as <code>self</code>.
-<li>You use the <code>__class__</code> attribute to see if <code>self</code> is a <code>UserDict</code>; if so, you're golden, because you know how to copy a <code>UserDict</code>: just create a new <code>UserDict</code> and give it the real dictionary that you've squirreled away in <var>self.data</var>. Then you immediately return the new <code>UserDict</code> you don't even get to the <code>import copy</code> on the next line.
-<li>If <code>self.__class__</code> is not <code>UserDict</code>, then <code>self</code> must be some subclass of <code>UserDict</code> (like maybe <code>FileInfo</code>), in which case life gets trickier. <code>UserDict</code> doesn't know how to make an exact copy of one of its descendants; there could, for instance, be other data attributes defined
+             But <code>UserDict</code> can't simply redirect to <code>self.data.copy</code>, because that method returns a real dictionary, and what you want is to return a new instance that is the same class as <var>self</var>.
+<li>You use the <code>__class__</code> attribute to see if <var>self</var> is a <code>UserDict</code>; if so, you're golden, because you know how to copy a <code>UserDict</code>: just create a new <code>UserDict</code> and give it the real dictionary that you've squirreled away in <var>self.data</var>. Then you immediately return the new <code>UserDict</code> you don't even get to the <code>import copy</code> on the next line.
+<li>If <code>self.__class__</code> is not <code>UserDict</code>, then <var>self</var> must be some subclass of <code>UserDict</code> (like maybe <code>FileInfo</code>), in which case life gets trickier. <code>UserDict</code> doesn't know how to make an exact copy of one of its descendants; there could, for instance, be other data attributes defined
             in the subclass, so you would need to iterate through them and make sure to copy all of them. Luckily, Python comes with a module to do exactly this, and it's called <code>copy</code>. I won't go into the details here (though it's a wicked cool module, if you're ever inclined to dive into it on your own).
              Suffice it to say that <code>copy</code> can copy arbitrary Python objects, and that's how you're using it here.
 <li>The rest of the methods are straightforward, redirecting the calls to the built-in methods on <var>self.data</var>.
@@ -1682,7 +1612,7 @@ class FileInfo(dict):<span>&#x2460;</span>
     "store file metadata"
     def __init__(self, filename=None): <span>&#x2461;</span>
         self["name"] = filename
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The first difference is that you don't need to import the <code>UserDict</code> module, since <code>dict</code> is a built-in datatype and is always available. The second is that you are inheriting from <code>dict</code> directly, instead of from <code>UserDict.UserDict</code>.
 <li>The third difference is subtle but important. Because of the way <code>UserDict</code> works internally, it requires you to manually call its <code>__init__</code> method to properly initialize its internal data structures. <code>dict</code> does not work like this; it is not a wrapper, and it requires no explicit initialization.
@@ -1706,7 +1636,7 @@ provide a way to map non-method-calling syntax into method calls.
 <samp class=p>>>> </samp><kbd>f.__getitem__("name")</kbd> <span>&#x2460;</span>
 '/music/_singles/kairo.mp3'
 <samp class=p>>>> </samp><kbd>f["name"]</kbd>             <span>&#x2461;</span>
-'/music/_singles/kairo.mp3'</pre><div class=calloutlist>
+'/music/_singles/kairo.mp3'</pre>
 <ol>
 <li>The <code>__getitem__</code> special method looks simple enough. Like the normal methods <code>clear</code>, <code>keys</code>, and <code>values</code>, it just redirects to the dictionary to return its value. But how does it get called?  Well, you can call <code>__getitem__</code> directly, but in practice you wouldn't actually do that; I'm just doing it here to show you how it works. The right way
                to use <code>__getitem__</code> is to get Python to call it for you.
@@ -1720,7 +1650,7 @@ provide a way to map non-method-calling syntax into method calls.
 {'name':'/music/_singles/kairo.mp3', 'genre':31}
 <samp class=p>>>> </samp><kbd>f["genre"] = 32</kbd>            <span>&#x2461;</span>
 <samp class=p>>>> </samp><kbd>f</kbd>
-{'name':'/music/_singles/kairo.mp3', 'genre':32}</pre><div class=calloutlist>
+{'name':'/music/_singles/kairo.mp3', 'genre':32}</pre>
 <ol>
 <li>Like the <code>__getitem__</code> method, <code>__setitem__</code> simply redirects to the real dictionary <var>self.data</var> to do its work. And like <code>__getitem__</code>, you wouldn't ordinarily call it directly like this; Python calls <code>__setitem__</code> for you when you use the right syntax.
 <li>This looks like regular dictionary syntax, except of course that <var>f</var> is really a class that's trying very hard to masquerade as a dictionary, and <code>__setitem__</code> is an essential part of that masquerade. This line of code actually calls <code>f.__setitem__("genre", 32)</code> under the covers.
@@ -1734,7 +1664,7 @@ provide a way to map non-method-calling syntax into method calls.
     def __setitem__(self, key, item):         <span>&#x2460;</span>
         if key == "name" and item:            <span>&#x2461;</span>
             self.__parse(item)                <span>&#x2462;</span>
-        FileInfo.__setitem__(self, key, item) <span>&#x2463;</span></pre><div class=calloutlist>
+        FileInfo.__setitem__(self, key, item) <span>&#x2463;</span></pre>
 <ol>
 <li>Notice that this <code>__setitem__</code> method is defined exactly the same way as the ancestor method. This is important, since Python will be calling the method for you, and it expects it to be defined with a certain number of arguments. (Technically speaking,
                the names of the arguments don't matter; only the number of arguments is important.)
@@ -1758,7 +1688,7 @@ provide a way to map non-method-calling syntax into method calls.
 <samp class=p>>>> </samp><kbd>mp3file</kbd>
 <samp>{'album': '', 'artist': 'The Cynic Project', 'genre': 18, 'title': 'Sidewinder', 
 'name': '/music/_singles/sidewinder.mp3', 'year': '2000', 
-'comment': 'http://mp3.com/cynicproject'}</span></pre><div class=calloutlist>
+'comment': 'http://mp3.com/cynicproject'}</span></pre>
 <ol>
 <li>First, you create an instance of <code>MP3FileInfo</code>, without passing it a filename. (You can get away with this because the <var>filename</var> argument of the <code>__init__</code> method is <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a>.)  Since <code>MP3FileInfo</code> has no <code>__init__</code> method of its own, Python walks up the ancestor tree and finds the <code>__init__</code> method of <code>FileInfo</code>. This <code>__init__</code> method manually calls the <code>__init__</code> method of <code>UserDict</code> and then sets the <code>name</code> key to <var>filename</var>, which is <code>None</code>, since you didn't pass a filename. Thus, <var>mp3file</var> initially looks like a dictionary with one key, <code>name</code>, whose value is <code>None</code>.
                
@@ -1777,7 +1707,7 @@ provide a way to map non-method-calling syntax into method calls.
         else: 
             return cmp(self.data, dict)           
     def __len__(self): return len(self.data)       <span>&#x2462;</span>
-    def __delitem__(self, key): del self.data[key] <span>&#x2463;</span></pre><div class=calloutlist>
+    def __delitem__(self, key): del self.data[key] <span>&#x2463;</span></pre>
 <ol>
 <li><code>__repr__</code> is a special method that is called when you call <code>repr(<var>instance</var>)</code>. The <code>repr</code> function is a built-in function that returns a string representation of an object. It works on any object, not just class
             instances. You're already intimately familiar with <code>repr</code> and you don't even know it. In the interactive window, when you type just a variable name and press the <kbd>ENTER</kbd> key, Python uses <code>repr</code> to display the variable's value. Go create a dictionary <var>d</var> with some data and then <code>print repr(d)</code> to see for yourself.
@@ -1833,7 +1763,7 @@ class MP3FileInfo(FileInfo):
 'artist': (33, 63, &lt;function stripnulls at 0260C8D4>), 
 'year': (93, 97, &lt;function stripnulls at 0260C8D4>), 
 'comment': (97, 126, &lt;function stripnulls at 0260C8D4>), 
-'album': (63, 93, &lt;function stripnulls at 0260C8D4>)}</span></pre><div class=calloutlist>
+'album': (63, 93, &lt;function stripnulls at 0260C8D4>)}</span></pre>
 <ol>
 <li><code>MP3FileInfo</code> is the class itself, not any particular instance of the class.
 <li><var>tagDataMap</var> is a class attribute: literally, an attribute of the class. It is available before creating any instances of the class.
@@ -1865,7 +1795,7 @@ class MP3FileInfo(FileInfo):
 <samp class=p>>>> </samp><kbd>c.count</kbd>
 2
 <samp class=p>>>> </samp><kbd>counter.count</kbd>
-2</pre><div class=calloutlist>
+2</pre>
 <ol>
 <li><var>count</var> is a class attribute of the <code>counter</code> class.
 <li><code>__class__</code> is a built-in attribute of every class instance (of every class). It is a reference to the class that <var>self</var> is an instance of (in this case, the <code>counter</code> class).
@@ -1896,7 +1826,7 @@ call it directly (even from outside the <code>fileinfo</code> module) if you had
 <samp class=p>>>> </samp><kbd>m.__parse("/music/_singles/kairo.mp3")</kbd> <span>&#x2460;</span>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
-AttributeError: 'MP3FileInfo' instance has no attribute '__parse'</span></pre><div class=calloutlist>
+AttributeError: 'MP3FileInfo' instance has no attribute '__parse'</span></pre>
 <ol>
 <li>If you try to call a private method, Python will raise a slightly misleading exception, saying that the method does not exist. Of course it does exist, but it's private,
             so it's not accessible outside the class.Strictly speaking, private methods are accessible outside their class, just not <em>easily</em> accessible. Nothing in Python is truly private; internally, the names of private methods and attributes are mangled and unmangled on the fly to make them
@@ -1963,7 +1893,7 @@ IOError: [Errno 2] No such file or directory: '/notthere'</samp>
 <samp class=p>...    </samp>print "The file does not exist, exiting gracefully"
 <samp class=p>... </samp>print "This line will always print" <span>&#x2463;</span>
 <samp>The file does not exist, exiting gracefully
-This line will always print</span></pre><div class=calloutlist>
+This line will always print</span></pre>
 <ol>
 <li>Using the built-in <code>open</code> function, you can try to open a file for reading (more on <code>open</code> in the next section). But the file doesn't exist, so this raises the <code>IOError</code> exception. Since you haven't provided any explicit check for an <code>IOError</code> exception, Python just prints out some debugging information about what happened and then gives up.
 <li>You're trying to open the same non-existent file, but this time you're doing it within a <code>try...except</code> block.
@@ -1999,7 +1929,7 @@ exceptions, errors occur immediately, and you can handle them in a standard way 
       else:
           getpass = win_getpass
   else:
-      getpass = unix_getpass</pre><div class=calloutlist>
+      getpass = unix_getpass</pre>
 <ol>
 <li><code>termios</code> is a <abbr>UNIX</abbr>-specific module that provides low-level control over the input terminal. If this module is not available (because it's not
                on your system, or your system doesn't support it), the import fails and Python raises an <code>ImportError</code>, which you catch.
@@ -2031,7 +1961,7 @@ exceptions, errors occur immediately, and you can handle them in a standard way 
 <samp class=p>>>> </samp><kbd>f.mode</kbd>  <span>&#x2462;</span>
 'rb'
 <samp class=p>>>> </samp><kbd>f.name</kbd>  <span>&#x2463;</span>
-'/music/_singles/kairo.mp3'</pre><div class=calloutlist>
+'/music/_singles/kairo.mp3'</pre>
 <ol>
 <li>The <code>open</code> method can take up to three parameters: a filename, a mode, and a buffering parameter. Only the first one, the filename,
             is required; the other two are <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a>. If not specified, the file is opened for reading in text mode. Here you are opening the file for reading in binary mode.
@@ -2054,7 +1984,7 @@ exceptions, errors occur immediately, and you can handle them in a standard way 
 <samp>'TAGKAIRO****THE BEST GOA         ***DJ MARY-JANE***            
 Rave Mix    2000http://mp3.com/DJMARYJANE     \037'</samp>
 <samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2464;</span>
-7543037</pre><div class=calloutlist>
+7543037</pre>
 <ol>
 <li>A file object maintains state about the file it has open. The <code>tell</code> method of a file object tells you your current position in the open file. Since you haven't done anything with this file
                yet, the current position is <code>0</code>, which is the beginning of the file.
@@ -2091,7 +2021,7 @@ ValueError: I/O operation on closed file</samp>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
 ValueError: I/O operation on closed file</samp>
-<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2464;</span></pre><div class=calloutlist>
+<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2464;</span></pre>
 <ol>
 <li>The <var>closed</var> attribute of a file object indicates whether the object has a file open or not. In this case, the file is still open (<var>closed</var> is <code>False</code>).
 <li>To close a file, call the <code>close</code> method of the file object. This frees the lock (if any) that you were holding on the file, flushes buffered writes (if any)
@@ -2115,7 +2045,7 @@ ValueError: I/O operation on closed file</samp>
             .
             .
         except IOError:   <span>&#x2465;</span>
-            pass         </pre><div class=calloutlist>
+            pass         </pre>
 <ol>
 <li>Because opening and reading files is risky and may raise an exception, all of this code is wrapped in a <code>try...except</code> block. (Hey, isn't <a href="#odbchelper.indenting" title="2.5. Indenting Code">standardized indentation</a> great?  This is where you start to appreciate it.)
 <li>The <code>open</code> function may raise an <code>IOError</code>. (Maybe the file doesn't exist.)
@@ -2145,7 +2075,7 @@ test succeeded
 <samp class=p>>>> </samp><kbd>logfile.close()</kbd>
 <samp class=p>>>> </samp><kbd>print file('test.log').read()</kbd>   <span>&#x2464;</span>
 test succeededline 2
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>You start boldly by creating either the new file <code>test.log</code> or overwrites the existing file, and opening the file for writing. (The second parameter <code>"w"</code> means open the file for writing.)  Yes, that's all as dangerous as it sounds. I hope you didn't care about the previous
                contents of that file, because it's gone now.
@@ -2180,7 +2110,7 @@ e</samp>
 <samp class=p>>>> </samp><kbd>print "\n".join(li)</kbd>  <span>&#x2462;</span>
 <samp>a
 b
-e</span></pre><div class=calloutlist>
+e</span></pre>
 <ol>
 <li>The syntax for a <code>for</code> loop is similar to <a href="#odbchelper.map" title="3.6. Mapping Lists">list comprehensions</a>. <var>li</var> is a list, and <var>s</var> will take the value of each element in turn, starting from the first element.
 <li>Like an <code>if</code> statement or any other <a href="#odbchelper.indenting" title="2.5. Indenting Code">indented block</a>, a <code>for</code> loop can have any number of lines of code in it.
@@ -2202,7 +2132,7 @@ b
 c
 d
 e</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>As you saw in <a href="#odbchelper.multiassign.range" title="Example 3.20. Assigning Consecutive Values">Example 3.20, &#8220;Assigning Consecutive Values&#8221;</a>, <code>range</code> produces a list of integers, which you then loop through. I know it looks a bit odd, but it is occasionally (and I stress
 <em>occasionally</em>) useful to have a counter loop.
@@ -2225,7 +2155,7 @@ OS=Windows_NT
 COMPUTERNAME=MPILGRIM
 USERNAME=mpilgrim
 
-[...snip...]</span></pre><div class=calloutlist>
+[...snip...]</span></pre>
 <ol>
 <li><var>os.environ</var> is a dictionary of the environment variables defined on your system. In Windows, these are your user and system variables
             accessible from <abbr>MS-DOS</abbr>. In <abbr>UNIX</abbr>, they are the variables exported in your shell's startup scripts. In Mac OS, there is no concept of environment variables, so this dictionary is empty.
@@ -2246,7 +2176,7 @@ USERNAME=mpilgrim
     .
             if tagdata[:3] == "TAG":
                 for tag, (start, end, parseFunc) in self.tagDataMap.items(): <span>&#x2461;</span>
-  self[tag] = parseFunc(tagdata[start:end])                <span>&#x2462;</span></pre><div class=calloutlist>
+  self[tag] = parseFunc(tagdata[start:end])                <span>&#x2462;</span></pre>
 <ol>
 <li><var>tagDataMap</var> is a <a href="#fileinfo.classattributes" title="5.8. Introducing Class Attributes">class attribute</a> that defines the tags you're looking for in an <abbr>MP3</abbr> file. Tags are stored in fixed-length fields. Once you read the last 128 bytes of the file, bytes 3 through 32 of those
             are always the song title, 33 through 62 are always the artist name, 63 through 92 are the album name, and so forth. Note
@@ -2269,7 +2199,7 @@ __builtin__
 site
 signal
 UserDict
-stat</span></pre><div class=calloutlist>
+stat</span></pre>
 <ol>
 <li>The <code>sys</code> module contains system-level information, such as the version of Python you're running (<code><code>sys</code>.version</code> or <code><code>sys</code>.version_info</code>), and system-level options such as the maximum allowed recursion depth (<code><code>sys</code>.getrecursionlimit()</code> and <code><code>sys</code>.setrecursionlimit()</code>).
 <li><code><code>sys</code>.modules</code> is a dictionary containing all the modules that have ever been imported since Python was started; the key is the module name, the value is the module object. Note that this is more than just the modules <em>your</em> program has imported. Python preloads some modules on startup, and if you're using a Python <abbr>IDE</abbr>, <code><code>sys</code>.modules</code> contains all the modules imported by all the programs you've run within the <abbr>IDE</abbr>.
@@ -2293,7 +2223,7 @@ stat</samp>
 <samp class=p>>>> </samp><kbd>fileinfo</kbd>
 &lt;module 'fileinfo' from 'fileinfo.pyc'>
 <samp class=p>>>> </samp><kbd>sys.modules["fileinfo"]</kbd> <span>&#x2461;</span>
-&lt;module 'fileinfo' from 'fileinfo.pyc'></pre><div class=calloutlist>
+&lt;module 'fileinfo' from 'fileinfo.pyc'></pre>
 <ol>
 <li>As new modules are imported, they are added to <code><code>sys</code>.modules</code>. This explains why importing the same module twice is very fast: Python has already loaded and cached the module in <code><code>sys</code>.modules</code>, so importing the second time is simply a dictionary lookup.
 <li>Given the name (as a string) of any previously-imported module, you can get a reference to the module itself through the <code><code>sys</code>.modules</code> dictionary.
@@ -2302,7 +2232,7 @@ stat</samp>
 <samp class=p>>>> </samp><kbd>MP3FileInfo.__module__</kbd>              <span>&#x2460;</span>
 'fileinfo'
 <samp class=p>>>> </samp><kbd>sys.modules[MP3FileInfo.__module__]</kbd> <span>&#x2461;</span>
-&lt;module 'fileinfo' from 'fileinfo.pyc'></pre><div class=calloutlist>
+&lt;module 'fileinfo' from 'fileinfo.pyc'></pre>
 <ol>
 <li>Every Python class has a built-in <a href="#fileinfo.classattributes" title="5.8. Introducing Class Attributes">class attribute</a> <code>__module__</code>, which is the name of the module in which the class is defined.
 <li>Combining this with the <code><code>sys</code>.modules</code> dictionary, you can get a reference to the module in which a class is defined.
@@ -2311,7 +2241,7 @@ stat</samp>
     def getFileInfoClass(filename, module=sys.modules[FileInfo.__module__]):       <span>&#x2460;</span>
         "get file info class from filename extension"           
         subclass = "%sFileInfo" % os.path.splitext(filename)[1].upper()[1:]        <span>&#x2461;</span>
-        return hasattr(module, subclass) and getattr(module, subclass) or FileInfo <span>&#x2462;</span></pre><div class=calloutlist>
+        return hasattr(module, subclass) and getattr(module, subclass) or FileInfo <span>&#x2462;</span></pre>
 <ol>
 <li>This is a function with two arguments; <var>filename</var> is required, but <var>module</var> is <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a> and defaults to the module that contains the <code>FileInfo</code> class. This looks inefficient, because you might expect Python to evaluate the <code><code>sys</code>.modules</code> expression every time the function is called. In fact, Python evaluates default expressions only once, the first time the module is imported. As you'll see later, you never call this
             function with a <var>module</var> argument, so <var>module</var> serves as a function-level constant.
@@ -2338,7 +2268,7 @@ stat</samp>
 <samp class=p>>>> </samp><kbd>os.path.expanduser("~")</kbd>       <span>&#x2463;</span>
 'c:\\Documents and Settings\\mpilgrim\\My Documents'
 <samp class=p>>>> </samp><kbd>os.path.join(os.path.expanduser("~"), "Python")</kbd> <span>&#x2464;</span>
-'c:\\Documents and Settings\\mpilgrim\\My Documents\\Python'</pre><div class=calloutlist>
+'c:\\Documents and Settings\\mpilgrim\\My Documents\\Python'</pre>
 <ol>
 <li><code>os.path</code> is a reference to a module -- which module depends on your platform. Just as <a href="#crossplatform.example" title="Example 6.2. Supporting Platform-Specific Functionality"><code>getpass</code></a> encapsulates differences between platforms by setting <var>getpass</var> to a platform-specific function, <code>os</code> encapsulates differences between platforms by setting <var>path</var> to a platform-specific module.
 <li>The <code>join</code> function of <code>os.path</code> constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings. (Note that dealing
@@ -2359,7 +2289,7 @@ stat</samp>
 <samp class=p>>>> </samp><kbd>shortname</kbd>
 'mahadeva'
 <samp class=p>>>> </samp><kbd>extension</kbd>
-'.mp3'</pre><div class=calloutlist>
+'.mp3'</pre>
 <ol>
 <li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename. Remember when I said you could use
 <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a> to return multiple values from a function?  Well, <code>split</code> is such a function.
@@ -2387,7 +2317,7 @@ stat</samp>
 <samp class=p>...    </samp>if os.path.isdir(os.path.join(dirname, f))]  <span>&#x2463;</span>
 <samp>['cygwin', 'docbook', 'Documents and Settings', 'Incoming',
 'Inetpub', 'Music', 'Program Files', 'Python20', 'RECYCLER',
-'System Volume Information', 'TEMP', 'WINNT']</span></pre><div class=calloutlist>
+'System Volume Information', 'TEMP', 'WINNT']</span></pre>
 <ol>
 <li>The <code>listdir</code> function takes a pathname and returns a list of the contents of the directory.
 <li><code>listdir</code> returns both files and folders, with no indication of which is which.
@@ -2401,7 +2331,7 @@ def listDirectory(directory, fileExtList):
                 for f in os.listdir(directory)]            <span>&#x2460;</span> <span>&#x2461;</span>
     fileList = [os.path.join(directory, f) 
                for f in fileList
-                if os.path.splitext(f)[1] in fileExtList]  <span>&#x2462;</span> <span>&#x2463;</span> <span>&#x2464;</span></pre><div class=calloutlist>
+                if os.path.splitext(f)[1] in fileExtList]  <span>&#x2462;</span> <span>&#x2463;</span> <span>&#x2464;</span></pre>
 <ol>
 <li><code>os.listdir(directory)</code> returns a list of all the files and folders in <var>directory</var>.
 <li>Iterating through the list with <var>f</var>, you use <code>os.path.normcase(f)</code> to normalize the case according to operating system defaults. <code>normcase</code> is a useful little function that compensates for case-insensitive operating systems that think that <code>mahadeva.mp3</code> and <code>mahadeva.MP3</code> are the same file. For instance, on Windows and Mac OS, <code>normcase</code> will convert the entire filename to lowercase; on <abbr>UNIX</abbr>-compatible systems, it will return the filename unchanged.
@@ -2431,7 +2361,7 @@ may already be familiar with from working on the command line.
 <samp>['c:\\music\\_singles\\sidewinder.mp3',
 'c:\\music\\_singles\\spinning.mp3']</samp>
 <samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\*\\*.mp3')</kbd><span>&#x2463;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>As you saw earlier, <code>os.listdir</code> simply takes a directory path and lists all files and directories in that directory.
 <li>The <code>glob</code> module, on the other hand, takes a wildcard and returns the full path of all files and directories matching the wildcard.
@@ -2461,7 +2391,7 @@ def listDirectory(directory, fileExtList):     <span>&#x2460;</span>
         "get file info class from filename extension"           
         subclass = "%sFileInfo" % os.path.splitext(filename)[1].upper()[1:]        <span>&#x2463;</span>
         return hasattr(module, subclass) and getattr(module, subclass) or FileInfo <span>&#x2464;</span>
-    return [getFileInfoClass(f)(f) for f in fileList]            <span>&#x2465;</span></pre><div class=calloutlist>
+    return [getFileInfoClass(f)(f) for f in fileList]            <span>&#x2465;</span></pre>
 <ol>
 <li><code>listDirectory</code> is the main attraction of this entire module. It takes a directory (like <code>c:\music\_singles\</code> in my case) and a list of interesting file extensions (like <code>['.mp3']</code>), and it returns a list of class instances that act like dictionaries that contain metadata about each interesting file in
             that directory. And it does it in just a few straightforward lines of code.
@@ -2925,7 +2855,7 @@ data: '\n      '
 &lt;td width='99%' align='right'>&lt;hr size='1' noshade>&lt;/td>&lt;/tr>
 &lt;tr>&lt;td class='tagline' colspan='2'>Python&amp;nbsp;for&amp;nbsp;experienced&amp;nbsp;programmers&lt;/td>&lt;/tr></span>
 
-[...snip...]</pre><div class=calloutlist>
+[...snip...]</pre>
 <ol>
 <li>The <code>urllib</code> module is part of the standard Python library. It contains functions for getting information about and actually retrieving data from Internet-based <abbr>URL</abbr>s (mainly web pages).
 <li>The simplest use of <code>urllib</code> is to retrieve the entire text of a web page using the <code>urlopen</code> function. Opening a <abbr>URL</abbr> is similar to <a href="#fileinfo.files" title="6.2. Working with File Objects">opening a file</a>. The return value of <code>urlopen</code> is a file-like object, which has some of the same methods as a file object.
@@ -2945,7 +2875,7 @@ class URLLister(SGMLParser):
     def start_a(self, attrs):   <span>&#x2461;</span>
         href = [v for k, v in attrs if k=='href'] <span>&#x2462;</span> <span>&#x2463;</span>
         if href:
-            self.urls.extend(href)</pre><div class=calloutlist>
+            self.urls.extend(href)</pre>
 <ol>
 <li><code>reset</code> is called by the <code>__init__</code> method of <code>SGMLParser</code>, and it can also be called manually once an instance of the parser has been created. So if you need to do any initialization,
             do it in <code>reset</code>, not in <code>__init__</code>, so that it will be re-initialized properly when someone re-uses a parser instance.
@@ -2974,7 +2904,7 @@ download/diveintopython3-xml-5.0.zip
 download/diveintopython3-common-5.0.zip
 </span>
 
-... rest of output omitted for brevity ...</pre><div class=calloutlist>
+... rest of output omitted for brevity ...</pre>
 <ol>
 <li>Call the <code>feed</code> method, defined in <code>SGMLParser</code>, to get <abbr>HTML</abbr> into the parser.
 <sup>[<a name="d0e20503" href="#ftn.d0e20503">1</a>]</sup>  It takes a string, which is what <code>usock.read()</code> returns.
@@ -3017,7 +2947,7 @@ class BaseHTMLProcessor(SGMLParser):
         self.pieces.append("&lt;?%(text)s>" % locals())
 
     def handle_decl(self, text):
-        self.pieces.append("&lt;!%(text)s>" % locals())</pre><div class=calloutlist>
+        self.pieces.append("&lt;!%(text)s>" % locals())</pre>
 <ol>
 <li><code>reset</code>, called by <code>SGMLParser.__init__</code>, initializes <var>self.pieces</var> as an empty list before <a href="#fileinfo.init.code.example" title="Example 5.6. Coding the FileInfo Class">calling the ancestor method</a>. <var>self.pieces</var> is a <a href="#fileinfo.userdict.init.example" title="Example 5.9. Defining the UserDict Class">data attribute</a> which will hold the pieces of the <abbr>HTML</abbr> document you're constructing. Each handler method will reconstruct the <abbr>HTML</abbr> that <code>SGMLParser</code> parsed, and each method will append that string to <var>self.pieces</var>. Note that <var>self.pieces</var> is a list. You might be tempted to define it as a string and just keep appending each piece to it. That would work, but
 Python is much more efficient at dealing with lists.
@@ -3037,7 +2967,7 @@ Python is much more efficient at dealing with lists.
 <div class=example><h3 id="dialect.output.example">Example 8.9. <code>BaseHTMLProcessor</code> output</h3><pre><code>
     def output(self):               <span>&#x2460;</span>
         """Return processed HTML as a single string"""
-        return "".join(self.pieces) <span>&#x2461;</span></pre><div class=calloutlist>
+        return "".join(self.pieces) <span>&#x2461;</span></pre>
 <ol>
 <li>This is the one method in <code>BaseHTMLProcessor</code> that is never called by the ancestor <code>SGMLParser</code>. Since the other handler methods store their reconstructed <abbr>HTML</abbr> in <var>self.pieces</var>, this function is needed to join all those pieces into one string. As noted before, Python is great at lists and mediocre at strings, so you only create the complete string when somebody explicitly asks for it.
 <li>If you prefer, you could use the <code>join</code> method of the <code>string</code> module instead: <code>string.join(self.pieces, "")</code><div class=itemizedlist>
@@ -3085,7 +3015,7 @@ from __future__ import nested_scopes</pre><p>Are you confused yet?  Don't despai
 <samp class=p>>>> </samp><kbd>foo(7)</kbd>        <span>&#x2461;</span>
 {'arg': 7, 'x': 1}
 <samp class=p>>>> </samp><kbd>foo('bar')</kbd>    <span>&#x2462;</span>
-{'arg': 'bar', 'x': 1}</pre><div class=calloutlist>
+{'arg': 'bar', 'x': 1}</pre>
 <ol>
 <li>The function <code>foo</code> has two variables in its local namespace: <var>arg</var>, whose value is passed in to the function, and <var>x</var>, which is defined within the function.
 <li><code>locals</code> returns a dictionary of name/value pairs. The keys of this dictionary are the names of the variables as strings; the values
@@ -3101,7 +3031,7 @@ access them directly without referencing the original module they came from. Wit
 <p>Look at the following block of code at the bottom of <code>BaseHTMLProcessor.py</code>:<pre><code>
 if __name__ == "__main__":
     for k, v in globals().items():             <span>&#x2460;</span>
-        print k, "=", v</pre><div class=calloutlist>
+        print k, "=", v</pre>
 <ol>
 <li>Just so you don't get intimidated, remember that you've seen all this before. The <code>globals</code> function returns a dictionary, and you're <a href="#dictionaryiter.example" title="Example 6.10. Iterating Through a Dictionary">iterating through the dictionary</a> using the <code>items</code> method and <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a>. The only thing new here is the <code>globals</code> function.
 <p>Now running the script from the command line gives this output (note that your output may be slightly different, depending
@@ -3110,7 +3040,7 @@ SGMLParser = sgmllib.SGMLParser                <span>&#x2460;</span>
 htmlentitydefs = &lt;module 'htmlentitydefs' from 'C:\Python23\lib\htmlentitydefs.py'> <span>&#x2461;</span>
 BaseHTMLProcessor = __main__.BaseHTMLProcessor <span>&#x2462;</span>
 __name__ = __main__          <span>&#x2463;</span>
-... rest of output omitted for brevity...</pre><div class=calloutlist>
+... rest of output omitted for brevity...</pre>
 <ol>
 <li><code>SGMLParser</code> was imported from <code>sgmllib</code>, using <code>from <var>module</var> import</code>. That means that it was imported directly into the module's namespace, and here it is.
 <li>Contrast this with <code>htmlentitydefs</code>, which was imported using <code>import</code>. That means that the <code>htmlentitydefs</code> module itself is in the namespace, but the <var>entitydefs</var> variable defined within <code>htmlentitydefs</code> is not.
@@ -3134,7 +3064,7 @@ print "z=",z
 foo(3)
 globals()["z"] = 8    <span>&#x2463;</span>
 print "z=",z          <span>&#x2464;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Since <code>foo</code> is called with <code>3</code>, this will print <code>{'arg': 3, 'x': 1}</code>. This should not be a surprise.
 <li><code>locals</code> is a function that returns a dictionary, and here you are setting a value in that dictionary. You might think that this
@@ -3156,7 +3086,7 @@ constantly switching between reading the string and reading the tuple of values.
 <samp class=p>>>> </samp><kbd>"%(pwd)s is not a good password for %(uid)s" % params</kbd> <span>&#x2461;</span>
 'secret is not a good password for sa'
 <samp class=p>>>> </samp><kbd>"%(database)s of mind, %(database)s of body" % params</kbd> <span>&#x2462;</span>
-'master of mind, master of body'</pre><div class=calloutlist>
+'master of mind, master of body'</pre>
 <ol>
 <li>Instead of a tuple of explicit values, this form of string formatting uses a dictionary, <var>params</var>. And instead of a simple <code>%s</code> marker in the string, the marker contains a name in parentheses. This name is used as a key in the <var>params</var> dictionary and subsitutes the corresponding value, <code>secret</code>, in place of the <code>%(pwd)s</code> marker.
 <li>Dictionary-based string formatting works with any number of named keys. Each key must exist in the given dictionary, or the
@@ -3168,7 +3098,7 @@ meaningful keys and values already. Like <a href="#dialect.locals" title="8.5. l
 <div class=example><h3 id="dialect.unknownstarttag">Example 8.14. Dictionary-based string formatting in <code>BaseHTMLProcessor.py</code></h3><pre><code>
     def handle_comment(self, text):        
         self.pieces.append("&lt;!--%(text)s-->" % locals()) <span>&#x2460;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Using the built-in <code>locals</code> function is the most common use of dictionary-based string formatting. It means that you can use the names of local variables
             within your string (in this case, <var>text</var>, which was passed to the class method as an argument) and each named variable will be replaced by its value. If <var>text</var> is <code>'Begin page footer'</code>, the string formatting <code>"&lt;!--%(text)s-->" % locals()</code> will resolve to the string <code>'&lt;!--Begin page footer-->'</code>.
@@ -3176,7 +3106,7 @@ meaningful keys and values already. Like <a href="#dialect.locals" title="8.5. l
     def unknown_starttag(self, tag, attrs):
         strattrs = "".join([' %s="%s"' % (key, value) for key, value in attrs]) <span>&#x2460;</span>
         self.pieces.append("&lt;%(tag)s%(strattrs)s>" % locals())    <span>&#x2461;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>When this method is called, <var>attrs</var> is a list of key/value tuples, just like the <a href="#odbchelper.items" title="Example 3.25. The keys, values, and items Functions"><code>items</code> of a dictionary</a>, which means you can use <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a> to iterate through it. This should be a familiar pattern by now, but there's a lot going on here, so let's break it down:
 <div class=orderedlist>
@@ -3232,7 +3162,7 @@ at all. It is this last side effect that you can take advantage of.
 &lt;li>&lt;a href="toc.html">Table of contents&lt;/a>&lt;/li>
 &lt;li>&lt;a href="history.html">Revision history&lt;/a>&lt;/li>
 &lt;/body>
-&lt;/html></span></pre><div class=calloutlist>
+&lt;/html></span></pre>
 <ol>
 <li>Note that the attribute values of the <code>href</code> attributes in the <code>&lt;a></code> tags are not properly quoted. (Also note that you're using <a href="#odbchelper.triplequotes" title="Example 2.2. Defining the buildConnectionString Function's docstring">triple quotes</a> for something other than a <code>docstring</code>. And directly in the <abbr>IDE</abbr>, no less. They're very useful.)
 <li>Feed the parser.
@@ -3248,7 +3178,7 @@ at all. It is this last side effect that you can take advantage of.
 
     def end_pre(self):    <span>&#x2463;</span>
         self.unknown_endtag("pre")          <span>&#x2464;</span>
-        self.verbatim -= 1<span>&#x2465;</span></pre><div class=calloutlist>
+        self.verbatim -= 1<span>&#x2465;</span></pre>
 <ol>
 <li><code>start_pre</code> is called every time <code>SGMLParser</code> finds a <code>&lt;pre></code> tag in the <abbr>HTML</abbr> source. (In a minute, you'll see exactly how this happens.)  The method takes a single parameter, <var>attrs</var>, which contains the attributes of the tag (if any). <var>attrs</var> is a list of key/value tuples, just like <a href="#dialect.unknownstarttag" title="Example 8.14. Dictionary-based string formatting in BaseHTMLProcessor.py"><code>unknown_starttag</code></a> takes.
 <li>In the <code>reset</code> method, you initialize a data attribute that serves as a counter for <code>&lt;pre></code> tags. Every time you hit a <code>&lt;pre></code> tag, you increment the counter; every time you hit a <code>&lt;/pre></code> tag, you'll decrement the counter. (You could just use this as a flag and set it to <code>1</code> and reset it to <code>0</code>, but it's just as easy to do it this way, and this handles the odd (but possible) case of nested <code>&lt;pre></code> tags.)  In a minute, you'll see how this counter is put to good use.
@@ -3276,11 +3206,11 @@ at all. It is this last side effect that you can take advantage of.
             return 1 <span>&#x2466;</span>
 
     def handle_starttag(self, tag, method, attrs):      
-        method(attrs)<span>&#x2467;</span></pre><div class=calloutlist>
+        method(attrs)<span>&#x2467;</span></pre>
 <ol>
 <li>At this point, <code>SGMLParser</code> has already found a start tag and parsed the attribute list. The only thing left to do is figure out whether there is a
             specific handler method for this tag, or whether you should fall back on the default method (<code>unknown_starttag</code>).
-<li>The &#8220;magic&#8221; of <code>SGMLParser</code> is nothing more than your old friend, <a href="#apihelper.getattr" title="4.4. Getting Object References With getattr"><code>getattr</code></a>. What you may not have realized before is that <code>getattr</code> will find methods defined in descendants of an object as well as the object itself. Here the object is <code>self</code>, the current instance. So if <var>tag</var> is <code>'pre'</code>, this call to <code>getattr</code> will look for a <code>start_pre</code> method on the current instance, which is an instance of the <code>Dialectizer</code> class.
+<li>The &#8220;magic&#8221; of <code>SGMLParser</code> is nothing more than your old friend, <a href="#apihelper.getattr" title="4.4. Getting Object References With getattr"><code>getattr</code></a>. What you may not have realized before is that <code>getattr</code> will find methods defined in descendants of an object as well as the object itself. Here the object is <var>self</var>, the current instance. So if <var>tag</var> is <code>'pre'</code>, this call to <code>getattr</code> will look for a <code>start_pre</code> method on the current instance, which is an instance of the <code>Dialectizer</code> class.
 <li><code>getattr</code> raises an <code>AttributeError</code> if the method it's looking for doesn't exist in the object (or any of its descendants), but that's okay, because you wrapped
             the call to <code>getattr</code> inside a <a href="#fileinfo.exception" title="6.1. Handling Exceptions"><code>try...except</code></a> block and explicitly caught the <code>AttributeError</code>.
 <li>Since you didn't find a <code>start_xxx</code> method, you'll also look for a <code>do_xxx</code> method before giving up. This alternate naming scheme is generally used for standalone tags, like <code>&lt;br></code>, which have no corresponding end tag. But you can use either naming scheme; as you can see, <code>SGMLParser</code> tries both for every tag. (You shouldn't define both a <code>start_xxx</code> and <code>do_xxx</code> handler method for the same tag, though; only the <code>start_xxx</code> method will get called.)
@@ -3299,7 +3229,7 @@ at all. It is this last side effect that you can take advantage of.
 you need to override the <code>handle_data</code> method.
 <div class=example><h3>Example 8.19. Overriding the <code>handle_data</code> method</h3><pre><code>
     def handle_data(self, text):     <span>&#x2460;</span>
-        self.pieces.append(self.verbatim and text or self.process(text)) <span>&#x2461;</span></pre><div class=calloutlist>
+        self.pieces.append(self.verbatim and text or self.process(text)) <span>&#x2461;</span></pre>
 <ol>
 <li><code>handle_data</code> is called with only one argument, the text to process.
 <li>In the ancestor <a href="#dialect.basehtml.intro" title="Example 8.8. Introducing BaseHTMLProcessor"><code>BaseHTMLProcessor</code></a>, the <code>handle_data</code> method simply appended the text to the output buffer, <var>self.pieces</var>. Here the logic is only slightly more complicated. If you're in the middle of a <code><code>&lt;pre></code>...<code>&lt;/pre></code></code> block, <var>self.verbatim</var> will be some value greater than <code>0</code>, and you want to put the text in the output buffer unaltered. Otherwise, you will call a separate method to process the
@@ -3315,7 +3245,7 @@ def translate(url, dialectName="chef"): <span>&#x2460;</span>
     sock = urllib.urlopen(url)          <span>&#x2462;</span>
     htmlSource = sock.read()           
     sock.close()     
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The <code>translate</code> function has an <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional argument</a> <var>dialectName</var>, which is a string that specifies the dialect you'll be using. You'll see how this is used in a minute.
 <li>Hey, wait a minute, there's an <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import</code></a> statement in this function!  That's perfectly legal in Python. You're used to seeing <code>import</code> statements at the top of a program, which means that the imported module is available anywhere in the program. But you can
@@ -3328,7 +3258,7 @@ def translate(url, dialectName="chef"): <span>&#x2460;</span>
     parserName = "%sDialectizer" % dialectName.capitalize() <span>&#x2460;</span>
     parserClass = globals()[parserName]   <span>&#x2461;</span>
     parser = parserClass()                <span>&#x2462;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><code>capitalize</code> is a string method you haven't seen before; it simply capitalizes the first letter of a string and forces everything else
             to lowercase. Combined with some <a href="#odbchelper.stringformatting" title="3.5. Formatting Strings">string formatting</a>, you've taken the name of a dialect and transformed it into the name of the corresponding Dialectizer class. If <var>dialectName</var> is the string <code>'chef'</code>, <var>parserName</var> will be the string <code>'ChefDialectizer'</code>.
@@ -3346,7 +3276,7 @@ appropriately-named file in the plug-ins directory (like <code>foodialect.py</co
     parser.feed(htmlSource) <span>&#x2460;</span>
     parser.close()          <span>&#x2461;</span>
     return parser.output()  <span>&#x2462;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>After all that imagining, this is going to seem pretty boring, but the <code>feed</code> function is what <a href="#dialect.feed.example" title="Example 8.7. Using urllister.py">does the entire transformation</a>. You had the entire <abbr>HTML</abbr> source in a single string, so you only had to call <code>feed</code> once. However, you can call <code>feed</code> as often as you want, and the parser will just keep parsing. So if you were worried about memory usage (or you knew you
             were going to be dealing with very large <abbr>HTML</abbr> pages), you could set this up in a loop, where you read a few bytes of <abbr>HTML</abbr> and fed it to the parser. The result would be the same.
@@ -3747,7 +3677,7 @@ that the grammar file defines the structure of the output, and the <code>kgp.py<
    to talk about packages.
 <div class=example><h3>Example 9.5. Loading an <abbr>XML</abbr> document (a sneak peek)</h3><pre class=screen>
 <samp class=p>>>> </samp><kbd>from xml.dom import minidom</kbd> <span>&#x2460;</span>
-<samp class=p>>>> </samp>xmldoc = minidom.parse('~/diveintopython3/common/py/kgp/binary.xml')</pre><div class=calloutlist>
+<samp class=p>>>> </samp>xmldoc = minidom.parse('~/diveintopython3/common/py/kgp/binary.xml')</pre>
 <ol>
 <li>This is a syntax you haven't seen before. It looks almost like the <code>from <var>module</var> import</code> you know and love, but the <code>"."</code> gives it away as something above and beyond a simple import. In fact, <code>xml</code> is what is known as a package, <code>dom</code> is a nested package within <code>xml</code>, and <code>minidom</code> is a module within <code>xml.dom</code>.
 <p>That sounds complicated, but it's really not. Looking at the actual implementation may help. Packages are little more than
@@ -3781,7 +3711,7 @@ The syntax is all the same; Python figures out what you mean based on the file l
 &lt;module 'xml.dom' from 'C:\Python21\lib\xml\dom\__init__.pyc'>
 <samp class=p>>>> </samp><kbd>import xml</kbd>        <span>&#x2463;</span>
 <samp class=p>>>> </samp><kbd>xml</kbd>
-&lt;module 'xml' from 'C:\Python21\lib\xml\__init__.pyc'></pre><div class=calloutlist>
+&lt;module 'xml' from 'C:\Python21\lib\xml\__init__.pyc'></pre>
 <ol>
 <li>Here you're importing a module (<code>minidom</code>) from a nested package (<code>xml.dom</code>). The result is that <code>minidom</code> is imported into your <a href="#dialect.locals" title="8.5. locals and globals">namespace</a>, and in order to reference classes within the <code>minidom</code> module (like <code>Element</code>), you need to preface them with the module name.
 <li>Here you are importing a class (<code>Element</code>) from a module (<code>minidom</code>) from a nested package (<code>xml.dom</code>). The result is that <code>Element</code> is imported directly into your namespace. Note that this does not interfere with the previous import; the <code>Element</code> class can now be referenced in two ways (but it's all still the same class).
@@ -3816,7 +3746,7 @@ package architecture. It's one of the many things Python is good at, so take adv
   &lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
 &lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>
 &lt;/ref>
-&lt;/grammar></span></pre><div class=calloutlist>
+&lt;/grammar></span></pre>
 <ol>
 <li>As you saw in the <a href="#kgp.packages" title="9.2. Packages">previous section</a>, this imports the <code>minidom</code> module from the <code>xml.dom</code> package.
 <li>Here is the one line of code that does all the work: <code>minidom.parse</code> takes one argument and returns a parsed representation of the <abbr>XML</abbr> document. The argument can be many things; in this case, it's simply a filename of an <abbr>XML</abbr> document on my local disk. (To follow along, you'll need to change the path to point to your downloaded examples directory.)
@@ -3830,7 +3760,7 @@ package architecture. It's one of the many things Python is good at, so take adv
 <samp class=p>>>> </samp><kbd>xmldoc.childNodes[0]</kbd> <span>&#x2461;</span>
 &lt;DOM Element: grammar at 17538908>
 <samp class=p>>>> </samp><kbd>xmldoc.firstChild</kbd>    <span>&#x2462;</span>
-&lt;DOM Element: grammar at 17538908></pre><div class=calloutlist>
+&lt;DOM Element: grammar at 17538908></pre>
 <ol>
 <li>Every <code>Node</code> has a <code>childNodes</code> attribute, which is a list of the <code>Node</code> objects. A <code>Document</code> always has only one child node, the root element of the <abbr>XML</abbr> document (in this case, the <code>grammar</code> element).
 <li>To get the first (and in this case, the only) child node, just use regular list syntax. Remember, there is nothing special
@@ -3848,7 +3778,7 @@ package architecture. It's one of the many things Python is good at, so take adv
   &lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
 &lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>
 &lt;/ref>
-&lt;/grammar></span></pre><div class=calloutlist>
+&lt;/grammar></span></pre>
 <ol>
 <li>Since the <code>toxml</code> method is defined in the <code>Node</code> class, it is available on any <abbr>XML</abbr> node, not just the <code>Document</code> element.
 <div class=example><h3 id="kgp.parse.childnodescanbetext.example">Example 9.11. Child nodes can be text</h3><pre class=screen>
@@ -3872,7 +3802,7 @@ package architecture. It's one of the many things Python is good at, so take adv
 <samp class=p>>>> </samp><kbd>print grammarNode.lastChild.toxml()</kbd>     <span>&#x2464;</span>
 <samp>
 
-</span></pre><div class=calloutlist>
+</span></pre>
 <ol>
 <li>Looking at the <abbr>XML</abbr> in <code>binary.xml</code>, you might think that the <code>grammar</code> has only two child nodes, the two <code>ref</code> elements. But you're missing something: the carriage returns!  After the <code>'&lt;grammar>'</code> and before the first <code>'&lt;ref>'</code> is a carriage return, and this text counts as a child node of the <code>grammar</code> element. Similarly, there is a carriage return after each <code>'&lt;/ref>'</code>; these also count as child nodes. So <code>grammar.childNodes</code> is actually a list of 5 objects: 3 <code>Text</code> objects and 2 <code>Element</code> objects.
 <li>The first child is a <code>Text</code> object representing the carriage return after the <code>'&lt;grammar>'</code> tag and before the first <code>'&lt;ref>'</code> tag.
@@ -3897,7 +3827,7 @@ package architecture. It's one of the many things Python is good at, so take adv
 <samp class=p>>>> </samp><kbd>pNode.firstChild</kbd>  <span>&#x2463;</span>
 &lt;DOM Text node "0">
 <samp class=p>>>> </samp><kbd>pNode.firstChild.data</kbd>               <span>&#x2464;</span>
-u'0'</pre><div class=calloutlist>
+u'0'</pre>
 <ol>
 <li>As you saw in the previous example, the first <code>ref</code> element is <code>grammarNode.childNodes[1]</code>, since childNodes[0] is a <code>Text</code> node for the carriage return.
 <li>The <code>ref</code> element has its own set of child nodes, one for the carriage return, a separate one for the spaces, one for the <code>p</code> element, and so forth.
@@ -3927,7 +3857,7 @@ you can customize.
 # but it usually goes in ${pythondir}/lib/site-packages/
 import sys
 sys.setdefaultencoding('iso-8859-1') <span>&#x2461;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><code>sitecustomize.py</code> is a special script; Python will try to import it on startup, so any code in it will be run automatically. As the comment mentions, it can go anywhere
             (as long as <code>import</code> can find it), but it usually goes in the <code>site-packages</code> directory within your Python <code>lib</code> directory.
@@ -3938,7 +3868,7 @@ sys.setdefaultencoding('iso-8859-1') <span>&#x2461;</span>
 'iso-8859-1'
 <samp class=p>>>> </samp><kbd>s = u'La Pe\xf1a'</kbd>
 <samp class=p>>>> </samp><kbd>print s</kbd><span>&#x2461;</span>
-La Pe&ntilde;a</pre><div class=calloutlist>
+La Pe&ntilde;a</pre>
 <ol>
 <li>This example assumes that you have made the changes listed in the previous example to your <code>sitecustomize.py</code> file, and restarted Python. If your default encoding still says <code>'ascii'</code>, you didn't set up your <code>sitecustomize.py</code> properly, or you didn't restart Python. The default encoding can only be changed during Python startup; you can't change it later. (Due to some wacky programming tricks that I won't get into right now, you can't even
             call <code>sys.setdefaultencoding</code> after Python has started up. Dig into <code>site.py</code> and search for &#8220;<code>setdefaultencoding</code>&#8221; to find out how.)
@@ -3988,7 +3918,7 @@ La Pe&ntilde;a</pre><div class=calloutlist>
   &lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
 &lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>
 &lt;/ref>
-</span></pre><div class=calloutlist>
+</span></pre>
 <ol>
 <li><code>getElementsByTagName</code> takes one argument, the name of the element you wish to find. It returns a list of <code>Element</code> objects, corresponding to the <abbr>XML</abbr> elements that have that name. In this case, you find two <code>ref</code> elements.
 <div class=example><h3>Example 9.22. Every element is searchable</h3><pre class=screen>
@@ -4004,7 +3934,7 @@ La Pe&ntilde;a</pre><div class=calloutlist>
 <samp class=p>>>> </samp><kbd>print plist[0].toxml()</kbd>   <span>&#x2462;</span>
 &lt;p>0&lt;/p>
 <samp class=p>>>> </samp><kbd>print plist[1].toxml()</kbd>
-&lt;p>1&lt;/p></pre><div class=calloutlist>
+&lt;p>1&lt;/p></pre>
 <ol>
 <li>Continuing from the previous example, the first object in your <var>reflist</var> is the <code>'bit'</code> <code>ref</code> element.
 <li>You can use the same <code>getElementsByTagName</code> method on this <code>Element</code> to find all the <code>&lt;p></code> elements within the <code>'bit'</code> <code>ref</code> element.
@@ -4019,7 +3949,7 @@ La Pe&ntilde;a</pre><div class=calloutlist>
 '&lt;p>1&lt;/p>'
 <samp class=p>>>> </samp><kbd>plist[2].toxml()</kbd>       <span>&#x2462;</span>
 <samp>'&lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
-&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>'</span></pre><div class=calloutlist>
+&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>'</span></pre>
 <ol>
 <li>Note carefully the difference between this and the previous example. Previously, you were searching for <code>p</code> elements within <var>firstref</var>, but here you are searching for <code>p</code> elements within <var>xmldoc</var>, the root-level object that represents the entire <abbr>XML</abbr> document. This <em>does</em> find the <code>p</code> elements nested within the <code>ref</code> elements within the root <code>grammar</code> element.
 <li>The first two <code>p</code> elements are within the first <code>ref</code> (the <code>'bit'</code> <code>ref</code>).
@@ -4047,7 +3977,7 @@ La Pe&ntilde;a</pre><div class=calloutlist>
 <samp class=p>>>> </samp><kbd>bitref.attributes.values()</kbd> <span>&#x2463;</span>
 [&lt;xml.dom.minidom.Attr instance at 0x81d5044>]
 <samp class=p>>>> </samp><kbd>bitref.attributes["id"]</kbd>    <span>&#x2464;</span>
-&lt;xml.dom.minidom.Attr instance at 0x81d5044></pre><div class=calloutlist>
+&lt;xml.dom.minidom.Attr instance at 0x81d5044></pre>
 <ol>
 <li>Each <code>Element</code> object has an attribute called <code>attributes</code>, which is a <code>NamedNodeMap</code> object. This sounds scary, but it's not, because a <code>NamedNodeMap</code> is an object that <a href="#fileinfo.userdict" title="5.5. Exploring UserDict: A Wrapper Class">acts like a dictionary</a>, so you already know how to use it.
 <li>Treating the <code>NamedNodeMap</code> as a dictionary, you can get a list of the names of the attributes of this element by using <code>attributes.keys()</code>. This element has only one attribute, <code>'id'</code>.
@@ -4062,7 +3992,7 @@ La Pe&ntilde;a</pre><div class=calloutlist>
 <samp class=p>>>> </samp><kbd>a.name</kbd>  <span>&#x2460;</span>
 u'id'
 <samp class=p>>>> </samp><kbd>a.value</kbd> <span>&#x2461;</span>
-u'bit'</pre><div class=calloutlist>
+u'bit'</pre>
 <ol>
 <li>The <code>Attr</code> object completely represents a single <abbr>XML</abbr> attribute of a single <abbr>XML</abbr> element. The name of the attribute (the same name as you used to find this object in the <code>bitref.attributes</code> <code>NamedNodeMap</code> pseudo-dictionary) is stored in <code>a.name</code>.
 <li>The actual text value of this <abbr>XML</abbr> attribute is stored in <code>a.value</code>.
@@ -4115,7 +4045,7 @@ calls the object's <code>read</code> method, the function can handle any kind of
   &lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
 &lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>
 &lt;/ref>
-&lt;/grammar></span></pre><div class=calloutlist>
+&lt;/grammar></span></pre>
 <ol>
 <li>First, you open the file on disk. This gives you a <a href="#fileinfo.files" title="6.2. Working with File Objects">file object</a>.
 <li>You pass the file object to <code>minidom.parse</code>, which calls the <code>read</code> method of <var>fsock</var> and reads the <abbr>XML</abbr> document from the file on disk.
@@ -4150,7 +4080,7 @@ just going to be parsing a local file, you can pass the filename and <code>minid
 &lt;link>http://slashdot.org/article.pl?sid=01/12/28/0421241&lt;/link>
 &lt;/item>
 
-[...snip...]</span></pre><div class=calloutlist>
+[...snip...]</span></pre>
 <ol>
 <li>As you saw <a href="#dialect.extract.urllib" title="Example 8.5. Introducing urllib">in a previous chapter</a>, <code>urlopen</code> takes a web page <abbr>URL</abbr> and returns a file-like object. Most importantly, this object has a <code>read</code> method which returns the <abbr>HTML</abbr> source of the web page.
 <li>Now you pass the file-like object to <code>minidom.parse</code>, which obediently calls the <code>read</code> method of the object and parses the <abbr>XML</abbr> data that the <code>read</code> method returns. The fact that this <abbr>XML</abbr> data is now coming straight from a web page is completely irrelevant. <code>minidom.parse</code> doesn't know about web pages, and it doesn't care about web pages; it just knows about file-like objects.
@@ -4161,7 +4091,7 @@ just going to be parsing a local file, you can pass the filename and <code>minid
 <samp class=p>>>> </samp><kbd>xmldoc = minidom.parseString(contents)</kbd> <span>&#x2460;</span>
 <samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>
 <samp>&lt;?xml version="1.0" ?>
-&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre><div class=calloutlist>
+&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre>
 <ol>
 <li><code>minidom</code> has a method, <code>parseString</code>, which takes an entire <abbr>XML</abbr> document as a string and parses it. You can use this instead of <code>minidom.parse</code> if you know you already have your entire <abbr>XML</abbr> document in a string.
 <p>OK, so you can use the <code>minidom.parse</code> function for parsing both local files and remote <abbr>URL</abbr>s, but for parsing strings, you use... a different function. That means that if you want to be able to take input from a
@@ -4182,7 +4112,7 @@ file, a <abbr>URL</abbr>, or a string, you'll need special logic to check whethe
 "d='bit'>&lt;p>0&lt;/p"
 <samp class=p>>>> </samp><kbd>ssock.read()</kbd>
 '>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>'
-<samp class=p>>>> </samp><kbd>ssock.close()</kbd>       <span>&#x2465;</span></pre><div class=calloutlist>
+<samp class=p>>>> </samp><kbd>ssock.close()</kbd>       <span>&#x2465;</span></pre>
 <ol>
 <li>The <code>StringIO</code> module contains a single class, also called <code>StringIO</code>, which allows you to turn a string into a file-like object. The <code>StringIO</code> class takes the string as a parameter when creating an instance.
 <li>Now you have a file-like object, and you can do all sorts of file-like things with it. Like <code>read</code>, which returns the original string.
@@ -4199,7 +4129,7 @@ file, a <abbr>URL</abbr>, or a string, you'll need special logic to check whethe
 <samp class=p>>>> </samp><kbd>ssock.close()</kbd>
 <samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>
 <samp>&lt;?xml version="1.0" ?>
-&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre><div class=calloutlist>
+&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre>
 <ol>
 <li>Now you can pass the file-like object (really a <code>StringIO</code>) to <code>minidom.parse</code>, which will call the object's <code>read</code> method and happily parse away, never knowing that its input came from a hard-coded string.
 <p>So now you know how to use a single function, <code>minidom.parse</code>, to parse an <abbr>XML</abbr> document stored on a web page, in a local file, or in a hard-coded string. For a web page, you use <code>urlopen</code> to get a file-like object; for a local file, you use <code>open</code>; and for a string, you use <code>StringIO</code>. Now let's take it one step further and generalize <em>these</em> differences as well.
@@ -4220,7 +4150,7 @@ def openAnything(source):<span>&#x2460;</span>
 
     # treat source as string
     import StringIO     
-    return StringIO.StringIO(str(source))  <span>&#x2463;</span></pre><div class=calloutlist>
+    return StringIO.StringIO(str(source))  <span>&#x2463;</span></pre>
 <ol>
 <li>The <code>openAnything</code> function takes a single parameter, <var>source</var>, and returns a file-like object. <var>source</var> is a string of some sort; it can either be a <abbr>URL</abbr> (like <code>'http://slashdot.org/slashdot.rdf'</code>), a full or partial pathname to a local file (like <code>'binary.xml'</code>), or a string that contains actual <abbr>XML</abbr> data to be parsed.
 <li>First, you see if <var>source</var> is a <abbr>URL</abbr>. You do this through brute force: you try to open it as a <abbr>URL</abbr> and silently ignore errors caused by trying to open something which is not a <abbr>URL</abbr>. This is actually elegant in the sense that, if <code>urllib</code> ever supports new types of <abbr>URL</abbr>s in the future, you will also support them without recoding. If <code>urllib</code> is able to open <var>source</var>, then the <code>return</code> kicks you out of the function immediately and the following <code>try</code> statements never execute.
@@ -4252,7 +4182,7 @@ Dive in</samp>
 Dive inDive inDive in
 <samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
 <samp class=p>...    </samp>sys.stderr.write('Dive in') <span>&#x2462;</span>
-Dive inDive inDive in</pre><div class=calloutlist>
+Dive inDive inDive in</pre>
 <ol>
 <li>As you saw in <a href="#fileinfo.for.counter" title="Example 6.9. Simple Counters">Example 6.9, &#8220;Simple Counters&#8221;</a>, you can use Python's built-in <code>range</code> function to build simple counter loops that repeat something a set number of times.
 <li><code>stdout</code> is a file-like object; calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you're printing, and calls <code>sys.stdout.write</code>.
@@ -4275,7 +4205,7 @@ sys.stdout = fsock   <span>&#x2463;</span>
 print 'This message will be logged instead of displayed' <span>&#x2464;</span>
 sys.stdout = saveout <span>&#x2465;</span>
 fsock.close()        <span>&#x2466;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
 <li>Always save <code>stdout</code> before redirecting it, so you can set it back to normal later.
@@ -4299,7 +4229,7 @@ import sys
 fsock = open('error.log', 'w')               <span>&#x2460;</span>
 sys.stderr = fsock         <span>&#x2461;</span>
 raise Exception, 'this error will be logged' <span>&#x2462;</span> <span>&#x2463;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Open the log file where you want to store debugging information.
 <li>Redirect standard error by assigning the file object of the newly-opened log file to <code>stderr</code>.
@@ -4313,7 +4243,7 @@ entering function
 <samp class=p>>>> </samp><kbd>import sys</kbd>
 <samp class=p>>>> </samp><kbd>print >> sys.stderr, 'entering function'</kbd> <span>&#x2460;</span>
 entering function
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This shorthand syntax of the <code>print</code> statement can be used to write to any open file, or file-like object. In this case, you can redirect a single <code>print</code> statement to <code>stderr</code> without affecting subsequent <code>print</code> statements.
 <p>Standard input, on the other hand, is a read-only file object, and it represents the data flowing into the program from some
@@ -4338,7 +4268,7 @@ one program's output to the next program's input.
 &lt;/ref>
 &lt;/grammar></samp>
 <samp class=p>[you@localhost kgp]$ </samp>cat binary.xml | python kgp.py -g - <span>&#x2462;</span> <span>&#x2463;</span>
-10110001</pre><div class=calloutlist>
+10110001</pre>
 <ol>
 <li>As you saw in <a href="#kgp.divein" title="9.1. Diving in">Section 9.1, &#8220;Diving in&#8221;</a>, this will print a string of eight random bits, <code>0</code> or <code>1</code>.
 <li>This simply prints out the entire contents of <code>binary.xml</code>. (Windows users should use <code>type</code> instead of <code>cat</code>.)
@@ -4361,7 +4291,7 @@ def openAnything(source):
     import urllib
     try:
 
-[... snip ...]</pre><div class=calloutlist>
+[... snip ...]</pre>
 <ol>
 <li>This is the <code>openAnything</code> function from <code>toolbox.py</code>, which you previously examined in <a href="#kgp.openanything" title="10.1. Abstracting input sources">Section 10.1, &#8220;Abstracting input sources&#8221;</a>. All you've done is add three lines of code at the beginning of the function to check if the source is &#8220;<code>-</code>&#8221;; if so, you return <code>sys.stdin</code>. Really, that's it!  Remember, <code>stdin</code> is a file-like object with a <code>read</code> method, so the rest of the code (in <code>kgp.py</code>, where you call <code>openAnything</code>) doesn't change a bit.
 <h2 id="kgp.cache">10.3. Caching node lookups</h2>
@@ -4375,7 +4305,7 @@ def openAnything(source):
         self.grammar = self._load(grammar)
         self.refs = {}   <span>&#x2460;</span>
         for ref in self.grammar.getElementsByTagName("ref"): <span>&#x2461;</span>
-            self.refs[ref.attributes["id"].value] = ref      <span>&#x2462;</span> <span>&#x2463;</span></pre><div class=calloutlist>
+            self.refs[ref.attributes["id"].value] = ref      <span>&#x2462;</span> <span>&#x2463;</span></pre>
 <ol>
 <li>Start by creating an empty dictionary, <var>self.refs</var>.
 <li>As you saw in <a href="#kgp.search" title="9.5. Searching for elements">Section 9.5, &#8220;Searching for elements&#8221;</a>, <code>getElementsByTagName</code> returns a list of all the elements of a particular name. You easily can get a list of all the <code>ref</code> elements, then simply loop through that list.
@@ -4394,7 +4324,7 @@ def openAnything(source):
         choices = [e for e in node.childNodes
  if e.nodeType == e.ELEMENT_NODE] <span>&#x2460;</span> <span>&#x2461;</span> <span>&#x2462;</span>
         chosen = random.choice(choices)             <span>&#x2463;</span>
-        return chosen            </pre><div class=calloutlist>
+        return chosen            </pre>
 <ol>
 <li>As you saw in <a href="#kgp.parse.gettingchildnodes.example" title="Example 9.9. Getting child nodes">Example 9.9, &#8220;Getting child nodes&#8221;</a>, the <code>childNodes</code> attribute returns a list of all the child nodes of an element.
 <li>However, as you saw in <a href="#kgp.parse.childnodescanbetext.example" title="Example 9.11. Child nodes can be text">Example 9.11, &#8220;Child nodes can be text&#8221;</a>, the list returned by <code>childNodes</code> contains all different types of nodes, including text nodes. That's not what you're looking for here. You only want the
@@ -4412,7 +4342,7 @@ def openAnything(source):
 <samp class=p>>>> </samp><kbd>xmldoc.__class__</kbd> <span>&#x2461;</span>
 &lt;class xml.dom.minidom.Document at 0x01105D40>
 <samp class=p>>>> </samp><kbd>xmldoc.__class__.__name__</kbd>          <span>&#x2462;</span>
-'Document'</pre><div class=calloutlist>
+'Document'</pre>
 <ol>
 <li>Assume for a moment that <code>kant.xml</code> is in the current directory.
 <li>As you saw in <a href="#kgp.packages" title="9.2. Packages">Section 9.2, &#8220;Packages&#8221;</a>, the object returned by parsing an <abbr>XML</abbr> document is a <code>Document</code> object, as defined in the <code>minidom.py</code> in the <code>xml.dom</code> package. As you saw in <a href="#fileinfo.create" title="5.4. Instantiating Classes">Section 5.4, &#8220;Instantiating Classes&#8221;</a>, <code>__class__</code> is built-in attribute of every Python object.
@@ -4422,7 +4352,7 @@ def openAnything(source):
 <div class=example><h3>Example 10.18. <code>parse</code>, a generic <abbr>XML</abbr> node dispatcher</h3><pre><code>
     def parse(self, node):          
         parseMethod = getattr(self, "parse_%s" % node.__class__.__name__) <span>&#x2460;</span> <span>&#x2461;</span>
-        parseMethod(node) <span>&#x2462;</span></pre><div class=calloutlist>
+        parseMethod(node) <span>&#x2462;</span></pre>
 <ol>
 <li>First off, notice that you're constructing a larger string based on the class name of the node you were passed (in the <var>node</var> argument). So if you're passed a <code>Document</code> node, you're constructing the string <code>'parse_Document'</code>, and so forth.
 <li>Now you can treat that string as a function name, and get a reference to the function itself using <code>getattr</code><li>Finally, you can call that function and pass the node itself as an argument. The next example shows the definitions of each
@@ -4445,7 +4375,7 @@ def openAnything(source):
 
     def parse_Element(self, node): <span>&#x2463;</span>
         handlerMethod = getattr(self, "do_%s" % node.tagName)
-        handlerMethod(node)</pre><div class=calloutlist>
+        handlerMethod(node)</pre>
 <ol>
 <li><code>parse_Document</code> is only ever called once, since there is only one <code>Document</code> node in an <abbr>XML</abbr> document, and only one <code>Document</code> object in the parsed <abbr>XML</abbr> representation. It simply turns around and parses the root element of the grammar file.
 <li><code>parse_Text</code> is called on nodes that represent bits of text. The function itself does some special processing to handle automatic capitalization
@@ -4471,7 +4401,7 @@ Python program, so let's write a simple program to see them.
 import sys
 
 for arg in sys.argv: <span>&#x2460;</span>
-    print arg</pre><div class=calloutlist>
+    print arg</pre>
 <ol>
 <li>Each command-line argument passed to the program will be in <var>sys.argv</var>, which is just a list. Here you are printing each argument on a separate line.
 <div class=example><h3>Example 10.21. The contents of <var>sys.argv</var></h3><pre class=screen>
@@ -4487,7 +4417,7 @@ def</samp>
 <samp class=p>[you@localhost py]$ </samp>python argecho.py -m kant.xml <span>&#x2463;</span>
 <samp>argecho.py
 -m
-kant.xml</span></pre><div class=calloutlist>
+kant.xml</span></pre>
 <ol>
 <li>The first thing to know about <var>sys.argv</var> is that it contains the name of the script you're calling. You will actually use this knowledge to your advantage later,
             in <a href="#regression" title="Chapter 16. Functional Programming">Chapter 16, <i>Functional Programming</i></a>. Don't worry about it for now.
@@ -4510,7 +4440,7 @@ def main(argv):
 ...
 
 if __name__ == "__main__":
-    main(sys.argv[1:])</pre><div class=calloutlist>
+    main(sys.argv[1:])</pre>
 <ol>
 <li>First off, look at the bottom of the example and notice that you're calling the <code>main</code> function with <code>sys.argv[1:]</code>. Remember, <code>sys.argv[0]</code> is the name of the script that you're running; you don't care about that for command-line processing, so you chop it off
             and pass the rest of the list.
@@ -4577,7 +4507,7 @@ def main(argv):        <span>&#x2460;</span>
     source = "".join(args)               <span>&#x2465;</span>
 
     k = KantGenerator(grammar, source)
-    print k.output()</pre><div class=calloutlist>
+    print k.output()</pre>
 <ol>
 <li>The <var>grammar</var> variable will keep track of the grammar file you're using. You initialize it here in case it's not specified on the command
             line (using either the <code>-g</code> or the <code>--grammar</code> flag).
@@ -4809,7 +4739,7 @@ def fetch(source, etag=None, last_modified=None, agent=USER_AGENT):
   &lt;title mode="escaped">dive into mark&lt;/title>
   &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
   &lt;-- rest of feed omitted for brevity --></span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Downloading anything over HTTP is incredibly easy in Python; in fact, it's a one-liner. The <code>urllib</code> module has a handy <code>urlopen</code> function that takes the address of the page you want, and returns a file-like object that you can just <code>read()</code> from to get the full contents of the page. It just can't get much easier.
 <p>So what's wrong with this?  Well, for a quick one-off during testing or development, there's nothing wrong with it. I do
@@ -4891,7 +4821,7 @@ header: ETag: "e8284-68e0-4de30f80" <span>&#x2467;</span>
 header: Accept-Ranges: bytes
 header: Content-Length: 26848
 header: Connection: close
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><code>urllib</code> relies on another standard Python library, <code>httplib</code>. Normally you don't need to <code>import httplib</code> directly (<code>urllib</code> does that automatically), but you will here so you can set the debugging flag on the <code>HTTPConnection</code> class that <code>urllib</code> uses internally to connect to the HTTP server. This is an incredibly useful technique. Some other Python libraries have similar debug flags, but there's no particular standard for naming them or turning them on; you need to read
          the documentation of each library to see if such a feature is available.
@@ -4933,7 +4863,7 @@ header: ETag: "e8284-68e0-4de30f80"
 header: Accept-Ranges: bytes
 header: Content-Length: 26848
 header: Connection: close
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>If you still have your Python <abbr>IDE</abbr> open from the previous section's example, you can skip this, but this turns on <a href="#oa.debug" title="11.4. Debugging HTTP web services">HTTP debugging</a> so you can see what you're actually sending over the wire, and what gets sent back.
 <li>Fetching an HTTP resource with <code>urllib2</code> is a three-step process, for good reasons that will become clear shortly. The first step is to create a <code>Request</code> object, which takes the URL of the resource you'll eventually get around to retrieving. Note that this step doesn't actually
@@ -4966,7 +4896,7 @@ header: ETag: "e8284-68e0-4de30f80"
 header: Accept-Ranges: bytes
 header: Content-Length: 26848
 header: Connection: close
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>You're continuing from the previous example; you've already created a <code>Request</code> object with the URL you want to access.
 <li>Using the <code>add_header</code> method on the <code>Request</code> object, you can add arbitrary HTTP headers to the request. The first argument is the header, the second is the value you're
@@ -5014,7 +4944,7 @@ turn it off by setting <code>httplib.HTTPConnection.debuglevel = 0</code>. Or yo
   File "c:\python23\lib\urllib2.py", line 412, in http_error_default
     raise HTTPError(req.get_full_url(), code, msg, hdrs, fp)
 urllib2.HTTPError: HTTP Error 304: Not Modified</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Remember all those HTTP headers you saw printed out when you turned on debugging?  This is how you can get access to them
             programmatically: <var>firstdatastream.headers</var> is <a href="#fileinfo.userdict" title="5.5. Exploring UserDict: A Wrapper Class">an object that acts like a dictionary</a> and allows you to get any of the individual headers returned from the HTTP server.
@@ -5033,7 +4963,7 @@ class DefaultErrorHandler(urllib2.HTTPDefaultErrorHandler):    <span>&#x2460;</s
             req.get_full_url(), code, msg, headers, fp)       
         result.status = code                 <span>&#x2462;</span>
         return result     
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><code>urllib2</code> is designed around URL handlers. Each handler is just a class that can define any number of methods. When something happens
             -- like an HTTP error, or even a <code>304</code> code -- <code>urllib2</code> introspects into the list of defined handlers for a method that can handle it. You used a similar introspection in <a href="#kgp" title="Chapter 9. XML Processing">Chapter 9, <i>XML Processing</i></a> to define handlers for different node types, but <code>urllib2</code> is more flexible, and introspects over as many handlers as are defined for the current request.
@@ -5051,7 +4981,7 @@ class DefaultErrorHandler(urllib2.HTTPDefaultErrorHandler):    <span>&#x2460;</s
 304
 <samp class=p>>>> </samp><kbd>seconddatastream.read()</kbd> <span>&#x2463;</span>
 ''
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>You're continuing the previous example, so the <code>Request</code> object is already set up, and you've already added the <code>If-Modified-Since</code> header.
 <li>This is the key: now that you've defined your custom URL handler, you need to tell <code>urllib2</code> to use it. Remember how I said that <code>urllib2</code> broke up the process of accessing an HTTP resource into three steps, and for good reason?  This is why building the URL opener
@@ -5085,7 +5015,7 @@ class DefaultErrorHandler(urllib2.HTTPDefaultErrorHandler):    <span>&#x2460;</s
 304
 <samp class=p>>>> </samp><kbd>seconddatastream.read()</kbd>  <span>&#x2464;</span>
 ''
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Using the <var>firstdatastream.headers</var> pseudo-dictionary, you can get the <code>ETag</code> returned from the server. (What happens if the server didn't send back an <code>ETag</code>?  Then this line would return <code>None</code>.)
 <li>OK, you got the data.
@@ -5149,7 +5079,7 @@ header: Content-Type: application/atom+xml</samp>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in ?
 AttributeError: addinfourl instance has no attribute 'status'</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>You'll be better able to see what's happening if you turn on debugging.
 <li>This is a URL which I have set up to permanently redirect to my Atom feed at <code>http://diveintomark.org/xml/atom.xml</code>.
@@ -5177,7 +5107,7 @@ class SmartRedirectHandler(urllib2.HTTPRedirectHandler):     <span>&#x2460;</spa
             self, req, fp, code, msg, headers)              
         result.status = code              
         return result   
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Redirect behavior is defined in <code>urllib2</code> in a class called <code>HTTPRedirectHandler</code>. You don't want to completely override the behavior, you just want to extend it a little, so you'll subclass <code>HTTPRedirectHandler</code> so you can call the ancestor class to do all the hard work.
 <li>When it encounters a <code>301</code> status code from the server, <code>urllib2</code> will search through its handlers and call the <code>http_error_301</code> method.  The first thing ours does is just call the <code>http_error_301</code> method in the ancestor, which handles the grunt work of looking for the <code>Location:</code> header and following the redirect to the new address.
@@ -5224,7 +5154,7 @@ header: Content-Type: application/atom+xml
 301
 <samp class=p>>>> </samp><kbd>f.url</kbd>
 'http://diveintomark.org/xml/atom.xml'
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>First, build a URL opener with the redirect handler you just defined.
 <li>You sent off a request, and you got a <code>301</code> status code in response. At this point, the <code>http_error_301</code> method gets called. You call the ancestor method, which follows the redirect and sends a request at the new location (<code>http://diveintomark.org/xml/atom.xml</code>).
@@ -5269,7 +5199,7 @@ header: Content-Type: application/atom+xml</samp>
 302
 <samp class=p>>>> </samp><kbd>f.url</kbd>
 http://diveintomark.org/xml/atom.xml
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This is a sample URL I've set up that is configured to tell clients to <em>temporarily</em> redirect to <code>http://diveintomark.org/xml/atom.xml</code>.
 <li>The server sends back a <code>302</code> status code, indicating a temporary redirect. The temporary new location of the data is given in the <code>Location:</code> header.
@@ -5308,7 +5238,7 @@ header: Content-Encoding: gzip</span>         <span>&#x2462;</span>
 header: Content-Length: 6289           <span>&#x2463;</span>
 <samp>header: Connection: close
 header: Content-Type: application/atom+xml</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This is the key: once you've created your <code>Request</code> object, add an <code>Accept-encoding</code> header to tell the server you can accept gzip-encoded data. <code>gzip</code> is the name of the compression algorithm you're using. In theory there could be other compression algorithms, but <code>gzip</code> is the compression algorithm used by 99% of web servers.
 <li>There's your header going across the wire.
@@ -5335,7 +5265,7 @@ header: Content-Type: application/atom+xml</span>
   &lt;-- rest of feed omitted for brevity --></samp>
 <samp class=p>>>> </samp><kbd>len(data)</kbd>
 15955
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Continuing from the previous example, <var>f</var> is the file-like object returned from the URL opener. Using its <code>read()</code> method would ordinarily get you the uncompressed data, but since this data has been gzip-compressed, this is just the first
             step towards getting the data you really want.
@@ -5357,7 +5287,7 @@ header: Content-Type: application/atom+xml</span>
   File "c:\python23\lib\gzip.py", line 252, in _read
     pos = self.fileobj.tell()   # Save current position
 AttributeError: addinfourl instance has no attribute 'tell'</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Continuing from the previous example, you already have a <code>Request</code> object set up with an <code>Accept-encoding: gzip</code> header.
 <li>Simply opening the request will get you the headers (though not download any data yet). As you can see from the returned
@@ -5384,7 +5314,7 @@ def openAnything(source, etag=None, lastmodified=None, agent=USER_AGENT):
         request.add_header('Accept-encoding', 'gzip')              <span>&#x2464;</span>
         opener = urllib2.build_opener(SmartRedirectHandler(), DefaultErrorHandler()) <span>&#x2465;</span>
         return opener.open(request)              <span>&#x2466;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><code>urlparse</code> is a handy utility module for, you guessed it, parsing URLs. It's primary function, also called <code>urlparse</code>, takes a URL and splits it into a tuple of (scheme, domain, path, params, query string parameters, and fragment identifier).
              Of these, the only thing you care about is the scheme, to make sure that you're dealing with an HTTP URL (which <code>urllib2</code> can handle).
@@ -5417,7 +5347,7 @@ def fetch(source, etag=None, last_modified=None, agent=USER_AGENT):
         result['status'] = f.status                
     f.close()  
     return result                
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>First, you call the <code>openAnything</code> function with a URL, <code>ETag</code> hash, <code>Last-Modified</code> date, and <code>User-Agent</code>.
 <li>Read the actual data returned from the server. This may be compressed; if so, you'll decompress it later.
@@ -5449,7 +5379,7 @@ def fetch(source, etag=None, last_modified=None, agent=USER_AGENT):
 'etag': '"e842a-3e53-55d97640"', 
 'status': 304,
 'data': ''}</span>  <span>&#x2464;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The very first time you fetch a resource, you don't have an <code>ETag</code> hash or <code>Last-Modified</code> date, so you'll leave those out. (They're <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional parameters</a>.)
 <li>What you get back is a dictionary of several useful headers, the HTTP status code, and the actual data returned from the server.
@@ -5548,7 +5478,7 @@ class ToRomanBadInput(unittest.TestCase):
 
     def testNonInteger(self):    
         """to_roman should fail with non-integer input"""             
-        self.assertRaises(roman.NotIntegerError, roman.to_roman, 0.5)  <span>&#x2462;</span></pre><div class=calloutlist>
+        self.assertRaises(roman.NotIntegerError, roman.to_roman, 0.5)  <span>&#x2462;</span></pre>
 <ol>
 <li>The <code>TestCase</code> class of the <code>unittest</code> provides the <code>assertRaises</code> method, which takes the following arguments: the exception you're expecting, the function you're testing, and the arguments
             you're passing that function. (If the function you're testing takes more than one argument, pass them all to <code>assertRaises</code>, in order, and it will pass them right along to the function you're testing.)  Pay close attention to what you're doing here:
@@ -5583,7 +5513,7 @@ class FromRomanBadInput(unittest.TestCase):
         """from_roman should fail with malformed antecedents""" 
         for s in ('IIMXCC', 'VX', 'DCM', 'CMM', 'IXIV',
 'MCMC', 'XCX', 'IVI', 'LM', 'LD', 'LC'):     
-            self.assertRaises(roman.InvalidRomanNumeralError, roman.from_roman, s)</pre><div class=calloutlist>
+            self.assertRaises(roman.InvalidRomanNumeralError, roman.from_roman, s)</pre>
 <ol>
 <li>Not much new to say about these; the pattern is exactly the same as the one you used to test bad input to <code>to_roman()</code>. I will briefly note that you have another exception: <code>roman.InvalidRomanNumeralError</code>. That makes a total of three custom exceptions that will need to be defined in <code>roman.py</code> (along with <code>roman.OutOfRangeError</code> and <code>roman.NotIntegerError</code>). You'll see how to define these custom exceptions when you actually start writing <code>roman.py</code>, later in this chapter.
 <h2 id="roman.sanity">13.6. Testing for sanity</h2>
@@ -5604,7 +5534,7 @@ class SanityCheck(unittest.TestCase):
         for integer in range(1, 4000):        <span>&#x2460;</span> <span>&#x2461;</span>
             numeral = roman.to_roman(integer) 
             result = roman.from_roman(numeral)
-            self.assertEqual(integer, result) <span>&#x2462;</span></pre><div class=calloutlist>
+            self.assertEqual(integer, result) <span>&#x2462;</span></pre>
 <ol>
 <li>You've seen <a href="#odbchelper.multiassign.range" title="Example 3.20. Assigning Consecutive Values">the <code>range</code> function</a> before, but here it is called with two arguments, which returns a list of integers starting at the first argument (<code>1</code>) and counting consecutively up to <em>but not including</em> the second argument (<code>4000</code>). Thus, <code>1..3999</code>, which is the valid range for converting to Roman numerals.
 <li>I just wanted to mention in passing that <var>integer</var> is not a keyword in Python; here it's just a variable name like any other.
@@ -5633,7 +5563,7 @@ class CaseCheck(unittest.TestCase):
             numeral = roman.to_roman(integer)          
             roman.from_roman(numeral.upper()) <span>&#x2461;</span> <span>&#x2462;</span>
             self.assertRaises(roman.InvalidRomanNumeralError,
-            roman.from_roman, numeral.lower())   <span>&#x2463;</span></pre><div class=calloutlist>
+            roman.from_roman, numeral.lower())   <span>&#x2463;</span></pre>
 <ol>
 <li>The most interesting thing about this test case is all the things it doesn't test. It doesn't test that the value returned
             from <code>to_roman()</code> is <a href="#roman.testtoromanknownvalues.example" title="Example 13.2. testToRomanKnownValues">right</a> or even <a href="#roman.sanity.example" title="Example 13.5. Testing to_roman against from_roman">consistent</a>; those questions are answered by separate test cases. You have a whole test case just to test for uppercase-ness. You might
@@ -5677,7 +5607,7 @@ def to_roman(n):
 def from_roman(s):
     """convert Roman numeral to integer"""
     pass
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This is how you define your own custom exceptions in Python. Exceptions are classes, and you create your own by subclassing existing exceptions. It is strongly recommended (but not
             required) that you subclass <code>Exception</code>, which is the base class that all built-in exceptions inherit from. Here I am defining <code>RomanError</code> (inherited from <code>Exception</code>) to act as the base class for all my other custom exceptions to follow. This is a matter of style; I could just as easily
@@ -5810,7 +5740,7 @@ AssertionError: OutOfRangeError    </span><span>&#x2461;</span><samp>
 ----------------------------------------------------------------------
 Ran 12 tests in 0.040s             </span><span>&#x2462;</span><samp>
 
-FAILED (failures=10, errors=2)     </span><span>&#x2463;</span></pre><div class=calloutlist>
+FAILED (failures=10, errors=2)     </span><span>&#x2463;</span></pre>
 <h2 id="roman.stage2">14.2. <code>roman.py</code>, stage 2</h2>
 <p>Now that you have the framework of the <code>roman</code> module laid out, it's time to start writing code and passing test cases.
 <div class=example><h3 id="roman.stage2.example">Example 14.3. <code>roman2.py</code></h3>
@@ -5852,7 +5782,7 @@ def to_roman(n):
 def from_roman(s):
     """convert Roman numeral to integer"""
     pass
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><var>romanNumeralMap</var> is a tuple of tuples which defines three things:
 <div class=orderedlist>
@@ -5896,7 +5826,7 @@ from_roman(to_roman(n))==n for all n ... FAIL
 to_roman should fail with non-integer input ... FAIL            </span><span>&#x2462;</span><samp>
 to_roman should fail with negative input ... FAIL
 to_roman should fail with large input ... FAIL
-to_roman should fail with 0 input ... FAIL</span></pre><div class=calloutlist>
+to_roman should fail with 0 input ... FAIL</span></pre>
 <ol>
 <li><code>to_roman()</code> does, in fact, always return uppercase, because <var>romanNumeralMap</var> defines the Roman numeral representations as uppercase. So this test passes already.
 <li>Here's the big news: this version of the <code>to_roman()</code> function passes the <a href="#roman.testtoromanknownvalues.example" title="Example 13.2. testToRomanKnownValues">known values test</a>. Remember, it's not comprehensive, but it does put the function through its paces with a variety of good inputs, including
@@ -6044,7 +5974,7 @@ def to_roman(n):
 def from_roman(s):
     """convert Roman numeral to integer"""
     pass
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This is a nice Pythonic shortcut: multiple comparisons at once. This is equivalent to <code>if not ((0 &lt; n) and (n &lt; 4000))</code>, but it's much easier to read. This is the range check, and it should catch inputs that are too large, negative, or zero.
 <li>You raise exceptions yourself with the <code>raise</code> statement. You can raise any of the built-in exceptions, or you can raise any of your custom exceptions that you've defined.
@@ -6077,7 +6007,7 @@ from_roman(to_roman(n))==n for all n ... FAIL
 to_roman should fail with non-integer input ... ok        </span><span>&#x2461;</span><samp>
 to_roman should fail with negative input ... ok           </span><span>&#x2462;</span><samp>
 to_roman should fail with large input ... ok
-to_roman should fail with 0 input ... ok</span></pre><div class=calloutlist>
+to_roman should fail with 0 input ... ok</span></pre>
 <ol>
 <li><code>to_roman()</code> still passes the <a href="#roman.testtoromanknownvalues.example" title="Example 13.2. testToRomanKnownValues">known values test</a>, which is comforting. All the tests that passed in <a href="#roman.stage2" title="14.2. roman.py, stage 2">stage 2</a> still pass, so the latest code hasn't broken anything.
 <li>More exciting is the fact that all of the <a href="#roman.tobadinput.example" title="Example 13.3. Testing bad input to to_roman">bad input tests</a> now pass. This test, <code>testNonInteger</code>, passes because of the <code>int(n) &lt;> n</code> check. When a non-integer is passed to <code>to_roman()</code>, the <code>int(n) &lt;> n</code> check notices it and raises the <code>NotIntegerError</code> exception, which is what <code>testNonInteger</code> is looking for.
@@ -6140,7 +6070,7 @@ AssertionError: 1 != None</span><samp>
 ----------------------------------------------------------------------
 Ran 12 tests in 0.401s
 
-FAILED (failures=6)</span> <span>&#x2460;</span></pre><div class=calloutlist>
+FAILED (failures=6)</span> <span>&#x2460;</span></pre>
 <ol>
 <li>You're down to 6 failures, and all of them involve <code>from_roman()</code>: the known values test, the three separate bad input tests, the case check, and the sanity check. That means that <code>to_roman()</code> has passed all the tests it can pass by itself. (It's involved in the sanity check, but that also requires that <code>from_roman()</code> be written, which it isn't yet.)  Which means that you must stop coding <code>to_roman()</code> now. No tweaking, no twiddling, no extra checks &#8220;just in case&#8221;. Stop. Now. Back away from the keyboard.
 <table class=note border="0" summary="">
@@ -6188,7 +6118,7 @@ def from_roman(s):
             result += integer
             index += len(numeral)
     return result
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The pattern here is the same as <a href="#roman.stage2.example" title="Example 14.3. roman2.py"><code>to_roman()</code></a>. You iterate through your Roman numeral data structure (a tuple of tuples), and instead of matching the highest integer
             values as often as possible, you match the &#8220;highest&#8221; Roman numeral character strings as often as possible.
@@ -6218,7 +6148,7 @@ from_roman(to_roman(n))==n for all n ... ok</span><span>&#x2461;</span><samp>
 to_roman should fail with non-integer input ... ok
 to_roman should fail with negative input ... ok
 to_roman should fail with large input ... ok
-to_roman should fail with 0 input ... ok</span></pre><div class=calloutlist>
+to_roman should fail with 0 input ... ok</span></pre>
 <ol>
 <li>Two pieces of exciting news here. The first is that <code>from_roman()</code> works for good input, at least for all the <a href="#roman.testtoromanknownvalues.example" title="Example 13.2. testToRomanKnownValues">known values</a> you test.
 <li>The second is that the <a href="#roman.sanity.example" title="Example 13.5. Testing to_roman against from_roman">sanity check</a> also passed. Combined with the known values tests, you can be reasonably sure that both <code>to_roman()</code> and <code>from_roman()</code> work properly for all possible good values. (This is not guaranteed; it is theoretically possible that <code>to_roman()</code> has a bug that produces the wrong Roman numeral for some particular set of inputs, <em>and</em> that <code>from_roman()</code> has a reciprocal bug that produces the same wrong integer values for exactly that set of Roman numerals that <code>to_roman()</code> generated incorrectly. Depending on your application and your requirements, this possibility may bother you; if so, write
@@ -6339,7 +6269,7 @@ def from_roman(s):
             result += integer
             index += len(numeral)
     return result
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This is just a continuation of the pattern you discussed in <a href="#re.roman" title="7.3. Case Study: Roman Numerals">Section 7.3, &#8220;Case Study: Roman Numerals&#8221;</a>. The tens places is either <code>XC</code> (<code>90</code>), <code>XL</code> (<code>40</code>), or an optional <code>L</code> followed by 0 to 3 optional <code>X</code> characters. The ones place is either <code>IX</code> (<code>9</code>), <code>IV</code> (<code>4</code>), or an optional <code>V</code> followed by 0 to 3 optional <code>I</code> characters.
 <li>Having encoded all that logic into a regular expression, the code to check for invalid Roman numerals becomes trivial. If
@@ -6363,7 +6293,7 @@ to_roman should fail with 0 input ... ok
 ----------------------------------------------------------------------
 Ran 12 tests in 2.864s
 
-OK     </span><span>&#x2463;</span></pre><div class=calloutlist>
+OK     </span><span>&#x2463;</span></pre>
 <ol>
 <li>One thing I didn't mention about regular expressions is that, by default, they are case-sensitive. Since the regular expression
 <var>romanNumeralPattern</var> was expressed in uppercase characters, the <code>re.search</code> check will reject any input that isn't completely uppercase. So the uppercase input test passes.
@@ -6448,7 +6378,7 @@ kgp g ref test ... ok
 ----------------------------------------------------------------------
 Ran 29 tests in 2.799s
 
-OK</span></pre><div class=calloutlist>
+OK</span></pre>
 <ol>
 <li>The first 5 tests are from <code>apihelpertest.py</code>, which tests the example script from <a href="#apihelper" title="Chapter 4. The Power Of Introspection">Chapter 4, <i>The Power Of Introspection</i></a>.
 <li>The next 5 tests are from <code>odbchelpertest.py</code>, which tests the example script from <a href="#odbchelper" title="Chapter 2. Your First Python Program">Chapter 2, <i>Your First Python Program</i></a>.
@@ -6466,7 +6396,7 @@ import sys, os
 print 'sys.argv[0] =', sys.argv[0]             <span>&#x2460;</span>
 pathname = os.path.dirname(sys.argv[0])        <span>&#x2461;</span>
 print 'path =', pathname
-print 'full path =', os.path.abspath(pathname) <span>&#x2462;</span></pre><div class=calloutlist>
+print 'full path =', os.path.abspath(pathname) <span>&#x2462;</span></pre>
 <ol>
 <li>Regardless of how you run a script, <code>sys.argv[0]</code> will always contain the name of the script, exactly as it appears on the command line. This may or may not include any path
             information, as you'll see shortly.
@@ -6485,7 +6415,7 @@ print 'full path =', os.path.abspath(pathname) <span>&#x2462;</span></pre><div c
 <samp class=p>>>> </samp><kbd>os.path.abspath('/home/you/.ssh')</kbd> <span>&#x2463;</span>
 /home/you/.ssh
 <samp class=p>>>> </samp><kbd>os.path.abspath('.ssh/../foo/')</kbd>    <span>&#x2464;</span>
-/home/you/foo</pre><div class=calloutlist>
+/home/you/foo</pre>
 <ol>
 <li><code>os.getcwd()</code> returns the current working directory.
 <li>Calling <code>os.path.abspath</code> with an empty string returns the current working directory, same as <code>os.getcwd()</code>.
@@ -6512,7 +6442,7 @@ full path = /home/you/diveintopython3/common/py</samp>
 <samp class=p>[you@localhost py]$ </samp>python fullpath.py <span>&#x2462;</span>
 <samp>sys.argv[0] = fullpath.py
 path = 
-full path = /home/you/diveintopython3/common/py</span></pre><div class=calloutlist>
+full path = /home/you/diveintopython3/common/py</span></pre>
 <ol>
 <li>In the first case, <code>sys.argv[0]</code> includes the full path of the script. You can then use the <code>os.path.dirname</code> function to strip off the script name and return the full directory name, and <code>os.path.abspath</code> simply returns what you give it.
 <li>If the script is run by using a partial pathname, <code>sys.argv[0]</code> will still contain exactly what appears on the command line. <code>os.path.dirname</code> will then give you a partial pathname (relative to the current directory), and <code>os.path.abspath</code> will construct a full pathname from the partial pathname.
@@ -6529,7 +6459,7 @@ def regressionTest():
     path = os.getcwd()       <span>&#x2460;</span>
     sys.path.append(path)    <span>&#x2461;</span>
     files = os.listdir(path) <span>&#x2462;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Instead of setting <var>path</var> to the directory where the currently running script is located, you set it to the current working directory instead. This
             will be whatever directory you were in before you ran the script, which is not necessarily the same as the directory the script
@@ -6557,7 +6487,7 @@ def regressionTest():
 <samp class=p>...    </samp>    filteredList.append(n)
 <samp class=p>...    </samp>
 <samp class=p>>>> </samp><kbd>filteredList</kbd>
-[1, 3, 5, 9, -3]</pre><div class=calloutlist>
+[1, 3, 5, 9, -3]</pre>
 <ol>
 <li><code>odd</code> uses the built-in mod function &#8220;<code>%</code>&#8221; to return <code>True</code> if <var>n</var> is odd and <code>False</code> if <var>n</var> is even.
 <li><code>filter</code> takes two arguments, a function (<code>odd</code>) and a list (<var>li</var>). It loops through the list and calls <code>odd</code> with each element. If <code>odd</code> returns a true value (remember, any non-zero value is true in Python), then the element is included in the returned list, otherwise it is filtered out. The result is a list of only the odd
@@ -6568,7 +6498,7 @@ def regressionTest():
 <div class=example><h3>Example 16.8. <code>filter</code> in <code>regression.py</code></h3><pre><code>
     files = os.listdir(path)              <span>&#x2460;</span>
     test = re.compile("test\.py$", re.IGNORECASE)           <span>&#x2461;</span>
-    files = filter(test.search, files)    <span>&#x2462;</span></pre><div class=calloutlist>
+    files = filter(test.search, files)    <span>&#x2462;</span></pre>
 <ol>
 <li>As you saw in <a href="#regression.path" title="16.2. Finding the path">Section 16.2, &#8220;Finding the path&#8221;</a>, <var>path</var> may contain the full or partial pathname of the directory of the currently running script, or it may contain an empty string
             if the script is being run from the current directory. Either way, <var>files</var> will end up with the names of the files in the same directory as this script you're running.
@@ -6581,7 +6511,7 @@ There is discussion that <code>map</code> and <code>filter</code> might be depre
 <div class=example><h3>Example 16.9. Filtering using list comprehensions instead</h3><pre><code>
     files = os.listdir(path)             
     test = re.compile("test\.py$", re.IGNORECASE)          
-    files = [f for f in files if test.search(f)] <span>&#x2460;</span></pre><div class=calloutlist>
+    files = [f for f in files if test.search(f)] <span>&#x2460;</span></pre>
 <ol>
 <li>This will accomplish exactly the same result as using the <code>filter</code> function. Which way is more expressive?  That's up to you.
 <h2 id="regression.map">16.4. Mapping lists revisited</h2>
@@ -6600,7 +6530,7 @@ There is discussion that <code>map</code> and <code>filter</code> might be depre
 <samp class=p>...    </samp>newlist.append(double(n))
 <samp class=p>...    </samp>
 <samp class=p>>>> </samp><kbd>newlist</kbd>
-[2, 4, 6, 10, 18, 20, 512, -6]</pre><div class=calloutlist>
+[2, 4, 6, 10, 18, 20, 512, -6]</pre>
 <ol>
 <li><code>map</code> takes a function and a list<sup>[<a name="d0e36079" href="#ftn.d0e36079">8</a>]</sup> and returns a new list by calling the function with each element of the list in order. In this case, the function simply
             multiplies each element by 2.
@@ -6609,7 +6539,7 @@ There is discussion that <code>map</code> and <code>filter</code> might be depre
 <div class=example><h3>Example 16.11. <code>map</code> with lists of mixed datatypes</h3><pre class=screen>
 <samp class=p>>>> </samp><kbd>li = [5, 'a', (2, 'b')]</kbd>
 <samp class=p>>>> </samp><kbd>map(double, li)</kbd>     <span>&#x2460;</span>
-[10, 'aa', (2, 'b', 2, 'b')]</pre><div class=calloutlist>
+[10, 'aa', (2, 'b', 2, 'b')]</pre>
 <ol>
 <li>As a side note, I'd like to point out that <code>map</code> works just as well with lists of mixed datatypes, as long as the function you're using correctly handles each type. In this
             case, the <code>double</code> function simply multiplies the given argument by 2, and Python Does The Right Thing depending on the datatype of the argument. For integers, this means actually multiplying it by 2; for
@@ -6618,7 +6548,7 @@ There is discussion that <code>map</code> and <code>filter</code> might be depre
 <p>All right, enough play time. Let's look at some real code.
 <div class=example><h3>Example 16.12. <code>map</code> in <code>regression.py</code></h3><pre><code>
     filenameToModuleName = lambda f: os.path.splitext(f)[0] <span>&#x2460;</span>
-    moduleNames = map(filenameToModuleName, files)          <span>&#x2461;</span></pre><div class=calloutlist>
+    moduleNames = map(filenameToModuleName, files)          <span>&#x2461;</span></pre>
 <ol>
 <li>As you saw in <a href="#apihelper.lambda" title="4.7. Using lambda Functions">Section 4.7, &#8220;Using lambda Functions&#8221;</a>, <code>lambda</code> defines an inline function. And as you saw in <a href="#splittingpathnames.example" title="Example 6.17. Splitting Pathnames">Example 6.17, &#8220;Splitting Pathnames&#8221;</a>, <code>os.path.splitext</code> takes a filename and returns a tuple <code>(<var>name</var>, <var>extension</var>)</code>. So <code>filenameToModuleName</code> is a function which will take a filename and strip off the file extension, and return just the name.
 <li>Calling <code>map</code> takes each filename listed in <var>files</var>, passes it to the function <code>filenameToModuleName</code>, and returns a list of the return values of each of those function calls. In other words, you strip the file extension off
@@ -6654,7 +6584,7 @@ too much, filter it. If it's not what you want, map it. Focus on the data; leave
 this way, with a comma-separated list. You did this on the very first line of this chapter's script.
 <div class=example><h3>Example 16.13. Importing multiple modules at once</h3><pre><code>
 import sys, os, re, unittest <span>&#x2460;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This imports four modules at once: <code>sys</code> (for system functions and access to the command line parameters), <code>os</code> (for operating system functions like directory listings), <code>re</code> (for regular expressions), and <code>unittest</code> (for unit testing).
 <p>Now let's do the same thing, but with dynamic imports.
@@ -6667,7 +6597,7 @@ import sys, os, re, unittest <span>&#x2460;</span>
 <samp class=p>>>> </samp><kbd>&lt;module 'sys' (built-in)></kbd>
 <samp class=p>>>> </samp><kbd>os</kbd>
 <samp class=p>>>> </samp><kbd>&lt;module 'os' from '/usr/local/lib/python2.2/os.pyc'></kbd>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The built-in <code>__import__</code> function accomplishes the same goal as using the <code>import</code> statement, but it's an actual function, and it takes a string as an argument.
 <li>The variable <var>sys</var> is now the <code>sys</code> module, just as if you had said <code>import sys</code>. The variable <var>os</var> is now the <code>os</code> module, and so forth.
@@ -6689,7 +6619,7 @@ to doesn't need to match the module name, either. You could import a series of m
 <samp class=p>>>> </samp><kbd>import sys</kbd>
 <samp class=p>>>> </samp><kbd>sys.version</kbd>
 '2.2.2 (#37, Nov 26 2002, 10:24:37) [MSC 32 bit (Intel)]'
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><var>moduleNames</var> is just a list of strings. Nothing fancy, except that the strings happen to be names of modules that you could import, if
             you wanted to.
@@ -6725,7 +6655,7 @@ return unittest.TestSuite(map(load, modules))
 'plural.py', 'pluraltest.py', 'pyfontify.py', 'regression.py', 'roman.py', 'romantest.py',
 'uncurly.py', 'unicode2koi8r.py', 'urllister.py', 'kgp', 'plural', 'roman',
 'colorize.py']</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li><var>files</var> is a list of all the files and directories in the script's directory. (If you've been running some of the examples already,
             you may also see some <code>.pyc</code> files in there as well.)
@@ -6734,7 +6664,7 @@ return unittest.TestSuite(map(load, modules))
 <samp class=p>>>> </samp><kbd>files = filter(test.search, files)</kbd>    <span>&#x2461;</span>
 <samp class=p>>>> </samp><kbd>files</kbd>               <span>&#x2462;</span>
 ['apihelpertest.py', 'kgptest.py', 'odbchelpertest.py', 'pluraltest.py', 'romantest.py']
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>This regular expression will match any string that ends with <code>test.py</code>. Note that you need to escape the period, since a period in a regular expression usually means &#8220;match any single character&#8221;, but you actually want to match a literal period instead.
 <li>The compiled regular expression acts like a function, so you can use it to filter the large list of files and directories,
@@ -6749,7 +6679,7 @@ return unittest.TestSuite(map(load, modules))
 <samp class=p>>>> </samp><kbd>moduleNames = map(filenameToModuleName, files)</kbd>          <span>&#x2462;</span>
 <samp class=p>>>> </samp><kbd>moduleNames</kbd>         <span>&#x2463;</span>
 ['apihelpertest', 'kgptest', 'odbchelpertest', 'pluraltest', 'romantest']
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>As you saw in <a href="#apihelper.lambda" title="4.7. Using lambda Functions">Section 4.7, &#8220;Using lambda Functions&#8221;</a>, <code>lambda</code> is a quick-and-dirty way of creating an inline, one-line function. This one takes a filename with an extension and returns
             just the filename part, using the standard library function <code>os.path.splitext</code> that you saw in <a href="#splittingpathnames.example" title="Example 6.17. Splitting Pathnames">Example 6.17, &#8220;Splitting Pathnames&#8221;</a>.
@@ -6766,7 +6696,7 @@ return unittest.TestSuite(map(load, modules))
 &lt;module 'romantest' from 'romantest.py'>]</samp>
 <samp class=p>>>> </samp><kbd>modules[-1]</kbd>         <span>&#x2462;</span>
 &lt;module 'romantest' from 'romantest.py'>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>As you saw in <a href="#regression.import" title="16.6. Dynamically importing modules">Section 16.6, &#8220;Dynamically importing modules&#8221;</a>, you can use a combination of <code>map</code> and <code>__import__</code> to map a list of module names (as strings) into actual modules (which you can call or access like any other module).
             
@@ -6785,7 +6715,7 @@ return unittest.TestSuite(map(load, modules))
   ]
 ]</samp>
 <samp class=p>>>> </samp><kbd>unittest.TestSuite(map(load, modules))</kbd> <span>&#x2461;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>These are real module objects. Not only can you access them like any other module, instantiate classes and call functions,
             you can also introspect into the module to figure out which classes and functions it has in the first place. That's what
@@ -6798,7 +6728,7 @@ in the <code>unittest</code> module, but then I'd never finish this one.)
 <div class=example><h3>Example 16.22. Step 6: Telling <code>unittest</code> to use your test suite</h3><pre><code>
 if __name__ == "__main__": 
     unittest.main(defaultTest="regressionTest") <span>&#x2460;</span>
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>Instead of letting the <code>unittest</code> module do all its magic for us, you've done most of it yourself. You've created a function (<code>regressionTest</code>) that imports the modules yourself, calls <code>unittest.defaultTestLoader</code> yourself, and wraps it all up in a test suite. Now all you need to do is tell <code>unittest</code> that, instead of looking for tests and building a test suite in the usual way, it should just call the <code>regressionTest</code> function, which returns a ready-to-use <code>TestSuite</code>.
 <h2 id="regression.summary">16.8. Summary</h2>
@@ -6966,7 +6896,7 @@ in your timing framework will irreparably skew your results.
 8.21683733547
 <samp class=p>>>> </samp><kbd>t.repeat(3, 2000000)</kbd>    <span>&#x2462;</span>
 [16.48319309109, 16.46128984923, 16.44203948912]
-</pre><div class=calloutlist>
+</pre>
 <ol>
 <li>The <code>timeit</code> module defines one class, <code>Timer</code>, which takes two arguments. Both arguments are strings. The first argument is the statement you wish to time; in this case,
             you are timing a call to the Soundex function within the <code>soundex</code> with an argument of <code>'Pilgrim'</code>. The second argument to the <code>Timer</code> class is the import statement that sets up the environment for the statement. Internally, <code>timeit</code> sets up an isolated virtual environment, manually executes the setup statement (importing the <code>soundex</code> module), then manually compiles and executes the timed statement (calling the Soundex function).
