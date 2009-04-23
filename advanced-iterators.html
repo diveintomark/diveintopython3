@@ -82,14 +82,18 @@ if __name__ == '__main__':
 
 <h2 id=re-findall>Finding all occurrences of a pattern</h2>
 
-<p>FIXME
+<p>The first thing this alphametics solver does is find all the letters (A&ndash;Z) in the puzzle.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
-<samp class=p>>>> </samp><kbd>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>
+<a><samp class=p>>>> </samp><kbd>re.findall('[0-9]+', '16 2-by-4s in rows of 8')</kbd>  <span>&#x2460;</span></a>
+<samp>['16', '2', '4', '8']</samp>
+<a><samp class=p>>>> </samp><kbd>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>     <span>&#x2461;</span></a>
 <samp>['SEND', 'MORE', 'MONEY']</samp></pre>
-
-<p>FIXME
+<ol>
+<li>The <code>re</code> module is Python's implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
+<li>Here the regular expression pattern matches sequences of letters. Again, the return value is a list, and each item in the list is a string that matched the regular expression pattern.
+</ol>
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
