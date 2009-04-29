@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+<meta charset=utf-8>
+<title>Advanced Classes - Dive into Python 3</title>
+<!--[if IE]><script src=html5.js></script><![endif]-->
+<link rel=stylesheet type=text/css href=dip3.css>
+<style>
+body{counter-reset:h1 11}
+</style>
+<link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
+</head>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#advanced-classes>Dive Into Python 3</a> <span>&#8227;</span>
+<p id=level>Difficulty level: <span title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
+<h1>Advanced Classes</h1>
+<blockquote class=q>
+<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>FIXME
+
+<p class=d>[<a href=examples/ordereddict.py>download <code>ordereddict.py</code></a>]
+<pre><code>import collections
+import itertools
+ 
+class OrderedDict(dict, collections.MutableMapping):
+
+    def __init__(self, *args, **kwds):
+        if len(args) > 1:
+            raise TypeError('expected at most 1 arguments')
+        if not hasattr(self, '_keys'):
+            self._keys = []
+        self.update(*args, **kwds)
+
+    def clear(self):
+        del self._keys[:]
+        dict.clear(self)
+
+    def __setitem__(self, key, value):
+        if key not in self:
+            self._keys.append(key)
+        dict.__setitem__(self, key, value)
+
+    def __delitem__(self, key):
+        dict.__delitem__(self, key)
+        self._keys.remove(key)
+
+    def __iter__(self):
+        return iter(self._keys)
+
+    def __reversed__(self):
+        return reversed(self._keys)
+
+    def popitem(self):
+        if not self:
+            raise KeyError('dictionary is empty')
+        key = self._keys.pop()
+        value = dict.pop(self, key)
+        return key, value
+
+    def __reduce__(self):
+        items = [[k, self[k]] for k in self]
+        inst_dict = vars(self).copy()
+        inst_dict.pop('_keys', None)
+        return (self.__class__, (items,), inst_dict)
+
+    setdefault = MutableMapping.setdefault
+    update = MutableMapping.update
+    pop = MutableMapping.pop
+    keys = MutableMapping.keys
+    values = MutableMapping.values
+    items = MutableMapping.items
+
+    def __repr__(self):
+        if not self:
+            return '%s()' % (self.__class__.__name__,)
+        return '%s(%r)' % (self.__class__.__name__, list(self.items()))
+
+    def copy(self):
+        return self.__class__(self)
+
+    @classmethod
+    def fromkeys(cls, iterable, value=None):
+        d = cls()
+        for key in iterable:
+            d[key] = value
+        return d
+
+    def __eq__(self, other):
+        if isinstance(other, OrderedDict):
+            return all(p==q for p, q in itertools.zip_longest(self.items(), other.items()))
+        return dict.__eq__(self, other)</code></pre>
+
+<p class=nav><a rel=prev class=todo><span>&#x261C;</a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
+<script src=jquery.js></script>
+<script src=dip3.js></script>

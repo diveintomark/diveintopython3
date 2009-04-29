@@ -5,105 +5,44 @@
 <!--[if IE]><script src=html5.js></script><![endif]-->
 <link rel=stylesheet type=text/css href=dip3.css>
 <style>
-body{counter-reset:h1 11}
+h1:before{counter-increment:h1;content:"Appendix B. "}
+h2:before{counter-increment:h2;content:"B." counter(h2) ". "}
+h3:before{counter-increment:h3;content:"B." counter(h2) "." counter(h3) ". "}
+tr + tr th:first-child{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
+table{width:100%;border-collapse:collapse}
+th,td{width:30%;padding:0 0.5em;border:1px solid #bbb}
+th{text-align:left;vertical-align:baseline}
+td{vertical-align:top}
+th:first-child{width:10%;text-align:center}
+th,td,td pre{margin:0}
+td pre{padding:0;border:0}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#special-method-names>Dive Into Python 3</a> <span>&#8227;</span>
-<p id=level>Difficulty level: <span title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
+<p id=level>Difficulty level: <span title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2666;</span>
 <h1>Special Method Names</h1>
 <blockquote class=q>
 <p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>Diving In</h2>
+<h2 id=divingin>Diving in</h2>
 <p class=f>FIXME
 
-<p class=d>[<a href=examples/ordereddict.py>download <code>ordereddict.py</code></a>]
-<pre><code>import collections
-import itertools
- 
-class OrderedDict(dict, collections.MutableMapping):
+<h2 id=basics>Basics</h2>
 
-    def __init__(self, *args, **kwds):
-        if len(args) > 1:
-            raise TypeError('expected at most 1 arguments')
-        if not hasattr(self, '_keys'):
-            self._keys = []
-        self.update(*args, **kwds)
-
-    def clear(self):
-        del self._keys[:]
-        dict.clear(self)
-
-    def __setitem__(self, key, value):
-        if key not in self:
-            self._keys.append(key)
-        dict.__setitem__(self, key, value)
-
-    def __delitem__(self, key):
-        dict.__delitem__(self, key)
-        self._keys.remove(key)
-
-    def __iter__(self):
-        return iter(self._keys)
-
-    def __reversed__(self):
-        return reversed(self._keys)
-
-    def popitem(self):
-        if not self:
-            raise KeyError('dictionary is empty')
-        key = self._keys.pop()
-        value = dict.pop(self, key)
-        return key, value
-
-    def __reduce__(self):
-        items = [[k, self[k]] for k in self]
-        inst_dict = vars(self).copy()
-        inst_dict.pop('_keys', None)
-        return (self.__class__, (items,), inst_dict)
-
-    setdefault = MutableMapping.setdefault
-    update = MutableMapping.update
-    pop = MutableMapping.pop
-    keys = MutableMapping.keys
-    values = MutableMapping.values
-    items = MutableMapping.items
-
-    def __repr__(self):
-        if not self:
-            return '%s()' % (self.__class__.__name__,)
-        return '%s(%r)' % (self.__class__.__name__, list(self.items()))
-
-    def copy(self):
-        return self.__class__(self)
-
-    @classmethod
-    def fromkeys(cls, iterable, value=None):
-        d = cls()
-        for key in iterable:
-            d[key] = value
-        return d
-
-    def __eq__(self, other):
-        if isinstance(other, OrderedDict):
-            return all(p==q for p, q in itertools.zip_longest(self.items(), other.items()))
-        return dict.__eq__(self, other)</code></pre>
-
-<!--
-
-Basics:
-
+<pre>
 __init__ - covered in iterators.html
 __repr__ - covered in ordereddict.py
 __str__ - covered in fractions.py
 __bytes__ (*)
 __format__
+</pre>
 
-Rich comparisons:
+<h2 id=rich-comparisons>Rich Comparisons</h2>
 
+<pre>
 __lt__ - covered in fractions.py
 __le__ - covered in fractions.py
 __eq__ - covered in ordereddict.py, fractions.py
@@ -112,41 +51,135 @@ __gt__ - covered in fractions.py
 __ge__ - covered in fractions.py
 __bool__ - covered in fractions.py
 __cmp__ (*)
+</pre>
 
-Custom attributes:
+<h2 id=custom-attributes>Custom Attributes</h2>
 
+<pre>
 __getattr__
 __getattribute__
 __setattr__
 __delattr__
 __dir__
+</pre>
 
-Acts like a function:
+<h2 id=acts-like-function>Classes That Act Like Functions</h2>
 
+<pre>
 __call__
+</pre>
 
-Acts like a list:
+<h2 id=acts-like-list>Classes That Act Like Sequences</h2>
 
+<p>FIXME sequence intro
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>length of a sequence
+<td><code>len(seq)</code>
+<td><code>seq.__len__()</code>
+<tr><th>
+<td>whether a sequence contains a specific value
+<td><code>x in seq</code>
+<td><code>seq.__contains__(<var>x</var>)</code>
+</table>
+
+<!--
 __len__
-__reversed__ - covered in ordereddict.py
 __contains__
-__index__
-__getslice__ (*)
+-->
 
-Acts like a dictionary:
+<h2 id=acts-like-dict>Classes That Act Like Dictionaries</h2>
 
+<pre>
 __getitem__
 __setitem__ - covered in ordereddict.py
 __delitem__ - covered in ordereddict.py
 __missing__ (*)
+</pre>
 
-Acts like an iterator:
+<h2 id=acts-like-iterator>Classes That Act Like Iterators</h2>
 
+<!--
+<tr><th>
+<td>reversed sequence
+<td><code>reversed(seq)</code>
+<td><code>x.__reversed__()</code>
+-->
+<pre>
 __iter__ (*) - covered in iterators.html
 __next__ (*) - covered in iterators.html
+__reversed__ - covered in ordereddict.py
+</pre>
 
-Acts like a number:
+<h2 id=acts-like-number>Classes That Act Like Numbers</h2>
 
+<p>FIXME binary operator intro
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>addition
+<td><code>x + y</code>
+<td><code>x.__add__(<var>y</var>)</code>
+<tr><th>
+<td>subtraction
+<td><code>x - y</code>
+<td><code>x.__sub__(<var>y</var>)</code>
+<tr><th>
+<td>multiplication
+<td><code>x * y</code>
+<td><code>x.__mul__(<var>y</var>)</code>
+<tr><th>
+<td>division
+<td><code>x / y</code>
+<td><code>x.__truediv__(<var>y</var>)</code>
+<tr><th>
+<td>floor division
+<td><code>x // y</code>
+<td><code>x.__floordiv__(<var>y</var>)</code>
+<tr><th>
+<td>modulo (remainder)
+<td><code>x % y</code>
+<td><code>x.__mod__(<var>y</var>)</code>
+<tr><th>
+<td>floor division <i class=baa>&amp;</i> modulo
+<td><code>divmod(x, y)</code>
+<td><code>x.__divmod__(<var>y</var>)</code>
+<tr><th>
+<td>raise to power
+<td><code>x ** y</code>
+<td><code>x.__pow__(<var>y</var>)</code>
+<tr><th>
+<td>left bit-shift
+<td><code>x &lt;&lt; y</code>
+<td><code>x.__lshift__(<var>y</var>)</code>
+<tr><th>
+<td>right bit-shift
+<td><code>x >> y</code>
+<td><code>x.__rshift__(<var>y</var>)</code>
+<tr><th>
+<td>bitwise <code>and</code>
+<td><code>x &amp; y</code>
+<td><code>x.__and__(<var>y</var>)</code>
+<tr><th>
+<td>bitwise <code>xor</code>
+<td><code>x ^ y</code>
+<td><code>x.__xor__(<var>y</var>)</code>
+<tr><th>
+<td>bitwise <code>or</code>
+<td><code>x | y</code>
+<td><code>x.__or__(<var>y</var>)</code>
+</table>
+
+<!--
 __add__ - covered in fractions.py
 __sub__
 __mul__
@@ -160,6 +193,70 @@ __rshift__
 __and__
 __xor__
 __or__
+-->
+
+<p>FIXME explain circumstances under which reflected methods will be called. <!-- If <var>x</var> doesn't implement a given special method, or if it implements it but  return <code>NotImplemented</code>, the Python interpreter will try a different approach &mdash; calling a special method on <var>y</var> instead of <var>x</var>.-->
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>addition
+<td><code>x + y</code>
+<td><code>y.__radd__(<var>x</var>)</code>
+<tr><th>
+<td>subtraction
+<td><code>x - y</code>
+<td><code>y.__rsub__(<var>x</var>)</code>
+<tr><th>
+<td>multiplication
+<td><code>x * y</code>
+<td><code>y.__rmul__(<var>x</var>)</code>
+<tr><th>
+<td>division
+<td><code>x / y</code>
+<td><code>y.__rtruediv__(<var>x</var>)</code>
+<tr><th>
+<td>floor division
+<td><code>x // y</code>
+<td><code>y.__rfloordiv__(<var>x</var>)</code>
+<tr><th>
+<td>modulo (remainder)
+<td><code>x % y</code>
+<td><code>y.__rmod__(<var>x</var>)</code>
+<tr><th>
+<td>floor division <i class=baa>&amp;</i> modulo
+<td><code>divmod(x, y)</code>
+<td><code>y.__rdivmod__(<var>x</var>)</code>
+<tr><th>
+<td>raise to power
+<td><code>x ** y</code>
+<td><code>y.__rpow__(<var>x</var>)</code>
+<tr><th>
+<td>left bit-shift
+<td><code>x &lt;&lt; y</code>
+<td><code>y.__rlshift__(<var>x</var>)</code>
+<tr><th>
+<td>right bit-shift
+<td><code>x >> y</code>
+<td><code>y.__rrshift__(<var>x</var>)</code>
+<tr><th>
+<td>bitwise <code>and</code>
+<td><code>x &amp; y</code>
+<td><code>y.__rand__(<var>x</var>)</code>
+<tr><th>
+<td>bitwise <code>xor</code>
+<td><code>x ^ y</code>
+<td><code>y.__rxor__(<var>x</var>)</code>
+<tr><th>
+<td>bitwise <code>or</code>
+<td><code>x | y</code>
+<td><code>y.__ror__(<var>x</var>)</code>
+</table>
+
+<!--
 __radd__ - covered in fractions.py
 __rsub__
 __rmul__
@@ -172,6 +269,66 @@ __rrshift__
 __rand__
 __rxor__
 __ror__
+-->
+
+<p>FIXME explain in-place augmented assignments
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>in-place addition
+<td><code>x += y</code>
+<td><code>x.__iadd__(<var>y</var>)</code>
+<tr><th>
+<td>in-place subtraction
+<td><code>x -= y</code>
+<td><code>x.__isub__(<var>y</var>)</code>
+<tr><th>
+<td>in-place multiplication
+<td><code>x *= y</code>
+<td><code>x.__imul__(<var>y</var>)</code>
+<tr><th>
+<td>in-place division
+<td><code>x /= y</code>
+<td><code>x.__itruediv__(<var>y</var>)</code>
+<tr><th>
+<td>in-place floor division
+<td><code>x //= y</code>
+<td><code>x.__ifloordiv__(<var>y</var>)</code>
+<tr><th>
+<td>in-place modulo
+<td><code>x %= y</code>
+<td><code>x.__imod__(<var>y</var>)</code>
+<tr><th>
+<td>in-place raise to power
+<td><code>x **= y</code>
+<td><code>x.__ipow__(<var>y</var>)</code>
+<tr><th>
+<td>in-place left bit-shift
+<td><code>x &lt;&lt;= y</code>
+<td><code>x.__ilshift__(<var>y</var>)</code>
+<tr><th>
+<td>in-place right bit-shift
+<td><code>x >>= y</code>
+<td><code>x.__irshift__(<var>y</var>)</code>
+<tr><th>
+<td>in-place bitwise <code>and</code>
+<td><code>x &amp;= y</code>
+<td><code>x.__iand__(<var>y</var>)</code>
+<tr><th>
+<td>in-place bitwise <code>xor</code>
+<td><code>x ^= y</code>
+<td><code>x.__ixor__(<var>y</var>)</code>
+<tr><th>
+<td>in-place bitwise <code>or</code>
+<td><code>x |= y</code>
+<td><code>x.__ior__(<var>y</var>)</code>
+</table>
+
+<!--
 __iadd__
 __isub__
 __imul__
@@ -184,6 +341,70 @@ __irshift__
 __iand__
 __ixor__
 __ior__
+-->
+
+<p>FIXME unary operator intro
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>negative number
+<td><code>-x</code>
+<td><code>x.__neg__()</code>
+<tr><th>
+<td>positive number
+<td><code>+x</code>
+<td><code>x.__pos__()</code>
+<tr><th>
+<td>absolute value
+<td><code>abs(x)</code>
+<td><code>x.__abs__()</code>
+<tr><th>
+<td>inverse
+<td><code>~x</code>
+<td><code>x.__invert__()</code>
+<tr><th>
+<td>complex number
+<td><code>complex(x)</code>
+<td><code>x.__complex__()</code>
+<tr><th>
+<td>integer
+<td><code>int(x)</code>
+<td><code>x.__int__()</code>
+<tr><th>
+<td>floating point number
+<td><code>float(x)</code>
+<td><code>x.__float__()</code>
+<tr><th>
+<td>number rounded to nearest integer
+<td><code>round(x)</code>
+<td><code>x.__round__()</code>
+<tr><th>
+<td>number rounded to nearest <var>n</var> digits
+<td><code>round(x, n)</code>
+<td><code>x.__round__(n)</code>
+<tr><th>
+<td>smallest integer <code>>= x</code>
+<td><code>math.ceil(x)</code>
+<td><code>x.__ceil__()</code>
+<tr><th>
+<td>largest integer <code>&lt;= x</code>
+<td><code>math.floor(x)</code>
+<td><code>x.__floor__()</code>
+<tr><th>
+<td>truncate <code>x</code> to nearest integer toward <code>0</code>
+<td><code>math.trunc(x)</code>
+<td><code>x.__trunc__()</code>
+<tr><th>
+<td>???
+<td><code>???</code>
+<td><code>x.__index__()</code>
+</table>
+
+<!--
 __neg__ - covered in fractions.py
 __pos__ - covered in fractions.py
 __abs__ - covered in fractions.py
@@ -191,13 +412,17 @@ __invert__
 __complex__
 __int__
 __float__
-__long__ (*)
 __round__ - covered in fractions.py
 __ceil__ (*) - covered in fractions.py
 __floor__ (*) - covered in fractions.py
 __trunc__ (*) - covered in fractions.py
+__index__
+-->
 
-Support for pickling, see http://docs.python.org/3.0/library/pickle.html:
+<h2 id=pickle>Support For Pickling</h2>
+
+<pre>
+see http://docs.python.org/3.0/library/pickle.html:
 
 __copy__ (*) - covered in fractions.py
 __deepcopy__ (*) - covered in fractions.py
@@ -207,9 +432,18 @@ __getstate__ (*)
 __setstate__ (*)
 __reduce__ (*) - covered in ordereddict.py, fractions.py
 __reduce_ex__ (*)
+</pre>
 
-Really weird stuff:
+<h2 id=context-managers>Classes That Can Be Used in a <code>with</code> Block</h2>
 
+<pre>
+__enter__ see http://docs.python.org/3.0/library/stdtypes.html#typecontextmanager
+__exit__
+</pre>
+
+<h2 id=esoterica>Really Esoteric Stuff</h2>
+
+<pre>
 __new__ - covered in fractions.py
 __del__
 __slots__
@@ -217,15 +451,12 @@ __hash__ - covered in fractions.py
 __get__
 __set__
 __delete__
-__enter__ see http://docs.python.org/3.0/library/stdtypes.html#typecontextmanager
-__exit__
 __subclasshook__ (*) see http://docs.python.org/3.0/library/abc.html
 __instancecheck__ (*) see http://www.ibm.com/developerworks/linux/library/l-python3-2/
 __subclasscheck__ (*)
+</pre>
 
--->
-
-<p class=nav><a rel=prev class=todo><span>&#x261C;</a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=nav><a rel=prev href=porting-code-to-python-3-with-2to3.html title="back to &#8220;Porting code to Python 3 with 2to3&#8221;"><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>
