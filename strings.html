@@ -49,19 +49,19 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p><i>Enter Unicode.</i>
 
-<p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number, from 0&ndash;4294967295. (That's 2<sup>32</sup>&minus;1.) Each 4-byte number represents a unique character used in at least one of the world's languages. Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn't be sufficient. Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn't have an <code>'A'</code> in it.
+<p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number, from 0&ndash;4294967295. (That&#8217;s 2<sup>32</sup>&minus;1.) Each 4-byte number represents a unique character used in at least one of the world&#8217;s languages. Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn&#8217;t be sufficient. Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn&#8217;t have an <code>'A'</code> in it.
 
-<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it's wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
+<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it&#8217;s wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
 
-<p>There is a Unicode encoding that uses four bytes per character. It's called UTF-32, because 32 bits = 4 bytes. UTF-32 is a straightforward encoding; it takes each Unicode character (a 4-byte number) and represents the character with that same number. This has some advantages, the most important being that you can find the <var>Nth</var> character of a string in constant time, because the <var>Nth</var> character starts at the <var>4&times;Nth</var> byte. It also has several disadvantages, the most obvious being that it takes four freaking bytes to store every freaking character.
+<p>There is a Unicode encoding that uses four bytes per character. It&#8217;s called UTF-32, because 32 bits = 4 bytes. UTF-32 is a straightforward encoding; it takes each Unicode character (a 4-byte number) and represents the character with that same number. This has some advantages, the most important being that you can find the <var>Nth</var> character of a string in constant time, because the <var>Nth</var> character starts at the <var>4&times;Nth</var> byte. It also has several disadvantages, the most obvious being that it takes four freaking bytes to store every freaking character.
 
-<p>Even though there are a lot of Unicode characters, it turns out that most people will never use anything beyond the first 65535. Thus, there is another Unicode encoding, called UTF-16 (because 16 bits = 2 bytes). UTF-16 encodes every character from 0&ndash;65535 as two bytes, then uses some dirty hacks if you actually need to represent the rarely-used &#8220;astral plane&#8221; Unicode characters beyond 65535. Most obvious advantage: UTF-16 is twice as space-efficient as UTF-32, because every character requires only two bytes to store instead of four bytes (except for the ones that don't). And you can still easily find the <var>Nth</var> character of a string in constant time, if you assume that the string doesn't include any astral plane characters, which is a good assumption right up until the moment that it's not.
+<p>Even though there are a lot of Unicode characters, it turns out that most people will never use anything beyond the first 65535. Thus, there is another Unicode encoding, called UTF-16 (because 16 bits = 2 bytes). UTF-16 encodes every character from 0&ndash;65535 as two bytes, then uses some dirty hacks if you actually need to represent the rarely-used &#8220;astral plane&#8221; Unicode characters beyond 65535. Most obvious advantage: UTF-16 is twice as space-efficient as UTF-32, because every character requires only two bytes to store instead of four bytes (except for the ones that don&#8217;t). And you can still easily find the <var>Nth</var> character of a string in constant time, if you assume that the string doesn&#8217;t include any astral plane characters, which is a good assumption right up until the moment that it&#8217;s not.
 
-<p>But there are also non-obvious disadvantages to both UTF-32 and UTF-16. Different computer systems store individual bytes in different ways. That means that the character <code>U+4E2D</code> could be stored in UTF-16 as either <code>4E 2D</code> or <code>2D 4E</code>, depending on whether the system is big-endian or little-endian. (For UTF-32, there are even more possible byte orderings.) As long as your documents never leave your computer, you're safe &mdash; different applications on the same computer will all use the same byte order. But the minute you want to transfer documents between systems, perhaps on a world wide web of some sort, you're going to need a way to indicate which order your bytes are stored. Otherwise, the receiving system has no way of knowing whether the two-byte sequence <code>4E 2D</code> means <code>U+4E2D</code> or <code>U+2D4E</code>.
+<p>But there are also non-obvious disadvantages to both UTF-32 and UTF-16. Different computer systems store individual bytes in different ways. That means that the character <code>U+4E2D</code> could be stored in UTF-16 as either <code>4E 2D</code> or <code>2D 4E</code>, depending on whether the system is big-endian or little-endian. (For UTF-32, there are even more possible byte orderings.) As long as your documents never leave your computer, you&#8217;re safe &mdash; different applications on the same computer will all use the same byte order. But the minute you want to transfer documents between systems, perhaps on a world wide web of some sort, you&#8217;re going to need a way to indicate which order your bytes are stored. Otherwise, the receiving system has no way of knowing whether the two-byte sequence <code>4E 2D</code> means <code>U+4E2D</code> or <code>U+2D4E</code>.
 
 <p>To solve <em>this</em> problem, the multi-byte Unicode encodings define a &#8220;Byte Order Mark,&#8221; which is a special non-printable character that you can include at the beginning of your document to indicate what order your bytes are in. For UTF-16, the Byte Order Mark is <code>U+FEFF</code>. If you receive a UTF-16 document that starts with the bytes <code>FF FE</code>, you know the byte ordering is one way; if it starts with <code>FE FF</code>, you know the byte ordering is reversed.
 
-<p>Still, UTF-16 isn't exactly ideal, especially if you're dealing with a lot of <abbr>ASCII</abbr> characters. If you think about it, even a Chinese web page is going to contain a lot of <abbr>ASCII</abbr> characters &mdash; all the elements and attributes surrounding the printable Chinese characters. Being able to find the <var>Nth</var> character in O(1) time is nice, but there's still the nagging problem of those astral plane characters, which mean that you can't <em>guarantee</em> that every character is exactly two bytes, so you can't <em>really</em> find the <var>Nth</var> character in O(1) time unless you maintain a separate index. And boy, there sure is a lot of <abbr>ASCII</abbr> text in the world&hellip;
+<p>Still, UTF-16 isn&#8217;t exactly ideal, especially if you&#8217;re dealing with a lot of <abbr>ASCII</abbr> characters. If you think about it, even a Chinese web page is going to contain a lot of <abbr>ASCII</abbr> characters &mdash; all the elements and attributes surrounding the printable Chinese characters. Being able to find the <var>Nth</var> character in O(1) time is nice, but there&#8217;s still the nagging problem of those astral plane characters, which mean that you can&#8217;t <em>guarantee</em> that every character is exactly two bytes, so you can&#8217;t <em>really</em> find the <var>Nth</var> character in O(1) time unless you maintain a separate index. And boy, there sure is a lot of <abbr>ASCII</abbr> text in the world&hellip;
 
 <p>Other people pondered these questions, and they came up with a solution:
 
@@ -71,7 +71,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Disadvantages: because each character can take a different number of bytes, finding the <var>Nth</var> character is an O(N) operation. Also, there is bit-twiddling involved to encode characters into bytes and decode bytes into characters.
 
-<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you'll have to trust me on this, because I'm not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in UTF-8 uses the exact same stream of bytes on any computer.
+<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in UTF-8 uses the exact same stream of bytes on any computer.
 
 <h2 id=divingin>Diving In</h2>
 
@@ -95,7 +95,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 <h2 id=formatting-strings>Formatting Strings</h2>
 
 <aside>Strings can be defined with either single or double quotes.</aside>
-<p>Let's take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<p>Let&#8217;s take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
 <pre><code>
@@ -127,8 +127,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; those are each strings.
 <li>Function docstrings are strings. This docstring spans multiple lines, so it uses three-in-a-row quotes to start and end the string.
 <li>These three-in-a-row quotes end the docstring.
-<li>There's another string, being passed to the exception as a human-readable error message.
-<li>There's a&hellip; whoa, what the heck is that?
+<li>There&#8217;s another string, being passed to the exception as a human-readable error message.
+<li>There&#8217;s a&hellip; whoa, what the heck is that?
 </ol>
 
 <p>Python 3 supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with single placeholder.
@@ -140,7 +140,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
 <li>No, my password is not really <kbd>PapayaWhip</kbd>.
-<li>There's a lot going on here. First, that's a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code>format()</code> method.
+<li>There&#8217;s a lot going on here. First, that&#8217;s a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code>format()</code> method.
 </ol>
 
 <h3 id=compound-field-names>Compound Field Names</h3>
@@ -156,8 +156,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
-<li>Rather than calling any function in the <code>humansize</code> module, you're just grabbing one of the data structures it defines: the list of "SI" (powers-of-1000) suffixes.
-<li>This looks complicated, but it's not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
+<li>Rather than calling any function in the <code>humansize</code> module, you&#8217;re just grabbing one of the data structures it defines: the list of "SI" (powers-of-1000) suffixes.
+<li>This looks complicated, but it&#8217;s not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
 </ol>
 
 <aside>{0} is replaced by the 1<sup>st</sup> format() argument. {1} is replaced by the 2<sup>nd</sup>.</aside>
@@ -171,7 +171,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li><em>Any combination of the above</em>
 </ul>
 
-<p>Just to blow your mind, here's an example that combines all of the above:
+<p>Just to blow your mind, here&#8217;s an example that combines all of the above:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
@@ -179,7 +179,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp class=p>>>> </samp><kbd>"1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}".format(sys)</kbd>
 <samp>'1MB = 1000KB'</samp></pre>
 
-<p>Here's how it works:
+<p>Here&#8217;s how it works:
 
 <ul>
 <li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the replacement field <code>{0}</code> refers to the <code>sys</code> module.
@@ -192,12 +192,12 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <h3 id=format-specifiers>Format Specifiers</h3>
 
-<p>But wait! There's more! Let's take another look at that strange line of code from <code>humansize.py</code>:
+<p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
 
 <pre><code>if size &lt; multiple:
     return "{0:.1f} {1}".format(size, suffix)</code></pre>
 
-<p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It's two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don't. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
+<p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
 
 <blockquote class="note compare clang">
 <p><span>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
@@ -239,7 +239,7 @@ experience of years.</samp>
 <li>The <code>count()</code> method counts the number of occurrences of a substring. Yes, there really are six &#8220;f&#8221;s in that sentence!
 </ol>
 
-<p>Here's another common case. Let's say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
+<p>Here&#8217;s another common case. Let&#8217;s say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
@@ -324,8 +324,8 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <a><samp class=p>>>> </samp><kbd>s.count(by.decode('ascii'))</kbd>  <span>&#x2462;</span></a>
 <samp>1</samp></pre>
 <ol>
-<li>You can't concatenate bytes and strings. They are two different data types.
-<li>You can't count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you'll need to say that explicitly. Python 3 won't implicitly convert bytes to strings or strings to bytes.
+<li>You can&#8217;t concatenate bytes and strings. They are two different data types.
+<li>You can&#8217;t count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you&#8217;ll need to say that explicitly. Python 3 won&#8217;t implicitly convert bytes to strings or strings to bytes.
 <li>By an amazing coincidence, this line of code says &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in this particular character encoding.&#8221;
 </ol>
 
@@ -393,7 +393,7 @@ FIXME: move this to the intro of the upcoming files chapter?
 
 <ul>
 <li><a href="http://docs.python.org/3.0/howto/unicode.html">Python Unicode HOWTO</a>
-<li><a href="http://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit">What's New In Python 3: Text vs. Data Instead Of Unicode vs. 8-bit</a>
+<li><a href="http://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit">What&#8217;s New In Python 3: Text vs. Data Instead Of Unicode vs. 8-bit</a>
 </ul>
 
 <p>On Unicode in general:

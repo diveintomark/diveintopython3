@@ -50,7 +50,8 @@ __ne__
 __gt__ - covered in fractions.py
 __ge__ - covered in fractions.py
 __bool__ - covered in fractions.py
-__cmp__ (*)
+
+(__cmp__ is gone)
 </pre>
 
 <h2 id=custom-attributes>Custom Attributes</h2>
@@ -118,7 +119,15 @@ __reversed__ - covered in ordereddict.py
 
 <h2 id=acts-like-number>Classes That Act Like Numbers</h2>
 
-<p>FIXME binary operator intro
+<p>Using the appropriate special methods, you can define your own classes that act like numbers. That is, you can add them, subtract them, and perform other mathematical operations on them. This is how <a href=advanced-classes.html#implementing-fractions>fractions are implemented</a> &mdash; the <code>Fraction</code> class implements these special methods, then you can do things like this:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd>x / 3</kbd>
+<samp>Fraction(1, 9)</samp></pre>
+
+<p>Here is the comprehensive list of special methods you need to implement a number-like class.
 
 <table>
 <tr><th>Notes
@@ -195,7 +204,24 @@ __xor__
 __or__
 -->
 
-<p>FIXME explain circumstances under which reflected methods will be called. <!-- If <var>x</var> doesn't implement a given special method, or if it implements it but  return <code>NotImplemented</code>, the Python interpreter will try a different approach &mdash; calling a special method on <var>y</var> instead of <var>x</var>.-->
+<p>That&#8217;s all well and good if <var>x</var> is an instance of a class that implements those methods. But what if it doesn&#8217;t implement one of them? Or worse, what if it implements it, but it can&#8217;t handle certain kinds of arguments? For example:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd>1 / x</kbd>
+<samp>Fraction(3, 1)</samp></pre>
+
+<p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truedive__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
+
+<p>The answer lies in a second set of arithmetic special methods with <i>reflected operands</i>. Given an arithmetic operation that takes two operands (<i>e.g.</i> <code>x / y</code>), there are two ways to go about it:
+
+<ol>
+<li>Tell <var>x</var> to divide itself by <var>y</var>, or
+<li>Tell <var>y</var> to divide itself into <var>x</var>
+</ol>
+
+<p>The set of special methods above take the first approach: given <code>x / y</code>, they provide a way for <var>x</var> to say &#8220;I know how to divide myself by <var>y</var>.&#8221; The following set of special methods tackle the second approach: they provide a way for <var>y</var> to say &#8220;I know how to be the denominator and divide myself into <var>x</var>.&#8221;
 
 <table>
 <tr><th>Notes
@@ -271,7 +297,7 @@ __rxor__
 __ror__
 -->
 
-<p>FIXME explain in-place augmented assignments
+<p>But wait! There&#8217;s more! If you&#8217;re doing &#8220;in-place&#8221; operations, like <code>x /= 3</code>, there are even more special methods you can define.
 
 <table>
 <tr><th>Notes
@@ -343,7 +369,17 @@ __ixor__
 __ior__
 -->
 
-<p>FIXME unary operator intro
+<p>Note: for the most part, the in-place operation methods are not required. If you don&#8217;t define an in-place method for a particular operation, Python will try the methods. For example, to execute the expression <code>x /= y</code>, Python will:
+
+<ol>
+<li>Try calling <code>x.__itruediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, we&#8217;re done.
+<li>Try calling <code>x.__truediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value, just as if you had done <code> x = x / y</code> instead.
+<li>Try calling <code>y.__rtruediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value.
+</ol>
+
+<p>So you only need to define in-place methods like the <code>__itruediv__()</code> method if you want to do some special optimization for in-place operands. Otherwise Python will essentially reformulate the in-place operand to use a regular operand + a variable assignment.
+
+<p>There are also a few &#8220;unary&#8221; mathematical operations you can perform on number-like objects by themselves.
 
 <table>
 <tr><th>Notes
@@ -399,7 +435,7 @@ __ior__
 <td><code>math.trunc(x)</code>
 <td><code>x.__trunc__()</code>
 <tr><th>
-<td>???
+<td>??? FIXME what the hell is this?
 <td><code>???</code>
 <td><code>x.__index__()</code>
 </table>
@@ -439,6 +475,29 @@ __reduce_ex__ (*)
 <pre>
 __enter__ see http://docs.python.org/3.0/library/stdtypes.html#typecontextmanager
 __exit__
+
+relevant excerpt from io.py:
+
+    def __enter__(self) -> "IOBase":  # That's a forward reference
+        """Context management protocol.  Returns self."""
+        self._checkClosed()
+        return self
+
+    def __exit__(self, *args) -> None:
+        """Context management protocol.  Calls close()"""
+        self.close()
+
+relevant excerpt from http://www.python.org/doc/3.0/reference/datamodel.html#with-statement-context-managers
+
+object.__enter__(self)
+  Enter the runtime context related to this object. The with statement will bind this method’s return value to the target(s) specified in the as clause of the statement, if any.
+object.__exit__(self, exc_type, exc_value, traceback)
+  Exit the runtime context related to this object. The parameters describe the exception that caused the context to be exited. If the context was exited without an exception, all three arguments will be None.
+
+If an exception is supplied, and the method wishes to suppress the exception (i.e., prevent it from being propagated), it should return a true value. Otherwise, the exception will be processed normally upon exit from this method.
+
+Note that __exit__() methods should not reraise the passed-in exception; this is the caller’s responsibility.
+
 </pre>
 
 <h2 id=esoterica>Really Esoteric Stuff</h2>

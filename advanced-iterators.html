@@ -17,7 +17,7 @@ body{counter-reset:h1 7}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>H<code>AWAII + IDAHO + IOWA + OHIO == STATES</code>. Or, to put it another way, <code>510199 + 98153 + 9301 + 3593 == 621246</code>. Am I speaking in tongues? No, it's just a puzzle.
+<p class=f>H<code>AWAII + IDAHO + IOWA + OHIO == STATES</code>. Or, to put it another way, <code>510199 + 98153 + 9301 + 3593 == 621246</code>. Am I speaking in tongues? No, it&#8217;s just a puzzle.
 
 <p>Let me spell it out for you.
 
@@ -38,7 +38,7 @@ E = 4</code></pre>
 
 <p>The most well-known alphametic puzzle is <code>SEND + MORE = MONEY</code>.
 
-<p>In this chapter, we'll dive into an incredible Python program originally written by Raymond Hettinger. This program solves alphametic puzzles <em>in just 14 lines of code</em>.
+<p>In this chapter, we&#8217;ll dive into an incredible Python program originally written by Raymond Hettinger. This program solves alphametic puzzles <em>in just 14 lines of code</em>.
 
 <p class=d>[<a href=examples/alphametics.py>download <code>alphametics.py</code></a>]
 <pre><code>import re
@@ -91,13 +91,13 @@ if __name__ == '__main__':
 <a><samp class=p>>>> </samp><kbd>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>     <span>&#x2461;</span></a>
 <samp>['SEND', 'MORE', 'MONEY']</samp></pre>
 <ol>
-<li>The <code>re</code> module is Python's implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
+<li>The <code>re</code> module is Python&#8217;s implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
 <li>Here the regular expression pattern matches sequences of letters. Again, the return value is a list, and each item in the list is a string that matched the regular expression pattern.
 </ol>
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
-<p>Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I'm going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
+<p>Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I&#8217;m going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
@@ -112,7 +112,7 @@ if __name__ == '__main__':
 <a><samp class=p>>>> </samp><kbd>{c for c in ''.join(words)}</kbd>              <span>&#x2463;</span></a>
 <samp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
 <ol>
-<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth &mdash; wait, that's in the set already, so it only gets listed once. Fifth. Sixth &mdash; again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn't even need to be sorted first.
+<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth &mdash; wait, that&#8217;s in the set already, so it only gets listed once. Fifth. Sixth &mdash; again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
 <li>The same technique works with strings, since a string is just a sequence of characters.
 <li>Given a list of strings, <code>''.join(<var>a_list</var>)</code> concatenates all the strings together into one.
 <li>So, given a list of strings, this set comprehension returns all the unique characters across all the strings, with no duplicates.
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
 <h2 id=assert>Making assertions</h2>
 
-<p>Like many programming languages, Python has an <code>assert</code> statement. Here's how it works.
+<p>Like many programming languages, Python has an <code>assert</code> statement. Here&#8217;s how it works.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 2</kbd>  <span>&#x2460;</span></a>
@@ -172,9 +172,9 @@ AssertionError</samp></pre>
 
 <h2 id=permutations>Calculating Permutations&hellip; The Lazy Way!</h2>
 
-<p>First of all, what the heck are permutations? Permutations are a mathematical concept. (There are actually several definitions, depending on what kind of math you're doing. Here I'm talking about combinatorics, but if that doesn't mean anything to you, don't worry about it. As always, <a href="http://en.wikipedia.org/wiki/Permutation">Wikipedia is your friend</a>.)
+<p>First of all, what the heck are permutations? Permutations are a mathematical concept. (There are actually several definitions, depending on what kind of math you&#8217;re doing. Here I&#8217;m talking about combinatorics, but if that doesn&#8217;t mean anything to you, don&#8217;t worry about it. As always, <a href="http://en.wikipedia.org/wiki/Permutation">Wikipedia is your friend</a>.)
 
-<p>The idea is that you take a list of things (could be numbers, could be letters, could be dancing bears) and find all the possible ways to split them up into smaller lists. All the smaller lists have the same size, which can be as small as 1 and as large as the total number of items. Oh, and nothing can be repeated. Mathematicians say things like "let's find the permutations of 3 different items taken 2 at a time," which means you have a sequence of 3 items and you want to find all the possible ordered pairs.
+<p>The idea is that you take a list of things (could be numbers, could be letters, could be dancing bears) and find all the possible ways to split them up into smaller lists. All the smaller lists have the same size, which can be as small as 1 and as large as the total number of items. Oh, and nothing can be repeated. Mathematicians say things like &#8220;let&#8217;s find the permutations of 3 different items taken 2 at a time,&#8221; which means you have a sequence of 3 items and you want to find all the possible ordered pairs.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>import itertools</kbd>                              <span>&#x2460;</span></a>
@@ -197,13 +197,13 @@ AssertionError</samp></pre>
 StopIteration</samp></pre>
 <ol>
 <li>The <code>itertools</code> module has all kinds of fun stuff in it, including a <ocde>permutations()</code> function that does all the hard work of finding permutations.
-<li>The <code>permutations()</code> function takes a sequence (here a list of three integers) and a number, which is the number of items you want in each smaller group. The function returns an iterator, which you can use in a <code>foor</code> loop or any old place that iterates. Here I'll step through the iterator manually to show all the values.
+<li>The <code>permutations()</code> function takes a sequence (here a list of three integers) and a number, which is the number of items you want in each smaller group. The function returns an iterator, which you can use in a <code>foor</code> loop or any old place that iterates. Here I&#8217;ll step through the iterator manually to show all the values.
 <li>The first permutation of <code>[1, 2, 3]</code> taken 2 at a time is <code>(1, 2)</code>.
 <li>Note that permutations are ordered: <code>(2, 1)</code> is different than <code>(1, 2)</code>.
-<li>That's it! Those are all the permutations of <code>[1, 2, 3]</code> taken 2 at a time. Pairs like <code>(1, 1)</code> and <code>(2, 2)</code> never show up, because they contain repeats so they aren't valid permutations. When there are no more permutations, the iterator raises a <code>StopIteration</code> exception.
+<li>That&#8217;s it! Those are all the permutations of <code>[1, 2, 3]</code> taken 2 at a time. Pairs like <code>(1, 1)</code> and <code>(2, 2)</code> never show up, because they contain repeats so they aren&#8217;t valid permutations. When there are no more permutations, the iterator raises a <code>StopIteration</code> exception.
 </ol>
 
-<p>The <code>permutations()</code> function doesn't have to take a list. It can take any sequence &mdash; even a string.
+<p>The <code>permutations()</code> function doesn&#8217;t have to take a list. It can take any sequence &mdash; even a string.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import itertools</kbd>
@@ -245,7 +245,7 @@ StopIteration</samp>
 <samp>[('A', 'B'), ('A', 'C'), ('B', 'C')]</samp></pre>
 <ol>
 <li>The <code>itertools.product()</code> function returns an iterator containing the Cartesian product of two sequences.
-<li>The <code>itertools.combinations()</code> function returns an iterator containing all the possible combinations of the given sequence of the given length. This is like the <code>itertools.permutations()</code> function, except combinations don't include items that are duplicates of other items in a different order. So <code>itertools.permutations('ABC', 2)</code> will return both <code>('A', 'B')</code> and <code>('B', 'A')</code> (among others), but <code>itertools.combinations('ABC', 2)</code> will not return <code>('B', 'A')</code> because it is a duplicate of <code>('A', 'B')</code> in a different order.
+<li>The <code>itertools.combinations()</code> function returns an iterator containing all the possible combinations of the given sequence of the given length. This is like the <code>itertools.permutations()</code> function, except combinations don&#8217;t include items that are duplicates of other items in a different order. So <code>itertools.permutations('ABC', 2)</code> will return both <code>('A', 'B')</code> and <code>('B', 'A')</code> (among others), but <code>itertools.combinations('ABC', 2)</code> will not return <code>('B', 'A')</code> because it is a duplicate of <code>('A', 'B')</code> in a different order.
 </ol>
 
 <p class=d>[<a href=examples/favorite-people.txt>download <code>favorite-people.txt</code></a>]
@@ -273,7 +273,7 @@ StopIteration</samp>
 <li>But the <code>sorted()</code> function can also take a function as the <var>key</var> parameter, and it sorts by that key. In this case, the sort function is <code>len()</code>, so it sorts by <code>len(<var>each item</var>)</code>. Shorter names come first, then longer, then longest.
 </ol>
 
-<p>What does this have to do with the <code>itertools</code> module? I'm glad you asked.
+<p>What does this have to do with the <code>itertools</code> module? I&#8217;m glad you asked.
 
 <pre class=screen>
 <p>&hellip;continuing from the previous interactive shell&hellip;
@@ -330,7 +330,7 @@ Wesley</samp></pre>
 <li>On the other hand, the <code>itertools.zip_longest()</code> function stops at the end of the <em>longest</em> sequence, inserting <code>None</code> values for items past the end of the shorter sequences.
 </ol>
 
-<p>OK, that was all very interesting, but how does it relate to the alphametics solver? Here's how:
+<p>OK, that was all very interesting, but how does it relate to the alphametics solver? Here&#8217;s how:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
@@ -343,7 +343,7 @@ Wesley</samp></pre>
  'N': '5', 'S': '1', 'R': '6', 'Y': '7'}</samp></pre>
 <ol>
 <li>Given a list of letters and a list of digits (each represented here as 1-character strings), the <code>zip</code> function will create a pairing of letters and digits, in order.
-<li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no "order" per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
+<li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no &#8220;order&#8221; per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
 </ol>
 
 <p>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
@@ -355,7 +355,7 @@ for guess in itertools.permutations(digits, len(characters)):
     ...
 <mark>    equation = puzzle.translate(dict(zip(characters, guess)))</mark></code></pre>
 
-<p>But what is this <code>translate()</code> method? Ah, now you're getting to the <em>really</em> fun part.
+<p>But what is this <code>translate()</code> method? Ah, now you&#8217;re getting to the <em>really</em> fun part.
 
 <h2 id=string-translate>A New Kind Of String Manipulation</h2>
 
@@ -411,9 +411,9 @@ for guess in itertools.permutations(digits, len(characters)):
 <h2 id=furtherreading>Further Reading</h2>
 
 <ul>
-<li><a href="http://blip.tv/file/1947373/">Watch Raymond Hettinger's "Easy AI with Python" talk</a> at PyCon 2009
-<li><a href="http://code.activestate.com/recipes/576615/">Recipe 576615: Alphametics solver</a>, Raymond Hettinger's original alphametics solver for Python 2
-<li><a href="http://code.activestate.com/recipes/users/178123/">More of Raymond Hettinger's recipes</a> in the ActiveState Code repository
+<li><a href="http://blip.tv/file/1947373/">Watch Raymond Hettinger&#8217;s "Easy AI with Python" talk</a> at PyCon 2009
+<li><a href="http://code.activestate.com/recipes/576615/">Recipe 576615: Alphametics solver</a>, Raymond Hettinger&#8217;s original alphametics solver for Python 2
+<li><a href="http://code.activestate.com/recipes/users/178123/">More of Raymond Hettinger&#8217;s recipes</a> in the ActiveState Code repository
 <li><a href="http://en.wikipedia.org/wiki/Verbal_arithmetic">Alphametics on Wikipedia</a>
 <li><a href="http://www.tkcs-collins.com/truman/alphamet/index.shtml">Alphametics Index</a>, including <a href="http://www.tkcs-collins.com/truman/alphamet/alphamet.shtml">lots of puzzles</a> and <a href="http://www.tkcs-collins.com/truman/alphamet/alpha_gen.shtml">a generator to make your own</a>
 </ul>

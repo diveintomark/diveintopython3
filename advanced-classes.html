@@ -20,6 +20,8 @@ body{counter-reset:h1 11}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
+<h2 id=ordereddict>Ordered Dictionary: Not An Oxymoron</h2>
+
 <p class=d>[<a href=examples/ordereddict.py>download <code>ordereddict.py</code></a>]
 <pre><code>import collections
 import itertools
@@ -91,6 +93,8 @@ class OrderedDict(dict, collections.MutableMapping):
         if isinstance(other, OrderedDict):
             return all(p==q for p, q in itertools.zip_longest(self.items(), other.items()))
         return dict.__eq__(self, other)</code></pre>
+
+<h2 id=implementing-fractions>Implementing Fractions</h2>
 
 <p class=nav><a rel=prev class=todo><span>&#x261C;</a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>

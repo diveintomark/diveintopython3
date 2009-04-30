@@ -614,7 +614,7 @@ ImportError: No module named constants</samp></pre>
 <p>Needs to become two separate imports:
 <pre><code>from . import constants
 import sys</code></pre>
-<p>There are variations of this problem scattered throughout the <code>chardet</code> library. In some places it&#8217;s "<code>import constants, sys</code>"; in other places, it&#8217;s "<code>import constants, re</code>". The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
+<p>There are variations of this problem scattered throughout the <code>chardet</code> library. In some places it&#8217;s &#8220;<code>import constants, sys</code>&#8221;; in other places, it&#8217;s &#8220;<code>import constants, re</code>&#8221;. The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
 <p>Onward!
 <h3 id=namefileisnotdefined>Name <var>'file'</var> is not defined</h3>
 <aside>open() is the new file(). PapayaWhip is the new black.</aside>
@@ -697,7 +697,7 @@ for line in open(f, 'rb'):
   File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
     elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
-<p>There's an unfortunate clash of coding style and Python interpreter here. The <code>TypeError</code> could be anywhere on that line, but the traceback doesn't tell you exactly where it is. It could be in the first conditional or the second, and the traceback would look the same. To narrow it down, you should split the line in half, like this:
+<p>There&#8217;s an unfortunate clash of coding style and Python interpreter here. The <code>TypeError</code> could be anywhere on that line, but the traceback doesn&#8217;t tell you exactly where it is. It could be in the first conditional or the second, and the traceback would look the same. To narrow it down, you should split the line in half, like this:
 <pre><code>elif (self._mInputState == ePureAscii) and \
     self._escDetector.search(self._mLastChar + aBuf):</code></pre>
 <p>And re-run the test:</p>
@@ -709,8 +709,8 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
   File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
     self._escDetector.search(self._mLastChar + aBuf):
 TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
-<p>Aha! The problem was not in the first conditional (<code>self._mInputState == ePureAscii</code>) but in the second one. So what could cause a <code>TypeError</code> there? Perhaps you're thinking that the <code>search()</code> method is expecting a value of a different type, but that wouldn't generate this traceback. Python functions can take any value; if you pass the right number of arguments, the function will execute. It may <em>crash</em> if you pass it a value of a different type than it's expecting, but if that happened, the traceback would point to somewhere inside the function. But this traceback says it never got as far as calling the <code>search()</code> method. So the problem must be in that <code>+</code> operation, as it's trying to construct the value that it will eventually pass to the <code>search()</code> method.
-<p>We know from <a href=#cantuseastringpattern>previous debugging</a> that <var>aBuf</var> is a byte array. So what is <code>self._mLastChar</code>? It's an instance variable, defined in the <code>reset()</code> method, which is actually called from the <code>__init__()</code> method.
+<p>Aha! The problem was not in the first conditional (<code>self._mInputState == ePureAscii</code>) but in the second one. So what could cause a <code>TypeError</code> there? Perhaps you&#8217;re thinking that the <code>search()</code> method is expecting a value of a different type, but that wouldn&#8217;t generate this traceback. Python functions can take any value; if you pass the right number of arguments, the function will execute. It may <em>crash</em> if you pass it a value of a different type than it&#8217;s expecting, but if that happened, the traceback would point to somewhere inside the function. But this traceback says it never got as far as calling the <code>search()</code> method. So the problem must be in that <code>+</code> operation, as it&#8217;s trying to construct the value that it will eventually pass to the <code>search()</code> method.
+<p>We know from <a href=#cantuseastringpattern>previous debugging</a> that <var>aBuf</var> is a byte array. So what is <code>self._mLastChar</code>? It&#8217;s an instance variable, defined in the <code>reset()</code> method, which is actually called from the <code>__init__()</code> method.
 <pre><code>class UniversalDetector:
     def __init__(self):
         self._highBitDetector = re.compile(b'[\x80-\xFF]')
@@ -726,7 +726,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
         self._mGotData = False
         self._mInputState = ePureAscii
 <mark>        self._mLastChar = ''</mark></code></pre>
-<p>And now we have our answer. Do you see it? <var>self._mLastChar</var> is a string, but <var>aBuf</var> is a byte array. And you can't concatenate a string to a byte array &mdash; not even a zero-length string.
+<p>And now we have our answer. Do you see it? <var>self._mLastChar</var> is a string, but <var>aBuf</var> is a byte array. And you can&#8217;t concatenate a string to a byte array &mdash; not even a zero-length string.
 <p>So what is <var>self._mLastChar</var> anyway? The answer is in the <code>feed()</code> method, just a few lines down from where the trackback occurred.
 <pre><code>if self._mInputState == ePureAscii:
     if self._highBitDetector.search(aBuf):
@@ -736,14 +736,14 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
         self._mInputState = eEscAscii
 
 <mark>self._mLastChar = aBuf[-1]</mark></code></pre>
-<p>The calling function calls this <code>feed()</code> method over and over again with a few bytes at a time. The method processes the bytes it was given (passed in as <var>aBuf</var>), then stores the last byte in <var>self._mLastChar</var> in case it's needed during the next call. (In a multi-byte encoding, the <code>feed()</code> method might get called with half of a character, then called again with the other half.)  But because <var>aBuf</var> is now a byte array instead of a string, <var>self._mLastChar</var> needs to be a byte array as well. Thus:
+<p>The calling function calls this <code>feed()</code> method over and over again with a few bytes at a time. The method processes the bytes it was given (passed in as <var>aBuf</var>), then stores the last byte in <var>self._mLastChar</var> in case it&#8217;s needed during the next call. (In a multi-byte encoding, the <code>feed()</code> method might get called with half of a character, then called again with the other half.)  But because <var>aBuf</var> is now a byte array instead of a string, <var>self._mLastChar</var> needs to be a byte array as well. Thus:
 <pre><code>  def reset(self):
       .
       .
       .
 <del>-     self._mLastChar = ''</del>
 <ins>+     self._mLastChar = b''</ins></code></pre>
-<p>Searching the entire codebase for <code>"mLastChar"</code> turns up a similar problem in <code>mbcharsetprober.py</code>, but instead of tracking the last character, it tracks the last <em>two</em> characters. The <code>MultiByteCharSetProber</code> class uses a list of 1-character strings to track the last two characters; in Python 3, it needs to use a list of integers.
+<p>Searching the entire codebase for &#8220;<code>mLastChar</code>&#8221; turns up a similar problem in <code>mbcharsetprober.py</code>, but instead of tracking the last character, it tracks the last <em>two</em> characters. The <code>MultiByteCharSetProber</code> class uses a list of 1-character strings to track the last two characters; in Python 3, it needs to use a list of integers.
 <pre><code>
   class MultiByteCharSetProber(CharSetProber):
       def __init__(self):
@@ -762,7 +762,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
 <del>-         self._mLastChar = ['\x00', '\x00']</del>
 <ins>+         self._mLastChar = [0, 0]</ins></code></pre>
 <h3 id=unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></h3>
-<p>I have good news, and I have bad news. The good news is we're making progress&hellip;
+<p>I have good news, and I have bad news. The good news is we&#8217;re making progress&hellip;
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class=traceback>Traceback (most recent call last):
@@ -771,8 +771,8 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
   File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
     self._escDetector.search(self._mLastChar + aBuf):
 TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
-<p>&hellip;The bad news is it doesn't always feel like progress.
-<p>But this is progress! Really! Even though the traceback calls out the same line of code, it's a different error than it used to be. Progress! So what's the problem now? The last time I checked, this line of code didn't try to concatenate an <code>int</code> with a byte array (<code>bytes</code>). In fact, you just spent a lot of time <a href=#cantconvertbytesobject>ensuring that <var>self._mLastChar</var> was a byte array</a>. How did it turn into an <code>int</code>?
+<p>&hellip;The bad news is it doesn&#8217;t always feel like progress.
+<p>But this is progress! Really! Even though the traceback calls out the same line of code, it&#8217;s a different error than it used to be. Progress! So what&#8217;s the problem now? The last time I checked, this line of code didn&#8217;t try to concatenate an <code>int</code> with a byte array (<code>bytes</code>). In fact, you just spent a lot of time <a href=#cantconvertbytesobject>ensuring that <var>self._mLastChar</var> was a byte array</a>. How did it turn into an <code>int</code>?
 <p>The answer lies not in the previous lines of code, but in the following lines.
 <pre><code>if self._mInputState == ePureAscii:
     if self._highBitDetector.search(aBuf):
@@ -783,7 +783,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
 
 <mark>self._mLastChar = aBuf[-1]</mark></code></pre>
 <aside>Each item in a string is a string. Each item in a byte array is an integer.</aside>
-<p>This error doesn't occur the first time the <code>feed()</code> method gets called; it occurs the <em>second time</em>, after <var>self._mLastChar</var> has been set to the last byte of <var>aBuf</var>. Well, what's the problem with that? Getting a single element from a byte array yields an integer, not a byte array. To see the difference, follow me to the interactive shell:
+<p>This error doesn&#8217;t occur the first time the <code>feed()</code> method gets called; it occurs the <em>second time</em>, after <var>self._mLastChar</var> has been set to the last byte of <var>aBuf</var>. Well, what&#8217;s the problem with that? Getting a single element from a byte array yields an integer, not a byte array. To see the difference, follow me to the interactive shell:
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>aBuf = b'\xEF\xBB\xBF'</kbd>         <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>len(aBuf)</kbd>
@@ -805,19 +805,19 @@ TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp>
 <ol>
 <li>Define a byte array of length 3.
 <li>The last element of the byte array is 191.
-<li>That's an integer.
-<li>Concatenating an integer with a byte array doesn't work. You've now replicated the error you just found in <code>universaldetector.py</code>.
-<li>Ah, here's the fix. Instead of taking the last element of the byte array, use <a href=native-datatypes.html#slicinglists>list slicing</a> to create a new byte array containing just the last element. That is, start with the last element and continue the slice until the end of the byte array. Now <var>mLastChar</var> is a byte array of length 1.
+<li>That&#8217;s an integer.
+<li>Concatenating an integer with a byte array doesn&#8217;t work. You&#8217;ve now replicated the error you just found in <code>universaldetector.py</code>.
+<li>Ah, here&#8217;s the fix. Instead of taking the last element of the byte array, use <a href=native-datatypes.html#slicinglists>list slicing</a> to create a new byte array containing just the last element. That is, start with the last element and continue the slice until the end of the byte array. Now <var>mLastChar</var> is a byte array of length 1.
 <li>Concatenating a byte array of length 1 with a byte array of length 3 returns a new byte array of length 4.
 </ol>
-<p>So, to ensure that the <code>feed()</code> method in <code>universaldetector.py</code> continues to work no matter how often it's called, you need to <a href=#cantconvertbytesobject>initialize <var>self._mLastChar</var> as a 0-length byte array</a>, then <em>make sure it stays a byte array</em>.
+<p>So, to ensure that the <code>feed()</code> method in <code>universaldetector.py</code> continues to work no matter how often it&#8217;s called, you need to <a href=#cantconvertbytesobject>initialize <var>self._mLastChar</var> as a 0-length byte array</a>, then <em>make sure it stays a byte array</em>.
 <pre><code>              self._escDetector.search(self._mLastChar + aBuf):
           self._mInputState = eEscAscii
 
 <del>- self._mLastChar = aBuf[-1]</del>
 <ins>+ self._mLastChar = aBuf[-1:]</ins></code></pre>
 <h3 id=ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</h3>
-<p>Tired yet? You're almost there&hellip;
+<p>Tired yet? You&#8217;re almost there&hellip;
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
 tests\Big5\0804.blogspot.com.xml</samp>
@@ -839,19 +839,19 @@ def next_state(self, c):
     # for each byte we get its class
     # if it is first byte, we also get byte length
     byteCls = self._mModel['classTable'][ord(c)]</code></pre>
-<p>That's no help; it's just passed into the function. Let's pop the stack.
+<p>That&#8217;s no help; it&#8217;s just passed into the function. Let&#8217;s pop the stack.
 <pre><code># utf8prober.py
 def feed(self, aBuf):
     for c in aBuf:
         codingState = self._mCodingSM.next_state(c)</code></pre>
-<p>And now we have the answer. Do you see it? In Python 2, <var>aBuf</var> was a string, so <var>c</var> was a 1-character string. (That's what you get when you iterate over a string &mdash; all the characters, one by one.) But now, <var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. In other words, there's no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!
+<p>And now we have the answer. Do you see it? In Python 2, <var>aBuf</var> was a string, so <var>c</var> was a 1-character string. (That&#8217;s what you get when you iterate over a string &mdash; all the characters, one by one.) But now, <var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. In other words, there&#8217;s no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!
 <p>Thus:
 <pre><code>  def next_state(self, c):
       # for each byte we get its class
       # if it is first byte, we also get byte length
 <del>-     byteCls = self._mModel['classTable'][ord(c)]</del>
 <ins>+     byteCls = self._mModel['classTable'][c]</ins></code></pre>
-<p>Searching the entire codebase for instances of <code>"ord(c)"</code> uncovers similar problems in <code>sbcharsetprober.py</code>&hellip;
+<p>Searching the entire codebase for instances of &#8220;<code>ord(c)</code>&#8221; uncovers similar problems in <code>sbcharsetprober.py</code>&hellip;
 <pre><code># sbcharsetprober.py
 def feed(self, aBuf):
     if not self._mModel['keepEnglishLetter']:
@@ -887,7 +887,7 @@ def feed(self, aBuf):
 <ins>+         charClass = Latin1_CharToClass[c]</ins>
 </code></pre>
 <h3 id=unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></h3>
-<p>Let's go again.
+<p>Let&#8217;s go again.
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
 tests\Big5\0804.blogspot.com.xml</samp>
@@ -905,8 +905,8 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\jpcntx.py", line 176, in get_order
     if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \
 TypeError: unorderable types: int() >= str()</samp></pre>
-<p>Did you notice? This time around, the code passed the first test case (<code>tests\ascii\howto.diveintomark.org.xml</code>). You're making real progress here.
-<p>So what's this all about? &#8220;Unorderable types&#8221;? Once again, the difference between byte arrays and strings is rearing its ugly head. Take a look at the code:
+<p>Did you notice? This time around, the code passed the first test case (<code>tests\ascii\howto.diveintomark.org.xml</code>). You&#8217;re making real progress here.
+<p>So what&#8217;s this all about? &#8220;Unorderable types&#8221;? Once again, the difference between byte arrays and strings is rearing its ugly head. Take a look at the code:
 <pre><code>class SJISContextAnalysis(JapaneseContextAnalysis):
     def get_order(self, aStr):
         if not aStr: return -1, 1
@@ -916,7 +916,7 @@ TypeError: unorderable types: int() >= str()</samp></pre>
             charLen = 2
         else:
             charLen = 1</code></pre>
-<p>And where does <var>aStr</var> come from? Let's pop the stack:
+<p>And where does <var>aStr</var> come from? Let&#8217;s pop the stack:
 <pre><code>def feed(self, aBuf, aLen):
     .
     .
@@ -924,9 +924,9 @@ TypeError: unorderable types: int() >= str()</samp></pre>
     i = self._mNeedToSkipCharNum
     while i &lt; aLen:
 <mark>        order, charLen = self.get_order(aBuf[i:i+2])</mark></code></pre>
-<p>Oh look, it's our old friend, <var>aBuf</var>. As you might have guessed from every other issue we've encountered in this chapter, <var>aBuf</var> is a byte array. Here, the <code>feed()</code> method isn't just passing it on wholesale; it's slicing it. But as you saw <a href=#unsupportedoperandtypeforplus>earlier in this chapter</a>, slicing a byte array returns a byte array, so the <var>aStr</var> parameter that gets passed to the <code>get_order()</code> method is still a byte array.
-<p>And what is this code trying to do with <var>aStr</var>? It's taking the first element of the byte array and comparing it to a string of length 1. In Python 2, that worked, because <var>aStr</var> and <var>aBuf</var> were strings, and <var>aStr[0]</var> would be a string, and you can compare strings for inequality. But in Python 3, <var>aStr</var> and <var>aBuf</var> are byte arrays, <var>aStr[0]</var> is an integer, and you can't compare integers and strings for inequality without explicitly coercing one of them.
-<p>In this case, there's no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you're comparing to are all constants. Let's change them from 1-character strings to integers.
+<p>Oh look, it&#8217;s our old friend, <var>aBuf</var>. As you might have guessed from every other issue we&#8217;ve encountered in this chapter, <var>aBuf</var> is a byte array. Here, the <code>feed()</code> method isn&#8217;t just passing it on wholesale; it&#8217;s slicing it. But as you saw <a href=#unsupportedoperandtypeforplus>earlier in this chapter</a>, slicing a byte array returns a byte array, so the <var>aStr</var> parameter that gets passed to the <code>get_order()</code> method is still a byte array.
+<p>And what is this code trying to do with <var>aStr</var>? It&#8217;s taking the first element of the byte array and comparing it to a string of length 1. In Python 2, that worked, because <var>aStr</var> and <var>aBuf</var> were strings, and <var>aStr[0]</var> would be a string, and you can compare strings for inequality. But in Python 3, <var>aStr</var> and <var>aBuf</var> are byte arrays, <var>aStr[0]</var> is an integer, and you can&#8217;t compare integers and strings for inequality without explicitly coercing one of them.
+<p>In this case, there&#8217;s no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you&#8217;re comparing to are all constants. Let&#8217;s change them from 1-character strings to integers.
 <pre><code>  class SJISContextAnalysis(JapaneseContextAnalysis):
       def get_order(self, aStr):
           if not aStr: return -1, 1
@@ -1115,7 +1115,7 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\latin1prober.py", line 126, in get_confidence
     total = reduce(operator.add, self._mFreqCounter)
 NameError: global name 'reduce' is not defined</samp></pre>
-<p>According to the official <a href=http://docs.python.org/3.0/whatsnew/3.0.html#builtins>What's New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: "Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable." You can read more about the decision from Guido van Rossum's weblog: <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=98196">The fate of reduce() in Python 3000</a>.
+<p>According to the official <a href=http://docs.python.org/3.0/whatsnew/3.0.html#builtins>What&#8217;s New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: &#8220;Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable.&#8221; You can read more about the decision from Guido van Rossum&#8217;s weblog: <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=98196">The fate of reduce() in Python 3000</a>.
 <pre><code>def get_confidence(self):
     if self.get_state() == constants.eNotMe:
         return 0.01
@@ -1129,7 +1129,7 @@ NameError: global name 'reduce' is not defined</samp></pre>
   
 <del>-     total = reduce(operator.add, self._mFreqCounter)</del>
 <ins>+     total = sum(self._mFreqCounter)</ins></code></pre>
-<p>Since you're no longer using the <code>operator</code> module, you can remove that <code>import</code> from the top of the file as well.
+<p>Since you&#8217;re no longer using the <code>operator</code> module, you can remove that <code>import</code> from the top of the file as well.
 <pre><code>  from .charsetprober import CharSetProber
   from . import constants
 <del>- import operator</del></code></pre>
@@ -1172,11 +1172,11 @@ tests\EUC-JP\arclamp.jp.xml                                  EUC-JP with confide
 <h2 id=summary>Summary</h2>
 <p>What have we learned?
 <ol>
-<li>Porting any non-trivial amount of code from Python 2 to Python 3 is going to be a pain. There's no way around it. It's hard.
-<li>The <a href=porting-code-to-python-3-with-2to3.html>automated <code>2to3</code> tool</a> is helpful as far as it goes, but it will only do the easy parts &mdash; function renames, module renames, syntax changes. It's an impressive piece of engineering, but in the end it's just an intelligent search-and-replace bot.
-<li>The #1 porting problem in this library was the difference between strings and bytes. In this case that seems obvious, since the whole point of the <code>chardet</code> library is to convert a stream of bytes into a string. But &#8220;a stream of bytes&#8221; comes up more often than you might think. Reading a file in &#8220;binary&#8221; mode? You'll get a stream of bytes. Fetching a web page? Calling a web <abbr>API</abbr>? They return a stream of bytes, too.
+<li>Porting any non-trivial amount of code from Python 2 to Python 3 is going to be a pain. There&#8217;s no way around it. It&#8217;s hard.
+<li>The <a href=porting-code-to-python-3-with-2to3.html>automated <code>2to3</code> tool</a> is helpful as far as it goes, but it will only do the easy parts &mdash; function renames, module renames, syntax changes. It&#8217;s an impressive piece of engineering, but in the end it&#8217;s just an intelligent search-and-replace bot.
+<li>The #1 porting problem in this library was the difference between strings and bytes. In this case that seems obvious, since the whole point of the <code>chardet</code> library is to convert a stream of bytes into a string. But &#8220;a stream of bytes&#8221; comes up more often than you might think. Reading a file in &#8220;binary&#8221; mode? You&#8217;ll get a stream of bytes. Fetching a web page? Calling a web <abbr>API</abbr>? They return a stream of bytes, too.
 <li><em>You</em> need to understand your program. Thoroughly. Preferably because you wrote it, but at the very least, you need to be comfortable with all its quirks and musty corners. The bugs are everywhere.
-<li>Test cases are essential. Don't port anything without them. Don't even try. The <em>only</em> reason I have any confidence at all that <code>chardet</code> works in Python 3 is because I had a test suite that exercised every line of code in the entire library. I <em>never</em> would have found half of these problems with manual spot-checking.
+<li>Test cases are essential. Don&#8217;t port anything without them. Don&#8217;t even try. The <em>only</em> reason I have any confidence at all that <code>chardet</code> works in Python 3 is because I had a test suite that exercised every line of code in the entire library. I <em>never</em> would have found half of these problems with manual spot-checking.
 </ol>
 
 <p class=nav><a rel=prev class=todo><span>&#x261C;</a> <a rel=next href=porting-code-to-python-3-with-2to3.html title="onward to &#8220;Porting Code to Python 3 with 2to3&#8221;"><span>&#x261E;</span></a>

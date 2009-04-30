@@ -40,33 +40,33 @@ body{counter-reset:h1 6}
         self.a, self.b = self.b, self.a + self.b
         return fib</code></pre>
 
-<p>Let's take that one line at a time.
+<p>Let&#8217;s take that one line at a time.
 
 <pre><code>class Fib:</code></pre>
 
-<p><code>class</code>? What's a class?
+<p><code>class</code>? What&#8217;s a class?
 
 <h2 id=defining-classes>Defining Classes</h2>
 
-<p>Python is fully object-oriented: you can define your own classes, inherit from your own or built-in classes, and instantiate the classes you've defined.
+<p>Python is fully object-oriented: you can define your own classes, inherit from your own or built-in classes, and instantiate the classes you&#8217;ve defined.
 
-<p>Defining a class in Python is simple. As with functions, there is no separate interface definition. Just define the class and start coding. A Python class starts with the reserved word <code>class</code>, followed by the class name. Technically, that's all that's required, since a class doesn't need to inherit from any other class.
+<p>Defining a class in Python is simple. As with functions, there is no separate interface definition. Just define the class and start coding. A Python class starts with the reserved word <code>class</code>, followed by the class name. Technically, that&#8217;s all that&#8217;s required, since a class doesn&#8217;t need to inherit from any other class.
 
 <pre><code>
 class PapayaWhip:  <span>&#x2460;</span>
     pass           <span>&#x2461;</span></code></pre>
 <ol>
-<li>The name of this class is <code>PapayaWhip</code>, and it doesn't inherit from any other class. Class names are usually capitalized, <code>EachWordLikeThis</code>, but this is only a convention, not a requirement.
+<li>The name of this class is <code>PapayaWhip</code>, and it doesn&#8217;t inherit from any other class. Class names are usually capitalized, <code>EachWordLikeThis</code>, but this is only a convention, not a requirement.
 <li>You probably guessed this, but everything in a class is indented, just like the code within a function, <code>if</code> statement, <code>for</code> loop, or any other block of code. The first line not indented is outside the class.
 </ol>
 
-<p>This <code>PapayaWhip</code> class doesn't define any methods or attributes, but syntactically, there needs to be something in the definition, thus the <code>pass</code> statement. This is a Python reserved word that just means &#8220;move along, nothing to see here&#8221;. It's a statement that does nothing, and it's a good placeholder when you're stubbing out functions or classes.
+<p>This <code>PapayaWhip</code> class doesn&#8217;t define any methods or attributes, but syntactically, there needs to be something in the definition, thus the <code>pass</code> statement. This is a Python reserved word that just means &#8220;move along, nothing to see here&#8221;. It&#8217;s a statement that does nothing, and it&#8217;s a good placeholder when you&#8217;re stubbing out functions or classes.
 
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>The <code>pass</code> statement in Python is like a empty set of curly braces (<code>{}</code>) in Java or C.
 </blockquote>
 
-<p>Many classes are inherited from other classes, but this one is not. Many classes define methods, but this one does not. There is nothing that a Python class absolutely must have, other than a name. In particular, C++ programmers may find it odd that Python classes don't have explicit constructors and destructors. Although it's not required, Python classes <em>can</em> have something similar to a constructor: the <code>__init__()</code> method.
+<p>Many classes are inherited from other classes, but this one is not. Many classes define methods, but this one does not. There is nothing that a Python class absolutely must have, other than a name. In particular, C++ programmers may find it odd that Python classes don&#8217;t have explicit constructors and destructors. Although it&#8217;s not required, Python classes <em>can</em> have something similar to a constructor: the <code>__init__()</code> method.
 
 <h3 id=init-method>The <code>__init__()</code> Method</h3>
 
@@ -79,10 +79,10 @@ class Fib:
 <a>    def __init__(self, max):                                      <span>&#x2461;</span></code></pre>
 <ol>
 <li>Classes can (and should) have <code>docstring</code>s too, just like modules and functions.
-<li>The <code>__init__()</code> method is called immediately after an instance of the class is created. It would be tempting but incorrect to call this the constructor of the class. It's tempting, because it looks like a constructor (by convention, the <code>__init__()</code> method is the first method defined for the class), acts like one (it's the first piece of code executed in a newly created instance of the class), and even sounds like one. Incorrect, because the object has already been constructed by the time the <code>__init__()</code> method is called, and you already have a valid reference to the new instance of the class.
+<li>The <code>__init__()</code> method is called immediately after an instance of the class is created. It would be tempting but incorrect to call this the constructor of the class. It&#8217;s tempting, because it looks like a constructor (by convention, the <code>__init__()</code> method is the first method defined for the class), acts like one (it&#8217;s the first piece of code executed in a newly created instance of the class), and even sounds like one. Incorrect, because the object has already been constructed by the time the <code>__init__()</code> method is called, and you already have a valid reference to the new instance of the class.
 </ol>
 
-<p>The first argument of every class method, including the <code>__init__()</code> method, is always a reference to the current instance of the class. By convention, this argument is named <var>self</var>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <var>self</var> is not a reserved word in Python, merely a naming convention. Nonetheless, please don't call it anything but <var>self</var>; this is a very strong convention.
+<p>The first argument of every class method, including the <code>__init__()</code> method, is always a reference to the current instance of the class. By convention, this argument is named <var>self</var>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <var>self</var> is not a reserved word in Python, merely a naming convention. Nonetheless, please don&#8217;t call it anything but <var>self</var>; this is a very strong convention.
 
 <p>In the <code>__init__()</code> method, <var>self</var> refers to the newly created object; in other class methods, it refers to the instance whose method was called. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
 
@@ -99,10 +99,10 @@ class Fib:
 <a><samp class=p>>>> </samp><kbd>fib.__doc__</kbd>                <span>&#x2463;</span></a>
 <samp>'iterator that yields numbers in the Fibanocci sequence'</samp></code></pre>
 <ol>
-<li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>'s <code>__init__()</code> method.
+<li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>&#8217;s <code>__init__()</code> method.
 <li><var>fib</var> is now an instance of the <code>Fib</code> class.
-<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object's class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName</code> and <code>getSuperclass</code> to get metadata information about an object. In Python, this kind of metadata is available directly on the object itself through attributes like <code>__class__</code>, <code>__name__</code>, and <code>__bases__</code>.
-<li>You can access the instance's <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
+<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object&#8217;s class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName</code> and <code>getSuperclass</code> to get metadata information about an object. In Python, this kind of metadata is available directly on the object itself through attributes like <code>__class__</code>, <code>__name__</code>, and <code>__bases__</code>.
+<li>You can access the instance&#8217;s <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
 </ol>
 
 <blockquote class="note compare java">
@@ -117,7 +117,7 @@ class Fib:
     def __init__(self, max):
 <a>        self.max = max        <span>&#x2460;</span></a></code></pre>
 <ol>
-<li>What is <var>self.max</var>? It's an instance variable. It is completely separate from <var>max</var>, which was passed into the <code>__init__()</code> method as an argument. <var>self.max</var> is &#8220;global&#8221; to the instance. That means that you can access it from other methods.
+<li>What is <var>self.max</var>? It&#8217;s an instance variable. It is completely separate from <var>max</var>, which was passed into the <code>__init__()</code> method as an argument. <var>self.max</var> is &#8220;global&#8221; to the instance. That means that you can access it from other methods.
 </ol>
 
 <pre><code>class Fib:
@@ -147,7 +147,7 @@ class Fib:
 
 <h2 id=a-fibonacci-iterator>A Fibonacci Iterator</h2>
 
-<p><em>Now</em> you're ready to learn how to build an iterator. An iterator is just a class that defines an <code>__iter__()</code> method.
+<p><em>Now</em> you&#8217;re ready to learn how to build an iterator. An iterator is just a class that defines an <code>__iter__()</code> method.
 
 <p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
 <pre><code><a>class Fib:                                        <span>&#x2460;</span></a>
@@ -195,7 +195,7 @@ class Fib:
 <h2 id=a-plural-rule-iterator>A Plural Rule Iterator</h2>
 
 <aside>iter(f) calls f.__iter__<br>next(f) calls f.__next__</aside>
-<p>Now it&#8217;s time for the finale. Let's rewrite the <a href=generators.html>plural rules generator</a> as an iterator.
+<p>Now it&#8217;s time for the finale. Let&#8217;s rewrite the <a href=generators.html>plural rules generator</a> as an iterator.
 
 <p class=d>[<a href=examples/plural6.py>download <code>plural6.py</code></a>]
 <pre><code>class LazyRules:
@@ -246,7 +246,7 @@ rules = LazyRules()</code></pre>
 <li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
 </ol>
 
-<p>Before we continue, let's take a closer look at <var>rules_f</var>. It's not defined within the <code>__init__()</code> method. In fact, it's not defined within <em>any</em> method. It's defined at the class level. It's a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_f</var>), it is shared across all instances of the <code>LazyRules</code> class.
+<p>Before we continue, let&#8217;s take a closer look at <var>rules_f</var>. It&#8217;s not defined within the <code>__init__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_f</var>), it is shared across all instances of the <code>LazyRules</code> class.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import plural6</kbd>
@@ -364,34 +364,3 @@ rules = LazyRules()</code></pre>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=jquery.js></script>
 <script src=dip3.js></script>
-
-<!--
-FIXME some good stuff here about calling ancestor's methods explicitly. need to find where to put it once we have an example of a class that inherits from something else.
-
-<li>Some pseudo-object-oriented languages like Powerbuilder have a concept of &#8220;extending&#8221; constructors and other events, where the ancestor's method is called automatically before the descendant's method is executed. Python does not do this; you must always explicitly call the appropriate method in the ancestor class.
-<li>I told you that this class acts like a dictionary, and here is the first sign of it. You're assigning the argument <var>filename</var> as the value of this object's <code>name</code> key.
-<li>Note that the <code>__init__</code> method never returns a value.
-
-<h3>5.3.2. Knowing When to Use <var>self</var> and <code>__init__</code></h3>
-<p>When defining your class methods, you <em>must</em> explicitly list <var>self</var> as the first argument for each method, including <code>__init__</code>. When you call a method of an ancestor class from within your class, you <em>must</em> include the <var>self</var> argument. But when you call your class method from outside, you do not specify anything for the <var>self</var> argument; you skip it entirely, and Python automatically adds the instance reference for you. I am aware that this is confusing at first; it's not really inconsistent,
-   but it may appear inconsistent because it relies on a distinction (between bound and unbound methods) that you don't know
-   about yet.
-<p>Whew. I realize that's a lot to absorb, but you'll get the hang of it. All Python classes work the same way, so once you learn one, you've learned them all. If you forget everything else, remember this
-   one thing, because I promise it will trip you up:<table id="tip.initoptional" class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code>__init__</code> methods are optional, but when you define one, you must remember to explicitly call the ancestor's <code>__init__</code> method (if it defines one). This is more generally true: whenever a descendant wants to extend the behavior of the ancestor,
-         the descendant method must explicitly call the ancestor method at the proper time, with the proper arguments.
-<div class=itemizedlist>
-<h3>Further Reading on Python Classes</h3>
-<ul>
-<li><a href="http://www.freenetpages.co.uk/hp/alan.gauld/" title="Python book for first-time programmers"><i class=citetitle>Learning to Program</i></a> has a gentler <a href="http://www.freenetpages.co.uk/hp/alan.gauld/tutclass.htm">introduction to classes</a>.
-
-<li><a href="http://www.ibiblio.org/obp/thinkCSpy/" title="Python book for computer science majors"><i class=citetitle>How to Think Like a Computer Scientist</i></a> shows how to <a href="http://www.ibiblio.org/obp/thinkCSpy/chap12.htm">use classes to model compound datatypes</a>.
-
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> has an in-depth look at <a href="http://www.python.org/doc/current/tut/node11.html">classes, namespaces, and inheritance</a>.
-
-<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/242">common questions about classes</a>.
-
-</ul>
-
--->

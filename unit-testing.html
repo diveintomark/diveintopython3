@@ -17,18 +17,18 @@ body{counter-reset:h1 8}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>(Not) Diving In</h2>
-<p class=f>In this chapter, you're going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
+<p class=f>In this chapter, you&#8217;re going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
 <p><a href="regular-expressions.html#romannumerals">The rules for Roman numerals</a> lead to a number of interesting observations:
 <ol>
 <li>There is only one correct way to represent a particular number as a Roman numeral.
 <li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number (that is, it can only be interpreted one way).
-<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. (The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>, but you're not going to deal with that. For the purposes of this chapter, let's stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.)
+<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. (The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>, but you&#8217;re not going to deal with that. For the purposes of this chapter, let&#8217;s stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.)
 <li>There is no way to represent <code>0</code> in Roman numerals.
 <li>There is no way to represent negative numbers in Roman numerals.
 <li>There is no way to represent fractions or non-integer numbers in Roman numerals.
 </ol>
-<p>Let's start mapping out what a <code>roman.py</code> module should do.  It will have two main functions, <code>to_roman()</code> and <code>from_roman()</code>. The <code>to_roman()</code> function should take an integer from <code>1</code> to <code>3999</code> and return the Roman numeral representation as a string&hellip;</p>
-<p>Stop right there. Now let's do something a little unexpected: write a test case that checks whether the <code>to_roman()</code> function does what you want it to. You read that right: you're going to write code that tests code that you haven't written yet.
+<p>Let&#8217;s start mapping out what a <code>roman.py</code> module should do.  It will have two main functions, <code>to_roman()</code> and <code>from_roman()</code>. The <code>to_roman()</code> function should take an integer from <code>1</code> to <code>3999</code> and return the Roman numeral representation as a string&hellip;</p>
+<p>Stop right there. Now let&#8217;s do something a little unexpected: write a test case that checks whether the <code>to_roman()</code> function does what you want it to. You read that right: you&#8217;re going to write code that tests code that you haven&#8217;t written yet.
 <p>This is called <i>unit testing</i>.  The set of two conversion functions &mdash; <code>to_roman()</code>, and later <code>from_roman()</code> &mdash; can be written and tested as a unit, separate from any larger program that imports them. Python has a framework for unit testing, the appropriately-named <code>unittest</code> module.
 <p>Unit testing is an important part of an overall testing-centric development strategy. If you write unit tests, it is important to write them early (preferably before writing the code that they test), and to keep them updated as code and requirements change. Unit testing is not a replacement for higher-level functional or system testing, but it is important in all phases of development:
 <ul>
@@ -36,7 +36,7 @@ body{counter-reset:h1 8}
 <li>While writing code, it keeps you from over-coding. When all the test cases pass, the function is complete.
 <li>When refactoring code, it assures you that the new version behaves the same way as the old version.
 <li>When maintaining code, it helps you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
-<li>When writing code in a team, it increases confidence that the code you're about to commit isn't going to break someone else's code, because you can run their unit tests first. (I've seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn't play well with others.)
+<li>When writing code in a team, it increases confidence that the code you&#8217;re about to commit isn&#8217;t going to break someone else&#8217;s code, because you can run their unit tests first. (I&#8217;ve seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn&#8217;t play well with others.)
 </ul>
 <h2 id=romantest1>A Single Question</h2>
 <aside>Every test is an island.</aside>
@@ -46,11 +46,11 @@ body{counter-reset:h1 8}
 <li>...determine by itself whether the function it is testing has passed or failed, without a human interpreting the results.
 <li>...run in isolation, separate from any other test cases (even if they test the same functions). Each test case is an island.
 </ul>
-<p>Given that, let's build a test case for the first requirement:
+<p>Given that, let&#8217;s build a test case for the first requirement:
 <ol>
 <li>The <code>to_roman()</code> function should return the Roman numeral representation for all integers <code>1</code> to <code>3999</code>.
 </ol>
-<p>It is not immediately obvious how this code does&hellip; well, <em>anything</em>. It defines a class which has no <code>__init__()</code> method. The class <em>does</em> have another method, but it is never called. The entire script has a <code>__main__</code> block, but it doesn't reference the class or its method. But it does do something, I promise.
+<p>It is not immediately obvious how this code does&hellip; well, <em>anything</em>. It defines a class which has no <code>__init__()</code> method. The class <em>does</em> have another method, but it is never called. The entire script has a <code>__main__</code> block, but it doesn&#8217;t reference the class or its method. But it does do something, I promise.
 <p class=d>[<a href=examples/romantest1.py>download <code>romantest1.py</code></a>]
 <pre><code>import roman1
 import unittest
@@ -125,20 +125,20 @@ if __name__ == "__main__":
 <li>To write a test case, first subclass the <code>TestCase</code> class of the <code>unittest</code> module. This class provides many useful methods which you can use in your test case to test specific conditions.
 <li>This is a list of integer/numeral pairs that I verified manually. It includes the lowest ten numbers, the highest number, every number that translates to a single-character Roman numeral, and a random sampling of other valid numbers. The point of a unit test is not to test every possible input, but to test a representative sample.
 <li>Every individual test is its own method, which must take no parameters and return no value. If the method exits normally without raising an exception, the test is considered passed; if the method raises an exception, the test is considered failed.
-<li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn't be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <abbr>API</abbr> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <abbr>API</abbr> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn't raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
+<li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn&#8217;t be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <abbr>API</abbr> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <abbr>API</abbr> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn&#8217;t raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
 <li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>testToRomanKnownValues</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
 </ol>
 <aside>Write a test that fails, then code until it passes.</aside>
-<p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you've written any code, you're doing it wrong &mdash; your tests aren't testing your code at all! Write a test that fails, then code until it passes.
+<p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you&#8217;ve written any code, you&#8217;re doing it wrong &mdash; your tests aren&#8217;t testing your code at all! Write a test that fails, then code until it passes.
 <pre><code># roman1.py
 
 function to_roman(n):
     """convert integer to Roman numeral"""
 <a>    pass                                   <span>&#x2460;</span></a></code></pre>
 <ol>
-<li>At this stage, you want to define the <abbr>API</abbr> of the <code>to_roman()</code> function, but you don't want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.
+<li>At this stage, you want to define the <abbr>API</abbr> of the <code>to_roman()</code> function, but you don&#8217;t want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.
 </ol>
-<p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what's going on as each test case runs. With any luck, your output should look like this:
+<p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what&#8217;s going on as each test case runs. With any luck, your output should look like this:
 <pre class=screen>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
 <samp><a>to_roman should give known result with known input ... FAIL            <span>&#x2460;</span></a>
@@ -157,9 +157,9 @@ Traceback (most recent call last):
 <a>FAILED (failures=1)                                                    <span>&#x2463;</span></a></samp></pre>
 <ol>
 <li>Running the script runs <code>unittest.main()</code>, which runs each test case. Each test case is a method within each class in <code>romantest.py</code> that inherits from <code>unittest.TestCase</code>. For each test case, the <code>unittest</code> module will print out the <code>docstring</code> of the method and whether that test passed or failed. As expected, this test case fails.
-<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>"I"</code>, but it didn't. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
+<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>"I"</code>, but it didn&#8217;t. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
 <li>After the detail of each test, <code>unittest</code> displays a summary of how many tests were performed and how long it took.
-<li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn't pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you're testing or the unit test case itself.
+<li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn&#8217;t pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you&#8217;re testing or the unit test case itself.
 </ol>
 <p><em>Now</em>, finally, you can write the <code>to_roman()</code> function.
 <p class=d>[<a href=examples/roman1.py>download <code>roman1.py</code></a>]
@@ -186,10 +186,10 @@ def to_roman(n):
             n -= integer
     return result</code></pre>
 <ol>
-<li><var>roman_numeral_map</var> is a tuple of tuples which defines three things: the character representations of the most basic Roman numerals; the order of the Roman numerals (in descending value order, from <code>M</code> all the way down to <code>I</code>); the value of each Roman numeral. Each inner tuple is a pair of <code>(<var>numeral</var>, <var>value</var>)</code>. It's not just single-character Roman numerals; it also defines two-character pairs like <code>CM</code> (&#8220;one hundred less than one thousand&#8221;). This makes the <code>to_roman()</code> function code simpler.
-<li>Here's where the rich data structure of <var>roman_numeral_map</var> pays off, because you don't need any special logic to handle the subtraction rule. To convert to Roman numerals, simply iterate through <var>roman_numeral_map</var> looking for the largest integer value less than or equal to the input. Once found, add the Roman numeral representation to the end of the output, subtract the corresponding integer value from the input, lather, rinse, repeat.
+<li><var>roman_numeral_map</var> is a tuple of tuples which defines three things: the character representations of the most basic Roman numerals; the order of the Roman numerals (in descending value order, from <code>M</code> all the way down to <code>I</code>); the value of each Roman numeral. Each inner tuple is a pair of <code>(<var>numeral</var>, <var>value</var>)</code>. It&#8217;s not just single-character Roman numerals; it also defines two-character pairs like <code>CM</code> (&#8220;one hundred less than one thousand&#8221;). This makes the <code>to_roman()</code> function code simpler.
+<li>Here&#8217;s where the rich data structure of <var>roman_numeral_map</var> pays off, because you don&#8217;t need any special logic to handle the subtraction rule. To convert to Roman numerals, simply iterate through <var>roman_numeral_map</var> looking for the largest integer value less than or equal to the input. Once found, add the Roman numeral representation to the end of the output, subtract the corresponding integer value from the input, lather, rinse, repeat.
 </ol>
-<p>If you're still not clear how the <code>to_roman()</code> function works, add a <code>print()</code> call to the end of the <code>while</code> loop:
+<p>If you&#8217;re still not clear how the <code>to_roman()</code> function works, add a <code>print()</code> call to the end of the <code>while</code> loop:
 <pre><code>
 while n >= integer:
     result += numeral
@@ -215,7 +215,7 @@ Ran 1 test in 0.016s
 
 OK</samp></pre>
 <ol>
-<li>Hooray! The <code>to_roman()</code> function passes the &#8220;known values&#8221; test case. It's not comprehensive, but it does put the function through its paces with a variety of inputs, including inputs that produce every single-character Roman numeral, the largest possible input (<code>3999</code>), and the input that produces the longest possible Roman numeral (<code>3888</code>). At this point, you can be reasonably confident that the function works for any good input value you could throw at it.
+<li>Hooray! The <code>to_roman()</code> function passes the &#8220;known values&#8221; test case. It&#8217;s not comprehensive, but it does put the function through its paces with a variety of inputs, including inputs that produce every single-character Roman numeral, the largest possible input (<code>3999</code>), and the input that produces the longest possible Roman numeral (<code>3888</code>). At this point, you can be reasonably confident that the function works for any good input value you could throw at it.
 </ol>
 <p>&#8220;Good&#8221; input? Hmm. What about bad input?
 <h2 id=romantest2>&#8220;Halt And Catch Fire&#8221;</h2>
@@ -230,9 +230,9 @@ OK</samp></pre>
 <a><samp class=p>>>> </samp><kbd>roman1.to_roman(9000)</kbd>  <span>&#x2460;</span></a>
 <samp>'MMMMMMMMM'</samp></pre>
 <ol>
-<li>That's definitely not what you wanted &mdash; that's not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better that it fail quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
+<li>That&#8217;s definitely not what you wanted &mdash; that&#8217;s not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better that it fail quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
 </ol>
-<p>The question to ask yourself is, &#8220;How can I express this as a testable requirement?&#8221; How's this for starters:
+<p>The question to ask yourself is, &#8220;How can I express this as a testable requirement?&#8221; How&#8217;s this for starters:
 <blockquote>
 <p>The <code>to_roman()</code> function should raise an <code>OutOfRangeError</code> when given an integer greater than <code>3999</code>.
 </blockquote>
@@ -244,12 +244,12 @@ OK</samp></pre>
         """to_roman should fail with large input"""
 <a>        self.assertRaises(roman2.OutOfRangeError, roman2.to_roman, 4000)  <span>&#x2462;</span></a></code></pre>
 <ol>
-<li>Like the previous test case, you create a class that inherits from <code>unittest.TestCase</code>. You can have more than one test per class (as you'll see later in this chapter), but I chose to create a new class here because this test is something different than the last one. We'll keep all the good input tests together in one class, and all the bad input tests together in another.
+<li>Like the previous test case, you create a class that inherits from <code>unittest.TestCase</code>. You can have more than one test per class (as you&#8217;ll see later in this chapter), but I chose to create a new class here because this test is something different than the last one. We&#8217;ll keep all the good input tests together in one class, and all the bad input tests together in another.
 <li>Like the previous test case, the test itself is a method of the class, with a name starting with <code>test</code>.
-<li>The <code>unittest.TestCase</code> class provides the <code>assertRaises</code> method, which takes the following arguments: the exception you're expecting, the function you're testing, and the arguments you're passing to that function. (If the function you're testing takes more than one argument, pass them all to <code>assertRaises</code>, in order, and it will pass them right along to the function you're testing.)
+<li>The <code>unittest.TestCase</code> class provides the <code>assertRaises</code> method, which takes the following arguments: the exception you&#8217;re expecting, the function you&#8217;re testing, and the arguments you&#8217;re passing to that function. (If the function you&#8217;re testing takes more than one argument, pass them all to <code>assertRaises</code>, in order, and it will pass them right along to the function you&#8217;re testing.)
 </ol>
-<p>Pay close attention to this last line of code. Instead of calling <code>to_roman()</code> directly and manually checking that it raises a particular exception (by wrapping it in a <code>try...except</code> block [FIXME xref]), the <code>assertRaises</code> method has encapsulated all of that for us. All you do is tell it what exception you're expecting (<code>roman2.OutOfRangeError</code>), the function (<code>to_roman()</code>), and the function's arguments (<code>4000</code>). The <code>assertRaises</code> method takes care of calling <code>to_roman()</code> and checking that it raises <code>roman2.OutOfRangeError</code>.
-<p>Also note that you're passing the <code>to_roman()</code> function itself as an argument; you're not calling it, and you're not passing the name of it as a string. Have I mentioned recently how handy it is that <a href="your-first-python-program.html#everythingisanobject">everything in Python is an object</a>?
+<p>Pay close attention to this last line of code. Instead of calling <code>to_roman()</code> directly and manually checking that it raises a particular exception (by wrapping it in a <code>try...except</code> block [FIXME xref]), the <code>assertRaises</code> method has encapsulated all of that for us. All you do is tell it what exception you&#8217;re expecting (<code>roman2.OutOfRangeError</code>), the function (<code>to_roman()</code>), and the function&#8217;s arguments (<code>4000</code>). The <code>assertRaises</code> method takes care of calling <code>to_roman()</code> and checking that it raises <code>roman2.OutOfRangeError</code>.
+<p>Also note that you&#8217;re passing the <code>to_roman()</code> function itself as an argument; you&#8217;re not calling it, and you&#8217;re not passing the name of it as a string. Have I mentioned recently how handy it is that <a href="your-first-python-program.html#everythingisanobject">everything in Python is an object</a>?
 <p>So what happens when you run the test suite with this new test?
 <pre class=screen>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
@@ -269,15 +269,15 @@ Ran 2 tests in 0.000s
 
 FAILED (errors=1)</samp></pre>
 <ol>
-<li>You should have expected this to fail (since you haven't written any code to pass it yet), but... it didn't actually &#8220;fail,&#8221; it had an &#8220;error&#8221; instead. This is a subtle but important distinction. A unit test actually has <em>three</em> return values: pass, fail, and error. Pass, of course, means that the test passed &mdash; the code did what you expected. &#8220;Fail&#8221; is what the previous test case did (until you wrote code to make it pass) &mdash; it executed the code but the result was not what you expected. &#8220;Error&#8221; means that the code didn't even execute properly.
-<li>Why didn't the code execute properly? The traceback gives the answer: the module you're testing doesn't have an exception called <code>OutOfRangeError</code>. Remember, you passed this exception to the <code>assertRaises()</code> method, because it's the exception you want the function to raise given an out-of-range input. But the exception doesn't exist, so the call to the <code>assertRaises()</code> method failed. It never got a chance to test the <code>to_roman()</code> function; it didn't get that far.
+<li>You should have expected this to fail (since you haven&#8217;t written any code to pass it yet), but... it didn&#8217;t actually &#8220;fail,&#8221; it had an &#8220;error&#8221; instead. This is a subtle but important distinction. A unit test actually has <em>three</em> return values: pass, fail, and error. Pass, of course, means that the test passed &mdash; the code did what you expected. &#8220;Fail&#8221; is what the previous test case did (until you wrote code to make it pass) &mdash; it executed the code but the result was not what you expected. &#8220;Error&#8221; means that the code didn&#8217;t even execute properly.
+<li>Why didn&#8217;t the code execute properly? The traceback gives the answer: the module you&#8217;re testing doesn&#8217;t have an exception called <code>OutOfRangeError</code>. Remember, you passed this exception to the <code>assertRaises()</code> method, because it&#8217;s the exception you want the function to raise given an out-of-range input. But the exception doesn&#8217;t exist, so the call to the <code>assertRaises()</code> method failed. It never got a chance to test the <code>to_roman()</code> function; it didn&#8217;t get that far.
 </ol>
 <p>To solve this problem, you need to define the <code>OutOfRangeError</code> exception in <code>roman2.py</code>.
 <pre><code><a>class OutOfRangeError(ValueError):  <span>&#x2460;</span></a>
 <a>    pass                            <span>&#x2461;</span></a></code></pre>
 <ol>
 <li>Exceptions are classes. An &#8220;out of range&#8221; error is a kind of value error &mdash; the argument value is out of its acceptable range. So this exception inherits from the built-in <code>ValueError</code> exception. This is not strictly necessary (it could just inherit from the base <code>Exception</code> class), but it feels right.
-<li>Exceptions don't actually do anything, but you need at least one line of code to make a class. Calling <code>pass</code> does precisely nothing, but it's a line of Python code, so that makes it a class.
+<li>Exceptions don&#8217;t actually do anything, but you need at least one line of code to make a class. Calling <code>pass</code> does precisely nothing, but it&#8217;s a line of Python code, so that makes it a class.
 </ol>
 <p>Now run the test suite again.
 <pre class=screen>
@@ -298,8 +298,8 @@ Ran 2 tests in 0.016s
 
 FAILED (failures=1)</samp></pre>
 <ol>
-<li>The new test is still not passing, but it's not returning an error either. Instead, the test is failing. That's progress! It means the call to the <code>assertRaises()</code> method succeeded this time, and the unit test framework actually tested the <code>to_roman()</code> function.
-<li>Of course, the <code>to_roman()</code> function isn't raising the <code>OutOfRangeError</code> exception you just defined, because you haven't told it to do that yet. That's excellent news! It means this is a valid test case &mdash; it fails before you write the code to make it pass.
+<li>The new test is still not passing, but it&#8217;s not returning an error either. Instead, the test is failing. That&#8217;s progress! It means the call to the <code>assertRaises()</code> method succeeded this time, and the unit test framework actually tested the <code>to_roman()</code> function.
+<li>Of course, the <code>to_roman()</code> function isn&#8217;t raising the <code>OutOfRangeError</code> exception you just defined, because you haven&#8217;t told it to do that yet. That&#8217;s excellent news! It means this is a valid test case &mdash; it fails before you write the code to make it pass.
 </ol>
 <p>Now you can write the code to make this test pass.
 <p class=d>[<a href=examples/roman2.py>download <code>roman2.py</code></a>]
@@ -315,9 +315,9 @@ FAILED (failures=1)</samp></pre>
             n -= integer
     return result</code></pre>
 <ol>
-<li>This is straightforward: if the given input (<var>n</var>) is greater than <code>3999</code>, raise an <code>OutOfRangeError</code> exception. The unit test does not check the human-readable string that accompanies the exception, although you could write another test that did check it (but watch out for internationalization issues for strings that vary by the user's language or environment).
+<li>This is straightforward: if the given input (<var>n</var>) is greater than <code>3999</code>, raise an <code>OutOfRangeError</code> exception. The unit test does not check the human-readable string that accompanies the exception, although you could write another test that did check it (but watch out for internationalization issues for strings that vary by the user&#8217;s language or environment).
 </ol>
-<p>Does this make the test pass? Let's find out.
+<p>Does this make the test pass? Let&#8217;s find out.
 <pre class=screen>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
@@ -328,7 +328,7 @@ Ran 2 tests in 0.000s
 
 OK</samp></pre>
 <ol>
-<li>Hooray! Both tests pass. Because you worked iteratively, bouncing back and forth between testing and coding, you can be sure that the two lines of code you just wrote were the cause of that one test going from &#8220;fail&#8221; to &#8220;pass.&#8221; That kind of confidence doesn't come cheap, but it will pay for itself over the lifetime of your code.
+<li>Hooray! Both tests pass. Because you worked iteratively, bouncing back and forth between testing and coding, you can be sure that the two lines of code you just wrote were the cause of that one test going from &#8220;fail&#8221; to &#8220;pass.&#8221; That kind of confidence doesn&#8217;t come cheap, but it will pay for itself over the lifetime of your code.
 </ol>
 
 <h2 id=romantest3>More Halting, More Fire</h2>
@@ -342,7 +342,7 @@ OK</samp></pre>
 <samp class=p>>>> </samp><kbd>roman2.to_roman(-1)</kbd>
 <samp>''</samp></pre>
 
-<p>Well <em>that's</em> not good. Let's add tests for each of these conditions.
+<p>Well <em>that&#8217;s</em> not good. Let&#8217;s add tests for each of these conditions.
 
 <p class=d>[<a href=examples/romantest3.py>download <code>romantest3.py</code></a>]
 <pre><code>
@@ -359,8 +359,8 @@ class ToRomanBadInput(unittest.TestCase):
         """to_roman should fail with negative input"""
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, -1)    <span>&#x2462;</span></a></code></pre>
 <ol>
-<li>The <code>test_too_large()</code> method has not changed since the previous step. I'm including it here to show where the new code fits.
-<li>Here's a new test: the <code>test_zero()</code> method. Like the <code>test_too_large()</code> method, it tells the <code>assertRaises()</code> method defined in <code>unittest.TestCase</code> to call our <code>to_roman()</code> function with a parameter of <code>0</code>, and check that it raises the appropriate exception, <code>OutOfRangeError</code>.
+<li>The <code>test_too_large()</code> method has not changed since the previous step. I&#8217;m including it here to show where the new code fits.
+<li>Here&#8217;s a new test: the <code>test_zero()</code> method. Like the <code>test_too_large()</code> method, it tells the <code>assertRaises()</code> method defined in <code>unittest.TestCase</code> to call our <code>to_roman()</code> function with a parameter of <code>0</code>, and check that it raises the appropriate exception, <code>OutOfRangeError</code>.
 <li>The <code>test_negative()</code> method is almost identical, except it passes <code>-1</code> to the <code>to_roman()</code> function. If either of these new tests does <em>not</em> raise an <code>OutOfRangeError</code> (either because the function returns an actual value, or because it raises some other exception), the test is considered failed.
 </ol>
 
@@ -394,7 +394,7 @@ Ran 4 tests in 0.000s
 
 FAILED (failures=2)</samp></pre>
 
-<p>Excellent. Both tests failed, as expected. Now let's switch over to the code and see what we can do to make them pass.
+<p>Excellent. Both tests failed, as expected. Now let&#8217;s switch over to the code and see what we can do to make them pass.
 
 <p class=d>[<a href=examples/roman3.py>download <code>roman3.py</code></a>]
 <pre><code>def to_roman(n):
@@ -409,11 +409,11 @@ FAILED (failures=2)</samp></pre>
             n -= integer
     return result</code></pre>
 <ol>
-<li>This is a nice Pythonic shortcut: multiple comparisons at once. This is equivalent to <code>if not ((0 &lt; n) and (n &lt; 4000))</code>, but it's much easier to read. This one line of code should catch inputs that are too large, negative, or zero.
-<li>If you change your conditions, make sure to update your human-readable error strings to match. The <code>unittest</code> framework won't care, but it'll make it difficult to do manual debugging if your code is throwing incorrectly-described exceptions.
+<li>This is a nice Pythonic shortcut: multiple comparisons at once. This is equivalent to <code>if not ((0 &lt; n) and (n &lt; 4000))</code>, but it&#8217;s much easier to read. This one line of code should catch inputs that are too large, negative, or zero.
+<li>If you change your conditions, make sure to update your human-readable error strings to match. The <code>unittest</code> framework won&#8217;t care, but it&#8217;ll make it difficult to do manual debugging if your code is throwing incorrectly-described exceptions.
 </ol>
 
-<p>I could show you a whole series of unrelated examples to show that the multiple-comparisons-at-once shortcut works, but instead I'll just run the unit tests and prove it.
+<p>I could show you a whole series of unrelated examples to show that the multiple-comparisons-at-once shortcut works, but instead I&#8217;ll just run the unit tests and prove it.
 
 <pre class=screen>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest3.py -v</kbd>
@@ -438,8 +438,8 @@ OK</samp></pre>
 <a><samp class=p>>>> </samp><kbd>roman3.to_roman(1.5)</kbd>  <span>&#x2461;</span></a>
 <samp>'I'</samp></pre>
 <ol>
-<li>Oh, that's bad.
-<li>Oh, that's even worse. Both of these cases should raise an exception. Instead, they give bogus results.
+<li>Oh, that&#8217;s bad.
+<li>Oh, that&#8217;s even worse. Both of these cases should raise an exception. Instead, they give bogus results.
 </ol>
 
 <p>Testing for non-integers is not difficult. First, define a <code>NonIntegerError</code> exception.
