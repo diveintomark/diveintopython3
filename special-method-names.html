@@ -212,7 +212,7 @@ __or__
 <samp class=p>>>> </samp><kbd>1 / x</kbd>
 <samp>Fraction(3, 1)</samp></pre>
 
-<p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truedive__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
+<p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truediv__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
 
 <p>The answer lies in a second set of arithmetic special methods with <i>reflected operands</i>. Given an arithmetic operation that takes two operands (<i>e.g.</i> <code>x / y</code>), there are two ways to go about it:
 
@@ -374,7 +374,7 @@ __ior__
 <ol>
 <li>Try calling <code>x.__itruediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, we&#8217;re done.
 <li>Try calling <code>x.__truediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value, just as if you had done <code> x = x / y</code> instead.
-<li>Try calling <code>y.__rtruediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value.
+<li>Try calling <code>y.__rtruediv__(<var>x</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value.
 </ol>
 
 <p>So you only need to define in-place methods like the <code>__itruediv__()</code> method if you want to do some special optimization for in-place operands. Otherwise Python will essentially reformulate the in-place operand to use a regular operand + a variable assignment.
