@@ -69,14 +69,6 @@ td a:link, td a:visited{border:0}
 <li>By convention, <var>format_spec</var> should conform to the <a href=http://www.python.org/doc/3.0/library/string.html#formatspec>Format Specification Mini-Language</a>.
 </ol>
 
-<!--
-__init__ - covered in iterators.html
-__repr__ - covered in ordereddict.py
-__str__ - covered in fractions.py
-__bytes__ (*)
-__format__
--->
-
 <h2 id=acts-like-iterator>Classes That Act Like Iterators</h2>
 
 <p>In <a href=iterators.html>the Iterators chapter</a>, you saw how to build an iterator from the ground up using the <code>__iter__()</code> and <code>__next__()</code> methods.
@@ -104,12 +96,6 @@ __format__
 <li>The <code>__next__()</code> method is called whenever you retrieve the next value from an iterator.
 <li>The <code>__reversed__()</code> method is uncommon. It takes an existing sequence and returns an iterator that yields the items in the sequence in reverse order, from last to first.
 </ol>
-
-<!--
-__iter__ (*) - covered in iterators.html
-__next__ (*) - covered in iterators.html
-__reversed__ - covered in ordereddict.py
--->
 
 <h2 id=computed-attributes>Computed Attributes</h2>
 
@@ -143,10 +129,10 @@ __reversed__ - covered in ordereddict.py
 </table>
 <ol>
 <li>If your class defines a <code>__getattribute__()</code> method, Python will call it on <em>every reference to any attribute or method name</em> (except special method names, since that would cause an unpleasant infinite loop).
-<li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>foo</var>, <code>x.foo</code> will <em>not</em> call <code>x.__getattr__("foo")</code>; it will simply return the already-defined value of <var>x.foo</var>.
+<li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>color</var>, <code>x.color</code> will <em>not</em> call <code>x.__getattr__("color")</code>; it will simply return the already-defined value of <var>x.color</var>.
 <li>The <code>__setattr__()</code> method is called whenever you assign a value to an attribute.
 <li>The <code>__delattr__()</code> method is called whenever you delete an attribute.
-<li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr()__</code> method handles a <var>foo</var> attribute dynamically, <code>dir(x)</code> would not list <var>foo</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>foo</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
+<li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr()__</code> method handles a <var>color</var> attribute dynamically, <code>dir(x)</code> would not list <var>color</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>color</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
 </ol>
 
 <p>The distinction between the <code>__getattr__()</code> and <code>__getattribute__()</code> methods is subtle but important. I can explain it with two examples:
@@ -154,22 +140,22 @@ __reversed__ - covered in ordereddict.py
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>class Dynamo:</kbd>
 <samp class=p>... </samp><kbd>  def __getattr__(self, key):</kbd>
-<a><samp class=p>... </samp><kbd>    if key == "foo":</kbd>                        <span>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>      return "Hi, I'm a custom value."</kbd>
+<a><samp class=p>... </samp><kbd>    if key == "color":</kbd>         <span>&#x2460;</span></a>
+<samp class=p>... </samp><kbd>      return "PapayaWhip"</kbd>
 <samp class=p>... </samp><kbd>    else:</kbd>
-<a><samp class=p>... </samp><kbd>      raise AttributeError</kbd>                  <span>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd>      raise AttributeError</kbd>     <span>&#x2461;</span></a>
 <samp class=p>... </samp>
 <samp class=p>>>> </samp><kbd>dyn = Dynamo()</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.foo</kbd>                                     <span>&#x2462;</span></a>
-<samp>"Hi, I'm a custom value."</samp>
-<samp class=p>>>> </samp><kbd>dyn.foo = "Overridden!"</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.foo</kbd>                                     <span>&#x2463;</span></a>
-<samp>'Overridden!'</samp></pre>
+<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2462;</span></a>
+<samp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd>dyn.color = "LemonChiffon"</kbd>
+<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2463;</span></a>
+<samp>'LemonChiffon'</samp></pre>
 <ol>
-<li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>"foo"</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
+<li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>"color"</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
 <li>If the attribute name is unknown, the <code>__getattr()__</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
-<li>The <var>dyn</var> instance does not have an attribute named <var>foo</var>, so the <code>__getattr__()</code> method is called to provide a computed value.
-<li>After explicitly setting <var>dyn.foo</var>, the <code>__getattr__()</code> method will no longer be called to provide a value for <var>dyn.foo</var>, because <var>dyn.foo</var> is already defined on the instance.
+<li>The <var>dyn</var> instance does not have an attribute named <var>color</var>, so the <code>__getattr__()</code> method is called to provide a computed value.
+<li>After explicitly setting <var>dyn.color</var>, the <code>__getattr__()</code> method will no longer be called to provide a value for <var>dyn.color</var>, because <var>dyn.color</var> is already defined on the instance.
 </ol>
 
 <p>On the other hand, the <code>__getattribute__()</code> method is absolute and unconditional.
@@ -177,34 +163,25 @@ __reversed__ - covered in ordereddict.py
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>class SuperDynamo:</kbd>
 <samp class=p>... </samp><kbd>  def __getattribute__(self, key):</kbd>
-<samp class=p>... </samp><kbd>    if key == 'foo':</kbd>
-<samp class=p>... </samp><kbd>      return "Hi, I'm a custom value."</kbd>
+<samp class=p>... </samp><kbd>    if key == 'color':</kbd>
+<samp class=p>... </samp><kbd>      return "PapayaWhip"</kbd>
 <samp class=p>... </samp><kbd>    else:</kbd>
 <samp class=p>... </samp><kbd>      raise AttributeError</kbd>
 <samp class=p>... </samp>
 <samp class=p>>>> </samp><kbd>dyn = SuperDynamo()</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.foo</kbd>                                     <span>&#x2460;</span></a>
-<samp>"Hi, I'm a custom value."</samp>
-<samp class=p>>>> </samp><kbd>dyndyn.foo = "Overridden!"</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.foo</kbd>                                     <span>&#x2461;</span></a>
-<samp>"Hi, I'm a custom value."</samp></pre>
+<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2460;</span></a>
+<samp>"PapayaWhip"</samp>
+<samp class=p>>>> </samp><kbd>dyn.color = "LemonChiffon"</kbd>
+<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2461;</span></a>
+<samp>"PapayaWhip"</samp></pre>
 <ol>
-<li>The <code>__getattribute__()</code> method is called to provide a value for <var>dyn.foo</var>.
-<li>After explicitly setting <var>dyn.foo</var>, the <code>__getattribute__()</code> method <em>is still called</em> to provide a value for <var>dyn.foo</var>. If present, the <code>__getattribute__()</code> method <em>is called unconditionally</em> for every attribute and method lookup, even for attributes that you explicitly set after creating an instance.
+<li>The <code>__getattribute__()</code> method is called to provide a value for <var>dyn.color</var>.
+<li>Even after explicitly setting <var>dyn.color</var>, the <code>__getattribute__()</code> method <em>is still called</em> to provide a value for <var>dyn.color</var>. If present, the <code>__getattribute__()</code> method <em>is called unconditionally</em> for every attribute and method lookup, even for attributes that you explicitly set after creating an instance.
 </ol>
 
 <blockquote class=note>
 <p><span>&#x261E;</span>If your class defines a <code>__getattribute__()</code> method, you probably also want to define a <code>__setattr__()</code> method and coordinate between them to keep track of attribute values. Otherwise, any attributes you set after creating an instance will disappear into a black hole.
 </blockquote>
-
-
-<!--
-__getattr__
-__getattribute__
-__setattr__
-__delattr__
-__dir__
--->
 
 <h2 id=acts-like-function>Classes That Act Like Functions</h2>
 
@@ -266,13 +243,6 @@ __dir__
 <td><code>x[nonexistent_key]</code>
 <td><a href=http://docs.python.org/3.0/library/collections.html#collections.defaultdict.__missing__><code>x.__missing__(<var>"nonexistent_key"</var>)</code></a>
 </table>
-
-<!--
-__getitem__
-__setitem__ - covered in ordereddict.py
-__delitem__ - covered in ordereddict.py
-__missing__ (*)
--->
 
 <h2 id=acts-like-number>Classes That Act Like Numbers</h2>
 
@@ -344,22 +314,6 @@ __missing__ (*)
 <td><code>x | y</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__or__><code>x.__or__(<var>y</var>)</code></a>
 </table>
-
-<!--
-__add__ - covered in fractions.py
-__sub__
-__mul__
-__truediv__
-__floordiv__ - covered in fractions.py
-__mod__ - covered in fractions.py
-__divmod__
-__pow__ - covered in fractions.py
-__lshift__
-__rshift__
-__and__
-__xor__
-__or__
--->
 
 <p>That&#8217;s all well and good if <var>x</var> is an instance of a class that implements those methods. But what if it doesn&#8217;t implement one of them? Or worse, what if it implements it, but it can&#8217;t handle certain kinds of arguments? For example:
 
@@ -439,21 +393,6 @@ __or__
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__ror__><code>y.__ror__(<var>x</var>)</code></a>
 </table>
 
-<!--
-__radd__ - covered in fractions.py
-__rsub__
-__rmul__
-__rtruediv__
-__rfloordiv__ - covered in fractions.py
-__rmod__ - covered in fractions.py
-__rpow__ - covered in fractions.py
-__rlshift__
-__rrshift__
-__rand__
-__rxor__
-__ror__
--->
-
 <p>But wait! There&#8217;s more! If you&#8217;re doing &#8220;in-place&#8221; operations, like <code>x /= 3</code>, there are even more special methods you can define.
 
 <table>
@@ -510,21 +449,6 @@ __ror__
 <td><code>x |= y</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__ior__><code>x.__ior__(<var>y</var>)</code></a>
 </table>
-
-<!--
-__iadd__
-__isub__
-__imul__
-__itruediv__
-__ifloordiv__
-__imod__
-__ipow__
-__ilshift__
-__irshift__
-__iand__
-__ixor__
-__ior__
--->
 
 <p>Note: for the most part, the in-place operation methods are not required. If you don&#8217;t define an in-place method for a particular operation, Python will try the methods. For example, to execute the expression <code>x /= y</code>, Python will:
 
@@ -597,21 +521,6 @@ __ior__
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__index__><code>x.__index__()</code></a>
 </table>
 
-<!--
-__neg__ - covered in fractions.py
-__pos__ - covered in fractions.py
-__abs__ - covered in fractions.py
-__invert__
-__complex__
-__int__
-__float__
-__round__ - covered in fractions.py
-__ceil__ (*) - covered in fractions.py
-__floor__ (*) - covered in fractions.py
-__trunc__ (*) - covered in fractions.py
-__index__
--->
-
 <h2 id=rich-comparisons>Classes That Can Be Compared</h2>
 
 <p>I broke this section out from the previous one because comparisons are not strictly the purview of numbers. Many datatypes can be compared &mdash; strings, lists, even dictionaries. If you&#8217;re creating your own class and it makes sense to compare your objects to other objects, you can use the following special methods to implement comparisons.
@@ -650,18 +559,6 @@ __index__
 <td><code>if x:</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__bool__><code>x.__bool__()</code></a>
 </table>
-
-<!--
-__lt__ - covered in fractions.py
-__le__ - covered in fractions.py
-__eq__ - covered in ordereddict.py, fractions.py
-__ne__
-__gt__ - covered in fractions.py
-__ge__ - covered in fractions.py
-__bool__ - covered in fractions.py
-
-(__cmp__ is gone)
--->
 
 <h2 id=pickle>Classes That Can Be Pickled</h2>
 
