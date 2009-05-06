@@ -29,11 +29,11 @@ td a:link, td a:visited{border:0}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving in</h2>
-<p class=f>FIXME
+<p class=f>We&#8217;ve already covered a few special method names elsewhere in this book &mdash; &#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sequences, like dictionaries, like functions, like iterators, or even like numbers! This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
 
 <h2 id=basics>Basics</h2>
 
-<p>If you&#8217;ve read the <a href=iterators.html#divingin>introduction to classes</a>, you&#8217;ve already seen the most common special method: the <code>__init__()</code> method. The majority of classes I write end up needing some initialization.
+<p>If you&#8217;ve read the <a href=iterators.html#divingin>introduction to classes</a>, you&#8217;ve already seen the most common special method: the <code>__init__()</code> method. The majority of classes I write end up needing some initialization. There are also a few other basic special methods that are especially useful for debugging your custom classes.
 
 <table>
 <tr><th>Notes
@@ -66,7 +66,7 @@ td a:link, td a:visited{border:0}
 <li>By convention, the <code>__repr__()</code> method should return a string that is a valid Python expression.
 <li>The <code>__str__()</code> method is also called when you <code>print(x)</code>.
 <li><em>New in Python 3</em>, since the <code>bytes</code> type was introduced.
-<li>By convention, <var>format_spec</var> should conform to the <a href=http://www.python.org/doc/3.0/library/string.html#formatspec>Format Specification Mini-Language</a>.
+<li>By convention, <var>format_spec</var> should conform to the <a href=http://www.python.org/doc/3.0/library/string.html#formatspec>Format Specification Mini-Language</a>. <code>decimal.py</code> in the Python standard library provides its own <code>__format__()</code> method.
 </ol>
 
 <h2 id=acts-like-iterator>Classes That Act Like Iterators</h2>
@@ -138,13 +138,13 @@ td a:link, td a:visited{border:0}
 <p>The distinction between the <code>__getattr__()</code> and <code>__getattribute__()</code> methods is subtle but important. I can explain it with two examples:
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>class Dynamo:</kbd>
-<samp class=p>... </samp><kbd>  def __getattr__(self, key):</kbd>
-<a><samp class=p>... </samp><kbd>    if key == "color":</kbd>         <span>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>      return "PapayaWhip"</kbd>
-<samp class=p>... </samp><kbd>    else:</kbd>
-<a><samp class=p>... </samp><kbd>      raise AttributeError</kbd>     <span>&#x2461;</span></a>
-<samp class=p>... </samp>
+<code>class Dynamo:
+    def __getattr__(self, key):
+<a>        if key == "color":         <span>&#x2460;</span></a>
+            return "PapayaWhip"
+        else:
+<a>            raise AttributeError   <span>&#x2461;</span></a></code>
+
 <samp class=p>>>> </samp><kbd>dyn = Dynamo()</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2462;</span></a>
 <samp>'PapayaWhip'</samp>
@@ -161,13 +161,13 @@ td a:link, td a:visited{border:0}
 <p>On the other hand, the <code>__getattribute__()</code> method is absolute and unconditional.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>class SuperDynamo:</kbd>
-<samp class=p>... </samp><kbd>  def __getattribute__(self, key):</kbd>
-<samp class=p>... </samp><kbd>    if key == 'color':</kbd>
-<samp class=p>... </samp><kbd>      return "PapayaWhip"</kbd>
-<samp class=p>... </samp><kbd>    else:</kbd>
-<samp class=p>... </samp><kbd>      raise AttributeError</kbd>
-<samp class=p>... </samp>
+<code>class SuperDynamo:
+    def __getattribute__(self, key):
+        if key == 'color':
+            return "PapayaWhip"
+        else:
+            raise AttributeError</code>
+
 <samp class=p>>>> </samp><kbd>dyn = SuperDynamo()</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2460;</span></a>
 <samp>"PapayaWhip"</samp>
@@ -183,9 +183,29 @@ td a:link, td a:visited{border:0}
 <p><span>&#x261E;</span>If your class defines a <code>__getattribute__()</code> method, you probably also want to define a <code>__setattr__()</code> method and coordinate between them to keep track of attribute values. Otherwise, any attributes you set after creating an instance will disappear into a black hole.
 </blockquote>
 
+<p>You need to be extra careful with the <code>__getattribute__()</code> method, because it is also called when Python looks up a method name on your class.
+
+<pre class=screen>
+<code>class Rastan:
+    def __getattribute__(self, key):
+<a>        raise AttributeError           <span>&#x2460;</span></a>
+    def swim(self):
+        pass</code>
+
+<samp class=p>>>> </samp><kbd>hero = Rastan()</kbd>
+<a><samp class=p>>>> </samp><kbd>hero.swim()</kbd>                        <span>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 3, in __getattribute__
+AttributeError</samp></pre>
+<ol>
+<li>This class defines a <code>__getattribute__()</code> method which always raises an <code>AttributeError</code> exception. No attribute or method lookups will succeed.
+<li>When you call <code>hero.swim()</code>, Python looks for a <code>swim()</code> method in the <code>Rastan</code> class. This lookup goes through the <code>__getattribute__()</code> method, <em>because all attribute and method lookups go through the <code>__getattribute__()</code> method</em>. In this case, the <code>__getattribute__()</code> method raises an <code>AttributeError</code> exception, so the method lookup fails, so the method call fails.
+</ol>
+
 <h2 id=acts-like-function>Classes That Act Like Functions</h2>
 
-<p>FIXME
+<p>You can make an instance of a class callable &mdash; exactly like a function is callable &mdash; by defining the <code>__call__()</code> method.
 
 <table>
 <tr><th>Notes
@@ -198,9 +218,43 @@ td a:link, td a:visited{border:0}
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__call__><code>my_instance.__call__()</code></a>
 </table>
 
+<p>The <a href="http://docs.python.org/3.0/library/zipfile.html"><code>zipfile</code> module</a> uses this to define a class that can decrypt an encrypted zip file with a given password. The zip decryption algorithm requires you to store state during decryption. Defining the decryptor as a class allows you to maintain this state within a single instance of the decryptor class.  The state is initialized in the <code>__init__()</code> method and updated as the file is decrypted. But since the class is also &#8220;callable&#8221; like a function, you can pass the instance as the first argument of the <code>map()</code> function, like so:
+
+<pre><code>
+# excerpt from zipfile.py
+class _ZipDecrypter:
+.
+.
+.
+    def __init__(self, pwd):
+<a>        self.key0 = 305419896               <span>&#x2460;</span></a>
+        self.key1 = 591751049
+        self.key2 = 878082192
+        for p in pwd:
+            self._UpdateKeys(p)
+
+<a>    def __call__(self, c):                  <span>&#x2461;</span></a>
+        assert isinstance(c, int)
+        k = self.key2 | 2
+        c = c ^ (((k * (k^1)) >> 8) & 255)
+        self._UpdateKeys(c)
+        return c
+.
+.
+.
+<a>zd = _ZipDecrypter(pwd)                    <span>&#x2462;</span></a>
+bytes = zef_file.read(12)
+<a>h = list(map(zd, bytes[0:12]))             <span>&#x2463;</span></a></code></pre>
+<ol>
+<li>The <code>_ZipDecryptor</code> class maintains state in the form of three rotating keys, which are later updated in the <code>_UpdateKeys()</code> method (not shown here).
+<li>The class defines a <code>__call__()</code> method, which makes class instances callable like functions. In this case, the <code>__call__()</code> method decrypts a single byte of the zip file, then updates the rotating keys based on the byte that was decrypted.
+<li><var>zd</var> is an instance of the <code>_ZipDecryptor</code> class. The <var>pwd</var> variable is passed to the <code>__init__()</code> method, where it is stored and used to update the rotating keys for the first time.
+<li>Given the first 12 bytes of a zip file, decrypt them by mapping the bytes to <var>zd</var>, in effect &#8220;calling&#8221; <var>zd</var> 12 times, which invokes the <code>__call__()</code> method 12 times, which updates its internal state and returns a resulting byte 12 times.
+</ol>
+
 <h2 id=acts-like-list>Classes That Act Like Sequences</h2>
 
-<p>FIXME sequence intro
+<p>If your class acts as a container for a set of values &mdash; that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value &mdash; then it should probably define the following special methods that make it act like a sequence.
 
 <table>
 <tr><th>Notes
@@ -217,9 +271,37 @@ td a:link, td a:visited{border:0}
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__contains__><code>seq.__contains__(<var>x</var>)</code></a>
 </table>
 
+<p id=acts-like-list-example>The <a href=http://docs.python.org/3.0/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
+
+<pre><code>
+# A script which responds to http://example.com/search?q=cgi
+import cgi
+fs = cgi.FieldStorage()
+<a>if "q" in fs:                                               <span>&#x2460;</span></a>
+  do_search()
+
+# An excerpt from cgi.py that explains how that works
+class FieldStorage:
+.
+.
+.
+<a>    def __contains__(self, key):                            <span>&#x2461;</span></a>
+        if self.list is None:
+            raise TypeError("not indexable")
+<a>        return any(item.name == key for item in self.list)  <span>&#x2462;</span></a>
+
+<a>    def __len__(self):                                      <span>&#x2463;</span></a>
+        return len(self.keys())</code></pre>
+<ol>
+<li>Once you create an instance of the <code>cgi.FieldStorage</code> class, you can use the &#8220;<code>in</code>&#8221; operator to check whether a particular parameter was included in the query string.
+<li>The <code>__contains__()</code> method is the magic that makes this work.
+<li>When you say <code>if "q" in fs</code>, Python looks for the <code>__contains__()</code> method on the <var>fs</var> object, which is defined in <code>cgi.py</code>. The value <code>"q"</code> is passed into the <code>__contains__()</code> method as the <var>key</var> argument.
+<li>The same <code>FieldStorage</code> class also supports returning its length, so you can say <code>len(<var>fs</var>)</code> and it will call the <code>__len__()</code> method on the <code>FieldStorage</code> class to return the number of query parameters that it identified.
+</ol>
+
 <h2 id=acts-like-dict>Classes That Act Like Dictionaries</h2>
 
-<p>FIXME
+<p>Extending the previous section a bit, you can define classes that not only respond to the &#8220;<code>in</code>&#8221; operator and the <code>len()</code> function, but they act like full-blown dictionaries, returning values based on keys.
 
 <table>
 <tr><th>Notes
@@ -243,6 +325,37 @@ td a:link, td a:visited{border:0}
 <td><code>x[nonexistent_key]</code>
 <td><a href=http://docs.python.org/3.0/library/collections.html#collections.defaultdict.__missing__><code>x.__missing__(<var>"nonexistent_key"</var>)</code></a>
 </table>
+
+<p>The <a href=#acts-like-list-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.0/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
+
+<pre><code>
+# A script which responds to http://example.com/search?q=cgi
+import cgi
+fs = cgi.FieldStorage()
+if "q" in fs:
+<a>  do_search(fs["q"])                              <span>&#x2460;</span></a>
+
+# An excerpt from cgi.py that shows how it works
+class FieldStorage:
+.
+.
+.
+<a>    def __getitem__(self, key):                   <span>&#x2461;</span></a>
+        if self.list is None:
+            raise TypeError("not indexable")
+        found = []
+        for item in self.list:
+            if item.name == key: found.append(item)
+        if not found:
+            raise KeyError(key)
+        if len(found) == 1:
+            return found[0]
+        else:
+            return found</code></pre>
+<ol>
+<li>The <var>fs</var> object is an instance of <code>cgi.FieldStorage</code>, but you can still evaluate expressions like <code>fs["q"]</code>.
+<li><code>fs["q"]</code> invokes the <code>__getitem__()</code> method with the <var>key</var> parameter set to <code>"q"</code>. It then looks up in its internally maintained list of query parameters (<var>self.list</var>) for an item whose <code>.name</code> matches the given key.
+</ol>
 
 <h2 id=acts-like-number>Classes That Act Like Numbers</h2>
 
@@ -515,9 +628,9 @@ td a:link, td a:visited{border:0}
 <td>truncate <code>x</code> to nearest integer toward <code>0</code>
 <td><code>math.trunc(x)</code>
 <td><a href=http://docs.python.org/3.0/library/math.html#math.trunc><code>x.__trunc__()</code></a>
-<tr><th>
-<td>??? FIXME what the hell is this?
-<td><code>???</code>
+<tr><th><a href=http://www.python.org/dev/peps/pep-0357/>PEP 357</a>
+<td>number as a list index
+<td><code>a_list[<var>x</var>]</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__index__><code>x.__index__()</code></a>
 </table>
 
@@ -560,20 +673,45 @@ td a:link, td a:visited{border:0}
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__bool__><code>x.__bool__()</code></a>
 </table>
 
-<h2 id=pickle>Classes That Can Be Pickled</h2>
+<h2 id=pickle>Classes That Can Be Serialized</h2>
+<!--see http://docs.python.org/3.0/library/pickle.html:-->
 
-<pre>
-see http://docs.python.org/3.0/library/pickle.html:
+<p>Python supports serializing and unserializing arbitrary objects. (Most Python references call this process &#8220;pickling&#8221; and &#8220;unpickling.&#8221;) This can be useful for saving state to a file and restoring it later. All of the <a href=native-datatypes.html>native datatypes</a> support pickling already. If you create a custom class that you to be able to pickle, read up on <a href=http://docs.python.org/3.0/library/pickle.html>the pickle protocol</a> to see when and how the following special methods are called.
 
-__copy__ (*) - covered in fractions.py
-__deepcopy__ (*) - covered in fractions.py
-__getnewargs__ (*)
-__getinitargs__ (*)
-__getstate__ (*)
-__setstate__ (*)
-__reduce__ (*) - covered in ordereddict.py, fractions.py
-__reduce_ex__ (*)
-</pre>
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>a custom object copy
+<td><code>copy.copy(x)</code>
+<td><a href=http://docs.python.org/3.0/library/copy.html><code>x.__copy__()</code></a>
+<tr><th>
+<td>a custom object deepcopy
+<td><code>copy.deepcopy(x)</code>
+<td><a href=http://docs.python.org/3.0/library/copy.html><code>x.__deepcopy__()</code></a>
+<tr><th>
+<td>to get an object&#8217;s state before pickling
+<td><code>pickle.dump(x, <var>file</var>)</code>
+<td><a href=http://docs.python.org/3.0/library/pickle.html#pickle-state><code>x.__getstate__()</code></a>
+<tr><th>
+<td>to serialize an object
+<td><code>pickle.dump(x, <var>file</var>)</code>
+<td><a href=http://docs.python.org/3.0/library/pickle.html#pickling-class-instances><code>x.__reduce__()</code></a>
+<tr><th>
+<td>to serialize an object (new pickling protocol)
+<td><code>pickle.dump(x, <var>file</var>, <var>protocol_version</var>)</code>
+<td><a href=http://docs.python.org/3.0/library/pickle.html#pickling-class-instances><code>x.__reduce_ex__(<var>protocol_version</var>)</code></a>
+<tr><th>
+<td>control over how an object is created during unpickling
+<td><code>x = pickle.load(<var>file</var>)</code>
+<td><a href=http://docs.python.org/3.0/library/pickle.html#pickling-class-instances><code>x.__getnewargs__()</code></a>
+<tr><th>
+<td>to restore an object&#8217;s state after unpickling
+<td><code>x = pickle.load(<var>file</var>)</code>
+<td><a href=http://docs.python.org/3.0/library/pickle.html#pickle-state><code>x.__setstate__()</code></a>
+</table>
 
 <h2 id=context-managers>Classes That Can Be Used in a <code>with</code> Block</h2>
 
@@ -626,18 +764,54 @@ def __exit__(self, *args) -> None:
 
 <h2 id=esoterica>Really Esoteric Stuff</h2>
 
-<pre>
-__new__ - covered in fractions.py
-__del__
-__slots__
-__hash__ - covered in fractions.py
-__get__
-__set__
-__delete__
-__subclasshook__ (*) see http://docs.python.org/3.0/library/abc.html
-__instancecheck__ (*) see http://www.ibm.com/developerworks/linux/library/l-python3-2/
-__subclasscheck__ (*)
-</pre>
+<p>If you know what you&#8217;re doing, you can gain almost complete control over how classes are compared, how attributes are defined, and what kinds of classes are considered subclasses of your class.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>a class constructor
+<td><code>x = MyClass()</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__new__><code>x.__new__()</code></a>
+<tr><th>
+<td>a class destructor
+<td><code>del x</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__del__><code>x.__del__()</code></a>
+<tr><th>
+<td>only a specific set of attributes to be defined
+<td>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__slots__><code>x.__slots__()</code></a>
+<tr><th>
+<td>a custom hash value
+<td><code>hash(x)</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__hash__><code>x.__hash__()</code></a>
+<tr><th>
+<td>to get an attribute&#8217;s value
+<td><code>x.color</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__get__><code>type(x).__dict__['color'].__get__(x, type(x))</code></a>
+<tr><th>
+<td>to set an attribute&#8217;s value
+<td><code>x.color = 'PapayaWhip'</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__set__><code>type(x).__dict__['color'].__set__(x, 'PapayaWhip')</code></a>
+<tr><th>
+<td>to delete an attribute
+<td><code>del x.color</code>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__delete__><code>type(x).__dict__['color'].__del__(x)</code></a>
+<tr><th>
+<td>to control whether an object is an instance of your class
+<td><code>isinstance(x, MyClass)</code>
+<td><a href=http://www.python.org/dev/peps/pep-3119/#overloading-isinstance-and-issubclass><code>MyClass.__instancecheck__(x)</code></a>
+<tr><th>
+<td>to control whether a class is a subclass of your class
+<td><code>issubclass(C, MyClass)</code>
+<td><a href=http://www.python.org/dev/peps/pep-3119/#overloading-isinstance-and-issubclass><code>MyClass.__subclasscheck__(C)</code></a>
+<tr><th>
+<td>to control whether a class is a subclass of your abstract base class
+<td><code>issubclass(C, MyABC)</code>
+<td><a href=http://docs.python.org/3.0/library/abc.html#abc.ABCMeta.__subclasshook__><code>MyABC.__subclasshook__(C)</code></a>
+</table>
 
 <p class=nav><a rel=prev href=porting-code-to-python-3-with-2to3.html title="back to &#8220;Porting code to Python 3 with 2to3&#8221;"><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
