@@ -330,7 +330,7 @@ Wesley</samp></pre>
 <li>On the other hand, the <code>itertools.zip_longest()</code> function stops at the end of the <em>longest</em> sequence, inserting <code>None</code> values for items past the end of the shorter sequences.
 </ol>
 
-<p>OK, that was all very interesting, but how does it relate to the alphametics solver? Here&#8217;s how:
+<p id=dict-zip>OK, that was all very interesting, but how does it relate to the alphametics solver? Here&#8217;s how:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
@@ -346,7 +346,7 @@ Wesley</samp></pre>
 <li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no &#8220;order&#8221; per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
 </ol>
 
-<p>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
+<p id=guess>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
 
 <pre><code>characters = tuple(ord(c) for c in sorted_characters)
 digits = tuple(ord(c) for c in '0123456789')
@@ -359,36 +359,173 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <h2 id=string-translate>A New Kind Of String Manipulation</h2>
 
-<p>FIXME
+<p>Python strings have many methods. You learned about some of those methods in <a href=strings.html>the Strings chapter</a>: <code>lower()</code>, <code>count()</code>, and <code>format()</code>. Now I want to introduce you to a powerful but little-known string manipulation technique: the <code>translate()</code> method.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>
+<a><samp class=p>>>> </samp><kbd>translation_table = {ord("A"): ord("O")}</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>translation_table</kbd>                         <span>&#x2461;</span></a>
+<samp>{65: 79}</samp>
+<a><samp class=p>>>> </samp><kbd>'MARK'.translate(translation_table)</kbd>       <span>&#x2462;</span></a>
+<samp>'MORK'</samp></pre>
+<ol>
+<li>String translation starts with a translation table, which is just a dictionary that maps one character to another. Actually, &#8220;character&#8221; is incorrect &mdash; the translation table really maps one <em>byte</em> to another.
+<li>Remember, bytes in Python 3 are integers. The <code>ord()</code> function returns the <abbr>ASCII</abbr> value of a character, which, in the case of A&ndash;Z, is always a byte from 65 to 90.
+<li>The <code>translate()</code> method on a string takes a translation table and runs the string through it. That is, it replaces all occurrences of the keys of the translation table with the corresponding values. In this case, &#8220;translating&#8221; <code>MARK</code> to <code>MORK</code>.
+</ol>
+
+<p>What does this have to do with solving alphametic puzzles? As it turns out, everything.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>       <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>characters</kbd>
 <samp>(83, 77, 69, 68, 79, 78, 82, 89)</samp>
-<samp class=p>>>> </samp><kbd>digits = tuple(ord(c) for c in '0123456789')</kbd>
-<samp class=p>>>> </samp><kbd>digits</kbd>
-<samp>(48, 49, 50, 51, 52, 53, 54, 55, 56, 57)</samp>
-<samp class=p>>>> </samp><kbd>guess = (49, 50, 48, 51, 52, 53, 54, 55)</kbd>
-<samp class=p>>>> </samp><kbd>translation_table = dict(zip(characters, guess))</kbd>
+<a><samp class=p>>>> </samp><kbd>guess = tuple(ord(c) for c in '91570682')</kbd>            <span>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd>guess</kbd>
+<samp>(57, 49, 53, 55, 48, 54, 56, 50)</samp>
+<a><samp class=p>>>> </samp><kbd>translation_table = dict(zip(characters, guess))</kbd>     <span>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>translation_table</kbd>
-<samp>{68: 51, 69: 48, 77: 50, 78: 53, 79: 52, 82: 54, 83: 49, 89: 55}</samp>
-<samp class=p>>>> </samp><kbd>"SEND + MORE == MONEY".translate(translation_table)</kbd>
-<samp>'1053 + 2460 == 24507'</samp></pre>
+<samp>{68: 55, 69: 53, 77: 49, 78: 54, 79: 48, 82: 56, 83: 57, 89: 50}</samp>
+<a><samp class=p>>>> </samp><kbd>"SEND + MORE == MONEY".translate(translation_table)</kbd>  <span>&#x2463;</span></a>
+<samp>'9567 + 1085 == 10652'</samp></pre>
+<ol>
+<li>Using a <a href=#generator-expressions>generator expression</a>, we quickly compute the byte values for each character in a string. <var>characters</var> is an example of the value of <var>sorted_characters</var> in the <code>alphametics.solve()</code> function.
+<li>Using another generator expression, we quickly compute the byte values for each digit in this string. The result, <var>guess</var>, is of the form <a href=#guess>returned by the <code>itertools.permutations()</code> function</a> in the <code>alphametics.solve()</code> function.
+<li>This translation table is generated by <a href=#dict-zip>zipping <var>characters</var> and <var>guess</var> together</a> and building a dictionary from the resulting sequence of pairs. This is exactly what the <code>alphametics.solve()</code> function does inside the <code>for</code> loop.
+<li>Finally, we pass this translation table to the <code>translate()</code> method of the original puzzle string. This converts each letter in the string to the corresponding digit (based on the letters in <var>characters</var> and the digits in <var>guess</var>). The result is a valid Python expression, as a string.
+</ol>
 
-<p>FIXME
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>translation_table = {ord("A"): ord("O")}</kbd>
-<samp class=p>>>> </samp><kbd>translation_table</kbd>
-<samp>{65: 79}</samp>
-<samp class=p>>>> </samp><kbd>'MARK'.translate(translation_table)</kbd>
-<samp>'MORK'</samp></pre>
-
-<p>FIXME
+<p>That&#8217;s pretty impressive. But what can you do with a string that happens to be a valid Python expression?
 
 <h2 id=eval>Evaluating Arbitrary Strings As Python Expressions</h2>
 
-<p>FIXME
+<p>This is the final piece of the puzzle (or rather, the final piece of the puzzle solver). After all that fancy string manipulation, we&#8217;re left with a string like <code>'9567 + 1085 == 10652'</code>. But that&#8217;s a string, and what good is a string? Enter <code>eval()</code>, the universal Python evaluation tool.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>eval('1 + 1 == 2')</kbd>
+<samp>True</samp>
+<samp class=p>>>> </samp><kbd>eval('1 + 1 == 3')</kbd>
+<samp>False</samp>
+<samp class=p>>>> </samp><kbd>eval('9567 + 1085 == 10652')</kbd>
+<samp>True</samp></pre>
+
+<p>But wait, there&#8217;s more! The <code>eval()</code> function isn&#8217;t limited to boolean expressions. It can handle <em>any</em> Python expression and returns <em>any</em> datatype.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>eval('"A" + "B"')</kbd>
+<samp>'AB'</samp>
+<samp class=p>>>> </samp><Kbd>eval('"MARK".translate({65: 79})')</kbd>
+<samp>'MORK'</samp>
+<samp class=p>>>> </samp><kbd>eval('"AAAAA".count("A")')</kbd>
+<samp>5</samp>
+<samp class=p>>>> </samp><kbd>eval('["*"] * 5')</kbd>
+<samp>['*', '*', '*', '*', '*']</samp></pre>
+
+<p>But wait, that&#8217;s not all!
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>x = 5</kbd>
+<a><samp class=p>>>> </samp><kbd>eval("x * 5")</kbd>         <span>&#x2460;</span></a>
+<samp>25</samp>
+<a><samp class=p>>>> </samp><kbd>eval("pow(x, 2)")</kbd>     <span>&#x2461;</span></a>
+<samp>25</samp>
+<samp class=p>>>> </samp><kbd>import math</kbd>
+<a><samp class=p>>>> </samp><kbd>eval("math.sqrt(x)")</kbd>  <span>&#x2462;</span></a>
+<samp>2.2360679774997898</samp></pre>
+<ol>
+<li>The expression that <code>eval()</code> takes can reference global variables defined outside the <code>eval()</code>. If called within a function, it can reference local variables too.
+<li>And functions.
+<li>And modules.
+</ol>
+
+<p>Hey, wait a minute&hellip;
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import subprocess</kbd>
+<a><samp class=p>>>> </samp><kbd>eval("subprocess.getoutput('ls ~')")</kbd>      <span>&#x2460;</span></a>
+<samp>'Desktop         Library         Pictures \
+ Documents       Movies          Public   \
+ Music           Sites'</samp>
+<a><samp class=p>>>> </samp><kbd>eval("subprocess.getoutput('rm -rf /')")</kbd>  <span>&#x2461;</span></a></pre>
+<ol>
+<li>The <code>subprocess</code> module allows you to run arbitrary shell commands and get the result as a Python string.
+<li>Don&#8217;t do this.
+</ol>
+
+<p>It&#8217;s even worse than that, because there&#8217;s a global <code>__import__()</code> function that takes a module name as a string, imports the module, and returns a reference to it. Combined with the power of <code>eval()</code>, you can construct a single expression that will wipe out all your files:
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')")</kbd>  <span>&#x2460;</span></a></pre>
+<ol>
+<li>Don&#8217;t do this either.
+</ol>
+
+<p class=c style="font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0">eval() is EVIL
+
+<p>Well, the evil part is evaluating arbitrary expressions from untrusted sources. You should only use <code>eval()</code> on trusted input. Of course, the trick is figuring out what&#8217;s &#8220;trusted.&#8221; But here&#8217;s something I know for certain: you should <b>NOT</b> take this alphametics solver and put it on the internet as a fun little web service. Don&#8217;t make the mistake of thinking, &#8220;Gosh, the function does a lot of string manipulation before getting a string to evaluate; <em>I can&#8217;t imagine</em> how someone could exploit that.&#8221; Someone <b>WILL</b> figure out how to sneak nasty executable code past all that string manipulation (<a href=http://www.matasano.com/log/1032/this-new-vulnerability-dowds-inhuman-flash-exploit/>stranger things have happened</a>), and then you can kiss your server goodbye.
+
+<p>But surely there&#8217;s <em>some</em> way to evaluate expressions safely? To put <code>eval()</code> in a sandbox where it can&#8217;t access or harm the outside world? Well, yeah, but it&#8217;s tricky.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>x = 5</kbd>
+<a><samp class=p>>>> </samp><kbd>eval("x * 5", {}, {})</kbd>               <span>&#x2460;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;string>", line 1, in &lt;module>
+NameError: name 'x' is not defined</samp>
+<a><samp class=p>>>> </samp><kbd>eval("x * 5", {"x": x}, {})</kbd>         <span>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd>import math</kbd>
+<a><samp class=p>>>> </samp><kbd>eval("math.sqrt(x)", {"x": x}, {})</kbd>  <span>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;string>", line 1, in &lt;module>
+NameError: name 'math' is not defined</samp></pre>
+<ol>
+<li>The second and third parameters passed to the <code>eval()</code> function act as the global and local namespaces for evaluating the expression. In this case, they are both empty, which means that when the string <code>"x * 5"</code> is evaluated, there is no reference to <var>x</var> in either the global or local namespace, so <code>eval()</code> throws an exception.
+<li>You can selectively include specific values in the global namespace by listing them individually. Then those &mdash; and only those &mdash; variables will be available during evaluation.
+<li>Even though you just imported the <code>math</code> module, you didn&#8217;t include it in the namespace passed to the <code>eval()</code> function, so the evaluation failed.
+</ol>
+
+<p>Gee, that was easy. Lemme make an alphametics web service now!
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>eval("pow(5, 2)", {}, {})</kbd>                   <span>&#x2460;</span></a>
+<samp>25</samp>
+<a><samp class=p>>>> </samp><kbd>eval("__import__('math').sqrt(5)", {}, {})</kbd>  <span>&#x2461;</span></a>
+<samp>2.2360679774997898</samp></pre>
+<ol>
+<li>Even though you&#8217;ve passed empty dictionaries for the global and local namespaces, all of Python&#8217;s built-in functions are still available during evaluation. So <code>pow(5, 2)</code> works, because <code>5</code> and <code>2</code> are literals, and <code>pow()</code> is a built-in function.
+<li>Unfortunately (and if you don&#8217;t see why it&#8217;s unfortunate, read on), the <code>__import__()</code> function is also a built-in function, so it works too.
+</ol>
+
+<p>Yeah, that means you can still do nasty things, even if you explicitly set the global and local namespaces to empty dictionaries when calling <code>eval()</code>:
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')", {}, {})</kbd>  <span>&#x2460;</span></a></pre>
+<ol>
+<li>Please don&#8217;t do this.</li>
+</ol>
+
+<p>Oops. I&#8217;m glad I didn&#8217;t make that alphametics web service. Is there <em>any</em> way to use <code>eval()</code> safely?
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>eval("__import__('math').sqrt(5)",</kbd>
+<a><samp class=p>... </samp><kbd>    {"__builtins__":None}, {})</kbd>          <span>&#x2460;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;string>", line 1, in &lt;module>
+NameError: name '__import__' is not defined</samp>
+<samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')",</kbd>
+<a><samp class=p>... </samp><kbd>    {"__builtins__":None}, {})</kbd>          <span>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<string>", line 1, in <module>
+NameError: name '__import__' is not defined</samp></pre>
+<ol>
+<li>To evaluate untrusted expressions safely, you need to define a global namespace dictionary that maps <code>"__builtins__"</code> to <code>None</code>, the Python null value. Internally, the &#8220;built-in&#8221; functions are contained within a pseudo-module called <code>"__builtins__"</code>. This pseudo-module (<i>i.e.</i> the set of built-in functions) is made available to evaluated expressions unless you explicitly override it.
+<li>You may do this, but be very, very careful not to make any typos. In particular, be sure you&#8217;ve overridden <code>__builtins__</code> and not <code>__builtin__</code> or <code>__built-ins__</code> or some other variation.
+</ol>
+
+<p>So, in the end, it <em>is</em> possible to safely evaluate untrusted Python expressions. Passing <code>{"__builtins__": None}</code> as the second parameter to the <code>eval()</code> function is non-intuitive (and not the default behavior), but it does work. If you understand <em>why</em> it works, you&#8217;re less likely to use <code>eval()</code> incorrectly, in a way that works with trusted input but has potentially devastating consequences with untrusted input.
 
 <h2 id=alphametics-finale>Putting It All Together</h2>
 
@@ -398,7 +535,6 @@ for guess in itertools.permutations(digits, len(characters)):
 <li><a href=#re-findall>Finds all the letters in the puzzle</a> with the <code>re.findall()</code> function
 <li><a href=#unique-items>Find all the <em>unique</em> letters in the puzzle</a> with set comprehensions
 <li><a href=#assert>Checks if there are more than 10 unique letters</a> (meaning the puzzle is definitely unsolvable) with an <code>assert</code> statement
-<li>FIXME sorts the letters with a set difference operation
 <li><a href=#generator-objects>Converts the letters to their ASCII equivalents</a> with a generator object
 <li><a href=#permutations>Calculates all the possible solutions</a> with the <code>itertools.permutations()</code> function
 <li><a href=#string-translate>Converts each possible solution to a Python expression</a> with the <code>translate()</code> string method
