@@ -154,21 +154,33 @@ AssertionError</samp></pre>
 
 <h2 id=generator-expressions>Generator expressions</h2>
 
-<p>FIXME
+<p>A generator expression is like a <a href=generators.html>generator function</a> without the function.
 
 <pre class=screen>
 <samp>>>> </samp><kbd>unique_characters = {'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</kbd>
-<samp>>>> </samp><kbd>gen = (ord(c) for c in unique_characters)</kbd>
-<samp>>>> </samp><kbd>gen</kbd>
+<a><samp>>>> </samp><kbd>gen = (ord(c) for c in unique_characters)</kbd>  <span>&#x2460;</span></a>
+<a><samp>>>> </samp><kbd>gen</kbd>                                        <span>&#x2461;</span></a>
 <samp>&lt;generator object &lt;genexpr> at 0x00BADC10></samp>
-<samp>>>> </samp><kbd>next(gen)</kbd>
+<a><samp>>>> </samp><kbd>next(gen)</kbd>                                  <span>&#x2462;</span></a>
 <samp>69</samp>
 <samp>>>> </samp><kbd>next(gen)</kbd>
 <samp>68</samp>
-<samp>>>> </samp><kbd>tuple(ord(c) for c in unique_characters)</kbd>
+<a><samp>>>> </samp><kbd>tuple(ord(c) for c in unique_characters)</kbd>   <span>&#x2463;</span></a>
 <samp>(69, 68, 77, 79, 78, 83, 82, 89)</samp></pre>
+<ol>
+<li>A generator expression is like an anonymous function that yields values. The expression itself looks like a list comprehension [FIXME have we introduced this yet?], but it&#8217;s wrapped in parentheses instead of square brackets.
+<li>The generator expression returns&hellip; an iterator.
+<li>Calling <code>next(<var>gen</var>)</code> returns the next value from the iterator.
+<li>If you like, you can iterate through all the possible values and return a tuple, list, or set, by passing the generator expression to <code>tuple()</code>, <code>list()</code>, or <code>set()</code>.
+</ol>
 
-<p>FIXME
+<p>Here&#8217;s another way to accomplish the same thing, using a <a href=generators.html>generator function</a>:
+
+<pre><code>def ord_map(a_string):
+    for c in a_string:
+        yield ord(c)
+
+gen = ord_map(unique_characters)</code></pre>
 
 <h2 id=permutations>Calculating Permutations&hellip; The Lazy Way!</h2>
 
