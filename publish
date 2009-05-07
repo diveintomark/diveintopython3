@@ -4,7 +4,7 @@
 rm -rf build
 mkdir build
 cp robots.txt *.js *.css build/
-rm examples/*.pyc
+rm -f examples/*.pyc
 cp -R examples build/
 
 # minimize HTML (note: this script is quite fragile and relies on knowledge of how I write HTML)
