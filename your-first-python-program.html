@@ -70,33 +70,11 @@ if __name__ == "__main__":
 <blockquote class=note>
 <p><span>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>. There are no subroutines in Python. Everything is a function, all functions return a value (even if it&#8217;s <code>None</code>), and all functions start with <code>def</code>.
 </blockquote>
-<p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype. (As you might guess from the <code>=True</code> syntax, the second argument is a boolean. You&#8217;ll learn what that syntax does in [FIXME xref-was-#apihelper].)  In Python, variables are never explicitly typed. Python figures out what type a variable is and keeps track of it internally.
+<p>The <code>approximate_size</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype. In Python, variables are never explicitly typed. Python figures out what type a variable is and keeps track of it internally.
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>In Java and other statically-typed languages, you must specify the datatype of the function return value and each function argument. In Python, you never explicitly specify the datatype of anything. Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
-<h3 id=datatypes>How Python&#8217;s Datatypes Compare to Other Programming Languages</h3>
-<p>An erudite reader sent me this explanation of how Python compares to other programming languages:
-<dl>
-<dt>statically typed language</dt>
-<dd>A language in which types are fixed at compile time. Most statically typed languages enforce this by requiring you to declare all variables with their datatypes before using them. Java and <abbr>C</abbr> are statically typed languages.
-</dd>
-<dt>dynamically typed language</dt>
-<dd>A language in which types are discovered at execution time; the opposite of statically typed. JavaScript and Python are dynamically typed, because they figure out what type a variable is when you first assign it a value.
-</dd>
-<dt>strongly typed language</dt>
-<dd>A language in which types are always enforced. Java and Python are strongly typed. If you have an integer, you can&#8217;t treat it like a string without explicitly converting it.
-</dd>
-<dt>weakly typed language</dt>
-<dd>A language in which types are &#8220;automagically&#8221; coerced to other types as needed; the opposite of strongly typed. <abbr>PHP</abbr> is weakly typed. In <abbr>PHP</abbr>, you can concatenate the string <code>'12'</code> and the integer <code>3</code> to get the string <code>'123'</code>, then treat that as the integer <code>123</code>, all without any explicit conversion.
-</dd>
-</dl>
-<p>So Python is both <em>dynamically typed</em> (because it doesn&#8217;t use explicit datatype declarations) and <em>strongly typed</em> (because once a variable has a datatype, it actually matters).
-<p>If you have experience in other programming languages, this table may help you visualize how Python compares to them:
-<table>
-<tr><th><th>Statically typed<th>Dynamically typed
-<tr><th>Weakly typed<td>C, Objective-C<td>JavaScript, Perl 5, <abbr>PHP</abbr>
-<tr><th>Strongly typed<td>Pascal, Java<td>Python, Ruby
-</table>
+
 <h2 id=readability>Writing Readable Code</h2>
 <p>I won&#8217;t bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you&#8217;ve forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You&#8217;ll thank me in six months.
 <h3 id=docstrings>Documentation Strings</h3>

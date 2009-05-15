@@ -806,40 +806,17 @@ buildConnectionString          Build a connection string from a dictionary Retur
 <samp>buildConnectionString          Build a connection string from a dictionary
     
     Returns string.
-</span></pre><h2 id="apihelper.optional">4.2. Using Optional and Named Arguments</h2>
-<p>Python allows function arguments to have default values; if the function is called without the argument, the argument gets its default
-   value. Futhermore, arguments can be specified in any order by using named arguments. Stored procedures in SQL Server Transact/<abbr>SQL</abbr> can do this, so if you're a SQL Server scripting guru, you can skim this part.
 
-<p>Here is an example of <code>info</code>, a function with two optional arguments:<pre><code>
-def info(object, spacing=10, collapse=1):</pre><p><var>spacing</var> and <var>collapse</var> are optional, because they have default values defined. <var>object</var> is required, because it has no default value. If <code>info</code> is called with only one argument, <var>spacing</var> defaults to <code>10</code> and <var>collapse</var> defaults to <code>1</code>. If <code>info</code> is called with two arguments, <var>collapse</var> still defaults to <code>1</code>.
-<p>Say you want to specify a value for <var>collapse</var> but want to accept the default value for <var>spacing</var>. In most languages, you would be out of luck, because you would need to call the function with three arguments. But in
-Python, arguments can be specified by name, in any order.
-<div class=example><h3>Example 4.4. Valid Calls of <code>info</code></h3><pre><code>
-info(odbchelper)  <span>&#x2460;</span>
-info(odbchelper, 12)                <span>&#x2461;</span>
-info(odbchelper, collapse=0)        <span>&#x2462;</span>
-info(spacing=15, object=odbchelper) <span>&#x2463;</span></pre>
-<ol>
-<li>With only one argument, <var>spacing</var> gets its default value of <code>10</code> and <var>collapse</var> gets its default value of <code>1</code>.
-<li>With two arguments, <var>collapse</var> gets its default value of <code>1</code>.
-<li>Here you are naming the <var>collapse</var> argument explicitly and specifying its value. <var>spacing</var> still gets its default value of <code>10</code>.
-<li>Even required arguments (like <var>object</var>, which has no default value) can be named, and named arguments can appear in any order.
-<p>This looks totally whacked until you realize that arguments are simply a dictionary. The &#8220;normal&#8221; method of calling functions without argument names is actually just a shorthand where Python matches up the values with the argument names in the order they're specified in the function declaration. And most of the
-time, you'll call functions the &#8220;normal&#8221; way, but you always have the additional flexibility if you need it.
-<table id="tip.arguments" class=note border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">The only thing you need to do to call a function is specify a value (somehow) for each required argument; the manner and order
-      in which you do that is up to you.
-<div class=itemizedlist>
-<h3>Further Reading on Optional Arguments</h3>
-<ul>
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses exactly <a href="http://www.python.org/doc/current/tut/node6.html#SECTION006710000000000000000">when and how default arguments are evaluated</a>, which matters when the default value is a list or an expression with side effects.
 
-</ul>
-<h2 id="apihelper.builtin">4.3. Using <code>type</code>, <code>str</code>, <code>dir</code>, and Other Built-In Functions</h2>
-<p>Python has a small set of extremely useful built-in functions. All other functions are partitioned off into modules. This was
-   actually a conscious design decision, to keep the core language from getting bloated like other scripting languages (cough
-   cough, Visual Basic).
+
+
+(optional and named arguments stuff was here)
+
+
+
+
+
 <h3>4.3.1. The <code>type</code> Function</h3>
 <p>The <code>type</code> function returns the datatype of any arbitrary object. The possible types are listed in the <code>types</code> module. This is useful for helper functions that can handle several types of data.
 <div class=example><h3 id="apihelper.type.intro">Example 4.5. Introducing <code>type</code></h3><pre class=screen><samp class=p>>>> </samp><kbd>type(1)</kbd>           <span>&#x2460;</span>
