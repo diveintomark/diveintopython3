@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<head>
+<meta charset=utf-8>
+<title>XML - Dive into Python 3</title>
+<link rel=stylesheet type=text/css href=dip3.css>
+<style>
+body{counter-reset:h1 13}
+mark{display:inline}
+</style>
+<link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
+</head>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=root value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#xml>Dive Into Python 3</a> <span>&#8227;</span>
+<p id=level>Difficulty level: <span title=beginner>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
+<h1>XML</h1>
+<blockquote class=q>
+<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Most of the chapters in this book have centered around a piece of sample code. But XML isn&#8217;t about code; it&#8217;s about data. One common use of XML is &#8220;syndication feeds&#8221; that list the latest articles on a blog, forum, or other frequently-updated website. Most popular blogging software can produce a feed and update it whenever new articles, discussion threads, or blog posts are published. You can follow a blog by &#8220;subscribing&#8221; to its feed, and you can follow multiple blogs with a dedicated &#8220;<a href=http://en.wikipedia.org/wiki/List_of_feed_aggregators>feed aggregator</a>&#8221; like <a href=http://www.google.com/reader/>Google Reader</a>.
+
+<p>Here, then, is the XML data we&#8217;ll be working with in this chapter. It&#8217;s a feed &mdash; specifically, an <a href=http://atompub.org/rfc4287.html>Atom syndication feed</a>.
+
+<p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  &lt;title type="text">dive into mark&lt;/title>
+  &lt;subtitle type="text">currently between addictions&lt;/subtitle>
+  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
+  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
+  &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
+  &lt;link rel="self" href="http://diveintomark.org/feed/" type="application/atom+xml"/>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+      &lt;uri>http://diveintomark.org/&lt;/uri>
+    &lt;/author>
+    &lt;title type="html">&lt;![CDATA[Dive into history, 2009 edition]]>&lt;/title>
+    &lt;link rel="alternate" type="text/html"
+      href="http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition"/>
+    &lt;id>tag:diveintomark.org,2009-03-27:/archives/20090327172042&lt;/id>
+    &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
+    &lt;published>2009-03-27T17:20:42Z&lt;/published>
+    &lt;category scheme="http://diveintomark.org" term="diveintopython"/>
+    &lt;category scheme="http://diveintomark.org" term="docbook"/>
+    &lt;category scheme="http://diveintomark.org" term="html"/>
+    &lt;summary type="html">Putting an entire chapter on one page sounds bloated, but
+      consider this: my longest chapter so far would be 75 printed pages, and it
+      loads in under 5 seconds. On dialup.&lt;/summary>
+  &lt;/entry>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+      &lt;uri>http://diveintomark.org/&lt;/uri>
+    &lt;/author>
+    &lt;title type="html">&lt;![CDATA[Accessibility is a harsh mistress]]>&lt;/title>
+    &lt;link rel="alternate" type="text/html"
+      href="http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress"/>
+    &lt;id>tag:diveintomark.org,2009-03-21:/archives/20090321200928&lt;/id>
+    &lt;updated>2009-03-22T01:05:37Z&lt;/updated>
+    &lt;published>2009-03-21T20:09:28Z&lt;/published>
+    &lt;category scheme="http://diveintomark.org" term="accessibility"/>
+    &lt;summary type="html">The accessibility orthodoxy does not permit people to
+      question the value of features that are rarely useful and rarely used.&lt;/summary>
+  &lt;/entry>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+      &lt;uri>http://diveintomark.org/&lt;/uri>
+    &lt;/author>
+    &lt;title type="html">&lt;![CDATA[A gentle introduction to video encoding,
+      part 1: container formats]]>&lt;/title>
+    &lt;link rel="alternate" type="text/html"
+      href="http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats"/>
+    &lt;id>tag:diveintomark.org,2008-12-18:/archives/20081218155422&lt;/id>
+    &lt;updated>2009-01-11T19:39:22Z&lt;/updated>
+    &lt;published>2008-12-18T15:54:22Z&lt;/published>
+    &lt;category scheme="http://diveintomark.org" term="asf"/>
+    &lt;category scheme="http://diveintomark.org" term="avi"/>
+    &lt;category scheme="http://diveintomark.org" term="encoding"/>
+    &lt;category scheme="http://diveintomark.org" term="flv"/>
+    &lt;category scheme="http://diveintomark.org" term="GIVE"/>
+    &lt;category scheme="http://diveintomark.org" term="mp4"/>
+    &lt;category scheme="http://diveintomark.org" term="ogg"/>
+    &lt;category scheme="http://diveintomark.org" term="video"/>
+    &lt;summary type="html">These notes will eventually become part of a
+      tech talk on video encoding.&lt;/summary>
+  &lt;/entry>
+&lt;/feed></code></pre>
+ 
+<h2 id=xml-structure>The Structure Of An Atom Feed</h2>
+
+<p>FIXME
+
+<h2 id=xml-parse>Parsing XML</h2>
+
+<p>FIXME
+
+<pre class=screen>
+>>> import xml.etree.ElementTree as etree
+>>> tree = etree.parse("examples/feed.xml")
+>>> root = tree.getroot()
+>>> root
+&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0>
+</pre>
+
+<h3 id=xml-elements>Elements Are Lists</h3>
+
+<p>FIXME
+
+<pre class=screen>
+>>> root.tag
+'{http://www.w3.org/2005/Atom}feed'
+>>> len(root)
+9
+>>> for child in root:
+...   print(child)
+...
+&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
+&lt;Element {http://www.w3.org/2005/Atom}subtitle at e2b4e0>
+&lt;Element {http://www.w3.org/2005/Atom}id at e2b6c0>
+&lt;Element {http://www.w3.org/2005/Atom}updated at e2b6f0>
+&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>
+&lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b720>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b750>
+</pre>
+
+<h3 id=xml-attributes>Attributes Are Dictonaries</h3>
+
+<p>FIXME
+
+<pre class=screen>
+>>> root.attrib
+{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}
+>>> root[4]
+<Element {http://www.w3.org/2005/Atom}link at e181b0>
+>>> root[4].attrib
+{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
+>>> root[3]
+<Element {http://www.w3.org/2005/Atom}updated at e2b4e0>
+>>> root[3].attrib
+{}
+</pre>
+
+<h2 id=xml-find>Searching For Nodes Within An XML Document</h2>
+
+<p>FIXME
+
+<pre class=screen>
+>>> tree.findall("{http://www.w3.org/2005/Atom}entry")
+[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>, &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>, &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]
+
+>>> feed_links = tree.findall("{http://www.w3.org/2005/Atom}link")
+>>> feed_links
+[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>]
+>>> feed_links[0].attrib
+{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
+>>> feed_links[1].attrib
+{'href': 'http://diveintomark.org/feed/', 'type': 'application/atom+xml', 'rel': 'self'}
+
+>>> all_links = tree.findall("//{http://www.w3.org/2005/Atom}link")
+>>> all_links
+[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b570>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b480>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b5a0>]
+>>> all_links[0].attrib
+{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
+>>> all_links[1].attrib
+{'href': 'http://diveintomark.org/feed/', 'type': 'application/atom+xml', 'rel': 'self'}
+>>> all_links[2].attrib
+{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition', 'type': 'text/html', 'rel': 'alternate'}
+>>> all_links[3].attrib
+{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress', 'type': 'text/html', 'rel': 'alternate'}
+>>> all_links[4].attrib
+{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats', 'type': 'text/html', 'rel': 'alternate'}
+</pre>
+
+<h2 id=xml-lxml>Going Further With lxml</h2>
+
+<p>FIXME
+
+<pre class=screen>
+>>> from lxml import etree
+.
+.  FIXME (show how it's a drop-in replacement for everything we've done so far)
+.
+
+from here on out, use lxml.etree explicitly because these functions are specific to lxml
+>>> import lxml.etree
+>>> nsmap = {"atom": "http://www.w3.org/2005/Atom"}
+>>> tree = lxml.etree.parse("examples/feed.xml")
+>>> entries = tree.xpath("//atom:category[@term='accessibility']/..", namespaces=nsmap)
+>>> entries
+[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]
+>>> entry = entries[0]
+>>> entry.xpath("./atom:title/text()", namespaces=nsmap)
+['Accessibility is a harsh mistress']
+</pre>
+
+<h3 id=xml-custom-parser>Customizing Your XML Parser</h3>
+
+<p>FIXME
+
+<pre class=screen>
+>>> import lxml.etree
+>>> parser = lxml.etree.XMLParser(no_network=True, ns_clean=True, recover=True, remove_blank_text=True, remove_comments=True)
+>>> tree = lxml.etree.parse("examples/feed.xml", parser)
+</pre>
+
+<h3 id=xml-incremental>Incremental Parsing</h3>
+
+<p>FIXME
+
+<h2 id=xml-generate>Generating XML</h2>
+
+<p>FIXME
+
+<pre class=screen>
+>>> import lxml.etree
+>>> new_feed = lxml.etree.Element("{http://www.w3.org/2005/Atom}feed", attrib={"{http://www.w3.org/XML/1998/namespace}lang": "en"})
+>>> print(lxml.etree.tounicode(new_feed))
+&lt;ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xml:lang="en"/>
+</pre>
+
+<p>FIXME
+
+<pre class=screen>
+>>> import lxml.etree
+>>> new_feed = lxml.etree.Element("feed", nsmap=NSMAP)
+>>> print(lxml.etree.tounicode(new_feed))
+&lt;feed xmlns="http://www.w3.org/2005/Atom"/>
+>>> new_feed.set("{http://www.w3.org/XML/1998/namespace}lang", "en")
+>>> print(lxml.etree.tounicode(new_feed))
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"/>
+</pre>
+
+<p>FIXME
+
+<pre class=screen>
+>>> title = lxml.etree.SubElement(new_feed, "title", attrib={"type":"html"})
+>>> print(lxml.etree.tounicode(new_feed))
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="html"/></feed>
+>>> title.text = "dive into mark"
+>>> print(lxml.etree.tounicode(new_feed))
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="html">dive into mark</title></feed>
+>>> print(lxml.etree.tounicode(new_feed, pretty_print=True))
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  &lt;title type="html">dive into mark&lt;/title>
+&lt;/feed>
+</pre>
+
+<h2 id=furtherreading>Further Reading</h2>
+
+<ul>
+<li><a href=http://en.wikipedia.org/wiki/XML>XML on Wikipedia.org</a>
+<li><a href=http://docs.python.org/3.0/library/xml.etree.elementtree.html>The ElementTree XML API</a>
+<li><a href=http://effbot.org/zone/element.htm>Elements and Element Trees</a>
+<li><a href=http://effbot.org/zone/element-iterparse.htm>The ElementTree iterparse Function</a>
+<li><a href=http://codespeak.net/lxml/1.3/parsing.html>Parsing XML and HTML with lxml</a>
+<li><a href=http://codespeak.net/lxml/1.3/xpathxslt.html>XPath and XSLT with lxml</a>
+</ul>
+
+<p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
+<script src=jquery.js></script>
+<script src=dip3.js></script>
