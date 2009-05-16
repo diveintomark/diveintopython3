@@ -76,7 +76,7 @@ class PapayaWhip:  <span>&#x2460;</span>
 class Fib:
 <a>    """iterator that yields numbers in the Fibanocci sequence"""  <span>&#x2460;</span></a>
 
-<a>    def __init__(self, max):                                      <span>&#x2461;</span></code></pre>
+<a>    def __init__(self, max):                                      <span>&#x2461;</span></a></code></pre>
 <ol>
 <li>Classes can (and should) have <code>docstring</code>s too, just like modules and functions.
 <li>The <code>__init__()</code> method is called immediately after an instance of the class is created. It would be tempting but incorrect to call this the constructor of the class. It&#8217;s tempting, because it looks like a constructor (by convention, the <code>__init__()</code> method is the first method defined for the class), acts like one (it&#8217;s the first piece of code executed in a newly created instance of the class), and even sounds like one. Incorrect, because the object has already been constructed by the time the <code>__init__()</code> method is called, and you already have a valid reference to the new instance of the class.
