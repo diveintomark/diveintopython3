@@ -219,7 +219,7 @@ import CGIHttpServer</code></pre>
 <li>The <code>http.server</code> module provides a basic <abbr>HTTP</abbr> server.
 </ol>
 <h3 id=urllib><code>urllib</code></h3>
-<p>Python 2 had a rat&#8217;s nest of overlapping modules to parse, encode, and fetch URLs. In Python 3, these have all been refactored and combined in a single package, <code>urllib</code>.
+<p>Python 2 had a rat&#8217;s nest of overlapping modules to parse, encode, and fetch <abbr>URLs</abbr>. In Python 3, these have all been refactored and combined in a single package, <code>urllib</code>.
 <table>
 <tr><th>Notes
 <th>Python 2
@@ -249,10 +249,10 @@ from urllib.error import HTTPError</code></pre>
 </table>
 <ol>
 <li>The old <code>urllib</code> module in Python 2 had a variety of functions, including <code>urlopen()</code> for fetching data and <code>splittype()</code>, <code>splithost()</code>, and <code>splituser()</code> for splitting a <abbr>URL</abbr> into its constituent parts. These functions have been reorganized more logically within the new <code>urllib</code> package. <code>2to3</code> will also change all calls to these functions so they use the new naming scheme.
-<li>The old <code>urllib2</code> module in Python 2 has been folded into into the <code>urllib</code> package in Python 3. All your <code>urllib2</code> favorites &mdash; the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends &mdash; are still available.
+<li>The old <code>urllib2</code> module in Python 2 has been folded into the <code>urllib</code> package in Python 3. All your <code>urllib2</code> favorites &mdash; the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends &mdash; are still available.
 <li>The <code>urllib.parse</code> module in Python 3 contains all the parsing functions from the old <code>urlparse</code> module in Python 2.
 <li>The <code>urllib.robotparser</code> module parses <a href=http://www.robotstxt.org/><code>robots.txt</code> files</a>.
-<li>The <code>FancyURLopener</code> class, which handles <abbr>HTTP</abbr> redirects and other status codes, is still available in the new <code>urllib.request</code> module. The <code>urlencode</code> function has moved to <code>urllib.parse</code>.
+<li>The <code>FancyURLopener</code> class, which handles <abbr>HTTP</abbr> redirects and other status codes, is still available in the new <code>urllib.request</code> module. The <code>urlencode()</code> function has moved to <code>urllib.parse</code>.
 <li>The <code>Request</code> object is still available in <code>urllib.request</code>, but constants like <code>HTTPError</code> have been moved to <code>urllib.error</code>.
 </ol>
 <h3 id=dbm><code>dbm</code></h3>
@@ -407,7 +407,7 @@ for an_iterator in a_sequence_of_iterators:
 <li>If you have a function that returns an iterator, call the function and pass the result to the <code>next()</code> function. (The <code>2to3</code> script is smart enough to convert this properly.)
 <li>If you define your own class and mean to use it as an iterator, define the <code>__next__()</code> special method.
 <li>If you define your own class and just happen to have a method named <code>next()</code> that takes one or more arguments, <code>2to3</code> will not touch it. This class can not be used as an iterator, because its <code>next()</code> method takes arguments.
-<li>This one is a bit tricky. If you have a local variable named <var>next</var>, then it takes precedence over the new global <code>next()</code> function. In this case, you need to call the iterator&#8217;s special <code>__next()__</code> method to get the next item in the sequence. (Alternatively, you could also refactor the code so the local variable wasn&#8217;t named <var>next</var>, but <code>2to3</code> will not do that for you automatically.)
+<li>This one is a bit tricky. If you have a local variable named <var>next</var>, then it takes precedence over the new global <code>next()</code> function. In this case, you need to call the iterator&#8217;s special <code>__next__()</code> method to get the next item in the sequence. (Alternatively, you could also refactor the code so the local variable wasn&#8217;t named <var>next</var>, but <code>2to3</code> will not do that for you automatically.)
 </ol>
 <h2 id=filter><code>filter()</code> global function</h2>
 <p>In Python 2, the <code>filter()</code> function returned a list, the result of filtering a sequence through a function that returned <code>True</code> or <code>False</code> for each item in the sequence. In Python 3, the <code>filter()</code> function returns an iterator, not a list.
@@ -478,7 +478,7 @@ for an_iterator in a_sequence_of_iterators:
 <td><pre><code>from functtools import reduce
 reduce(a, b, c)</code></pre>
 </table>
-<blockquote>
+<blockquote class=note>
 <p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id=apply><code>apply()</code> global function</h2>
@@ -547,7 +547,7 @@ reduce(a, b, c)</code></pre>
 <td><code>execfile("a_filename")</code>
 <td><code>exec(compile(open("a_filename").read(), "a_filename", "exec"))</code>
 </table>
-<blockquote>
+<blockquote class=note>
 <p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id=repr><code>repr</code> literals (backticks)</h2>
@@ -805,7 +805,7 @@ except:
 <td><code>aClassInstance.aClassMethod.im_class</code>
 <td><code>aClassInstance.aClassMethod.self.__class__</code>
 </table>
-<h2 id=nonzero><code>__nonzero__</code> special class attribute</h2>
+<h2 id=nonzero><code>__nonzero__</code> special method</h2>
 <p>In Python 2, you could build your own classes that could be used in a boolean context. For example, you could instantiate the class and then use the instance in an <code>if</code> statement. To do this, you defined a special <code>__nonzero__()</code> method which returned <code>True</code> or <code>False</code>, and it was called whenever the instance was used in a boolean context. In Python 3, you can still do this, but the name of the method has changed to <code>__bool__()</code>.
 <table>
 <tr><th>Notes
@@ -920,6 +920,9 @@ except:
 <td><code>types.NoneType</code>
 <td><code>type(None)</code>
 </table>
+<blockquote class=note>
+<p><span>&#x261E;</span><code>types.StringType</code> gets mapped to <code>bytes</code> instead of <code>str</code> because a Python 2 &#8220;string&#8221; (not a Unicode string, just a regular string) is really just a sequence of bytes in a particular character encoding.
+</blockquote>
 <h2 id=isinstance><code>isinstance()</code> global function (3.1+)</h2>
 <p>The <code>isinstance()</code> function checks whether an object is an instance of a particular class or type. In Python 2, you could pass a tuple of types, and <code>isinstance()</code> would return <code>True</code> if the object was any of those types. In Python 3, you can still do this, but passing the same type twice is deprecated.
 <table>
@@ -930,7 +933,7 @@ except:
 <td><code>isinstance(x, (int, float, int))</code>
 <td><code>isinstance(x, (int, float))</code>
 </table>
-<blockquote>
+<blockquote class=note>
 <p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
 </blockquote>
 <h2 id=basestring><code>basestring</code> datatype</h2>
