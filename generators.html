@@ -156,8 +156,8 @@ def plural(noun):
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
-<li>Now, each match rule is its own function which returns the results of calling the <code>re.sub()</code> function.
-<li>Each apply rule is also its own function which calls the <code>re.search()</code> function to apply the appropriate pluralization rule.
+<li>Now, each match rule is its own function which returns the results of calling the <code>re.search()</code> function.
+<li>Each apply rule is also its own function which calls the <code>re.sub()</code> function to apply the appropriate pluralization rule.
 <li>Instead of having one function (<code>plural()</code>) with multiple rules, you have the <code>rules</code> data structure, which is a sequence of pairs of functions.
 <li>Since the rules have been broken out into a separate data structure, the new <code>plural()</code> function can be reduced to a few lines of code. Using a <code>for</code> loop, you can pull out the match and apply rules two at a time (one match, one apply) from the <var>rules</var> structure. On the first iteration of the <code>for</code> loop, <var>matches_rule</var> will get <code>match_sxz</code>, and <var>apply_rule</var> will get <code>apply_sxz</code>. On the second iteration (assuming you get that far), <var>matches_rule</var> will be assigned <code>match_h</code>, and <var>apply_rule</var> will be assigned <code>apply_h</code>. The function is guaranteed to return something eventually, because the final match rule (<code>match_default</code>) simply returns <code>True</code>, meaning the corresponding apply rule (<code>apply_default</code>) will always be applied.
 </ol>
