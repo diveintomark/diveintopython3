@@ -240,10 +240,10 @@ from here on out, use lxml.etree explicitly because these functions are specific
 <pre class=screen>
 >>> title = lxml.etree.SubElement(new_feed, "title", attrib={"type":"html"})
 >>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="html"/></feed>
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html"/>&lt;/feed>
 >>> title.text = "dive into mark"
 >>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="html">dive into mark</title></feed>
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into mark&lt;/title>&lt;/feed>
 >>> print(lxml.etree.tounicode(new_feed, pretty_print=True))
 &lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   &lt;title type="html">dive into mark&lt;/title>
