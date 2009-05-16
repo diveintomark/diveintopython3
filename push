@@ -1,6 +1,4 @@
 #!/bin/sh
 
 ssh diveintomark.org "hg -R /home/mark/db/diveintopython3/ serve --stdio" &
-pid=$!
 hg push ssh://mark@diveintomark.org//home/mark/db/diveintopython3/
-kill "$pid"
