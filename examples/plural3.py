@@ -12,7 +12,7 @@ def build_match_and_apply_functions(pattern, search, replace):
         return re.search(pattern, word)
     def apply_rule(word):
         return re.sub(search, replace, word)
-    return (matches_rule, apply_rule)
+    return [matches_rule, apply_rule]
 
 patterns = \
   [

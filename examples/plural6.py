@@ -12,13 +12,13 @@ def build_match_and_apply_functions(pattern, search, replace):
         return re.search(pattern, word)
     def apply_rule(word):
         return re.sub(search, replace, word)
-    return (matches_rule, apply_rule)
+    return [matches_rule, apply_rule]
 
 class LazyRules:
-    rules_f = 'plural6-rules.txt'
+    rules_filename = 'plural6-rules.txt'
 
     def __init__(self):
-        self.pattern_file = open(self.rules_f)
+        self.pattern_file = open(self.rules_filename)
         self.cache = []
 
     def __iter__(self):

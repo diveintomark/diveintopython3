@@ -145,11 +145,11 @@ def match_default(noun):
 def apply_default(noun):
     return noun + 's'
 
-<a>rules = ((match_sxz, apply_sxz),               <span>&#x2462;</span></a>
-         (match_h, apply_h),
-         (match_y, apply_y),
-         (match_default, apply_default)
-         )
+<a>rules = [[match_sxz, apply_sxz],               <span>&#x2462;</span></a>
+         [match_h, apply_h],
+         [match_y, apply_y],
+         [match_default, apply_default]
+         ]
 
 def plural(noun):           
 <a>    for matches_rule, apply_rule in rules:       <span>&#x2463;</span></a>
@@ -204,11 +204,11 @@ def build_match_and_apply_functions(pattern, search, replace):
         return re.search(pattern, word)
 <a>    def apply_rule(word):                                       <span>&#x2461;</span></a>
         return re.sub(search, replace, word)
-<a>    return (matches_rule, apply_rule)                           <span>&#x2462;</span></a></code></pre>
+<a>    return [matches_rule, apply_rule]                           <span>&#x2462;</span></a></code></pre>
 <ol>
 <li><code>build_match_and_apply_functions()</code> is a function that builds other functions dynamically. It takes <var>pattern</var>, <var>search</var> and <var>replace</var>, then defines a <code>matches_rule()</code> function which calls <code>re.search()</code> with the <var>pattern</var> that was passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>matches_rule()</code> function you&#8217;re building. Whoa.
 <li>Building the apply function works the same way. The apply function is a function that takes one parameter, and calls <code>re.sub()</code> with the <var>search</var> and <var>replace</var> parameters that were passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>apply_rule()</code> function you&#8217;re building. This technique of using the values of outside parameters within a dynamic function is called <em>closures</em>. You&#8217;re essentially defining constants within the apply function you&#8217;re building: it takes one parameter (<var>word</var>), but it then acts on that plus two other values (<var>search</var> and <var>replace</var>) which were set when you defined the apply function.
-<li>Finally, the <code>build_match_and_apply_functions()</code> function returns a tuple of two values: the two functions you just created. The constants you defined within those functions (<var>pattern</var> within <var>matchFunction</var>, and <var>search</var> and <var>replace</var> within <var>applyFunction</var>) stay with those functions, even after you return from <code>build_match_and_apply_functions()</code>. That&#8217;s insanely cool.
+<li>Finally, the <code>build_match_and_apply_functions()</code> function returns a list of two values: the two functions you just created. The constants you defined within those functions (<var>pattern</var> within <var>matchFunction</var>, and <var>search</var> and <var>replace</var> within <var>applyFunction</var>) stay with those functions, even after you return from <code>build_match_and_apply_functions()</code>. That&#8217;s insanely cool.
 </ol>
 
 <p>If this is incredibly confusing (and it should be, this is weird stuff), it may become clearer when you see how to use it.
@@ -225,7 +225,7 @@ def build_match_and_apply_functions(pattern, search, replace):
          for (pattern, search, replace) in patterns]</code></pre>
 <ol>
 <li>Our pluralization rules are now defined as a list of lists of strings (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
-<li>This line is magic. It takes the list of strings in <var>patterns</var> and turns them into a list of functions. How? By mapping the strings to the <code>build_match_and_apply_functions()</code> function, which just happens to take three strings as parameters and return a tuple of two functions. This means that <var>rules</var> ends up being exactly the same as the previous example: a list of tuples, where each tuple is a pair of functions, where the first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
+<li>This line is magic. It takes the list of strings in <var>patterns</var> and turns them into a list of functions. How? By mapping the strings to the <code>build_match_and_apply_functions()</code> function, which just happens to take three strings as parameters and return a list of two functions. This means that <var>rules</var> ends up being exactly the same as the previous example: a list of lists, where each (inner) list is a pair of functions. The first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
 </ol>
 
 <p>Rounding out this version of the script is the main entry point, the <code>plural()</code> function.
@@ -262,7 +262,7 @@ $                    $    s</code></pre>
         return re.search(pattern, word)
     def apply_rule(word):
         return re.sub(search, replace, word)
-    return (matches_rule, apply_rule)
+    return [matches_rule, apply_rule]
 
 rules = []
 <a>pattern_file = open('plural4-rules.txt')                        <span>&#x2461;</span></a>
@@ -277,7 +277,7 @@ finally:
 <li>The <code>build_match_and_apply_functions()</code> function has not changed. You&#8217;re still using closures to build two functions dynamically that use variables defined in the outer function.
 <li>Open the file that contains the pattern strings.
 <li>Read through the file one line at a time, using the <code>for line in &lt;fileobject&gt;</code> idiom.
-<li>Each line in the file really has three values, but they&#8217;re separated by whitespace (tabs or spaces, it makes no difference). To split it out, use the <code>split()</code> string method. The first argument to the <code>split()</code> method is <code>None</code>, which means &#8220;split on any whitespace (tabs or spaces, it makes no difference).&#8221; The second argument is <code>3</code>, which means &#8220;split on whitespace 3 times, then discard the rest of the line.&#8221; A line like <code>[sxz]$ $ es</code> will be broken up into the tuple <code>('[sxz]$', '$', 'es')</code>, which means that <var>pattern</var> will get <code>'[sxz]$'</code>, <var>search</var> will get <code>'$'</code>, and <var>replace</var> will get <code>'es'</code>. That&#8217;s a lot of power in one little line of code.
+<li>Each line in the file really has three values, but they&#8217;re separated by whitespace (tabs or spaces, it makes no difference). To split it out, use the <code>split()</code> string method. The first argument to the <code>split()</code> method is <code>None</code>, which means &#8220;split on any whitespace (tabs or spaces, it makes no difference).&#8221; The second argument is <code>3</code>, which means &#8220;split on whitespace 3 times, then discard the rest of the line.&#8221; A line like <code>[sxz]$ $ es</code> will be broken up into the list <code>['[sxz]$', '$', 'es']</code>, which means that <var>pattern</var> will get <code>'[sxz]$'</code>, <var>search</var> will get <code>'$'</code>, and <var>replace</var> will get <code>'es'</code>. That&#8217;s a lot of power in one little line of code.
 <li>Use a <code>try..finally</code> block to ensure the file object is closed.
 </ol>
 
