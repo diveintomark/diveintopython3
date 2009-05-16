@@ -101,7 +101,7 @@ class Fib:
 <ol>
 <li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>&#8217;s <code>__init__()</code> method.
 <li><var>fib</var> is now an instance of the <code>Fib</code> class.
-<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object&#8217;s class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName</code> and <code>getSuperclass</code> to get metadata information about an object. In Python, this kind of metadata is available directly on the object itself through attributes like <code>__class__</code>, <code>__name__</code>, and <code>__bases__</code>.
+<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object&#8217;s class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName()</code> and <code>getSuperclass()</code> to get metadata information about an object. In Python, this kind of metadata is available through attributes, but the idea is the same.
 <li>You can access the instance&#8217;s <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
 </ol>
 
@@ -235,33 +235,33 @@ rules = LazyRules()</code></pre>
 <p>Let&#8217;s take the class one bite at a time.
 
 <pre><code>class LazyRules:
-    rules_f = 'plural6-rules.txt'
+    rules_filename = 'plural6-rules.txt'
 
-<a>    def __init__(self):                         <span>&#x2460;</span></a>
-<a>        self.pattern_file = open(self.rules_f)  <span>&#x2462;</span></a>
-<a>        self.cache = []                         <span>&#x2461;</span></a></code></pre>
+<a>    def __init__(self):                                <span>&#x2460;</span></a>
+<a>        self.pattern_file = open(self.rules_filename)  <span>&#x2462;</span></a>
+<a>        self.cache = []                                <span>&#x2461;</span></a></code></pre>
 <ol>
 <li>The <code>__init__()</code> method is only going to be called once, when you instantiate the class and assign it to <var>rules</var>.
 <li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. You&#8217;ll read it later; no point doing more than you absolutely have to until absolutely necessary!
 <li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
 </ol>
 
-<p>Before we continue, let&#8217;s take a closer look at <var>rules_f</var>. It&#8217;s not defined within the <code>__init__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_f</var>), it is shared across all instances of the <code>LazyRules</code> class.
+<p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__init__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import plural6</kbd>
 <samp class=p>>>> </samp><kbd>r1 = plural6.LazyRules()</kbd>
 <samp class=p>>>> </samp><kbd>r2 = plural6.LazyRules()</kbd>
-<samp class=p>>>> </samp><kbd>r1.rules_f</kbd>                               <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>r1.rules_filename</kbd>                               <span>&#x2460;</span>
 <samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r2.rules_f</kbd>
+<samp class=p>>>> </samp><kbd>r2.rules_filename</kbd>
 <samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r1.__class__.rules_f</kbd>                     <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>r1.__class__.rules_filename</kbd>                     <span>&#x2461;</span>
 <samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r1.__class__.rules_f = 'papayawhip.txt'</kbd>  <span>&#x2462;</span>
-<samp class=p>>>> </samp><kbd>r1.rules_f</kbd>
+<samp class=p>>>> </samp><kbd>r1.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>r1.rules_filename</kbd>
 <samp>'papayawhip.txt'</samp>
-<samp class=p>>>> </samp><kbd>r2.rules_f</kbd>                               <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd>r2.rules_filename</kbd>                               <span>&#x2463;</span>
 <samp>'papayawhip.txt'</samp></pre>
 <ol>
 <li>FIXME
