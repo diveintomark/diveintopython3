@@ -157,8 +157,8 @@ td pre{padding:0;border:0}
 <li>The simplest form.
 <li>The <code>or</code> operator takes precedence over the <code>in</code> operator, so there is no need for parentheses here.
 <li>On the other hand, you <em>do</em> need parentheses here, for the same reason &mdash; <code>or</code> takes precedence over <code>in</code>.
-<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form needs parentheses too.
-<li>Again with the parentheses, for the same reason.
+<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form technically doesn&#8217;t need parentheses, but <code>2to3</code> includes them anyway.
+<li>This form definitely needs parentheses, since the <code>in</code> operator takes precedence over the <code>+</code> operator.
 </ol>
 <h2 id=dict>Dictionary methods that return lists</h2>
 <p>In Python 2, many dictionary methods returned lists. The most frequently used methods were <code>keys()</code>, <code>items()</code>, and <code>values()</code>. In Python 3, all of these methods return dynamic views. In some contexts, this is not a problem. If the method&#8217;s return value is immediately passed to another function that iterates through the entire sequence, it makes no difference whether the actual type is a list or a view. In other contexts, it matters a great deal. If you were expecting a complete list with individually addressable elements, your code will choke, because views do not support indexing.
