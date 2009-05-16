@@ -302,10 +302,10 @@ def plural(noun):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>def make_counter(x):</kbd>
-<samp class=p>... </samp><kbd>    print 'entering make_counter'</kbd>
+<samp class=p>... </samp><kbd>    print('entering make_counter')</kbd>
 <samp class=p>... </samp><kbd>    while True:</kbd>
 <a><samp class=p>... </samp><kbd>        yield x</kbd>                    <span>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>        print 'incrementing x'</kbd>
+<samp class=p>... </samp><kbd>        print('incrementing x')</kbd>
 <samp class=p>... </samp><kbd>        x = x + 1</kbd>
 <samp class=p>... </samp>
 <a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>          <span>&#x2461;</span></a>
