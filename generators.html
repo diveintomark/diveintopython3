@@ -276,7 +276,7 @@ finally:
 <ol>
 <li>The <code>build_match_and_apply_functions()</code> function has not changed. You&#8217;re still using closures to build two functions dynamically that use variables defined in the outer function.
 <li>Open the file that contains the pattern strings.
-<li>Read through the file one line at a time, using the <code>for line in &lt;fileobject&gt;</code> idiom.
+<li>Read through the file one line at a time, using the <code>for line in &lt;fileobject></code> idiom.
 <li>Each line in the file really has three values, but they&#8217;re separated by whitespace (tabs or spaces, it makes no difference). To split it out, use the <code>split()</code> string method. The first argument to the <code>split()</code> method is <code>None</code>, which means &#8220;split on any whitespace (tabs or spaces, it makes no difference).&#8221; The second argument is <code>3</code>, which means &#8220;split on whitespace 3 times, then discard the rest of the line.&#8221; A line like <code>[sxz]$ $ es</code> will be broken up into the list <code>['[sxz]$', '$', 'es']</code>, which means that <var>pattern</var> will get <code>'[sxz]$'</code>, <var>search</var> will get <code>'$'</code>, and <var>replace</var> will get <code>'es'</code>. That&#8217;s a lot of power in one little line of code.
 <li>Use a <code>try..finally</code> block to ensure the file object is closed.
 </ol>

@@ -11,7 +11,7 @@ $(document).ready(function() {
 		    pre.addClass("code");
 		}
 	    });
-	$("pre.code, pre.screen").each(function(i) {
+	$("pre.code:not(.nd), pre.screen:not(.nd)").each(function(i) {
 		this.id = "autopre" + i;
 		$(this).wrapInner('<div class=b></div>');
 		$(this).prepend('<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');

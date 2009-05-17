@@ -35,6 +35,10 @@ Classname Legend
 .q = "quote"    = quote at beginning of each chapter
 .f = "fancy"    = first paragraph of each chapter (gets a fancy drop-cap)
 .c = "centered" = centered footer text (also clears floats)
+.s = "simple"   = 
+
+.nm = "no mobile"     = hide this section on mobile devices
+.nd = "no decoration" = hide the widgets on this code block
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands

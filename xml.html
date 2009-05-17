@@ -89,9 +89,83 @@ mark{display:inline}
   &lt;/entry>
 &lt;/feed></code></pre>
  
+<h2 id=xml-intro>A 5-Minute Crash Course in XML</h2>
+
+<p>If you already know about XML, you can skip this section.
+
+<p>XML is a generalized way of describing hierarchical structured data. An XML <i>document</i> contains one or more <i>elements</i>, which are delimited by <i>start and end tags</i>. This is a complete (albeit boring) XML document:
+
+<pre class=nd><code><a>&lt;foo>   <span>&#x2460;</span></a>
+<a>&lt;/foo>  <span>&#x2461;</span></a></code></pre>
+<ol>
+<li>This is the <i>start tag</i> of the <code>foo</code> element.
+<li>This is the matching <i>end tag</i> of the <code>foo</code> element. Like balancing parentheses in writing or mathematics or code, every start tag much be <i>closed</i> (matched) by a corresponding end tag.
+</ol>
+
+<p>Elements can be <i>nested</i>. An element <code>bar</code> inside an element <code>foo</code> is said to be a <i>subelement</i> or <i>child</i> of <code>foo</code>.
+
+<pre class=nd><code>&lt;foo>
+  <mark>&lt;bar>&lt;/bar></mark>
+&lt;/foo>
+</code></pre>
+
+<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated on the same element (although they can appear on different elements). <i>Attribute values</i> must be quoted.
+
+<pre class=nd><code><a>&lt;foo <mark>lang="en"</mark>>     <span>&#x2460;</span></a>
+<a>  &lt;bar <mark>lang="fr"</mark>>&lt;/bar>  <span>&#x2461;</span></a>
+&lt;/foo>
+</code></pre>
+<ol>
+<li>The <code>foo</code> element has one attribute, named <code>lang</code>. The value of its <code>lang</code> attribute is <code>en</code>.
+<li>The <code>bar</code> element has one attribute, named <code>lang</code>. The value of its <code>lang</code> attribute is <code>fr</code>. This doesn&#8217;t conflict with the <code>foo</code> element in any way. Each element has its own set of attributes.
+</ol>
+
+<p>Elements can have <i>text content</i>.
+
+<pre class=nd><code>&lt;foo lang="en">
+  &lt;bar lang="fr"><mark>PapayaWhip</mark>&lt;/bar>
+&lt;/foo>
+</code></pre>
+
+<p>Elements that contain no text and no children are <i>empty</i>.
+
+<pre class=nd><code>&lt;foo>&lt;/foo></code></pre>
+
+<p>There is a shorthand for writing empty elements. By putting a <code>/</code> character in the start tag, you can skip the end tag altogther. The XML document in the previous example could be written like this instead:
+
+<pre class=nd><code>&lt;foo<mark>/</mark>></code></pre>
+
+<p>Like Python functions can be declared in different <i>modules</i>, XML elements can be declared in different <i>namespaces</i>. Namespaces usually look like URLs. You use an <code>xmlns</code> declaration to define a <i>default namespace</i>. A namespace declaration looks similar to an attribute, but it has a different purpose.
+
+<pre class=nd><a><code>&lt;feed <mark>xmlns="http://www.w3.org/2005/Atom"</mark>>  <span>&#x2460;</span></a>
+<a>  &lt;title>dive into mark&lt;/title>             <span>&#x2461;</span></a>
+&lt;/feed>
+</code></pre>
+<ol>
+<li>The <code>feed</code> element is in the <code>http://www.w3.org/2005/Atom</code> namespace.
+<li>The <code>title</code> element is also in the <code>http://www.w3.org/2005/Atom</code> namespace. The namespace declaration affects the element where it&#8217;s declared, plus all child elements.
+</ol>
+
+<p>You can also use an <code>xmlns:<var>prefix</var></code> declaration to define a namespace and associate it with a <i>prefix</i>. Then each element in that namespace must be explicitly declared with the prefix.
+
+<pre class=nd><a><code>&lt;atom:feed <mark>xmlns:atom="http://www.w3.org/2005/Atom"</mark>>  <span>&#x2460;</span></a>
+<a>  &lt;atom:title>dive into mark&lt;/atom:title>             <span>&#x2461;</span></a>
+&lt;/atom:feed>
+</code></pre>
+<ol>
+<li>The <code>feed</code> element is in the <code>http://www.w3.org/2005/Atom</code> namespace.
+<li>The <code>title</code> element is also in the <code>http://www.w3.org/2005/Atom</code> namespace.
+</ol>
+
+<p>As far as a namespace-aware XML parser is concerned, the previous two XML documents are <em>identical</em>. Namespace + element name = XML identity. Prefixes are irrelevant.
+
 <h2 id=xml-structure>The Structure Of An Atom Feed</h2>
 
-<p>FIXME
+<p>Think of a weblog, or in fact any website with frequently updated content, like <a href=http://www.cnn.com/>CNN.com</a>. The site itself has a title (&#8220;CNN.com&#8221;), a subtitle (&#8220;Breaking News, U.S., World, Weather, Entertainment <i class=baa>&amp;</i> Video News&#8221;), a last-updated date (&#8220;updated 12:43 p.m. EDT, Sat May 16, 2009&#8221;), and a list of articles posted at different times. Each article also has a title, a first-published date (and maybe also a last-updated date, if they published a correction or fixed a typo), and a unique URL.
+
+<p>The Atom syndication format is designed to capture all of this information in a standard format. My weblog and CNN.com are wildly different in design, scope, and audience, but they both have the same basic structure. CNN.com has a title; my blog has a title. CNN.com publishes articles; I publish articles.
+
+<p>At the top level is the &#8220;root&#8221; element, which every Atom feed shares: the <code>&lt;feed></code> element in the Atom namespace (<code>http://www.w3.org/2005/Atom</code>). ... FIXME
 
 <h2 id=xml-parse>Parsing XML</h2>
 
