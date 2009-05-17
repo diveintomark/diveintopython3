@@ -109,7 +109,7 @@ mark{display:inline}
 &lt;/foo>
 </code></pre>
 
-<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated on the same element (although they can appear on different elements). <i>Attribute values</i> must be quoted.
+<p>Elements can have <i>attributes</i>, which are name-value pairs. Order of attributes is not significant; an element&#8217;s attributes form an unordered set of keys and values, like a Python dictionary. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated on the same element (although they can appear on different elements). <i>Attribute values</i> must be quoted.
 
 <pre class=nd><code><a>&lt;foo <mark>lang="en"</mark>>     <span>&#x2460;</span></a>
 <a>  &lt;bar <mark>lang="fr"</mark>>&lt;/bar>  <span>&#x2461;</span></a>
@@ -157,7 +157,7 @@ mark{display:inline}
 <li>The <code>title</code> element is also in the <code>http://www.w3.org/2005/Atom</code> namespace.
 </ol>
 
-<p>As far as a namespace-aware XML parser is concerned, the previous two XML documents are <em>identical</em>. Namespace + element name = XML identity. Prefixes are irrelevant.
+<p>As far as an XML parser is concerned, the previous two XML documents are <em>identical</em>. Namespace + element name = XML identity. Prefixes only exist to refer to namespaces, so the actual prefix name (<code>atom:</code>) is irrelevant. The namespaces match, the element names match, the attributes (or lack of attributes) match, and each element&#8217;s text content matches, therefore the XML documents are the same.
 
 <h2 id=xml-structure>The Structure Of An Atom Feed</h2>
 
