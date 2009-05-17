@@ -109,9 +109,9 @@ mark{display:inline}
 &lt;/foo>
 </code></pre>
 
-<p>Elements can have <i>attributes</i>, which are name-value pairs. Order of attributes is not significant; an element&#8217;s attributes form an unordered set of keys and values, like a Python dictionary. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated on the same element (although they can appear on different elements). <i>Attribute values</i> must be quoted.
+<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated within an element. <i>Attribute values</i> must be quoted.
 
-<pre class=nd><code><a>&lt;foo <mark>lang="en"</mark>>     <span>&#x2460;</span></a>
+<pre class=nd><code><a>&lt;foo <mark>lang="en"</mark>>          <span>&#x2460;</span></a>
 <a>  &lt;bar <mark>lang="fr"</mark>>&lt;/bar>  <span>&#x2461;</span></a>
 &lt;/foo>
 </code></pre>
@@ -119,6 +119,8 @@ mark{display:inline}
 <li>The <code>foo</code> element has one attribute, named <code>lang</code>. The value of its <code>lang</code> attribute is <code>en</code>.
 <li>The <code>bar</code> element has one attribute, named <code>lang</code>. The value of its <code>lang</code> attribute is <code>fr</code>. This doesn&#8217;t conflict with the <code>foo</code> element in any way. Each element has its own set of attributes.
 </ol>
+
+<p>If an element has more than one attribute, the ordering of the attributes is not significant. An element&#8217;s attributes form an unordered set of keys and values, like a Python dictionary. 
 
 <p>Elements can have <i>text content</i>.
 
