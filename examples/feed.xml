@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  <title type="text">dive into mark</title>
-  <subtitle type="text">currently between addictions</subtitle>
+  <title>dive into mark</title>
+  <subtitle>currently between addictions</subtitle>
   <id>tag:diveintomark.org,2001-07-29:/</id>
   <updated>2009-03-27T21:56:07Z</updated>
   <link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  <link rel="self" href="http://diveintomark.org/feed/" type="application/atom+xml"/>
   <entry>
     <author>
       <name>Mark</name>
       <uri>http://diveintomark.org/</uri>
     </author>
-    <title type="html"><![CDATA[Dive into history, 2009 edition]]></title>
+    <title>Dive into history, 2009 edition</title>
     <link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition"/>
     <id>tag:diveintomark.org,2009-03-27:/archives/20090327172042</id>
@@ -20,16 +19,17 @@
     <category scheme="http://diveintomark.org" term="diveintopython"/>
     <category scheme="http://diveintomark.org" term="docbook"/>
     <category scheme="http://diveintomark.org" term="html"/>
-    <summary type="html">Putting an entire chapter on one page sounds bloated, but
-      consider this: my longest chapter so far would be 75 printed pages, and it
-      loads in under 5 seconds. On dialup.</summary>
+    <summary type="html">Putting an entire chapter on one page sounds
+    bloated, but consider this &amp;mdash; my longest chapter so far
+    would be 75 printed pages, and it loads in under 5 seconds&amp;hellip;
+    On dialup.&lt;/summary>
   </entry>
   <entry>
     <author>
       <name>Mark</name>
       <uri>http://diveintomark.org/</uri>
     </author>
-    <title type="html"><![CDATA[Accessibility is a harsh mistress]]></title>
+    <title>Accessibility is a harsh mistress</title>
     <link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress"/>
     <id>tag:diveintomark.org,2009-03-21:/archives/20090321200928</id>
@@ -44,8 +44,7 @@
       <name>Mark</name>
       <uri>http://diveintomark.org/</uri>
     </author>
-    <title type="html"><![CDATA[A gentle introduction to video encoding,
-      part 1: container formats]]></title>
+    <title>A gentle introduction to video encoding, part 1: container formats</title>
     <link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats"/>
     <id>tag:diveintomark.org,2008-12-18:/archives/20081218155422</id>

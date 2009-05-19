@@ -25,18 +25,18 @@ mark{display:inline}
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre><code>&lt;?xml version="1.0" encoding="utf-8"?>
 &lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  &lt;title type="text">dive into mark&lt;/title>
-  &lt;subtitle type="text">currently between addictions&lt;/subtitle>
+  &lt;title>dive into mark&lt;/title>
+  &lt;subtitle>currently between addictions&lt;/subtitle>
   &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
   &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
   &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  &lt;link rel="self" href="http://diveintomark.org/feed/" type="application/atom+xml"/>
+  &lt;link rel="self" type="application/atom+xml" href="http://diveintomark.org/feed/"/>
   &lt;entry>
     &lt;author>
       &lt;name>Mark&lt;/name>
       &lt;uri>http://diveintomark.org/&lt;/uri>
     &lt;/author>
-    &lt;title type="html">&lt;![CDATA[Dive into history, 2009 edition]]>&lt;/title>
+    &lt;title>Dive into history, 2009 edition&lt;/title>
     &lt;link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition"/>
     &lt;id>tag:diveintomark.org,2009-03-27:/archives/20090327172042&lt;/id>
@@ -45,16 +45,17 @@ mark{display:inline}
     &lt;category scheme="http://diveintomark.org" term="diveintopython"/>
     &lt;category scheme="http://diveintomark.org" term="docbook"/>
     &lt;category scheme="http://diveintomark.org" term="html"/>
-    &lt;summary type="html">Putting an entire chapter on one page sounds bloated, but
-      consider this: my longest chapter so far would be 75 printed pages, and it
-      loads in under 5 seconds. On dialup.&lt;/summary>
+  &lt;summary type="html">Putting an entire chapter on one page sounds
+    bloated, but consider this &amp;amp;mdash; my longest chapter so far
+    would be 75 printed pages, and it loads in under 5 seconds&amp;amp;hellip;
+    On dialup.&lt;/summary>
   &lt;/entry>
   &lt;entry>
     &lt;author>
       &lt;name>Mark&lt;/name>
       &lt;uri>http://diveintomark.org/&lt;/uri>
     &lt;/author>
-    &lt;title type="html">&lt;![CDATA[Accessibility is a harsh mistress]]>&lt;/title>
+    &lt;title>Accessibility is a harsh mistress&lt;/title>
     &lt;link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress"/>
     &lt;id>tag:diveintomark.org,2009-03-21:/archives/20090321200928&lt;/id>
@@ -69,8 +70,7 @@ mark{display:inline}
       &lt;name>Mark&lt;/name>
       &lt;uri>http://diveintomark.org/&lt;/uri>
     &lt;/author>
-    &lt;title type="html">&lt;![CDATA[A gentle introduction to video encoding,
-      part 1: container formats]]>&lt;/title>
+    &lt;title>A gentle introduction to video encoding, part 1: container formats&lt;/title>
     &lt;link rel="alternate" type="text/html"
       href="http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats"/>
     &lt;id>tag:diveintomark.org,2008-12-18:/archives/20081218155422&lt;/id>
@@ -102,14 +102,19 @@ mark{display:inline}
 <li>This is the matching <i>end tag</i> of the <code>foo</code> element. Like balancing parentheses in writing or mathematics or code, every start tag much be <i>closed</i> (matched) by a corresponding end tag.
 </ol>
 
-<p>Elements can be <i>nested</i>. An element <code>bar</code> inside an element <code>foo</code> is said to be a <i>subelement</i> or <i>child</i> of <code>foo</code>.
+<p>Elements can be <i>nested</i> to any depth. An element <code>bar</code> inside an element <code>foo</code> is said to be a <i>subelement</i> or <i>child</i> of <code>foo</code>.
 
 <pre class=nd><code>&lt;foo>
   <mark>&lt;bar>&lt;/bar></mark>
 &lt;/foo>
 </code></pre>
 
-<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element. <i>Attribute names</i> can not be repeated within an element. <i>Attribute values</i> must be quoted.
+<p>The first element in every XML document is called the <i>root element</i>. An XML document can only have one root element. The following is <strong>not an XML document</strong>, because it has two root elements:
+
+<pre class=nd><code>&lt;foo>&lt;/foo>
+&lt;bar>&lt;/bar></code></pre>
+
+<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element and separated by whitespace. <i>Attribute names</i> can not be repeated within an element. <i>Attribute values</i> must be quoted.
 
 <pre class=nd><code><a>&lt;foo <mark>lang="en"</mark>>          <span>&#x2460;</span></a>
 <a>  &lt;bar <mark>lang="fr"</mark>>&lt;/bar>  <span>&#x2461;</span></a>
@@ -161,13 +166,83 @@ mark{display:inline}
 
 <p>As far as an XML parser is concerned, the previous two XML documents are <em>identical</em>. Namespace + element name = XML identity. Prefixes only exist to refer to namespaces, so the actual prefix name (<code>atom:</code>) is irrelevant. The namespaces match, the element names match, the attributes (or lack of attributes) match, and each element&#8217;s text content matches, therefore the XML documents are the same.
 
+<p>Finally, XML documents can contain <a href=strings.html#one-ring-to-rule-them-all>character encoding information</a> on the first line, before the root element. (If you&#8217;re curious how a document can contain information which needs to be known before the document can be parsed, <a href=http://www.w3.org/TR/REC-xml/#sec-guessing-no-ext-info>Section F of the XML specification</a> details how to resolve this Catch-22.)
+
+<pre class=nd><code>&lt;?xml version="1.0" <mark>encoding="utf-8"</mark>?></code></pre>
+
+<p>And now you know just enough XML to be dangerous!
+
 <h2 id=xml-structure>The Structure Of An Atom Feed</h2>
 
 <p>Think of a weblog, or in fact any website with frequently updated content, like <a href=http://www.cnn.com/>CNN.com</a>. The site itself has a title (&#8220;CNN.com&#8221;), a subtitle (&#8220;Breaking News, U.S., World, Weather, Entertainment <i class=baa>&amp;</i> Video News&#8221;), a last-updated date (&#8220;updated 12:43 p.m. EDT, Sat May 16, 2009&#8221;), and a list of articles posted at different times. Each article also has a title, a first-published date (and maybe also a last-updated date, if they published a correction or fixed a typo), and a unique URL.
 
 <p>The Atom syndication format is designed to capture all of this information in a standard format. My weblog and CNN.com are wildly different in design, scope, and audience, but they both have the same basic structure. CNN.com has a title; my blog has a title. CNN.com publishes articles; I publish articles.
 
-<p>At the top level is the &#8220;root&#8221; element, which every Atom feed shares: the <code>&lt;feed></code> element in the Atom namespace (<code>http://www.w3.org/2005/Atom</code>). ... FIXME
+<p>At the top level is the <i>root element</i>, which every Atom feed shares: the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace.
+
+<pre class=nd><code>
+<a>&lt;feed xmlns="http://www.w3.org/2005/Atom"  <span>&#x2460;</span></a>
+<a>      xml:lang="en">                       <span>&#x2461;</span></a></code></pre>
+<ol>
+<li><code>http://www.w3.org/2005/Atom</code> is the Atom namespace.
+<li>Any element can contain an <code>xml:lang</code> attribute, which declares the language of the element and its children. In this case, the <code>xml:lang</code> attribute is declared once on the root element, which means the entire feed is in English.
+</ol>
+
+<p>An Atom feed contains several pieces of information about the feed itself. These are declared as children of the root-level <code>feed</code> element.
+
+<pre class=nd><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<a>  &lt;title>dive into mark&lt;/title>                                             <span>&#x2460;</span></a>
+<a>  &lt;subtitle>currently between addictions&lt;/subtitle>                         <span>&#x2461;</span></a>
+<a>  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>                                <span>&#x2462;</span></a>
+<a>  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>                                   <span>&#x2463;</span></a>
+<a>  &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>  <span>&#x2464;</span></a></code></pre>
+<ol>
+<li>The title of this feed is <code>dive into mark</code>. 
+<li>The subtitle of this feed is <code>currently between addictions</code>.
+<li>Every feed needs a globally unique identifier. See <a href=http://www.ietf.org/rfc/rfc4151.txt>RFC 4151</a> for how to create one.
+<li>This feed was last updated on March 27, 2009, at 21:56 GMT. This is usually equivalent to the last-modified date of the most recent article.
+<li>Now things start to get interesting. This <code>link</code> element has no text content, but it has three attributes: <code>rel</code>, <code>type</code>, and <code>href</code>. The <code>rel</code> value tells you what kind of link this is; <code>rel="alternate"</code> means that this is a link to an alternate representation of this feed. The <code>type="text/html"</code> attribute means that this is a link to an HTML page. And the link target is given in the <code>href</code> attribute.
+</ol>
+
+<p>Now we know that this is a feed for a site named &#8220;dive into mark&#8220; which is available at <a href=http://diveintomark.org/><code>http://diveintomark.org/</code></a> and was last updated on March 27, 2009.
+
+<blockquote class=note>
+<p><span>&#x261E;</span>Although the order of elements can be relevant in some XML documents, it is not relevant in an Atom feed.
+</blockquote>
+
+<p>After the feed-level metadata is the list of the most recent articles. An article looks like this:
+
+<pre class=nd><code>&lt;entry>
+<a>  &lt;author>                                                                 <span>&#x2460;</span></a>
+    &lt;name>Mark&lt;/name>
+    &lt;uri>http://diveintomark.org/&lt;/uri>
+  &lt;/author>
+<a>  &lt;title>Dive into history, 2009 edition&lt;/title>                           <span>&#x2461;</span></a>
+<a>  &lt;link rel="alternate" type="text/html"                                   <span>&#x2462;</span></a>
+    href="http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition"/>
+<a>  &lt;id>tag:diveintomark.org,2009-03-27:/archives/20090327172042&lt;/id>        <span>&#x2463;</span></a>
+<a>  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>                                  <span>&#x2464;</span></a>
+  &lt;published>2009-03-27T17:20:42Z&lt;/published>        
+<a>  &lt;category scheme="http://diveintomark.org" term="diveintopython"/>       <span>&#x2465;</span></a>
+  &lt;category scheme="http://diveintomark.org" term="docbook"/>
+  &lt;category scheme="http://diveintomark.org" term="html"/>
+<a>  &lt;summary type="html">Putting an entire chapter on one page sounds        <span>&#x2466;</span></a>
+    bloated, but consider this &amp;amp;mdash; my longest chapter so far
+    would be 75 printed pages, and it loads in under 5 seconds&amp;amp;hellip;
+    On dialup.&lt;/summary>
+<a>&lt;/entry>                                                                   <span>&#x2467;</span></a></code></pre>
+<ol>
+<li>The <code>author</code> element tells who wrote this article: some guy named Mark, whom you can find loafing at <code>http://diveintomark.org/</code>. (This is the same as the alternate link in the feed metadata, but it doesn&#8217;t have to be. Many weblogs have multiple authors, each with their own personal website.)
+<li>The <code>title</code> element gives the title of the article, &#8220;Dive into history, 2009 edition&#8221;.
+<li>As with the feed-level alternate link, this <code>link</code> element gives the address of the HTML version of this article.
+<li>Entries, like feeds, need a unique identifier.
+<li>Entries have two dates: a first-published date (<code>published</code>) and a last-modified date (<code>updated</code>).
+<li>Entries can have an arbitrary number of categories. This article is filed under <code>diveintopython</code>, <code>docbook</code>, and <code>html</code>.
+<li>The <code>summary</code> element gives a brief summary of the article. (There is also a <code>content</code> element, not shown here, if you want to include the complete article text in your feed.) This <code>summary</code> element has the Atom-specific <code>type="html"</code> attribute, which specifies that this summary is a snippet of HTML, not plain text. This is important, since it has HTML-specific entities in it (<code>&amp;mdash;</code> and <code>&amp;hellip;</code>) which should be rendered as &#8220;&mdash;&#8221; and &#8220;&hellip;&#8221; rather than displayed directly.
+<li>Finally, the end tag for the <code>entry</code> element, signaling the end of the metadata for this article.
+</ol>
+
+<p>
 
 <h2 id=xml-parse>Parsing XML</h2>
 
@@ -322,7 +397,7 @@ from here on out, use lxml.etree explicitly because these functions are specific
 &lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into mark&lt;/title>&lt;/feed>
 >>> print(lxml.etree.tounicode(new_feed, pretty_print=True))
 &lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  &lt;title type="html">dive into mark&lt;/title>
+&lt;title type="html">dive into mark&lt;/title>
 &lt;/feed>
 </pre>
 
