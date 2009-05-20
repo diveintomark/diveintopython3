@@ -55,7 +55,7 @@ Acknowledgements & Inspirations
 */
 
 /* typography */
-body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,Jara,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
+body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
 pre,kbd,samp,code,var{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
 span{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 pre span{font-family:'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
