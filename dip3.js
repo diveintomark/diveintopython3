@@ -20,7 +20,7 @@ $(document).ready(function() {
 			$(this).next("pre").find("div.w").append(" " + $(this).html());
 			this.parentNode.removeChild(this);
 		    });
-		
+
 		/* create skip links */
 		var postelm = $(this).next().get(0);
 		var postid = postelm.id || ("postautopre" + i);

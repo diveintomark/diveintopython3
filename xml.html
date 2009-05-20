@@ -14,7 +14,7 @@ mark{display:inline}
 <p id=level>Difficulty level: <span title=beginner>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
 <h1>XML</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+<p><span>&#x275D;</span> In the archonship of Aristaechmus, Draco enacted his ordinances. <span>&#x275E;</span><br>&mdash; <a href="http://www.perseus.tufts.edu/cgi-bin/ptext?doc=Perseus:text:1999.01.0046;query=chapter%3D%235;layout=;loc=3.1">Aristotle</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -270,39 +270,67 @@ mark{display:inline}
 
 <pre class=screen>
 # continued from the previous example
-<samp class=p>>>> </samp><kbd>root.tag</kbd>
+<a><samp class=p>>>> </samp><kbd>root.tag</kbd>                        <span>&#x2460;</span></a>
 <samp>'{http://www.w3.org/2005/Atom}feed'</samp>
-<samp class=p>>>> </samp><kbd>len(root)</kbd>
-<samp>9</kbd>
-<samp class=p>>>> </samp><kbd>for child in root:</kbd>
-<samp class=p>... </samp><kbd>  print(child)</kbd>
+<a><samp class=p>>>> </samp><kbd>len(root)</kbd>                       <span>&#x2461;</span></a>
+<samp>8</samp>
+<a><samp class=p>>>> </samp><kbd>for child in root:</kbd>              <span>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd>  print(child)</kbd>                  <span>&#x2463;</span></a>
 <samp class=p>... </samp>
 <samp>&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
 &lt;Element {http://www.w3.org/2005/Atom}subtitle at e2b4e0>
 &lt;Element {http://www.w3.org/2005/Atom}id at e2b6c0>
 &lt;Element {http://www.w3.org/2005/Atom}updated at e2b6f0>
-&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>
 &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>
 &lt;Element {http://www.w3.org/2005/Atom}entry at e2b720>
 &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>
 &lt;Element {http://www.w3.org/2005/Atom}entry at e2b750></samp></pre>
+<ol>
+<li>Continuing from the previous example, the root element is <code>{http://www.w3.org/2005/Atom}feed</code>.
+<li>The &#8220;length&#8221; of the root element is the number of child elements.
+<li>You can use the element itself as an iterator to loop through all of its child elements.
+<li>As you can see from the output, there are indeed 8 child elements: all of the feed-level metadata (<code>title</code>, <code>subtitle</code>, <code>id</code>, <code>updated</code>, and <code>link</code>) followed by the three <code>entry</code> elements.
+</ol>
+
+<p>You may have guessed this already, but I want to point it out explicitly: the list of child elements only includes <em>direct</em> children. Each of the <code>entry</code> elements contain their own children, but those are not included in the list. They would be included in the list of each <code>entry</code>&#8217;s children, but they are not included in the list of the <code>feed</code>&#8217;s children. There are ways to find elements no matter how deeply nested they are; we&#8217;ll look at two such ways later in this chapter.
 
 <h3 id=xml-attributes>Attributes Are Dictonaries</h3>
 
-<p>FIXME
+<p>XML isn&#8217;t just a collection of elements; each element can also have its own set of attributes. Once you have a reference to a specific element, you can easily get its attributes as a Python dictionary.
 
+<p>To refresh your memory, here is the first few lines of <code>feed.xml</code>, the XML document we&#8217;re working with.
+
+<pre><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  &lt;title>dive into mark&lt;/title>
+  &lt;subtitle>currently between addictions&lt;/subtitle>
+  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
+  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
+  &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
+  &lt;link rel="self" type="application/atom+xml" href="http://diveintomark.org/feed/"/>
+...</code></pre>
 <pre class=screen>
->>> root.attrib
-{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}
->>> root[4]
-&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>
->>> root[4].attrib
-{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
->>> root[3]
-&lt;Element {http://www.w3.org/2005/Atom}updated at e2b4e0>
->>> root[3].attrib
-{}
-</pre>
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+FIXME
+# continuing from the previous example
+<a><samp class=p>>>> </samp><kbd>root.attrib</kbd>                           <span>&#x2460;</span></a>
+<samp>{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}</samp>
+<a><samp class=p>>>> </samp><kbd>root[4]</kbd>                               <span>&#x2461;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at e181b0></samp>
+<a><samp class=p>>>> </samp><kbd>root[4].attrib</kbd>                        <span>&#x2462;</span></a>
+<samp>{'href': 'http://diveintomark.org/',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<a><samp class=p>>>> </samp><kbd>root[3]</kbd>                               <span>&#x2463;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}updated at e2b4e0></samp>
+<a><samp class=p>>>> </samp><kbd>root[3].attrib</kbd>                        <span>&#x2464;</span></a>
+<samp>{}</samp></pre>
+<ol>
+<li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns
+<li>
+<li>
+<li>
+<li>
+</ol>
 
 <h2 id=xml-find>Searching For Nodes Within An XML Document</h2>
 

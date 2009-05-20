@@ -17,8 +17,8 @@ body{counter-reset:h1 8}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>(Not) Diving In</h2>
-<p class=f>In this chapter, you&#8217;re going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href="regular-expressions.html#romannumerals">&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
-<p><a href="regular-expressions.html#romannumerals">The rules for Roman numerals</a> lead to a number of interesting observations:
+<p class=f>In this chapter, you&#8217;re going to write and debug a set of utility functions to convert to and from Roman numerals. You saw the mechanics of constructing and validating Roman numerals in <a href=regular-expressions.html#romannumerals>&#8220;Case study: roman numerals&#8221;</a>. Now step back and consider what it would take to expand that into a two-way utility.
+<p><a href=regular-expressions.html#romannumerals>The rules for Roman numerals</a> lead to a number of interesting observations:
 <ol>
 <li>There is only one correct way to represent a particular number as a Roman numeral.
 <li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number (that is, it can only be interpreted one way).
@@ -249,7 +249,7 @@ OK</samp></pre>
 <li>The <code>unittest.TestCase</code> class provides the <code>assertRaises</code> method, which takes the following arguments: the exception you&#8217;re expecting, the function you&#8217;re testing, and the arguments you&#8217;re passing to that function. (If the function you&#8217;re testing takes more than one argument, pass them all to <code>assertRaises</code>, in order, and it will pass them right along to the function you&#8217;re testing.)
 </ol>
 <p>Pay close attention to this last line of code. Instead of calling <code>to_roman()</code> directly and manually checking that it raises a particular exception (by wrapping it in a <code>try...except</code> block [FIXME xref]), the <code>assertRaises</code> method has encapsulated all of that for us. All you do is tell it what exception you&#8217;re expecting (<code>roman2.OutOfRangeError</code>), the function (<code>to_roman()</code>), and the function&#8217;s arguments (<code>4000</code>). The <code>assertRaises</code> method takes care of calling <code>to_roman()</code> and checking that it raises <code>roman2.OutOfRangeError</code>.
-<p>Also note that you&#8217;re passing the <code>to_roman()</code> function itself as an argument; you&#8217;re not calling it, and you&#8217;re not passing the name of it as a string. Have I mentioned recently how handy it is that <a href="your-first-python-program.html#everythingisanobject">everything in Python is an object</a>?
+<p>Also note that you&#8217;re passing the <code>to_roman()</code> function itself as an argument; you&#8217;re not calling it, and you&#8217;re not passing the name of it as a string. Have I mentioned recently how handy it is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>?
 <p>So what happens when you run the test suite with this new test?
 <pre class=screen>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest2.py -v</kbd>

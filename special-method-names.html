@@ -218,7 +218,7 @@ AttributeError</samp></pre>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__call__><code>my_instance.__call__()</code></a>
 </table>
 
-<p>The <a href="http://docs.python.org/3.0/library/zipfile.html"><code>zipfile</code> module</a> uses this to define a class that can decrypt an encrypted zip file with a given password. The zip decryption algorithm requires you to store state during decryption. Defining the decryptor as a class allows you to maintain this state within a single instance of the decryptor class.  The state is initialized in the <code>__init__()</code> method and updated as the file is decrypted. But since the class is also &#8220;callable&#8221; like a function, you can pass the instance as the first argument of the <code>map()</code> function, like so:
+<p>The <a href=http://docs.python.org/3.0/library/zipfile.html><code>zipfile</code> module</a> uses this to define a class that can decrypt an encrypted zip file with a given password. The zip decryption algorithm requires you to store state during decryption. Defining the decryptor as a class allows you to maintain this state within a single instance of the decryptor class.  The state is initialized in the <code>__init__()</code> method and updated as the file is decrypted. But since the class is also &#8220;callable&#8221; like a function, you can pass the instance as the first argument of the <code>map()</code> function, like so:
 
 <pre><code>
 # excerpt from zipfile.py
