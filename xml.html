@@ -298,19 +298,7 @@ mark{display:inline}
 
 <p>XML isn&#8217;t just a collection of elements; each element can also have its own set of attributes. Once you have a reference to a specific element, you can easily get its attributes as a Python dictionary.
 
-<p>To refresh your memory, here is the first few lines of <code>feed.xml</code>, the XML document we&#8217;re working with.
-
-<pre><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  &lt;title>dive into mark&lt;/title>
-  &lt;subtitle>currently between addictions&lt;/subtitle>
-  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
-  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
-  &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  &lt;link rel="self" type="application/atom+xml" href="http://diveintomark.org/feed/"/>
-...</code></pre>
 <pre class=screen>
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-FIXME
 # continuing from the previous example
 <a><samp class=p>>>> </samp><kbd>root.attrib</kbd>                           <span>&#x2460;</span></a>
 <samp>{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}</samp>
@@ -325,11 +313,11 @@ FIXME
 <a><samp class=p>>>> </samp><kbd>root[3].attrib</kbd>                        <span>&#x2464;</span></a>
 <samp>{}</samp></pre>
 <ol>
-<li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns
-<li>
-<li>
-<li>
-<li>
+<li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"></code>. The <code>xml:</code> prefix refers to a built-in namespace that every XML document can use without declaring it.
+<li>The fifth child &mdash; <code>[4]</code> in a <code>0</code>-based list &mdash; is the <code>link</code> element.
+<li>The <code>link</code> element has three attributes: <code>href</code>, <code>type</code>, and <code>rel</code>.
+<li>The fourth child &mdash; <code>[3]</code> in a <code>0</code>-based list &mdash; is the <code>updated</code> element.
+<li>The <code>updated</code> element has no attributes, so its <code>.attrib</code> is just an empty dictionary.
 </ol>
 
 <h2 id=xml-find>Searching For Nodes Within An XML Document</h2>
