@@ -244,20 +244,29 @@ mark{display:inline}
 
 <h2 id=xml-parse>Parsing XML</h2>
 
-<p>Python comes with an efficient XML parsing library called Etree.
+<p>Python can parse XML documents in several ways. It has traditional <a href=http://en.wikipedia.org/wiki/XML#DOM>DOM</a> and <a href=http://en.wikipedia.org/wiki/Simple_API_for_XML>SAX</a> parsers, but I will focus on a different library called Etree.
 
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre class=screen>
->>> import xml.etree.ElementTree as etree
->>> tree = etree.parse("examples/feed.xml")
->>> root = tree.getroot()
->>> root
-&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0>
-</pre>
+<a><samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>    <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>tree = etree.parse("examples/feed.xml")</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>root = tree.getroot()</kbd>                    <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>root</kbd>                                     <span>&#x2463;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
+<ol>
+<li>The Etree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
+<li>The primary entry point for the Etree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an XML document incrementally instead.
+<li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
+<li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an XML element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
+</ol>
+
+<blockquote class=note>
+<p><span>&#x261E;</span>Etree represents XML elements as <code>{<var>namespace</var>}<var>localname</var></code>. You&#8217;ll see and use this format in multiple places in the Etree library.
+</blockquote>
 
 <h3 id=xml-elements>Elements Are Lists</h3>
 
-<p>FIXME
+<p>In Etree, an element acts like a list. The items of the list are the element&#8217;s children.
 
 <pre class=screen>
 >>> root.tag

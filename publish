@@ -7,7 +7,7 @@ cp robots.txt *.js *.css build/
 rm -f examples/*.pyc
 cp -R examples build/
 
-# minimize HTML (note: this script is quite fragile and relies on knowledge of how I write HTML)
+# minimize HTML (XXX this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
   python htmlminimizer.py "$f" build/"$f"
 done
@@ -41,7 +41,7 @@ sed -i -e "s|<link rel=stylesheet type=text/css media='only screen and (max-devi
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
 sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
 
-# images will be served from a separate domain
+# images would be served from a separate domain if we had any, which we currently don't
 #sed -i -e "s|bsb.png|http://wearehugh.com/dip3/bsb.png|g" build/*.html
 
 # minimize URLs
