@@ -269,14 +269,15 @@ mark{display:inline}
 <p>In Etree, an element acts like a list. The items of the list are the element&#8217;s children.
 
 <pre class=screen>
->>> root.tag
-'{http://www.w3.org/2005/Atom}feed'
->>> len(root)
-9
->>> for child in root:
-...   print(child)
-...
-&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd>root.tag</kbd>
+<samp>'{http://www.w3.org/2005/Atom}feed'</samp>
+<samp class=p>>>> </samp><kbd>len(root)</kbd>
+<samp>9</kbd>
+<samp class=p>>>> </samp><kbd>for child in root:</kbd>
+<samp class=p>... </samp><kbd>  print(child)</kbd>
+<samp class=p>... </samp>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
 &lt;Element {http://www.w3.org/2005/Atom}subtitle at e2b4e0>
 &lt;Element {http://www.w3.org/2005/Atom}id at e2b6c0>
 &lt;Element {http://www.w3.org/2005/Atom}updated at e2b6f0>
@@ -284,8 +285,7 @@ mark{display:inline}
 &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>
 &lt;Element {http://www.w3.org/2005/Atom}entry at e2b720>
 &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>
-&lt;Element {http://www.w3.org/2005/Atom}entry at e2b750>
-</pre>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b750></samp></pre>
 
 <h3 id=xml-attributes>Attributes Are Dictonaries</h3>
 
