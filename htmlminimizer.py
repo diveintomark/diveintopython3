@@ -9,6 +9,8 @@ out = open(output_file, 'w', encoding="utf-8") # encoding argument! important!
 for line in open(input_file).readlines():
     # replace entities with Unicode characters
     for e in re.findall('&(.+?);', line):
+        if e in ('lt', 'gt', 'amp'):
+            continue
         n = html.entities.name2codepoint.get(e)
         if not n:
             if e.count('#x'):
