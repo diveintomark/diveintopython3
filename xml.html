@@ -242,12 +242,11 @@ mark{display:inline}
 <li>Finally, the end tag for the <code>entry</code> element, signaling the end of the metadata for this article.
 </ol>
 
-<p>
-
 <h2 id=xml-parse>Parsing XML</h2>
 
-<p>FIXME
+<p>Python comes with an efficient XML parsing library called Etree.
 
+<p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre class=screen>
 >>> import xml.etree.ElementTree as etree
 >>> tree = etree.parse("examples/feed.xml")
