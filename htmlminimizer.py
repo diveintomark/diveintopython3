@@ -6,7 +6,7 @@ input_file = sys.argv[1]
 output_file = sys.argv[2]
 in_pre = False
 out = open(output_file, 'w', encoding="utf-8") # encoding argument! important!
-for line in open(input_file).readlines():
+for line in open(input_file, encoding="utf-8").readlines():
     # replace entities with Unicode characters
     for e in re.findall('&(.+?);', line):
         if e in ('lt', 'gt', 'amp', 'quot', 'apos', 'nbsp'):
