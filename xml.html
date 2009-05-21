@@ -144,7 +144,7 @@ mark{display:inline}
 
 <p>Like Python functions can be declared in different <i>modules</i>, XML elements can be declared in different <i>namespaces</i>. Namespaces usually look like URLs. You use an <code>xmlns</code> declaration to define a <i>default namespace</i>. A namespace declaration looks similar to an attribute, but it has a different purpose.
 
-<pre class=nd><a><code>&lt;feed <mark>xmlns="http://www.w3.org/2005/Atom"</mark>>  <span>&#x2460;</span></a>
+<pre class=nd><code><a>&lt;feed <mark>xmlns="http://www.w3.org/2005/Atom"</mark>>  <span>&#x2460;</span></a>
 <a>  &lt;title>dive into mark&lt;/title>             <span>&#x2461;</span></a>
 &lt;/feed>
 </code></pre>
@@ -179,8 +179,7 @@ mark{display:inline}
 
 <p>At the top level is the <i>root element</i>, which every Atom feed shares: the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace.
 
-<pre><code>
-<a>&lt;feed xmlns="http://www.w3.org/2005/Atom"  <span>&#x2460;</span></a>
+<pre><code><a>&lt;feed xmlns="http://www.w3.org/2005/Atom"  <span>&#x2460;</span></a>
 <a>      xml:lang="en">                       <span>&#x2461;</span></a></code></pre>
 <ol>
 <li><code>http://www.w3.org/2005/Atom</code> is the Atom namespace.
