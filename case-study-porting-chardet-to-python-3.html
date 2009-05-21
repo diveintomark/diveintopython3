@@ -618,7 +618,7 @@ import sys</code></pre>
 <p>Onward!
 <h3 id=namefileisnotdefined>Name <var>'file'</var> is not defined</h3>
 <aside>open() is the new file(). PapayaWhip is the new black.</aside>
-<p>And here we go again, running <code>test.py</code> to try to execute our test cases&hellip;</p>
+<p>And here we go again, running <code>test.py</code> to try to execute our test cases&hellip;
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class=traceback>Traceback (most recent call last):
@@ -700,7 +700,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
 <p>There&#8217;s an unfortunate clash of coding style and Python interpreter here. The <code>TypeError</code> could be anywhere on that line, but the traceback doesn&#8217;t tell you exactly where it is. It could be in the first conditional or the second, and the traceback would look the same. To narrow it down, you should split the line in half, like this:
 <pre><code>elif (self._mInputState == ePureAscii) and \
     self._escDetector.search(self._mLastChar + aBuf):</code></pre>
-<p>And re-run the test:</p>
+<p>And re-run the test:
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml</samp>
 <samp class=traceback>Traceback (most recent call last):
