@@ -180,7 +180,7 @@ mark{display:inline}
 
 <p>At the top level is the <i>root element</i>, which every Atom feed shares: the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace.
 
-<pre class=nd><code>
+<pre><code>
 <a>&lt;feed xmlns="http://www.w3.org/2005/Atom"  <span>&#x2460;</span></a>
 <a>      xml:lang="en">                       <span>&#x2461;</span></a></code></pre>
 <ol>
@@ -190,7 +190,7 @@ mark{display:inline}
 
 <p>An Atom feed contains several pieces of information about the feed itself. These are declared as children of the root-level <code>feed</code> element.
 
-<pre class=nd><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<pre><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <a>  &lt;title>dive into mark&lt;/title>                                             <span>&#x2460;</span></a>
 <a>  &lt;subtitle>currently between addictions&lt;/subtitle>                         <span>&#x2461;</span></a>
 <a>  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>                                <span>&#x2462;</span></a>
@@ -212,7 +212,7 @@ mark{display:inline}
 
 <p>After the feed-level metadata is the list of the most recent articles. An article looks like this:
 
-<pre class=nd><code>&lt;entry>
+<pre><code>&lt;entry>
 <a>  &lt;author>                                                                 <span>&#x2460;</span></a>
     &lt;name>Mark&lt;/name>
     &lt;uri>http://diveintomark.org/&lt;/uri>
@@ -325,62 +325,96 @@ mark{display:inline}
 <p>FIXME
 
 <pre class=screen>
->>> tree.findall("{http://www.w3.org/2005/Atom}entry")
-[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>, &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>, &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]
+<samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd>tree = etree.parse("examples/feed.xml")</kbd>
+<samp class=p>>>> </samp><kbd>tree.findall("{http://www.w3.org/2005/Atom}entry")</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp></pre>
 
->>> feed_links = tree.findall("{http://www.w3.org/2005/Atom}link")
->>> feed_links
-[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>]
->>> feed_links[0].attrib
-{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
->>> feed_links[1].attrib
-{'href': 'http://diveintomark.org/feed/', 'type': 'application/atom+xml', 'rel': 'self'}
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>feed_links = tree.findall("{http://www.w3.org/2005/Atom}link")</kbd>
+<samp class=p>>>> </samp><kbd>feed_links</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>]</samp>
+<samp class=p>>>> </samp><kbd>feed_links[0].attrib</kbd>
+<samp>{'href': 'http://diveintomark.org/',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp></pre>
 
->>> all_links = tree.findall("//{http://www.w3.org/2005/Atom}link")
->>> all_links
-[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b570>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b480>, &lt;Element {http://www.w3.org/2005/Atom}link at e2b5a0>]
->>> all_links[0].attrib
-{'href': 'http://diveintomark.org/', 'type': 'text/html', 'rel': 'alternate'}
->>> all_links[1].attrib
-{'href': 'http://diveintomark.org/feed/', 'type': 'application/atom+xml', 'rel': 'self'}
->>> all_links[2].attrib
-{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition', 'type': 'text/html', 'rel': 'alternate'}
->>> all_links[3].attrib
-{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress', 'type': 'text/html', 'rel': 'alternate'}
->>> all_links[4].attrib
-{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats', 'type': 'text/html', 'rel': 'alternate'}
-</pre>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>all_links = tree.findall("//{http://www.w3.org/2005/Atom}link")</kbd>
+<samp class=p>>>> </samp><kbd>all_links</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b570>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b480>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b5a0>]</samp>
+<samp class=p>>>> </samp><kbd>all_links[0].attrib</kbd>
+<samp>{'href': 'http://diveintomark.org/',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<samp class=p>>>> </samp><kbd>all_links[1].attrib</kbd>
+<samp>{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<samp class=p>>>> </samp><kbd>all_links[2].attrib</kbd>
+<samp>{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<samp class=p>>>> </samp><kbd>all_links[3].attrib</kbd>
+<samp>{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp></pre>
 
 <h2 id=xml-lxml>Going Further With lxml</h2>
 
 <p>FIXME
 
 <pre class=screen>
->>> from lxml import etree
+<samp class=p>>>> </samp><kbd>from lxml import etree</kbd>
 .
 .  FIXME (show how it's a drop-in replacement for everything we've done so far)
 .
-
-from here on out, use lxml.etree explicitly because these functions are specific to lxml
->>> import lxml.etree
->>> nsmap = {"atom": "http://www.w3.org/2005/Atom"}
->>> tree = lxml.etree.parse("examples/feed.xml")
->>> entries = tree.xpath("//atom:category[@term='accessibility']/..", namespaces=nsmap)
->>> entries
-[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]
->>> entry = entries[0]
->>> entry.xpath("./atom:title/text()", namespaces=nsmap)
-['Accessibility is a harsh mistress']
 </pre>
+
+<p>FIXME: from here on out, we use lxml.etree explicitly because these functions are specific to lxml
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed.xml")</kbd>
+<samp class=p>>>> </samp><kbd>it = tree.iterfind("//{http://www.w3.org/2005/Atom}link")</kbd>
+<samp class=p>>>> </samp><kbd>next(it)</kbd>
+&lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0>
+<samp class=p>>>> </samp><kbd>next(it)</kbd>
+&lt;Element {http://www.w3.org/2005/Atom}link at 122f1e0>
+<samp class=p>>>> </samp><kbd>next(it)</kbd>
+&lt;Element {http://www.w3.org/2005/Atom}link at 122f210>
+<samp class=p>>>> </samp><kbd>next(it)</kbd>
+&lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0>
+<samp class=p>>>> </samp><kbd>next(it)</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+StopIteration</samp></pre>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>NSMAP = {"atom": "http://www.w3.org/2005/Atom"}</kbd>
+<samp class=p>>>> </samp><kbd>entries = tree.xpath("//atom:category[@term='accessibility']/..", namespaces=NSMAP)</kbd>
+<samp class=p>>>> </samp><kbd>entries</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
+<samp class=p>>>> </samp><kbd>entry = entries[0]</kbd>
+<samp class=p>>>> </samp><kbd>entry.xpath("./atom:title/text()", namespaces=nsmap)</kbd>
+<samp>['Accessibility is a harsh mistress']</samp></pre>
 
 <h3 id=xml-custom-parser>Customizing Your XML Parser</h3>
 
 <p>FIXME
 
 <pre class=screen>
->>> import lxml.etree
->>> parser = lxml.etree.XMLParser(no_network=True, ns_clean=True, recover=True, remove_blank_text=True, remove_comments=True)
->>> tree = lxml.etree.parse("examples/feed.xml", parser)
+<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd>parser = lxml.etree.XMLParser(no_network=True, ns_clean=True, recover=True, remove_blank_text=True, remove_comments=True)</kbd>
+<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed.xml", parser)</kbd>
+.
+.
+.
 </pre>
 
 <h3 id=xml-incremental>Incremental Parsing</h3>
@@ -392,38 +426,37 @@ from here on out, use lxml.etree explicitly because these functions are specific
 <p>FIXME
 
 <pre class=screen>
->>> import lxml.etree
->>> new_feed = lxml.etree.Element("{http://www.w3.org/2005/Atom}feed", attrib={"{http://www.w3.org/XML/1998/namespace}lang": "en"})
->>> print(lxml.etree.tounicode(new_feed))
-&lt;ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xml:lang="en"/>
-</pre>
+<samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd>new_feed = etree.Element("{http://www.w3.org/2005/Atom}feed",</kbd>
+<samp class=p>... </samp><kbd>    attrib={"{http://www.w3.org/XML/1998/namespace}lang": "en"})</kbd>
+<samp class=p>>>> </samp><kbd>print(etree.tostring(new_feed))</kbd>
+<samp>&lt;ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xml:lang="en"/></samp></pre>
 
 <p>FIXME
 
 <pre class=screen>
->>> import lxml.etree
->>> new_feed = lxml.etree.Element("feed", nsmap=NSMAP)
->>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom"/>
->>> new_feed.set("{http://www.w3.org/XML/1998/namespace}lang", "en")
->>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"/>
-</pre>
+<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd>NSMAP = {"atom": "http://www.w3.org/2005/Atom"}</kbd>
+<samp class=p>>>> </samp><kbd>new_feed = lxml.etree.Element("feed", nsmap=NSMAP)</kbd>
+<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom"/></samp>
+<samp class=p>>>> </samp><kbd>new_feed.set("{http://www.w3.org/XML/1998/namespace}lang", "en")</kbd>
+<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"/></samp></pre>
 
 <p>FIXME
 
 <pre class=screen>
->>> title = lxml.etree.SubElement(new_feed, "title", attrib={"type":"html"})
->>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html"/>&lt;/feed>
->>> title.text = "dive into mark"
->>> print(lxml.etree.tounicode(new_feed))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into mark&lt;/title>&lt;/feed>
->>> print(lxml.etree.tounicode(new_feed, pretty_print=True))
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<samp class=p>>>> </samp><kbd>title = lxml.etree.SubElement(new_feed, "title", attrib={"type":"html"})</kbd>
+<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html"/>&lt;/feed></samp>
+<samp class=p>>>> </samp><kbd>title.text = "dive into mark"</kbd>
+<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into mark&lt;/title>&lt;/feed></samp>
+<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 &lt;title type="html">dive into mark&lt;/title>
-&lt;/feed>
-</pre>
+&lt;/feed></samp></pre>
 
 <h2 id=furtherreading>Further Reading</h2>
 
