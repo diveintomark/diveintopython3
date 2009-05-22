@@ -92,7 +92,7 @@ pre a,.w a{padding:0.4375em 0}
 .w a{text-decoration:underline}
 kbd,mark{font-weight:bold}
 mark{display:inline-block;width:100%;background:#ff8}
-.p{color:#667}
+pre span,.p{color:#667}
 
 /* overrides */
 li ol,.q{margin:0}

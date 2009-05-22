@@ -337,8 +337,7 @@ mark{display:inline}
 <samp>[]</samp></pre>
 <ol>
 <li>The <code>findall()</code> method finds child elements that match a specific query. (More on the query format in a minute.)
-<li>Each element &mdash; including the root element, but also child elements &mdash; has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children.
-<li>What happened here? Although it may not be obvious, this particular <code>findall()</code> query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
+<li>Each element &mdash; including the root element, but also child elements &mdash; has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children. But why aren&#8217;t there any results? Although it may not be obvious, this particular query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
 <li>This result may also surprise you. <a href=#divingin>There is an <code>author</code> element</a> in this document; in fact, there are three (one in each <code>entry</code>). But those <code>author</code> elements are not <em>direct children</em> of the root element; they are &#8220;grandchildren&#8221; (literally, a child element of a child element). If you want to look for <code>author</code> elements at any nesting level, you can do that, but the query format is slightly different.
 </ol>
 
