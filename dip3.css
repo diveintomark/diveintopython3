@@ -55,70 +55,234 @@ Acknowledgements & Inspirations
 */
 
 /* typography */
-body,.w a{font:medium 'Gill Sans','Gill Sans MT',Corbel,Helvetica,'Nimbus Sans L',sans-serif;line-height:1.75;word-spacing:0.1em}
-pre,kbd,samp,code,var{font-family:Consolas,'Andale Mono',Monaco,'Liberation Mono','Bitstream Vera Sans Mono','DejaVu Sans Mono',monospace;font-size:medium;line-height:1.75;word-spacing:0}
-span{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
-pre span{font-family:'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
-.baa{font:oblique large Constantia,Baskerville,Palatino,'Palatino Linotype','URW Palladio L',serif}
-abbr{font-variant:small-caps;text-transform:lowercase;letter-spacing:0.1em}
-.q{text-align:right;font-style:oblique}
-.q span{font-size:large}
-.note{margin:3.5em 4.94em}
-.note span{display:block;float:left;font-size:xx-large;line-height:0.875;margin:0 0.22em 0 -1.22em;color:steelblue}
-.c,pre,.w,.w a,.d{line-height:2.154}
-.f:first-letter{float:left;color:lightblue;padding:0.11em 4px 0 0;font:normal 4em/0.68 serif}
-p,ul,ol{margin:1.75em 0;font-size:medium}
+
+body, .w a {
+  font: medium 'Gill Sans', 'Gill Sans MT', Corbel, Helvetica, 'Nimbus Sans L', sans-serif;
+  line-height: 1.75;
+  word-spacing: 0.1em;
+}
+pre, kbd, samp, code, var {
+  font-family: Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
+  font-size: medium;
+  line-height: 1.75;
+  word-spacing: 0;
+}
+span {
+  font: medium 'Arial Unicode MS', FreeSerif, OpenSymbol, 'DejaVu Sans', sans-serif;
+}
+pre span {
+  font-family: 'Arial Unicode MS', 'DejaVu Sans', FreeSerif, OpenSymbol, sans-serif;
+}
+.baa {
+  font: oblique large Constantia, Baskerville, Palatino, 'Palatino Linotype', 'URW Palladio L', serif;
+}
+abbr {
+  font-variant: small-caps;
+  text-transform: lowercase;
+  letter-spacing: 0.1em;
+}
+.q {
+  text-align: right;
+  font-style: oblique;
+}
+.q span {
+  font-size: large;
+}
+.note {
+  margin: 3.5em 4.94em;
+}
+.note span {
+  display: block;
+  float: left;
+  font-size: xx-large;
+  line-height: 0.875;
+  margin: 0 0.22em 0 -1.22em;
+  color: steelblue;
+}
+.c, pre, .w, .w a, .d {
+  line-height: 2.154;
+}
+.f:first-letter {
+  float: left;
+  color: lightblue;
+  padding: 0.11em 4px 0 0;
+  font: normal 4em/0.68 serif;
+}
+p, ul, ol {
+  margin: 1.75em 0;
+  font-size: medium;
+}
 
 /* basics */
-html{background:#fff;color:#222}
-body{margin:1.75em 28px}
-.c{clear:both;text-align:center;margin:2.154em 0}
-form div,#level{float:right}
-.todo{color:#ddd}
+
+html {
+  background: #fff;
+  color: #222;
+}
+body {
+  margin: 1.75em 28px;
+}
+.c {
+  clear: both;
+  text-align: center;
+  margin: 2.154em 0;
+}
+form div, #level {
+  float: right;
+}
+.todo {
+  color: #ddd;
+}
 
 /* links */
-a{text-decoration:none;border-bottom:1px dotted}
-a:hover{border-bottom:1px solid}
-a:link,.w a{color:steelblue}
-a:visited{color:darkorchid}
-.c a{color:inherit}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+a:hover {
+  border-bottom: 1px solid;
+}
+a:link, .w a {
+  color: steelblue;
+}
+a:visited {
+  color: darkorchid;
+}
+.c a {
+  color: inherit;
+}
 
 /* code blocks */
-pre{white-space:pre-wrap;padding-left:2.154em;border-left:1px solid #ddd}
-.w{float:left}
-.c,.w,.w a,.d{font-size:small}
-.b,ol,p,blockquote,h1,h2,h3{clear:left}
-pre a,.w a{padding:0.4375em 0}
-.w a{text-decoration:underline}
-kbd,mark{font-weight:bold}
-mark{display:inline-block;width:100%;background:#ff8}
-pre span,.p{color:#667}
+
+pre {
+  white-space: pre-wrap;
+  padding-left: 2.154em;
+  border-left: 1px solid #ddd;
+}
+.w {
+  float: left;
+}
+.c, .w, .w a, .d {
+  font-size: small;
+}
+.b, ol, p, blockquote, h1, h2, h3 {
+  clear: left;
+}
+pre a, .w a {
+  padding: 0.4375em 0;
+}
+.w a {
+  text-decoration: underline;
+}
+kbd, mark {
+  font-weight: bold;
+}
+mark {
+  display: inline-block;
+  width: 100%;
+  background: #ff8;
+}
+pre span, .p {
+  color: #667;
+}
 
 /* overrides */
-li ol,.q{margin:0}
-pre a,.w a,pre a:hover{border:0}
+
+li ol, .q {
+  margin: 0;
+}
+pre a, .w a, pre a:hover {
+  border: 0;
+}
 
 /* headers and pullquotes */
-h1,h2,h3,aside{font-family:"Book Antiqua",Palatino,Georgia,serif}
-h1,h2,h3{font-variant:small-caps}
-h1,h2{letter-spacing:-1px}
-h1,h1 code{font-size:xx-large}
-h2,h2 code{font-size:x-large}
-h3,h3 code{font-size:large}
-h1{border-bottom:4px double;width:100%;margin:1em 0}
-h1:before{content:"Chapter " counter(h1) ". "}
-h1{counter-reset:h2}
-h2:before{counter-increment:h2;content:counter(h1) "." counter(h2) ". "}
-h2{counter-reset:h3;border-top:1px dotted;padding-top:1.75em}
-h2,h3{margin-top:1.75em}
-#toc + h2{border:0;margin:0;padding:0}
-#toc + h2:before{content:""}
-h3:before{counter-increment:h3;content:counter(h1) "." counter(h2) "." counter(h3) ". "}
-aside{display:block;float:right;font-style:oblique;font-size:xx-large;width:25%;margin:1.75em 0 .75em 1.75em;background:steelblue;color:white;padding:1.75em;border:1px solid;-moz-border-radius:1em;-webkit-border-radius:1em;border-radius:1em}
+
+h1, h2, h3, aside {
+  font-family: "Book Antiqua", Palatino, Georgia, serif;
+}
+h1, h2, h3 {
+  font-variant: small-caps;
+}
+h1, h2 {
+  letter-spacing: -1px;
+}
+h1, h1 code {
+  font-size: xx-large;
+}
+h2, h2 code {
+  font-size: x-large;
+}
+h3, h3 code {
+  font-size: large;
+}
+h1 {
+  border-bottom: 4px double;
+  width: 100%;
+  margin: 1em 0;
+}
+h1:before {
+  content: "Chapter " counter(h1) ". ";
+}
+h1 {
+  counter-reset: h2;
+}
+h2:before {
+  counter-increment: h2;
+  content: counter(h1) "." counter(h2) ". ";
+}
+h2 {
+  counter-reset: h3;
+  border-top: 1px dotted;
+  padding-top: 1.75em;
+}
+h2, h3 {
+  margin-top: 1.75em;
+}
+#toc + h2 {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+#toc + h2:before {
+  content: "";
+}
+h3:before {
+  counter-increment: h3;
+  content: counter(h1) "." counter(h2) "." counter(h3) ". ";
+}
+aside {
+  display: block;
+  float: right;
+  font-style: oblique;
+  font-size: xx-large;
+  width: 25%;
+  margin: 1.75em 0 .75em 1.75em;
+  background: steelblue;
+  color: white;
+  padding: 1.75em;
+  border: 1px solid;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+}
 
 /* previous/next navigation links */
 
-.nav a{text-decoration:none;border:0;display:block}
-.nav a:first-child{float:left}
-.nav a:last-child{float:right}
-.nav span{font-size:1000%;line-height:1;margin:0;text-shadow:gainsboro 3px 3px 3px}
+.nav a {
+  text-decoration: none;
+  border: 0;
+  display: block;
+}
+.nav a:first-child {
+  float: left;
+}
+.nav a:last-child {
+  float: right;
+}
+.nav span {
+  font-size: 1000%;
+  line-height: 1;
+  margin: 0;
+  text-shadow: gainsboro 3px 3px 3px;
+}

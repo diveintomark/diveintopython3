@@ -34,29 +34,76 @@ Acknowledgements & Inspirations
 */
 
 /* typography */
-body,.c,span,pre span,.c,.note,p,ul,ol{font:normal 12px/18px sans-serif;word-spacing:0}
-pre,kbd,samp,code,var{font:normal 12px/18px monospace}
-.baa{font:normal 14px/18px serif}
-abbr{font-variant:normal;text-transform:none;letter-spacing:0}
-.c,.note,p,ul,ol,h2,h3{margin:1.75em 0}
+
+body, .c, span, pre span, .c, .note, p, ul, ol {
+  font:normal 12px/18px sans-serif;
+  word-spacing:0;
+}
+pre, kbd, samp, code, var {
+  font:normal 12px/18px monospace;
+}
+.baa {
+  font:normal 14px/18px serif;
+}
+abbr {
+  font-variant:normal;
+  text-transform:none;
+  letter-spacing:0;
+}
+.c, .note, p, ul, ol, h2, h3 {
+  margin:1.75em 0;
+}
 
 /* basics */
-html{color:#000}
-body{margin:4px 1px 0 1px}
+
+html {
+  color:#000;
+}
+body {
+  margin:4px 1px 0 1px;
+}
 
 /* links */
-a{text-decoration:underline;border-bottom:0}
-pre a{text-decoration:none}
+
+a {
+  text-decoration:underline;
+  border-bottom:0;
+}
+pre a {
+  text-decoration:none;
+}
 
 /* headers and pullquotes */
-h1,h2,h3,pre{padding:0;border:0;letter-spacing:0}
-h1{margin:0}
-h1,h1 code{font:normal 18px/18px serif}
-h2,h2 code{font:normal 16px/18px serif}
-h3,h3 code{font:normal 14px/18px serif}
-h1:before{content:""}
+
+h1, h2, h3, pre {
+  padding:0;
+  border:0;
+  letter-spacing:0;
+}
+h1 {
+  margin:0;
+}
+h1, h1 code {
+  font:normal 18px/18px serif;
+}
+h2, h2 code {
+  font:normal 16px/18px serif;
+}
+h3, h3 code {
+  font:normal 14px/18px serif;
+}
+h1:before {
+  content:"";
+}
 
 /* overrides */
-.nm,.w,aside,form,form+p,.note span,.q span{display:none}
-dd{margin:0 0 0 1.75em}
-.nav span{font-size:200%}
+
+.nm, .w, aside, form, form+p, .note span, .q span {
+  display:none;
+}
+dd {
+  margin:0 0 0 1.75em;
+}
+.nav span {
+  font-size:200%;
+}
