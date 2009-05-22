@@ -2,12 +2,12 @@
 <head>
 <meta charset=utf-8>
 <title>Strings - Dive into Python 3</title>
-<link rel=stylesheet type=text/css href=dip3.css>
+<!--[if IE]><script src=html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 3}
-.s{text-decoration:line-through}
 </style>
-<link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span>&#8227;</span>
@@ -156,12 +156,12 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
-<li>Rather than calling any function in the <code>humansize</code> module, you&#8217;re just grabbing one of the data structures it defines: the list of "SI" (powers-of-1000) suffixes.
+<li>Rather than calling any function in the <code>humansize</code> module, you&#8217;re just grabbing one of the data structures it defines: the list of &#8220;SI&#8221; (powers-of-1000) suffixes.
 <li>This looks complicated, but it&#8217;s not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces &mdash; including <code>1000</code>, the equals sign, and the spaces &mdash; is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
 </ol>
 
 <aside>{0} is replaced by the 1<sup>st</sup> format() argument. {1} is replaced by the 2<sup>nd</sup>.</aside>
-<p>What this example shows is that <em>format specifers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names "just work":
+<p>What this example shows is that <em>format specifers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names &#8220;just work&#8221;:
 
 <ul>
 <li>Passing a list, and accessing an item of the list by index (as in the previous example)
@@ -362,11 +362,6 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <li>This is a <code>bytes</code> object. It has 11 bytes. It is an <em>entirely different sequence of bytes</em> that you get by encoding <var>a_string</var> with the Big5 encoding algorithm.
 <li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
 </ol>
-
-<!--
-FIXME: move this to the intro of the upcoming files chapter?
-<p>OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
--->
 
 <h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
 
