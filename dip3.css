@@ -113,7 +113,7 @@ p, ul, ol {
 /* basics */
 
 html {
-  background: #fff url(grid28.gif);
+  background: #fff;
   color: #222;
 }
 body {
