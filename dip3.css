@@ -113,7 +113,7 @@ p, ul, ol {
 /* basics */
 
 html {
-  background: #fff;
+  background: #fff url(grid28.gif);
   color: #222;
 }
 body {
@@ -213,13 +213,13 @@ h1, h1 code {
 }
 h2, h2 code {
   font-size: x-large;
-  line-height: 2.334;
-  margin: 2.334em 0;
+  line-height: 1.167;
+  margin: 1.167em 0;
 }
 h3, h3 code {
   font-size: large;
-  line-height: 3.112;
-  margin: 3.112em 0;
+  line-height: 1.556;
+  margin: 1.556em 0;
 }
 h1 {
   border-bottom: 4px double;
