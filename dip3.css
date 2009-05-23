@@ -57,14 +57,11 @@ Acknowledgements & Inspirations
 /* typography */
 
 body, .w a {
-  font: medium 'Gill Sans', 'Gill Sans MT', Corbel, Helvetica, 'Nimbus Sans L', sans-serif;
-  line-height: 1.75;
+  font: medium/1.75 'Gill Sans', 'Gill Sans MT', Corbel, Helvetica, 'Nimbus Sans L', sans-serif;
   word-spacing: 0.1em;
 }
-pre, kbd, samp, code, var {
-  font-family: Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
-  font-size: medium;
-  line-height: 1.75;
+pre, kbd, samp, code, var, .b {
+  font: small/2.154 Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
   word-spacing: 0;
 }
 span {
@@ -99,7 +96,7 @@ abbr {
   margin: 0 0.22em 0 -1.22em;
   color: steelblue;
 }
-.c, pre, .w, .w a, .d {
+.c, w, .w a, .d {
   line-height: 2.154;
 }
 .f:first-letter {
@@ -116,7 +113,7 @@ p, ul, ol {
 /* basics */
 
 html {
-  background: #fff;
+  background: #fff url(grid28.gif);
   color: #222;
 }
 body {
@@ -192,6 +189,9 @@ pre span, .p {
 li ol, .q {
   margin: 0;
 }
+code, var, samp {
+  line-height:inherit !important;
+}
 pre a, .w a, pre a:hover {
   border: 0;
 }
@@ -209,23 +209,26 @@ h1, h2 {
 }
 h1, h1 code {
   font-size: xx-large;
+  line-height: 1.72;
 }
 h2, h2 code {
   font-size: x-large;
+  line-height: 2.334;
+  margin: 2.334em 0;
 }
 h3, h3 code {
   font-size: large;
+  line-height: 3.112;
+  margin: 3.112em 0;
 }
 h1 {
   border-bottom: 4px double;
   width: 100%;
-  margin: 1em 0;
+  margin: 1.71em 0 1.72em 0;
+  counter-reset: h2;
 }
 h1:before {
   content: "Chapter " counter(h1) ". ";
-}
-h1 {
-  counter-reset: h2;
 }
 h2:before {
   counter-increment: h2;
@@ -233,16 +236,6 @@ h2:before {
 }
 h2 {
   counter-reset: h3;
-  border-top: 1px dotted;
-  padding-top: 1.75em;
-}
-h2, h3 {
-  margin-top: 1.75em;
-}
-#toc + h2 {
-  border: 0;
-  margin: 0;
-  padding: 0;
 }
 #toc + h2:before {
   content: "";
