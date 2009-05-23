@@ -113,7 +113,7 @@ p, ul, ol {
 /* basics */
 
 html {
-  background: #fff;
+  background: #fff url(grid28.gif);
   color: #222;
 }
 body {
@@ -209,7 +209,7 @@ h1, h2 {
 }
 h1, h1 code {
   font-size: xx-large;
-  line-height: 1.72;
+  line-height: 1.3125;
 }
 h2, h2 code {
   font-size: x-large;
@@ -224,7 +224,7 @@ h3, h3 code {
 h1 {
   border-bottom: 4px double;
   width: 100%;
-  margin: 1.71em 0 1.72em 0;
+  margin: 1.49em 0;
   counter-reset: h2;
 }
 h1:before {
