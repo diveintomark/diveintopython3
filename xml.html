@@ -253,7 +253,7 @@ mark{display:inline}
 <samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
 <ol>
 <li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
-<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an <abbr>XML</abbr> document incrementally instead. [FIXME href]
+<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to <a href=http://effbot.org/zone/element-iterparse.htm>parse an <abbr>XML</abbr> document incrementally instead</a>.
 <li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
 <li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an <abbr>XML</abbr> element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
 </ol>
@@ -433,7 +433,7 @@ StopIteration</samp></pre>
 
 <h2 id=xml-lxml>Going Further With lxml</h2>
 
-<p><a href=http://codespeak.net/lxml/>lxml</a> is an open source third-party library that builds on the popular libxml2 parser [FIXME href]. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are installers available for Windows and Mac OS X (FIXME really?); Linux users can probably use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories.
+<p><a href=http://codespeak.net/lxml/>lxml</a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install lxml manually</a>.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>from lxml import etree</kbd>                   <span>&#x2460;</span></a>
@@ -457,7 +457,7 @@ StopIteration</samp></pre>
 except ImportError:
     import xml.etree.ElementTree as etree</code></pre>
 
-<p>But lxml is more than just a faster ElementTree. It also integrates support for arbitrary XPath expressions. I&#8217;m not going to go into depth about XPath syntax (it can get quite complicated). [FIXME href] is a good beginner&#8217;s guide to XPath.
+<p>But lxml is more than just a faster ElementTree. It also integrates support for arbitrary XPath expressions. I&#8217;m not going to go into depth about XPath syntax. (That could be a whole book unto itself!) But I will show you how it integrates into lxml.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>import lxml.etree</kbd>                                                  <span>&#x2460;</span></a> 
@@ -549,7 +549,7 @@ except ImportError:
 
 <h2 id=xml-custom-parser>Customizing Your XML Parser</h2>
 
-<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr> &mdash; your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <abbr>HTML</abbr> error handling is actually quite well-defined [FIXME href], but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
+<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr> &mdash; your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <a href=http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#parsing><abbr>HTML</abbr> error handling</a> is actually quite well-defined, but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
 
 <p>Some people (myself included) believe that it was a mistake for the inventors of <abbr>XML</abbr> to mandate draconian error handling. Don&#8217;t get me wrong; I can certainly see the allure of simplifying the error handling rules. But in practice, the concept of &#8220;wellformedness&#8221; is trickier than it sounds, especially for <code>XML</code> documents (like Atom feeds) that are published on the web and served over <abbr>HTTP</abbr>. Despite the maturity of <abbr>XML</abbr>, which standardized on draconian error handling in 1997, surveys continually show a significant fraction of Atom feeds on the web are plagued with wellformedness errors.
 
@@ -599,7 +599,7 @@ lxml.etree.XMLSyntaxError: Entity 'hellip' not defined, line 3, column 28</samp>
 . [rest of serialization snipped for brevity]
 .</samp></pre>
 <ol>
-<li>To create a custom parser, instantiate the <code>lxml.etree.XMLParser</code> class. It can take a number of different named arguments [FIXME href]. The one we&#8217;re interested in here is the <var>recover</var> argument. When set to <code>True</code>, the <abbr>XML</abbr> parser will try its best to &#8220;recover&#8221; from wellformedness errors.
+<li>To create a custom parser, instantiate the <code>lxml.etree.XMLParser</code> class. It can take <a href=http://codespeak.net/lxml/parsing.html#parser-options>a number of different named arguments</a>. The one we&#8217;re interested in here is the <var>recover</var> argument. When set to <code>True</code>, the <abbr>XML</abbr> parser will try its best to &#8220;recover&#8221; from wellformedness errors.
 <li>To parse an <code>XML</code> document with your custom parser, pass the <var>parser</var> object as the second argument to the <code>parse()</code> function. Note that lxml does not raise an exception about the undefined <code>&amp;hellip;</code> entity.
 <li>The parser keeps a log of the wellformedness errors that it has encountered. (This is actually true regardless of whether it is set to recover from those errors or not.)
 <li>Since it didn&#8217;t know what to do with the undefined <code>&amp;hellip;</code> entity, the parser just silently dropped it. The text content of the <code>title</code> element becomes <code>"dive into "</code>.
