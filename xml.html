@@ -253,7 +253,7 @@ mark{display:inline}
 <samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
 <ol>
 <li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
-<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an <abbr>XML</abbr> document incrementally instead.
+<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an <abbr>XML</abbr> document incrementally instead. [FIXME href]
 <li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
 <li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an <abbr>XML</abbr> element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
 </ol>
@@ -407,26 +407,12 @@ mark{display:inline}
 <li>After doing some quick <a href=strings.html#formatting-strings>string formatting</a> (because otherwise these compound queries get ridiculously long), this query searches for Atom <code>author</code> elements that have an Atom <code>uri</code> element as a child. This only returns two <code>author</code> elements, the ones in the first and second <code>entry</code>. The <code>author</code> in the last <code>entry</code> contains only a <code>name</code>, not a <code>uri</code>.
 </ol>
 
-<p>Overall, ElementTree&#8217;s <code>findall()</code> method is a very powerful feature, but the query language can be a bit surprising. It is officially described as &#8220;<a href=http://effbot.org/zone/element-xpath.htm>limited support for XPath expressions</a>.&#8221; <a href=http://www.w3.org/TR/xpath>XPath</a> is a W3C standard for querying <abbr>XML</abbr> documents. ElementTree&#8217;s query language is similar enough to XPath to do basic searching, but dissimilar enough that it may annoy you if you already know XPath. Now let&#8217;s look at a third-party <abbr>XML</abbr> library that extends the ElementTree <abbr>API</abbr> with full XPath support.
-
-<h2 id=xml-lxml>Going Further With lxml</h2>
-
-<p><a href=http://codespeak.net/lxml/>lxml</a> FIXME
+<p>What&#8217;s that? You say you want the power of the <code>findall()</code> method, but you want to work with an iterator instead of building a complete list? ElementTree can do that too.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from lxml import etree</kbd>
-.
-.  FIXME (show how it's a drop-in replacement for everything we've done so far)
-.
-</pre>
-
-<p>FIXME: from here on out, we use lxml.etree explicitly because these functions are specific to lxml
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed.xml")</kbd>
-<samp class=p>>>> </samp><kbd>it = tree.iterfind("//{http://www.w3.org/2005/Atom}link")</kbd>
-<samp class=p>>>> </samp><kbd>next(it)</kbd>
+# continuing from the previous example
+<a><samp class=p>>>> </samp><kbd>it = tree.getiterator("{http://www.w3.org/2005/Atom}link")</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(it)</kbd>                                                    <span>&#x2461;</span></a>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0>
 <samp class=p>>>> </samp><kbd>next(it)</kbd>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f1e0>
@@ -438,32 +424,59 @@ mark{display:inline}
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 StopIteration</samp></pre>
+<ol>
+<li>The <code>getiterator()</code> method can zero or one arguments. If called with no arguments, it returns an iterator that spits out every element and child element in the entire document. Or, as shown here, you can call it with an element name in standard ElementTree format. This returns an iterator that spits out only elements of that name.
+<li>
+</ol>
+
+<p>Overall, ElementTree&#8217;s <code>findall()</code> method is a very powerful feature, but the query language can be a bit surprising. It is officially described as &#8220;<a href=http://effbot.org/zone/element-xpath.htm>limited support for XPath expressions</a>.&#8221; <a href=http://www.w3.org/TR/xpath>XPath</a> is a W3C standard for querying <abbr>XML</abbr> documents. ElementTree&#8217;s query language is similar enough to XPath to do basic searching, but dissimilar enough that it may annoy you if you already know XPath. Now let&#8217;s look at a third-party <abbr>XML</abbr> library that extends the ElementTree <abbr>API</abbr> with full XPath support.
+
+<h2 id=xml-lxml>Going Further With lxml</h2>
+
+<p><a href=http://codespeak.net/lxml/>lxml</a> is an open source third-party library that builds on the popular libxml2 parser [FIXME href]. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are installers available for Windows and Mac OS X (FIXME really?); Linux users can probably use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>NSMAP = {"atom": "http://www.w3.org/2005/Atom"}</kbd>
-<samp class=p>>>> </samp><kbd>entries = tree.xpath("//atom:category[@term='accessibility']/..", namespaces=NSMAP)</kbd>
-<samp class=p>>>> </samp><kbd>entries</kbd>
+<a><samp class=p>>>> </samp><kbd>from lxml import etree</kbd>                   <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>tree = etree.parse("examples/feed.xml")</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>root = tree.getroot()</kbd>                    <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>root.findall("{http://www.w3.org/2005/Atom}entry")</kbd>  <span>&#x2463;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp></pre>
+<ol>
+<li>Once imported, lxml provides the same <abbr>API</abbr> as the built-in ElementTree libary.
+<li><code>parse()</code> function: same as ElementTree.
+<li><code>getroot()</code> method: also the same.
+<li><code>findall()</code> method: exactly the same.
+</ol>
+
+<p>For large <abbr>XML</abbr> documents, lxml is significantly faster than the built-in ElementTree libary. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import lxml and fall back to the built-in ElementTree.
+
+<pre><code>try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree</code></pre>
+
+<p>But lxml is more than just a faster ElementTree. It also integrates support for arbitrary XPath expressions. I&#8217;m not going to go into depth about XPath syntax (it can get quite complicated). [FIXME href] is a good beginner&#8217;s guide to XPath.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>import lxml.etree</kbd>                                                  <span>&#x2460;</span></a> 
+<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed.xml")</kbd>
+<a><samp class=p>>>> </samp><kbd>NSMAP = {"atom": "http://www.w3.org/2005/Atom"}</kbd>                    <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>entries = tree.xpath("//atom:category[@term='accessibility']/..",</kbd>  <span>&#x2462;</span></a>
+<samp class=p>... </samp><kbd>    namespaces=NSMAP)</kbd>
+<a><samp class=p>>>> </samp><kbd>entries</kbd>                                                            <span>&#x2463;</span></a>
 <samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
 <samp class=p>>>> </samp><kbd>entry = entries[0]</kbd>
-<samp class=p>>>> </samp><kbd>entry.xpath("./atom:title/text()", namespaces=nsmap)</kbd>
+<a><samp class=p>>>> </samp><kbd>entry.xpath("./atom:title/text()", namespaces=nsmap)</kbd>               <span>&#x2464;</span></a>
 <samp>['Accessibility is a harsh mistress']</samp></pre>
-
-<h3 id=xml-custom-parser>Customizing Your XML Parser</h3>
-
-<p>FIXME
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<samp class=p>>>> </samp><kbd>parser = lxml.etree.XMLParser(no_network=True, ns_clean=True, recover=True, remove_blank_text=True, remove_comments=True)</kbd>
-<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed.xml", parser)</kbd>
-.
-.
-.
-</pre>
-
-<h3 id=xml-incremental>Incremental Parsing</h3>
-
-<p>FIXME
+<ol>
+<li>In this example, I&#8217;m going to <code>import lxml.etree</code> (instead of, say, <code>from lxml import etree</code>), to emphasize that these features are specific to lxml.
+<li>To perform XPath queries on namespaced elements, you need to define a namespace prefix mapping. This is just a Python dictionary.
+<li>Here is an XPath query. The XPath expression searches for <code>category</code> elements (in the Atom namespace) that contain a <code>term</code> attribute with the value <code>accessibility</code>. But that&#8217;s not actually the query result. Look at the very end of the query string; did you notice the <code>/..</code> bit? That means &#8220;and then return the parent element of the <code>category</code> element you just found.&#8221; So this single XPath query will find all entries with a child element of <code>&lt;category term="accessibility"></code>.
+<li>The <code>xpath()</code> function returns a list of ElementTree objects. In this document, there is only one entry with a <code>category</code> whose <code>term</code> is <code>accessibility</code>.
+<li>XPath expressions don&#8217;t always return a list of elements. Technically, the <abbr>DOM</abbr> of a parsed <abbr>XML</abbr> document doesn&#8217;t contain elements; it contains <i>nodes</i>. Depending on their type, nodes can be elements, attributes, or even text content. The result of an XPath query is a list of nodes. This query returns a list of text nodes: the text content (<code>text()</code>) of the <code>title</code> element (<code>atom:title</code>) that is a child of the current element (<code>./</code>).
+</ol>
 
 <h2 id=xml-generate>Generating XML</h2>
 
@@ -533,6 +546,67 @@ StopIteration</samp></pre>
 <li>Now the <code>title</code> element is serialized with its text content. Any text content that contains less-than signs or ampersands needs to be escaped when serialized. lxml handles this escaping automatically.
 <li>You can also apply &#8220;pretty printing&#8221; to the serialization, which inserts line breaks after end tags, and after start tags of elements that contain child elements but no text content. In technical terms, lxml adds &#8220;insignificant whitespace&#8221; to make the output more readable.
 </ol>
+
+<h2 id=xml-custom-parser>Customizing Your XML Parser</h2>
+
+<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr> &mdash; your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <abbr>HTML</abbr> error handling is actually quite well-defined [FIXME href], but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
+
+<p>Some people (myself included) believe that it was a mistake for the inventors of <abbr>XML</abbr> to mandate draconian error handling. Don&#8217;t get me wrong; I can certainly see the allure of simplifying the error handling rules. But in practice, the concept of &#8220;wellformedness&#8221; is trickier than it sounds, especially for <code>XML</code> documents (like Atom feeds) that are published on the web and served over <abbr>HTTP</abbr>. Despite the maturity of <abbr>XML</abbr>, which standardized on draconian error handling in 1997, surveys continually show a significant fraction of Atom feeds on the web are plagued with wellformedness errors.
+
+<p>So, I have both theoretical and practical reasons to parse <code>XML</code> documents &#8220;at any cost,&#8221; that is, <em>not</em> to halt and catch fire at the first wellformedness error. If you find yourself wanting to do this too, lxml can help.
+
+<p>Here is a fragment of a broken <abbr>XML</abbr> document. I&#8217;ve highlighted the wellformedness error.
+
+<pre class=nd><code>&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  &lt;title>dive into <mark>&hellip;</mark>&lt;/title>
+...
+&lt;/feed></code></pre>
+
+<p>That&#8217;s an error, because the <code>&amp;hellip;</code> entity is not defined in <abbr>XML</abbr>. (It is defined in <abbr>HTML</abbr>.) If you try to parse this broken feed with the default settings, lxml will choke on the undefined entity.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed-broken.xml")</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "lxml.etree.pyx", line 2693, in lxml.etree.parse (src/lxml/lxml.etree.c:52591)
+  File "parser.pxi", line 1478, in lxml.etree._parseDocument (src/lxml/lxml.etree.c:75665)
+  File "parser.pxi", line 1507, in lxml.etree._parseDocumentFromURL (src/lxml/lxml.etree.c:75993)
+  File "parser.pxi", line 1407, in lxml.etree._parseDocFromFile (src/lxml/lxml.etree.c:75002)
+  File "parser.pxi", line 965, in lxml.etree._BaseParser._parseDocFromFile (src/lxml/lxml.etree.c:72023)
+  File "parser.pxi", line 539, in lxml.etree._ParserContext._handleParseResultDoc (src/lxml/lxml.etree.c:67830)
+  File "parser.pxi", line 625, in lxml.etree._handleParseResult (src/lxml/lxml.etree.c:68877)
+  File "parser.pxi", line 565, in lxml.etree._raiseParseError (src/lxml/lxml.etree.c:68125)
+lxml.etree.XMLSyntaxError: Entity 'hellip' not defined, line 3, column 28</samp></pre>
+
+<p>To parse this broken <abbr>XML</abbr> document, despite its wellformedness error, you need to create a custom <abbr>XML</abbr> parser.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd>parser = lxml.etree.XMLParser(recover=True)</kbd>                  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>tree = lxml.etree.parse("examples/feed-broken.xml", parser)</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>parser.error_log</kbd>                                             <span>&#x2462;</span></a>
+<samp>examples/feed-broken.xml:3:28:FATAL:PARSER:ERR_UNDECLARED_ENTITY: Entity 'hellip' not defined</samp>
+<samp class=p>>>> </samp><kbd>tree.findall("{http://www.w3.org/2005/Atom}title")</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}title at ead510>]</samp>
+<samp class=p>>>> </samp><kbd>title = tree.findall("{http://www.w3.org/2005/Atom}title")[0]</kbd>
+<a><samp class=p>>>> </samp><kbd>title.text</kbd>                                                   <span>&#x2463;</span></a>
+<samp>'dive into '</samp>
+<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(tree.getroot()))</kbd>                  <span>&#x2464;</span></a>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  &lt;title>dive into &lt;/title>
+.
+. [rest of serialization snipped for brevity]
+.</samp></pre>
+<ol>
+<li>To create a custom parser, instantiate the <code>lxml.etree.XMLParser</code> class. It can take a number of different named arguments [FIXME href]. The one we&#8217;re interested in here is the <var>recover</var> argument. When set to <code>True</code>, the <abbr>XML</abbr> parser will try its best to &#8220;recover&#8221; from wellformedness errors.
+<li>To parse an <code>XML</code> document with your custom parser, pass the <var>parser</var> object as the second argument to the <code>parse()</code> function. Note that lxml does not raise an exception about the undefined <code>&amp;hellip;</code> entity.
+<li>The parser keeps a log of the wellformedness errors that it has encountered. (This is actually true regardless of whether it is set to recover from those errors or not.)
+<li>Since it didn&#8217;t know what to do with the undefined <code>&amp;hellip;</code> entity, the parser just silently dropped it. The text content of the <code>title</code> element becomes <code>"dive into "</code>.
+<li>As you can see from the serialization, the <code>&amp;hellip;</code> entity didn&#8217;t get moved; it was simply dropped.
+</ol>
+
+<p>It is important to reiterate that there is <strong>no guarantee of interoperability</strong> with &#8220;recovering&#8221; <abbr>XML</abbr> parsers. A different parser might decide that it recognized the <code>&amp;hellip;</code> entity from <abbr>HTML</abbr>, and replace it with <code>&amp;amp;hellip;</code> instead. Is that &#8220;better&#8221;? Maybe. Is it &#8220;more correct&#8221;? No, they are both equally incorrect. The correct behavior (according to the <abbr>XML</abbr> specification) is to halt and catch fire. If you&#8217;ve decided not to do that, you&#8217;re on your own.
 
 <h2 id=furtherreading>Further Reading</h2>
 
