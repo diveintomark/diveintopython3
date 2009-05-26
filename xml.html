@@ -242,7 +242,7 @@ mark{display:inline}
 
 <h2 id=xml-parse>Parsing XML</h2>
 
-<p>Python can parse <abbr>XML</abbr> documents in several ways. It has traditional <a href=http://en.wikipedia.org/wiki/XML#DOM>DOM</a> and <a href=http://en.wikipedia.org/wiki/Simple_API_for_XML>SAX</a> parsers, but I will focus on a different library called Etree.
+<p>Python can parse <abbr>XML</abbr> documents in several ways. It has traditional <a href=http://en.wikipedia.org/wiki/XML#DOM><abbr>DOM</abbr></a> and <a href=http://en.wikipedia.org/wiki/Simple_API_for_XML><abbr>SAX</abbr></a> parsers, but I will focus on a different library called ElementTree.
 
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre class=screen>
@@ -252,14 +252,14 @@ mark{display:inline}
 <a><samp class=p>>>> </samp><kbd>root</kbd>                                     <span>&#x2463;</span></a>
 <samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
 <ol>
-<li>The Etree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
-<li>The primary entry point for the Etree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an <abbr>XML</abbr> document incrementally instead.
+<li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
+<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to parse an <abbr>XML</abbr> document incrementally instead.
 <li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
 <li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an <abbr>XML</abbr> element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
 </ol>
 
 <blockquote class=note>
-<p><span>&#x261E;</span>Etree represents <abbr>XML</abbr> elements as <code>{<var>namespace</var>}<var>localname</var></code>. You&#8217;ll see and use this format in multiple places in the Etree library.
+<p><span>&#x261E;</span>ElementTree represents <abbr>XML</abbr> elements as <code>{<var>namespace</var>}<var>localname</var></code>. You&#8217;ll see and use this format in multiple places in the ElementTree <abbr>API</abbr>.
 </blockquote>
 
 <h3 id=xml-elements>Elements Are Lists</h3>
@@ -411,7 +411,7 @@ mark{display:inline}
 
 <h2 id=xml-lxml>Going Further With lxml</h2>
 
-<p>FIXME
+<p><a href=http://codespeak.net/lxml/>lxml</a> FIXME
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>from lxml import etree</kbd>
@@ -467,40 +467,72 @@ StopIteration</samp></pre>
 
 <h2 id=xml-generate>Generating XML</h2>
 
-<p>FIXME
+<p>Python&#8217;s support for <abbr>XML</abbr> is not limited to parsing existing documents. You can also create <abbr>XML</abbr> documents from scratch.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>
-<samp class=p>>>> </samp><kbd>new_feed = etree.Element("{http://www.w3.org/2005/Atom}feed",</kbd>
-<samp class=p>... </samp><kbd>    attrib={"{http://www.w3.org/XML/1998/namespace}lang": "en"})</kbd>
-<samp class=p>>>> </samp><kbd>print(etree.tostring(new_feed))</kbd>
+<a><samp class=p>>>> </samp><kbd>new_feed = etree.Element("{http://www.w3.org/2005/Atom}feed",</kbd>     <span>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd>    attrib={"{http://www.w3.org/XML/1998/namespace}lang": "en"})</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(etree.tostring(new_feed))</kbd>                                   <span>&#x2462;</span></a>
 <samp>&lt;ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xml:lang="en"/></samp></pre>
+<ol>
+<li>To create a new element, instantiate the <code>Element</code> class. You pass the element name (namespace + local name) as the first argument. This statement creates a <code>feed</code> element in the Atom namespace. This will be our new document&#8217;s root element.
+<li>To add attributes to the newly created element, pass a dictionary of attribute names and values in the <var>attrib</var> argument. Note that the attribute name should be in the standard ElementTree format, <code>{<var>namespace</var>}<var>localname</var></code>.
+<li>At any time, you can serialize any element (and its children) with the ElementTree <code>tostring()</code> function.
+</ol>
 
-<p>FIXME
+<p>Was that serialization surprising to you? The way ElementTree serializes namespaced <abbr>XML</abbr> elements is technically accurate but not optimal. The sample <abbr>XML</abbr> document at the beginning of this chapter defined a <i>default namespace</i> (<code>xmlns="http://www.w3.org/2005/Atom"</code>). Defining a default namespace is useful for documents &mdash; like Atom feeds &mdash; where every element is in the same namespace, because you can declare the namespace once and declare each element with just its local name (<code>&lt;feed></code>, <code>&lt;link></code>, <code>&lt;entry></code>). There is no need to use any prefixes unless you want to declare elements from another namespace.
+
+<p>An <abbr>XML</abbr> parser won&#8217;t &#8220;see&#8221; any difference between an <abbr>XML</abbr> document with a default namespace and an <abbr>XML</abbr> document with a prefixed namespace. The resulting <abbr>DOM</abbr> of this serialization:
+
+<pre class=nd><code>&lt;ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xml:lang="en"/></code></pre>
+
+<p>is identical to the <abbr>DOM</abbr> of this serialization:
+
+<pre class=nd><code>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"/></code></pre>
+
+<p>The only practical difference is that the second serialization is several characters shorter. If we were to recast our entire sample feed with a <code>ns0:</code> prefix in every start and end tag, it would add 4 characters per start tag &times; 79 tags + 4 characters for the namespace declaration itself, for a total of 316 characters. Assuming <a href=strings.html#byte-arrays>UTF-8 encoding</a>, that&#8217;s 316 extra bytes. (After gzipping, the difference drops to 21 bytes, but still, 21 bytes is 21 bytes.) Maybe that doesn&#8217;t matter to you, but for something like an Atom feed, which may be downloaded several thousand times whenever it changes, saving a few bytes per request can quickly add up.
+
+<p>The built-in ElementTree library does not offer this fine-grained control over serializing namespaced elements, but lxml does.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<samp class=p>>>> </samp><kbd>NSMAP = {"atom": "http://www.w3.org/2005/Atom"}</kbd>
-<samp class=p>>>> </samp><kbd>new_feed = lxml.etree.Element("feed", nsmap=NSMAP)</kbd>
-<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
+<a><samp class=p>>>> </samp><kbd>NSMAP = {None: "http://www.w3.org/2005/Atom"}</kbd>                     <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>new_feed = lxml.etree.Element("feed", nsmap=NSMAP)</kbd>                <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>                             <span>&#x2462;</span></a>
 <samp>&lt;feed xmlns="http://www.w3.org/2005/Atom"/></samp>
-<samp class=p>>>> </samp><kbd>new_feed.set("{http://www.w3.org/XML/1998/namespace}lang", "en")</kbd>
+<a><samp class=p>>>> </samp><kbd>new_feed.set("{http://www.w3.org/XML/1998/namespace}lang", "en")</kbd>  <span>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
 <samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"/></samp></pre>
+<ol>
+<li>To start, define a namespace mapping as a dictionary. Dictionary values are namespaces; dictionary keys are the desired prefix. Using <code>None</code> as a prefix effectively declares a default namespace.
+<li>Now you can pass the lxml-specific <var>nsmap</var> argument when you create an element, and lxml will respect the namespace prefixes you&#8217;ve defined.
+<li>As expected, this serialization defines the Atom namespace as the default namespace and declares the <code>feed</code> element without a namespace prefix.
+<li>Oops, we forgot to add the <code>xml:lang</code> attribute. You can always add attributes to any element with the <code>set()</code> method. It takes two arguments: the attribute name in standard ElementTree format, then the attribute value. (This method is not lxml-specific. The only lxml-specific part of this example was the <var>nsmap</var> argument to control the namespace prefixes in the serialized output.)
+</ol>
 
-<p>FIXME
+<p>Are <abbr>XML</abbr> documents limited to one element per document? No, of course not. You can easily create child elements, too.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>title = lxml.etree.SubElement(new_feed, "title", attrib={"type":"html"})</kbd>
+<a><samp class=p>>>> </samp><kbd>title = lxml.etree.SubElement(new_feed, "title",</kbd>          <span>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd>    attrib={"type":"html"})</kbd>                               <span>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
 <samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html"/>&lt;/feed></samp>
-<samp class=p>>>> </samp><kbd>title.text = "dive into mark"</kbd>
-<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
-<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into mark&lt;/title>&lt;/feed></samp>
-<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>
+<a><samp class=p>>>> </samp><kbd>title.text = "dive into &amp;hellip;"</kbd>                         <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>                     <span>&#x2463;</span></a>
+<samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">&lt;title type="html">dive into &amp;amp;hellip;&lt;/title>&lt;/feed></samp>
+<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span>&#x2464;</span></a>
 <samp>&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-&lt;title type="html">dive into mark&lt;/title>
+&lt;title type="html">dive into&amp;amp;hellip;&lt;/title>
 &lt;/feed></samp></pre>
+<ol>
+<li>To create a child element of an existing element, instantiate the <code>SubElement</code> class. The only required arguments are the parent element (<var>new_feed</var> in this case) and the new element&#8217;s name. Since this child element will inherit the namespace mapping of its parent, there is no need to redeclare the namespace or prefix here.
+<li>You can also pass in an attribute dictionary. Keys are attribute names; values are attribute values.
+<li>As expected, the new <code>title</code> element was created in the Atom namespace, and it was inserted as a child of the <code>feed</code> element. Since the <code>title</code> element has no text content and no children of its own, lxml serializes it as an empty element (with the <code>/></code> shortcut).
+<li>To set the text content of an element, simply set its <code>.text</code> property.
+<li>Now the <code>title</code> element is serialized with its text content. Any text content that contains less-than signs or ampersands needs to be escaped when serialized. lxml handles this escaping automatically.
+<li>You can also apply &#8220;pretty printing&#8221; to the serialization, which inserts line breaks after end tags, and after start tags of elements that contain child elements but no text content. In technical terms, lxml adds &#8220;insignificant whitespace&#8221; to make the output more readable.
+</ol>
 
 <h2 id=furtherreading>Further Reading</h2>
 
@@ -510,6 +542,7 @@ StopIteration</samp></pre>
 <li><a href=http://effbot.org/zone/element.htm>Elements and Element Trees</a>
 <li><a href=http://effbot.org/zone/element-xpath.htm>XPath Support in ElementTree</a>
 <li><a href=http://effbot.org/zone/element-iterparse.htm>The ElementTree iterparse Function</a>
+<li><a href=http://codespeak.net/lxml/>lxml</a>
 <li><a href=http://codespeak.net/lxml/1.3/parsing.html>Parsing <abbr>XML</abbr> and <abbr>HTML</abbr> with lxml</a>
 <li><a href=http://codespeak.net/lxml/1.3/xpathxslt.html>XPath and <abbr>XSLT</abbr> with lxml</a>
 </ul>

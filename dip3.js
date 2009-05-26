@@ -1,3 +1,31 @@
+/*
+
+"Dive Into Python 3" scripts
+
+Copyright (c) 2009, Mark Pilgrim, All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
 var HS = {'visible': 'hide', 'hidden': 'show'};
 //google.load("jquery", "1.3");
 //google.setOnLoadCallback(function() {
@@ -12,10 +40,14 @@ $(document).ready(function() {
 		}
 	    });
 	$("pre.code:not(.nd), pre.screen:not(.nd)").each(function(i) {
+		/* give each code block a unique ID */
 		this.id = "autopre" + i;
+
+		/* wrap code block in a div and insert widget block */
 		$(this).wrapInner('<div class=b></div>');
 		$(this).prepend('<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 		
+		/* move download link into widget block */
 		$(this).prev("p.d").each(function(i) {
 			$(this).next("pre").find("div.w").append(" " + $(this).html());
 			this.parentNode.removeChild(this);
@@ -37,7 +69,7 @@ $(document).ready(function() {
 		$(this).css({'position':'static','width':'auto','height':'auto'});
 	    });
 	
-	// synchronized highlighting on callouts and their associated lines within code & screen blocks
+	/* synchronized highlighting on callouts and their associated lines within code & screen blocks */
 	var hip = {'background-color':'#eee','cursor':'default'};
 	var unhip = {'background-color':'inherit','cursor':'inherit'};
 	$("pre.code, pre.screen").each(function() {
@@ -49,7 +81,7 @@ $(document).ready(function() {
 		    });
 	    });
 	
-	// synchronized highlighting on callouts and their associated table rows
+	/* synchronized highlighting on callouts and their associated table rows */
 	$("table").each(function() {
 		$(this).find("tr:gt(0)").each(function(i) {
 			var tr = $(this);
