@@ -1,0 +1,150 @@
+/*
+
+"Dive Into Python 3" print stylesheet
+
+Copyright (c) 2009, Mark Pilgrim, All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/* print-specific (and some Prince-specific) rules */
+
+@page {
+  size: US-Letter;
+  margin: 30pt;
+  padding: 0;
+  @bottom-center {
+    font: 12pt/1.75 Helvetica, 'Gill Sans', 'Gill Sans MT', Corbel, 'Nimbus Sans L', sans-serif;
+    content: counter(page);
+  }
+}
+pre {
+  page-break-inside: avoid;
+}
+h1 {
+  page-break-before: always;
+  prince-bookmark-level: 1;
+}
+h2 {
+  prince-bookmark-level: 2;
+}
+h3 {
+  prince-bookmark-level: 3;
+}
+
+/* typography */
+
+body, .w a {
+  font: 12pt/1.75 Helvetica, 'Gill Sans', 'Gill Sans MT', Corbel, 'Nimbus Sans L', sans-serif;
+  word-spacing: 0;
+}
+pre, kbd, samp, code, var, .b {
+  font-size: 10pt;
+  line-height: 2.1;
+}
+span {
+  font-size: 12pt;
+}
+.baa {
+  font-size: 13pt;
+}
+.q span {
+  font-size: 13pt;
+}
+.note span {
+  color: #000;
+}
+.f:first-letter {
+  color: #888;
+  font: normal 48pt/0.68 serif;
+}
+p {
+  margin: 1.75em 0;
+  font-size: 12pt;
+}
+ul, ol {
+  margin: 1.75em 20pt;
+  font-size: 12pt;
+}
+
+/* basics */
+
+html {
+  background: #fff;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* links */
+
+a {
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+a:link, .w a {
+  color: #000;
+}
+a:visited {
+  color: #000;
+}
+
+/* code blocks */
+
+pre {
+  border: 0;
+}
+.c {
+  font-size: 10pt;
+  line-height: 2.1;
+}
+}
+mark {
+  background: gainsboro;
+}
+
+/* headers and pullquotes */
+
+h1, h1 code {
+  font-size: 24pt;
+}
+h2, h2 code {
+  font-size: 18pt;
+}
+h3, h3 code {
+  font-size: 13pt;
+}
+aside {
+  font-size: 24pt;
+  background: #667;
+  color: white;
+}
+
+/* overrides */
+
+.w, .d {
+  display: none !important;
+}
