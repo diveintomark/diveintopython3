@@ -115,6 +115,8 @@ Ran 11 tests in 0.156s
 
 <p>Coding this way does not make fixing bugs any easier. Simple bugs (like this one) require simple test cases; complex bugs will require complex test cases. In a testing-centric environment, it may <em>seem</em> like it takes longer to fix a bug, since you need to articulate in code exactly what the bug is (to write the test case), then fix the bug itself. Then if the test case doesn&#8217;t pass right away, you need to figure out whether the fix was wrong, or whether the test case itself has a bug in it. However, in the long run, this back-and-forth between test code and code tested pays for itself, because it makes it more likely that bugs are fixed correctly the first time. Also, since you can easily re-run <em>all</em> the test cases along with your new one, you are much less likely to break old code when fixing new code. Today&#8217;s unit test is tomorrow&#8217;s regression test.
 
+<p class=a>&#x2042;
+
 <h2 id=changing-requirements>Handling Changing Requirements</h2>
 <p>Despite your best efforts to pin your customers to the ground and extract exact requirements from them on pain of horrible nasty things involving scissors and hot wax, requirements will change. Most customers don&#8217;t know what they want until they see it, and even if they do, they aren&#8217;t that good at articulating what they want precisely enough to be useful. And even if they do, they&#8217;ll want more in the next release anyway. So be prepared to update your test cases as requirements change.
 
@@ -289,6 +291,8 @@ Ran 12 tests in 0.203s
 
 <p>Comprehensive unit testing means never having to rely on a programmer who says &#8220;Trust me.&#8221;
 
+<p class=a>&#x2042;
+
 <h2 id=refactoring>Refactoring</h2>
 
 <p>The best thing about comprehensive unit testing is not the feeling you get when all your test cases finally pass, or even the feeling you get when someone else blames you for breaking their code and you can actually <em>prove</em> that you didn&#8217;t. The best thing about unit testing is that it gives you the freedom to refactor mercilessly.
@@ -451,6 +455,8 @@ OK</samp></pre>
 <li>Especially when regular expressions are involved.
 <li>Unit tests can give you the confidence to do large-scale refactoring.
 </ul>
+
+<p class=a>&#x2042;
 
 <h2 id=summary>Summary</h2>
 

@@ -83,6 +83,8 @@ if __name__ == '__main__':
 <samp>SEND + MORE == MONEY
 9567 + 1085 == 10652</samp></pre>
 
+<p class=a>&#x2042;
+
 <h2 id=re-findall>Finding all occurrences of a pattern</h2>
 
 <p>The first thing this alphametics solver does is find all the letters (A&ndash;Z) in the puzzle.
@@ -97,6 +99,8 @@ if __name__ == '__main__':
 <li>The <code>re</code> module is Python&#8217;s implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
 <li>Here the regular expression pattern matches sequences of letters. Again, the return value is a list, and each item in the list is a string that matched the regular expression pattern.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
@@ -127,6 +131,8 @@ if __name__ == '__main__':
 
 <p>This list is later used to assign digits to characters as the solver iterates through the possible solutions.
 
+<p class=a>&#x2042;
+
 <h2 id=assert>Making assertions</h2>
 
 <p>Like many programming languages, Python has an <code>assert</code> statement. Here&#8217;s how it works.
@@ -154,6 +160,8 @@ AssertionError</samp></pre>
 <p>But a bit easier to read and write.
 
 <p>The alphametics solver uses this exact <code>assert</code> statement to bail out early if the puzzle contains more than ten unique letters. Since each letter is assigned a unique digit, and there are only ten digits, a puzzle with more than ten unique letters is unsolvable.
+
+<p class=a>&#x2042;
 
 <h2 id=generator-expressions>Generator expressions</h2>
 
@@ -184,6 +192,8 @@ AssertionError</samp></pre>
         yield ord(c)
 
 gen = ord_map(unique_characters)</code></pre>
+
+<p class=a>&#x2042;
 
 <h2 id=permutations>Calculating Permutations&hellip; The Lazy Way!</h2>
 
@@ -248,6 +258,8 @@ StopIteration</samp>
 <li>The first permutation of the 3 items <code>['A', 'B', 'C']</code>, taken 3 at a time, is <code>('A', 'B', 'C')</code>. There are five other permutations &mdash; the same three characters in every conceivable order.
 <li>Since the <code>permutations()</code> function always returns an iterator, an easy way to debug permutations is to pass that iterator to the built-in <code>list()</code> function to see all the permutations immediately.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=more-itertools>Other Fun Stuff in the <code>itertools</code> Module</h2>
 <pre class=screen>
@@ -372,6 +384,8 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <p>But what is this <code>translate()</code> method? Ah, now you&#8217;re getting to the <em>really</em> fun part.
 
+<p class=a>&#x2042;
+
 <h2 id=string-translate>A New Kind Of String Manipulation</h2>
 
 <p>Python strings have many methods. You learned about some of those methods in <a href=strings.html>the Strings chapter</a>: <code>lower()</code>, <code>count()</code>, and <code>format()</code>. Now I want to introduce you to a powerful but little-known string manipulation technique: the <code>translate()</code> method.
@@ -410,6 +424,8 @@ for guess in itertools.permutations(digits, len(characters)):
 </ol>
 
 <p>That&#8217;s pretty impressive. But what can you do with a string that happens to be a valid Python expression?
+
+<p class=a>&#x2042;
 
 <h2 id=eval>Evaluating Arbitrary Strings As Python Expressions</h2>
 
@@ -542,6 +558,8 @@ NameError: name '__import__' is not defined</samp></pre>
 
 <p>So, in the end, it <em>is</em> possible to safely evaluate untrusted Python expressions. Passing <code>{"__builtins__": None}</code> as the second parameter to the <code>eval()</code> function is non-intuitive (and not the default behavior), but it does work. If you understand <em>why</em> it works, you&#8217;re less likely to use <code>eval()</code> incorrectly, in a way that works with trusted input but has potentially devastating consequences with untrusted input.
 
+<p class=a>&#x2042;
+
 <h2 id=alphametics-finale>Putting It All Together</h2>
 
 <p>To recap: this program solves alphametic puzzles by brute force, <i>i.e.</i> through an exhaustive search of all possible solutions. To do this, it&hellip;
@@ -558,6 +576,8 @@ NameError: name '__import__' is not defined</samp></pre>
 </ol>
 
 <p>&hellip;in just 14 lines of code.
+
+<p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 

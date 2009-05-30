@@ -35,7 +35,7 @@ Classname Legend
 .q = "quote"    = quote at beginning of each chapter
 .f = "fancy"    = first paragraph of each chapter (gets a fancy drop-cap)
 .c = "centered" = centered footer text (also clears floats)
-.s = "simple"   = 
+.a = "asterism" = section break
 
 .nm = "no mobile"     = hide this section on mobile devices
 .nd = "no decoration" = hide the widgets on this code block
@@ -52,6 +52,7 @@ Acknowledgements & Inspirations
 "Compose to a Vertical Rhythm" ........................... http://24ways.org/2006/compose-to-a-vertical-rhythm
 "Use the Best Available Ampersand" ....................... http://simplebits.com/notebook/2008/08/14/ampersands.html
 "Unicode Support in HTML, Fonts, and Web Browsers" ....... http://alanwood.net/unicode/
+"Punctuation" ............................................ http://en.wikipedia.org/wiki/Punctuation
 */
 
 /* typography */
@@ -67,7 +68,7 @@ pre, kbd, samp, code, var, .b {
 span {
   font: medium 'Arial Unicode MS', FreeSerif, OpenSymbol, 'DejaVu Sans', sans-serif;
 }
-pre span {
+pre span, .a {
   font-family: 'Arial Unicode MS', 'DejaVu Sans', FreeSerif, OpenSymbol, sans-serif;
 }
 .baa {
@@ -119,10 +120,17 @@ html {
 body {
   margin: 1.75em 28px;
 }
-.c {
+.c, .a {
   clear: both;
   text-align: center;
+}
+.c {
   margin: 2.154em 0;
+}
+.a {
+  font-size: xx-large;
+  line-height: .875;
+  color: #444;
 }
 form div, #level {
   float: right;

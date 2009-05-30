@@ -91,6 +91,8 @@ mark{display:inline}
   &lt;/entry>
 &lt;/feed></code></pre>
  
+<p class=a>&#x2042;
+
 <h2 id=xml-intro>A 5-Minute Crash Course in XML</h2>
 
 <p>If you already know about <abbr>XML</abbr>, you can skip this section.
@@ -173,6 +175,8 @@ mark{display:inline}
 
 <p>And now you know just enough <abbr>XML</abbr> to be dangerous!
 
+<p class=a>&#x2042;
+
 <h2 id=xml-structure>The Structure Of An Atom Feed</h2>
 
 <p>Think of a weblog, or in fact any website with frequently updated content, like <a href=http://www.cnn.com/>CNN.com</a>. The site itself has a title (&#8220;CNN.com&#8221;), a subtitle (&#8220;Breaking News, U.S., World, Weather, Entertainment <i class=baa>&amp;</i> Video News&#8221;), a last-updated date (&#8220;updated 12:43 p.m. EDT, Sat May 16, 2009&#8221;), and a list of articles posted at different times. Each article also has a title, a first-published date (and maybe also a last-updated date, if they published a correction or fixed a typo), and a unique URL.
@@ -241,6 +245,8 @@ mark{display:inline}
 <li>The <code>summary</code> element gives a brief summary of the article. (There is also a <code>content</code> element, not shown here, if you want to include the complete article text in your feed.) This <code>summary</code> element has the Atom-specific <code>type="html"</code> attribute, which specifies that this summary is a snippet of <abbr>HTML</abbr>, not plain text. This is important, since it has <abbr>HTML</abbr>-specific entities in it (<code>&amp;mdash;</code> and <code>&amp;hellip;</code>) which should be rendered as &#8220;&mdash;&#8221; and &#8220;&hellip;&#8221; rather than displayed directly.
 <li>Finally, the end tag for the <code>entry</code> element, signaling the end of the metadata for this article.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=xml-parse>Parsing XML</h2>
 
@@ -319,6 +325,8 @@ mark{display:inline}
 <li>The fourth child &mdash; <code>[3]</code> in a <code>0</code>-based list &mdash; is the <code>updated</code> element.
 <li>The <code>updated</code> element has no attributes, so its <code>.attrib</code> is just an empty dictionary.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=xml-find>Searching For Nodes Within An XML Document</h2>
 
@@ -433,6 +441,8 @@ StopIteration</samp></pre>
 
 <p>Overall, ElementTree&#8217;s <code>findall()</code> method is a very powerful feature, but the query language can be a bit surprising. It is officially described as &#8220;<a href=http://effbot.org/zone/element-xpath.htm>limited support for XPath expressions</a>.&#8221; <a href=http://www.w3.org/TR/xpath>XPath</a> is a W3C standard for querying <abbr>XML</abbr> documents. ElementTree&#8217;s query language is similar enough to XPath to do basic searching, but dissimilar enough that it may annoy you if you already know XPath. Now let&#8217;s look at a third-party <abbr>XML</abbr> library that extends the ElementTree <abbr>API</abbr> with full XPath support.
 
+<p class=a>&#x2042;
+
 <h2 id=xml-lxml>Going Further With lxml</h2>
 
 <p><a href=http://codespeak.net/lxml/>lxml</a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install lxml manually</a>.
@@ -479,6 +489,8 @@ except ImportError:
 <li>The <code>xpath()</code> function returns a list of ElementTree objects. In this document, there is only one entry with a <code>category</code> whose <code>term</code> is <code>accessibility</code>.
 <li>XPath expressions don&#8217;t always return a list of elements. Technically, the <abbr>DOM</abbr> of a parsed <abbr>XML</abbr> document doesn&#8217;t contain elements; it contains <i>nodes</i>. Depending on their type, nodes can be elements, attributes, or even text content. The result of an XPath query is a list of nodes. This query returns a list of text nodes: the text content (<code>text()</code>) of the <code>title</code> element (<code>atom:title</code>) that is a child of the current element (<code>./</code>).
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=xml-generate>Generating XML</h2>
 
@@ -549,6 +561,8 @@ except ImportError:
 <li>You can also apply &#8220;pretty printing&#8221; to the serialization, which inserts line breaks after end tags, and after start tags of elements that contain child elements but no text content. In technical terms, lxml adds &#8220;insignificant whitespace&#8221; to make the output more readable.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=xml-custom-parser>Customizing Your XML Parser</h2>
 
 <p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr> &mdash; your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <a href=http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#parsing><abbr>HTML</abbr> error handling</a> is actually quite well-defined, but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
@@ -609,6 +623,8 @@ lxml.etree.XMLSyntaxError: Entity 'hellip' not defined, line 3, column 28</samp>
 </ol>
 
 <p>It is important to reiterate that there is <strong>no guarantee of interoperability</strong> with &#8220;recovering&#8221; <abbr>XML</abbr> parsers. A different parser might decide that it recognized the <code>&amp;hellip;</code> entity from <abbr>HTML</abbr>, and replace it with <code>&amp;amp;hellip;</code> instead. Is that &#8220;better&#8221;? Maybe. Is it &#8220;more correct&#8221;? No, they are both equally incorrect. The correct behavior (according to the <abbr>XML</abbr> specification) is to halt and catch fire. If you&#8217;ve decided not to do that, you&#8217;re on your own.
+
+<p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 

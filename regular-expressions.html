@@ -26,6 +26,8 @@ body{counter-reset:h1 4}
 <blockquote class="note compare perl5">
 <p><span>&#x261E;</span>If you&#8217;ve used regular expressions in other languages (like Perl 5), Python&#8217;s syntax will be very familiar. Read the summary of the <a href=http://docs.python.org/dev/library/re.html#module-contents><code>re</code> module</a> to get an overview of the available functions and their arguments.
 </blockquote>
+<p class=a>&#x2042;
+
 <h2 id=streetaddresses>Case Study: Street Addresses</h2>
 <p>This series of examples was inspired by a real-life problem I had in my day job several years ago, when I needed to scrub and standardize street addresses exported from a legacy system before importing them into a newer system. (See, I don&#8217;t just make this stuff up; it&#8217;s actually useful.)  This example shows how I approached the problem.
 <pre class=screen>
@@ -68,6 +70,8 @@ body{counter-reset:h1 4}
 <li><em>*sigh*</em>  Unfortunately, I soon found more cases that contradicted my logic. In this case, the street address contained the word <code>'ROAD'</code> as a whole word by itself, but it wasn&#8217;t at the end, because the address had an apartment number after the street designation. Because <code>'ROAD'</code> isn&#8217;t at the very end of the string, it doesn&#8217;t match, so the entire call to <code>re.sub()</code> ends up replacing nothing at all, and you get the original string back, which is not what you want.
 <li>To solve this problem, I removed the <code>$</code> character and added another <code>\b</code>. Now the regular expression reads &#8220;match <code>'ROAD'</code> when it&#8217;s a whole word by itself anywhere in the string,&#8221; whether at the end, the beginning, or somewhere in the middle.
 </ol>
+<p class=a>&#x2042;
+
 <h2 id=romannumerals>Case Study: Roman Numerals</h2>
 <p>You&#8217;ve most likely seen Roman numerals, even if you didn&#8217;t recognize them. You may have seen them in copyrights of old movies and television shows (&#8220;Copyright <code>MCMXLVI</code>&#8221; instead of &#8220;Copyright <code>1946</code>&#8221;), or on the dedication walls of libraries or universities (&#8220;established <code>MDCCCLXXXVIII</code>&#8221; instead of &#8220;established <code>1888</code>&#8221;). You may also have seen them in outlines and bibliographical references. It&#8217;s a system of representing numbers that really does date back to the ancient Roman empire (hence the name).
 <p>In Roman numerals, there are seven characters that are repeated and combined in various ways to represent numbers.
@@ -157,6 +161,8 @@ body{counter-reset:h1 4}
 <li>Interestingly, an empty string still matches this pattern, because all the <code>M</code> characters are optional and ignored, and the empty string matches the <code>D?C?C?C?</code> pattern where all the characters are optional and ignored.
 </ol>
 <p>Whew! See how quickly regular expressions can get nasty?  And you&#8217;ve only covered the thousands and hundreds places of Roman numerals. But if you followed all that, the tens and ones places are easy, because they&#8217;re exactly the same pattern. But let&#8217;s look at another way to express the pattern.
+<p class=a>&#x2042;
+
 <h2 id=nmsyntax>Using The <code>{n,m}</code> Syntax</h2>
 <aside>{1,4} matches between 1 and 4 occurrences of a pattern.</aside>
 <p>In the previous section, you were dealing with a pattern where the same character could be repeated up to three times. There is another way to express this in regular expressions, which some people find more readable. First look at the method we already used in the previous example.
@@ -240,6 +246,8 @@ body{counter-reset:h1 4}
 </ol>
 <p>If you followed all that and understood it on the first try, you&#8217;re doing better than I did. Now imagine trying to understand someone else&#8217;s regular expressions, in the middle of a critical function of a large program. Or even imagine coming back to your own regular expressions a few months later. I&#8217;ve done it, and it&#8217;s not a pretty sight.
 <p>Now let&#8217;s explore an alternate syntax that can help keep your expressions maintainable.
+<p class=a>&#x2042;
+
 <h2 id=verbosere>Verbose Regular Expressions</h2>
 <p>So far you&#8217;ve just been dealing with what I&#8217;ll call &#8220;compact&#8221; regular expressions. As you&#8217;ve seen, they are difficult to read, and even if you figure out what one does, that&#8217;s no guarantee that you&#8217;ll be able to understand it six months later. What you really need is inline documentation.
 <p>Python allows you to do this with something called <i>verbose regular expressions</i>. A verbose regular expression is different from a compact regular expression in two ways:
@@ -273,6 +281,8 @@ body{counter-reset:h1 4}
 <li>This matches the start of the string, then three of a possible three <code>M</code>, then <code>D</code> and three of a possible three <code>C</code>, then <code>L</code> and three of a possible three <code>X</code>, then <code>V</code> and three of a possible three <code>I</code>, then the end of the string.
 <li>This does not match. Why?  Because it doesn&#8217;t have the <code>re.VERBOSE</code> flag, so the <code>re.search</code> function is treating the pattern as a compact regular expression, with significant whitespace and literal hash marks. Python can&#8217;t auto-detect whether a regular expression is verbose or not. Python assumes every regular expression is compact unless you explicitly state that it is verbose.
 </ol>
+<p class=a>&#x2042;
+
 <h2 id=phonenumbers>Case study: Parsing Phone Numbers</h2>
 <aside>\d matches any numeric digit (0&ndash;9). \D matches anything but digits.</aside>
 <p>So far you&#8217;ve concentrated on matching whole patterns. Either the pattern matches, or it doesn&#8217;t. But regular expressions are much more powerful than that. When a regular expression <em>does</em> match, you can pick out specific pieces of it. You can find out what matched where.
@@ -404,6 +414,8 @@ body{counter-reset:h1 4}
 <li>Other than being spread out over multiple lines, this is exactly the same regular expression as the last step, so it&#8217;s no surprise that it parses the same inputs.
 <li>Final sanity check. Yes, this still works. You&#8217;re done.
 </ol>
+<p class=a>&#x2042;
+
 <h2 id=summary>Summary</h2>
 <p>This is just the tiniest tip of the iceberg of what regular expressions can do. In other words, even though you&#8217;re completely overwhelmed by them now, believe me, you ain&#8217;t seen nothing yet.
 <p>You should now be familiar with the following techniques:

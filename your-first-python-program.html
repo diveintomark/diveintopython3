@@ -70,6 +70,8 @@ if __name__ == "__main__":
 
 <p>So why does running the script on the command line give you the same output every time? We&#8217;ll get to that. First, let&#8217;s look at that <code>approximate_size()</code> function.
 
+<p class=a>&#x2042;
+
 <h2 id=declaringfunctions>Declaring Functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
 <pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
@@ -129,6 +131,8 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <li>This call fails too, for the same reason as the previous call. Is that surprising? After all, you passed <code>4000</code> for the argument named <code>size</code>, then &#8220;obviously&#8221; that <code>False</code> value was meant for the <var>a_kilobyte_is_1024_bytes</var> argument. But Python doesn&#8217;t work that way. As soon as you have a named argument, all arguments to the right of that need to be named arguments, too.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=readability>Writing Readable Code</h2>
 <p>I won&#8217;t bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you&#8217;ve forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You&#8217;ll thank me in six months.
 <h3 id=docstrings>Documentation Strings</h3>
@@ -153,6 +157,8 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <blockquote class=note>
 <p><span>&#x261E;</span>Many Python <abbr>IDE</abbr>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip. This can be incredibly helpful, but it&#8217;s only as good as the <code>docstring</code>s you write.
 </blockquote>
+<p class=a>&#x2042;
+
 <h2 id=everythingisanobject>Everything Is An Object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
@@ -215,6 +221,8 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <p>Still, this doesn&#8217;t answer the more fundamental question: what is an object?  Different programming languages define &#8220;object&#8221; in different ways. In some, it means that <em>all</em> objects <em>must</em> have attributes and methods; in others, it means that all objects are subclassable. In Python, the definition is looser. Some objects have neither attributes nor methods, <em>but they could</em>. Not all objects are subclassable. But everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function.
 <p>You may have heard the term &#8220;first-class object&#8221; in other programming contexts. In Python, functions are <i>first-class objects</i>. You can pass a function as an argument to another function. Modules are <i>first-class objects</i>. You can pass an entire module as an argument to a function. Classes are first-class objects, and individual instances of a class are also first-class objects.
 <p>This is important, so I&#8217;m going to repeat it in case you missed it the first few times: <em>everything in Python is an object</em>. Strings are objects. Lists are objects. Functions are objects. Classes are objects. Class instances are objects. Even modules are objects.
+<p class=a>&#x2042;
+
 <h2 id=indentingcode>Indenting Code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
 <pre><code>
@@ -240,6 +248,8 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks. <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
 </blockquote>
+<p class=a>&#x2042;
+
 <h2 id=runningscripts>Running Scripts</h2>
 <aside>Everything in Python is an object.</aside>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
@@ -261,6 +271,8 @@ if __name__ == "__main__":
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <p>And that&#8217;s your first Python program!
+<p class=a>&#x2042;
+
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href=http://www.python.org/dev/peps/pep-0257/>PEP 257: Docstring Conventions</a> explains what distinguishes a good <code>docstring</code> from a great <code>docstring</code>.

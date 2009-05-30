@@ -49,6 +49,8 @@ body{counter-reset:h1 6}
 
 <p><code>class</code>? What&#8217;s a class?
 
+<p class=a>&#x2042;
+
 <h2 id=defining-classes>Defining Classes</h2>
 
 <p>Python is fully object-oriented: you can define your own classes, inherit from your own or built-in classes, and instantiate the classes you&#8217;ve defined.
@@ -89,6 +91,8 @@ class Fib:
 
 <p>In the <code>__init__()</code> method, <var>self</var> refers to the newly created object; in other class methods, it refers to the instance whose method was called. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
 
+<p class=a>&#x2042;
+
 <h2 id=instantiating-classes>Instantiating Classes</h2>
 
 <p>Instantiating classes in Python is straightforward. To instantiate a class, simply call the class as if it were a function, passing the arguments that the <code>__init__()</code> method requires. The return value will be the newly created object.
@@ -111,6 +115,8 @@ class Fib:
 <blockquote class="note compare java">
 <p><span>&#x261E;</span>In Python, simply call a class as if it were a function to create a new instance of the class. There is no explicit <code>new</code> operator like <abbr>C++</abbr> or Java.
 </blockquote>
+
+<p class=a>&#x2042;
 
 <h2 id=instance-variables>Instance Variables</h2>
 
@@ -147,6 +153,8 @@ class Fib:
 <samp>100</samp>
 <samp class=p>>>> </samp><kbd>fib2.max</kbd>
 <samp>200</samp></pre>
+
+<p class=a>&#x2042;
 
 <h2 id=a-fibonacci-iterator>A Fibonacci Iterator</h2>
 
@@ -194,6 +202,8 @@ class Fib:
 <li>To &#8220;loop through&#8221; the iterator, the <code>for</code> loop calls <code>next(fib_iter)</code>, which calls the <code>__next__()</code> method on the <code>fib_iter</code> object, which does the next-Fibonacci-number calculations and returns a value. The <code>for</code> loop takes this value and assigns it to <var>n</var>, then executes the body of the <code>for</code> loop for that value of <var>n</var>.
 <li>How does the <code>for</code> loop know when to stop? I&#8217;m glad you asked! When <code>next(fib_iter)</code> raises a <code>StopIteration</code> exception, the <code>for</code> loop will swallow the exception and gracefully exit. (Any other exception will pass through and be raised as usual.) And where have you seen a <code>StopIteration</code> exception? In the <code>__next__()</code> method, of course!
 </ul>
+
+<p class=a>&#x2042;
 
 <h2 id=a-plural-rule-iterator>A Plural Rule Iterator</h2>
 
@@ -355,6 +365,8 @@ rules = LazyRules()</code></pre>
 <li><strong>Maximum performance.</strong> The previous example would read through the file and build functions dynamically every time you wanted to pluralize a word. This version will cache functions as soon as they&#8217;re built, and in the worst case, it will only read through the pattern file once, no matter how many words you pluralize.
 <li><strong>Separation of code and data.</strong> All the patterns are stored in a separate file. Code is code, and data is data, and never the twain shall meet.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>

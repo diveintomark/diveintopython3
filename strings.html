@@ -47,6 +47,8 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Now cry a lot, because everything you thought you knew about strings is wrong, and there ain&#8217;t no such thing as &#8220;plain text.&#8221;
 
+<p class=a>&#x2042;
+
 <h2 id=one-ring-to-rule-them-all>Unicode</h2>
 
 <p><i>Enter Unicode.</i>
@@ -75,6 +77,8 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in UTF-8 uses the exact same stream of bytes on any computer.
 
+<p class=a>&#x2042;
+
 <h2 id=divingin>Diving In</h2>
 
 <p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. "Is this string UTF-8?" is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
@@ -93,6 +97,8 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 <li>Just like getting individual items out of a list, you can get individual characters out of a string using index notation.
 <li>Just like lists, you can concatenate strings using the <code>+</code> operator.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=formatting-strings>Formatting Strings</h2>
 
@@ -213,6 +219,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>For all the gory details on format specifiers, consult the <a href=http://docs.python.org/3.0/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> in the official Python documentation.
 
+<p class=a>&#x2042;
+
 <h2 id=common-string-methods>Other Common String Methods</h2>
 
 <p>Besides formatting, strings can do a number of other useful tricks.
@@ -260,6 +268,8 @@ experience of years.</samp>
 <li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We want to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
 <li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=byte-arrays>Strings vs. Bytes</h2>
 
@@ -365,6 +375,8 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
 
 <p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in UTF-8.
@@ -383,6 +395,8 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 # -*- coding: windows-1252 -*-</code></pre>
 
 <p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
+
+<p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 

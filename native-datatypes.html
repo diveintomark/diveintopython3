@@ -33,6 +33,8 @@ body{counter-reset:h1 2}
 </ol>
 <p>Of course, there are a lot more types than these seven. <a href=your-first-python-program.html#everythingisanobject>Everything is an object</a> in Python, so there are types like <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, and even <i>compiled code</i>. You&#8217;ve already seen some of these: <a href=your-first-python-program.html#runningscripts>modules have names</a>, <a href=your-first-python-program.html#docstrings>functions have <code>docstrings</code></a>, <i class=baa>&amp;</i>c. You&#8217;ll learn about classes in [FIXME xref] and files in [FIXME xref].
 <p>Strings and bytes are important enough &mdash; and complicated enough &mdash; that they get their own chapter. Let&#8217;s look at the others first.
+<p class=a>&#x2042;
+
 <h2 id=booleans>Booleans</h2>
 <aside>You can use virtually any expression in a boolean context.</aside>
 <p>Booleans are either true or false. Python has two constants, <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
@@ -50,6 +52,8 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd>size = -1</kbd>
 <samp class=p>>>> </samp><kbd>size &lt; 0</kbd>
 <samp>True</samp></pre>
+<p class=a>&#x2042;
+
 <h2 id=numbers>Numbers</h2>
 <p>Numbers are awesome. There are so many to choose from. Python supports both integers and floating point numbers. There&#8217;s no type declaration to distinguish them; Python tells them apart by the presence or absence of a decimal point.
 <pre class=screen>
@@ -182,6 +186,8 @@ body{counter-reset:h1 2}
 <li>Non-zero floating point numbers are true; <code>0.0</code> is false. Be careful with this one! If there&#8217;s the slightest rounding error (not impossible, as you saw in the previous section) then Python will be testing <code>0.0000000000001</code> instead of <code>0</code> and will return <code>True</code>.
 <li>Fractions can also be used in a boolean context. <code>Fraction(0, n)</code> is false for all values of <var>n</var>. All other fractions are true.
 </ol>
+<p class=a>&#x2042;
+
 <h2 id=lists>Lists</h2>
 <p>Lists are Python&#8217;s workhorse datatype. When I say &#8220;list,&#8221; you might be thinking &#8220;array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c.&#8221; Don&#8217;t think that. Lists are much cooler than that.
 <blockquote class="note compare perl5">
@@ -326,9 +332,13 @@ ValueError: list.index(x): x not in list</samp></pre>
 <li>Any list with at least one item is true. The value of the items is irrelevant.
 </ol>
 <!--
+<p class=a>&#x2042;
+
 <h2 id=sets>Sets</h2>
 <p>FIXME
 -->
+<p class=a>&#x2042;
+
 <h2 id=dictionaries>Dictionaries</h2>
 <p>One of Python&#8217;s most important datatypes is the dictionary, which defines one-to-one relationships between keys and values.
 <blockquote class="note compare perl5">
@@ -419,6 +429,8 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li>In a boolean context, an empty dictionary is false.
 <li>Any dictionary with at least one key-value pair is true.
 </ol>
+<p class=a>&#x2042;
+
 <h2 id=none><code>None</code></h2>
 <p><code>None</code> is a special constant in Python. It is a null value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not <code>0</code>. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
 <p><code>None</code> is the only null value. It has its own datatype (<code>NoneType</code>). You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects. All variables whose value is <code>None</code> are equal to each other.
@@ -453,6 +465,8 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp>no, it's false</samp>
 <samp class=p>>>> </samp><kbd>is_it_true(not None)</kbd>
 <samp>yes, it's true</samp></pre>
+<p class=a>&#x2042;
+
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href=http://docs.python.org/3.0/library/fractions.html>The <code>fractions</code> module</a>

@@ -29,6 +29,8 @@ del{background:#f87}
 <p>A Unipony, as it were.
 <p>I&#8217;ll settle for character encoding auto-detection.
 
+<p class=a>&#x2042;
+
 <h2 id=faq.what>What is Character Encoding Auto-Detection?</h2>
 <p>It means taking a sequence of bytes in an unknown character encoding, and attempting to determine the encoding so you can read the text. It&#8217;s like cracking a code when you don&#8217;t have the decryption key.
 
@@ -38,6 +40,8 @@ del{background:#f87}
 
 <h3 id=faq.who>Does Such An Algorithm Exist?</h3>
 <p>As it turns out, yes. All major browsers have character encoding auto-detection, because the web is full of pages that have no encoding information whatsoever. <a href=http://lxr.mozilla.org/seamonkey/source/extensions/universalchardet/src/base/>Mozilla Firefox contains an encoding auto-detection library</a> which is open source. <a href=http://chardet.feedparser.org/>I ported the library to Python 2</a> and dubbed it the <code>chardet</code> module. This chapter will take you step-by-step through the process of porting the <code>chardet</code> module from Python 2 to Python 3.
+
+<p class=a>&#x2042;
 
 <h2 id=divingin2>Introducing The <code>chardet</code> Module</h2>
 <p>[FIXME download link, possibly on chardet.feedparser.org, possibly local]
@@ -70,6 +74,8 @@ del{background:#f87}
 <p>Hebrew is handled as a special case. If the text appears to be Hebrew based on 2-character distribution analysis, <code>HebrewProber</code> (defined in <code>hebrewprober.py</code>) tries to distinguish between Visual Hebrew (where the source text actually stored &#8220;backwards&#8221; line-by-line, and then displayed verbatim so it can be read from right to left) and Logical Hebrew (where the source text is stored in reading order and then rendered right-to-left by the client). Because certain characters are encoded differently based on whether they appear in the middle of or at the end of a word, we can make a reasonable guess about direction of the source text, and return the appropriate encoding (<code>windows-1255</code> for Logical Hebrew, or <code>ISO-8859-8</code> for Visual Hebrew).
 <h3 id=how.windows1252><code>windows-1252</code></h3>
 <p>If <code>UniversalDetector</code> detects a high-bit character in the text, but none of the other multi-byte or single-byte encoding probers return a confident result, it creates a <code>Latin1Prober</code> (defined in <code>latin1prober.py</code>) to try to detect English text in a <code>windows-1252</code> encoding. This detection is inherently unreliable, because English letters are encoded in the same way in many different encodings. The only way to distinguish <code>windows-1252</code> is through commonly used symbols like smart quotes, curly apostrophes, copyright symbols, and the like. <code>Latin1Prober</code> automatically reduces its confidence rating to allow more accurate probers to win if at all possible.
+<p class=a>&#x2042;
+
 <h2 id=running2to3>Running <code>2to3</code></h2>
 <p>We&#8217;re going to migrate the <code>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy &mdash; a function was renamed or moved to a different modules &mdash; but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code>2to3</code></a>. In this chapter, we&#8217;ll start by running <code>2to3</code> on the <code>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
 <p>The main <code>chardet</code> package is split across several different files, all in the same directory. The <code>2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code>2to3</code> will convert each of the files in turn.
@@ -572,6 +578,8 @@ RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
 <p>[FIXME explain the difference in import syntax]
 <p>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Time to run the new version. Do you think it&#8217;ll work?
+<p class=a>&#x2042;
+
 <h2 id=manual>Fixing What <code>2to3</code> Can&#8217;t</h2>
 <h3 id=falseisinvalidsyntax><code>False</code> is invalid syntax</h3>
 <aside>You do have tests, right?</aside>
@@ -1171,6 +1179,8 @@ tests\EUC-JP\arclamp.jp.xml                                  EUC-JP with confide
 .
 316 tests</samp></pre>
 <p>Holy crap, it actually works! <em><a href=http://www.hampsterdance.com/>/me does a little dance</a></em>
+<p class=a>&#x2042;
+
 <h2 id=summary>Summary</h2>
 <p>What have we learned?
 <ol>

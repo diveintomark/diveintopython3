@@ -41,6 +41,8 @@ body{counter-reset:h1 8}
 <li>When maintaining code, it helps you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
 <li>When writing code in a team, it increases confidence that the code you&#8217;re about to commit isn&#8217;t going to break someone else&#8217;s code, because you can run their unit tests first. (I&#8217;ve seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn&#8217;t play well with others.)
 </ul>
+<p class=a>&#x2042;
+
 <h2 id=romantest1>A Single Question</h2>
 <aside>Every test is an island.</aside>
 <p>A test case answers a single question about the code it is testing. A test case should be able to...
@@ -221,6 +223,8 @@ OK</samp></pre>
 <li>Hooray! The <code>to_roman()</code> function passes the &#8220;known values&#8221; test case. It&#8217;s not comprehensive, but it does put the function through its paces with a variety of inputs, including inputs that produce every single-character Roman numeral, the largest possible input (<code>3999</code>), and the input that produces the longest possible Roman numeral (<code>3888</code>). At this point, you can be reasonably confident that the function works for any good input value you could throw at it.
 </ol>
 <p>&#8220;Good&#8221; input? Hmm. What about bad input?
+<p class=a>&#x2042;
+
 <h2 id=romantest2>&#8220;Halt And Catch Fire&#8221;</h2>
 <aside>The Pythonic way to halt and catch fire is to raise an exception.</aside>
 <p>It is not enough to test that functions succeed when given good input; you must also test that they fail when given bad input. And not just any sort of failure; they must fail in the way you expect.
@@ -334,6 +338,8 @@ OK</samp></pre>
 <li>Hooray! Both tests pass. Because you worked iteratively, bouncing back and forth between testing and coding, you can be sure that the two lines of code you just wrote were the cause of that one test going from &#8220;fail&#8221; to &#8220;pass.&#8221; That kind of confidence doesn&#8217;t come cheap, but it will pay for itself over the lifetime of your code.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=romantest3>More Halting, More Fire</h2>
 
 <p>Along with testing numbers that are too large, you need to test numbers that are too small. As <a href=#divingin>we noted in our functional requirements</a>, Roman numerals cannot express <code>0</code> or negative numbers.
@@ -429,6 +435,8 @@ to_roman should fail with 0 input ... ok
 Ran 4 tests in 0.016s
 
 OK</samp></pre>
+
+<p class=a>&#x2042;
 
 <h2 id=romantest4>And One More Thing&hellip;</h2>
 

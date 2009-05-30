@@ -33,6 +33,8 @@ body{counter-reset:h1 5}
 <p>(I know, there are a lot of exceptions. <i>Man</i> becomes <i>men</i> and <i>woman</i> becomes <i>women</i>, but <i>human</i> becomes <i>humans</i>. <i>Mouse</i> becomes <i>mice</i> and <i>louse</i> becomes <i>lice</i>, but <i>house</i> becomes <i>houses</i>. <i>Knife</i> becomes <i>knives</i> and <i>wife</i> becomes <i>wives</i>, but <i>lowlife</i> becomes <i>lowlifes</i>. And don&#8217;t even get me started on words that are their own plural, like <i>sheep</i>, <i>deer</i>, and <i>haiku</i>.)
 <p>Other languages, of course, are completely different.
 <p>Let&#8217;s design a Python library that automatically pluralizes English nouns. We&#8217;ll start just these four rules, but keep in mind that you&#8217;ll inevitably need to add more.
+<p class=a>&#x2042;
+
 <h2 id=i-know>I Know, Let&#8217;s Use Regular Expressions!</h2>
 <p>So you&#8217;re looking at words, which, at least in English, means you&#8217;re looking at strings of characters. You have rules that say you need to find different combinations of characters, then do different things to them. This sounds like a job for regular expressions!
 <p class=d>[<a href=examples/plural1.py>download <code>plural1.py</code></a>]
@@ -117,6 +119,8 @@ def plural(noun):
 </ol>
 <p>Regular expression substitutions are extremely powerful, and the <code>\1</code> syntax makes them even more powerful. But combining the entire operation into one regular expression is also much harder to read, and it doesn&#8217;t directly map to the way you first described the pluralizing rules. You originally laid out rules like &#8220;if the word ends in S, X, or Z, then add ES&#8221;. If you look at this function, you have two lines of code that say &#8220;if the word ends in S, X, or Z, then add ES&#8221;. It doesn&#8217;t get much more direct than that.
 
+<p class=a>&#x2042;
+
 <h2 id=a-list-of-functions>A List Of Functions</h2>
 
 <p>Now you&#8217;re going to add a level of abstraction. You started by defining a list of rules: if this, do that, otherwise go to the next rule. Let&#8217;s temporarily complicate part of the program so you can simplify another part.
@@ -195,6 +199,8 @@ def plural(noun):
 
 <p>But this is really just a stepping stone to the next section. Let&#8217;s move on&hellip;
 
+<p class=a>&#x2042;
+
 <h2 id=a-list-of-patterns>A List Of Patterns</h2>
 
 <p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> list and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
@@ -241,6 +247,8 @@ def build_match_and_apply_functions(pattern, search, replace):
 <li>Since the <var>rules</var> list is the same as the previous example (really, it is), it should come as no surprise that the <code>plural()</code> function hasn&#8217;t changed at all. It&#8217;s completely generic; it takes a list of rule functions and calls them in order. It doesn&#8217;t care how the rules are defined. In the previous example, they were defined as seperate named functions. Now they are built dynamically by mapping the output of the <code>build_match_and_apply_functions()</code> function onto a list of raw strings. It doesn&#8217;t matter; the <code>plural()</code> function still works the same way.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=a-file-of-patterns>A File Of Patterns</h2>
 
 <p>You&#8217;ve factored out all the duplicate code and added enough abstractions so that the pluralization rules are defined in a list of strings. The next logical step is to take these strings and put them in a separate file, where they can be maintained separately from the code that uses them.
@@ -285,6 +293,8 @@ finally:
 </ol>
 
 <p>The improvement here is that you&#8217;ve completely separated the pluralization rules into an external file, so it can be maintained separately from the code that uses it. Code is code, data is data, and life is good.
+
+<p class=a>&#x2042;
 
 <h2 id=generators>Generators</h2>
 
@@ -388,6 +398,8 @@ def plural(noun):
 <p>What if you could have the best of both worlds: minimal startup cost (don&#8217;t execute any code on <code>import</code>), <em>and</em> maximum performance (don&#8217;t build the same functions over and over again). Oh, and you still want to keep the rules in a separate file (because code is code and data is data), just as long as you never have to read the same line twice.
 
 <p>To do that, you&#8217;ll need to build your own iterator. But before you do <em>that</em>, you need to learn about Python classes.
+
+<p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
