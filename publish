@@ -13,7 +13,7 @@ echo "minimizing HTML"
 
 # minimize HTML (XXX this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
-  python htmlminimizer.py "$f" build/"$f"
+  python3 htmlminimizer.py "$f" build/"$f"
 done
 
 # add evil tracking code
