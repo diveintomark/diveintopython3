@@ -26,35 +26,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* print-specific (and some Prince-specific) rules */
-
-@page {
-  size: US-Letter;
-  margin: 30pt;
-  padding: 0;
-  @bottom-center {
-    font: 12pt/1.75 Helvetica, 'Gill Sans', 'Gill Sans MT', Corbel, 'Nimbus Sans L', sans-serif;
-    content: counter(page);
-  }
-}
-pre {
-  page-break-inside: avoid;
-}
-h1 {
-  page-break-before: always;
-  prince-bookmark-level: 1;
-}
-h2 {
-  prince-bookmark-level: 2;
-}
-h3 {
-  prince-bookmark-level: 3;
-}
-
 /* typography */
 
 body, .w a {
-  font: 12pt/1.75 Helvetica, 'Gill Sans', 'Gill Sans MT', Corbel, 'Nimbus Sans L', sans-serif;
+  font: 12pt/1.75 'Gill Sans', 'Gill Sans MT', Helvetica, Corbel, 'Nimbus Sans L', sans-serif;
   word-spacing: 0;
 }
 pre, kbd, samp, code, var, .b {
@@ -77,12 +52,8 @@ span {
   color: #888;
   font: normal 48pt/0.68 serif;
 }
-p {
+p, ul, ol {
   margin: 1.75em 0;
-  font-size: 12pt;
-}
-ul, ol {
-  margin: 1.75em 20pt;
   font-size: 12pt;
 }
 
@@ -145,6 +116,6 @@ aside {
 
 /* overrides */
 
-.w, .d {
+.w, .d, form, form + p, #level, #toc {
   display: none !important;
 }
