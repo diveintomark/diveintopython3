@@ -59,7 +59,8 @@ mark{display:inline}
   &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
   &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
   &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  &lt;-- rest of feed omitted for brevity --></samp></pre>
+  &hellip;
+</samp></pre>
 <ol>
 <li>Downloading anything over HTTP is incredibly easy in Python; in fact, it&#8217;s a one-liner. The <code>urllib.request</code> module has a handy <code>urlopen()</code> function that takes the address of the page you want, and returns a file-like object that you can just <code>read()</code> from to get the full contents of the page. It just can&#8217;t get any easier.
 </ol>
@@ -341,7 +342,8 @@ class DefaultErrorHandler(urllib2.HTTPDefaultErrorHandler):    <span>&#x2460;</s
   xml:lang="en">
   &lt;title mode="escaped">dive into mark&lt;/title>
   &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  &lt;-- rest of feed omitted for brevity --&gt;</samp>
+  &hellip;
+</samp>
 <samp class=p>>>> </samp><kbd>request.add_header('If-None-Match',</kbd>
 <samp class=p>...    </samp>firstdatastream.headers.get('ETag'))   <span>&#x2462;</span>
 <samp class=p>>>> </samp><kbd>seconddatastream = opener.open(request)</kbd>
@@ -602,7 +604,8 @@ header: Content-Type: application/atom+xml</span>
   xml:lang="en">
   &lt;title mode="escaped">dive into mark&lt;/title>
   &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
-  &lt;-- rest of feed omitted for brevity --&gt;</samp>
+  &hellip;
+</samp>
 <samp class=p>>>> </samp><kbd>len(data)</kbd>
 15955
 </pre>
@@ -711,7 +714,8 @@ def fetch(source, etag=None, last_modified=None, agent=USER_AGENT):
 'status': 301,
 'data': '&lt;?xml version="1.0" encoding="iso-8859-1"?>
 &lt;feed version="0.3"
-&lt;-- rest of data omitted for brevity --&gt;'}</samp>
+&hellip;
+'}</samp>
 <samp class=p>>>> </samp><kbd>if params['status'] == 301:</kbd><span>&#x2462;</span>
 <samp class=p>...    </samp>url = params['url']
 <samp class=p>>>> </samp><kbd>newparams = openanything.fetch(</kbd>
