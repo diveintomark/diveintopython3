@@ -134,19 +134,21 @@ Content-Type: image/jpeg
 
 The second time you request the same data, you include the ETag hash in an <code>If-None-Match</code> header of your request. If the data hasn&#8217;t changed, the server will send you back a <code>304</code> status code. As with the last-modified date checking, the server sends back <em>only</em> the <code>304</code> status code; it doesn&#8217;t send you the same data a second time. By including the ETag hash in your second request, you&#8217;re telling the server that there&#8217;s no need to re-send the same data if it still matches this hash, since <a href=#caching>you still have the data from the last time</a>.
 
+<p>FIXME add curl example here
+
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support ETags, but <code>httplib2</code> does.
 
 <h3 id=compression>Compression</h3>
 
 <p>When you talk about <abbr>HTTP</abbr> web services, you&#8217;re almost always talking about moving text-based data back and forth over the wire. Maybe it&#8217;s <abbr>XML</abbr>, maybe it&#8217;s <abbr>JSON</abbr>, maybe it&#8217;s just <a href=strings.html#boring-stuff title="there ain&#8217;t no such thing as plain text">plain text</a>. Regardless of the format, text compresses well. The example feed in <a href=xml.html>the XML chapter</a> is 3070 bytes uncompressed, but would be 941 bytes after gzip compression. That&#8217;s just 30% of the original size!
 
-<p><abbr>HTTP</abbr> supports several compression algorithms. The two most common types are <a href=http://www.ietf.org/rfc/rfc1952.txt>gzip</a> and <a href=http://www.ietf.org/rfc/rfc1951.txt>deflate</a>. When you request a resource over <abbr>HTTP</abbr>, you can ask the server to send it in compressed format. You include an <code>Accept-encoding</code> header in your request, and if the server supports compression, it will send you back compressed data with a <code>Content-encoding</code> header that tells you which compression algorithm it used. Then it&#8217;s up to you to decompress the data.
+<p><abbr>HTTP</abbr> supports several compression algorithms. The two most common types are <a href=http://www.ietf.org/rfc/rfc1952.txt>gzip</a> and <a href=http://www.ietf.org/rfc/rfc1951.txt>deflate</a>. When you request a resource over <abbr>HTTP</abbr>, you can ask the server to send it in compressed format. You include an <code>Accept-encoding</code> header in your request that lists which compression algorithms you support. If the server supports any of the same algorithms, it will send you back compressed data (with a <code>Content-encoding</code> header that tells you which algorithm it used). Then it&#8217;s up to you to decompress the data.
 
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support compression, but <code>httplib2</code> does.
 
 <h3 id=redirects>Redirects</h3>
 
-<p><a href=http://www.w3.org/Provider/Style/URI>Cool URIs don&#8217;t change</a>, but many <abbr>URI</abbr>s are seriously uncool. Web sites get reorganized, pages move to new addresses. Even web services can reorganize. A syndicated feed at <code>http://example.com/index.xml</code> might be moved to <code>http://example.com/xml/atom.xml</code>. Or an entire domain might move, as an organization expands and reorganizes; <code>http://www.example.com/index.xml</code> becomes <code>http://server-farm-1.example.com/index.xml</code>.
+<p><a href=http://www.w3.org/Provider/Style/URI>Cool <abbr>URI</abbr>s don&#8217;t change</a>, but many <abbr>URI</abbr>s are seriously uncool. Web sites get reorganized, pages move to new addresses. Even web services can reorganize. A syndicated feed at <code>http://example.com/index.xml</code> might be moved to <code>http://example.com/xml/atom.xml</code>. Or an entire domain might move, as an organization expands and reorganizes; <code>http://www.example.com/index.xml</code> becomes <code>http://server-farm-1.example.com/index.xml</code>.
 
 <p>Every time you request any kind of resource from an <abbr>HTTP</abbr> server, the server includes a status code in its response. Status code <code>200</code> means &#8220;everything&#8217;s normal, here&#8217;s the page you asked for&#8221;. Status code <code>404</code> means &#8220;page not found&#8221;. (You&#8217;ve probably seen 404 errors while browsing the web.) Status codes in the 300&#8217;s indicate some form of redirection.
 
