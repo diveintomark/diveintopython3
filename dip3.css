@@ -102,9 +102,10 @@ abbr {
 }
 .f:first-letter {
   float: left;
-  color: lightblue;
+  color: lightsteelblue;
   padding: 0.11em 4px 0 0;
   font: normal 4em/0.68 serif;
+  text-shadow: steelblue 1px 1px 1px;
 }
 p, ul, ol {
   margin: 1.75em 0;
@@ -130,7 +131,7 @@ body {
 .a {
   font-size: xx-large;
   line-height: .875;
-  color: #444;
+  color: #82b445;
 }
 form div, #level {
   float: right;
@@ -152,7 +153,7 @@ a:link, .w a {
   color: steelblue;
 }
 a:visited {
-  color: darkorchid;
+  color: #b44582;
 }
 .c a {
   color: inherit;
@@ -267,7 +268,9 @@ aside {
   -webkit-border-radius: 1em;
   border-radius: 1em;
 }
-
+#level span {
+  color: #82b445;
+}
 /* previous/next navigation links */
 
 .nav a {
