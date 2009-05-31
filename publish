@@ -16,7 +16,12 @@ for f in *.html; do
   python3 htmlminimizer.py "$f" build/"$f"
 done
 
-# add evil tracking code
+# build sitemap
+ls build/*.html | sed -e "s|build/|http://diveintopython3.org/|g" > build/sitemap.txt
+
+echo "adding evil tracking code"
+
+# add Google Analytics script
 for f in build/*.html; do
   cat "$f" ga.js > build/tmp
   mv build/tmp "$f"
