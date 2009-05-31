@@ -1,0 +1,15 @@
+AddType application/xml .xml
+AddType text/plain .py
+
+AddDefaultCharset utf-8
+
+ExpiresActive On
+ExpiresDefault "access plus 1 day"
+
+FileETag MTime Size
+
+SetOutputFilter DEFLATE
+
+Header unset Vary
+Header add Vary Accept-Encoding
+
