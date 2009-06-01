@@ -44,7 +44,7 @@ td a:link, td a:visited{border:0}
 <th>And Python Calls&hellip;
 <tr><th>&#x2460;
 <td>to initialize an instance
-<td><code>x = MyCustomClass()</code>
+<td><code>x = MyClass()</code>
 <td><code>x.__init__()</code>
 <tr><th>&#x2461;
 <td>the &#8220;official&#8221; representation as a string
@@ -108,11 +108,11 @@ td a:link, td a:visited{border:0}
 <th>You Want&hellip;
 <th>So You Write&hellip;
 <th>And Python Calls&hellip;
-<tr><th>&#x2461;
+<tr><th>&#x2460;
 <td>to get a computed attribute (unconditionally)
 <td><code>x.my_property</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattribute__><code>x.__getattribute__(<var>"my_property"</var>)</code></a>
-<tr><th>&#x2460;
+<tr><th>&#x2461;
 <td>to get a computed attribute (fallback)
 <td><code>x.my_property</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattr__><code>x.__getattr__(<var>"my_property"</var>)</code></a>
@@ -214,7 +214,7 @@ AttributeError</samp></pre>
 <th>You Want&hellip;
 <th>So You Write&hellip;
 <th>And Python Calls&hellip;
-<tr><th>&#x2460;
+<tr><th>
 <td>to &#8220;call&#8221; an instance like a function
 <td><code>my_instance()</code>
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__call__><code>my_instance.__call__()</code></a>
@@ -737,6 +737,8 @@ class FieldStorage:
 </table>
 
 <p>This is how the [FIXME-xref] <code>with <var>file</var></code> idiom works.
+
+<p>FIXME-xref to as-yet-unwritten section on function annotations
 
 <pre><code># excerpt from io.py:
 def _checkClosed(self, msg=None):

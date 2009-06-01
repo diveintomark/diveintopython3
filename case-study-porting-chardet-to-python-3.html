@@ -625,6 +625,7 @@ ImportError: No module named constants</samp></pre>
 <pre><code>from . import constants
 import sys</code></pre>
 <p>There are variations of this problem scattered throughout the <code>chardet</code> library. In some places it&#8217;s &#8220;<code>import constants, sys</code>&#8221;; in other places, it&#8217;s &#8220;<code>import constants, re</code>&#8221;. The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
+<p>FIXME-xref to as-yet-unwritten PEP 8 style section (which says you should put all imports on their own line)
 <p>Onward!
 <h3 id=namefileisnotdefined>Name <var>'file'</var> is not defined</h3>
 <aside>open() is the new file(). PapayaWhip is the new black.</aside>
