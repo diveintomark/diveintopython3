@@ -134,7 +134,20 @@ Content-Type: image/jpeg
 
 The second time you request the same data, you include the ETag hash in an <code>If-None-Match</code> header of your request. If the data hasn&#8217;t changed, the server will send you back a <code>304</code> status code. As with the last-modified date checking, the server sends back <em>only</em> the <code>304</code> status code; it doesn&#8217;t send you the same data a second time. By including the ETag hash in your second request, you&#8217;re telling the server that there&#8217;s no need to re-send the same data if it still matches this hash, since <a href=#caching>you still have the data from the last time</a>.
 
-<p>FIXME add curl example here
+<p>Again with the <kbd>curl</kbd>:
+
+<pre class=screen>
+<a><samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-None-Match: \"3075-ddc8d800\""</mark> http://wearehugh.com/m.jpg</kbd>  <span>&#x2460;</span></a>
+<samp>HTTP/1.1 304 Not Modified
+Date: Sun, 31 May 2009 18:04:39 GMT
+Server: Apache
+Connection: close
+ETag: "3075-ddc8d800"
+Expires: Mon, 31 May 2010 18:04:39 GMT
+Cache-Control: max-age=31536000, public</samp></pre>
+<ol>
+<li>ETags are commonly enclosed in quotation marks, but <em>the quotation marks are part of the value</em>. They are not delimiters; the only delimiter in the <code>ETag</code> header is the colon between <code>ETag</code> and <code>"3075-ddc8d800"</code>. That means you need to send the quotation marks back to the server in the <code>If-None-Match</code> header.
+</ol>
 
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support ETags, but <code>httplib2</code> does.
 
@@ -296,7 +309,29 @@ Content-Type: application/xml</samp>
 
 <p class=a>&#x2042;
 
-<h2 id=beyond-get>Beyond GET</h2>
+<h2 id=introducing-httplib2>Introducing <code>httplib2</code></h2>
+
+<p>FIXME
+
+<h3 id=httplib2-caching>How <code>httplib2</code> handles caching</h3>
+
+<p>FIXME
+
+<h3 id=httplib2-etags>How <code>httplib2</code> handles <code>Last-Modified</code> and <code>ETag</code> headers</h3>
+
+<p>FIXME
+
+<h3 id=httplib2-compression>How <code>http2lib</code> handles compression</h3>
+
+<p>FIXME
+
+<h3 id=httplib2-redirects>How <code>httplib2</code> handles redirects</h3>
+
+<p>FIXME
+
+<p class=a>&#x2042;
+
+<h2 id=beyond-get>Beyond HTTP GET</h2>
 
 <p>FIXME
 
@@ -356,7 +391,7 @@ Content-Type: application/xml</samp>
 
 <p class=a>&#x2042;
 
-<h2 id=beyond-post>Beyond POST</h2>
+<h2 id=beyond-post>Beyond HTTP POST</h2>
 
 <p>FIXME
 
