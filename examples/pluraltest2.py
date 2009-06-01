@@ -1,51 +1,59 @@
-"""Unit test for plural2.py
+"""Unit test for plural2.py"""
 
-This program is part of "Dive Into Python", a free Python book for
-experienced programmers.  Visit http://diveintopython.org/ for the
-latest version.
-"""
-
-__author__ = "Mark Pilgrim (mark@diveintopython.org)"
-__version__ = "$Revision: 1.2 $"
-__date__ = "$Date: 2004/03/17 14:34:40 $"
-__copyright__ = "Copyright (c) 2004 Mark Pilgrim"
-__license__ = "Python"
-
-from plural2 import plural
-import unittest, new
+import plural2
+import unittest
 
 class KnownValues(unittest.TestCase):
-    nouns = {'bass': 'basses',
-             'bus': 'buses',
-             'walrus': 'walruses',
-             'box': 'boxes',
-             'fax': 'faxes',
-             'suffix': 'suffixes',
-             'mailbox': 'mailboxes',
-             'buzz': 'buzzes',
-             'waltz': 'waltzes',
-             'coach': 'coaches',
-             'glitch': 'glitches',
-             'rash': 'rashes',
-             'watch': 'watches',
-             'cheetah': 'cheetahs',
-             'cough': 'coughs',
-             'utility': 'utilities',
-             'vacancy': 'vacancies',
-             'boy': 'boys',
-             'day': 'days',
-             'computer': 'computers',
-             'rock': 'rocks',
-             'paper': 'papers',
-             }
+    def test_sxz(self):
+        "words ending in S, X, and Z"
+        nouns = {
+            'bass': 'basses',
+            'bus': 'buses',
+            'walrus': 'walruses',
+            'box': 'boxes',
+            'fax': 'faxes',
+            'suffix': 'suffixes',
+            'mailbox': 'mailboxes',
+            'buzz': 'buzzes',
+            'waltz': 'waltzes'
+            }
+        for singular, plural in nouns.items():
+            self.assertEqual(plural2.plural(singular), plural)
 
-for noun, pluralnoun in KnownValues.nouns.items():
-    func = lambda self, noun=noun, pluralnoun=pluralnoun: \
-           KnownValues.failUnlessEqual(self, plural(noun), pluralnoun)
-    func.__doc__ = "%s --> %s" % (noun, pluralnoun)
-    instanceMethod = new.instancemethod(func, None, KnownValues)
-    setattr(KnownValues, "test_%s" % noun, instanceMethod)
+    def test_h(self):
+        "words ending in H"
+        nouns = {
+            'coach': 'coaches',
+            'glitch': 'glitches',
+            'rash': 'rashes',
+            'watch': 'watches',
+            'cheetah': 'cheetahs',
+            'cough': 'coughs'
+            }
+        for singular, plural in nouns.items():
+            self.assertEqual(plural2.plural(singular), plural)
 
+    def test_y(self):
+        "words ending in Y"
+        nouns = {
+            'utility': 'utilities',
+            'vacancy': 'vacancies',
+            'boy': 'boys',
+            'day': 'days'
+            }
+        for singular, plural in nouns.items():
+            self.assertEqual(plural2.plural(singular), plural)
+
+    def test_default(self):
+        "unexceptional words"
+        nouns = {
+            'papaya': 'papayas',
+            'whip': 'whips',
+            'palimpsest': 'palimpsests'
+            }
+        for singular, plural in nouns.items():
+            self.assertEqual(plural2.plural(singular), plural)
+        
 if __name__ == "__main__":
     unittest.main()
 

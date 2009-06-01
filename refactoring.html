@@ -77,7 +77,7 @@ FAILED (failures=1)</samp></pre>
 <a>    if not s:  <span>&#x2460;</span></a>
         raise InvalidRomanNumeralError, 'Input can not be blank'
     if not re.search(romanNumeralPattern, s):
-        raise InvalidRomanNumeralError, 'Invalid Roman numeral: %s' % s
+        raise InvalidRomanNumeralError, 'Invalid Roman numeral: {0}'.format(s)
 
     result = 0
     index = 0
