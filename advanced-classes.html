@@ -100,6 +100,67 @@ class OrderedDict(dict, collections.MutableMapping):
 
 <p class=a>&#x2042;
 
+<h2 id=class-attributes>Attributes of a Class Object</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import ordereddict</kbd>
+<samp class=p>>>> </samp><kbd>od = ordereddict.OrderedDict()</kbd>
+<samp class=p>>>> </samp><kbd>klass = od.__class__</kbd>
+<samp class=p>>>> </samp><kbd>type(klass)</kbd>
+<samp>&lt;class 'abc.ABCMeta'></samp>
+<samp class=p>>>> </samp><kbd>klass.__name__</kbd>
+<samp>'OrderedDict'</samp>
+<!--
+<samp class=p>>>> </samp><kbd>klass.__doc__</kbd>
+<samp>FIXME</samp>
+-->
+<samp class=p>>>> </samp><kbd>klass.__module__</kbd>
+<samp>'ordereddict'</samp>
+<samp class=p>>>> </samp><kbd>klass.__bases__</kbd>
+<samp>(&lt;class 'dict'>, &lt;class '_abcoll.MutableMapping'>)</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+# continued from previous example
+<samp class=p>>>> </samp><kbd>klass.__dict__</kbd>
+<samp>{'__abstractmethods__': frozenset(),
+ '__delitem__': &lt;function __delitem__ at 0x00DCB6A8>,
+ '__dict__': &lt;attribute '__dict__' of 'OrderedDict' objects>,
+ '__doc__': None,
+ '__eq__': &lt;function __eq__ at 0x00DD2930>,
+ '__hash__': None,
+ '__init__': &lt;function __init__ at 0x00DC41E0>,
+ '__iter__': &lt;function __iter__ at 0x00DCB618>,
+ '__module__': 'ordereddict',
+ '__reduce__': &lt;function __reduce__ at 0x00DCB6F0>,
+ '__repr__': &lt;function __repr__ at 0x00DCB8E8>,
+ '__reversed__': &lt;function __reversed__ at 0x00DCB660>,
+ '__setitem__': &lt;function __setitem__ at 0x00DCB5D0>,
+ '__weakref__': &lt;attribute '__weakref__' of 'OrderedDict' objects>,
+ '_abc_cache': &lt;_weakrefset.WeakSet object at 0x00DCF950>,
+ '_abc_negative_cache': &lt;_weakrefset.WeakSet object at 0x00DCF990>,
+ '_abc_negative_cache_version': 12,
+ '_abc_registry': &lt;_weakrefset.WeakSet object at 0x00DCF910>,
+ 'clear': &lt;function clear at 0x00DCB7C8>,
+ 'copy': &lt;function copy at 0x00DD28A0>,
+ 'fromkeys': &lt;classmethod object at 0x00DCF8F0>,
+ 'items': &lt;function items at 0x00D60150>,
+ 'keys': &lt;function keys at 0x00D60108>,
+ 'pop': &lt;function pop at 0x00D60978>,
+ 'popitem': &lt;function popitem at 0x00DCB780>,
+ 'setdefault': &lt;function setdefault at 0x00D60A98>,
+ 'update': &lt;function update at 0x00D60A50>,
+ 'values': &lt;function values at 0x00D60198>}</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p class=a>&#x2042;
+
 <h2 id=implementing-fractions>Implementing Fractions</h2>
 
 <p class=nav><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
