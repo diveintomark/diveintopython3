@@ -300,7 +300,7 @@ Content-Type: application/xml</samp>
 <a><samp class=p>>>> </samp><kbd>data2 == data</kbd>                            <span>&#x2462;</span></a>
 <samp>True</samp></pre>
 <ol>
-<li>The server is still sending the same array of &#8220;smart&#8221; headers: <code>Cache-Control</code> and <code>Expires</code> to allow caching, <code>Last-Modified</code> and <code>ETag</code> to enable &#8220;not-modified&#8221; tracking. Even the <code>Vary: Accept-Encoding</code> header hints that the server would support compression, if only you would bloody well ask for it. But you&#8217;re not listening.
+<li>The server is still sending the same array of &#8220;smart&#8221; headers: <code>Cache-Control</code> and <code>Expires</code> to allow caching, <code>Last-Modified</code> and <code>ETag</code> to enable &#8220;not-modified&#8221; tracking. Even the <code>Vary: Accept-Encoding</code> header hints that the server would support compression, if only you would ask for it. But you didn&#8217;t.
 <li>Once again, fetching this data downloads the whole 3070 bytes&hellip;
 <li>&hellip;the exact same 3070 bytes you downloaded last time.
 </ol>
@@ -311,21 +311,101 @@ Content-Type: application/xml</samp>
 
 <h2 id=introducing-httplib2>Introducing <code>httplib2</code></h2>
 
+<p>To use <code>httplib2</code>, create an instance of the <code>httplib2.Http</code> class.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
+<samp class=p>>>> </samp><kbd>response.status</kbd>
+<samp>200</samp>
+<samp class=p>>>> </samp><kbd>content[:52]</kbd>
+<samp>b'&lt;?xml version="1.0" encoding="utf-8"?>\r\n&lt;feed xmlns='</samp>
+<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<samp>3070</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<h3 id=httplib2-caching>How <code>httplib2</code> Handles Caching</h3>
+
 <p>FIXME
 
-<h3 id=httplib2-caching>How <code>httplib2</code> handles caching</h3>
+<pre class=screen>
+# continued from previous example
+<samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
+<samp class=p>>>> </samp><kbd>response2.status</kbd>
+<samp>200</samp>
+<samp class=p>>>> </samp><kbd>content2[:52]</kbd>
+<samp>b'&lt;?xml version="1.0" encoding="utf-8"?>\r\n&lt;feed xmlns='</samp>
+<samp class=p>>>> </samp><kbd>len(content2)</kbd>
+<samp>3070</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+# NOT continued from previous example!
+# Please exit out of the interactive shell
+# and launch a new one.
+<samp class=p>>>> </samp><kbd>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>
+<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
+<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<samp>3070</samp>
+<samp class=p>>>> </samp><kbd>response.status</kbd>
+<samp>200</samp>
+<samp class=p>>>> </samp><kbd>response.fromcache</kbd>
+<samp>True</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+# continued from previous example
+<samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml',</kbd>
+<samp class=p>... </samp><kbd>    headers={'cache-control':'no-cache'})</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET /examples/feed.xml HTTP/1.1
+Host: diveintopython3.org
+user-agent: Python-httplib2/$Rev: 259 $
+accept-encoding: deflate, gzip
+cache-control: no-cache'
+reply: 'HTTP/1.1 200 OK'
+&hellip;further debugging information omitted&hellip;</samp>
+<samp class=p>>>> </samp><kbd>response2.status</kbd>
+<samp>200</samp>
+<samp class=p>>>> </samp><kbd>response2.fromcache</kbd>
+<samp>False</samp>
+<samp class=p>>>> </samp><kbd>print(dict(response2.items()))</kbd>
+<samp>{'status': '200',
+ 'content-length': '3070',
+ 'content-location': 'http://diveintopython3.org/examples/feed.xml',
+ 'accept-ranges': 'bytes',
+ 'expires': 'Wed, 03 Jun 2009 00:40:26 GMT',
+ 'vary': 'Accept-Encoding',
+ 'server': 'Apache',
+ 'last-modified': 'Sun, 31 May 2009 22:51:11 GMT',
+ 'connection': 'close',
+ '-content-encoding': 'gzip',
+ 'etag': '"bfe-255ef5c0"',
+ 'cache-control': 'max-age=86400',
+ 'date': 'Tue, 02 Jun 2009 00:40:26 GMT',
+ 'content-type': 'application/xml'}</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> headers</h3>
 
 <p>FIXME
 
-<h3 id=httplib2-etags>How <code>httplib2</code> handles <code>Last-Modified</code> and <code>ETag</code> headers</h3>
+<h3 id=httplib2-compression>How <code>http2lib</code> Handles compression</h3>
 
 <p>FIXME
 
-<h3 id=httplib2-compression>How <code>http2lib</code> handles compression</h3>
-
-<p>FIXME
-
-<h3 id=httplib2-redirects>How <code>httplib2</code> handles redirects</h3>
+<h3 id=httplib2-redirects>How <code>httplib2</code> Handles redirects</h3>
 
 <p>FIXME
 
