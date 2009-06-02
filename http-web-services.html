@@ -401,6 +401,47 @@ reply: 'HTTP/1.1 200 OK'
 
 <p>FIXME
 
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>
+<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET / HTTP/1.1
+Host: diveintopython3.org
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 200 OK'</samp>
+<samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
+<samp>{'-content-encoding': 'gzip',
+ 'accept-ranges': 'bytes',
+ 'connection': 'close',
+ 'content-length': '6657',
+ 'content-location': 'http://diveintopython3.org/',
+ 'content-type': 'text/html',
+ 'date': 'Tue, 02 Jun 2009 03:26:54 GMT',
+ 'etag': '"7f806d-1a01-9fb97900"',
+ 'last-modified': 'Tue, 02 Jun 2009 02:51:48 GMT',
+ 'server': 'Apache',
+ 'status': '304',
+ 'vary': 'Accept-Encoding,User-Agent'}</samp>
+<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<samp>6657</samp>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET / HTTP/1.1
+Host: diveintopython3.org
+if-none-match: "7f806d-1a01-9fb97900"
+if-modified-since: Tue, 02 Jun 2009 02:51:48 GMT
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 304 Not Modified'</samp>
+<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<samp>6657</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
 <h3 id=httplib2-compression>How <code>http2lib</code> Handles compression</h3>
 
 <p>FIXME
