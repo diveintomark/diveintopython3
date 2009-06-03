@@ -548,18 +548,18 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
 <p>FIXME
 
 <pre>
-<samp class=p>>>> </samp><kbd>import httplib2
-<samp class=p>>>> </samp><kbd>from urllib.parse import urlencode
-<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')
-<samp class=p>>>> </samp><kbd>data = {"status": "Test update from Python 3"}
-<samp class=p>>>> </samp><kbd>h.add_credentials("diveintomark", "<var>MY_SECRET_PASSWORD</var>")
-<samp class=p>>>> </samp><kbd>resp, content = h.request("http://twitter.com/statuses/update.xml", "POST", urlencode(data))
-<samp class=p>>>> </samp><kbd>resp.status
-200
-<samp class=p>>>> </samp><kbd>from xml.etree import ElementTree as etree
-<samp class=p>>>> </samp><kbd>tree = etree.fromstring(content)
-<samp class=p>>>> </samp><kbd>print(etree.tostring(tree))
-&lt;status>
+<samp class=p>>>> </samp><kbd>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd>from urllib.parse import urlencode</kbd>
+<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
+<samp class=p>>>> </samp><kbd>data = {"status": "Test update from Python 3"}</kbd>
+<samp class=p>>>> </samp><kbd>h.add_credentials("diveintomark", "<var>MY_SECRET_PASSWORD</var>")</kbd>
+<samp class=p>>>> </samp><kbd>resp, content = h.request("http://twitter.com/statuses/update.xml", "POST", urlencode(data))</kbd>
+<samp class=p>>>> </samp><kbd>resp.status</kbd>
+<samp>200</samp>
+<samp class=p>>>> </samp><kbd>from xml.etree import ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd>tree = etree.fromstring(content)</kbd>
+<samp class=p>>>> </samp><kbd>print(etree.tostring(tree))</kbd>
+<samp>&lt;status>
   &lt;created_at>Sat May 30 19:11:38 +0000 2009&lt;/created_at>
   &lt;id>1973974228&lt;/id>
   &lt;text>Test update from Python 3&lt;/text>
@@ -596,8 +596,7 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
     &lt;notifications>false&lt;/notifications>
     &lt;following>false&lt;/following>
   &lt;/user>
-&lt;/status>
-</pre>
+&lt;/status></samp></pre>
 
 <p>FIXME
 
