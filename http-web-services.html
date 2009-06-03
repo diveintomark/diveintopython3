@@ -23,7 +23,7 @@ mark{display:inline}
 <h2 id=divingin>Diving In</h2>
 <p class=f>HTTP web services are programmatic ways of sending and receiving data from remote servers using nothing but the operations of <abbr>HTTP</abbr>. If you want to get data from the server, use <abbr>HTTP</abbr> <code>GET</code>; if you want to send new data to the server, use <abbr>HTTP</abbr> <code>POST</code>. Some more advanced <abbr>HTTP</abbr> web service <abbr>API</abbr>s also define ways of modifying existing data and deleting data, using <abbr>HTTP</abbr> <code>PUT</code> and <abbr>HTTP</abbr> <code>DELETE</code>. In other words, the &#8220;verbs&#8221; built into the <abbr>HTTP</abbr> protocol (<code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>) map directly to application-level operations for retrieving, creating, modifying, and deleting data.
 
-<p>The main advantage of this approach is simplicity, and its simplicity has proven popular with a lot of different sites. Data &mdash; usually <abbr>XML</abbr> data &mdash; can be built and stored statically, or generated dynamically by a server-side script, and all major programming languages (including Python, of course!) include an <abbr>HTTP</abbr> library for downloading it. Debugging is also easier; because each &#8220;call&#8221; to the web service had a unique <abbr>URL</abbr>, you can load it in your web browser and immediately see the raw data.
+<p>The main advantage of this approach is simplicity, and its simplicity has proven popular. Data &mdash; usually <abbr>XML</abbr> data &mdash; can be built and stored statically, or generated dynamically by a server-side script, and all major programming languages (including Python, of course!) include an <abbr>HTTP</abbr> library for downloading it. Debugging is also easier; because each &#8220;call&#8221; to the web service had a unique <abbr>URL</abbr>, you can load it in your web browser and immediately see the raw data.
 
 <p>Examples of <abbr>HTTP</abbr> web services:
 <ul>
@@ -445,6 +445,28 @@ reply: 'HTTP/1.1 304 Not Modified'</samp>
 <h3 id=httplib2-compression>How <code>http2lib</code> Handles compression</h3>
 
 <p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET / HTTP/1.1
+Host: diveintopython3.org
+<mark>accept-encoding: deflate, gzip</mark>
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 200 OK'</samp>
+<samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
+<samp>{<mark>'-content-encoding': 'gzip',</mark>
+ 'accept-ranges': 'bytes',
+ 'connection': 'close',
+ 'content-length': '6657',
+ 'content-location': 'http://diveintopython3.org/',
+ 'content-type': 'text/html',
+ 'date': 'Tue, 02 Jun 2009 03:26:54 GMT',
+ 'etag': '"7f806d-1a01-9fb97900"',
+ 'last-modified': 'Tue, 02 Jun 2009 02:51:48 GMT',
+ 'server': 'Apache',
+ 'status': '304',
+ 'vary': 'Accept-Encoding,User-Agent'}</samp></pre>
 
 <h3 id=httplib2-redirects>How <code>httplib2</code> Handles redirects</h3>
 
