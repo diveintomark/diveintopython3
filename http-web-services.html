@@ -397,7 +397,7 @@ reply: 'HTTP/1.1 200 OK'
 <li>FIXME
 </ol>
 
-<h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> headers</h3>
+<h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</h3>
 
 <p>FIXME
 
@@ -442,7 +442,7 @@ reply: 'HTTP/1.1 304 Not Modified'</samp>
 <li>FIXME
 </ol>
 
-<h3 id=httplib2-compression>How <code>http2lib</code> Handles compression</h3>
+<h3 id=httplib2-compression>How <code>http2lib</code> Handles Compression</h3>
 
 <p>FIXME
 
@@ -468,9 +468,78 @@ reply: 'HTTP/1.1 200 OK'</samp>
  'status': '304',
  'vary': 'Accept-Encoding,User-Agent'}</samp></pre>
 
-<h3 id=httplib2-redirects>How <code>httplib2</code> Handles redirects</h3>
+<h3 id=httplib2-redirects>How <code>httplib2</code> Handles Redirects</h3>
 
 <p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET /examples/feed-302.xml HTTP/1.1
+Host: diveintopython3.org
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+<mark>reply: 'HTTP/1.1 302 Found'</mark>
+<mark>send: b'GET /examples/feed.xml HTTP/1.1</mark>
+Host: diveintopython3.org
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 200 OK'</samp>
+<samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
+{'status': '200',
+ 'content-length': '3070',
+<mark> 'content-location': 'http://diveintopython3.org/examples/feed.xml',</mark>
+ 'accept-ranges': 'bytes',
+ 'expires': 'Thu, 04 Jun 2009 02:21:41 GMT',
+ 'vary': 'Accept-Encoding',
+ 'server': 'Apache',
+ 'last-modified': 'Wed, 03 Jun 2009 02:20:15 GMT',
+ 'connection': 'close',
+ '-content-encoding': 'gzip',
+ 'etag': '"bfe-4cbbf5c0"',
+ 'cache-control': 'max-age=86400',
+ 'date': 'Wed, 03 Jun 2009 02:21:41 GMT',
+ 'content-type': 'application/xml'}</samp>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET /examples/feed-302.xml HTTP/1.1
+Host: diveintopython3.org
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 302 Found'</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>
+<samp>connect: (diveintopython3.org, 80)
+send: b'GET /examples/feed-301.xml HTTP/1.1
+Host: diveintopython3.org
+accept-encoding: deflate, gzip
+user-agent: Python-httplib2/$Rev: 259 $'
+reply: 'HTTP/1.1 301 Moved Permanently'</samp>
+<samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
+<samp>{'status': '200',
+ 'content-length': '3070',
+ 'content-location': 'http://diveintopython3.org/examples/feed.xml',
+ 'accept-ranges': 'bytes',
+ 'expires': 'Thu, 04 Jun 2009 02:21:41 GMT',
+ 'vary': 'Accept-Encoding',
+ 'server': 'Apache',
+ 'last-modified': 'Wed, 03 Jun 2009 02:20:15 GMT',
+ 'connection': 'close',
+ '-content-encoding': 'gzip',
+ 'etag': '"bfe-4cbbf5c0"',
+ 'cache-control': 'max-age=86400',
+ 'date': 'Wed, 03 Jun 2009 02:21:41 GMT',
+ 'content-type': 'application/xml'}</samp>
+<samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>
+<samp class=p>>>> </samp><kbd>response2.fromcache</kbd>
+<samp>True</samp></pre>
+<ol>
+<li>FIXME
+</ol>
 
 <p class=a>&#x2042;
 
@@ -479,17 +548,17 @@ reply: 'HTTP/1.1 200 OK'</samp>
 <p>FIXME
 
 <pre>
->>> import httplib2
->>> from urllib.parse import urlencode
->>> h = httplib2.Http('.cache')
->>> data = {"status": "Test update from Python 3"}
->>> h.add_credentials("diveintomark", "<var>MY_SECRET_PASSWORD</var>")
->>> resp, content = h.request("http://twitter.com/statuses/update.xml", "POST", urlencode(data))
->>> resp.status
+<samp class=p>>>> </samp><kbd>import httplib2
+<samp class=p>>>> </samp><kbd>from urllib.parse import urlencode
+<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')
+<samp class=p>>>> </samp><kbd>data = {"status": "Test update from Python 3"}
+<samp class=p>>>> </samp><kbd>h.add_credentials("diveintomark", "<var>MY_SECRET_PASSWORD</var>")
+<samp class=p>>>> </samp><kbd>resp, content = h.request("http://twitter.com/statuses/update.xml", "POST", urlencode(data))
+<samp class=p>>>> </samp><kbd>resp.status
 200
->>> from xml.etree import ElementTree as etree
->>> tree = etree.fromstring(content)
->>> print(etree.tostring(tree))
+<samp class=p>>>> </samp><kbd>from xml.etree import ElementTree as etree
+<samp class=p>>>> </samp><kbd>tree = etree.fromstring(content)
+<samp class=p>>>> </samp><kbd>print(etree.tostring(tree))
 &lt;status>
   &lt;created_at>Sat May 30 19:11:38 +0000 2009&lt;/created_at>
   &lt;id>1973974228&lt;/id>
@@ -538,13 +607,13 @@ reply: 'HTTP/1.1 200 OK'</samp>
 
 <p>FIXME
 
-<pre>
->>> tree.findtext("id")
-'1973974228'
->>> resp, delete_content = h.request("http://twitter.com/statuses/destroy/{0}.xml".format(tree.findtext("id")), "DELETE")
->>> resp.status
-200
-</pre>
+<pre class=screen>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd>tree.findtext("id")</kbd>
+<samp>'1973974228'</samp>
+<samp class=p>>>> </samp><kbd>resp, delete_content = h.request("http://twitter.com/statuses/destroy/{0}.xml".format(tree.findtext("id")), "DELETE")</kbd>
+<samp class=p>>>> </samp><kbd>resp.status</kbd>
+<samp>200</samp></pre>
 
 <p class=a>&#x2042;
 
