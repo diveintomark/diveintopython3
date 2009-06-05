@@ -45,9 +45,6 @@ span {
 .q span {
   font-size: 13pt;
 }
-.note span {
-  color: #000;
-}
 .f:first-letter {
   color: #888;
   font: normal 48pt/0.68 serif;
@@ -61,11 +58,8 @@ p, ul, ol {
 
 html {
   background: #fff;
-  color: #000;
-  margin: 0;
-  padding: 0;
 }
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
@@ -76,10 +70,7 @@ a {
   text-decoration: none;
   border-bottom: 1px dotted;
 }
-a:link, .w a {
-  color: #000;
-}
-a:visited {
+html, a:link, a:visited, .w a, .note span {
   color: #000;
 }
 
@@ -111,7 +102,7 @@ h3, h3 code {
 aside {
   font-size: 24pt;
   background: #667;
-  color: white;
+  color: #fff;
 }
 
 /* overrides */

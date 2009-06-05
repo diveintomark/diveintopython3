@@ -18,8 +18,11 @@ h1:before{content:""}
 <p>The dynamic highlighting effects in the online edition are built on top of <a href=http://jquery.com>jQuery</a>, which is dual-licensed under the MIT and GPL licenses.
 <p>The online edition loads as quickly as it does because
 <ol>
-<li>jQuery is served by <a href=http://code.google.com/apis/ajaxlibs/>Google AJAX Libraries API</a>.
-<li>Other Javascript and CSS resources are minimized by <a href=http://developer.yahoo.com/yui/compressor/>YUI Compressor</a>.
+<li>HTML is <a href=http://httpd.apache.org/docs/trunk/mod/mod_deflate.html>compressed</a>.
+<li>Scripts and stylesheets are minimized by <a href=http://developer.yahoo.com/yui/compressor/>YUI Compressor</a>.
+<li>Scripts are combined to reduce HTTP requests.
+<li>Stylesheets are combined and inlined to reduce HTTP requests.
+<li>Unused CSS selectors and properties are <a href=http://hg.diveintopython3.org/file/default/util/lesscss.py>removed on a page-by-page basis</a> with <a href=http://pyquery.org/>pyquery</a>.
 <li>HTTP caching and other server-side options are optimized based on advice from <a href=http://developer.yahoo.com/yslow/>YSlow</a> and <a href=http://code.google.com/speed/page-speed/>Page Speed</a>.
 <li>The text uses <a href=http://www.alanwood.net/unicode/unicode_samples.html>Unicode characters</a> in place of graphics wherever possible.
 <li>The entire book was <a href=http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition>lovingly hand-authored in HTML 5</a> to avoid markup cruft.

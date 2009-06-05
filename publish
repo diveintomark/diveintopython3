@@ -27,15 +27,17 @@ for f in build/*.html; do
   mv build/tmp "$f"
 done
 
-# jQuery will be served by Google AJAX Libraries API
-sed -i -e "s|jquery\.js|http://www.google.com/jsapi|g" build/*.html
-sed -i -e "s|//google\.|google.|g" build/dip3.js
-sed -i -e "s|//}.; /\* google\..*|});|g" build/dip3.js
-
 # minimize JS and CSS
 echo "minimizing JS"
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
-java -jar yuicompressor-2.4.2.jar build/dip3.js > build/$revision.js
+java -jar yuicompressor-2.4.2.jar build/dip3.js > build/dip3-$revision.js
+
+# combine jQuery and our script
+echo "combining JS"
+cat jquery.min.js build/dip3-$revision.js > build/$revision.js
+rm build/dip3-$revision.js
+sed -i -e "s|<script src=jquery.js></script>||g" build/*.html
+
 echo "minimizing CSS"
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
 java -jar yuicompressor-2.4.2.jar build/mobile.css > build/m-$revision.css
@@ -47,7 +49,9 @@ sed -i -e "s|;}|}|g" build/p-$revision.css
 # put CSS inline
 echo "inlining CSS"
 css=`cat build/$revision.css`
-sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|</style><style>||g" build/*.html
+mobilecss=`cat build/m-$revision.css`
+printcss=`cat build/p-$revision.css`
+sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media only screen and (max-device-width: 480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" build/*.html
 
 # remove unused CSS properties on a page-by-page basis
 echo "removing unused CSS"
@@ -55,10 +59,10 @@ for f in build/*.html; do
   python2.6 util/lesscss.py "$f"
 done
 
-# secondary stylesheets will be served from a separate domain
-echo "fixing hrefs"
-sed -i -e "s|href=mobile.css|href=http://wearehugh.com/dip3/m-${revision}.css|g" build/*.html
-sed -i -e "s|href=print.css|href=http://wearehugh.com/dip3/p-${revision}.css|g" build/*.html
+## secondary stylesheets will be served from a separate domain
+#echo "fixing hrefs"
+#sed -i -e "s|href=mobile.css|href=http://wearehugh.com/dip3/m-${revision}.css|g" build/*.html
+#sed -i -e "s|href=print.css|href=http://wearehugh.com/dip3/p-${revision}.css|g" build/*.html
 
 # JS will be served from a separate domain
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
@@ -77,5 +81,5 @@ chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples
 
 # ship it!
 echo "publishing"
-rsync -essh -avzP build/$revision.js build/html5.js build/m-$revision.css build/p-$revision.css diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
 rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/

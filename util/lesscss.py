@@ -7,14 +7,14 @@ import sys
 filename = sys.argv[1]
 pqd = pq(filename=filename)
 raw_data = open(filename, 'rb').read()
-if raw_data.count('<pre'):
+if raw_data.count('<pre><code>') or raw_data.count('<pre class=screen>'):
     def keep(s):
         return s == '.w' or s.startswith('.w ') or s == '.b' or s.startswith('.b ')
 else:
     def keep(s):
         return False
 
-original_css = raw_data.split('<style>', 1)[1].split('</style>', 1)[0]
+original_css = raw_data.split('<style>', 1)[1].split('@media', 1)[0]
 new_css = ''
 for rule in original_css.split('}')[:-1]:
     selectors, properties = rule.split('{', 1)

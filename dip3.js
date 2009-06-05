@@ -27,8 +27,6 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 var HS = {'visible': 'hide', 'hidden': 'show'};
-//google.load("jquery", "1.3");
-//google.setOnLoadCallback(function() {
 $(document).ready(function() {
 	hideTOC();
 	
@@ -93,7 +91,6 @@ $(document).ready(function() {
 		    });
 	    });
     }); /* document.ready */
-//}); /* google.setOnLoadCallback */
 
 function toggleCodeBlock(id) {
     $("#" + id).find("div.b").toggle();
