@@ -51,7 +51,7 @@ echo "inlining CSS"
 css=`cat build/$revision.css`
 mobilecss=`cat build/m-$revision.css`
 printcss=`cat build/p-$revision.css`
-sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media only screen and (max-device-width: 480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" build/*.html
+sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" build/*.html
 
 # remove unused CSS properties on a page-by-page basis
 echo "removing unused CSS"
