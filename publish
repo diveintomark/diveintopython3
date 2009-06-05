@@ -5,7 +5,7 @@ echo "started build"
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
-cp robots.txt *.js *.css build/
+cp robots.txt *.css build/
 cp -R j build/
 rm -f examples/*.pyc
 cp -R examples build/
@@ -24,20 +24,20 @@ echo "adding evil tracking code"
 
 # add Google Analytics script
 for f in build/*.html; do
-  cat "$f" ga.js > build/tmp
+  cat "$f" j/ga.js > build/tmp
   mv build/tmp "$f"
 done
 
 # minimize JS and CSS
 echo "minimizing JS"
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
-java -jar yuicompressor-2.4.2.jar build/dip3.js > build/dip3-$revision.js
+java -jar yuicompressor-2.4.2.jar build/j/dip3.js > build/j/dip3-$revision.js
 
 # combine jQuery and our script
 echo "combining JS"
-cat jquery.min.js build/dip3-$revision.js > build/$revision.js
-rm build/dip3-$revision.js
-sed -i -e "s|<script src=jquery.js></script>||g" build/*.html
+cat build/j/jquery.min.js build/j/dip3-$revision.js > build/j/$revision.js
+sed -i -e "s|<script src=j/jquery.js></script>||g" build/*.html
+sed -i -e "s|<script src=j/dip3.js>|<script src=j/${revision}.js>|g" build/*.html
 
 echo "minimizing CSS"
 java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
@@ -60,26 +60,16 @@ for f in build/*.html; do
   python2.6 util/lesscss.py "$f"
 done
 
-## secondary stylesheets will be served from a separate domain
-#echo "fixing hrefs"
-#sed -i -e "s|href=mobile.css|href=http://wearehugh.com/dip3/m-${revision}.css|g" build/*.html
-#sed -i -e "s|href=print.css|href=http://wearehugh.com/dip3/p-${revision}.css|g" build/*.html
-
-# JS will be served from a separate domain
-sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
-
-# images would be served from a separate domain if we had any, which we currently don't
-#sed -i -e "s|bsb.png|http://wearehugh.com/dip3/bsb.png|g" build/*.html
-
 # minimize URLs
 echo "minimizing URLs"
 sed -i -e "s|=http:|=|g" build/*.html
 sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
-chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples/*.txt build/*.txt
+chmod 755 build/j
+chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js
 
 # ship it!
 echo "publishing"
-rsync -essh -avzP build/$revision.js diveintomark.org:~/web/wearehugh.com/dip3/
-rsync -essh -avzP build/*.html build/examples build/*.txt j diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
+rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/
