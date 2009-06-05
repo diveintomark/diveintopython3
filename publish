@@ -6,6 +6,7 @@ echo "started build"
 rm -rf build
 mkdir build
 cp robots.txt *.js *.css build/
+cp -R j build/
 rm -f examples/*.pyc
 cp -R examples build/
 
@@ -66,7 +67,6 @@ done
 
 # JS will be served from a separate domain
 sed -i -e "s|dip3\.js|http://wearehugh.com/dip3/${revision}.js|g" build/*.html
-sed -i -e "s|html5\.js|http://wearehugh.com/dip3/html5.js|g" build/*.html
 
 # images would be served from a separate domain if we had any, which we currently don't
 #sed -i -e "s|bsb.png|http://wearehugh.com/dip3/bsb.png|g" build/*.html
@@ -81,5 +81,5 @@ chmod 644 build/*.html build/*.css build/*.js build/examples/*.py build/examples
 
 # ship it!
 echo "publishing"
-rsync -essh -avzP build/$revision.js build/html5.js diveintomark.org:~/web/wearehugh.com/dip3/
-rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/$revision.js diveintomark.org:~/web/wearehugh.com/dip3/
+rsync -essh -avzP build/*.html build/examples build/*.txt j diveintomark.org:~/web/diveintopython3.org/
