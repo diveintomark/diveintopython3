@@ -98,7 +98,7 @@ h1:before {
 
 /* overrides */
 
-.nm, .w, aside, form, form+p, .note span, .q span {
+.nm, .w, aside, form, form+p, .note span, .q span, .a {
   display:none;
 }
 dd {

@@ -1,9 +1,5 @@
 #!/usr/bin/python3
 
-# TODO:
-# - fix internal xrefs (look for href=<in [chapters]>.html)
-# - fix duplicate IDs
-
 import re
 
 # get list of chapters
