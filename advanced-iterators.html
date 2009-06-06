@@ -391,7 +391,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>Python strings have many methods. You learned about some of those methods in <a href=strings.html>the Strings chapter</a>: <code>lower()</code>, <code>count()</code>, and <code>format()</code>. Now I want to introduce you to a powerful but little-known string manipulation technique: the <code>translate()</code> method.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>translation_table = {ord("A"): ord("O")}</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>translation_table = {ord('A'): ord('O')}</kbd>  <span>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd>translation_table</kbd>                         <span>&#x2461;</span></a>
 <samp>{65: 79}</samp>
 <a><samp class=p>>>> </samp><kbd>'MARK'.translate(translation_table)</kbd>       <span>&#x2462;</span></a>
@@ -414,7 +414,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <a><samp class=p>>>> </samp><kbd>translation_table = dict(zip(characters, guess))</kbd>     <span>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>translation_table</kbd>
 <samp>{68: 55, 69: 53, 77: 49, 78: 54, 79: 48, 82: 56, 83: 57, 89: 50}</samp>
-<a><samp class=p>>>> </samp><kbd>"SEND + MORE == MONEY".translate(translation_table)</kbd>  <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>'SEND + MORE == MONEY'.translate(translation_table)</kbd>  <span>&#x2463;</span></a>
 <samp>'9567 + 1085 == 10652'</samp></pre>
 <ol>
 <li>Using a <a href=#generator-expressions>generator expression</a>, we quickly compute the byte values for each character in a string. <var>characters</var> is an example of the value of <var>sorted_characters</var> in the <code>alphametics.solve()</code> function.
@@ -490,7 +490,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <li>Don&#8217;t do this either.
 </ol>
 
-<p class=c style="font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0">eval() is EVIL
+<p class=c style='font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0'>eval() is EVIL
 
 <p>Well, the evil part is evaluating arbitrary expressions from untrusted sources. You should only use <code>eval()</code> on trusted input. Of course, the trick is figuring out what&#8217;s &#8220;trusted.&#8221; But here&#8217;s something I know for certain: you should <b>NOT</b> take this alphametics solver and put it on the internet as a fun little web service. Don&#8217;t make the mistake of thinking, &#8220;Gosh, the function does a lot of string manipulation before getting a string to evaluate; <em>I can&#8217;t imagine</em> how someone could exploit that.&#8221; Someone <b>WILL</b> figure out how to sneak nasty executable code past all that string manipulation (<a href=http://www.matasano.com/log/1032/this-new-vulnerability-dowds-inhuman-flash-exploit/>stranger things have happened</a>), and then you can kiss your server goodbye.
 
@@ -591,8 +591,9 @@ NameError: name '__import__' is not defined</samp></pre>
 
 <p>Many, many thanks to Raymond Hettinger for agreeing to relicense his code so I could port it to Python 3 and use it as the basis for this chapter.
 
-<p class=nav><a rel=prev href=iterators.html title="back to &#8220;Iterators&#8221;"><span>&#x261C;</span></a> <a rel=next href=unit-testing.html title="onward to &#8220;Unit Testing&#8221;"><span>&#x261E;</span></a>
+<p class=v><a href=iterators.html rel=prev title='back to &#8220;Iterators&#8221;'><span>&#x261C;</span></a> <a href=unit-testing.html rel=next title='onward to &#8220;Unit Testing&#8221;'><span>&#x261E;</span></a>
 
+<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

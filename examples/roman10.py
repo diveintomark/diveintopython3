@@ -1,9 +1,9 @@
-"""Convert to and from Roman numerals
+'''Convert to and from Roman numerals
 
-This program is part of "Dive Into Python 3", a free Python book for
+This program is part of 'Dive Into Python 3', a free Python book for
 experienced programmers.  Visit http://diveintopython3.org/ for the
 latest version.
-"""
+'''
 
 class OutOfRangeError(ValueError): pass
 class NotIntegerError(ValueError): pass
@@ -27,26 +27,26 @@ to_roman_table = [ None ]
 from_roman_table = {}
 
 def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
     if not (0 < n < 5000):
-        raise OutOfRangeError("number out of range (must be 1..4999)")
+        raise OutOfRangeError('number out of range (must be 1..4999)')
     if int(n) != n:
-        raise NotIntegerError("non-integers can not be converted")
+        raise NotIntegerError('non-integers can not be converted')
     return to_roman_table[n]
 
 def from_roman(s):
-    """convert Roman numeral to integer"""
+    '''convert Roman numeral to integer'''
     if not isinstance(s, str):
-        raise InvalidRomanNumeralError("Input must be a string")
+        raise InvalidRomanNumeralError('Input must be a string')
     if not s:
-        raise InvalidRomanNumeralError("Input can not be blank")
+        raise InvalidRomanNumeralError('Input can not be blank')
     if s not in from_roman_table:
-        raise InvalidRomanNumeralError("Invalid Roman numeral: {0}".format(s))
+        raise InvalidRomanNumeralError('Invalid Roman numeral: {0}'.format(s))
     return from_roman_table[s]
 
 def build_lookup_tables():
     def to_roman(n):
-        result = ""
+        result = ''
         for numeral, integer in roman_numeral_map:
             if n >= integer:
                 result = numeral

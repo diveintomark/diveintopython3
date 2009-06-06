@@ -1,9 +1,9 @@
-"""Convert to and from Roman numerals
+'''Convert to and from Roman numerals
 
-This program is part of "Dive Into Python 3", a free Python book for
+This program is part of 'Dive Into Python 3', a free Python book for
 experienced programmers.  Visit http://diveintopython3.org/ for the
 latest version.
-"""
+'''
 class OutOfRangeError(ValueError): pass
 class NotIntegerError(ValueError): pass
 
@@ -22,13 +22,13 @@ roman_numeral_map = (('M',  1000),
                      ('I',  1))
 
 def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
     if not (0 < n < 4000):
-        raise OutOfRangeError("number out of range (must be 0..3999)")
+        raise OutOfRangeError('number out of range (must be 0..3999)')
     if not isinstance(n, int):
-        raise NotIntegerError("non-integers can not be converted")
+        raise NotIntegerError('non-integers can not be converted')
 
-    result = ""
+    result = ''
     for numeral, integer in roman_numeral_map:
         while n >= integer:
             result += numeral
@@ -36,7 +36,7 @@ def to_roman(n):
     return result
 
 def from_roman(s):
-    """convert Roman numeral to integer"""
+    '''convert Roman numeral to integer'''
     result = 0
     index = 0
     for numeral, integer in roman_numeral_map:

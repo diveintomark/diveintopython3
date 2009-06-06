@@ -1,8 +1,8 @@
-"""Find solutions to alphametic equations.
+'''Find solutions to alphametic equations.
 
 >>> alphametics.solve('SEND + MORE == MONEY')
 '9567 + 1085 == 10652'
-"""
+'''
 
 import re
 import itertools

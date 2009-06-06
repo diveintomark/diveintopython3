@@ -5,9 +5,9 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-h1:before{counter-increment:h1;content:"Appendix A. "}
-h2:before{counter-increment:h2;content:"A." counter(h2) ". "}
-h3:before{counter-increment:h3;content:"A." counter(h2) "." counter(h3) ". "}
+h1:before{counter-increment:h1;content:'Appendix A. '}
+h2:before{counter-increment:h2;content:'A.' counter(h2) '. '}
+h3:before{counter-increment:h3;content:'A.' counter(h2) '.' counter(h3) '. '}
 tr + tr th:first-child{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 table{width:100%;border-collapse:collapse}
 th,td{width:45%;padding:0 0.5em;border:1px solid #bbb}
@@ -19,9 +19,9 @@ td pre{padding:0;border:0}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
-<meta name=viewport content='initial-scale=1.0'>
+<meta content='initial-scale=1.0' name=viewport>
 </head>
-<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
+<form action=http://www.google.com/cse><div><input name=cx type=hidden value=014021643941856155761:l5eihuescdw><input name=ie type=hidden value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input name=sa type=submit value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#porting-code-to-python-3-with-2to3>Dive Into Python 3</a> <span>&#8227;</span>
 <p id=level>Difficulty level: <span title=pro>&#x2666;&#x2666;&#x2666;&#x2666;&#x2666;</span>
 <h1>Porting Code to Python 3 with <code>2to3</code></h1>
@@ -67,11 +67,11 @@ td pre{padding:0;border:0}
 <th>Python 2
 <th>Python 3
 <tr><th>&#x2460;
-<td><code>u"PapayaWhip"</code>
-<td><code>"PapayaWhip"</code>
+<td><code>u'PapayaWhip'</code>
+<td><code>'PapayaWhip'</code>
 <tr><th>&#x2461;
-<td><code>ur"PapayaWhip\foo"</code>
-<td><code>r"PapayaWhip\foo"</code>
+<td><code>ur'PapayaWhip\foo'</code>
+<td><code>r'PapayaWhip\foo'</code>
 </table>
 <ol>
 <li>Unicode string literals are simply converted into string literals, which, in Python 3, are always Unicode.
@@ -141,8 +141,8 @@ td pre{padding:0;border:0}
 <th>Python 2
 <th>Python 3
 <tr><th>&#x2460;
-<td><code>a_dictionary.has_key("PapayaWhip")</code>
-<td><code>"PapayaWhip" in a_dictionary</code>
+<td><code>a_dictionary.has_key('PapayaWhip')</code>
+<td><code>'PapayaWhip' in a_dictionary</code>
 <tr><th>&#x2461;</th >
 <td><code>a_dictionary.has_key(x) or a_dictionary.has_key(y)</code>
 <td><code>x in a_dictionary or y in a_dictionary</code>
@@ -547,8 +547,8 @@ reduce(a, b, c)</code></pre>
 <th>Python 2
 <th>Python 3
 <tr><th>
-<td><code>execfile("a_filename")</code>
-<td><code>exec(compile(open("a_filename").read(), "a_filename", "exec"))</code>
+<td><code>execfile('a_filename')</code>
+<td><code>exec(compile(open('a_filename').read(), 'a_filename', 'exec'))</code>
 </table>
 <blockquote class=note>
 <p><span>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
@@ -563,8 +563,8 @@ reduce(a, b, c)</code></pre>
 <td><code>`x`</code>
 <td><code>repr(x)</code>
 <tr><th>&#x2461;
-<td><code>`"PapayaWhip" + `2``</code>
-<td><code>repr("PapayaWhip" + repr(2))</code>
+<td><code>`'PapayaWhip' + `2``</code>
+<td><code>repr('PapayaWhip' + repr(2))</code>
 </table>
 <ol>
 <li>Remember, <var>x</var> can be anything &mdash; a class, a function, a module, a primitive data type, etc. The <code>repr()</code> function works on everything.
@@ -626,13 +626,13 @@ except:
 <td><code>raise MyException</code>
 <td><i>unchanged</i>
 <tr><th>&#x2461;
-<td><code>raise MyException, "error message"</code>
-<td><code>raise MyException("error message")</code>
+<td><code>raise MyException, 'error message'</code>
+<td><code>raise MyException('error message')</code>
 <tr><th>&#x2462;
-<td><code>raise MyException, "error message", a_traceback</code>
-<td><code>raise MyException("error message").with_traceback(a_traceback)</code>
+<td><code>raise MyException, 'error message', a_traceback</code>
+<td><code>raise MyException('error message').with_traceback(a_traceback)</code>
 <tr><th>&#x2463;
-<td><code>raise "error message"</code>
+<td><code>raise 'error message'</code>
 <td><i>unsupported</i>
 </table>
 <ol>
@@ -651,10 +651,10 @@ except:
 <td><code>a_generator.throw(MyException)</code>
 <td><i>no change</i>
 <tr><th>&#x2461;
-<td><code>a_generator.throw(MyException, "error message")</code>
-<td><code>a_generator.throw(MyException("error message"))</code>
+<td><code>a_generator.throw(MyException, 'error message')</code>
+<td><code>a_generator.throw(MyException('error message'))</code>
 <tr><th>&#x2462;
-<td><code>a_generator.throw("error message")</code>
+<td><code>a_generator.throw('error message')</code>
 <td><i>unsupported</i>
 </table>
 <ol>
@@ -701,8 +701,8 @@ except:
 <td><code>raw_input()</code>
 <td><code>input()</code>
 <tr><th>&#x2461;
-<td><code>raw_input("prompt")</code>
-<td><code>input("prompt")</code>
+<td><code>raw_input('prompt')</code>
+<td><code>input('prompt')</code>
 <tr><th>&#x2462;
 <td><code>input()</code>
 <td><code>eval(input())</code>
@@ -766,7 +766,7 @@ except:
 <li>If you used to call <code>xreadlines()</code> with no arguments, <code>2to3</code> will convert it to just the file object. In Python 3, this will accomplish the same thing: read the file one line at a time and execute the body of the <code>for</code> loop.
 <li>If you used to call <code>xreadlines()</code> with an argument (the number of lines to read at a time), keep doing that. It still works in Python 3, and <code>2to3</code> will not change it.
 </ol>
-<p class=c><span style="font-size:56px;line-height:0.88">&#x2603;</span>
+<p class=c><span style='font-size:56px;line-height:0.88'>&#x2603;</span>
 <h2 id=tuple_params><code>lambda</code> functions that take a tuple instead of multiple parameters</h2>
 <p>In Python 2, you could define anonymous <code>lambda</code> functions which took multiple parameters by defining the function as taking a tuple with a specific number of items. In effect, Python 2 would &#8220;unpack&#8221; the tuple into named arguments, which you could then reference (by name) within the <code>lambda</code> function. In Python 3, you can still pass a tuple to a <code>lambda</code> function, but the Python interpreter will not unpack the tuple into named arguments. Instead, you will need to reference each argument by its positional index.
 <table>
@@ -866,7 +866,7 @@ except:
 <th>Python 3
 <tr><th>
 <td><code>callable(anything)</code>
-<td><code>hasattr(anything, "__call__")</code>
+<td><code>hasattr(anything, '__call__')</code>
 </table>
 <h2 id=zip><code>zip()</code> global function</h2>
 <p>In Python 2, the global <code>zip()</code> function took any number of sequences and returned a list of tuples. The first tuple contained the first item from each sequence; the second tuple contained the second item from each sequence; and so on. In Python 3, <code>zip()</code> returns an iterator instead of a list.
@@ -1119,7 +1119,7 @@ do_stuff(a_list)</code></pre>
 </table>
 <p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
 
-<p class=nav><a rel=prev href=where-to-go-from-here.html title="back to &#8220;Where To Go From Here&#8221;"><span>&#x261C;</span></a> <a rel=next href=special-method-names.html title="onward to &#8220;Special Method Names&#8221;"><span>&#x261E;</span></a>
+<p class=v><a href=where-to-go-from-here.html rel=prev title='back to &#8220;Where To Go From Here&#8221;'><span>&#x261C;</span></a> <a href=special-method-names.html rel=next title='onward to &#8220;Special Method Names&#8221;'><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

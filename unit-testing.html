@@ -119,12 +119,12 @@ import unittest
 <a>                     (3999, 'MMMCMXCIX'))           <span>&#x2461;</span></a>
 
 <a>    def test_to_roman_known_values(self):           <span>&#x2462;</span></a>
-        """to_roman should give known result with known input"""
+        '''to_roman should give known result with known input'''
         for integer, numeral in self.known_values:
 <a>            result = roman1.to_roman(integer)       <span>&#x2463;</span></a>
 <a>            self.assertEqual(numeral, result)       <span>&#x2464;</span></a>
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()</code></pre>
 <ol>
 <li>To write a test case, first subclass the <code>TestCase</code> class of the <code>unittest</code> module. This class provides many useful methods which you can use in your test case to test specific conditions.
@@ -138,7 +138,7 @@ if __name__ == "__main__":
 <pre><code># roman1.py
 
 function to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
 <a>    pass                                   <span>&#x2460;</span></a></code></pre>
 <ol>
 <li>At this stage, you want to define the <abbr>API</abbr> of the <code>to_roman()</code> function, but you don&#8217;t want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code> [FIXME ref], which does precisely nothing.
@@ -162,7 +162,7 @@ Traceback (most recent call last):
 <a>FAILED (failures=1)                                                    <span>&#x2463;</span></a></samp></pre>
 <ol>
 <li>Running the script runs <code>unittest.main()</code>, which runs each test case. Each test case is a method within each class in <code>romantest.py</code> that inherits from <code>unittest.TestCase</code>. For each test case, the <code>unittest</code> module will print out the <code>docstring</code> of the method and whether that test passed or failed. As expected, this test case fails.
-<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>"I"</code>, but it didn&#8217;t. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
+<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>'I'</code>, but it didn&#8217;t. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
 <li>After the detail of each test, <code>unittest</code> displays a summary of how many tests were performed and how long it took.
 <li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn&#8217;t pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you&#8217;re testing or the unit test case itself.
 </ol>
@@ -183,8 +183,8 @@ Traceback (most recent call last):
 <a>                     ('I',  1))                 <span>&#x2460;</span></a>
 
 def to_roman(n):
-    """convert integer to Roman numeral"""
-    result = ""
+    '''convert integer to Roman numeral'''
+    result = ''
     for numeral, integer in roman_numeral_map:
 <a>        while n >= integer:                     <span>&#x2461;</span></a>
             result += numeral
@@ -248,7 +248,7 @@ OK</samp></pre>
 <pre><code>
 <a>class ToRomanBadInput(unittest.TestCase):                                 <span>&#x2460;</span></a>
 <a>    def test_too_large(self):                                             <span>&#x2461;</span></a>
-        """to_roman should fail with large input"""
+        '''to_roman should fail with large input'''
 <a>        self.assertRaises(roman2.OutOfRangeError, roman2.to_roman, 4000)  <span>&#x2462;</span></a></code></pre>
 <ol>
 <li>Like the previous test case, you create a class that inherits from <code>unittest.TestCase</code>. You can have more than one test per class (as you&#8217;ll see later in this chapter), but I chose to create a new class here because this test is something different than the last one. We&#8217;ll keep all the good input tests together in one class, and all the bad input tests together in another.
@@ -311,11 +311,11 @@ FAILED (failures=1)</samp></pre>
 <p>Now you can write the code to make this test pass.
 <p class=d>[<a href=examples/roman2.py>download <code>roman2.py</code></a>]
 <pre><code>def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
     if n > 3999:
-<a>        raise OutOfRangeError("number out of range (must be less than 3999)")  <span>&#x2460;</span></a>
+<a>        raise OutOfRangeError('number out of range (must be less than 3999)')  <span>&#x2460;</span></a>
 
-    result = ""
+    result = ''
     for numeral, integer in roman_numeral_map:
         while n >= integer:
             result += numeral
@@ -357,15 +357,15 @@ OK</samp></pre>
 <pre><code>
 class ToRomanBadInput(unittest.TestCase):
     def test_too_large(self):
-        """to_roman should fail with large input"""
+        '''to_roman should fail with large input'''
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, 4000)  <span>&#x2460;</span></a>
 
     def test_zero(self):
-        """to_roman should fail with 0 input"""
+        '''to_roman should fail with 0 input'''
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, 0)     <span>&#x2461;</span></a>
 
     def test_negative(self):
-        """to_roman should fail with negative input"""
+        '''to_roman should fail with negative input'''
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, -1)    <span>&#x2462;</span></a></code></pre>
 <ol>
 <li>The <code>test_too_large()</code> method has not changed since the previous step. I&#8217;m including it here to show where the new code fits.
@@ -407,11 +407,11 @@ FAILED (failures=2)</samp></pre>
 
 <p class=d>[<a href=examples/roman3.py>download <code>roman3.py</code></a>]
 <pre><code>def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
 <a>    if not (0 < n < 4000):                                              <span>&#x2460;</span></a>
-<a>        raise OutOfRangeError("number out of range (must be 0..3999)")  <span>&#x2461;</span></a>
+<a>        raise OutOfRangeError('number out of range (must be 0..3999)')  <span>&#x2461;</span></a>
 
-    result = ""
+    result = ''
     for numeral, integer in roman_numeral_map:
         while n >= integer:
             result += numeral
@@ -466,7 +466,7 @@ class OutOfRangeError(ValueError): pass
     .
     .
     def test_non_integer(self):
-        """to_roman should fail with non-integer input"""
+        '''to_roman should fail with non-integer input'''
 <mark>        self.assertRaises(roman4.NotIntegerError, roman4.to_roman, 0.5)</mark></code></pre>
 
 <p>Now check that the test fails properly.
@@ -495,13 +495,13 @@ FAILED (failures=1)</samp></pre>
 <p>Write the code that makes the test pass.
 
 <pre><code>def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
     if not (0 < n < 4000):
-        raise OutOfRangeError("number out of range (must be 0..3999)")
+        raise OutOfRangeError('number out of range (must be 0..3999)')
 <a>    if not isinstance(n, int):                                          <span>&#x2460;</span></a>
-<a>        raise NotIntegerError("non-integers can not be converted")      <span>&#x2461;</span></a>
+<a>        raise NotIntegerError('non-integers can not be converted')      <span>&#x2461;</span></a>
 
-    result = ""
+    result = ''
     for numeral, integer in roman_numeral_map:
         while n >= integer:
             result += numeral
@@ -529,44 +529,7 @@ OK</samp></pre>
 
 <p>Now stop coding.
 
-<!--
-<li><a href="#roman.requirements">Requirement #3</a> specifies that <code>to_roman()</code> cannot accept a non-integer number, so here you test to make sure that <code>to_roman()</code> raises a <code>roman.NotIntegerError</code> exception when called with <code>0.5</code>. If <code>to_roman()</code> does not raise a <code>roman.NotIntegerError</code>, this test is considered failed.
--->
-
-<!--
-For instance, the <code>testFromRomanCase</code> method (&#8220;<code>from_roman()</code> should only accept uppercase input&#8221;) was an error, because the call to <code>numeral.upper()</code> raised an <code>AttributeError</code> exception, because <code>to_roman()</code> was supposed to return a string but didn't. But <code>testZero</code> (&#8220;<code>to_roman()</code> should fail with 0 input&#8221;) was a failure, because the call to <code>from_roman()</code> did not raise the <code>InvalidRomanNumeral</code> exception that <code>assertRaises</code> was looking for.
--->
-
-
-<!--
-<li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertRaises</code> (also called <code>failUnlessRaises</code>) raised an <code>AssertionError</code> because it was expecting <code>to_roman()</code> to raise an <code>OutOfRangeError</code> and it didn't.
--->
-
-
-<!--
-<p>Given all of this, what would you expect out of a set of functions to convert to and from Roman numerals?
-<ol>
-<li><code>to_roman</code> should return the Roman numeral representation for all integers <code>1</code> to <code>3999</code>.
-<li><code>to_roman</code> should fail when given an integer outside the range <code>1</code> to <code>3999</code>.
-<li><code>to_roman</code> should fail when given a non-integer number.
-<li><code>from_roman</code> should take a valid Roman numeral and return the number that it represents.
-<li><code>from_roman</code> should fail when given an invalid Roman numeral.
-<li>If you take a number, convert it to Roman numerals, then convert that back to a number, you should end up with the number
-      you started with. So <code>from_roman(to_roman(n)) == n</code> for all <var>n</var> in <code>1..3999</code>.
-<li><code>to_roman</code> should always return a Roman numeral using uppercase letters.
-<li><code>from_roman</code> should only accept uppercase Roman numerals (<i class=foreignphrase><abbr>i.e.</abbr></i> it should fail when given lowercase input).
-</ol>
--->
-
-
-<!--
-<ol>
-<li>The <code>re.compile</code> function can take an optional second argument, which is a set of one or more flags that control various options about the
-            compiled regular expression. Here you're specifying the <code>re.VERBOSE</code> flag, which tells Python that there are in-line comments within the regular expression itself. The comments and all the whitespace around them are
-<em>not</em> considered part of the regular expression; the <code>re.compile</code> function simply strips them all out when it compiles the expression. This new, &#8220;verbose&#8221; version is identical to the old version, but it is infinitely more readable.
-</ol>
--->
-
+<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

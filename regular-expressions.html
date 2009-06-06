@@ -23,7 +23,7 @@ body{counter-reset:h1 4}
 <p class=f>Every modern programming language has built-in functions for working with strings. In Python, strings have methods for searching and replacing: <code>index()</code>, <code>find()</code>, <code>split()</code>, <code>count()</code>, <code>replace()</code>, <i class=baa>&amp;</i>c. But these methods are limited to the simplest of cases. For example, the <code>index()</code> method looks for a single, hard-coded substring, and the search is always case-sensitive. To do case-insensitive searches of a string <var>s</var>, you must call <code>s.lower()</code> or <code>s.upper()</code> and make sure your search strings are the appropriate case to match. The <code>replace()</code> and <code>split()</code> methods have the same limitations.
 <p>If your goal can be accomplished with string methods, you should use them. They&#8217;re fast and simple and easy to read, and there&#8217;s a lot to be said for fast, simple, readable code. But if you find yourself using a lot of different string functions with <code>if</code> statements to handle special cases, or if you&#8217;re chaining calls to <code>split()</code> and <code>join()</code> to slice-and-dice your strings, you may need to move up to regular expressions.
 <p>Regular expressions are a powerful and (mostly) standardized way of searching, replacing, and parsing text with complex patterns of characters. Although the regular expression syntax is tight and unlike normal code, the result can end up being <em>more</em> readable than a hand-rolled solution that uses a long chain of string functions. There are even ways of embedding comments within regular expressions, so you can include fine-grained documentation within them.
-<blockquote class="note compare perl5">
+<blockquote class='note compare perl5'>
 <p><span>&#x261E;</span>If you&#8217;ve used regular expressions in other languages (like Perl 5), Python&#8217;s syntax will be very familiar. Read the summary of the <a href=http://docs.python.org/dev/library/re.html#module-contents><code>re</code> module</a> to get an overview of the available functions and their arguments.
 </blockquote>
 <p class=a>&#x2042;
@@ -257,7 +257,7 @@ body{counter-reset:h1 4}
 </ul>
 <p>This will be more clear with an example. Let&#8217;s revisit the compact regular expression you&#8217;ve been working with, and make it a verbose regular expression. This example shows how.
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>pattern = """
+<samp class=p>>>> </samp><kbd>pattern = '''
     ^                   # beginning of string
     M{0,3}              # thousands - 0 to 3 M's
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
@@ -267,7 +267,7 @@ body{counter-reset:h1 4}
     (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 I's),
                         #        or 5-8 (V, followed by 0 to 3 I's)
     $                   # end of string
-    """</kbd>
+    '''</kbd>
 <a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXXIX', re.VERBOSE)</kbd>         <span>&#x2461;</span></a>
@@ -433,7 +433,7 @@ body{counter-reset:h1 4}
 <li><code>(x)</code> in general is a <em>remembered group</em>. You can get the value of what matched by using the <code>groups()</code> method of the object returned by <code>re.search</code>.
 </ul>
 <p>Regular expressions are extremely powerful, but they are not the correct solution for every problem. You should learn enough about them to know when they are appropriate, when they will solve your problems, and when they will cause more problems than they solve.
-<p class=nav><a rel=prev href=strings.html title="back to &#8220;Strings&#8221;"><span>&#x261C;</span></a> <a rel=next href=generators.html title="onward to &#8220;Generators&#8221;"><span>&#x261E;</span></a>
+<p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Generators&#8221;'><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

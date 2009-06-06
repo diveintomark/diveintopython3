@@ -30,7 +30,7 @@ mark{display:inline}
 <li><a href=http://code.google.com/apis/gdata/>Google Data <abbr>API</abbr>s</a> allow you to interact with a wide variety of Google services, including <a href=http://www.blogger.com/>Blogger</a> and <a href=http://www.youtube.com/>YouTube</a>.
 <li><a href=http://www.flickr.com/services/api/>Flickr Services</a> allow you to upload and download photos from <a href=http://www.flickr.com/>Flickr</a>.
 <li><a href=http://apiwiki.twitter.com/>Twitter <abbr>API</abbr></a> allows you to publish status updates on <a href=http://twitter.com/>Twitter</a>.
-<li><a href="http://www.programmableweb.com/apis/directory/1?sort=mashups">&hellip;and many more</a>
+<li><a href='http://www.programmableweb.com/apis/directory/1?sort=mashups'>&hellip;and many more</a>
 </ul>
 
 <p>Python 3 comes with two different libraries for interacting with <abbr>HTTP</abbr> web services:
@@ -153,7 +153,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <h3 id=compression>Compression</h3>
 
-<p>When you talk about <abbr>HTTP</abbr> web services, you&#8217;re almost always talking about moving text-based data back and forth over the wire. Maybe it&#8217;s <abbr>XML</abbr>, maybe it&#8217;s <abbr>JSON</abbr>, maybe it&#8217;s just <a href=strings.html#boring-stuff title="there ain&#8217;t no such thing as plain text">plain text</a>. Regardless of the format, text compresses well. The example feed in <a href=xml.html>the XML chapter</a> is 3070 bytes uncompressed, but would be 941 bytes after gzip compression. That&#8217;s just 30% of the original size!
+<p>When you talk about <abbr>HTTP</abbr> web services, you&#8217;re almost always talking about moving text-based data back and forth over the wire. Maybe it&#8217;s <abbr>XML</abbr>, maybe it&#8217;s <abbr>JSON</abbr>, maybe it&#8217;s just <a href=strings.html#boring-stuff title='there ain&#8217;t no such thing as plain text'>plain text</a>. Regardless of the format, text compresses well. The example feed in <a href=xml.html>the XML chapter</a> is 3070 bytes uncompressed, but would be 941 bytes after gzip compression. That&#8217;s just 30% of the original size!
 
 <p><abbr>HTTP</abbr> supports several compression algorithms. The two most common types are <a href=http://www.ietf.org/rfc/rfc1952.txt>gzip</a> and <a href=http://www.ietf.org/rfc/rfc1951.txt>deflate</a>. When you request a resource over <abbr>HTTP</abbr>, you can ask the server to send it in compressed format. You include an <code>Accept-encoding</code> header in your request that lists which compression algorithms you support. If the server supports any of the same algorithms, it will send you back compressed data (with a <code>Content-encoding</code> header that tells you which algorithm it used). Then it&#8217;s up to you to decompress the data.
 
@@ -190,13 +190,13 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <samp class=p>>>> </samp><kbd>import urllib.request</kbd>
 <a><samp class=p>>>> </samp><kbd>data = urllib.request.urlopen('http://diveintopython3.org/examples/feed.xml').read()</kbd>  <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>print(data)</kbd>
-<samp>&lt;?xml version="1.0" encoding="utf-8"?>
-&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<samp>&lt;?xml version='1.0' encoding='utf-8'?>
+&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
   &lt;title>dive into mark&lt;/title>
   &lt;subtitle>currently between addictions&lt;/subtitle>
   &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
   &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
-  &lt;link rel="alternate" type="text/html" href="http://diveintomark.org/"/>
+  &lt;link rel='alternate' type='text/html' href='http://diveintomark.org/'/>
   &hellip;
 </samp></pre>
 <ol>
@@ -320,7 +320,7 @@ Content-Type: application/xml</samp>
 <samp class=p>>>> </samp><kbd>response.status</kbd>
 <samp>200</samp>
 <samp class=p>>>> </samp><kbd>content[:52]</kbd>
-<samp>b'&lt;?xml version="1.0" encoding="utf-8"?>\r\n&lt;feed xmlns='</samp>
+<samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content)</kbd>
 <samp>3070</samp></pre>
 <ol>
@@ -337,7 +337,7 @@ Content-Type: application/xml</samp>
 <samp class=p>>>> </samp><kbd>response2.status</kbd>
 <samp>200</samp>
 <samp class=p>>>> </samp><kbd>content2[:52]</kbd>
-<samp>b'&lt;?xml version="1.0" encoding="utf-8"?>\r\n&lt;feed xmlns='</samp>
+<samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content2)</kbd>
 <samp>3070</samp></pre>
 <ol>
@@ -551,9 +551,9 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
 <samp class=p>>>> </samp><kbd>from urllib.parse import urlencode</kbd>
 <samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
-<samp class=p>>>> </samp><kbd>data = {"status": "Test update from Python 3"}</kbd>
-<samp class=p>>>> </samp><kbd>h.add_credentials("diveintomark", "<var>MY_SECRET_PASSWORD</var>")</kbd>
-<samp class=p>>>> </samp><kbd>resp, content = h.request("http://twitter.com/statuses/update.xml", "POST", urlencode(data))</kbd>
+<samp class=p>>>> </samp><kbd>data = {'status': 'Test update from Python 3'}</kbd>
+<samp class=p>>>> </samp><kbd>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>')</kbd>
+<samp class=p>>>> </samp><kbd>resp, content = h.request('http://twitter.com/statuses/update.xml', 'POST', urlencode(data))</kbd>
 <samp class=p>>>> </samp><kbd>resp.status</kbd>
 <samp>200</samp>
 <samp class=p>>>> </samp><kbd>from xml.etree import ElementTree as etree</kbd>
@@ -608,9 +608,9 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
 
 <pre class=screen>
 # continued from the previous example
-<samp class=p>>>> </samp><kbd>tree.findtext("id")</kbd>
+<samp class=p>>>> </samp><kbd>tree.findtext('id')</kbd>
 <samp>'1973974228'</samp>
-<samp class=p>>>> </samp><kbd>resp, delete_content = h.request("http://twitter.com/statuses/destroy/{0}.xml".format(tree.findtext("id")), "DELETE")</kbd>
+<samp class=p>>>> </samp><kbd>resp, delete_content = h.request('http://twitter.com/statuses/destroy/{0}.xml'.format(tree.findtext('id')), 'DELETE')</kbd>
 <samp class=p>>>> </samp><kbd>resp.status</kbd>
 <samp>200</samp></pre>
 
@@ -627,6 +627,7 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
 <li><a href=http://code.google.com/p/doctype/wiki/ArticleHttpCaching>How to control caching with <abbr>HTTP</abbr> headers</a> on Google Doctype
 </ul>
 
+<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

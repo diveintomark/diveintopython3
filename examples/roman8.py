@@ -1,9 +1,9 @@
-"""Convert to and from Roman numerals
+'''Convert to and from Roman numerals
 
-This program is part of "Dive Into Python 3", a free Python book for
+This program is part of 'Dive Into Python 3', a free Python book for
 experienced programmers.  Visit http://diveintopython3.org/ for the
 latest version.
-"""
+'''
 import re
 
 class OutOfRangeError(ValueError): pass
@@ -24,7 +24,7 @@ roman_numeral_map = (('M',  1000),
                      ('IV', 4),
                      ('I',  1))
 
-roman_numeral_pattern = re.compile("""
+roman_numeral_pattern = re.compile('''
     ^                   # beginning of string
     M{0,3}              # thousands - 0 to 3 M's
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
@@ -34,16 +34,16 @@ roman_numeral_pattern = re.compile("""
     (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 I's),
                         #        or 5-8 (V, followed by 0 to 3 I's)
     $                   # end of string
-    """, re.VERBOSE)
+    ''', re.VERBOSE)
 
 def to_roman(n):
-    """convert integer to Roman numeral"""
+    '''convert integer to Roman numeral'''
     if not (0 < n < 4000):
-        raise OutOfRangeError("number out of range (must be 0..3999)")
+        raise OutOfRangeError('number out of range (must be 0..3999)')
     if not isinstance(n, int):
-        raise NotIntegerError("non-integers can not be converted")
+        raise NotIntegerError('non-integers can not be converted')
 
-    result = ""
+    result = ''
     for numeral, integer in roman_numeral_map:
         while n >= integer:
             result += numeral
@@ -51,13 +51,13 @@ def to_roman(n):
     return result
 
 def from_roman(s):
-    """convert Roman numeral to integer"""
+    '''convert Roman numeral to integer'''
     if not isinstance(s, str):
-        raise InvalidRomanNumeralError("Input must be a string")
+        raise InvalidRomanNumeralError('Input must be a string')
     if not s:
-        raise InvalidRomanNumeralError("Input can not be blank")
+        raise InvalidRomanNumeralError('Input can not be blank')
     if not roman_numeral_pattern.search(s):
-        raise InvalidRomanNumeralError("Invalid Roman numeral: {0}".format(s))
+        raise InvalidRomanNumeralError('Invalid Roman numeral: {0}'.format(s))
 
     result = 0
     index = 0

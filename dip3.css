@@ -28,21 +28,21 @@ POSSIBILITY OF SUCH DAMAGE.
 
 Classname Legend
 
-.w = "widgets"  = wrapper block for hide/open/download links dynamically inserted into code listings
-.b = "block"    = internal block dynamically inserted into code listings
-.d = "download" = download link for code listings
-.p = "prompt"   = command-line or interactive shell prompt within code listings
-.q = "quote"    = quote at beginning of each chapter
-.f = "fancy"    = first paragraph of each chapter (gets a fancy drop-cap)
-.c = "centered" = centered footer text (also clears floats)
-.a = "asterism" = section break
+.w = "widgets"    = wrapper block for hide/open/download links dynamically inserted into code listings
+.b = "block"      = internal block dynamically inserted into code listings
+.d = "download"   = download link for code listings
+.p = "prompt"     = command-line or interactive shell prompt within code listings
+.q = "quote"      = quote at beginning of each chapter
+.f = "fancy"      = first paragraph of each chapter (gets a fancy drop-cap)
+.c = "centered"   = centered footer text (also clears floats)
+.a = "asterism"   = section break
+.v = "navigation" = prev/next navigation links (not breadcrumbs)
 
 .nm = "no mobile"     = hide this section on mobile devices
 .nd = "no decoration" = hide the widgets on this code block
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
-.nav  = "navigation"               = prev/next navigation links (not breadcrumbs)
 
 
 Acknowledgements & Inspirations
@@ -273,18 +273,18 @@ aside {
 }
 /* previous/next navigation links */
 
-.nav a {
+.v a {
   text-decoration: none;
   border: 0;
   display: block;
 }
-.nav a:first-child {
+.v a:first-child {
   float: left;
 }
-.nav a:last-child {
+.v a:last-child {
   float: right;
 }
-.nav span {
+.v span {
   font-size: 1000%;
   line-height: 1;
   margin: 0;

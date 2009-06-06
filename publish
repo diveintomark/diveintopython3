@@ -18,7 +18,7 @@ for f in *.html; do
 done
 
 # build sitemap
-ls build/*.html | sed -e "s|build/|http://diveintopython3.org/|g" > build/sitemap.txt
+ls build/*.html | sed -e "s|build/|http://diveintopython3.org/|g" -e "s|/index.html|/|g" > build/sitemap.txt
 
 echo "adding evil tracking code"
 

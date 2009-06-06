@@ -1,9 +1,9 @@
-"""Pluralize English nouns (stage 2)
+'''Pluralize English nouns (stage 2)
 
 Command line usage:
 $ python plural2.py noun
 nouns
-"""
+'''
 
 import re
 

@@ -1,9 +1,9 @@
-"""Unit test for roman1.py
+'''Unit test for roman1.py
 
-This program is part of "Dive Into Python 3", a free Python book for
+This program is part of 'Dive Into Python 3', a free Python book for
 experienced programmers.  Visit http://diveintopython3.org/ for the
 latest version.
-"""
+'''
 
 import roman4
 import unittest
@@ -67,29 +67,29 @@ class KnownValues(unittest.TestCase):
                      (3999, 'MMMCMXCIX'))
 
     def test_to_roman_known_values(self):
-        """to_roman should give known result with known input"""
+        '''to_roman should give known result with known input'''
         for integer, numeral in self.known_values:
             result = roman4.to_roman(integer)
             self.assertEqual(numeral, result)
 
 class ToRomanBadInput(unittest.TestCase):
     def test_too_large(self):
-        """to_roman should fail with large input"""
+        '''to_roman should fail with large input'''
         self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, 4000)
 
     def test_zero(self):
-        """to_roman should fail with 0 input"""
+        '''to_roman should fail with 0 input'''
         self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, 0)
 
     def test_negative(self):
-        """to_roman should fail with negative input"""
+        '''to_roman should fail with negative input'''
         self.assertRaises(roman4.OutOfRangeError, roman4.to_roman, -1)
 
     def test_non_integer(self):
-        """to_roman should fail with non-integer input"""
+        '''to_roman should fail with non-integer input'''
         self.assertRaises(roman4.NotIntegerError, roman4.to_roman, 0.5)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
 
 # Copyright (c) 2009, Mark Pilgrim, All rights reserved.

@@ -5,9 +5,9 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-h1:before{counter-increment:h1;content:"Appendix B. "}
-h2:before{counter-increment:h2;content:"B." counter(h2) ". "}
-h3:before{counter-increment:h3;content:"B." counter(h2) "." counter(h3) ". "}
+h1:before{counter-increment:h1;content:'Appendix B. '}
+h2:before{counter-increment:h2;content:'B.' counter(h2) '. '}
+h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 tr + tr th:first-child{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
 table{width:100%;border-collapse:collapse}
 th,td{width:30%;padding:0 0.5em;border:1px solid #bbb}
@@ -111,19 +111,19 @@ td a:link, td a:visited{border:0}
 <tr><th>&#x2460;
 <td>to get a computed attribute (unconditionally)
 <td><code>x.my_property</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattribute__><code>x.__getattribute__(<var>"my_property"</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattribute__><code>x.__getattribute__(<var>'my_property'</var>)</code></a>
 <tr><th>&#x2461;
 <td>to get a computed attribute (fallback)
 <td><code>x.my_property</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattr__><code>x.__getattr__(<var>"my_property"</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getattr__><code>x.__getattr__(<var>'my_property'</var>)</code></a>
 <tr><th>&#x2462;
 <td>to set an attribute
 <td><code>x.my_property = value</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__setattr__><code>x.__setattr__(<var>"my_property"</var>, <var>value</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__setattr__><code>x.__setattr__(<var>'my_property'</var>, <var>value</var>)</code></a>
 <tr><th>&#x2463;
 <td>to delete an attribute
 <td><code>del x.my_property</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__delattr__><code>x.__delattr__(<var>"my_property"</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__delattr__><code>x.__delattr__(<var>'my_property'</var>)</code></a>
 <tr><th>&#x2464;
 <td>to list all attributes and methods
 <td><code>dir(x)</code>
@@ -131,7 +131,7 @@ td a:link, td a:visited{border:0}
 </table>
 <ol>
 <li>If your class defines a <code>__getattribute__()</code> method, Python will call it on <em>every reference to any attribute or method name</em> (except special method names, since that would cause an unpleasant infinite loop).
-<li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>color</var>, <code>x.color</code> will <em>not</em> call <code>x.__getattr__("color")</code>; it will simply return the already-defined value of <var>x.color</var>.
+<li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>color</var>, <code>x.color</code> will <em>not</em> call <code>x.__getattr__('color')</code>; it will simply return the already-defined value of <var>x.color</var>.
 <li>The <code>__setattr__()</code> method is called whenever you assign a value to an attribute.
 <li>The <code>__delattr__()</code> method is called whenever you delete an attribute.
 <li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr()__</code> method handles a <var>color</var> attribute dynamically, <code>dir(x)</code> would not list <var>color</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>color</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
@@ -142,19 +142,19 @@ td a:link, td a:visited{border:0}
 <pre class=screen>
 <code>class Dynamo:
     def __getattr__(self, key):
-<a>        if key == "color":         <span>&#x2460;</span></a>
-            return "PapayaWhip"
+<a>        if key == 'color':         <span>&#x2460;</span></a>
+            return 'PapayaWhip'
         else:
 <a>            raise AttributeError   <span>&#x2461;</span></a></code>
 
 <samp class=p>>>> </samp><kbd>dyn = Dynamo()</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2462;</span></a>
 <samp>'PapayaWhip'</samp>
-<samp class=p>>>> </samp><kbd>dyn.color = "LemonChiffon"</kbd>
+<samp class=p>>>> </samp><kbd>dyn.color = 'LemonChiffon'</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2463;</span></a>
 <samp>'LemonChiffon'</samp></pre>
 <ol>
-<li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>"color"</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
+<li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>'color'</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
 <li>If the attribute name is unknown, the <code>__getattr()__</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
 <li>The <var>dyn</var> instance does not have an attribute named <var>color</var>, so the <code>__getattr__()</code> method is called to provide a computed value.
 <li>After explicitly setting <var>dyn.color</var>, the <code>__getattr__()</code> method will no longer be called to provide a value for <var>dyn.color</var>, because <var>dyn.color</var> is already defined on the instance.
@@ -166,16 +166,16 @@ td a:link, td a:visited{border:0}
 <code>class SuperDynamo:
     def __getattribute__(self, key):
         if key == 'color':
-            return "PapayaWhip"
+            return 'PapayaWhip'
         else:
             raise AttributeError</code>
 
 <samp class=p>>>> </samp><kbd>dyn = SuperDynamo()</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2460;</span></a>
-<samp>"PapayaWhip"</samp>
-<samp class=p>>>> </samp><kbd>dyn.color = "LemonChiffon"</kbd>
+<samp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd>dyn.color = 'LemonChiffon'</kbd>
 <a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span>&#x2461;</span></a>
-<samp>"PapayaWhip"</samp></pre>
+<samp>'PapayaWhip'</samp></pre>
 <ol>
 <li>The <code>__getattribute__()</code> method is called to provide a value for <var>dyn.color</var>.
 <li>Even after explicitly setting <var>dyn.color</var>, the <code>__getattribute__()</code> method <em>is still called</em> to provide a value for <var>dyn.color</var>. If present, the <code>__getattribute__()</code> method <em>is called unconditionally</em> for every attribute and method lookup, even for attributes that you explicitly set after creating an instance.
@@ -279,7 +279,7 @@ bytes = zef_file.read(12)
 # A script which responds to http://example.com/search?q=cgi
 import cgi
 fs = cgi.FieldStorage()
-<a>if "q" in fs:                                               <span>&#x2460;</span></a>
+<a>if 'q' in fs:                                               <span>&#x2460;</span></a>
   do_search()
 
 # An excerpt from cgi.py that explains how that works
@@ -289,7 +289,7 @@ class FieldStorage:
 .
 <a>    def __contains__(self, key):                            <span>&#x2461;</span></a>
         if self.list is None:
-            raise TypeError("not indexable")
+            raise TypeError('not indexable')
 <a>        return any(item.name == key for item in self.list)  <span>&#x2462;</span></a>
 
 <a>    def __len__(self):                                      <span>&#x2463;</span></a>
@@ -297,7 +297,7 @@ class FieldStorage:
 <ol>
 <li>Once you create an instance of the <code>cgi.FieldStorage</code> class, you can use the &#8220;<code>in</code>&#8221; operator to check whether a particular parameter was included in the query string.
 <li>The <code>__contains__()</code> method is the magic that makes this work.
-<li>When you say <code>if "q" in fs</code>, Python looks for the <code>__contains__()</code> method on the <var>fs</var> object, which is defined in <code>cgi.py</code>. The value <code>"q"</code> is passed into the <code>__contains__()</code> method as the <var>key</var> argument.
+<li>When you say <code>if 'q' in fs</code>, Python looks for the <code>__contains__()</code> method on the <var>fs</var> object, which is defined in <code>cgi.py</code>. The value <code>'q'</code> is passed into the <code>__contains__()</code> method as the <var>key</var> argument.
 <li>The same <code>FieldStorage</code> class also supports returning its length, so you can say <code>len(<var>fs</var>)</code> and it will call the <code>__len__()</code> method on the <code>FieldStorage</code> class to return the number of query parameters that it identified.
 </ol>
 
@@ -313,19 +313,19 @@ class FieldStorage:
 <tr><th>
 <td>to get a value by its key
 <td><code>x[key]</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getitem__><code>x.__getitem__(<var>"key"</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__getitem__><code>x.__getitem__(<var>'key'</var>)</code></a>
 <tr><th>
 <td>to set a value by its key
 <td><code>x[key] = value</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__setitem__><code>x.__setitem__(<var>"key"</var>, <var>value</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__setitem__><code>x.__setitem__(<var>'key'</var>, <var>value</var>)</code></a>
 <tr><th>
 <td>to delete a key-value pair
 <td><code>del x[key]</code>
-<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__delitem__><code>x.__delitem__(<var>"key"</var>)</code></a>
+<td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__delitem__><code>x.__delitem__(<var>'key'</var>)</code></a>
 <tr><th>
 <td>to provide a default value for missing keys
 <td><code>x[nonexistent_key]</code>
-<td><a href=http://docs.python.org/3.0/library/collections.html#collections.defaultdict.__missing__><code>x.__missing__(<var>"nonexistent_key"</var>)</code></a>
+<td><a href=http://docs.python.org/3.0/library/collections.html#collections.defaultdict.__missing__><code>x.__missing__(<var>'nonexistent_key'</var>)</code></a>
 </table>
 
 <p>The <a href=#acts-like-list-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.0/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
@@ -334,8 +334,8 @@ class FieldStorage:
 # A script which responds to http://example.com/search?q=cgi
 import cgi
 fs = cgi.FieldStorage()
-if "q" in fs:
-<a>  do_search(fs["q"])                              <span>&#x2460;</span></a>
+if 'q' in fs:
+<a>  do_search(fs['q'])                              <span>&#x2460;</span></a>
 
 # An excerpt from cgi.py that shows how it works
 class FieldStorage:
@@ -344,7 +344,7 @@ class FieldStorage:
 .
 <a>    def __getitem__(self, key):                   <span>&#x2461;</span></a>
         if self.list is None:
-            raise TypeError("not indexable")
+            raise TypeError('not indexable')
         found = []
         for item in self.list:
             if item.name == key: found.append(item)
@@ -355,8 +355,8 @@ class FieldStorage:
         else:
             return found</code></pre>
 <ol>
-<li>The <var>fs</var> object is an instance of <code>cgi.FieldStorage</code>, but you can still evaluate expressions like <code>fs["q"]</code>.
-<li><code>fs["q"]</code> invokes the <code>__getitem__()</code> method with the <var>key</var> parameter set to <code>"q"</code>. It then looks up in its internally maintained list of query parameters (<var>self.list</var>) for an item whose <code>.name</code> matches the given key.
+<li>The <var>fs</var> object is an instance of <code>cgi.FieldStorage</code>, but you can still evaluate expressions like <code>fs['q']</code>.
+<li><code>fs['q']</code> invokes the <code>__getitem__()</code> method with the <var>key</var> parameter set to <code>'q'</code>. It then looks up in its internally maintained list of query parameters (<var>self.list</var>) for an item whose <code>.name</code> matches the given key.
 </ol>
 
 <h2 id=acts-like-number>Classes That Act Like Numbers</h2>
@@ -742,19 +742,19 @@ class FieldStorage:
 
 <pre><code># excerpt from io.py:
 def _checkClosed(self, msg=None):
-    """Internal: raise an ValueError if file is closed
-    """
+    '''Internal: raise an ValueError if file is closed
+    '''
     if self.closed:
-        raise ValueError("I/O operation on closed file."
+        raise ValueError('I/O operation on closed file.'
                          if msg is None else msg)
 
-def __enter__(self) -> "IOBase":
-    """Context management protocol.  Returns self."""
+def __enter__(self) -> 'IOBase':
+    '''Context management protocol.  Returns self.'''
 <a>    self._checkClosed()                                <span>&#x2460;</span></a>
 <a>    return self                                        <span>&#x2461;</span></a>
 
 def __exit__(self, *args) -> None:
-    """Context management protocol.  Calls close()"""
+    '''Context management protocol.  Calls close()'''
 <a>    self.close()                                       <span>&#x2462;</span></a></code></pre>
 <ol>
 <li>The file object defines both an <code>__enter__()</code> and an <code>__exit__()</code> method. The <code>__enter__()</code> method checks that the file is open; if it&#8217;s not, the <code>_checkClosed()</code> method raises an exception.
@@ -817,7 +817,7 @@ def __exit__(self, *args) -> None:
 <td><a href=http://docs.python.org/3.0/library/abc.html#abc.ABCMeta.__subclasshook__><code>MyABC.__subclasshook__(C)</code></a>
 </table>
 
-<p class=nav><a rel=prev href=porting-code-to-python-3-with-2to3.html title="back to &#8220;Porting code to Python 3 with 2to3&#8221;"><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=v><a href=porting-code-to-python-3-with-2to3.html rel=prev title='back to &#8220;Porting code to Python 3 with 2to3&#8221;'><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/dip3.js></script>

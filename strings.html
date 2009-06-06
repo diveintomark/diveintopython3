@@ -55,7 +55,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number. Each number represents a unique character used in at least one of the world&#8217;s languages. (Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn&#8217;t be sufficient.) Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn&#8217;t have an <code>'A'</code> in it.
 
-<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span title="interrobang!">&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it&#8217;s wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
+<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span title='interrobang!'>&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it&#8217;s wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
 
 <p>There is a Unicode encoding that uses four bytes per character. It&#8217;s called UTF-32, because 32 bits = 4 bytes. UTF-32 is a straightforward encoding; it takes each Unicode character (a 4-byte number) and represents the character with that same number. This has some advantages, the most important being that you can find the <var>Nth</var> character of a string in constant time, because the <var>Nth</var> character starts at the <var>4&times;Nth</var> byte. It also has several disadvantages, the most obvious being that it takes four freaking bytes to store every freaking character.
 
@@ -69,7 +69,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <p>Other people pondered these questions, and they came up with a solution:
 
-<p class=c style="font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0">UTF-8
+<p class=c style='font-size:1000%;font-weight:bold;line-height:1;margin:0.7em 0'>UTF-8
 
 <p>UTF-8 is a <em>variable-length</em> encoding system for Unicode. That is, different characters take up a different number of bytes. For <abbr>ASCII</abbr> characters (A-Z, <i class=baa>&amp;</i>c.) UTF-8 uses just one byte per character. In fact, it uses the exact same bytes; the first 128 characters (0&ndash;127) in UTF-8 are indistinguishable from <abbr>ASCII</abbr>. &#8220;Extended Latin&#8221; characters like &ntilde; and &ouml; end up taking two bytes. (The bytes are not simply the Unicode code point like they would be in UTF-16; there is some serious bit-twiddling involved.) Chinese characters like &#x4E2D; end up taking three bytes. The rarely-used &#8220;astral plane&#8221; characters take four bytes.
 
@@ -81,7 +81,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 
 <h2 id=divingin>Diving In</h2>
 
-<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. "Is this string UTF-8?" is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
+<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. &#8220;Is this string UTF-8?&#8221; is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>s = '深入 Python'</kbd>    <span>&#x2460;</span></a>
@@ -111,7 +111,7 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
-<a>    """Convert a file size to human-readable form.                          <span>&#x2461;</span></a>
+<a>    '''Convert a file size to human-readable form.                          <span>&#x2461;</span></a>
 
     Keyword arguments:
     size -- file size in bytes
@@ -120,7 +120,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
     Returns: string
 
-<a>    """                                                                     <span>&#x2462;</span></a>
+<a>    '''                                                                     <span>&#x2462;</span></a>
     if size &lt; 0:
 <a>        raise ValueError('number must be non-negative')                     <span>&#x2463;</span></a>
 
@@ -128,7 +128,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     for suffix in SUFFIXES[multiple]:
         size /= multiple
         if size &lt; multiple:
-<a>            return "{0:.1f} {1}".format(size, suffix)                       <span>&#x2464;</span></a>
+<a>            return '{0:.1f} {1}'.format(size, suffix)                       <span>&#x2464;</span></a>
 
     raise ValueError('number too large')</code></pre>
 <ol>
@@ -142,8 +142,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p>Python 3 supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with single placeholder.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>username = "mark"</kbd>
-<a><samp class=p>>>> </samp><kbd>password = "PapayaWhip"</kbd>                             <span>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd>username = 'mark'</kbd>
+<a><samp class=p>>>> </samp><kbd>password = 'PapayaWhip'</kbd>                             <span>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd>"{0}'s password is {1}".format(username, password)</kbd>  <span>&#x2461;</span></a>
 <samp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
@@ -160,7 +160,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <a><samp class=p>>>> </samp><kbd>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>si_suffixes</kbd>
 <samp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
-<a><samp class=p>>>> </samp><kbd>"1000{0[0]} = 1{0[1]}".format(si_suffixes)</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>'1000{0[0]} = 1{0[1]}'.format(si_suffixes)</kbd>  <span>&#x2461;</span></a>
 <samp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
@@ -184,7 +184,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
 <samp class=p>>>> </samp><kbd>import sys</kbd>
-<samp class=p>>>> </samp><kbd>"1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}".format(sys)</kbd>
+<samp class=p>>>> </samp><kbd>'1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}'.format(sys)</kbd>
 <samp>'1MB = 1000KB'</samp></pre>
 
 <p>Here&#8217;s how it works:
@@ -192,10 +192,10 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <ul>
 <li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the replacement field <code>{0}</code> refers to the <code>sys</code> module.
 <li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the replacement field <code>{0.modules}</code> refers to the dictionary of imported modules.
-<li><code>sys.modules["humansize"]</code> is the <code>humansize</code> module which you just imported. The replacement field <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>"humansize"</code>). But within a replacement field, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>).
-<li><code>sys.modules["humansize"].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The replacement field <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
-<li><code>sys.modules["humansize"].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the replacement field <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
-<lI><code>sys.modules["humansize"].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete replacement field <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
+<li><code>sys.modules['humansize']</code> is the <code>humansize</code> module which you just imported. The replacement field <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>'humansize'</code>). But within a replacement field, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>).
+<li><code>sys.modules['humansize'].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The replacement field <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
+<li><code>sys.modules['humansize'].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the replacement field <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
+<lI><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete replacement field <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
 </ul>
 
 <h3 id=format-specifiers>Format Specifiers</h3>
@@ -203,18 +203,18 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
 
 <pre><code>if size &lt; multiple:
-    return "{0:.1f} {1}".format(size, suffix)</code></pre>
+    return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
 
-<blockquote class="note compare clang">
+<blockquote class='note compare clang'>
 <p><span>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
 </blockquote>
 
 <p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>"{0:.1f} {1}".format(698.25, 'GB')</kbd>
+<samp class=p>>>> </samp><kbd>'{0:.1f} {1}'.format(698.25, 'GB')</kbd>
 <samp>'698.3 GB'</samp></pre>
 
 <p>For all the gory details on format specifiers, consult the <a href=http://docs.python.org/3.0/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> in the official Python documentation.
@@ -226,10 +226,10 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p>Besides formatting, strings can do a number of other useful tricks.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>s = """Finished files are the re-</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>s = '''Finished files are the re-</kbd>  <span>&#x2460;</span></a>
 <samp class=p>... </samp><kbd>sult of years of scientif-</kbd>
 <samp class=p>... </samp><kbd>ic study combined with the</kbd>
-<samp class=p>... </samp><kbd>experience of years."""</kbd>
+<samp class=p>... </samp><kbd>experience of years.'''</kbd>
 <a><samp class=p>>>> </samp><kbd>s.splitlines()</kbd>                     <span>&#x2461;</span></a>
 <samp>['Finished files are the re-',
  'sult of years of scientif-',
@@ -240,7 +240,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 sult of years of scientif-
 ic study combined with the
 experience of years.</samp>
-<a><samp class=p>>>> </samp><kbd>s.lower().count("f")</kbd>               <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.lower().count('f')</kbd>               <span>&#x2463;</span></a>
 <samp>6</samp></pre>
 <ol>
 <li>You can input multi-line strings in the Python interactive shell. Once you start a multi-line string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
@@ -381,7 +381,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 
 <p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in UTF-8.
 
-<blockquote class="note compare python2">
+<blockquote class='note compare python2'>
 <p><span>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
 </blockquote>
 
@@ -432,7 +432,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
 </ul>
 
-<p class=nav><a rel=prev href=native-datatypes.html title="back to &#8220;Native Datatypes&#8221;"><span>&#x261C;</span></a> <a rel=next href=regular-expressions.html title="onward to &#8220;Regular Expressions&#8221;"><span>&#x261E;</span></a>
+<p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
