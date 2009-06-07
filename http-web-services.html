@@ -336,44 +336,61 @@ Content-Type: application/xml</samp>
 
 <h3 id=httplib2-caching>How <code>httplib2</code> Handles Caching</h3>
 
-<p>FIXME
+<p>Remember in the previous section when I said you should always create an <code>httplib2.Http</code> object with a directory name? Caching is the reason.
 
 <pre class=screen>
-# continued from previous example
-<samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
-<samp class=p>>>> </samp><kbd>response2.status</kbd>
+# continued from the <a href=#introducing-httplib2>previous example</a>
+<a><samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response2.status</kbd>                                                                 <span>&#x2461;</span></a>
 <samp>200</samp>
-<samp class=p>>>> </samp><kbd>content2[:52]</kbd>
+<a><samp class=p>>>> </samp><kbd>content2[:52]</kbd>                                                                    <span>&#x2462;</span></a>
 <samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content2)</kbd>
 <samp>3070</samp></pre>
 <ol>
-<li>FIXME
+<li>This shouldn&#8217;t be terribly surprising. It&#8217;s the same thing you did last time, except you&#8217;re putting the result into two new variables.
+<li>The <abbr>HTTP</abbr> <code>status</code> is once again <code>200</code>, just like last time.
+<li>The downloaded content is the same as last time, too.
 </ol>
+
+<p>So&hellip; who cares? Quit your Python interactive shell and relaunch it with a new session, and I&#8217;ll show you.
 
 <pre class=screen>
 # NOT continued from previous example!
 # Please exit out of the interactive shell
 # and launch a new one.
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
-<samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>
-<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
-<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
-<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<a><samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>                                                        <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                                   <span>&#x2463;</span></a>
 <samp>3070</samp>
-<samp class=p>>>> </samp><kbd>response.status</kbd>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span>&#x2464;</span></a>
 <samp>200</samp>
-<samp class=p>>>> </samp><kbd>response.fromcache</kbd>
+<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                                             <span>&#x2465;</span></a>
 <samp>True</samp></pre>
 <ol>
-<li>FIXME
+<li>Let&#8217;s turn on debugging and see <a href=#whats-on-the-wire>what&#8217;s on the wire</a>. This is the <code>httplib2</code> equivalent of turning on debugging in <code>http.client</code>. <code>httplib2</code> will print all the data being sent to the server and some key information being sent back.
+<li>Create an <code>httplib2.Http</code> object with the same directory name as before.
+<li>Request the same <abbr>URL</abbr> as before. <em>Nothing appears to happen.</em> More precisely, nothing gets sent to the server, and nothing gets returned from the server. There is absolutely no network activity whatsoever.
+<li>Yet we did &#8220;receive&#8221; some data &mdash; in fact, we received all of it.
+<li>We also &#8220;received&#8221; an <abbr>HTTP</abbr> status code indicating that the &#8220;request&#8221; was successful.
+<li>Here&#8217;s the rub: this &#8220;response&#8221; was generated from <code>httplib2</code>&#8217;s local cache. That directory name you passed in when you created the <code>httplib2.Http</code> object &mdash; that directory holds <code>httplib2</code>&#8217;s cache of all the operations it&#8217;s ever performed.
 </ol>
 
+<p>You previously requested the data at this <abbr>URL</abbr>. That request was successful (<code>status: 200</code>). That response included not only the feed data, but also a set of <a href=#caching>caching headers</a> that told anyone who was listening that they could cache this resource for up to 24 hours (<code>Cache-Control: max-age=86400</code>, which is 24 hours measured in seconds). <code>httplib2</code> understand and respects those caching headers, and it stored the previous response in the <code>.cache</code> directory (which you passed in when you create the <code>Http</code> object). That cache hasn&#8217;t expired yet, so the second time you request the data at this <abbr>URL</abbr>, <code>httplib2</code> simply returns the cached result without ever hitting the network.
+
+<p>I say &#8220;simply,&#8221; but obviously there is a lot of complexity hidden behind that simplicity. <code>httplib2</code> handles <abbr>HTTP</abbr> caching <em>automatically</em> and <em>by default</em>. If for some reason you need to know whether a response came from the cache, you can check <code>response.fromcache</code>. Otherwise, it Just Works.
+
+<p>Now, suppose you have data cached, but you want to bypass the cache and re-request it from the remote server. Browsers sometimes do this if the user specifically requests it. For example, pressing <kbd>F5</kbd> refreshes the current page, but pressing <kbd>Ctrl+F5</kbd> bypasses the cache and re-requests the current page from the remote server. You might think &#8220;oh, I&#8217;ll just delete the data from my local cache, then request it again.&#8221; You could do that, but remember that there may be more parties involved than just you and the remote server. What about those intermediate proxy servers? They&#8217;re completely beyond your control, and they may still have that data cached, and will happily return it to you because (as far as they are concerned) their cache is still valid.
+
+<p>Instead of manipulating your local cache and hoping for the best, you should use the features of <abbr>HTTP</abbr> to ensure that your request actually reaches the remote server.
+
 <pre class=screen>
-# continued from previous example
+# continued from the previous example
 <samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml',</kbd>
-<samp class=p>... </samp><kbd>    headers={'cache-control':'no-cache'})</kbd>
-<samp>connect: (diveintopython3.org, 80)
+<a><samp class=p>... </samp><kbd>    headers={'cache-control':'no-cache'})</kbd>  <span>&#x2460;</span></a>
+<a><samp>connect: (diveintopython3.org, 80)             <span>&#x2461;</span></a>
 send: b'GET /examples/feed.xml HTTP/1.1
 Host: diveintopython3.org
 user-agent: Python-httplib2/$Rev: 259 $
@@ -383,9 +400,9 @@ reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp>
 <samp class=p>>>> </samp><kbd>response2.status</kbd>
 <samp>200</samp>
-<samp class=p>>>> </samp><kbd>response2.fromcache</kbd>
+<a><samp class=p>>>> </samp><kbd>response2.fromcache</kbd>                        <span>&#x2462;</span></a>
 <samp>False</samp>
-<samp class=p>>>> </samp><kbd>print(dict(response2.items()))</kbd>
+<a><samp class=p>>>> </samp><kbd>print(dict(response2.items()))</kbd>             <span>&#x2463;</span></a>
 <samp>{'status': '200',
  'content-length': '3070',
  'content-location': 'http://diveintopython3.org/examples/feed.xml',
@@ -401,7 +418,10 @@ reply: 'HTTP/1.1 200 OK'
  'date': 'Tue, 02 Jun 2009 00:40:26 GMT',
  'content-type': 'application/xml'}</samp></pre>
 <ol>
-<li>FIXME
+<li><code>httplib2</code> allows you to add arbitrary <abbr>HTTP</abbr> headers to any outgoing request. In order to bypass <em>all</em> caches (not just your local disk cache, but also any caching proxies between you and the remote server), add a <code>no-cache</code> header in the <var>headers</var> dictionary.
+<li>Now you see <code>httplib2</code> initiating a network request. <code>httplib2</code> understands and respects caching headers <em>in both directions</em> &mdash; as part of the incoming response <em>and as part of the outgoing request</em>. It noticed that you added the <code>no-cache</code> header, so it bypassed its local cache altogether and then had no choice but to hit the network to request the data.
+<li>This response was <em>not</em> generated from your local cache. You knew that, of course, because you saw the debugging information on the outgoing request. But it&#8217;s nice to have that programmatically verified.
+<li>The request succeeded; you downloaded the entire feed again from the remote server. Of course, the server also sent back a full complement of <abbr>HTTP</abbr> headers along with the feed data. That includes caching headers, which <code>httplib2</code> uses to update its local cache, in the hopes of avoiding network access the <em>next</em> time you request this feed. Everything about <abbr>HTTP</abbr> caching is designed to maximize cache hits and minimize network access. Even though you bypassed the cache this time, the remote server would really appreciate it if you would cache the result for next time.
 </ol>
 
 <h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</h3>
