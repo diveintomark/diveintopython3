@@ -315,17 +315,24 @@ Content-Type: application/xml</samp>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
-<samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
-<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>
-<samp class=p>>>> </samp><kbd>response.status</kbd>
+<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span>&#x2462;</span></a>
 <samp>200</samp>
-<samp class=p>>>> </samp><kbd>content[:52]</kbd>
+<a><samp class=p>>>> </samp><kbd>content[:52]</kbd>                                                                   <span>&#x2463;</span></a>
 <samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content)</kbd>
 <samp>3070</samp></pre>
 <ol>
-<li>FIXME
+<li>The primary interface to <code>httplib2</code> is the <code>Http</code> object. For reasons you&#8217;ll see in the next section, you should always pass a directory name when you create an <code>Http</code> object. The directory does not need to exist; <code>httplib2</code> will create it if necessary.
+<li>Once you have an <code>Http</code> object, retrieving data is as simple as calling the <code>request()</code> method with the address of the data you want. This will issue an <abbr>HTTP</abbr> <code>GET</code> request for that <abbr>URL</abbr>. (Later in this chapter, you&#8217;ll see how to issue other <abbr>HTTP</abbr> requests, like <code>POST</code>.)
+<li>The <code>request()</code> method returns two values. The first is an <code>httplib2.Response</code> object, which contains all the <abbr>HTTP</abbr> headers the server returned. For example, a <code>status</code> code of <code>200</code> indicates that the request was successful.
+<li>The <var>content</var> variable contains the actual data that was returned by the <abbr>HTTP</abbr> server. The data is returned as <a href=strings.html#byte-arrays><code>bytes</code>, not <code>str</code></a>. If you want it as a string, you&#8217;ll need to <a href=http://feedparser.org/docs/character-encoding.html>determine the character encoding</a> and explicitly convert it.
 </ol>
+
+<blockquote class=note>
+<p><span>&#x261E;</span>You probably only need one <code>httplib2.Http</code> object. There are valid reasons for creating more than one, but you should only do so if you know why you need them. &#8220;I need to request data from two different <abbr>URL</abbr>s&#8221; is not a valid reason. Re-use the <code>Http</code> object and just call the <code>request()</code> method twice.
+</blockquote>
 
 <h3 id=httplib2-caching>How <code>httplib2</code> Handles Caching</h3>
 
