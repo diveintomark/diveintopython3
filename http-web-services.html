@@ -382,7 +382,7 @@ Content-Type: application/xml</samp>
 
 <p>I say &#8220;simply,&#8221; but obviously there is a lot of complexity hidden behind that simplicity. <code>httplib2</code> handles <abbr>HTTP</abbr> caching <em>automatically</em> and <em>by default</em>. If for some reason you need to know whether a response came from the cache, you can check <code>response.fromcache</code>. Otherwise, it Just Works.
 
-<p>Now, suppose you have data cached, but you want to bypass the cache and re-request it from the remote server. Browsers sometimes do this if the user specifically requests it. For example, pressing <kbd>F5</kbd> refreshes the current page, but pressing <kbd>Ctrl+F5</kbd> bypasses the cache and re-requests the current page from the remote server. You might think &#8220;oh, I&#8217;ll just delete the data from my local cache, then request it again.&#8221; You could do that, but remember that there may be more parties involved than just you and the remote server. What about those intermediate proxy servers? They&#8217;re completely beyond your control, and they may still have that data cached, and will happily return it to you because (as far as they are concerned) their cache is still valid.
+<p id=bypass-the-cache>Now, suppose you have data cached, but you want to bypass the cache and re-request it from the remote server. Browsers sometimes do this if the user specifically requests it. For example, pressing <kbd>F5</kbd> refreshes the current page, but pressing <kbd>Ctrl+F5</kbd> bypasses the cache and re-requests the current page from the remote server. You might think &#8220;oh, I&#8217;ll just delete the data from my local cache, then request it again.&#8221; You could do that, but remember that there may be more parties involved than just you and the remote server. What about those intermediate proxy servers? They&#8217;re completely beyond your control, and they may still have that data cached, and will happily return it to you because (as far as they are concerned) their cache is still valid.
 
 <p>Instead of manipulating your local cache and hoping for the best, you should use the features of <abbr>HTTP</abbr> to ensure that your request actually reaches the remote server.
 
@@ -426,20 +426,22 @@ reply: 'HTTP/1.1 200 OK'
 
 <h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</h3>
 
-<p>FIXME
+<p>The <code>Cache-Control</code> and <code>Expires</code> <a href=#caching>caching headers</a> are called <i>freshness indicators</i>. They tell caches in no uncertain terms that you can completely avoid all network access until the cache expires. And that&#8217;s exactly the behavior you saw <a href=#httplib2-caching>in the previous section</a>: given a strong validator, <code>httplib2</code> <em>does not generate a single byte of network activity</em> to serve up cached data (unless you explicitly <a href=#bypass-the-cache>bypass the cache</a>, of course).
+
+<p>But what about the case where the data <em>might</em> have changed, but hasn&#8217;t? <abbr>HTTP</abbr> defines <a href=#last-modified><code>Last-Modified</code></a> and <a href=#etags><code>Etag</code></a> headers for this purpose. These headers are called <i>validators</i>. If the local cache is no longer fresh, a client can send the validators with the next request to see if the data has actually changed. If the data hasn&#8217;t changed, the server sends back a <code>304</code> status code <em>and no data</em>. So there&#8217;s still a round-trip over the network, but you end up downloading fewer bytes.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
 <samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>
 <samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
-<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
 reply: 'HTTP/1.1 200 OK'</samp>
-<samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
+<a><samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>                                 <span>&#x2461;</span></a>
 <samp>{'-content-encoding': 'gzip',
  'accept-ranges': 'bytes',
  'connection': 'close',
@@ -447,26 +449,47 @@ reply: 'HTTP/1.1 200 OK'</samp>
  'content-location': 'http://diveintopython3.org/',
  'content-type': 'text/html',
  'date': 'Tue, 02 Jun 2009 03:26:54 GMT',
- 'etag': '"7f806d-1a01-9fb97900"',
- 'last-modified': 'Tue, 02 Jun 2009 02:51:48 GMT',
+<mark> 'etag': '"7f806d-1a01-9fb97900"',</mark>
+<mark> 'last-modified': 'Tue, 02 Jun 2009 02:51:48 GMT',</mark>
  'server': 'Apache',
  'status': '304',
  'vary': 'Accept-Encoding,User-Agent'}</samp>
-<samp class=p>>>> </samp><kbd>len(content)</kbd>
-<samp>6657</samp>
-<samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span>&#x2462;</span></a>
+<samp>6657</samp></pre>
+<ol>
+<li>Instead of the feed, this time we&#8217;re going to download the site&#8217;s home page, which is <abbr>HTML</abbr>. Since this is the first time you&#8217;lve ever requested this page, <code>httplib2</code> has little to work with, and it sends out a minimum of headers with the request.
+<li>The response contains a multitude of <abbr>HTTP</abbr> headers&hellip; but no caching information. However, it does include both an <code>ETag</code> and <code>Last-Modified</code> header.
+<li>At the time I constructed this example, this page was 6657 bytes. It&#8217;s probably changed since then, but don&#8217;t worry about it.
+</ol>
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
-if-none-match: "7f806d-1a01-9fb97900"
-if-modified-since: Tue, 02 Jun 2009 02:51:48 GMT
+<a>if-none-match: "7f806d-1a01-9fb97900"                             <span>&#x2461;</span></a>
+<a>if-modified-since: Tue, 02 Jun 2009 02:51:48 GMT                  <span>&#x2462;</span></a>
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
-reply: 'HTTP/1.1 304 Not Modified'</samp>
-<samp class=p>>>> </samp><kbd>len(content)</kbd>
+<a>reply: 'HTTP/1.1 304 Not Modified'                                <span>&#x2463;</span></a></samp>
+<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                            <span>&#x2464;</span></a>
+<samp>True</samp>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                               <span>&#x2465;</span></a>
+<samp>200</samp>
+<a><samp class=p>>>> </samp><kbd>response.dict['status']</kbd>                                       <span>&#x2466;</span></a>
+<samp>'304'</samp>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span>&#x2467;</span></a>
 <samp>6657</samp></pre>
 <ol>
-<li>FIXME
+<li>You request the same page again, with the same <code>Http</code> object (and the same local cache).
+<li><code>httplib2</code> sends the <code>ETag</code> validator back to the server in the <code>If-None-Match</code> header.
+<li><code>httplib2</code> also sends the <code>Last-Modified</code> validator back to the server in the <code>If-Modified-Since</code> header.
+<li>The server looked at these validators, looked at the page you requested, and determined that the page has not changed since you last requested it, so it sends back a <code>304</code> status code <em>and no data</em>.
+<li>Back on the client, <code>httplib2</code> notices the <code>304</code> status code and loads the content of the page from its cache.
+<li>This might be a bit confusing. There are really <em>two</em> status codes &mdash; <code>304</code> (returned from the server this time, which caused <code>httplib2</code> to look in its cache), and <code>200</code> (returned from the server <em>last time</em>, and stored in <code>httplib2</code>&#8217;s cache along with the page data). <code>response.status</code> returns the status from the cache.
+<li>If you want the raw status code returned from the server, you can get that by looking in <code>response.dict</code>, which is a dictionary of the actual headers returned from the server.
+<li>However, you still get the data in the <var>content</var> variable. Generally, you don&#8217;t need to know why a response was served from the cache. (You may not even care that it was served from the cache at all, and that&#8217;s fine too. <code>httplib2</code> is smart enough to let you act dumb.) By the time the <code>request()</code> method returns to the caller, <code>httplib2</code> has already updated its cache and returned the data to you.
 </ol>
 
 <h3 id=httplib2-compression>How <code>http2lib</code> Handles Compression</h3>
