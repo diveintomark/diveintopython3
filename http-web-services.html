@@ -494,18 +494,18 @@ user-agent: Python-httplib2/$Rev: 259 $'
 
 <h3 id=httplib2-compression>How <code>http2lib</code> Handles Compression</h3>
 
-<p>FIXME
+<p><abbr>HTTP</abbr> supports <a href=#compression>two types of compression</a>. <code>httplib2</code> supports both of them.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
-<mark>accept-encoding: deflate, gzip</mark>
+<a>accept-encoding: deflate, gzip                          <span>&#x2460;</span></a>
 user-agent: Python-httplib2/$Rev: 259 $'
 reply: 'HTTP/1.1 200 OK'</samp>
 <samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
-<samp>{<mark>'-content-encoding': 'gzip',</mark>
+<samp><a>{'-content-encoding': 'gzip',                           <span>&#x2461;</span></a>
  'accept-ranges': 'bytes',
  'connection': 'close',
  'content-length': '6657',
@@ -517,6 +517,10 @@ reply: 'HTTP/1.1 200 OK'</samp>
  'server': 'Apache',
  'status': '304',
  'vary': 'Accept-Encoding,User-Agent'}</samp></pre>
+<ol>
+<li>Every time <code>httplib2</code> sends a request, it includes an <code>Accept-Encoding</code> header to tell the server that it can handle either <code>deflate</code> or <code>gzip</code> compression.
+<li>In this case, the server has responded with a gzip-compressed payload. By the time the <code>request()</code> method returns, <code>httplib2</code> has already decompressed the body of the response and placed it in the <var>content</var> variable. If you&#8217;re curious about whether or not the response was compressed, you can check the <var>response</var> dictionary; otherwise, don&#8217;t worry about it.
+</ol>
 
 <h3 id=httplib2-redirects>How <code>httplib2</code> Handles Redirects</h3>
 

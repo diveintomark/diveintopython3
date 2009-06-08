@@ -12,9 +12,9 @@ cp -R examples build/
 
 echo "minimizing HTML"
 
-# minimize HTML (XXX this script is quite fragile and relies on knowledge of how I write HTML)
+# minimize HTML (NB: this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
-  python3 htmlminimizer.py "$f" build/"$f"
+  python3 util/htmlminimizer.py "$f" build/"$f"
 done
 
 # build sitemap
@@ -31,7 +31,7 @@ done
 # minimize JS and CSS
 echo "minimizing JS"
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
-java -jar yuicompressor-2.4.2.jar build/j/dip3.js > build/j/dip3-$revision.js
+java -jar util/yuicompressor-2.4.2.jar build/j/dip3.js > build/j/dip3-$revision.js
 
 # combine jQuery and our script
 echo "combining JS"
