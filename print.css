@@ -110,3 +110,16 @@ aside {
 .w, .d, form, form + p, #level, #toc {
   display: none !important;
 }
+
+/* syntax highlighting */
+
+.str { color: #060; }
+.kwd { color: #006; font-weight: bold; }
+.com { color: #600; font-style: italic; }
+.typ { color: #404; font-weight: bold; }
+.lit { color: #044; }
+.pun { color: #440; }
+.pln { color: #000; }
+.tag { color: #006; font-weight: bold; }
+.atn { color: #404; }
+.atv { color: #060; }

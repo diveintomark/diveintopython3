@@ -12,11 +12,11 @@ body{counter-reset:h1 11}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#advanced-classes>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#advanced-classes>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
 <h1>Advanced Classes</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> FIXME <span>&#x275E;</span><br>&mdash; FIXME
+<p><span class=u>&#x275D;</span> FIXME <span class=u>&#x275E;</span><br>&mdash; FIXME
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -27,7 +27,7 @@ body{counter-reset:h1 11}
 <p>[FIXME here's why ordered dicts are useful: http://www.gossamer-threads.com/lists/python/dev/656556 ]
 
 <p class=d>[<a href=examples/ordereddict.py>download <code>ordereddict.py</code></a>]
-<pre><code>import collections
+<pre><code class=pp>import collections
 import itertools
  
 class OrderedDict(dict, collections.MutableMapping):
@@ -107,7 +107,7 @@ class OrderedDict(dict, collections.MutableMapping):
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import ordereddict</kbd>
 <samp class=p>>>> </samp><kbd>od = ordereddict.OrderedDict()</kbd>
-<a><samp class=p>>>> </samp><kbd>klass = od.__class__</kbd>       <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>klass = od.__class__</kbd>       <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>type(klass)</kbd>
 <samp>&lt;class 'abc.ABCMeta'></samp>
 <samp class=p>>>> </samp><kbd>klass.__name__</kbd>
@@ -163,7 +163,8 @@ class OrderedDict(dict, collections.MutableMapping):
 
 <h2 id=implementing-fractions>Implementing Fractions</h2>
 
-<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next class=todo><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>

@@ -4,12 +4,20 @@ from pyquery import PyQuery as pq
 import glob
 import sys
 
+# These selectors are kept regardless of whether this script thinks they are used.
+# Most of these match nodes that are dynamically inserted or manipulated by script
+# after the page has loaded, which is why a static analysis thinks they're unused.
+SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun', '.tag', '.atn', '.atv', '.dec', 'pre span.u', 'pre span.u span')
+
 filename = sys.argv[1]
 pqd = pq(filename=filename)
 raw_data = open(filename, 'rb').read()
-if raw_data.count('<pre><code>') or raw_data.count('<pre class=screen>'):
+if raw_data.count('<pre><code') or raw_data.count('<pre class=screen>'):
     def keep(s):
-        return s == '.w' or s.startswith('.w ') or s == '.b' or s.startswith('.b ')
+        for selector in SELECTOR_EXCEPTIONS:
+            if s == selector: return True
+            if s.startswith(selector + ' '): return True
+        return False
 else:
     def keep(s):
         return False

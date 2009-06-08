@@ -29,7 +29,8 @@ POSSIBILITY OF SUCH DAMAGE.
 var HS = {'visible': 'hide', 'hidden': 'show'};
 $(document).ready(function() {
 	hideTOC();
-	
+	prettyPrint();
+
 	/* "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks */
 	$("pre > code").each(function(i) {
 		var pre = $(this.parentNode);
@@ -90,6 +91,7 @@ $(document).ready(function() {
 			}
 		    });
 	    });
+
     }); /* document.ready */
 
 function toggleCodeBlock(id) {
@@ -100,7 +102,7 @@ function toggleCodeBlock(id) {
 
 function plainTextOnClick(id) {
     var clone = $("#" + id).clone();
-    clone.find("div.w, span").remove();
+    clone.find("div.w, span.u").remove();
     var win = window.open("about:blank", "plaintext", "toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=600,height=400,left=35,top=75");
     win.document.open();
     win.document.write('<pre>' + clone.html());

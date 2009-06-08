@@ -4,6 +4,7 @@
 <title>Your first Python program - Dive into Python 3</title>
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
+<link rel=stylesheet href=prettify.css>
 <style>
 body{counter-reset:h1 1}
 table{border:1px solid #bbb;border-collapse:collapse;margin:auto}
@@ -15,17 +16,17 @@ th{text-align:left}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#your-first-python-program>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#your-first-python-program>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=novice>&#x2666;&#x2662;&#x2662;&#x2662;&#x2662;</span>
 <h1>Your First Python Program</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> Don&#8217;t bury your burden in saintly silence. You have a problem?  Great. Rejoice, dive in, and investigate. <span>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Buddhism>Ven. Henepola Gunaratana</a>
+<p><span class=u>&#x275D;</span> Don&#8217;t bury your burden in saintly silence. You have a problem?  Great. Rejoice, dive in, and investigate. <span class=u>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Buddhism>Ven. Henepola Gunaratana</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
 <p class=f>Books about programming usually start with a bunch of boring chapters about fundamentals and eventually work up to building something useful. Let&#8217;s skip all that. Here is a complete, working Python program. It probably makes absolutely no sense to you. Don&#8217;t worry about that, because you&#8217;re going to dissect it line by line. But read through it first and see what, if anything, you can make of it.
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
-<pre><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+<pre><code class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
@@ -74,16 +75,16 @@ if __name__ == '__main__':
 
 <h2 id=declaringfunctions>Declaring Functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
-<pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 <aside>When you need a function, just declare it.</aside>
 <p>The keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses. Multiple arguments are separated with commas.
 <p>Also note that the function doesn&#8217;t define a return datatype. Python functions do not specify the datatype of their return value; they don&#8217;t even specify whether or not they return a value. (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
 <blockquote class=note>
-<p><span>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>. There are no subroutines in Python. Everything is a function, all functions return a value (even if it&#8217;s <code>None</code>), and all functions start with <code>def</code>.
+<p><span class=u>&#x261E;</span>In some languages, functions (that return a value) start with <code>function</code>, and subroutines (that do not return a value) start with <code>sub</code>. There are no subroutines in Python. Everything is a function, all functions return a value (even if it&#8217;s <code>None</code>), and all functions start with <code>def</code>.
 </blockquote>
 <p>The <code>approximate_size()</code> function takes the two arguments &mdash; <var>size</var> and <var>a_kilobyte_is_1024_bytes</var> &mdash; but neither argument specifies a datatype. In Python, variables are never explicitly typed. Python figures out what type a variable is and keeps track of it internally.
 <blockquote class='note compare java'>
-<p><span>&#x261E;</span>In Java and other statically-typed languages, you must specify the datatype of the function return value and each function argument. In Python, you never explicitly specify the datatype of anything. Based on what value you assign, Python keeps track of the datatype internally.
+<p><span class=u>&#x261E;</span>In Java and other statically-typed languages, you must specify the datatype of the function return value and each function argument. In Python, you never explicitly specify the datatype of anything. Based on what value you assign, Python keeps track of the datatype internally.
 </blockquote>
 
 <h3 id=optional-arguments>Optional and Named Arguments</h3>
@@ -92,16 +93,15 @@ if __name__ == '__main__':
 
 <p>Let&#8217;s take another look at that <code>approximate_size()</code> function declaration:
 
-<pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 
 <p>The second argument, <var>a_kilobyte_is_1024_bytes</var>, specifies a default value of <code>True</code>. This means the argument is <i>optional</i>; you can call the function without it, and Python will act as if you had called it with <code>True</code> as a second parameter.
 
 <p>Now look at the bottom of the script:
 
-<pre><code>
-if __name__ == '__main__':
-<a>    print(approximate_size(1000000000000, False))  <span>&#x2460;</span></a>
-<a>    print(approximate_size(1000000000000))         <span>&#x2461;</span></a></code></pre>
+<pre><code class=pp>if __name__ == '__main__':
+<a>    print(approximate_size(1000000000000, False))  <span class=u>&#x2460;</span></a>
+<a>    print(approximate_size(1000000000000))         <span class=u>&#x2461;</span></a></code></pre>
 <ol>
 <li>This calls the <code>approximate_size()</code> function with two argument. Within the <code>approximate_size()</code> function, <var>a_kilobyte_is_1024_bytes</var> will be <code>False</code>, since you explicitly passed <code>False</code> as the second argument.
 <li>This calls the <code>approximate_size()</code> function with only one argument. But that&#8217;s OK, because the second argument is optional! Since the caller doesn&#8217;t specify, the second argument defaults to <code>True</code>, as defined by the function declaration.
@@ -111,16 +111,16 @@ if __name__ == '__main__':
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>from humansize import approximate_size</kbd>
-<a><samp class=p>>>> </samp><kbd>approximate_size(4000, a_kilobyte_is_1024_bytes=False)</kbd>       <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>approximate_size(4000, a_kilobyte_is_1024_bytes=False)</kbd>       <span class=u>&#x2460;</span></a>
 <samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, a_kilobyte_is_1024_bytes=False)</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, a_kilobyte_is_1024_bytes=False)</kbd>  <span class=u>&#x2461;</span></a>
 <samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, size=4000)</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, size=4000)</kbd>  <span class=u>&#x2462;</span></a>
 <samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, 4000)</kbd>       <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, 4000)</kbd>       <span class=u>&#x2463;</span></a>
 <samp class=traceback>  File "&lt;stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, False)</kbd>                           <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, False)</kbd>                           <span class=u>&#x2464;</span></a>
 <samp class=traceback>  File "&lt;stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <ol>
@@ -137,7 +137,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <p>I won&#8217;t bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (i.e. after you&#8217;ve forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You&#8217;ll thank me in six months.
 <h3 id=docstrings>Documentation Strings</h3>
 <p>You can document a Python function by giving it a documentation string (<code>docstring</code> for short). In this program, the <code>approximate_size()</code> function has a <code>docstring</code>:
-<pre><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
+<pre><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     '''Convert a file size to human-readable form.
 
     Keyword arguments:
@@ -151,11 +151,11 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <aside>Every function deserves a decent docstring.</aside>
 <p>Triple quotes signify a multi-line string. Everything between the start and end quotes is part of a single string, including carriage returns, leading white space, and other quote characters. You can use them anywhere, but you&#8217;ll see them most often used when defining a <code>docstring</code>.
 <blockquote class='note compare perl5'>
-<p><span>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
+<p><span class=u>&#x261E;</span>Triple quotes are also an easy way to define a string with both single and double quotes, like <code>qq/.../</code> in Perl 5.
 </blockquote>
 <p>Everything between the triple quotes is the function&#8217;s <code>docstring</code>, which documents what the function does. A <code>docstring</code>, if it exists, must be the first thing defined in a function (that is, on the next line after the function declaration). You don&#8217;t technically need to give your function a <code>docstring</code>, but you always should. I know you&#8217;ve heard this in every programming class you&#8217;ve ever taken, but Python gives you an added incentive: the <code>docstring</code> is available at runtime as an attribute of the function.
 <blockquote class=note>
-<p><span>&#x261E;</span>Many Python <abbr>IDE</abbr>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip. This can be incredibly helpful, but it&#8217;s only as good as the <code>docstring</code>s you write.
+<p><span class=u>&#x261E;</span>Many Python <abbr>IDE</abbr>s use the <code>docstring</code> to provide context-sensitive documentation, so that when you type a function name, its <code>docstring</code> appears as a tooltip. This can be incredibly helpful, but it&#8217;s only as good as the <code>docstring</code>s you write.
 </blockquote>
 <p class=a>&#x2042;
 
@@ -163,10 +163,10 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import humansize</kbd>                               <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size(4096, True))</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>import humansize</kbd>                               <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size(4096, True))</kbd>  <span class=u>&#x2461;</span></a>
 <samp>4.0 KiB</samp>
-<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size.__doc__)</kbd>      <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size.__doc__)</kbd>      <span class=u>&#x2462;</span></a>
 <samp>Convert a file size to human-readable form.
 
     Keyword arguments:
@@ -183,13 +183,13 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <li>Instead of calling the function as you would expect to, you asked for one of the function&#8217;s attributes, <code>__doc__</code>.
 </ol>
 <blockquote class='note compare perl5'>
-<p><span>&#x261E;</span><code>import</code> in Python is like <code>require</code> in Perl. Once you <code>import</code> a Python module, you access its functions with <code><var>module</var>.<var>function</var></code>; once you <code>require</code> a Perl module, you access its functions with <code><var>module</var>::<var>function</var></code>.
+<p><span class=u>&#x261E;</span><code>import</code> in Python is like <code>require</code> in Perl. Once you <code>import</code> a Python module, you access its functions with <code><var>module</var>.<var>function</var></code>; once you <code>require</code> a Perl module, you access its functions with <code><var>module</var>::<var>function</var></code>.
 </blockquote>
 <h3 id=importsearchpath>The <code>import</code> Search Path</h3>
 <p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You&#8217;ll learn more about lists in <a href=native-datatypes.html#lists>Native Datatypes</a>.)
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import sys</kbd>                           <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>import sys</kbd>                           <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span class=u>&#x2461;</span></a>
 <samp>['', 
  '/usr/lib/python30.zip', 
  '/usr/lib/python3.0',
@@ -197,10 +197,10 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
  '/usr/lib/python3.0/lib-dynload', 
  '/usr/lib/python3.0/dist-packages', 
  '/usr/local/lib/python3.0/dist-packages']</samp>
-<a><samp class=p>>>> </samp><kbd>sys</kbd>                                  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>sys</kbd>                                  <span class=u>&#x2462;</span></a>
 <samp>&lt;module 'sys' (built-in)></samp>
-<a><samp class=p>>>> </samp><kbd>sys.path.insert(0, '/home/mark/py')</kbd>  <span>&#x2463;</span></a>
-<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>sys.path.insert(0, '/home/mark/py')</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span class=u>&#x2464;</span></a>
 <samp>['/home/mark/py', 
  '', 
  '/usr/lib/python30.zip', 
@@ -225,13 +225,12 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <h2 id=indentingcode>Indenting Code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
-<pre><code>
-<a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span>&#x2460;</span></a>
-<a>    if size &lt; 0:                                            <span>&#x2461;</span></a>
-<a>        raise ValueError('number must be non-negative')     <span>&#x2462;</span></a>
-<a>                                                            <span>&#x2463;</span></a>
+<pre><code class=pp><a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span class=u>&#x2460;</span></a>
+<a>    if size &lt; 0:                                            <span class=u>&#x2461;</span></a>
+<a>        raise ValueError('number must be non-negative')     <span class=u>&#x2462;</span></a>
+<a>                                                            <span class=u>&#x2463;</span></a>
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
-<a>    for suffix in SUFFIXES[multiple]:                       <span>&#x2464;</span></a>
+<a>    for suffix in SUFFIXES[multiple]:                       <span class=u>&#x2464;</span></a>
         size /= multiple
         if size &lt; multiple:
             return '{0:.1f} {1}'.format(size, suffix)
@@ -246,19 +245,19 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 </ol>
 <p>After some initial protests and several snide analogies to Fortran, you will make peace with this and start seeing its benefits. One major benefit is that all Python programs look similar, since indentation is a language requirement and not a matter of style. This makes it easier to read and understand other people&#8217;s Python code.
 <blockquote class='note compare java'>
-<p><span>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks. <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
+<p><span class=u>&#x261E;</span>Python uses carriage returns to separate statements and a colon and indentation to separate code blocks. <abbr>C++</abbr> and Java use semicolons to separate statements and curly braces to separate code blocks.
 </blockquote>
 <p class=a>&#x2042;
 
 <h2 id=runningscripts>Running Scripts</h2>
 <aside>Everything in Python is an object.</aside>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
-<pre><code>
+<pre><code class=pp>
 if __name__ == '__main__':
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
 <blockquote class='note compare clang'>
-<p><span>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment. Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there&#8217;s no chance of accidentally assigning the value you thought you were comparing.
+<p><span class=u>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment. Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there&#8217;s no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>. A module&#8217;s <code>__name__</code> depends on how you&#8217;re using the module. If you <code>import</code> the module, then <code>__name__</code> is the module&#8217;s filename, without a directory path or file extension.
 <pre class=screen>
@@ -280,7 +279,8 @@ if __name__ == '__main__':
 <li><a href=http://www.python.org/dev/peps/pep-0008/>PEP 8: Style Guide for Python Code</a> discusses good indentation style.
 <li><a href=http://docs.python.org/3.0/reference/><cite>Python Reference Manual</cite></a> explains what it means to say that <a href=http://docs.python.org/3.0/reference/datamodel.html#objects-values-and-types>everything in Python is an object</a>, because some people are <a href=http://www.douglasadams.com/dna/pedants.html>pedants</a> and like to discuss that sort of thing at great length.
 </ul>
-<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next href=native-datatypes.html title='onward to &#8220;Native Datatypes&#8221;'><span>&#x261E;</span></a>
+<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next href=native-datatypes.html title='onward to &#8220;Native Datatypes&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>

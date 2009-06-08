@@ -12,12 +12,12 @@ body{counter-reset:h1 3}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
 <h1>Strings</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
-My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr. Seuss, On Beyond Zebra!
+<p><span class=u>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
+My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&mdash; Dr. Seuss, On Beyond Zebra!
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=boring-stuff>Some Boring Stuff You Need To Understand Before You Can Dive In</h2>
@@ -84,12 +84,12 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 <p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. &#8220;Is this string UTF-8?&#8221; is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>s = '深入 Python'</kbd>    <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>len(s)</kbd>               <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>s = '深入 Python'</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(s)</kbd>               <span class=u>&#x2461;</span></a>
 <samp>9</samp>
-<a><samp class=p>>>> </samp><kbd>s[0]</kbd>                 <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>s[0]</kbd>                 <span class=u>&#x2462;</span></a>
 <samp>'深'</samp>
-<a><samp class=p>>>> </samp><kbd>s + ' 3'</kbd>             <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>s + ' 3'</kbd>             <span class=u>&#x2463;</span></a>
 <samp>'深入 Python 3'</samp></pre>
 <ol>
 <li>To create a string, enclose it in quotes. Python strings can be defined with either single quotes (<code>'</code>) or double quotes (<code>"</code>).<!--"-->
@@ -106,12 +106,11 @@ My alphabet starts where your alphabet ends! <span>&#x275E;</span><br>&mdash; Dr
 <p>Let&#8217;s take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
-<pre><code>
-<a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span>&#x2460;</span></a>
+<pre><code class=pp><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>&#x2460;</span></a>
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
-<a>    '''Convert a file size to human-readable form.                          <span>&#x2461;</span></a>
+<a>    '''Convert a file size to human-readable form.                          <span class=u>&#x2461;</span></a>
 
     Keyword arguments:
     size -- file size in bytes
@@ -120,15 +119,15 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
     Returns: string
 
-<a>    '''                                                                     <span>&#x2462;</span></a>
+<a>    '''                                                                     <span class=u>&#x2462;</span></a>
     if size &lt; 0:
-<a>        raise ValueError('number must be non-negative')                     <span>&#x2463;</span></a>
+<a>        raise ValueError('number must be non-negative')                     <span class=u>&#x2463;</span></a>
 
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
     for suffix in SUFFIXES[multiple]:
         size /= multiple
         if size &lt; multiple:
-<a>            return '{0:.1f} {1}'.format(size, suffix)                       <span>&#x2464;</span></a>
+<a>            return '{0:.1f} {1}'.format(size, suffix)                       <span class=u>&#x2464;</span></a>
 
     raise ValueError('number too large')</code></pre>
 <ol>
@@ -143,8 +142,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>username = 'mark'</kbd>
-<a><samp class=p>>>> </samp><kbd>password = 'PapayaWhip'</kbd>                             <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>"{0}'s password is {1}".format(username, password)</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>password = 'PapayaWhip'</kbd>                             <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>"{0}'s password is {1}".format(username, password)</kbd>  <span class=u>&#x2461;</span></a>
 <samp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
 <li>No, my password is not really <kbd>PapayaWhip</kbd>.
@@ -157,10 +156,10 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import humansize</kbd>
-<a><samp class=p>>>> </samp><kbd>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>si_suffixes</kbd>
 <samp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
-<a><samp class=p>>>> </samp><kbd>'1000{0[0]} = 1{0[1]}'.format(si_suffixes)</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>'1000{0[0]} = 1{0[1]}'.format(si_suffixes)</kbd>  <span class=u>&#x2461;</span></a>
 <samp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
@@ -202,13 +201,13 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
 
-<pre><code>if size &lt; multiple:
+<pre><code class=pp>if size &lt; multiple:
     return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
 
 <blockquote class='note compare clang'>
-<p><span>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
+<p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
 </blockquote>
 
 <p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
@@ -226,21 +225,21 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p>Besides formatting, strings can do a number of other useful tricks.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>s = '''Finished files are the re-</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>s = '''Finished files are the re-</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp><kbd>sult of years of scientif-</kbd>
 <samp class=p>... </samp><kbd>ic study combined with the</kbd>
 <samp class=p>... </samp><kbd>experience of years.'''</kbd>
-<a><samp class=p>>>> </samp><kbd>s.splitlines()</kbd>                     <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.splitlines()</kbd>                     <span class=u>&#x2461;</span></a>
 <samp>['Finished files are the re-',
  'sult of years of scientif-',
  'ic study combined with the',
  'experience of years.']</samp>
-<a><samp class=p>>>> </samp><kbd>print(s.lower())</kbd>                   <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(s.lower())</kbd>                   <span class=u>&#x2462;</span></a>
 <samp>finished files are the re-
 sult of years of scientif-
 ic study combined with the
 experience of years.</samp>
-<a><samp class=p>>>> </samp><kbd>s.lower().count('f')</kbd>               <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.lower().count('f')</kbd>               <span class=u>&#x2463;</span></a>
 <samp>6</samp></pre>
 <ol>
 <li>You can input multi-line strings in the Python interactive shell. Once you start a multi-line string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
@@ -253,13 +252,13 @@ experience of years.</samp>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
-<a><samp class=p>>>> </samp><kbd>a_list = query.split('&amp;')</kbd>                            <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_list = query.split('&amp;')</kbd>                            <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>a_list</kbd>
 <samp>['user=pilgrim', 'database=master', 'password=PapayaWhip']</samp>
-<a><samp class=p>>>> </samp><kbd>a_list_of_lists = [v.split('=', 1) for v in a_list]</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_list_of_lists = [v.split('=', 1) for v in a_list]</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd>a_list_of_lists</kbd>
 <samp>[['user', 'pilgrim'], ['database', 'master'], ['password', 'PapayaWhip']]</samp>
-<a><samp class=p>>>> </samp><kbd>a_dict = dict(a_list_of_lists)</kbd>                       <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_dict = dict(a_list_of_lists)</kbd>                       <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>a_dict</kbd>
 <samp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 
@@ -276,21 +275,21 @@ experience of years.</samp>
 <p>Bytes are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
 <samp>b'abcde'</samp>
-<a><samp class=p>>>> </samp><kbd>type(by)</kbd>          <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>type(by)</kbd>          <span class=u>&#x2461;</span></a>
 <samp>&lt;class 'bytes'></samp>
-<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span class=u>&#x2462;</span></a>
 <samp>5</samp>
-<a><samp class=p>>>> </samp><kbd>by += b'\xff'</kbd>     <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>by += b'\xff'</kbd>     <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
 <samp>b'abcde\xff'</samp>
-<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(by)</kbd>           <span class=u>&#x2464;</span></a>
 <samp>6</samp>
-<a><samp class=p>>>> </samp><kbd>by[0]</kbd>             <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>by[0]</kbd>             <span class=u>&#x2465;</span></a>
 <samp>97</samp>
-<a><samp class=p>>>> </samp><kbd>by[0] = 102</kbd>       <span>&#x2466;</span></a>
+<a><samp class=p>>>> </samp><kbd>by[0] = 102</kbd>       <span class=u>&#x2466;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'bytes' object does not support item assignment</samp></pre>
@@ -306,12 +305,12 @@ TypeError: 'bytes' object does not support item assignment</samp></pre>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>
-<a><samp class=p>>>> </samp><kbd>barr = bytearray(by)</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>barr = bytearray(by)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>barr</kbd>
 <samp>bytearray(b'abcde')</samp>
-<a><samp class=p>>>> </samp><kbd>len(barr)</kbd>             <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(barr)</kbd>             <span class=u>&#x2461;</span></a>
 <samp>5</samp>
-<a><samp class=p>>>> </samp><kbd>barr[0] = 102</kbd>         <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>barr[0] = 102</kbd>         <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>barr</kbd>
 <samp>bytearray(b'fbcde')</samp></pre>
 <ol>
@@ -325,15 +324,15 @@ TypeError: 'bytes' object does not support item assignment</samp></pre>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>by = b'd'</kbd>
 <samp class=p>>>> </samp><kbd>s = 'abcde'</kbd>
-<a><samp class=p>>>> </samp><kbd>by + s</kbd>                       <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>by + s</kbd>                       <span class=u>&#x2460;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: can't concat bytes to str</samp>
-<a><samp class=p>>>> </samp><kbd>s.count(by)</kbd>                  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.count(by)</kbd>                  <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: Can't convert 'bytes' object to str implicitly</samp>
-<a><samp class=p>>>> </samp><kbd>s.count(by.decode('ascii'))</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.count(by.decode('ascii'))</kbd>  <span class=u>&#x2462;</span></a>
 <samp>1</samp></pre>
 <ol>
 <li>You can&#8217;t concatenate bytes and strings. They are two different data types.
@@ -344,25 +343,25 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code>decode()</code> method that takes a character encoding and returns a string, and strings have an <code>encode()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward &mdash; converting a sequence of bytes n the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string &mdash; even legacy (non-Unicode) encodings.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>a_string = '深入 Python'</kbd>         <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_string = '深入 Python'</kbd>         <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>len(a_string)</kbd>
 <samp>9</samp>
-<a><samp class=p>>>> </samp><kbd>by = a_string.encode('utf-8')</kbd>    <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('utf-8')</kbd>    <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
 <samp>b'\xe6\xb7\xb1\xe5\x85\xa5 Python'</samp>
 <samp class=p>>>> </samp><kbd>len(by)</kbd>
 <samp>13</samp>
-<a><samp class=p>>>> </samp><kbd>by = a_string.encode('gb18030')</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('gb18030')</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
 <samp>b'\xc9\xee\xc8\xeb Python'</samp>
 <samp class=p>>>> </samp><kbd>len(by)</kbd>
 <samp>11</samp>
-<a><samp class=p>>>> </samp><kbd>by = a_string.encode('big5')</kbd>     <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>by = a_string.encode('big5')</kbd>     <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd>by</kbd>
 <samp>b'\xb2`\xa4J Python'</samp>
 <samp class=p>>>> </samp><kbd>len(by)</kbd>
 <samp>11</samp>
-<a><samp class=p>>>> </samp><kbd>roundtrip = by.decode('big5')</kbd>    <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>roundtrip = by.decode('big5')</kbd>    <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp><kbd>roundtrip</kbd>
 <samp>'深入 Python'</samp>
 <samp class=p>>>> </samp><kbd>a_string == roundtrip</kbd>
@@ -382,16 +381,16 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in UTF-8.
 
 <blockquote class='note compare python2'>
-<p><span>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
+<p><span class=u>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
 </blockquote>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
 
-<pre><code># -*- coding: windows-1252 -*-</code></pre>
+<pre><code class=pp># -*- coding: windows-1252 -*-</code></pre>
 
 <p>Technically, the character encoding override can also be on the second line, if the first line is a <abbr>UNIX</abbr>-like hash-bang command.
 
-<pre><code>#!/usr/bin/python3
+<pre><code class=pp>#!/usr/bin/python3
 # -*- coding: windows-1252 -*-</code></pre>
 
 <p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
@@ -432,8 +431,9 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
 </ul>
 
-<p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span>&#x261E;</span></a>
+<p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>

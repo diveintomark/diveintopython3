@@ -13,11 +13,11 @@ mark{display:inline}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=root value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#http-web-services>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#http-web-services>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
 <h1>HTTP Web Services</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> A ruffled mind makes a restless pillow. <span>&#x275E;</span><br>&mdash; Charlotte Bront&euml;
+<p><span class=u>&#x275D;</span> A ruffled mind makes a restless pillow. <span class=u>&#x275E;</span><br>&mdash; Charlotte Bront&euml;
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -137,7 +137,7 @@ The second time you request the same data, you include the ETag hash in an <code
 <p>Again with the <kbd>curl</kbd>:
 
 <pre class=screen>
-<a><samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-None-Match: \"3075-ddc8d800\""</mark> http://wearehugh.com/m.jpg</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-None-Match: \"3075-ddc8d800\""</mark> http://wearehugh.com/m.jpg</kbd>  <span class=u>&#x2460;</span></a>
 <samp>HTTP/1.1 304 Not Modified
 Date: Sun, 31 May 2009 18:04:39 GMT
 Server: Apache
@@ -188,7 +188,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <p>Let&#8217;s say you want to download a resource over <abbr>HTTP</abbr>, such as <a href=xml.html>an Atom feed</a>. Being a feed, you&#8217;re not just going to download it once; you&#8217;re going to download it over and over again. (Most feed readers will check for changes once an hour.) Let&#8217;s do it the quick-and-dirty way first, and then see how you can do better.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import urllib.request</kbd>
-<a><samp class=p>>>> </samp><kbd>data = urllib.request.urlopen('http://diveintopython3.org/examples/feed.xml').read()</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>data = urllib.request.urlopen('http://diveintopython3.org/examples/feed.xml').read()</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>print(data)</kbd>
 <samp>&lt;?xml version='1.0' encoding='utf-8'?>
 &lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
@@ -213,13 +213,13 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>from http.client import HTTPConnection</kbd>
-<a><samp class=p>>>> </samp><kbd>HTTPConnection.debuglevel = 1</kbd>                                       <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>HTTPConnection.debuglevel = 1</kbd>                                       <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd>from urllib.request import urlopen</kbd>
-<a><samp class=p>>>> </samp><kbd>response = urlopen('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2461;</span></a>
-<samp><a>send: b'GET /examples/feed.xml HTTP/1.1                                 <span>&#x2462;</span></a>
-<a>Host: diveintopython3.org                                               <span>&#x2463;</span></a>
-<a>Accept-Encoding: identity                                               <span>&#x2464;</span></a>
-<a>User-Agent: Python-urllib/3.0'                                          <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>response = urlopen('http://diveintopython3.org/examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<samp><a>send: b'GET /examples/feed.xml HTTP/1.1                                 <span class=u>&#x2462;</span></a>
+<a>Host: diveintopython3.org                                               <span class=u>&#x2463;</span></a>
+<a>Accept-Encoding: identity                                               <span class=u>&#x2464;</span></a>
+<a>User-Agent: Python-urllib/3.0'                                          <span class=u>&#x2465;</span></a>
 Connection: close
 reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp></pre>
@@ -236,19 +236,19 @@ reply: 'HTTP/1.1 200 OK'
 
 <pre class=screen>
 # continued from previous example
-<a><samp class=p>>>> </samp><kbd>print(response.headers.as_string())</kbd>        <span>&#x2460;</span></a>
-<samp><a>Date: Sun, 31 May 2009 19:23:06 GMT            <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(response.headers.as_string())</kbd>        <span class=u>&#x2460;</span></a>
+<samp><a>Date: Sun, 31 May 2009 19:23:06 GMT            <span class=u>&#x2461;</span></a>
 Server: Apache
-<a>Last-Modified: Sun, 31 May 2009 06:39:55 GMT   <span>&#x2462;</span></a>
-<a>ETag: "bfe-93d9c4c0"                           <span>&#x2463;</span></a>
+<a>Last-Modified: Sun, 31 May 2009 06:39:55 GMT   <span class=u>&#x2462;</span></a>
+<a>ETag: "bfe-93d9c4c0"                           <span class=u>&#x2463;</span></a>
 Accept-Ranges: bytes
-<a>Content-Length: 3070                           <span>&#x2464;</span></a>
-<a>Cache-Control: max-age=86400                   <span>&#x2465;</span></a>
+<a>Content-Length: 3070                           <span class=u>&#x2464;</span></a>
+<a>Cache-Control: max-age=86400                   <span class=u>&#x2465;</span></a>
 Expires: Mon, 01 Jun 2009 19:23:06 GMT
 Vary: Accept-Encoding
 Connection: close
 Content-Type: application/xml</samp>
-<a><samp class=p>>>> </samp><kbd>data = response.read()</kbd>                     <span>&#x2466;</span></a>
+<a><samp class=p>>>> </samp><kbd>data = response.read()</kbd>                     <span class=u>&#x2466;</span></a>
 <samp class=p>>>> </samp><kbd>len(data)</kbd>
 <samp>3070</samp></pre>
 <ol>
@@ -282,7 +282,7 @@ reply: 'HTTP/1.1 200 OK'
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd>print(response2.headers.as_string())</kbd>     <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(response2.headers.as_string())</kbd>     <span class=u>&#x2460;</span></a>
 <samp>Date: Mon, 01 Jun 2009 03:58:00 GMT
 Server: Apache
 Last-Modified: Sun, 31 May 2009 22:51:11 GMT
@@ -295,9 +295,9 @@ Vary: Accept-Encoding
 Connection: close
 Content-Type: application/xml</samp>
 <samp class=p>>>> </samp><kbd>data2 = response2.read()</kbd>
-<a><samp class=p>>>> </samp><kbd>len(data2)</kbd>                               <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(data2)</kbd>                               <span class=u>&#x2461;</span></a>
 <samp>3070</samp>
-<a><samp class=p>>>> </samp><kbd>data2 == data</kbd>                            <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>data2 == data</kbd>                            <span class=u>&#x2462;</span></a>
 <samp>True</samp></pre>
 <ol>
 <li>The server is still sending the same array of &#8220;smart&#8221; headers: <code>Cache-Control</code> and <code>Expires</code> to allow caching, <code>Last-Modified</code> and <code>ETag</code> to enable &#8220;not-modified&#8221; tracking. Even the <code>Vary: Accept-Encoding</code> header hints that the server would support compression, if only you would ask for it. But you didn&#8217;t.
@@ -315,11 +315,11 @@ Content-Type: application/xml</samp>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
-<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span class=u>&#x2462;</span></a>
 <samp>200</samp>
-<a><samp class=p>>>> </samp><kbd>content[:52]</kbd>                                                                   <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>content[:52]</kbd>                                                                   <span class=u>&#x2463;</span></a>
 <samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content)</kbd>
 <samp>3070</samp></pre>
@@ -331,7 +331,7 @@ Content-Type: application/xml</samp>
 </ol>
 
 <blockquote class=note>
-<p><span>&#x261E;</span>You probably only need one <code>httplib2.Http</code> object. There are valid reasons for creating more than one, but you should only do so if you know why you need them. &#8220;I need to request data from two different <abbr>URL</abbr>s&#8221; is not a valid reason. Re-use the <code>Http</code> object and just call the <code>request()</code> method twice.
+<p><span class=u>&#x261E;</span>You probably only need one <code>httplib2.Http</code> object. There are valid reasons for creating more than one, but you should only do so if you know why you need them. &#8220;I need to request data from two different <abbr>URL</abbr>s&#8221; is not a valid reason. Re-use the <code>Http</code> object and just call the <code>request()</code> method twice.
 </blockquote>
 
 <h3 id=httplib2-caching>How <code>httplib2</code> Handles Caching</h3>
@@ -340,10 +340,10 @@ Content-Type: application/xml</samp>
 
 <pre class=screen>
 # continued from the <a href=#introducing-httplib2>previous example</a>
-<a><samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>response2.status</kbd>                                                                 <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response2.status</kbd>                                                                 <span class=u>&#x2461;</span></a>
 <samp>200</samp>
-<a><samp class=p>>>> </samp><kbd>content2[:52]</kbd>                                                                    <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>content2[:52]</kbd>                                                                    <span class=u>&#x2462;</span></a>
 <samp>b"&lt;?xml version='1.0' encoding='utf-8'?>\r\n&lt;feed xmlns="</samp>
 <samp class=p>>>> </samp><kbd>len(content2)</kbd>
 <samp>3070</samp></pre>
@@ -360,14 +360,14 @@ Content-Type: application/xml</samp>
 # Please exit out of the interactive shell
 # and launch a new one.
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
-<a><samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>                                                        <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                                   <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>                                                        <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>                                                    <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/examples/feed.xml')</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                                   <span class=u>&#x2463;</span></a>
 <samp>3070</samp>
-<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                                                <span class=u>&#x2464;</span></a>
 <samp>200</samp>
-<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                                             <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                                             <span class=u>&#x2465;</span></a>
 <samp>True</samp></pre>
 <ol>
 <li>Let&#8217;s turn on debugging and see <a href=#whats-on-the-wire>what&#8217;s on the wire</a>. This is the <code>httplib2</code> equivalent of turning on debugging in <code>http.client</code>. <code>httplib2</code> will print all the data being sent to the server and some key information being sent back.
@@ -389,8 +389,8 @@ Content-Type: application/xml</samp>
 <pre class=screen>
 # continued from the previous example
 <samp class=p>>>> </samp><kbd>response2, content2 = h.request('http://diveintopython3.org/examples/feed.xml',</kbd>
-<a><samp class=p>... </samp><kbd>    headers={'cache-control':'no-cache'})</kbd>  <span>&#x2460;</span></a>
-<a><samp>connect: (diveintopython3.org, 80)             <span>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd>    headers={'cache-control':'no-cache'})</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp>connect: (diveintopython3.org, 80)             <span class=u>&#x2461;</span></a>
 send: b'GET /examples/feed.xml HTTP/1.1
 Host: diveintopython3.org
 user-agent: Python-httplib2/$Rev: 259 $
@@ -400,9 +400,9 @@ reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp>
 <samp class=p>>>> </samp><kbd>response2.status</kbd>
 <samp>200</samp>
-<a><samp class=p>>>> </samp><kbd>response2.fromcache</kbd>                        <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>response2.fromcache</kbd>                        <span class=u>&#x2462;</span></a>
 <samp>False</samp>
-<a><samp class=p>>>> </samp><kbd>print(dict(response2.items()))</kbd>             <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(dict(response2.items()))</kbd>             <span class=u>&#x2463;</span></a>
 <samp>{'status': '200',
  'content-length': '3070',
  'content-location': 'http://diveintopython3.org/examples/feed.xml',
@@ -434,14 +434,14 @@ reply: 'HTTP/1.1 200 OK'
 <samp class=p>>>> </samp><kbd>import httplib2</kbd>
 <samp class=p>>>> </samp><kbd>httplib2.debuglevel = 1</kbd>
 <samp class=p>>>> </samp><kbd>h = httplib2.Http('.cache')</kbd>
-<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
 reply: 'HTTP/1.1 200 OK'</samp>
-<a><samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>                                 <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>                                 <span class=u>&#x2461;</span></a>
 <samp>{'-content-encoding': 'gzip',
  'accept-ranges': 'bytes',
  'connection': 'close',
@@ -454,7 +454,7 @@ reply: 'HTTP/1.1 200 OK'</samp>
  'server': 'Apache',
  'status': '304',
  'vary': 'Accept-Encoding,User-Agent'}</samp>
-<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span class=u>&#x2462;</span></a>
 <samp>6657</samp></pre>
 <ol>
 <li>Instead of the feed, this time we&#8217;re going to download the site&#8217;s home page, which is <abbr>HTML</abbr>. Since this is the first time you&#8217;lve ever requested this page, <code>httplib2</code> has little to work with, and it sends out a minimum of headers with the request.
@@ -464,22 +464,22 @@ reply: 'HTTP/1.1 200 OK'</samp>
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>response, content = h.request('http://diveintopython3.org/')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
-<a>if-none-match: "7f806d-1a01-9fb97900"                             <span>&#x2461;</span></a>
-<a>if-modified-since: Tue, 02 Jun 2009 02:51:48 GMT                  <span>&#x2462;</span></a>
+<a>if-none-match: "7f806d-1a01-9fb97900"                             <span class=u>&#x2461;</span></a>
+<a>if-modified-since: Tue, 02 Jun 2009 02:51:48 GMT                  <span class=u>&#x2462;</span></a>
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
-<a>reply: 'HTTP/1.1 304 Not Modified'                                <span>&#x2463;</span></a></samp>
-<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                            <span>&#x2464;</span></a>
+<a>reply: 'HTTP/1.1 304 Not Modified'                                <span class=u>&#x2463;</span></a></samp>
+<a><samp class=p>>>> </samp><kbd>response.fromcache</kbd>                                            <span class=u>&#x2464;</span></a>
 <samp>True</samp>
-<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                               <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.status</kbd>                                               <span class=u>&#x2465;</span></a>
 <samp>200</samp>
-<a><samp class=p>>>> </samp><kbd>response.dict['status']</kbd>                                       <span>&#x2466;</span></a>
+<a><samp class=p>>>> </samp><kbd>response.dict['status']</kbd>                                       <span class=u>&#x2466;</span></a>
 <samp>'304'</samp>
-<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span>&#x2467;</span></a>
+<a><samp class=p>>>> </samp><kbd>len(content)</kbd>                                                  <span class=u>&#x2467;</span></a>
 <samp>6657</samp></pre>
 <ol>
 <li>You request the same page again, with the same <code>Http</code> object (and the same local cache).
@@ -501,11 +501,11 @@ user-agent: Python-httplib2/$Rev: 259 $'
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET / HTTP/1.1
 Host: diveintopython3.org
-<a>accept-encoding: deflate, gzip                          <span>&#x2460;</span></a>
+<a>accept-encoding: deflate, gzip                          <span class=u>&#x2460;</span></a>
 user-agent: Python-httplib2/$Rev: 259 $'
 reply: 'HTTP/1.1 200 OK'</samp>
 <samp class=p>>>> </samp><kbd>print(dict(response.items()))</kbd>
-<samp><a>{'-content-encoding': 'gzip',                           <span>&#x2461;</span></a>
+<samp><a>{'-content-encoding': 'gzip',                           <span class=u>&#x2461;</span></a>
  'accept-ranges': 'bytes',
  'connection': 'close',
  'content-length': '6657',
@@ -681,7 +681,8 @@ reply: 'HTTP/1.1 301 Moved Permanently'</samp>
 <li><a href=http://code.google.com/p/doctype/wiki/ArticleHttpCaching>How to control caching with <abbr>HTTP</abbr> headers</a> on Google Doctype
 </ul>
 
-<p class=v><a rel=prev class=todo><span>&#x261C;</span></a> <a rel=next class=todo><span>&#x261E;</span></a>
+<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next class=todo><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>

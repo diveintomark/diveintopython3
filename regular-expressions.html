@@ -12,11 +12,11 @@ body{counter-reset:h1 4}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=root value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#regular-expressions>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#regular-expressions>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
 <h1>Regular Expressions</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> Some people, when confronted with a problem, think &#8220;I know, I&#8217;ll use regular expressions.&#8221;  Now they have two problems. <span>&#x275E;</span><br>&mdash; <a href=http://www.jwz.org/hacks/marginal.html>Jamie Zawinski</a>
+<p><span class=u>&#x275D;</span> Some people, when confronted with a problem, think &#8220;I know, I&#8217;ll use regular expressions.&#8221;  Now they have two problems. <span class=u>&#x275E;</span><br>&mdash; <a href=http://www.jwz.org/hacks/marginal.html>Jamie Zawinski</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -24,7 +24,7 @@ body{counter-reset:h1 4}
 <p>If your goal can be accomplished with string methods, you should use them. They&#8217;re fast and simple and easy to read, and there&#8217;s a lot to be said for fast, simple, readable code. But if you find yourself using a lot of different string functions with <code>if</code> statements to handle special cases, or if you&#8217;re chaining calls to <code>split()</code> and <code>join()</code> to slice-and-dice your strings, you may need to move up to regular expressions.
 <p>Regular expressions are a powerful and (mostly) standardized way of searching, replacing, and parsing text with complex patterns of characters. Although the regular expression syntax is tight and unlike normal code, the result can end up being <em>more</em> readable than a hand-rolled solution that uses a long chain of string functions. There are even ways of embedding comments within regular expressions, so you can include fine-grained documentation within them.
 <blockquote class='note compare perl5'>
-<p><span>&#x261E;</span>If you&#8217;ve used regular expressions in other languages (like Perl 5), Python&#8217;s syntax will be very familiar. Read the summary of the <a href=http://docs.python.org/dev/library/re.html#module-contents><code>re</code> module</a> to get an overview of the available functions and their arguments.
+<p><span class=u>&#x261E;</span>If you&#8217;ve used regular expressions in other languages (like Perl 5), Python&#8217;s syntax will be very familiar. Read the summary of the <a href=http://docs.python.org/dev/library/re.html#module-contents><code>re</code> module</a> to get an overview of the available functions and their arguments.
 </blockquote>
 <p class=a>&#x2042;
 
@@ -32,15 +32,15 @@ body{counter-reset:h1 4}
 <p>This series of examples was inspired by a real-life problem I had in my day job several years ago, when I needed to scrub and standardize street addresses exported from a legacy system before importing them into a newer system. (See, I don&#8217;t just make this stuff up; it&#8217;s actually useful.)  This example shows how I approached the problem.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>s = '100 NORTH MAIN ROAD'</kbd>
-<a><samp class=p>>>> </samp><kbd>s.replace('ROAD', 'RD.')</kbd>                <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.replace('ROAD', 'RD.')</kbd>                <span class=u>&#x2460;</span></a>
 <samp>'100 NORTH MAIN RD.'</samp>
 <samp class=p>>>> </samp><kbd>s = '100 NORTH BROAD ROAD'</kbd>
-<a><samp class=p>>>> </samp><kbd>s.replace('ROAD', 'RD.')</kbd>                <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>s.replace('ROAD', 'RD.')</kbd>                <span class=u>&#x2461;</span></a>
 <samp>'100 NORTH BRD. RD.'</samp>
-<a><samp class=p>>>> </samp><kbd>s[:-4] + s[-4:].replace('ROAD', 'RD.')</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>s[:-4] + s[-4:].replace('ROAD', 'RD.')</kbd>  <span class=u>&#x2462;</span></a>
 <samp>'100 NORTH BROAD RD.'</samp>
-<a><samp class=p>>>> </samp><kbd>import re</kbd>                               <span>&#x2463;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.sub('ROAD$', 'RD.', s)</kbd>               <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>import re</kbd>                               <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('ROAD$', 'RD.', s)</kbd>               <span class=u>&#x2464;</span></a>
 <samp>'100 NORTH BROAD RD.'</samp></pre>
 <ol>
 <li>My goal is to standardize a street address so that <code>'ROAD'</code> is always abbreviated as <code>'RD.'</code>. At first glance, I thought this was simple enough that I could just use the string method <code>replace()</code>. After all, all the data was already uppercase, so case mismatches would not be a problem. And the search string, <code>'ROAD'</code>, was a constant. And in this deceptively simple example, <code>s.replace()</code> does indeed work.
@@ -55,14 +55,14 @@ body{counter-reset:h1 4}
 <samp class=p>>>> </samp><kbd>s = '100 BROAD'</kbd>
 <samp class=p>>>> </samp><kbd>re.sub('ROAD$', 'RD.', s)</kbd>
 <samp>'100 BRD.'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('\\bROAD$', 'RD.', s)</kbd>   <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('\\bROAD$', 'RD.', s)</kbd>   <span class=u>&#x2460;</span></a>
 <samp>'100 BROAD'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD$', 'RD.', s)</kbd>   <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD$', 'RD.', s)</kbd>   <span class=u>&#x2461;</span></a>
 <samp>'100 BROAD'</samp>
 <samp class=p>>>> </samp><kbd>s = '100 BROAD ROAD APT. 3'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD$', 'RD.', s)</kbd>   <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD$', 'RD.', s)</kbd>   <span class=u>&#x2462;</span></a>
 <samp>'100 BROAD ROAD APT. 3'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD\b', 'RD.', s)</kbd>  <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub(r'\bROAD\b', 'RD.', s)</kbd>  <span class=u>&#x2463;</span></a>
 <samp>'100 BROAD RD. APT 3'</samp></pre>
 <ol>
 <li>What I <em>really</em> wanted was to match <code>'ROAD'</code> when it was at the end of the string <em>and</em> it was its own word (and not a part of some larger word). To express this in a regular expression, you use <code>\b</code>, which means &#8220;a word boundary must occur right here.&#8221; In Python, this is complicated by the fact that the <code>'\'</code> character in a string must itself be escaped. This is sometimes referred to as the backslash plague, and it is one reason why regular expressions are easier in Perl than in Python. On the down side, Perl mixes regular expressions with other syntax, so if you have a bug, it may be hard to tell whether it&#8217;s a bug in syntax or a bug in your regular expression.
@@ -96,15 +96,15 @@ body{counter-reset:h1 4}
 <p>What would it take to validate that an arbitrary string is a valid Roman numeral?  Let&#8217;s take it one digit at a time. Since Roman numerals are always written highest to lowest, let&#8217;s start with the highest: the thousands place. For numbers 1000 and higher, the thousands are represented by a series of <code>M</code> characters.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>pattern = '^M?M?M?$'</kbd>        <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>pattern = '^M?M?M?$'</kbd>        <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span class=u>&#x2461;</span></a>
 <samp>&lt;SRE_Match object at 0106FB58></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2462;</span></a>
 <samp>&lt;SRE_Match object at 0106C290></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2463;</span></a>
 <samp>&lt;SRE_Match object at 0106AA38></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span>&#x2464;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, '')</kbd>      <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, '')</kbd>      <span class=u>&#x2465;</span></a>
 <samp>&lt;SRE_Match object at 0106F4A8></samp></pre>
 <ol>
 <li>This pattern has three parts. <code>^</code> matches what follows only at the beginning of the string. If this were not specified, the pattern would match no matter where the <code>M</code> characters were, which is not what you want. You want to make sure that the <code>M</code> characters, if they&#8217;re there, are at the beginning of the string. <code>M?</code> optionally matches a single <code>M</code> character. Since this is repeated three times, you&#8217;re matching anywhere from zero to three <code>M</code> characters in a row. And <code>$</code> matches the end of the string. When combined with the <code>^</code> character at the beginning, this means that the pattern must match the entire string, with no other characters before or after the <code>M</code> characters.
@@ -142,15 +142,15 @@ body{counter-reset:h1 4}
 <p>This example shows how to validate the hundreds place of a Roman numeral.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)$'</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCM')</kbd>             <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)$'</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCM')</kbd>             <span class=u>&#x2461;</span></a>
 <samp>&lt;SRE_Match object at 01070390></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MD')</kbd>              <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MD')</kbd>              <span class=u>&#x2462;</span></a>
 <samp>&lt;SRE_Match object at 01073A50></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMCCC')</kbd>          <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMCCC')</kbd>          <span class=u>&#x2463;</span></a>
 <samp>&lt;SRE_Match object at 010748A8></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMC')</kbd>            <span>&#x2464;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, '')</kbd>                <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMC')</kbd>            <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, '')</kbd>                <span class=u>&#x2465;</span></a>
 <samp>&lt;SRE_Match object at 01071D98></samp></pre>
 <ol>
 <li>This pattern starts out the same as the previous one, checking for the beginning of the string (<code>^</code>), then the thousands place (<code>M?M?M?</code>). Then it has the new part, in parentheses, which defines a set of three mutually exclusive patterns, separated by vertical bars: <code>CM</code>, <code>CD</code>, and <code>D?C?C?C?</code> (which is an optional <code>D</code> followed by zero to three optional <code>C</code> characters). The regular expression parser checks for each of these patterns in order (from left to right), takes the first one that matches, and ignores the rest.
@@ -169,15 +169,15 @@ body{counter-reset:h1 4}
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?$'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span class=u>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?$'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2461;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?$'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2462;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This matches the start of the string, and then the first optional <code>M</code>, but not the second and third <code>M</code> (but that&#8217;s okay because they&#8217;re optional), and then the end of the string.
@@ -186,14 +186,14 @@ body{counter-reset:h1 4}
 <li>This matches the start of the string, and then all three optional <code>M</code>, but then does not match the the end of the string (because there is still one unmatched <code>M</code>), so the pattern does not match and returns <code>None</code>.
 </ol>
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>pattern = '^M{0,3}$'</kbd>        <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>pattern = '^M{0,3}$'</kbd>        <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>     <span class=u>&#x2461;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2462;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2463;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEDA8></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This pattern says: &#8220;Match the start of the string, then anywhere from zero to three <code>M</code> characters, then the end of the string.&#8221;  The 0 and 3 can be any numbers; if you want to match at least one but no more than three <code>M</code> characters, you could say <code>M{1,3}</code>.
@@ -206,15 +206,15 @@ body{counter-reset:h1 4}
 <p>Now let&#8217;s expand the Roman numeral regular expression to cover the tens and ones place. This example shows the check for tens.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMXL')</kbd>     <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMXL')</kbd>     <span class=u>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCML')</kbd>      <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCML')</kbd>      <span class=u>&#x2461;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLX')</kbd>     <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLX')</kbd>     <span class=u>&#x2462;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXX')</kbd>   <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXX')</kbd>   <span class=u>&#x2463;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXXX')</kbd>  <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXXX')</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This matches the start of the string, then the first optional <code>M</code>, then <code>CM</code>, then <code>XL</code>, then the end of the string. Remember, the <code>(A|B|C)</code> syntax means &#8220;match exactly one of A, B, or C&#8221;. You match <code>XL</code>, so you ignore the <code>XC</code> and <code>L?X?X?X?</code> choices, and then move on to the end of the string. <code>MCML</code> is the Roman numeral representation of <code>1940</code>.
@@ -230,13 +230,13 @@ body{counter-reset:h1 4}
 </pre><p>So what does that look like using this alternate <code>{n,m}</code> syntax?  This example shows the new syntax.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>pattern = '^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$'</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MDLV')</kbd>              <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MDLV')</kbd>              <span class=u>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMDCLXVI')</kbd>          <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMDCLXVI')</kbd>          <span class=u>&#x2461;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMDCCCLXXXVIII')</kbd>   <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMDCCCLXXXVIII')</kbd>   <span class=u>&#x2462;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'I')</kbd>                 <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'I')</kbd>                 <span class=u>&#x2463;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp></pre>
 <ol>
 <li>This matches the start of the string, then one of a possible three <code>M</code> characters, then <code>D?C{0,3}</code>. Of that, it matches the optional <code>D</code> and zero of three possible <code>C</code> characters. Moving on, it matches <code>L?X{0,3}</code> by matching the optional <code>L</code> and zero of three possible <code>X</code> characters. Then it matches <code>V?I{0,3}</code> by matching the optional <code>V</code> and zero of three possible <code>I</code> characters, and finally the end of the string. <code>MDLV</code> is the Roman numeral representation of <code>1555</code>.
@@ -268,13 +268,13 @@ body{counter-reset:h1 4}
                         #        or 5-8 (V, followed by 0 to 3 I's)
     $                   # end of string
     '''</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span class=u>&#x2460;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXXIX', re.VERBOSE)</kbd>         <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MCMLXXXIX', re.VERBOSE)</kbd>         <span class=u>&#x2461;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMDCCCLXXXVIII', re.VERBOSE)</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'MMMDCCCLXXXVIII', re.VERBOSE)</kbd>  <span class=u>&#x2462;</span></a>
 <samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
-<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>                             <span>&#x2463;</span></a></pre>
+<a><samp class=p>>>> </samp><kbd>re.search(pattern, 'M')</kbd>                             <span class=u>&#x2463;</span></a></pre>
 <ol>
 <li>The most important thing to remember when using verbose regular expressions is that you need to pass an extra argument when working with them: <code>re.VERBOSE</code> is a constant defined in the <code>re</code> module that signals that the pattern should be treated as a verbose regular expression. As you can see, this pattern has quite a bit of whitespace (all of which is ignored), and several comments (all of which are ignored). Once you ignore the whitespace and the comments, this is exactly the same regular expression as you saw in the previous section, but it&#8217;s a lot more readable.
 <li>This matches the start of the string, then one of a possible three <code>M</code>, then <code>CM</code>, then <code>L</code> and three of a possible three <code>X</code>, then <code>IX</code>, then the end of the string.
@@ -302,10 +302,10 @@ body{counter-reset:h1 4}
 <p>Quite a variety! In each of these cases, I need to know that the area code was <code>800</code>, the trunk was <code>555</code>, and the rest of the phone number was <code>1212</code>. For those with an extension, I need to know that the extension was <code>1234</code>.
 <p>Let&#8217;s work through developing a solution for phone number parsing. This example shows the first step.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>             <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>             <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234')</kbd>                 <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234')</kbd>                 <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>Always read regular expressions from left to right. This one matches the beginning of the string, and then <code>(\d{3})</code>. What&#8217;s <code>\d{3}</code>?  Well, the <code>{3}</code> means &#8220;match exactly three numeric digits&#8221;; it&#8217;s a variation on the <a href=#nmsyntax><code>{n,m} syntax</code></a> you saw earlier. <code>\d</code> means &#8220;any numeric digit&#8221; (<code>0</code> through <code>9</code>). Putting it in parentheses means &#8220;match exactly three numeric digits, <em>and then remember them as a group that I can ask for later</em>&#8221;. Then match a literal hyphen. Then match another group of exactly three digits. Then another literal hyphen. Then another group of exactly four digits. Then match the end of the string.
@@ -313,12 +313,12 @@ body{counter-reset:h1 4}
 <li>This regular expression is not the final answer, because it doesn&#8217;t handle a phone number with an extension on the end. For that, you&#8217;ll need to expand the regular expression.
 </ol>
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})-(\d{3})-(\d{4})-(\d+)$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234').groups()</kbd>              <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})-(\d{3})-(\d{4})-(\d+)$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234').groups()</kbd>              <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800 555 1212 1234')</kbd>                       <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800 555 1212 1234')</kbd>                       <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                            <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                            <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This regular expression is almost identical to the previous one. Just as before, you match the beginning of the string, then a remembered group of three digits, then a hyphen, then a remembered group of three digits, then a hyphen, then a remembered group of four digits. What&#8217;s new is that you then match another hyphen, and a remembered group of one or more digits, then the end of the string.
@@ -328,14 +328,14 @@ body{counter-reset:h1 4}
 </ol>
 <p>The next example shows the regular expression to handle separators between the different parts of the phone number.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})\D+(\d{3})\D+(\d{4})\D+(\d+)$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800 555 1212 1234').groups()</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})\D+(\d{3})\D+(\d{4})\D+(\d+)$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800 555 1212 1234').groups()</kbd>  <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234').groups()</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212-1234').groups()</kbd>  <span class=u>&#x2462;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234')</kbd>              <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234')</kbd>              <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>Hang on to your hat. You&#8217;re matching the beginning of the string, then a group of three digits, then <code>\D+</code>. What the heck is that?  Well, <code>\D</code> matches any character <em>except</em> a numeric digit, and <code>+</code> means &#8220;1 or more&#8221;. So <code>\D+</code> matches one or more characters that are not digits. This is what you&#8217;re using instead of a literal hyphen, to try to match different separators.
@@ -346,14 +346,14 @@ body{counter-reset:h1 4}
 </ol>
 <p>The next example shows the regular expression for handling phone numbers <em>without</em> separators.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234').groups()</kbd>      <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234').groups()</kbd>      <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800.555.1212 x1234').groups()</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800.555.1212 x1234').groups()</kbd>  <span class=u>&#x2462;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>        <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>        <span class=u>&#x2463;</span></a>
 <samp>('800', '555', '1212', '')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('(800)5551212 x1234')</kbd>           <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('(800)5551212 x1234')</kbd>           <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>The only change you&#8217;ve made since that last step is changing all the <code>+</code> to <code>*</code>. Instead of <code>\D+</code> between the parts of the phone number, you now match on <code>\D*</code>. Remember that <code>+</code> means &#8220;1 or more&#8221;?  Well, <code>*</code> means &#8220;zero or more&#8221;. So now you should be able to parse phone numbers even when there is no separator character at all.
@@ -364,12 +364,12 @@ body{counter-reset:h1 4}
 </ol>
 <p>The next example shows how to handle leading characters in phone numbers.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^\D*(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('(800)5551212 ext. 1234').groups()</kbd>                  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'^\D*(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('(800)5551212 ext. 1234').groups()</kbd>                  <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>                            <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212').groups()</kbd>                            <span class=u>&#x2462;</span></a>
 <samp>('800', '555', '1212', '')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234')</kbd>                      <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234')</kbd>                      <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This is the same as in the previous example, except now you&#8217;re matching <code>\D*</code>, zero or more non-numeric characters, before the first remembered group (the area code). Notice that you&#8217;re not remembering these non-numeric characters (they&#8217;re not in parentheses). If you find them, you&#8217;ll just skip over them and then start remembering the area code whenever you get to it.
@@ -379,12 +379,12 @@ body{counter-reset:h1 4}
 </ol>
 <p>Let&#8217;s back up for a second. So far the regular expressions have all matched from the beginning of the string. But now you see that there may be an indeterminate amount of stuff at the beginning of the string that you want to ignore. Rather than trying to match it all just so you can skip over it, let&#8217;s take a different approach: don&#8217;t explicitly match the beginning of the string at all. This approach is shown in the next example.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234').groups()</kbd>         <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern = re.compile(r'(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234').groups()</kbd>         <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                                 <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                                 <span class=u>&#x2462;</span></a>
 <samp>('800', '555', '1212', '')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234')</kbd>                               <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('80055512121234')</kbd>                               <span class=u>&#x2463;</span></a>
 <samp>('800', '555', '1212', '1234')</samp></pre>
 <ol>
 <li>Note the lack of <code>^</code> in this regular expression. You are not matching the beginning of the string anymore. There&#8217;s nothing that says you need to match the entire input with your regular expression. The regular expression engine will do the hard work of figuring out where the input string starts to match, and go from there.
@@ -406,9 +406,9 @@ body{counter-reset:h1 4}
     (\d*)       # extension is optional and can be any number of digits
     $           # end of string
     ''', re.VERBOSE)</kbd>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234').groups()</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('work 1-(800) 555.1212 #1234').groups()</kbd>  <span class=u>&#x2460;</span></a>
 <samp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                          <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>phonePattern.search('800-555-1212')</kbd>                          <span class=u>&#x2461;</span></a>
 <samp>('800', '555', '1212', '')</samp></pre>
 <ol>
 <li>Other than being spread out over multiple lines, this is exactly the same regular expression as the last step, so it&#8217;s no surprise that it parses the same inputs.
@@ -433,7 +433,8 @@ body{counter-reset:h1 4}
 <li><code>(x)</code> in general is a <em>remembered group</em>. You can get the value of what matched by using the <code>groups()</code> method of the object returned by <code>re.search</code>.
 </ul>
 <p>Regular expressions are extremely powerful, but they are not the correct solution for every problem. You should learn enough about them to know when they are appropriate, when they will solve your problems, and when they will cause more problems than they solve.
-<p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Generators&#8221;'><span>&#x261E;</span></a>
+<p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span class=u>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Generators&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>

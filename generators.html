@@ -12,11 +12,11 @@ body{counter-reset:h1 5}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span>&#8227;</span> <a href=table-of-contents.html#generators>Dive Into Python 3</a> <span>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#generators>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
 <h1>Generators</h1>
 <blockquote class=q>
-<p><span>&#x275D;</span> My spelling is Wobbly. It&#8217;s good spelling but it Wobbles, and the letters get in the wrong places. <span>&#x275E;</span><br>&mdash; Winnie-the-Pooh
+<p><span class=u>&#x275D;</span> My spelling is Wobbly. It&#8217;s good spelling but it Wobbles, and the letters get in the wrong places. <span class=u>&#x275E;</span><br>&mdash; Winnie-the-Pooh
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -38,11 +38,11 @@ body{counter-reset:h1 5}
 <h2 id=i-know>I Know, Let&#8217;s Use Regular Expressions!</h2>
 <p>So you&#8217;re looking at words, which, at least in English, means you&#8217;re looking at strings of characters. You have rules that say you need to find different combinations of characters, then do different things to them. This sounds like a job for regular expressions!
 <p class=d>[<a href=examples/plural1.py>download <code>plural1.py</code></a>]
-<pre><code>import re
+<pre><code class=pp>import re
 
 def plural(noun):          
-<a>    if re.search('[sxz]$', noun):             <span>&#x2460;</span></a>
-<a>        return re.sub('$', 'es', noun)        <span>&#x2461;</span></a>
+<a>    if re.search('[sxz]$', noun):             <span class=u>&#x2460;</span></a>
+<a>        return re.sub('$', 'es', noun)        <span class=u>&#x2461;</span></a>
     elif re.search('[^aeioudgkprt]h$', noun):
         return re.sub('$', 'es', noun)       
     elif re.search('[^aeiou]y$', noun):      
@@ -57,13 +57,13 @@ def plural(noun):
 <p>Let&#8217;s look at regular expression substitutions in more detail.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search('[abc]', 'Mark')</kbd>    <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search('[abc]', 'Mark')</kbd>    <span class=u>&#x2460;</span></a>
 &lt;_sre.SRE_Match object at 0x001C1FA8>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'Mark')</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'Mark')</kbd>  <span class=u>&#x2461;</span></a>
 <samp>'Mork'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'rock')</kbd>  <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'rock')</kbd>  <span class=u>&#x2462;</span></a>
 <samp>'rook'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'caps')</kbd>  <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'caps')</kbd>  <span class=u>&#x2463;</span></a>
 <samp>'oops'</samp></pre>
 <ol>
 <li>Does the string <code>Mark</code> contain <code>a</code>, <code>b</code>, or <code>c</code>? Yes, it contains <code>a</code>.
@@ -74,11 +74,11 @@ def plural(noun):
 
 <p>And now, back to the <code>plural()</code> function&hellip;
 
-<pre><code>def plural(noun):          
+<pre><code class=pp>def plural(noun):          
     if re.search('[sxz]$', noun):            
-<a>        return re.sub('$', 'es', noun)         <span>&#x2460;</span></a>
-<a>    elif re.search('[^aeioudgkprt]h$', noun):  <span>&#x2461;</span></a>
-<a>        return re.sub('$', 'es', noun)         <span>&#x2462;</span></a>
+<a>        return re.sub('$', 'es', noun)         <span class=u>&#x2460;</span></a>
+<a>    elif re.search('[^aeioudgkprt]h$', noun):  <span class=u>&#x2461;</span></a>
+<a>        return re.sub('$', 'es', noun)         <span class=u>&#x2462;</span></a>
     elif re.search('[^aeiou]y$', noun):      
         return re.sub('y$', 'ies', noun)     
     else:
@@ -93,13 +93,13 @@ def plural(noun):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'vacancy')</kbd>  <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'vacancy')</kbd>  <span class=u>&#x2460;</span></a>
 &lt;_sre.SRE_Match object at 0x001C1FA8>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'boy')</kbd>      <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'boy')</kbd>      <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp>
 <samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'day')</kbd>
 <samp class=p>>>> </samp>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'pita')</kbd>     <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'pita')</kbd>     <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li><code>vacancy</code> matches this regular expression, because it ends in <code>cy</code>, and <code>c</code> is not <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, or <code>u</code>.
@@ -107,11 +107,11 @@ def plural(noun):
 <li><code>pita</code> does not match, because it does not end in <code>y</code>.
 </ol>
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>re.sub('y$', 'ies', 'vacancy')</kbd>               <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('y$', 'ies', 'vacancy')</kbd>               <span class=u>&#x2460;</span></a>
 <samp>'vacancies'</samp>
 <samp class=p>>>> </samp><kbd>re.sub('y$', 'ies', 'agency')</kbd>
 <samp>'agencies'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('([^aeiou])y$', r'\1ies', 'vacancy')</kbd>  <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>re.sub('([^aeiou])y$', r'\1ies', 'vacancy')</kbd>  <span class=u>&#x2461;</span></a>
 <samp>'vacancies'</samp></pre>
 <ol>
 <li>This regular expression turns <code>vacancy</code> into <code>vacancies</code> and <code>agency</code> into <code>agencies</code>, which is what you wanted. Note that it would also turn <code>boy</code> into <code>boies</code>, but that will never happen in the function because you did that <code>re.search</code> first to find out whether you should do this <code>re.sub</code>.
@@ -126,7 +126,7 @@ def plural(noun):
 <p>Now you&#8217;re going to add a level of abstraction. You started by defining a list of rules: if this, do that, otherwise go to the next rule. Let&#8217;s temporarily complicate part of the program so you can simplify another part.
 
 <p class=d>[<a href=examples/plural2.py>download <code>plural2.py</code></a>]
-<pre><code>import re
+<pre><code class=pp>import re
 
 def match_sxz(noun):
     return re.search('[sxz]$', noun)
@@ -140,10 +140,10 @@ def match_h(noun):
 def apply_h(noun):
     return re.sub('$', 'es', noun)
 
-<a>def match_y(noun):                             <span>&#x2460;</span></a>
+<a>def match_y(noun):                             <span class=u>&#x2460;</span></a>
     return re.search('[^aeiou]y$', noun)
         
-<a>def apply_y(noun):                             <span>&#x2461;</span></a>
+<a>def apply_y(noun):                             <span class=u>&#x2461;</span></a>
     return re.sub('y$', 'ies', noun)
 
 def match_default(noun):
@@ -152,14 +152,14 @@ def match_default(noun):
 def apply_default(noun):
     return noun + 's'
 
-<a>rules = [[match_sxz, apply_sxz],               <span>&#x2462;</span></a>
+<a>rules = [[match_sxz, apply_sxz],               <span class=u>&#x2462;</span></a>
          [match_h, apply_h],
          [match_y, apply_y],
          [match_default, apply_default]
          ]
 
 def plural(noun):           
-<a>    for matches_rule, apply_rule in rules:       <span>&#x2463;</span></a>
+<a>    for matches_rule, apply_rule in rules:       <span class=u>&#x2463;</span></a>
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
@@ -174,7 +174,7 @@ def plural(noun):
 
 <p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
 
-<pre><code>
+<pre><code class=pp>
 def plural(noun):
     if match_sxz(noun):
         return apply_sxz(noun)
@@ -206,14 +206,14 @@ def plural(noun):
 <p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> list and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
 
 <p class=d>[<a href=examples/plural3.py>download <code>plural3.py</code></a>]
-<pre><code>import re
+<pre><code class=pp>import re
 
 def build_match_and_apply_functions(pattern, search, replace):
-<a>    def matches_rule(word):                                     <span>&#x2460;</span></a>
+<a>    def matches_rule(word):                                     <span class=u>&#x2460;</span></a>
         return re.search(pattern, word)
-<a>    def apply_rule(word):                                       <span>&#x2461;</span></a>
+<a>    def apply_rule(word):                                       <span class=u>&#x2461;</span></a>
         return re.sub(search, replace, word)
-<a>    return [matches_rule, apply_rule]                           <span>&#x2462;</span></a></code></pre>
+<a>    return [matches_rule, apply_rule]                           <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li><code>build_match_and_apply_functions()</code> is a function that builds other functions dynamically. It takes <var>pattern</var>, <var>search</var> and <var>replace</var>, then defines a <code>matches_rule()</code> function which calls <code>re.search()</code> with the <var>pattern</var> that was passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>matches_rule()</code> function you&#8217;re building. Whoa.
 <li>Building the apply function works the same way. The apply function is a function that takes one parameter, and calls <code>re.sub()</code> with the <var>search</var> and <var>replace</var> parameters that were passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>apply_rule()</code> function you&#8217;re building. This technique of using the values of outside parameters within a dynamic function is called <em>closures</em>. You&#8217;re essentially defining constants within the apply function you&#8217;re building: it takes one parameter (<var>word</var>), but it then acts on that plus two other values (<var>search</var> and <var>replace</var>) which were set when you defined the apply function.
@@ -222,15 +222,14 @@ def build_match_and_apply_functions(pattern, search, replace):
 
 <p>If this is incredibly confusing (and it should be, this is weird stuff), it may become clearer when you see how to use it.
 
-<pre><code>
-<a>patterns = \                                                        <span>&#x2460;</span></a>
+<pre><code class=pp><a>patterns = \                                                        <span class=u>&#x2460;</span></a>
   [
     ['[sxz]$',           '$',  'es'],
     ['[^aeioudgkprt]h$', '$',  'es'],
     ['(qu|[^aeiou])y$',  'y$', 'ies'],
     ['$',                '$',  's']
   ]
-<a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span>&#x2461;</span></a>
+<a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2461;</span></a>
          for (pattern, search, replace) in patterns]</code></pre>
 <ol>
 <li>Our pluralization rules are now defined as a list of lists of strings (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
@@ -239,8 +238,8 @@ def build_match_and_apply_functions(pattern, search, replace):
 
 <p>Rounding out this version of the script is the main entry point, the <code>plural()</code> function.
 
-<pre><code>def plural(noun):
-<a>    for matches_rule, apply_rule in rules:  <span>&#x2460;</span></a>
+<pre><code class=pp>def plural(noun):
+<a>    for matches_rule, apply_rule in rules:  <span class=u>&#x2460;</span></a>
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
@@ -256,7 +255,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 <p>First, let&#8217;s create a text file that contains the rules you want. No fancy data structures, just whitespace-delimited strings in three columns. Let&#8217;s call it <code>plural4-rules.txt</code>.
 
 <p class=d>[<a href=examples/plural4-rules.txt>download <code>plural4-rules.txt</code></a>]
-<pre><code>[sxz]$               $    es
+<pre><code class=pp>[sxz]$               $    es
 [^aeioudgkprt]h$     $    es
 [^aeiou]y$          y$    ies
 $                    $    s</code></pre>
@@ -266,9 +265,9 @@ $                    $    s</code></pre>
 <p>[FIXME: now that this chapter comes before the I/O chapter, need to at least mention what open() does]
 <p>[FIXME: try/finally -> with]
 <p class=d>[<a href=examples/plural4.py>download <code>plural4.py</code></a>]
-<pre><code>import re
+<pre><code class=pp>import re
 
-<a>def build_match_and_apply_functions(pattern, search, replace):  <span>&#x2460;</span></a>
+<a>def build_match_and_apply_functions(pattern, search, replace):  <span class=u>&#x2460;</span></a>
     def matches_rule(word):
         return re.search(pattern, word)
     def apply_rule(word):
@@ -276,14 +275,14 @@ $                    $    s</code></pre>
     return [matches_rule, apply_rule]
 
 rules = []
-<a>pattern_file = open('plural4-rules.txt')                        <span>&#x2461;</span></a>
+<a>pattern_file = open('plural4-rules.txt')                        <span class=u>&#x2461;</span></a>
 try:
-<a>    for line in pattern_file:                                   <span>&#x2462;</span></a>
-<a>        pattern, search, replace = line.split(None, 3)          <span>&#x2463;</span></a>
-<a>        rules.append(build_match_and_apply_functions(           <span>&#x2464;</span></a>
+<a>    for line in pattern_file:                                   <span class=u>&#x2462;</span></a>
+<a>        pattern, search, replace = line.split(None, 3)          <span class=u>&#x2463;</span></a>
+<a>        rules.append(build_match_and_apply_functions(           <span class=u>&#x2464;</span></a>
                 pattern, search, replace))
 finally:
-<a>    pattern_file.close()                                        <span>&#x2465;</span></a></code></pre>
+<a>    pattern_file.close()                                        <span class=u>&#x2465;</span></a></code></pre>
 <ol>
 <li>The <code>build_match_and_apply_functions()</code> function has not changed. You&#8217;re still using closures to build two functions dynamically that use variables defined in the outer function.
 <li>Open the file that contains the pattern strings.
@@ -301,7 +300,7 @@ finally:
 <p>Wouldn&#8217;t it be grand to have a generic <code>plural()</code> function that parses the rules file? Get rules, check for a match, apply appropriate transformation, go to next rule. That&#8217;s all the <code>plural()</code> function has to do, and that&#8217;s all the <code>plural()</code> function should do.
 
 <p class=d>[<a href=examples/plural5.py>download <code>plural5.py</code></a>]
-<pre><code>def rules():
+<pre><code class=pp>def rules():
     for line in open('plural5-rules.txt'):
         pattern, search, replace = line.split(None, 3)
         yield build_match_and_apply_functions(pattern, search, replace)
@@ -317,20 +316,20 @@ def plural(noun):
 <samp class=p>>>> </samp><kbd>def make_counter(x):</kbd>
 <samp class=p>... </samp><kbd>    print('entering make_counter')</kbd>
 <samp class=p>... </samp><kbd>    while True:</kbd>
-<a><samp class=p>... </samp><kbd>        yield x</kbd>                    <span>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd>        yield x</kbd>                    <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp><kbd>        print('incrementing x')</kbd>
 <samp class=p>... </samp><kbd>        x = x + 1</kbd>
 <samp class=p>... </samp>
-<a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>          <span>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>counter</kbd>                            <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>          <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>counter</kbd>                            <span class=u>&#x2462;</span></a>
 &lt;generator object at 0x001C9C10>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2463;</span></a>
 <samp>entering make_counter
 2</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2464;</span></a>
 <samp>incrementing x
 3</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2465;</span></a>
 <samp>incrementing x
 4</samp></pre>
 <ol>
@@ -347,11 +346,11 @@ def plural(noun):
 <h3 id=a-fibonacci-generator>A Fibonacci Generator</h3>
 
 <p class=d>[<a href=examples/fibonacci.py>download <code>fibonacci.py</code></a>]
-<pre><code>def fib(max):
-<a>    a, b = 0, 1          <span>&#x2460;</span></a>
+<pre><code class=pp>def fib(max):
+<a>    a, b = 0, 1          <span class=u>&#x2460;</span></a>
     while a &lt; max:
-<a>        yield a          <span>&#x2461;</span></a>
-<a>        a, b = b, a + b  <span>&#x2462;</span></a></code></pre>
+<a>        yield a          <span class=u>&#x2461;</span></a>
+<a>        a, b = b, a + b  <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>The Fibonacci sequence is a sequence of numbers where each number is the sum of the two numbers before it. It starts with <code>0</code> and <code>1</code>, goes up slowly at first, then more and more rapidly. To start the sequence, you need two variables: <var>a</var> starts at <code>0</code>, and <var>b</var> starts at <code>1</code>.
 <li><var>a</var> is the current number in the sequence, so yield it.
@@ -364,8 +363,8 @@ def plural(noun):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>from fibonacci import fib</kbd>
-<a><samp class=p>>>> </samp><kbd>for n in fib(1000):</kbd>  <span>&#x2460;</span></a>
-<a><samp class=p>... </samp><kbd>    print(n, end=' ')</kbd>    <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>for n in fib(1000):</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd>    print(n, end=' ')</kbd>    <span class=u>&#x2461;</span></a>
 <samp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
 <ol>
 <li>You can use a generator like <code>fib()</code> in a <code>for</code> loop directly. The <code>for</code> loop will automatically call the <code>next()</code> function to get values from the <code>fib()</code> generator and assign them to the <code>for</code> loop index variable (<var>n</var>).
@@ -376,13 +375,13 @@ def plural(noun):
 
 <p>Let&#8217;s go back to <code>plural5.py</code> and see how this version of the <code>plural()</code> function works.
 
-<pre><code>def rules():
+<pre><code class=pp>def rules():
     for line in open('plural5-rules.txt'):
-<a>        pattern, search, replace = line.split(None, 3)                   <span>&#x2461;</span></a>
-<a>        yield build_match_and_apply_functions(pattern, search, replace)  <span>&#x2462;</span></a>
+<a>        pattern, search, replace = line.split(None, 3)                   <span class=u>&#x2461;</span></a>
+<a>        yield build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2462;</span></a>
 
 def plural(noun):
-<a>    for matches_rule, apply_rule in rules():                             <span>&#x2463;</span></a>
+<a>    for matches_rule, apply_rule in rules():                             <span class=u>&#x2463;</span></a>
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
@@ -406,8 +405,9 @@ def plural(noun):
 <li><a href=http://www.python.org/dev/peps/pep-0255/>PEP 255: Simple Generators</a>
 </ul>
 
-<p class=v><a href=regular-expressions.html rel=prev title='back to &#8220;Regular Expressions&#8221;'><span>&#x261C;</span></a> <a href=iterators.html rel=next title='onward to &#8220;Iterators&#8221;'><span>&#x261E;</span></a>
+<p class=v><a href=regular-expressions.html rel=prev title='back to &#8220;Regular Expressions&#8221;'><span class=u>&#x261C;</span></a> <a href=iterators.html rel=next title='onward to &#8220;Iterators&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
 <script src=j/dip3.js></script>
