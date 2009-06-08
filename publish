@@ -40,9 +40,9 @@ sed -i -e "s|<script src=j/jquery.js></script>||g" build/*.html
 sed -i -e "s|<script src=j/dip3.js>|<script src=j/${revision}.js>|g" build/*.html
 
 echo "minimizing CSS"
-java -jar yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
-java -jar yuicompressor-2.4.2.jar build/mobile.css > build/m-$revision.css
-java -jar yuicompressor-2.4.2.jar build/print.css > build/p-$revision.css
+java -jar util/yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css
+java -jar util/yuicompressor-2.4.2.jar build/mobile.css > build/m-$revision.css
+java -jar util/yuicompressor-2.4.2.jar build/print.css > build/p-$revision.css
 sed -i -e "s|;}|}|g" build/$revision.css
 sed -i -e "s|;}|}|g" build/m-$revision.css
 sed -i -e "s|;}|}|g" build/p-$revision.css
