@@ -795,23 +795,23 @@ TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
 <aside>Each item in a string is a string. Each item in a byte array is an integer.</aside>
 <p>This error doesn&#8217;t occur the first time the <code>feed()</code> method gets called; it occurs the <em>second time</em>, after <var>self._mLastChar</var> has been set to the last byte of <var>aBuf</var>. Well, what&#8217;s the problem with that? Getting a single element from a byte array yields an integer, not a byte array. To see the difference, follow me to the interactive shell:
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>aBuf = b'\xEF\xBB\xBF'</kbd>         <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>len(aBuf)</kbd>
-<samp>3</samp>
-<samp class=p>>>> </samp><kbd>mLastChar = aBuf[-1]</kbd>
-<a><samp class=p>>>> </samp><kbd>mLastChar</kbd>                      <span class=u>&#x2461;</span></a>
-<samp>191</samp>
-<a><samp class=p>>>> </samp><kbd>type(mLastChar)</kbd>                <span class=u>&#x2462;</span></a>
-<samp>&lt;class 'int'></samp>
-<a><samp class=p>>>> </samp><kbd>mLastChar + aBuf</kbd>               <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>aBuf = b'\xEF\xBB\xBF'</kbd>         <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>len(aBuf)</kbd>
+<samp class=pp>3</samp>
+<samp class=p>>>> </samp><kbd class=pp>mLastChar = aBuf[-1]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar</kbd>                      <span class=u>&#x2461;</span></a>
+<samp class=pp>191</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(mLastChar)</kbd>                <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'int'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar + aBuf</kbd>               <span class=u>&#x2463;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp>
-<a><samp class=p>>>> </samp><kbd>mLastChar = aBuf[-1:]</kbd>          <span class=u>&#x2464;</span></a>
-<samp class=p>>>> </samp><kbd>mLastChar</kbd>
-<samp>b'\xbf'</samp>
-<a><samp class=p>>>> </samp><kbd>mLastChar + aBuf</kbd>               <span class=u>&#x2465;</span></a>
-<samp>b'\xbf\xef\xbb\xbf'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar = aBuf[-1:]</kbd>          <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>mLastChar</kbd>
+<samp class=pp>b'\xbf'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar + aBuf</kbd>               <span class=u>&#x2465;</span></a>
+<samp class=pp>b'\xbf\xef\xbb\xbf'</samp></pre>
 <ol>
 <li>Define a byte array of length 3.
 <li>The last element of the byte array is 191.
@@ -901,7 +901,7 @@ def feed(self, aBuf):
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
 <samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
 tests\Big5\0804.blogspot.com.xml</samp>
-<samp>Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "test.py", line 10, in &lt;module>
     u.feed(line)
   File "C:\home\chardet\chardet\universaldetector.py", line 116, in feed

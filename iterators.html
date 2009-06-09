@@ -95,14 +95,14 @@ body{counter-reset:h1 6}
 
 <p>Instantiating classes in Python is straightforward. To instantiate a class, simply call the class as if it were a function, passing the arguments that the <code>__init__()</code> method requires. The return value will be the newly created object.
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import fibonacci2</kbd>
-<a><samp class=p>>>> </samp><kbd>fib = fibonacci2.Fib(100)</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>fib</kbd>                        <span class=u>&#x2461;</span></a>
-<samp>&lt;fibonacci2.Fib object at 0x00DB8810></samp>
-<a><samp class=p>>>> </samp><kbd>fib.__class__</kbd>              <span class=u>&#x2462;</span></a>
-<samp>&lt;class 'fibonacci2.Fib'></samp>
-<a><samp class=p>>>> </samp><kbd>fib.__doc__</kbd>                <span class=u>&#x2463;</span></a>
-<samp>'iterator that yields numbers in the Fibonacci sequence'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import fibonacci2</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>fib = fibonacci2.Fib(100)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>fib</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;fibonacci2.Fib object at 0x00DB8810></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fib.__class__</kbd>              <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'fibonacci2.Fib'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fib.__doc__</kbd>                <span class=u>&#x2463;</span></a>
+<samp class=pp>'iterator that yields numbers in the Fibonacci sequence'</samp></pre>
 <ol>
 <li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>&#8217;s <code>__init__()</code> method.
 <li><var>fib</var> is now an instance of the <code>Fib</code> class.
@@ -144,13 +144,13 @@ body{counter-reset:h1 6}
 <p>Instance variables are specific to one instance of a class. For example, if you create two <code>Fib</code> instances with different maximum values, they will each remember their own values.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import fibonacci2</kbd>
-<samp class=p>>>> </samp><kbd>fib1 = fibonacci2.Fib(100)</kbd>
-<samp class=p>>>> </samp><kbd>fib2 = fibonacci2.Fib(200)</kbd>
-<samp class=p>>>> </samp><kbd>fib1.max</kbd>
-<samp>100</samp>
-<samp class=p>>>> </samp><kbd>fib2.max</kbd>
-<samp>200</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import fibonacci2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib1 = fibonacci2.Fib(100)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib2 = fibonacci2.Fib(200)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib1.max</kbd>
+<samp class=pp>100</samp>
+<samp class=p>>>> </samp><kbd class=pp>fib2.max</kbd>
+<samp class=pp>200</samp></pre>
 
 <p class=a>&#x2042;
 
@@ -185,10 +185,10 @@ body{counter-reset:h1 6}
 <p>Thoroughly confused yet? Excellent. Let&#8217;s see how to call this iterator:
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from fibonacci2 import Fib</kbd>
-<samp class=p>>>> </samp><kbd>for n in Fib(1000):</kbd>
-<samp class=p>... </samp><kbd>    print(n, end=' ')</kbd>
-<samp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>from fibonacci2 import Fib</kbd>
+<samp class=p>>>> </samp><kbd class=pp>for n in Fib(1000):</kbd>
+<samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>
+<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
 
 <p>Why, it&#8217;s exactly the same! Byte for byte identical to how you called <a href=generators.html#a-fibonacci-generator>Fibonacci-as-a-generator</a> (modulo one capital letter). But how?
 
@@ -260,20 +260,20 @@ rules = LazyRules()</code></pre>
 <p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__init__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import plural6</kbd>
-<samp class=p>>>> </samp><kbd>r1 = plural6.LazyRules()</kbd>
-<samp class=p>>>> </samp><kbd>r2 = plural6.LazyRules()</kbd>
-<samp class=p>>>> </samp><kbd>r1.rules_filename</kbd>                               <span class=u>&#x2460;</span>
-<samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r2.rules_filename</kbd>
-<samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r1.__class__.rules_filename</kbd>                     <span class=u>&#x2461;</span>
-<samp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd>r1.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span class=u>&#x2462;</span>
-<samp class=p>>>> </samp><kbd>r1.rules_filename</kbd>
-<samp>'papayawhip.txt'</samp>
-<samp class=p>>>> </samp><kbd>r2.rules_filename</kbd>                               <span class=u>&#x2463;</span>
-<samp>'papayawhip.txt'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import plural6</kbd>
+<samp class=p>>>> </samp><kbd class=pp>r1 = plural6.LazyRules()</kbd>
+<samp class=p>>>> </samp><kbd class=pp>r2 = plural6.LazyRules()</kbd>
+<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>                               <span class=u>&#x2460;</span>
+<samp class=pp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>
+<samp class=pp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r1.__class__.rules_filename</kbd>                     <span class=u>&#x2461;</span>
+<samp class=pp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r1.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span class=u>&#x2462;</span>
+<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>
+<samp class=pp>'papayawhip.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>                               <span class=u>&#x2463;</span>
+<samp class=pp>'papayawhip.txt'</samp></pre>
 <ol>
 <li>FIXME
 <li>

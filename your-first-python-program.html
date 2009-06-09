@@ -110,17 +110,17 @@ if __name__ == '__main__':
 <p>You can also pass values into a function by name.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from humansize import approximate_size</kbd>
-<a><samp class=p>>>> </samp><kbd>approximate_size(4000, a_kilobyte_is_1024_bytes=False)</kbd>       <span class=u>&#x2460;</span></a>
-<samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, a_kilobyte_is_1024_bytes=False)</kbd>  <span class=u>&#x2461;</span></a>
-<samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, size=4000)</kbd>  <span class=u>&#x2462;</span></a>
-<samp>'4.0 KB'</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(a_kilobyte_is_1024_bytes=False, 4000)</kbd>       <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>from humansize import approximate_size</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>approximate_size(4000, a_kilobyte_is_1024_bytes=False)</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=pp>'4.0 KB'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>approximate_size(size=4000, a_kilobyte_is_1024_bytes=False)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'4.0 KB'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>approximate_size(a_kilobyte_is_1024_bytes=False, size=4000)</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>'4.0 KB'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>approximate_size(a_kilobyte_is_1024_bytes=False, 4000)</kbd>       <span class=u>&#x2463;</span></a>
 <samp class=traceback>  File "&lt;stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg</samp>
-<a><samp class=p>>>> </samp><kbd>approximate_size(size=4000, False)</kbd>                           <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>approximate_size(size=4000, False)</kbd>                           <span class=u>&#x2464;</span></a>
 <samp class=traceback>  File "&lt;stdin>", line 1
 SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <ol>
@@ -163,10 +163,10 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import humansize</kbd>                               <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size(4096, True))</kbd>  <span class=u>&#x2461;</span></a>
-<samp>4.0 KiB</samp>
-<a><samp class=p>>>> </samp><kbd>print(humansize.approximate_size.__doc__)</kbd>      <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>                               <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(humansize.approximate_size(4096, True))</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>4.0 KiB</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(humansize.approximate_size.__doc__)</kbd>      <span class=u>&#x2462;</span></a>
 <samp>Convert a file size to human-readable form.
 
     Keyword arguments:
@@ -188,20 +188,20 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <h3 id=importsearchpath>The <code>import</code> Search Path</h3>
 <p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You&#8217;ll learn more about lists in <a href=native-datatypes.html#lists>Native Datatypes</a>.)
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import sys</kbd>                           <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span class=u>&#x2461;</span></a>
-<samp>['', 
+<a><samp class=p>>>> </samp><kbd class=pp>import sys</kbd>                           <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                             <span class=u>&#x2461;</span></a>
+<samp class=pp>['', 
  '/usr/lib/python30.zip', 
  '/usr/lib/python3.0',
  '/usr/lib/python3.0/plat-linux2@EXTRAMACHDEPPATH@', 
  '/usr/lib/python3.0/lib-dynload', 
  '/usr/lib/python3.0/dist-packages', 
  '/usr/local/lib/python3.0/dist-packages']</samp>
-<a><samp class=p>>>> </samp><kbd>sys</kbd>                                  <span class=u>&#x2462;</span></a>
-<samp>&lt;module 'sys' (built-in)></samp>
-<a><samp class=p>>>> </samp><kbd>sys.path.insert(0, '/home/mark/py')</kbd>  <span class=u>&#x2463;</span></a>
-<a><samp class=p>>>> </samp><kbd>sys.path</kbd>                             <span class=u>&#x2464;</span></a>
-<samp>['/home/mark/py', 
+<a><samp class=p>>>> </samp><kbd class=pp>sys</kbd>                                  <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;module 'sys' (built-in)></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path.insert(0, '/home/mark/py')</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                             <span class=u>&#x2464;</span></a>
+<samp class=pp>['/home/mark/py', 
  '', 
  '/usr/lib/python30.zip', 
  '/usr/lib/python3.0', 
@@ -261,9 +261,9 @@ if __name__ == '__main__':
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>. A module&#8217;s <code>__name__</code> depends on how you&#8217;re using the module. If you <code>import</code> the module, then <code>__name__</code> is the module&#8217;s filename, without a directory path or file extension.
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import humansize</kbd>
-<samp class=p>>>> </samp><kbd>humansize.__name__</kbd>
-<samp>'humansize'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
+<samp class=p>>>> </samp><kbd class=pp>humansize.__name__</kbd>
+<samp class=pp>'humansize'</samp></pre>
 <p>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
 <pre class=screen>
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>

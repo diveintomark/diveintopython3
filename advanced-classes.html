@@ -105,29 +105,29 @@ class OrderedDict(dict, collections.MutableMapping):
 <p>FIXME
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import ordereddict</kbd>
-<samp class=p>>>> </samp><kbd>od = ordereddict.OrderedDict()</kbd>
-<a><samp class=p>>>> </samp><kbd>klass = od.__class__</kbd>       <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>type(klass)</kbd>
-<samp>&lt;class 'abc.ABCMeta'></samp>
-<samp class=p>>>> </samp><kbd>klass.__name__</kbd>
-<samp>'OrderedDict'</samp>
+<samp class=p>>>> </samp><kbd class=pp>import ordereddict</kbd>
+<samp class=p>>>> </samp><kbd class=pp>od = ordereddict.OrderedDict()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>klass = od.__class__</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>type(klass)</kbd>
+<samp class=pp>&lt;class 'abc.ABCMeta'></samp>
+<samp class=p>>>> </samp><kbd class=pp>klass.__name__</kbd>
+<samp class=pp>'OrderedDict'</samp>
 <!--
-<samp class=p>>>> </samp><kbd>klass.__doc__</kbd>
-<samp>FIXME</samp>
+<samp class=p>>>> </samp><kbd class=pp>klass.__doc__</kbd>
+<samp class=pp>FIXME</samp>
 -->
-<samp class=p>>>> </samp><kbd>klass.__module__</kbd>
-<samp>'ordereddict'</samp>
-<samp class=p>>>> </samp><kbd>klass.__bases__</kbd>
-<samp>(&lt;class 'dict'>, &lt;class '_abcoll.MutableMapping'>)</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>klass.__module__</kbd>
+<samp class=pp>'ordereddict'</samp>
+<samp class=p>>>> </samp><kbd class=pp>klass.__bases__</kbd>
+<samp class=pp>(&lt;class 'dict'>, &lt;class '_abcoll.MutableMapping'>)</samp></pre>
 <ol>
 <li>FIXME
 </ol>
 
 <pre class=screen>
 # continued from previous example
-<samp class=p>>>> </samp><kbd>klass.__dict__</kbd>
-<samp>{'__abstractmethods__': frozenset(),
+<samp class=p>>>> </samp><kbd class=pp>klass.__dict__</kbd>
+<samp class=pp>{'__abstractmethods__': frozenset(),
  '__delitem__': &lt;function __delitem__ at 0x00DCB6A8>,
  '__dict__': &lt;attribute '__dict__' of 'OrderedDict' objects>,
  '__doc__': None,

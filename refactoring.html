@@ -22,9 +22,9 @@ body{counter-reset:h1 10}
 <h2 id=divingin>Diving In</h2>
 <p class=f>Despite your best efforts to write comprehensive unit tests, bugs happen. What do I mean by &#8220;bug&#8221;?  A bug is a test case you haven&#8217;t written yet.
 
-<pre class=screen><samp class=p>>>> </samp><kbd>import roman7</kbd>
-<a><samp class=p>>>> </samp><kbd>roman7.from_roman('')</kbd> <span class=u>&#x2460;</span></a>
-<samp>0</samp></pre>
+<pre class=screen><samp class=p>>>> </samp><kbd class=pp>import roman7</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>roman7.from_roman('')</kbd> <span class=u>&#x2460;</span></a>
+<samp class=pp>0</samp></pre>
 <ol>
 <li>Remember in the [FIXME-xref] previous section when you kept seeing that an empty string would match the regular expression you were using to check for valid Roman numerals? Well, it turns out that this is still true for the final version of the regular expression. And that&#8217;s a bug; you want an empty string to raise an <code>InvalidRomanNumeralError</code> exception just like any other sequence of characters that don&#8217;t represent a valid Roman numeral.
 </ol>

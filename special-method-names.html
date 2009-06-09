@@ -147,12 +147,12 @@ td a:link, td a:visited{border:0}
         else:
 <a>            raise AttributeError   <span class=u>&#x2461;</span></a></code>
 
-<samp class=p>>>> </samp><kbd>dyn = Dynamo()</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span class=u>&#x2462;</span></a>
-<samp>'PapayaWhip'</samp>
-<samp class=p>>>> </samp><kbd>dyn.color = 'LemonChiffon'</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span class=u>&#x2463;</span></a>
-<samp>'LemonChiffon'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>dyn = Dynamo()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2462;</span></a>
+<samp class=pp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd class=pp>dyn.color = 'LemonChiffon'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2463;</span></a>
+<samp class=pp>'LemonChiffon'</samp></pre>
 <ol>
 <li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>'color'</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
 <li>If the attribute name is unknown, the <code>__getattr()__</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
@@ -170,12 +170,12 @@ td a:link, td a:visited{border:0}
         else:
             raise AttributeError</code>
 
-<samp class=p>>>> </samp><kbd>dyn = SuperDynamo()</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span class=u>&#x2460;</span></a>
-<samp>'PapayaWhip'</samp>
-<samp class=p>>>> </samp><kbd>dyn.color = 'LemonChiffon'</kbd>
-<a><samp class=p>>>> </samp><kbd>dyn.color</kbd>                      <span class=u>&#x2461;</span></a>
-<samp>'PapayaWhip'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>dyn = SuperDynamo()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2460;</span></a>
+<samp class=pp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd class=pp>dyn.color = 'LemonChiffon'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2461;</span></a>
+<samp class=pp>'PapayaWhip'</samp></pre>
 <ol>
 <li>The <code>__getattribute__()</code> method is called to provide a value for <var>dyn.color</var>.
 <li>Even after explicitly setting <var>dyn.color</var>, the <code>__getattribute__()</code> method <em>is still called</em> to provide a value for <var>dyn.color</var>. If present, the <code>__getattribute__()</code> method <em>is called unconditionally</em> for every attribute and method lookup, even for attributes that you explicitly set after creating an instance.
@@ -194,8 +194,8 @@ td a:link, td a:visited{border:0}
     def swim(self):
         pass</code>
 
-<samp class=p>>>> </samp><kbd>hero = Rastan()</kbd>
-<a><samp class=p>>>> </samp><kbd>hero.swim()</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>hero = Rastan()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>hero.swim()</kbd>                        <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
   File "&lt;stdin>", line 3, in __getattribute__
@@ -361,10 +361,10 @@ class FieldStorage:
 <p>Using the appropriate special methods, you can define your own classes that act like numbers. That is, you can add them, subtract them, and perform other mathematical operations on them. This is how <a href=advanced-classes.html#implementing-fractions><dfn>fractions</dfn> are implemented</a> &mdash; the <code><dfn>Fraction</dfn></code> class implements these special methods, then you can do things like this:
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from fractions import Fraction</kbd>
-<samp class=p>>>> </samp><kbd>x = Fraction(1, 3)</kbd>
-<samp class=p>>>> </samp><kbd>x / 3</kbd>
-<samp>Fraction(1, 9)</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x / 3</kbd>
+<samp class=pp>Fraction(1, 9)</samp></pre>
 
 <p>Here is the comprehensive list of special methods you need to implement a number-like class.
 
@@ -430,10 +430,10 @@ class FieldStorage:
 <p>That&#8217;s all well and good if <var>x</var> is an instance of a class that implements those methods. But what if it doesn&#8217;t implement one of them? Or worse, what if it implements it, but it can&#8217;t handle certain kinds of arguments? For example:
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from fractions import Fraction</kbd>
-<samp class=p>>>> </samp><kbd>x = Fraction(1, 3)</kbd>
-<samp class=p>>>> </samp><kbd>1 / x</kbd>
-<samp>Fraction(3, 1)</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>1 / x</kbd>
+<samp class=pp>Fraction(3, 1)</samp></pre>
 
 <p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truediv__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
 

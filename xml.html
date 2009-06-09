@@ -254,11 +254,11 @@ mark{display:inline}
 
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>    <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd>root</kbd>                                     <span class=u>&#x2463;</span></a>
-<samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root</kbd>                                     <span class=u>&#x2463;</span></a>
+<samp class=pp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
 <ol>
 <li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
 <li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to <a href=http://effbot.org/zone/element-iterparse.htm>parse an <abbr>XML</abbr> document incrementally instead</a>.
@@ -276,14 +276,14 @@ mark{display:inline}
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd>root.tag</kbd>                        <span class=u>&#x2460;</span></a>
-<samp>'{http://www.w3.org/2005/Atom}feed'</samp>
-<a><samp class=p>>>> </samp><kbd>len(root)</kbd>                       <span class=u>&#x2461;</span></a>
-<samp>8</samp>
-<a><samp class=p>>>> </samp><kbd>for child in root:</kbd>              <span class=u>&#x2462;</span></a>
-<a><samp class=p>... </samp><kbd>  print(child)</kbd>                  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root.tag</kbd>                        <span class=u>&#x2460;</span></a>
+<samp class=pp>'{http://www.w3.org/2005/Atom}feed'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(root)</kbd>                       <span class=u>&#x2461;</span></a>
+<samp class=pp>8</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>for child in root:</kbd>              <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>  print(child)</kbd>                  <span class=u>&#x2463;</span></a>
 <samp class=p>... </samp>
-<samp>&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
+<samp class=pp>&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
 &lt;Element {http://www.w3.org/2005/Atom}subtitle at e2b4e0>
 &lt;Element {http://www.w3.org/2005/Atom}id at e2b6c0>
 &lt;Element {http://www.w3.org/2005/Atom}updated at e2b6f0>
@@ -306,18 +306,18 @@ mark{display:inline}
 
 <pre class=screen>
 # continuing from the previous example
-<a><samp class=p>>>> </samp><kbd>root.attrib</kbd>                           <span class=u>&#x2460;</span></a>
-<samp>{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}</samp>
-<a><samp class=p>>>> </samp><kbd>root[4]</kbd>                               <span class=u>&#x2461;</span></a>
-<samp>&lt;Element {http://www.w3.org/2005/Atom}link at e181b0></samp>
-<a><samp class=p>>>> </samp><kbd>root[4].attrib</kbd>                        <span class=u>&#x2462;</span></a>
-<samp>{'href': 'http://diveintomark.org/',
+<a><samp class=p>>>> </samp><kbd class=pp>root.attrib</kbd>                           <span class=u>&#x2460;</span></a>
+<samp class=pp>{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[4]</kbd>                               <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;Element {http://www.w3.org/2005/Atom}link at e181b0></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[4].attrib</kbd>                        <span class=u>&#x2462;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/',
  'type': 'text/html',
  'rel': 'alternate'}</samp>
-<a><samp class=p>>>> </samp><kbd>root[3]</kbd>                               <span class=u>&#x2463;</span></a>
-<samp>&lt;Element {http://www.w3.org/2005/Atom}updated at e2b4e0></samp>
-<a><samp class=p>>>> </samp><kbd>root[3].attrib</kbd>                        <span class=u>&#x2464;</span></a>
-<samp>{}</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>root[3]</kbd>                               <span class=u>&#x2463;</span></a>
+<samp class=pp>&lt;Element {http://www.w3.org/2005/Atom}updated at e2b4e0></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[3].attrib</kbd>                        <span class=u>&#x2464;</span></a>
+<samp class=pp>{}</samp></pre>
 <ol>
 <li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'></code>. The <code>xml:</code> prefix refers to a built-in namespace that every <abbr>XML</abbr> document can use without declaring it.
 <li>The fifth child &mdash; <code>[4]</code> in a <code>0</code>-based list &mdash; is the <code>link</code> element.
@@ -333,19 +333,19 @@ mark{display:inline}
 <p>So far, we&#8217;ve worked with this <abbr>XML</abbr> document &#8220;from the top down,&#8221; starting with the root element, getting its child elements, and so on throughout the document. But many uses of <abbr>XML</abbr> require you to find specific elements. Etree can do that, too.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>
-<samp class=p>>>> </samp><kbd>tree = etree.parse('examples/feed.xml')</kbd>
-<samp class=p>>>> </samp><kbd>root = tree.getroot()</kbd>
-<a><samp class=p>>>> </samp><kbd>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+<samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp>
-<samp class=p>>>> </samp><kbd>root.tag</kbd>
-<samp>'{http://www.w3.org/2005/Atom}feed'</samp>
-<a><samp class=p>>>> </samp><kbd>root.findall('{http://www.w3.org/2005/Atom}feed')</kbd>     <span class=u>&#x2461;</span></a>
-<samp>[]</samp>
-<a><samp class=p>>>> </samp><kbd>root.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2462;</span></a>
-<samp>[]</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>root.tag</kbd>
+<samp class=pp>'{http://www.w3.org/2005/Atom}feed'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}feed')</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>[]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2462;</span></a>
+<samp class=pp>[]</samp></pre>
 <ol>
 <li>The <code>findall()</code> method finds child elements that match a specific query. (More on the query format in a minute.)
 <li>Each element &mdash; including the root element, but also child elements &mdash; has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children. But why aren&#8217;t there any results? Although it may not be obvious, this particular query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
@@ -353,12 +353,12 @@ mark{display:inline}
 </ol>
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>tree.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp>
-<a><samp class=p>>>> </samp><kbd>tree.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2461;</span></a>
-<samp>[]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2461;</span></a>
+<samp class=pp>[]</samp>
 </pre>
 <ol>
 <li>For convenience, the <code>tree</code> object (returned from the <code>etree.parse()</code> function) has several methods that mirror the methods on the root element. The results are the same as if you had called the <code>tree.getroot().findall()</code> method.
@@ -368,26 +368,26 @@ mark{display:inline}
 <p>There <em>is</em> a way to search for <em>descendant</em> elements, <i>i.e.</i> children, grandchildren, and any element at any nesting level.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>all_links = tree.findall('//{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>all_links</kbd>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>,
+<a><samp class=p>>>> </samp><kbd class=pp>all_links = tree.findall('//{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>all_links</kbd>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>,
  &lt;Element {http://www.w3.org/2005/Atom}link at e2b570>,
  &lt;Element {http://www.w3.org/2005/Atom}link at e2b480>,
  &lt;Element {http://www.w3.org/2005/Atom}link at e2b5a0>]</samp>
-<a><samp class=p>>>> </samp><kbd>all_links[0].attrib</kbd>                                              <span class=u>&#x2461;</span></a>
-<samp>{'href': 'http://diveintomark.org/',
+<a><samp class=p>>>> </samp><kbd class=pp>all_links[0].attrib</kbd>                                              <span class=u>&#x2461;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/',
  'type': 'text/html',
  'rel': 'alternate'}</samp>
-<a><samp class=p>>>> </samp><kbd>all_links[1].attrib</kbd>                                              <span class=u>&#x2462;</span></a>
-<samp>{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+<a><samp class=p>>>> </samp><kbd class=pp>all_links[1].attrib</kbd>                                              <span class=u>&#x2462;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
  'type': 'text/html',
  'rel': 'alternate'}</samp>
-<samp class=p>>>> </samp><kbd>all_links[2].attrib</kbd>
-<samp>{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress',
+<samp class=p>>>> </samp><kbd class=pp>all_links[2].attrib</kbd>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress',
  'type': 'text/html',
  'rel': 'alternate'}</samp>
-<samp class=p>>>> </samp><kbd>all_links[3].attrib</kbd>
-<samp>{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats',
+<samp class=p>>>> </samp><kbd class=pp>all_links[3].attrib</kbd>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats',
  'type': 'text/html',
  'rel': 'alternate'}</samp></pre>
 <ol>
@@ -400,16 +400,16 @@ mark{display:inline}
 
 <pre class=screen>
 # continuing from the previous example
-<a><samp class=p>>>> </samp><kbd>it = tree.getiterator('{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>next(it)</kbd>                                                    <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>it = tree.getiterator('{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>                                                    <span class=u>&#x2461;</span></a>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0>
-<samp class=p>>>> </samp><kbd>next(it)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f1e0>
-<samp class=p>>>> </samp><kbd>next(it)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f210>
-<samp class=p>>>> </samp><kbd>next(it)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
 &lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0>
-<samp class=p>>>> </samp><kbd>next(it)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 StopIteration</samp></pre>
@@ -427,11 +427,11 @@ StopIteration</samp></pre>
 <p><a href=http://codespeak.net/lxml/><code>lxml</code></a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install <code>lxml</code> manually</a>.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>from lxml import etree</kbd>                   <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>  <span class=u>&#x2463;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+<a><samp class=p>>>> </samp><kbd class=pp>from lxml import etree</kbd>                   <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp></pre>
 <ol>
@@ -451,18 +451,18 @@ except ImportError:
 <p>But <code>lxml</code> is more than just a faster ElementTree. Its <code>findall()</code> method includes support for more complicated expressions.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import lxml.etree</kbd>                                                                   <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse('examples/feed.xml')</kbd>
-<a><samp class=p>>>> </samp><kbd>tree.findall('//{http://www.w3.org/2005/Atom}*[@href]')</kbd>                             <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>                                                                   <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed.xml')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('//{http://www.w3.org/2005/Atom}*[@href]')</kbd>                             <span class=u>&#x2461;</span></a>
 [&lt;Element {http://www.w3.org/2005/Atom}link at eeb8a0>,
  &lt;Element {http://www.w3.org/2005/Atom}link at eeb990>,
  &lt;Element {http://www.w3.org/2005/Atom}link at eeb960>,
  &lt;Element {http://www.w3.org/2005/Atom}link at eeb9c0>]
-<a><samp class=p>>>> </samp><kbd>tree.findall("//{http://www.w3.org/2005/Atom}*[@href='http://diveintomark.org/']")</kbd>  <span class=u>&#x2462;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at eeb930>]</samp>
-<samp class=p>>>> </samp><kbd>NS = '{http://www.w3.org/2005/Atom}'</kbd>
-<a><samp class=p>>>> </samp><kbd>tree.findall('//{NS}author[{NS}uri]'.format(NS=NS))</kbd>                                 <span class=u>&#x2463;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}author at eeba80>,
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall("//{http://www.w3.org/2005/Atom}*[@href='http://diveintomark.org/']")</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}link at eeb930>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>NS = '{http://www.w3.org/2005/Atom}'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('//{NS}author[{NS}uri]'.format(NS=NS))</kbd>                                 <span class=u>&#x2463;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}author at eeba80>,
  &lt;Element {http://www.w3.org/2005/Atom}author at eebba0>]</samp></pre>
 <ol>
 <li>In this example, I&#8217;m going to <code>import lxml.etree</code> (instead of, say, <code>from lxml import etree</code>), to emphasize that these features are specific to <code>lxml</code>.
@@ -474,16 +474,16 @@ except ImportError:
 <p>Not enough for you? <code>lxml</code> also integrates support for arbitrary XPath expressions. I&#8217;m not going to go into depth about XPath syntax; that could be a whole book unto itself! But I will show you how it integrates into <code>lxml</code>.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse('examples/feed.xml')</kbd>
-<a><samp class=p>>>> </samp><kbd>NSMAP = {'atom': 'http://www.w3.org/2005/Atom'}</kbd>                    <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>entries = tree.xpath("//atom:category[@term='accessibility']/..",</kbd>  <span class=u>&#x2461;</span></a>
-<samp class=p>... </samp><kbd>    namespaces=NSMAP)</kbd>
-<a><samp class=p>>>> </samp><kbd>entries</kbd>                                                            <span class=u>&#x2462;</span></a>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
-<samp class=p>>>> </samp><kbd>entry = entries[0]</kbd>
-<a><samp class=p>>>> </samp><kbd>entry.xpath('./atom:title/text()', namespaces=nsmap)</kbd>               <span class=u>&#x2463;</span></a>
-<samp>['Accessibility is a harsh mistress']</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed.xml')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>NSMAP = {'atom': 'http://www.w3.org/2005/Atom'}</kbd>                    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>entries = tree.xpath("//atom:category[@term='accessibility']/..",</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>... </samp><kbd class=pp>    namespaces=NSMAP)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entries</kbd>                                                            <span class=u>&#x2462;</span></a>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry = entries[0]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry.xpath('./atom:title/text()', namespaces=nsmap)</kbd>               <span class=u>&#x2463;</span></a>
+<samp class=pp>['Accessibility is a harsh mistress']</samp></pre>
 <ol>
 <li>To perform XPath queries on namespaced elements, you need to define a namespace prefix mapping. This is just a Python dictionary.
 <li>Here is an XPath query. The XPath expression searches for <code>category</code> elements (in the Atom namespace) that contain a <code>term</code> attribute with the value <code>accessibility</code>. But that&#8217;s not actually the query result. Look at the very end of the query string; did you notice the <code>/..</code> bit? That means &#8220;and then return the parent element of the <code>category</code> element you just found.&#8221; So this single XPath query will find all entries with a child element of <code>&lt;category term='accessibility'></code>.
@@ -498,11 +498,11 @@ except ImportError:
 <p>Python&#8217;s support for <abbr>XML</abbr> is not limited to parsing existing documents. You can also create <abbr>XML</abbr> documents from scratch.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import xml.etree.ElementTree as etree</kbd>
-<a><samp class=p>>>> </samp><kbd>new_feed = etree.Element('{http://www.w3.org/2005/Atom}feed',</kbd>     <span class=u>&#x2460;</span></a>
-<a><samp class=p>... </samp><kbd>    attrib={'{http://www.w3.org/XML/1998/namespace}lang': 'en'})</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>print(etree.tostring(new_feed))</kbd>                                   <span class=u>&#x2462;</span></a>
-<samp>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed = etree.Element('{http://www.w3.org/2005/Atom}feed',</kbd>     <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    attrib={'{http://www.w3.org/XML/1998/namespace}lang': 'en'})</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(etree.tostring(new_feed))</kbd>                                   <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
 <ol>
 <li>To create a new element, instantiate the <code>Element</code> class. You pass the element name (namespace + local name) as the first argument. This statement creates a <code>feed</code> element in the Atom namespace. This will be our new document&#8217;s root element.
 <li>To add attributes to the newly created element, pass a dictionary of attribute names and values in the <var>attrib</var> argument. Note that the attribute name should be in the standard ElementTree format, <code>{<var>namespace</var>}<var>localname</var></code>.
@@ -524,14 +524,14 @@ except ImportError:
 <p>The built-in ElementTree library does not offer this fine-grained control over serializing namespaced elements, but <code>lxml</code> does.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<a><samp class=p>>>> </samp><kbd>NSMAP = {None: 'http://www.w3.org/2005/Atom'}</kbd>                     <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>new_feed = lxml.etree.Element('feed', nsmap=NSMAP)</kbd>                <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>                             <span class=u>&#x2462;</span></a>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom'/></samp>
-<a><samp class=p>>>> </samp><kbd>new_feed.set('{http://www.w3.org/XML/1998/namespace}lang', 'en')</kbd>  <span class=u>&#x2463;</span></a>
-<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>NSMAP = {None: 'http://www.w3.org/2005/Atom'}</kbd>                     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed = lxml.etree.Element('feed', nsmap=NSMAP)</kbd>                <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                             <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom'/></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed.set('{http://www.w3.org/XML/1998/namespace}lang', 'en')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
 <ol>
 <li>To start, define a namespace mapping as a dictionary. Dictionary values are namespaces; dictionary keys are the desired prefix. Using <code>None</code> as a prefix effectively declares a default namespace.
 <li>Now you can pass the <code>lxml</code>-specific <var>nsmap</var> argument when you create an element, and <code>lxml</code> will respect the namespace prefixes you&#8217;ve defined.
@@ -542,15 +542,15 @@ except ImportError:
 <p>Are <abbr>XML</abbr> documents limited to one element per document? No, of course not. You can easily create child elements, too.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>title = lxml.etree.SubElement(new_feed, 'title',</kbd>          <span class=u>&#x2460;</span></a>
-<a><samp class=p>... </samp><kbd>    attrib={'type':'html'})</kbd>                               <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'/>&lt;/feed></samp>
-<a><samp class=p>>>> </samp><kbd>title.text = 'dive into &amp;hellip;'</kbd>                         <span class=u>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2463;</span></a>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'>dive into &amp;amp;hellip;&lt;/title>&lt;/feed></samp>
-<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span class=u>&#x2464;</span></a>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+<a><samp class=p>>>> </samp><kbd class=pp>title = lxml.etree.SubElement(new_feed, 'title',</kbd>          <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    attrib={'type':'html'})</kbd>                               <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'/>&lt;/feed></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>title.text = 'dive into &amp;hellip;'</kbd>                         <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2463;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'>dive into &amp;amp;hellip;&lt;/title>&lt;/feed></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span class=u>&#x2464;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
 &lt;title type='html'>dive into&amp;amp;hellip;&lt;/title>
 &lt;/feed></samp></pre>
 <ol>
@@ -583,8 +583,8 @@ except ImportError:
 <p>That&#8217;s an error, because the <code>&amp;hellip;</code> entity is not defined in <abbr>XML</abbr>. (It is defined in <abbr>HTML</abbr>.) If you try to parse this broken feed with the default settings, <code>lxml</code> will choke on the undefined entity.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import lxml.etree</kbd>
-<samp class=p>>>> </samp><kbd>tree = lxml.etree.parse('examples/feed-broken.xml')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed-broken.xml')</kbd>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
   File "lxml.etree.pyx", line 2693, in lxml.etree.parse (src/lxml/lxml.etree.c:52591)
@@ -600,17 +600,17 @@ lxml.etree.XMLSyntaxError: Entity 'hellip' not defined, line 3, column 28</samp>
 <p>To parse this broken <abbr>XML</abbr> document, despite its wellformedness error, you need to create a custom <abbr>XML</abbr> parser.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>parser = lxml.etree.XMLParser(recover=True)</kbd>                  <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>tree = lxml.etree.parse('examples/feed-broken.xml', parser)</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>parser.error_log</kbd>                                             <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>parser = lxml.etree.XMLParser(recover=True)</kbd>                  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed-broken.xml', parser)</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>parser.error_log</kbd>                                             <span class=u>&#x2462;</span></a>
 <samp>examples/feed-broken.xml:3:28:FATAL:PARSER:ERR_UNDECLARED_ENTITY: Entity 'hellip' not defined</samp>
-<samp class=p>>>> </samp><kbd>tree.findall('{http://www.w3.org/2005/Atom}title')</kbd>
-<samp>[&lt;Element {http://www.w3.org/2005/Atom}title at ead510>]</samp>
-<samp class=p>>>> </samp><kbd>title = tree.findall('{http://www.w3.org/2005/Atom}title')[0]</kbd>
-<a><samp class=p>>>> </samp><kbd>title.text</kbd>                                                   <span class=u>&#x2463;</span></a>
-<samp>'dive into '</samp>
-<a><samp class=p>>>> </samp><kbd>print(lxml.etree.tounicode(tree.getroot()))</kbd>                  <span class=u>&#x2464;</span></a>
-<samp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+<samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}title')</kbd>
+<samp class=pp>[&lt;Element {http://www.w3.org/2005/Atom}title at ead510>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>title = tree.findall('{http://www.w3.org/2005/Atom}title')[0]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>title.text</kbd>                                                   <span class=u>&#x2463;</span></a>
+<samp class=pp>'dive into '</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(tree.getroot()))</kbd>                  <span class=u>&#x2464;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
   &lt;title>dive into &lt;/title>
 .
 . [rest of serialization snipped for brevity]

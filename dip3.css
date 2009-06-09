@@ -183,10 +183,8 @@ pre a, .w a {
 .w a {
   text-decoration: underline;
 }
-kbd, mark {
-  font-weight: bold;
-}
 mark {
+  font-weight: bold;
   display: inline-block;
   width: 100%;
   background: #ff8;

@@ -202,8 +202,8 @@ while n >= integer:
     print('subtracting {0} from input, adding {1} to output'.format(integer, numeral))</code></pre>
 <p>With the debug <code>print()</code> statements, the output looks like this:
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import roman1</kbd>
-<samp class=p>>>> </samp><kbd>roman1.to_roman(1424)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import roman1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(1424)</kbd>
 <samp>subtracting 1000 from input, adding M to output
 subtracting 400 from input, adding CD to output
 subtracting 10 from input, adding X to output
@@ -229,13 +229,13 @@ OK</samp></pre>
 <aside>The Pythonic way to halt and catch fire is to raise an exception.</aside>
 <p>It is not enough to test that functions succeed when given good input; you must also test that they fail when given bad input. And not just any sort of failure; they must fail in the way you expect.
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import roman1</kbd>
-<samp class=p>>>> </samp><kbd>roman1.to_roman(4000)</kbd>
-<samp>'MMMM'</samp>
-<samp class=p>>>> </samp><kbd>roman1.to_roman(5000)</kbd>
-<samp>'MMMMM'</samp>
-<a><samp class=p>>>> </samp><kbd>roman1.to_roman(9000)</kbd>  <span class=u>&#x2460;</span></a>
-<samp>'MMMMMMMMM'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import roman1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(4000)</kbd>
+<samp class=pp>'MMMM'</samp>
+<samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(5000)</kbd>
+<samp class=pp>'MMMMM'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(9000)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>'MMMMMMMMM'</samp></pre>
 <ol>
 <li>That&#8217;s definitely not what you wanted &mdash; that&#8217;s not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better that it fail quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
 </ol>
@@ -344,11 +344,11 @@ OK</samp></pre>
 <p>Along with testing numbers that are too large, you need to test numbers that are too small. As <a href=#divingin>we noted in our functional requirements</a>, Roman numerals cannot express <code>0</code> or negative numbers.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import roman2</kbd>
-<samp class=p>>>> </samp><kbd>roman2.to_roman(0)</kbd>
-<samp>''</samp>
-<samp class=p>>>> </samp><kbd>roman2.to_roman(-1)</kbd>
-<samp>''</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import roman2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>roman2.to_roman(0)</kbd>
+<samp class=pp>''</samp>
+<samp class=p>>>> </samp><kbd class=pp>roman2.to_roman(-1)</kbd>
+<samp class=pp>''</samp></pre>
 
 <p>Well <em>that&#8217;s</em> not good. Let&#8217;s add tests for each of these conditions.
 
@@ -441,11 +441,11 @@ OK</samp></pre>
 <p>There was one more <a href=#divingin>functional requirement</a> for converting numbers to Roman numerals: dealing with non-integers.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import roman3</kbd>
-<a><samp class=p>>>> </samp><kbd>roman3.to_roman(0.5)</kbd>  <span class=u>&#x2460;</span></a>
-<samp>''</samp>
-<a><samp class=p>>>> </samp><kbd>roman3.to_roman(1.5)</kbd>  <span class=u>&#x2461;</span></a>
-<samp>'I'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import roman3</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>roman3.to_roman(0.5)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>''</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>roman3.to_roman(1.5)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'I'</samp></pre>
 <ol>
 <li>Oh, that&#8217;s bad.
 <li>Oh, that&#8217;s even worse. Both of these cases should raise an exception. Instead, they give bogus results.

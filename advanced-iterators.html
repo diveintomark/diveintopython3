@@ -90,11 +90,11 @@ if __name__ == '__main__':
 <p>The first thing this alphametics solver does is find all the letters (A&ndash;Z) in the puzzle.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>re.findall('[0-9]+', '16 2-by-4s in rows of 8')</kbd>  <span class=u>&#x2460;</span></a>
-<samp>['16', '2', '4', '8']</samp>
-<a><samp class=p>>>> </samp><kbd>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>     <span class=u>&#x2461;</span></a>
-<samp>['SEND', 'MORE', 'MONEY']</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>import re</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>re.findall('[0-9]+', '16 2-by-4s in rows of 8')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>['16', '2', '4', '8']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.findall('[A-Z]+', 'SEND + MORE == MONEY')</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>['SEND', 'MORE', 'MONEY']</samp></pre>
 <ol>
 <li>The <code>re</code> module is Python&#8217;s implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
 <li>Here the regular expression pattern matches sequences of letters. Again, the return value is a list, and each item in the list is a string that matched the regular expression pattern.
@@ -107,17 +107,17 @@ if __name__ == '__main__':
 <p>Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I&#8217;m going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
-<a><samp class=p>>>> </samp><kbd>{c for c in a_list}</kbd>                      <span class=u>&#x2460;</span></a>
-<samp>{'a', 'c', 'b', 'd'}</samp>
-<samp class=p>>>> </samp><kbd>a_string = 'EAST IS EAST'</kbd>
-<a><samp class=p>>>> </samp><kbd>{c for c in a_string}</kbd>                    <span class=u>&#x2461;</span></a>
-<samp>{'A', ' ', 'E', 'I', 'S', 'T'}</samp>
-<samp class=p>>>> </samp><kbd>words = ['SEND', 'MORE', 'MONEY']</kbd>
-<a><samp class=p>>>> </samp><kbd>''.join(words)</kbd>                           <span class=u>&#x2462;</span></a>
-<samp>'SENDMOREMONEY'</samp>
-<a><samp class=p>>>> </samp><kbd>{c for c in ''.join(words)}</kbd>              <span class=u>&#x2463;</span></a>
-<samp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>{c for c in a_list}</kbd>                      <span class=u>&#x2460;</span></a>
+<samp class=pp>{'a', 'c', 'b', 'd'}</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_string = 'EAST IS EAST'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>{c for c in a_string}</kbd>                    <span class=u>&#x2461;</span></a>
+<samp class=pp>{'A', ' ', 'E', 'I', 'S', 'T'}</samp>
+<samp class=p>>>> </samp><kbd class=pp>words = ['SEND', 'MORE', 'MONEY']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>''.join(words)</kbd>                           <span class=u>&#x2462;</span></a>
+<samp class=pp>'SENDMOREMONEY'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>{c for c in ''.join(words)}</kbd>              <span class=u>&#x2463;</span></a>
+<samp class=pp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
 <ol>
 <li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth &mdash; wait, that&#8217;s in the set already, so it only gets listed once. Fifth. Sixth &mdash; again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
 <li>The same technique works with strings, since a string is just a sequence of characters.
@@ -138,8 +138,8 @@ if __name__ == '__main__':
 <p>Like many programming languages, Python has an <code>assert</code> statement. Here&#8217;s how it works.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 2</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>assert 1 + 1 == 3</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>assert 1 + 1 == 2</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>assert 1 + 1 == 3</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in <module>
 AssertionError</samp></pre>
@@ -168,16 +168,16 @@ AssertionError</samp></pre>
 <p>A generator expression is like a <a href=generators.html>generator function</a> without the function.
 
 <pre class=screen>
-<samp>>>> </samp><kbd>unique_characters = {'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</kbd>
-<a><samp>>>> </samp><kbd>gen = (ord(c) for c in unique_characters)</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp>>>> </samp><kbd>gen</kbd>                                        <span class=u>&#x2461;</span></a>
-<samp>&lt;generator object &lt;genexpr> at 0x00BADC10></samp>
-<a><samp>>>> </samp><kbd>next(gen)</kbd>                                  <span class=u>&#x2462;</span></a>
-<samp>69</samp>
-<samp>>>> </samp><kbd>next(gen)</kbd>
-<samp>68</samp>
-<a><samp>>>> </samp><kbd>tuple(ord(c) for c in unique_characters)</kbd>   <span class=u>&#x2463;</span></a>
-<samp>(69, 68, 77, 79, 78, 83, 82, 89)</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>unique_characters = {'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>gen = (ord(c) for c in unique_characters)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>gen</kbd>                                        <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;generator object &lt;genexpr> at 0x00BADC10></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>next(gen)</kbd>                                  <span class=u>&#x2462;</span></a>
+<samp class=pp>69</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(gen)</kbd>
+<samp class=pp>68</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>tuple(ord(c) for c in unique_characters)</kbd>   <span class=u>&#x2463;</span></a>
+<samp class=pp>(69, 68, 77, 79, 78, 83, 82, 89)</samp></pre>
 <ol>
 <li>A generator expression is like an anonymous function that yields values. The expression itself looks like a list comprehension [FIXME have we introduced this yet?], but it&#8217;s wrapped in parentheses instead of square brackets.
 <li>The generator expression returns&hellip; an iterator.
@@ -202,21 +202,21 @@ gen = ord_map(unique_characters)</code></pre>
 <p>The idea is that you take a list of things (could be numbers, could be letters, could be dancing bears) and find all the possible ways to split them up into smaller lists. All the smaller lists have the same size, which can be as small as 1 and as large as the total number of items. Oh, and nothing can be repeated. Mathematicians say things like &#8220;let&#8217;s find the permutations of 3 different items taken 2 at a time,&#8221; which means you have a sequence of 3 items and you want to find all the possible ordered pairs.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>import itertools</kbd>                              <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>perms = itertools.permutations([1, 2, 3], 2)</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>next(perms)</kbd>                                   <span class=u>&#x2462;</span></a>
-<samp>(1, 2)</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>(1, 3)</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<a><samp>(2, 1)</samp>                                            <span class=u>&#x2463;</span></a>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>(2, 3)</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>(3, 1)</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>(3, 2)</samp>
-<a><samp class=p>>>> </samp><kbd>next(perms)</kbd>                                   <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>import itertools</kbd>                              <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>perms = itertools.permutations([1, 2, 3], 2)</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>                                   <span class=u>&#x2462;</span></a>
+<samp class=pp>(1, 2)</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>(1, 3)</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<a><samp class=pp>(2, 1)</samp>                                            <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>(2, 3)</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>(3, 1)</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>(3, 2)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>                                   <span class=u>&#x2464;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in <module>
 StopIteration</samp></pre>
@@ -231,26 +231,26 @@ StopIteration</samp></pre>
 <p>The <code>permutations()</code> function doesn&#8217;t have to take a list. It can take any sequence &mdash; even a string.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import itertools</kbd>
-<a><samp class=p>>>> </samp><kbd>perms = itertools.permutations('ABC', 3)</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<a><samp>('A', 'B', 'C')</samp>                               <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>('A', 'C', 'B')</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>('B', 'A', 'C')</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>('B', 'C', 'A')</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>('C', 'A', 'B')</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
-<samp>('C', 'B', 'A')</samp>
-<samp class=p>>>> </samp><kbd>next(perms)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import itertools</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>perms = itertools.permutations('ABC', 3)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<a><samp class=pp>('A', 'B', 'C')</samp>                               <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>('A', 'C', 'B')</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>('B', 'A', 'C')</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>('B', 'C', 'A')</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>('C', 'A', 'B')</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
+<samp class=pp>('C', 'B', 'A')</samp>
+<samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in <module>
 StopIteration</samp>
-<a><samp class=p>>>> </samp><kbd>list(itertools.permutations('ABC', 3))</kbd>    <span class=u>&#x2462;</span></a>
-<samp>[('A', 'B', 'C'), ('A', 'C', 'B'),
+<a><samp class=p>>>> </samp><kbd class=pp>list(itertools.permutations('ABC', 3))</kbd>    <span class=u>&#x2462;</span></a>
+<samp class=pp>[('A', 'B', 'C'), ('A', 'C', 'B'),
  ('B', 'A', 'C'), ('B', 'C', 'A'),
  ('C', 'A', 'B'), ('C', 'B', 'A')]</samp></pre>
 <ol>
@@ -263,13 +263,13 @@ StopIteration</samp>
 
 <h2 id=more-itertools>Other Fun Stuff in the <code>itertools</code> Module</h2>
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import itertools</kbd>
-<a><samp class=p>>>> </samp><kbd>list(itertools.product('ABC', '123'))</kbd>   <span class=u>&#x2460;</span></a>
-<samp>[('A', '1'), ('A', '2'), ('A', '3'), 
+<samp class=p>>>> </samp><kbd class=pp>import itertools</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>list(itertools.product('ABC', '123'))</kbd>   <span class=u>&#x2460;</span></a>
+<samp class=pp>[('A', '1'), ('A', '2'), ('A', '3'), 
  ('B', '1'), ('B', '2'), ('B', '3'), 
  ('C', '1'), ('C', '2'), ('C', '3')]</samp>
-<a><samp class=p>>>> </samp><kbd>list(itertools.combinations('ABC', 2))</kbd>  <span class=u>&#x2461;</span></a>
-<samp>[('A', 'B'), ('A', 'C'), ('B', 'C')]</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>list(itertools.combinations('ABC', 2))</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>[('A', 'B'), ('A', 'C'), ('B', 'C')]</samp></pre>
 <ol>
 <li>The <code>itertools.product()</code> function returns an iterator containing the Cartesian product of two sequences.
 <li>The <code>itertools.combinations()</code> function returns an iterator containing all the possible combinations of the given sequence of the given length. This is like the <code>itertools.permutations()</code> function, except combinations don&#8217;t include items that are duplicates of other items in a different order. So <code>itertools.permutations('ABC', 2)</code> will return both <code>('A', 'B')</code> and <code>('B', 'A')</code> (among others), but <code>itertools.combinations('ABC', 2)</code> will not return <code>('B', 'A')</code> because it is a duplicate of <code>('A', 'B')</code> in a different order.
@@ -277,21 +277,21 @@ StopIteration</samp>
 
 <p class=d>[<a href=examples/favorite-people.txt>download <code>favorite-people.txt</code></a>]
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>names = list(open('examples/favorite-people.txt'))</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>names</kbd>
-<samp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
+<a><samp class=p>>>> </samp><kbd class=pp>names = list(open('examples/favorite-people.txt'))</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>names</kbd>
+<samp class=pp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
 'Mike\n', 'Chris\n', 'Sarah\n', 'Alex\n', 'Lizzie\n']</samp>
-<a><samp class=p>>>> </samp><kbd>names = [name.rstrip() for name in names]</kbd>           <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd>names</kbd>
-<samp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
+<a><samp class=p>>>> </samp><kbd class=pp>names = [name.rstrip() for name in names]</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>names</kbd>
+<samp class=pp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
 'Mike', 'Chris', 'Sarah', 'Alex', 'Lizzie']</samp>
-<a><samp class=p>>>> </samp><kbd>names = sorted(names)</kbd>                               <span class=u>&#x2462;</span></a>
-<samp class=p>>>> </samp><kbd>names</kbd>
-<samp>['Alex', 'Anne', 'Chris', 'Dora', 'Ethan',
+<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names)</kbd>                               <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>names</kbd>
+<samp class=pp>['Alex', 'Anne', 'Chris', 'Dora', 'Ethan',
 'John', 'Lizzie', 'Mike', 'Sarah', 'Wesley']</samp>
-<a><samp class=p>>>> </samp><kbd>names = sorted(names, key=len)</kbd>                      <span class=u>&#x2463;</span></a>
-<samp class=p>>>> </samp><kbd>names</kbd>
-<samp>['Alex', 'Anne', 'Dora', 'John', 'Mike',
+<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names, key=len)</kbd>                      <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>names</kbd>
+<samp class=pp>['Alex', 'Anne', 'Dora', 'John', 'Mike',
 'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']</samp></pre>
 <ol>
 <li>This idiom returns a list of the lines in a text file.
@@ -304,19 +304,19 @@ StopIteration</samp>
 
 <pre class=screen>
 <p>&hellip;continuing from the previous interactive shell&hellip;
-<samp class=p>>>> </samp><kbd>import itertools</kbd>
-<a><samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>groups</kbd>
-<samp>&lt;itertools.groupby object at 0x00BB20C0></samp>
-<samp class=p>>>> </samp><kbd>list(groups)</kbd>
-<samp>[(4, &lt;itertools._grouper object at 0x00BA8BF0>),
+<samp class=p>>>> </samp><kbd class=pp>import itertools</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>groups = itertools.groupby(names, len)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>groups</kbd>
+<samp class=pp>&lt;itertools.groupby object at 0x00BB20C0></samp>
+<samp class=p>>>> </samp><kbd class=pp>list(groups)</kbd>
+<samp class=pp>[(4, &lt;itertools._grouper object at 0x00BA8BF0>),
  (5, &lt;itertools._grouper object at 0x00BB4050>),
  (6, &lt;itertools._grouper object at 0x00BB4030>)]</samp>
-<samp class=p>>>> </samp><kbd>groups = itertools.groupby(names, len)</kbd>
-<a><samp class=p>>>> </samp><kbd>for name_length, name_iter in groups:</kbd>    <span class=u>&#x2461;</span></a>
-<samp class=p>... </samp><kbd>    print('Names with {0:d} letters:'.format(name_length))</kbd>
-<samp class=p>... </samp><kbd>    for name in name_iter:</kbd>
-<samp class=p>... </samp><kbd>        print(name)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>groups = itertools.groupby(names, len)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>for name_length, name_iter in groups:</kbd>    <span class=u>&#x2461;</span></a>
+<samp class=p>... </samp><kbd class=pp>    print('Names with {0:d} letters:'.format(name_length))</kbd>
+<samp class=p>... </samp><kbd class=pp>    for name in name_iter:</kbd>
+<samp class=p>... </samp><kbd class=pp>        print(name)</kbd>
 <samp class=p>... </samp>
 <samp>Names with 4 letters:
 Alex
@@ -338,18 +338,18 @@ Wesley</samp></pre>
 <!-- YO DAWG, WE HEARD YOU LIKE LOOPING, SO WE PUT AN ITERATOR IN YOUR ITERATOR SO YOU CAN LOOP WHILE YOU LOOP. -->
 <p>Are you watching closely?
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>list(range(0, 3))</kbd>
-<samp>[0, 1, 2]</samp>
-<samp class=p>>>> </samp><kbd>list(range(10, 13))</kbd>
-<samp>[10, 11, 12]</samp>
-<a><samp class=p>>>> </samp><kbd>list(itertools.chain(range(0, 3), range(10, 13)))</kbd>        <span class=u>&#x2460;</span></a>
-<samp>[0, 1, 2, 10, 11, 12]</samp>
-<a><samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 13)))</kbd>                    <span class=u>&#x2461;</span></a>
-<samp>[(0, 10), (1, 11), (2, 12)]</samp>
-<a><samp class=p>>>> </samp><kbd>list(zip(range(0, 3), range(10, 14)))</kbd>                    <span class=u>&#x2462;</span></a>
-<samp>[(0, 10), (1, 11), (2, 12)]</samp>
-<a><samp class=p>>>> </samp><kbd>list(itertools.zip_longest(range(0, 3), range(10, 14)))</kbd>  <span class=u>&#x2463;</span></a>
-<samp>[(0, 10), (1, 11), (2, 12), (None, 13)]</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>list(range(0, 3))</kbd>
+<samp class=pp>[0, 1, 2]</samp>
+<samp class=p>>>> </samp><kbd class=pp>list(range(10, 13))</kbd>
+<samp class=pp>[10, 11, 12]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(itertools.chain(range(0, 3), range(10, 13)))</kbd>        <span class=u>&#x2460;</span></a>
+<samp class=pp>[0, 1, 2, 10, 11, 12]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(zip(range(0, 3), range(10, 13)))</kbd>                    <span class=u>&#x2461;</span></a>
+<samp class=pp>[(0, 10), (1, 11), (2, 12)]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(zip(range(0, 3), range(10, 14)))</kbd>                    <span class=u>&#x2462;</span></a>
+<samp class=pp>[(0, 10), (1, 11), (2, 12)]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(itertools.zip_longest(range(0, 3), range(10, 14)))</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>[(0, 10), (1, 11), (2, 12), (None, 13)]</samp></pre>
 <ol>
 <li>The <code>itertools.chain()</code> function takes two iterators and returns an iterator that contains all the items from the first iterator, followed by all the items from the second iterator. (Actually, it can take any number of iterators, and it chains them all in the order they were passed to the function.)
 <li>The <code>zip()</code> function does something prosaic that turns out to be extremely useful: it any number of sequences and returns an iterator with the first items of each sequence, then the second items of each, then the third, and so on.
@@ -360,13 +360,13 @@ Wesley</samp></pre>
 <p id=dict-zip>OK, that was all very interesting, but how does it relate to the alphametics solver? Here&#8217;s how:
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
-<samp class=p>>>> </samp><kbd>guess = ('1', '2', '0', '3', '4', '5', '6', '7')</kbd>
-<a><samp class=p>>>> </samp><kbd>tuple(zip(characters, guess))</kbd>  <span class=u>&#x2460;</span></a>
-<samp>(('S', '1'), ('M', '2'), ('E', '0'), ('D', '3'),
+<samp class=p>>>> </samp><kbd class=pp>characters = ('S', 'M', 'E', 'D', 'O', 'N', 'R', 'Y')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>guess = ('1', '2', '0', '3', '4', '5', '6', '7')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tuple(zip(characters, guess))</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>(('S', '1'), ('M', '2'), ('E', '0'), ('D', '3'),
  ('O', '4'), ('N', '5'), ('R', '6'), ('Y', '7'))</samp>
-<a><samp class=p>>>> </samp><kbd>dict(zip(characters, guess))</kbd>   <span class=u>&#x2461;</span></a>
-<samp>{'E': '0', 'D': '3', 'M': '2', 'O': '4',
+<a><samp class=p>>>> </samp><kbd class=pp>dict(zip(characters, guess))</kbd>   <span class=u>&#x2461;</span></a>
+<samp class=pp>{'E': '0', 'D': '3', 'M': '2', 'O': '4',
  'N': '5', 'S': '1', 'R': '6', 'Y': '7'}</samp></pre>
 <ol>
 <li>Given a list of letters and a list of digits (each represented here as 1-character strings), the <code>zip</code> function will create a pairing of letters and digits, in order.
@@ -391,11 +391,11 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>Python strings have many methods. You learned about some of those methods in <a href=strings.html>the Strings chapter</a>: <code>lower()</code>, <code>count()</code>, and <code>format()</code>. Now I want to introduce you to a powerful but little-known string manipulation technique: the <code>translate()</code> method.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>translation_table = {ord('A'): ord('O')}</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd>translation_table</kbd>                         <span class=u>&#x2461;</span></a>
-<samp>{65: 79}</samp>
-<a><samp class=p>>>> </samp><kbd>'MARK'.translate(translation_table)</kbd>       <span class=u>&#x2462;</span></a>
-<samp>'MORK'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>translation_table = {ord('A'): ord('O')}</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>translation_table</kbd>                         <span class=u>&#x2461;</span></a>
+<samp class=pp>{65: 79}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>'MARK'.translate(translation_table)</kbd>       <span class=u>&#x2462;</span></a>
+<samp class=pp>'MORK'</samp></pre>
 <ol>
 <li>String translation starts with a translation table, which is just a dictionary that maps one character to another. Actually, &#8220;character&#8221; is incorrect &mdash; the translation table really maps one <em>byte</em> to another.
 <li>Remember, bytes in Python 3 are integers. The <code>ord()</code> function returns the <abbr>ASCII</abbr> value of a character, which, in the case of A&ndash;Z, is always a byte from 65 to 90.
@@ -405,17 +405,17 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>What does this have to do with solving alphametic puzzles? As it turns out, everything.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>       <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd>characters</kbd>
-<samp>(83, 77, 69, 68, 79, 78, 82, 89)</samp>
-<a><samp class=p>>>> </samp><kbd>guess = tuple(ord(c) for c in '91570682')</kbd>            <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd>guess</kbd>
-<samp>(57, 49, 53, 55, 48, 54, 56, 50)</samp>
-<a><samp class=p>>>> </samp><kbd>translation_table = dict(zip(characters, guess))</kbd>     <span class=u>&#x2462;</span></a>
-<samp class=p>>>> </samp><kbd>translation_table</kbd>
-<samp>{68: 55, 69: 53, 77: 49, 78: 54, 79: 48, 82: 56, 83: 57, 89: 50}</samp>
-<a><samp class=p>>>> </samp><kbd>'SEND + MORE == MONEY'.translate(translation_table)</kbd>  <span class=u>&#x2463;</span></a>
-<samp>'9567 + 1085 == 10652'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>characters = tuple(ord(c) for c in 'SMEDONRY')</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>characters</kbd>
+<samp class=pp>(83, 77, 69, 68, 79, 78, 82, 89)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>guess = tuple(ord(c) for c in '91570682')</kbd>            <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>guess</kbd>
+<samp class=pp>(57, 49, 53, 55, 48, 54, 56, 50)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>translation_table = dict(zip(characters, guess))</kbd>     <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>translation_table</kbd>
+<samp class=pp>{68: 55, 69: 53, 77: 49, 78: 54, 79: 48, 82: 56, 83: 57, 89: 50}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>'SEND + MORE == MONEY'.translate(translation_table)</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>'9567 + 1085 == 10652'</samp></pre>
 <ol>
 <li>Using a <a href=#generator-expressions>generator expression</a>, we quickly compute the byte values for each character in a string. <var>characters</var> is an example of the value of <var>sorted_characters</var> in the <code>alphametics.solve()</code> function.
 <li>Using another generator expression, we quickly compute the byte values for each digit in this string. The result, <var>guess</var>, is of the form <a href=#guess>returned by the <code>itertools.permutations()</code> function</a> in the <code>alphametics.solve()</code> function.
@@ -432,36 +432,36 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>This is the final piece of the puzzle (or rather, the final piece of the puzzle solver). After all that fancy string manipulation, we&#8217;re left with a string like <code>'9567 + 1085 == 10652'</code>. But that&#8217;s a string, and what good is a string? Enter <code>eval()</code>, the universal Python evaluation tool.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>eval('1 + 1 == 2')</kbd>
-<samp>True</samp>
-<samp class=p>>>> </samp><kbd>eval('1 + 1 == 3')</kbd>
-<samp>False</samp>
-<samp class=p>>>> </samp><kbd>eval('9567 + 1085 == 10652')</kbd>
-<samp>True</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>eval('1 + 1 == 2')</kbd>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>eval('1 + 1 == 3')</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>eval('9567 + 1085 == 10652')</kbd>
+<samp class=pp>True</samp></pre>
 
 <p>But wait, there&#8217;s more! The <code>eval()</code> function isn&#8217;t limited to boolean expressions. It can handle <em>any</em> Python expression and returns <em>any</em> datatype.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>eval('"A" + "B"')</kbd>
-<samp>'AB'</samp>
-<samp class=p>>>> </samp><Kbd>eval('"MARK".translate({65: 79})')</kbd>
-<samp>'MORK'</samp>
-<samp class=p>>>> </samp><kbd>eval('"AAAAA".count("A")')</kbd>
-<samp>5</samp>
-<samp class=p>>>> </samp><kbd>eval('["*"] * 5')</kbd>
-<samp>['*', '*', '*', '*', '*']</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>eval('"A" + "B"')</kbd>
+<samp class=pp>'AB'</samp>
+<samp class=p>>>> </samp><kbd class=pp>eval('"MARK".translate({65: 79})')</kbd>
+<samp class=pp>'MORK'</samp>
+<samp class=p>>>> </samp><kbd class=pp>eval('"AAAAA".count("A")')</kbd>
+<samp class=pp>5</samp>
+<samp class=p>>>> </samp><kbd class=pp>eval('["*"] * 5')</kbd>
+<samp class=pp>['*', '*', '*', '*', '*']</samp></pre>
 
 <p>But wait, that&#8217;s not all!
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>x = 5</kbd>
-<a><samp class=p>>>> </samp><kbd>eval("x * 5")</kbd>         <span class=u>&#x2460;</span></a>
-<samp>25</samp>
-<a><samp class=p>>>> </samp><kbd>eval("pow(x, 2)")</kbd>     <span class=u>&#x2461;</span></a>
-<samp>25</samp>
-<samp class=p>>>> </samp><kbd>import math</kbd>
-<a><samp class=p>>>> </samp><kbd>eval("math.sqrt(x)")</kbd>  <span class=u>&#x2462;</span></a>
-<samp>2.2360679774997898</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>x = 5</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("x * 5")</kbd>         <span class=u>&#x2460;</span></a>
+<samp class=pp>25</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("pow(x, 2)")</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>25</samp>
+<samp class=p>>>> </samp><kbd class=pp>import math</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("math.sqrt(x)")</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>2.2360679774997898</samp></pre>
 <ol>
 <li>The expression that <code>eval()</code> takes can reference global variables defined outside the <code>eval()</code>. If called within a function, it can reference local variables too.
 <li>And functions.
@@ -471,12 +471,12 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>Hey, wait a minute&hellip;
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import subprocess</kbd>
-<a><samp class=p>>>> </samp><kbd>eval("subprocess.getoutput('ls ~')")</kbd>      <span class=u>&#x2460;</span></a>
-<samp>'Desktop         Library         Pictures \
+<samp class=p>>>> </samp><kbd class=pp>import subprocess</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("subprocess.getoutput('ls ~')")</kbd>      <span class=u>&#x2460;</span></a>
+<samp class=pp>'Desktop         Library         Pictures \
  Documents       Movies          Public   \
  Music           Sites'</samp>
-<a><samp class=p>>>> </samp><kbd>eval("subprocess.getoutput('rm -rf /')")</kbd>  <span class=u>&#x2461;</span></a></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("subprocess.getoutput('rm -rf /')")</kbd>  <span class=u>&#x2461;</span></a></pre>
 <ol>
 <li>The <code>subprocess</code> module allows you to run arbitrary shell commands and get the result as a Python string.
 <li>Don&#8217;t do this.
@@ -485,7 +485,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>It&#8217;s even worse than that, because there&#8217;s a global <code>__import__()</code> function that takes a module name as a string, imports the module, and returns a reference to it. Combined with the power of <code>eval()</code>, you can construct a single expression that will wipe out all your files:
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')")</kbd>  <span class=u>&#x2460;</span></a></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm -rf /')")</kbd>  <span class=u>&#x2460;</span></a></pre>
 <ol>
 <li>Don&#8217;t do this either.
 </ol>
@@ -497,15 +497,15 @@ for guess in itertools.permutations(digits, len(characters)):
 <p>But surely there&#8217;s <em>some</em> way to evaluate expressions safely? To put <code>eval()</code> in a sandbox where it can&#8217;t access or harm the outside world? Well, yeah, but it&#8217;s tricky.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>x = 5</kbd>
-<a><samp class=p>>>> </samp><kbd>eval("x * 5", {}, {})</kbd>               <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>x = 5</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("x * 5", {}, {})</kbd>               <span class=u>&#x2460;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
   File "&lt;string>", line 1, in &lt;module>
 NameError: name 'x' is not defined</samp>
-<a><samp class=p>>>> </samp><kbd>eval("x * 5", {"x": x}, {})</kbd>         <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd>import math</kbd>
-<a><samp class=p>>>> </samp><kbd>eval("math.sqrt(x)", {"x": x}, {})</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("x * 5", {"x": x}, {})</kbd>         <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>import math</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("math.sqrt(x)", {"x": x}, {})</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
   File "&lt;string>", line 1, in &lt;module>
@@ -519,10 +519,10 @@ NameError: name 'math' is not defined</samp></pre>
 <p>Gee, that was easy. Lemme make an alphametics web service now!
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>eval("pow(5, 2)", {}, {})</kbd>                   <span class=u>&#x2460;</span></a>
-<samp>25</samp>
-<a><samp class=p>>>> </samp><kbd>eval("__import__('math').sqrt(5)", {}, {})</kbd>  <span class=u>&#x2461;</span></a>
-<samp>2.2360679774997898</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("pow(5, 2)", {}, {})</kbd>                   <span class=u>&#x2460;</span></a>
+<samp class=pp>25</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("__import__('math').sqrt(5)", {}, {})</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>2.2360679774997898</samp></pre>
 <ol>
 <li>Even though you&#8217;ve passed empty dictionaries for the global and local namespaces, all of Python&#8217;s built-in functions are still available during evaluation. So <code>pow(5, 2)</code> works, because <code>5</code> and <code>2</code> are literals, and <code>pow()</code> is a built-in function.
 <li>Unfortunately (and if you don&#8217;t see why it&#8217;s unfortunate, read on), the <code>__import__()</code> function is also a built-in function, so it works too.
@@ -531,7 +531,7 @@ NameError: name 'math' is not defined</samp></pre>
 <p>Yeah, that means you can still do nasty things, even if you explicitly set the global and local namespaces to empty dictionaries when calling <code>eval()</code>:
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')", {}, {})</kbd>  <span class=u>&#x2460;</span></a></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm -rf /')", {}, {})</kbd>  <span class=u>&#x2460;</span></a></pre>
 <ol>
 <li>Please don&#8217;t do this.
 </ol>
@@ -539,14 +539,14 @@ NameError: name 'math' is not defined</samp></pre>
 <p>Oops. I&#8217;m glad I didn&#8217;t make that alphametics web service. Is there <em>any</em> way to use <code>eval()</code> safely?
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>eval("__import__('math').sqrt(5)",</kbd>
-<a><samp class=p>... </samp><kbd>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>eval("__import__('math').sqrt(5)",</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2460;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
   File "&lt;string>", line 1, in &lt;module>
 NameError: name '__import__' is not defined</samp>
-<samp class=p>>>> </samp><kbd>eval("__import__('subprocess').getoutput('rm -rf /')",</kbd>
-<a><samp class=p>... </samp><kbd>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm -rf /')",</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
   File "<string>", line 1, in <module>

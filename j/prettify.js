@@ -14,7 +14,8 @@
 //
 // Changes from upstream:
 // - use class=pp instead of class=prettyprint to declare blocks-to-colorize
-
+// - removed support for <xmp>
+// - added support for <kbd> and <samp>
 
 /**
  * @fileoverview
@@ -35,9 +36,6 @@
  * <script type="text/javascript" src="/path/to/prettify.js"></script>
  * 2) define style rules.  See the example page for examples.
  * 3) mark the <pre> and <code> tags in your source with class=pp.
- *    You can also use the (html deprecated) <xmp> tag, but the pretty printer
- *    needs to do more substantial DOM manipulations to support that, so some
- *    css styles may not be preserved.
  * That's it.  I wanted to keep the API as simple as possible, so there's no
  * need to specify which language the code is in.
  *
@@ -269,11 +267,6 @@ window['_pr_isIE6'] = function () {
         .replace(pr_quotEnt, '"')
         .replace(pr_ampEnt, '&')
         .replace(pr_nbspEnt, ' ');
-  }
-
-  /** is the given node's innerHTML normally unescaped? */
-  function isRawContent(node) {
-    return 'XMP' === node.tagName;
   }
 
   function normalizedHtml(node, out) {
@@ -548,10 +541,6 @@ window['_pr_isIE6'] = function () {
 
     if (PR_innerHtmlWorks) {
       var content = node.innerHTML;
-      // XMP tags contain unescaped entities so require special handling.
-      if (isRawContent(node)) {
-        content = textToHtml(content);
-      }
       return content;
     }
 
@@ -1283,7 +1272,8 @@ window['_pr_isIE6'] = function () {
     var codeSegments = [
         document.getElementsByTagName('pre'),
         document.getElementsByTagName('code'),
-        document.getElementsByTagName('xmp') ];
+	document.getElementsByTagName('kbd'),
+	document.getElementsByTagName('samp') ];
     var elements = [];
     for (var i = 0; i < codeSegments.length; ++i) {
       for (var j = 0, n = codeSegments[i].length; j < n; ++j) {
@@ -1321,7 +1311,7 @@ window['_pr_isIE6'] = function () {
           var nested = false;
           for (var p = cs.parentNode; p; p = p.parentNode) {
             if ((p.tagName === 'pre' || p.tagName === 'code' ||
-                 p.tagName === 'xmp') &&
+                 p.tagName === 'kbd' || p.tagName === 'samp') &&
                 p.className && p.className.indexOf('pp') >= 0) {
               nested = true;
               break;
@@ -1358,31 +1348,7 @@ window['_pr_isIE6'] = function () {
       var cs = prettyPrintingJob.sourceNode;
 
       // push the prettified html back into the tag.
-      if (!isRawContent(cs)) {
-        // just replace the old html with the new
-        cs.innerHTML = newContent;
-      } else {
-        // we need to change the tag to a <pre> since <xmp>s do not allow
-        // embedded tags such as the span tags used to attach styles to
-        // sections of source code.
-        var pre = document.createElement('PRE');
-        for (var i = 0; i < cs.attributes.length; ++i) {
-          var a = cs.attributes[i];
-          if (a.specified) {
-            var aname = a.name.toLowerCase();
-            if (aname === 'class') {
-              pre.className = a.value;  // For IE 6
-            } else {
-              pre.setAttribute(a.name, a.value);
-            }
-          }
-        }
-        pre.innerHTML = newContent;
-
-        // remove the old
-        cs.parentNode.replaceChild(pre, cs);
-        cs = pre;
-      }
+      cs.innerHTML = newContent;
 
       // Replace <br>s with line-feeds so that copying and pasting works
       // on IE 6.

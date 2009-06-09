@@ -56,15 +56,15 @@ def plural(noun):
 
 <p>Let&#8217;s look at regular expression substitutions in more detail.
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search('[abc]', 'Mark')</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>import re</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[abc]', 'Mark')</kbd>    <span class=u>&#x2460;</span></a>
 &lt;_sre.SRE_Match object at 0x001C1FA8>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'Mark')</kbd>  <span class=u>&#x2461;</span></a>
-<samp>'Mork'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'rock')</kbd>  <span class=u>&#x2462;</span></a>
-<samp>'rook'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('[abc]', 'o', 'caps')</kbd>  <span class=u>&#x2463;</span></a>
-<samp>'oops'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'Mark')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'Mork'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'rock')</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>'rook'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'caps')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>'oops'</samp></pre>
 <ol>
 <li>Does the string <code>Mark</code> contain <code>a</code>, <code>b</code>, or <code>c</code>? Yes, it contains <code>a</code>.
 <li>OK, now find <code>a</code>, <code>b</code>, or <code>c</code>, and replace it with <code>o</code>. <code>Mark</code> becomes <code>Mork</code>.
@@ -92,14 +92,14 @@ def plural(noun):
 <p>Let&#8217;s look at negation regular expressions in more detail.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import re</kbd>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'vacancy')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>import re</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'vacancy')</kbd>  <span class=u>&#x2460;</span></a>
 &lt;_sre.SRE_Match object at 0x001C1FA8>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'boy')</kbd>      <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'boy')</kbd>      <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp>
-<samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'day')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'day')</kbd>
 <samp class=p>>>> </samp>
-<a><samp class=p>>>> </samp><kbd>re.search('[^aeiou]y$', 'pita')</kbd>     <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'pita')</kbd>     <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li><code>vacancy</code> matches this regular expression, because it ends in <code>cy</code>, and <code>c</code> is not <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, or <code>u</code>.
@@ -107,12 +107,12 @@ def plural(noun):
 <li><code>pita</code> does not match, because it does not end in <code>y</code>.
 </ol>
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd>re.sub('y$', 'ies', 'vacancy')</kbd>               <span class=u>&#x2460;</span></a>
-<samp>'vacancies'</samp>
-<samp class=p>>>> </samp><kbd>re.sub('y$', 'ies', 'agency')</kbd>
-<samp>'agencies'</samp>
-<a><samp class=p>>>> </samp><kbd>re.sub('([^aeiou])y$', r'\1ies', 'vacancy')</kbd>  <span class=u>&#x2461;</span></a>
-<samp>'vacancies'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('y$', 'ies', 'vacancy')</kbd>               <span class=u>&#x2460;</span></a>
+<samp class=pp>'vacancies'</samp>
+<samp class=p>>>> </samp><kbd class=pp>re.sub('y$', 'ies', 'agency')</kbd>
+<samp class=pp>'agencies'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('([^aeiou])y$', r'\1ies', 'vacancy')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'vacancies'</samp></pre>
 <ol>
 <li>This regular expression turns <code>vacancy</code> into <code>vacancies</code> and <code>agency</code> into <code>agencies</code>, which is what you wanted. Note that it would also turn <code>boy</code> into <code>boies</code>, but that will never happen in the function because you did that <code>re.search</code> first to find out whether you should do this <code>re.sub</code>.
 <li>Just in passing, I want to point out that it is possible to combine these two regular expressions (one to find out if the rule applies, and another to actually apply it) into a single regular expression. Here&#8217;s what that would look like. Most of it should look familiar: you&#8217;re using a remembered group, which you learned in <a href=regular-expressions.html#phonenumbers>Case study: Parsing Phone Numbers</a>. The group is used to remember the character before the letter <code>y</code>. Then in the substitution string, you use a new syntax, <code>\1</code>, which means &#8220;hey, that first group you remembered? put it right here.&#8221; In this case, you remember the <code>c</code> before the <code>y</code>; when you do the substitution, you substitute <code>c</code> in place of <code>c</code>, and <code>ies</code> in place of <code>y</code>. (If you have more than one remembered group, you can use <code>\2</code> and <code>\3</code> and so on.)
@@ -313,23 +313,23 @@ def plural(noun):
 <p>How the heck does <em>that</em> work? Let&#8217;s look at an interactive example first.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>def make_counter(x):</kbd>
-<samp class=p>... </samp><kbd>    print('entering make_counter')</kbd>
-<samp class=p>... </samp><kbd>    while True:</kbd>
-<a><samp class=p>... </samp><kbd>        yield x</kbd>                    <span class=u>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>        print('incrementing x')</kbd>
-<samp class=p>... </samp><kbd>        x = x + 1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>def make_counter(x):</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('entering make_counter')</kbd>
+<samp class=p>... </samp><kbd class=pp>    while True:</kbd>
+<a><samp class=p>... </samp><kbd class=pp>        yield x</kbd>                    <span class=u>&#x2460;</span></a>
+<samp class=p>... </samp><kbd class=pp>        print('incrementing x')</kbd>
+<samp class=p>... </samp><kbd class=pp>        x = x + 1</kbd>
 <samp class=p>... </samp>
-<a><samp class=p>>>> </samp><kbd>counter = make_counter(2)</kbd>          <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd>counter</kbd>                            <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>counter = make_counter(2)</kbd>          <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>counter</kbd>                            <span class=u>&#x2462;</span></a>
 &lt;generator object at 0x001C9C10>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2463;</span></a>
 <samp>entering make_counter
 2</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2464;</span></a>
 <samp>incrementing x
 3</samp>
-<a><samp class=p>>>> </samp><kbd>next(counter)</kbd>                      <span class=u>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2465;</span></a>
 <samp>incrementing x
 4</samp></pre>
 <ol>
@@ -362,10 +362,10 @@ def plural(noun):
 <p>So you have a function that spits out successive Fibonacci numbers. Sure, you could do that with recursion, but this way is easier to read. Also, it works well with <code>for</code> loops.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>from fibonacci import fib</kbd>
-<a><samp class=p>>>> </samp><kbd>for n in fib(1000):</kbd>  <span class=u>&#x2460;</span></a>
-<a><samp class=p>... </samp><kbd>    print(n, end=' ')</kbd>    <span class=u>&#x2461;</span></a>
-<samp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>from fibonacci import fib</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>for n in fib(1000):</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>    <span class=u>&#x2461;</span></a>
+<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
 <ol>
 <li>You can use a generator like <code>fib()</code> in a <code>for</code> loop directly. The <code>for</code> loop will automatically call the <code>next()</code> function to get values from the <code>fib()</code> generator and assign them to the <code>for</code> loop index variable (<var>n</var>).
 <li>Each time through the <code>for</code> loop, <var>n</var> gets a new value from the <code>yield</code> statement in <code>fib()</code>, and all you have to do is print it out. Once <code>fib()</code> runs out of numbers (<var>a</var> becomes bigger than <var>max</var>, which in this case is <code>1000</code>), then the <code>for</code> loop exits gracefully.
