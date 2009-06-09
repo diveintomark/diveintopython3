@@ -51,7 +51,7 @@ My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&m
 
 <h2 id=one-ring-to-rule-them-all>Unicode</h2>
 
-<p><i>Enter Unicode.</i>
+<p><i>Enter <dfn>Unicode</dfn>.</i>
 
 <p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number. Each number represents a unique character used in at least one of the world&#8217;s languages. (Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn&#8217;t be sufficient.) Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn&#8217;t have an <code>'A'</code> in it.
 
@@ -93,9 +93,9 @@ My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&m
 <samp>'深入 Python 3'</samp></pre>
 <ol>
 <li>To create a string, enclose it in quotes. Python strings can be defined with either single quotes (<code>'</code>) or double quotes (<code>"</code>).<!--"-->
-<li>The built-in <code>len()</code> function returns the length of the string, <i>i.e.</i> the number of characters. This is the same function you use to <a href=native-datatypes.html#extendinglists>find the length of a list</a>. A string is like a list of characters.
+<li>The built-in <code><dfn>len</dfn>()</code> function returns the length of the string, <i>i.e.</i> the number of characters. This is the same function you use to <a href=native-datatypes.html#extendinglists>find the length of a list</a>. A string is like a list of characters.
 <li>Just like getting individual items out of a list, you can get individual characters out of a string using index notation.
-<li>Just like lists, you can concatenate strings using the <code>+</code> operator.
+<li>Just like lists, you can <dfn>concatenate</dfn> strings using the <code>+</code> operator.
 </ol>
 
 <p class=a>&#x2042;
@@ -138,7 +138,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li>There&#8217;s a&hellip; whoa, what the heck is that?
 </ol>
 
-<p>Python 3 supports formatting values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with single placeholder.
+<p>Python 3 supports <dfn>formatting</dfn> values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with single placeholder.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>username = 'mark'</kbd>
@@ -147,7 +147,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
 <li>No, my password is not really <kbd>PapayaWhip</kbd>.
-<li>There&#8217;s a lot going on here. First, that&#8217;s a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code>format()</code> method.
+<li>There&#8217;s a lot going on here. First, that&#8217;s a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code><dfn>format</dfn>()</code> method.
 </ol>
 
 <h3 id=compound-field-names>Compound Field Names</h3>
@@ -207,7 +207,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
 
 <blockquote class='note compare clang'>
-<p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code>printf()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
+<p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code><dfn>printf</dfn>()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
 </blockquote>
 
 <p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
@@ -242,8 +242,8 @@ experience of years.</samp>
 <a><samp class=p>>>> </samp><kbd>s.lower().count('f')</kbd>               <span class=u>&#x2463;</span></a>
 <samp>6</samp></pre>
 <ol>
-<li>You can input multi-line strings in the Python interactive shell. Once you start a multi-line string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
-<li>The <code>splitlines()</code> method takes one multi-line string and returns a list of strings, one for each line of the original. Note that the carriage returns at the end of each line are not included.
+<li>You can input <dfn>multiline</dfn> strings in the Python interactive shell. Once you start a multiline string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
+<li>The <code><dfn>splitlines</dfn>()</code> method takes one multiline string and returns a list of strings, one for each line of the original. Note that the carriage returns at the end of each line are not included.
 <li>The <code>lower()</code> method converts the entire string to lowercase. (Similarly, the <code>upper()</code> method converts a string to uppercase.)
 <li>The <code>count()</code> method counts the number of occurrences of a substring. Yes, there really are six &#8220;f&#8221;s in that sentence!
 </ol>
@@ -263,7 +263,7 @@ experience of years.</samp>
 <samp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 
 <ol>
-<li>The <code>split()</code> string method takes one argument, a delimiter, and split a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
+<li>The <code><dfn>split</dfn>()</code> string method takes one argument, a delimiter, and split a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
 <li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We want to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
 <li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
 </ol>
@@ -272,7 +272,7 @@ experience of years.</samp>
 
 <h2 id=byte-arrays>Strings vs. Bytes</h2>
 
-<p>Bytes are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
+<p><dfn>Bytes</dfn> are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>by = b'abcd\x65'</kbd>  <span class=u>&#x2460;</span></a>
@@ -294,7 +294,7 @@ experience of years.</samp>
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'bytes' object does not support item assignment</samp></pre>
 <ol>
-<li>To define a <code>bytes</code> object, use the <code>b''</code> &#8220;byte literal&#8221; syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
+<li>To define a <code>bytes</code> object, use the <code>b''</code> &#8220;<dfn>byte</dfn> literal&#8221; syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
 <li>The type of a <code>bytes</code> object is <code>bytes</code>.
 <li>Just like lists and strings, you can get the length of a <code>bytes</code> object with the built-in <code>len()</code> function.
 <li>Just like lists and strings, you can use the <code>+</code> operator to concatenate <code>bytes</code> objects. The result is a new <code>bytes</code> object.
@@ -336,11 +336,11 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <samp>1</samp></pre>
 <ol>
 <li>You can&#8217;t concatenate bytes and strings. They are two different data types.
-<li>You can&#8217;t count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you&#8217;ll need to say that explicitly. Python 3 won&#8217;t implicitly convert bytes to strings or strings to bytes.
+<li>You can&#8217;t count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you&#8217;ll need to say that explicitly. Python 3 won&#8217;t <dfn>implicitly</dfn> convert bytes to strings or strings to bytes.
 <li>By an amazing coincidence, this line of code says &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in this particular character encoding.&#8221;
 </ol>
 
-<p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code>decode()</code> method that takes a character encoding and returns a string, and strings have an <code>encode()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward &mdash; converting a sequence of bytes n the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string &mdash; even legacy (non-Unicode) encodings.
+<p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code><dfn>decode</dfn>()</code> method that takes a character encoding and returns a string, and strings have an <code><dfn>encode</dfn>()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward &mdash; converting a sequence of bytes n the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string &mdash; even legacy (non-Unicode) encodings.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>a_string = '深入 Python'</kbd>         <span class=u>&#x2460;</span></a>
@@ -381,7 +381,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <p>Python 3 assumes that your source code &mdash; <i>i.e.</i> each <code>.py</code> file &mdash; is encoded in UTF-8.
 
 <blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>In Python 2, the default encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
+<p><span class=u>&#x261E;</span>In Python 2, the <dfn>default</dfn> encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
 </blockquote>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
