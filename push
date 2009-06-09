@@ -1,4 +1,14 @@
 #!/bin/sh
 
+die () {
+  echo "$1" >/dev/stderr
+  exit 1
+}
+
+hg status|grep "^\?" && die "Stray files found."
+echo "running unit tests"
+cd examples/
+python3 regression.py
+cd ..
 ssh diveintomark.org "hg -R /home/mark/db/diveintopython3/ serve --stdio" &
 hg push ssh://mark@diveintomark.org//home/mark/db/diveintopython3/
