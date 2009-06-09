@@ -527,28 +527,32 @@ reply: 'HTTP/1.1 200 OK'</samp>
 <p><abbr>HTTP</abbr> defines <a href=#redirects>two kinds of redirects</a>: temporary and permanent. There&#8217;s nothing special to do with temporary redirects except follow them, which <code>httplib2</code> does automatically.
 
 <pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>h = httplib2.Http('.cache')</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
-<a>send: b'GET /examples/feed-302.xml HTTP/1.1                                         <span class=u>&#x2461;</span></a>
+<a>send: b'GET /examples/feed-302.xml HTTP/1.1                                            <span class=u>&#x2461;</span></a>
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
-<a>reply: 'HTTP/1.1 302 Found'                                                         <span class=u>&#x2462;</span></a>
-<a>send: b'GET /examples/feed.xml HTTP/1.1                                             <span class=u>&#x2463;</span></a>
+<a>reply: 'HTTP/1.1 302 Found'                                                            <span class=u>&#x2462;</span></a>
+<a>send: b'GET /examples/feed.xml HTTP/1.1                                                <span class=u>&#x2463;</span></a>
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
 reply: 'HTTP/1.1 200 OK'</samp></pre>
 <ol>
-<li>
-<li>
-<li>
-<li>
+<li>There is no feed at this <abbr>URL</abbr>. I&#8217;ve set up my server to issue a temporary redirect to the correct address.
+<li>There&#8217;s the request.
+<li>And there&#8217;s the response: <code>302 Found</code>. Not shown here, this response also includes a <code>Location</code> header that points to the real <abbr>URL</abbr>.
+<li><code>httplib2</code> immediately turns around and &#8220;follows&#8221; the redirect by issuing another request for the <abbr>URL</abbr> given in the <code>Location</code> header: <code>http://diveintopython3.org/examples/feed.xml</code>
 </ol>
+
+<p>&#8220;Following&#8221; a redirect is nothing more than this example shows. <code>httplib2</code> sends a request for the <abbr>URL</abbr> you asked for. The server comes back with a response that says &#8220;No no, look over there instead.&#8221; <code>httplib2</code> sends another request for the new <abbr>URL</abbr>.
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>print(dict(response.items()))</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(dict(response.items()))</kbd>                                     <span class=u>&#x2460;</span></a>
 <samp class=pp>{'status': '200',
  'content-length': '3070',
 <a> 'content-location': 'http://diveintopython3.org/examples/feed.xml',  <span class=u>&#x2461;</span></a>
@@ -560,59 +564,73 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
  'connection': 'close',
 <a> '-content-encoding': 'gzip',                                         <span class=u>&#x2462;</span></a>
  'etag': '"bfe-4cbbf5c0"',
- 'cache-control': 'max-age=86400',
+<a> 'cache-control': 'max-age=86400',                                    <span class=u>&#x2463;</span></a>
  'date': 'Wed, 03 Jun 2009 02:21:41 GMT',
  'content-type': 'application/xml'}</samp></pre>
 <ol>
-<li>
-<li>
-<li>
+<li>The <var>response</var> you get back from this single call to the <code>request()</code> method is the response from the final <abbr>URL</abbr>.
+<li><code>httplib2</code> adds the final <abbr>URL</abbr> to the <var>response</var> dictionary, as <code>content-location</code>. This is not a header that came from the server; it&#8217;s specific to <code>httplib2</code>.
+<li>Apropos of nothing, this feed is <a href=#httplib2-compression>compressed</a>.
+<li>And cacheable. (This is important, as you&#8217;ll see in the next example.)
 </ol>
+
+<p>What happens if you request the same <abbr>URL</abbr> again?
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response2, content2 = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
-<a>send: b'GET /examples/feed-302.xml HTTP/1.1                                 <span class=u>&#x2461;</span></a>
+<a>send: b'GET /examples/feed-302.xml HTTP/1.1                                              <span class=u>&#x2461;</span></a>
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
-<a>reply: 'HTTP/1.1 302 Found'                                                 <span class=u>&#x2462;</span></a></samp></pre>
+<a>reply: 'HTTP/1.1 302 Found'                                                              <span class=u>&#x2462;</span></a></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>content2 == content</kbd>                                                                  <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp></pre>
 <ol>
-<li>
-<li>
-<li>
+<li>Same <abbr>URL</abbr>, same <code>httplib2.Http</code> object (and therefore the same cache).
+<li>The <code>302</code> response was not cached, so <code>httplib2</code> sends another request for the same <abbr>URL</abbr>.
+<li>Once again, the server responds with a <code>302</code>. But notice what <em>didn&#8217;t</em> happen: there wasn&#8217;t ever a second request for the final <abbr>URL</abbr>, <code>http://diveintopython3.org/examples/feed.xml</code>. That response was cached (remember the <code>Cache-Control</code> header that you saw in the previous example). Once <code>httplib2</code> received the <code>302 Found</code> code, <em>it checked its cache before issuing another request</em>. The cache contained a fresh copy of <code>http://diveintopython3.org/examples/feed.xml</code>, so there was no need to re-request it.
+<li>By the time the <code>request()</code> method returns, it has read the feed data from the cache and returned it. Of course, it&#8217;s the same as the data you received last time.
 </ol>
 
+<p>In other words, you don&#8217;t have to do anything special for temporary redirects. <code>httplib2</code> will follow them automatically, and the fact that one <abbr>URL</abbr> redirects to another has no bearing on <code>httplib2</code>&#8217;s support for compression, caching, <code>ETags</code>, or any of the other features of <abbr>HTTP</abbr>.
+
+<p>Permanent redirects are just as simple.
+
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
 send: b'GET /examples/feed-301.xml HTTP/1.1
 Host: diveintopython3.org
 accept-encoding: deflate, gzip
 user-agent: Python-httplib2/$Rev: 259 $'
-reply: 'HTTP/1.1 301 Moved Permanently'</samp>
-<samp class=p>>>> </samp><kbd class=pp>print(dict(response.items()))</kbd>
-<samp class=pp>{'status': '200',
- 'content-length': '3070',
- 'content-location': 'http://diveintopython3.org/examples/feed.xml',
- 'accept-ranges': 'bytes',
- 'expires': 'Thu, 04 Jun 2009 02:21:41 GMT',
- 'vary': 'Accept-Encoding',
- 'server': 'Apache',
- 'last-modified': 'Wed, 03 Jun 2009 02:20:15 GMT',
- 'connection': 'close',
- '-content-encoding': 'gzip',
- 'etag': '"bfe-4cbbf5c0"',
- 'cache-control': 'max-age=86400',
- 'date': 'Wed, 03 Jun 2009 02:21:41 GMT',
- 'content-type': 'application/xml'}</samp>
-<samp class=p>>>> </samp><kbd class=pp>response2, content2 = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>
-<samp class=p>>>> </samp><kbd class=pp>response2.fromcache</kbd>
+<a>reply: 'HTTP/1.1 301 Moved Permanently'                                                <span class=u>&#x2461;</span></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>response.fromcache</kbd>                                                                 <span class=u>&#x2462;</span></a>
 <samp class=pp>True</samp></pre>
 <ol>
-<li>FIXME
+<li>Once again, this <abbr>URL</abbr> doesn&#8217;t really exist. I&#8217;ve set up my server to issue a permanent redirect to <code>http://diveintopython3.org/examples/feed.xml</code>.
+<li>And here it is: status code <code>301</code>. But again, notice what <em>didn&#8217;t</em> happen: there was no request to the redirect <abbr>URL</abbr>. Why not? Because it&#8217;s already cached locally.
+<li><code>httplib2</code> &#8220;followed&#8221; the redirect right into its cache.
 </ol>
+
+<p>But wait! There&#8217;s more!
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>response2, content2 = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response2.fromcache</kbd>                                                                  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>content2 == content</kbd>                                                                  <span class=u>&#x2462;</span></a>
+<samp class=pp>True</samp>
+</pre>
+<ol>
+<li>Here&#8217;s the difference between temporary and permanent redirects: once <code>httplib2</code> follows a permanent redirect, all further requests for that <abbr>URL</abbr> will transparently be rewritten to the target <abbr>URL</abbr> <em>without hitting the network for the original <abbr>URL</abbr></em>. Remember, debugging is still turned on, yet there is no output of network activity whatsoever.
+<li>Yep, this response was retrieved from the local cache.
+<li>Yep, you got the entire feed (from the cache).
+</ol>
+
+<p><abbr>HTTP</abbr>. It works.
 
 <p class=a>&#x2042;
 
