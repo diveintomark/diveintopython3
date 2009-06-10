@@ -7,6 +7,7 @@ rm -rf build
 mkdir build
 cp robots.txt *.css build/
 cp -R j build/
+cp -R i build/
 rm -f examples/*.pyc
 cp -R examples build/
 
@@ -68,10 +69,10 @@ sed -i -e "s|=http:|=|g" build/*.html
 sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
-chmod 755 build/j
-chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess
+chmod 755 build/j build/i
+chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess build/i/*
 
 # ship it!
 echo "publishing"
 rsync -essh -avzP build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
-rsync -essh -avzP build/*.html build/examples build/*.txt diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avzP build/*.html build/examples build/*.txt build/i diveintomark.org:~/web/diveintopython3.org/

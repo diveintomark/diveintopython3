@@ -636,60 +636,139 @@ user-agent: Python-httplib2/$Rev: 259 $'
 
 <h2 id=beyond-get>Beyond HTTP GET</h2>
 
-<p>FIXME
+<p><abbr>HTTP</abbr> web services are not limited to <code>GET</code> requests. What if you want to create something new? Whenever you post a comment on a discussion forum, update your weblog, publish your status on a microblogging service like <a href=http://twitter.com/>Twitter</a> or <a href=http://identi.ca/>Identi.ca</a>, you&#8217;re probably already using <abbr>HTTP</abbr> <code>POST</code>.
 
-<pre>
-<samp class=p>>>> </samp><kbd class=pp>import httplib2</kbd>
+<p>Both Twitter and Identi.ca both offer a simple <abbr>HTTP</abbr>-based <abbr>API</abbr> for publishing and updating your status in 140 characters or less. Let&#8217;s look at <a href=http://laconi.ca/trac/wiki/TwitterCompatibleAPI>Identi.ca&#8217;s <abbr>API</abbr> documentation</a> for updating your status:
+
+<blockquote class=pf>
+<p><b>Identi.ca <abbr>REST</abbr> <abbr>API</abbr> Method: statuses/update</b><br>
+Updates the authenticating user&#8217;s status.  Requires the <code>status</code> parameter specified below.  Request must be a <code>POST</code>.
+ 
+<dl>
+<dt><abbr>URL</abbr>
+<dd><code>https://identi.ca/api/statuses/update.<i><var>format</var></i></code>
+<dt>Formats
+<dd><code>xml</code>, <code>json</code>, <code>rss</code>, <code>atom</code>
+<dt><abbr>HTTP</abbr> Method(s)
+<dd><code>POST</code>
+<dt>Requires Authentication
+<dd>true
+<dt>Parameters
+<dd><code>status</code>. Required. The text of your status update. <abbr>URL</abbr>-encode as necessary.
+</dl>
+</blockquote>
+
+<p>How does this work? To publish a new message on Identi.ca, you need to issue an <abbr>HTTP</abbr> <code>POST</code> request to <code>http://identi.ca/api/statuses/update.<i>format</i></code>. (The <var>format</var> bit is not part of the <abbr>URL</abbr>; you replace it with the data format you want the server to return in response to your request. So if you want a response in <abbr>XML</abbr>, you would post the request to <code>https://identi.ca/api/statuses/update.xml</code>.) The request needs to include a parameter called <code>status</code>, which contains the text of your status update. And the request needs to be authenticated.
+
+<p>Authenticated? Sure. To update your status on Identi.ca, you need to prove who you are. Identi.ca is not a wiki; only you can update your own status. Identi.ca uses <a href=http://en.wikipedia.org/wiki/Basic_access_authentication><abbr>HTTP</abbr> Basic Authentication</a> (<i>a.k.a.</i> <a href=http://www.ietf.org/rfc/rfc2617.txt>RFC 2617</a>) over <abbr>SSL</abbr> to provide secure but easy-to-use authentication. <code>httplib2</code> supports both <abbr>SSL</abbr> and <abbr>HTTP</abbr> Basic Authentication, so this part is easy.
+
+<p>A <code>POST</code> request is different from a <code>GET</code> request, because it includes a <i>payload</i>. The payload is the data you want to send to the server. The once piece of data that this <abbr>API</abbr> method requires is <code>status</code>, and it should be <i><abbr>URL</abbr>-encoded</i>. This is a very simple serialization format that takes a set of key-value pairs (<i>i.e.</i> a <a href=native-datatypes.html#dictionaries>dictionary</a>) and transforms it into a string.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>from urllib.parse import urlencode</kbd>              <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>data = {'status': 'Test update from Python 3'}</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>urlencode(data)</kbd>                                 <span class=u>&#x2462;</span></a>
+<samp>'status=test+update+from+python+3'</samp></pre>
+<ol>
+<li>Python comes with a utility function to <abbr>URL</abbr>-encode a dictionary: <code>urllib.parse.urlencode()</code>.
+<li>This is the sort of dictionary that the Identi.ca <abbr>API</abbr> is looking for. It contains one key, <code>status</code>, whose value is the text of a single status update.
+<li>This is what the <abbr>URL</abbr>-encoded string looks like. This is the <i>payload</i> that will be sent &#8220;on the wire&#8221; to the Identi.ca <abbr>API</abbr> server in your <abbr>HTTP</abbr> <code>POST</code> request.
+</ol>
+
+<p>
+
+<pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>from urllib.parse import urlencode</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>httplib2.debuglevel = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>h = httplib2.Http('.cache')</kbd>
 <samp class=p>>>> </samp><kbd class=pp>data = {'status': 'Test update from Python 3'}</kbd>
-<samp class=p>>>> </samp><kbd class=pp>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>')</kbd>
-<samp class=p>>>> </samp><kbd class=pp>resp, content = h.request('http://twitter.com/statuses/update.xml', 'POST', urlencode(data))</kbd>
-<samp class=p>>>> </samp><kbd class=pp>resp.status</kbd>
-<samp class=pp>200</samp>
-<samp class=p>>>> </samp><kbd class=pp>from xml.etree import ElementTree as etree</kbd>
-<samp class=p>>>> </samp><kbd class=pp>tree = etree.fromstring(content)</kbd>
-<samp class=p>>>> </samp><kbd class=pp>print(etree.tostring(tree))</kbd>
-<samp class=pp>&lt;status>
-  &lt;created_at>Sat May 30 19:11:38 +0000 2009&lt;/created_at>
-  &lt;id>1973974228&lt;/id>
-  &lt;text>Test update from Python 3&lt;/text>
-  &lt;source>web&lt;/source>
-  &lt;truncated>false&lt;/truncated>
-  &lt;in_reply_to_status_id />
-  &lt;in_reply_to_user_id />
-  &lt;favorited>false&lt;/favorited>
-  &lt;in_reply_to_screen_name />
-  &lt;user>
-    &lt;id>8294212&lt;/id>
-    &lt;name>Mark Pilgrim&lt;/name>
-    &lt;screen_name>diveintomark&lt;/screen_name>
-    &lt;location>Apex, NC&lt;/location>
-    &lt;description>Like a fine spice&lt;/description>
-    &lt;profile_image_url>http://s3.amazonaws.com/twitter_production/profile_images/72859681/beau_normal.jpg&lt;/profile_image_url>
+<a><samp class=p>>>> </samp><kbd class=pp>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>')</kbd>                 <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>resp, content = h.request('https://identi.ca/api/statuses/update.xml',</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    'POST',</kbd>                                                             <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    urlencode(data),</kbd>                                                    <span class=u>&#x2463;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    headers={'Content-Type': 'application/x-www-form-urlencoded'})</kbd>      <span class=u>&#x2464;</span></a></pre>
+<ol>
+<li>This is how <code>httplib2</code> handles authentication. Store your username and password with the <code>add_credentials()</code> method. When <code>httplib2</code> tries to issue the request, the server will respond with a <code>401 Authentication Required</code>, and it will list which authentication methods it supports. <code>httplib2</code> will automatically format the appropriate FIXME
+<li>
+<li>
+<li>
+<li>
+</ol>
 
-    &lt;url>http://diveintomark.org/&lt;/url>
-    &lt;protected>false&lt;/protected>
-    &lt;followers_count>2565&lt;/followers_count>
-    &lt;profile_background_color>FFFFFF&lt;/profile_background_color>
-    &lt;profile_text_color>333333&lt;/profile_text_color>
-    &lt;profile_link_color>333333&lt;/profile_link_color>
-    &lt;profile_sidebar_fill_color>ffffff&lt;/profile_sidebar_fill_color>
-    &lt;profile_sidebar_border_color>333333&lt;/profile_sidebar_border_color>
-    &lt;friends_count>44&lt;/friends_count>
-    &lt;created_at>Sun Aug 19 23:58:36 +0000 2007&lt;/created_at>
-    &lt;favourites_count>71&lt;/favourites_count>
-    &lt;utc_offset>-18000&lt;/utc_offset>
-    &lt;time_zone>Eastern Time (US &amp; Canada)&lt;/time_zone>
-    &lt;profile_background_image_url>http://static.twitter.com/images/themes/theme1/bg.gif&lt;/profile_background_image_url>
-    &lt;profile_background_tile>false&lt;/profile_background_tile>
-    &lt;statuses_count>527&lt;/statuses_count>
-    &lt;notifications>false&lt;/notifications>
-    &lt;following>false&lt;/following>
-  &lt;/user>
+<pre class=screen>
+# continued from the previous example
+<samp>send: b'POST /api/statuses/update.xml HTTP/1.1
+Host: identi.ca
+Accept-Encoding: identity
+Content-Length: 32
+content-type: application/x-www-form-urlencoded
+user-agent: Python-httplib2/$Rev: 259 $
+
+status=Test+update+from+Python+3'
+reply: 'HTTP/1.1 401 Unauthorized'
+send: b'POST /api/statuses/update.xml HTTP/1.1
+Host: identi.ca
+Accept-Encoding: identity
+Content-Length: 32
+content-type: application/x-www-form-urlencoded
+authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2
+user-agent: Python-httplib2/$Rev: 259 $
+
+status=Test+update+from+Python+3'
+reply: 'HTTP/1.1 200 OK'</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd class=pp>print(content.decode('utf-8'))</kbd>
+<samp class=pp>&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;status>
+ &lt;text>Test update from Python 3&lt;/text>
+ &lt;truncated>false&lt;/truncated>
+ &lt;created_at>Wed Jun 10 03:53:46 +0000 2009&lt;/created_at>
+ &lt;in_reply_to_status_id>&lt;/in_reply_to_status_id>
+ &lt;source>api&lt;/source>
+ &lt;id>5131472&lt;/id>
+ &lt;in_reply_to_user_id>&lt;/in_reply_to_user_id>
+ &lt;in_reply_to_screen_name>&lt;/in_reply_to_screen_name>
+ &lt;favorited>false&lt;/favorited>
+ &lt;user>
+  &lt;id>3212&lt;/id>
+  &lt;name>Mark Pilgrim&lt;/name>
+  &lt;screen_name>diveintomark&lt;/screen_name>
+  &lt;location>27502, US&lt;/location>
+  &lt;description>tech writer, husband, father&lt;/description>
+  &lt;profile_image_url>http://avatar.identi.ca/3212-48-20081216000626.png&lt;/profile_image_url>
+  &lt;url>http://diveintomark.org/&lt;/url>
+  &lt;protected>false&lt;/protected>
+  &lt;followers_count>329&lt;/followers_count>
+  &lt;profile_background_color>&lt;/profile_background_color>
+  &lt;profile_text_color>&lt;/profile_text_color>
+  &lt;profile_link_color>&lt;/profile_link_color>
+  &lt;profile_sidebar_fill_color>&lt;/profile_sidebar_fill_color>
+  &lt;profile_sidebar_border_color>&lt;/profile_sidebar_border_color>
+  &lt;friends_count>2&lt;/friends_count>
+  &lt;created_at>Wed Jul 02 22:03:58 +0000 2008&lt;/created_at>
+  &lt;favourites_count>30768&lt;/favourites_count>
+  &lt;utc_offset>0&lt;/utc_offset>
+  &lt;time_zone>UTC&lt;/time_zone>
+  &lt;profile_background_image_url>&lt;/profile_background_image_url>
+  &lt;profile_background_tile>false&lt;/profile_background_tile>
+  &lt;statuses_count>122&lt;/statuses_count>
+  &lt;following>false&lt;/following>
+  &lt;notifications>false&lt;/notifications>
+&lt;/user>
 &lt;/status></samp></pre>
+<ol>
+<li>FIXME
+</ol>
 
 <p>FIXME
+
+<p class=c><img class=fr src=i/identica-screenshot.png alt="screenshot of identi.ca/notice/5131472 showing status just published" width=740 height=449>
 
 <p class=a>&#x2042;
 
@@ -699,11 +778,32 @@ user-agent: Python-httplib2/$Rev: 259 $'
 
 <pre class=screen>
 # continued from the previous example
-<samp class=p>>>> </samp><kbd class=pp>tree.findtext('id')</kbd>
-<samp class=pp>'1973974228'</samp>
-<samp class=p>>>> </samp><kbd class=pp>resp, delete_content = h.request('http://twitter.com/statuses/destroy/{0}.xml'.format(tree.findtext('id')), 'DELETE')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>from xml.etree import ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = etree.fromstring(content)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>status_id = tree.findtext('id')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>status_id</kbd>
+<samp class=pp>'5131472'</samp>
+<samp class=p>>>> </samp><kbd class=pp>resp, deleted_content = h.request('https://identi.ca/api/statuses/destroy/{0}.xml'.format(status_id), 'DELETE')</kbd>
+<samp>send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1
+Host: identi.ca
+Accept-Encoding: identity
+user-agent: Python-httplib2/$Rev: 259 $
+
+'
+reply: 'HTTP/1.1 401 Unauthorized'
+send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1
+Host: identi.ca
+Accept-Encoding: identity
+authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2
+user-agent: Python-httplib2/$Rev: 259 $
+
+'
+reply: 'HTTP/1.1 200 OK'</samp>
 <samp class=p>>>> </samp><kbd class=pp>resp.status</kbd>
 <samp class=pp>200</samp></pre>
+<ol>
+<li>FIXME
+</ol>
 
 <p class=a>&#x2042;
 
