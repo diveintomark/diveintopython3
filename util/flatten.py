@@ -44,7 +44,7 @@ for filename in chapters:
     for line in open(filename, encoding="utf-8"):
         if line.count('<h1>'):
             include = True
-        if line.count('<p class=nav') or line.count('<p class=c>&copy;'):
+        if line.count('<p class=v') or line.count('<p class=c>&copy;'):
             include = False
         if line.count('<p id=toc'):
             line = line.replace(' id=toc', '')
