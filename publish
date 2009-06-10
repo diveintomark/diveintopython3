@@ -70,7 +70,7 @@ sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
 chmod 755 build/j build/i
-chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess build/i/*
+chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess build/i/* build/i/.htaccess
 
 # ship it!
 echo "publishing"
