@@ -684,17 +684,18 @@ Updates the authenticating user&#8217;s status.  Requires the <code>status</code
 <samp class=p>>>> </samp><kbd class=pp>h = httplib2.Http('.cache')</kbd>
 <samp class=p>>>> </samp><kbd class=pp>data = {'status': 'Test update from Python 3'}</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>')</kbd>                 <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>resp, content = h.request('https://identi.ca/api/statuses/update.xml',</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>resp, content = h.request('https://identi.ca/api/statuses/update.xml',</kbd>
 <a><samp class=p>... </samp><kbd class=pp>    'POST',</kbd>                                                             <span class=u>&#x2462;</span></a>
 <a><samp class=p>... </samp><kbd class=pp>    urlencode(data),</kbd>                                                    <span class=u>&#x2463;</span></a>
 <a><samp class=p>... </samp><kbd class=pp>    headers={'Content-Type': 'application/x-www-form-urlencoded'})</kbd>      <span class=u>&#x2464;</span></a></pre>
 <ol>
-<li>This is how <code>httplib2</code> handles authentication. Store your username and password with the <code>add_credentials()</code> method. When <code>httplib2</code> tries to issue the request, the server will respond with a <code>401 Authentication Required</code>, and it will list which authentication methods it supports. <code>httplib2</code> will automatically format the appropriate FIXME
-<li>
-<li>
-<li>
-<li>
+<li>This is how <code>httplib2</code> handles authentication. Store your username and password with the <code>add_credentials()</code> method. When <code>httplib2</code> tries to issue the request, the server will respond with a <code>401 Unauthorized</code> status code, and it will list which authentication methods it supports (in the <code>WWW-Authenticate</code> header). <code>httplib2</code> will automatically construct an <code>Authorization</code> header and re-request the <abbr>URL</abbr>.
+<li>The second parameter is the type of <abbr>HTTP</abbr> request, in this case <code>POST</code>.
+<li>The third parameter is the <i>payload</i> to send to the server. We&#8217;re sending the <abbr>URL</abbr>-encoded dictionary with a status message.
+<li>Finally, we need to tell the server that the payload is <abbr>URL</abbr>-encoded data.
 </ol>
+
+<p>This is what goes over the wire:
 
 <pre class=screen>
 # continued from the previous example
@@ -706,32 +707,37 @@ content-type: application/x-www-form-urlencoded
 user-agent: Python-httplib2/$Rev: 259 $
 
 status=Test+update+from+Python+3'
-reply: 'HTTP/1.1 401 Unauthorized'
-send: b'POST /api/statuses/update.xml HTTP/1.1
+<a>reply: 'HTTP/1.1 401 Unauthorized'                        <span class=u>&#x2460;</span></a>
+<a>send: b'POST /api/statuses/update.xml HTTP/1.1            <span class=u>&#x2461;</span></a>
 Host: identi.ca
 Accept-Encoding: identity
 Content-Length: 32
 content-type: application/x-www-form-urlencoded
-authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2
+<a>authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2  <span class=u>&#x2462;</span></a>
 user-agent: Python-httplib2/$Rev: 259 $
 
 status=Test+update+from+Python+3'
-reply: 'HTTP/1.1 200 OK'</samp></pre>
+<a>reply: 'HTTP/1.1 200 OK'                                  <span class=u>&#x2463;</span></a></samp></pre>
 <ol>
-<li>FIXME
+<li>After the first request, the server responds with a <code>401 Unauthorized</code> status code. <code>httplib2</code> will never send authentication headers unless the server explicitly asks for them. This is how the server asks for them.
+<li><code>httplib2</code> immediately turns around and requests the same <abbr>URL</abbr> a second time.
+<li>This time, it includes the username and password that you added with the <code>add_credentials()</code> method.
+<li>It worked!
 </ol>
+
+<p>What does the server send back after a successful request? That depends entirely on the web service <abbr>API</abbr>. In some protocols (like the <a href=http://www.ietf.org/rfc/rfc5023.txt>Atom Publishing Protocol</a>), the server sends back a <code>201 Created</code> status code and the location of the newly created resource in the <code>Location</code> header. Identi.ca sends back a <code>200 OK</code> and an <abbr>XML</abbr> document containing information about the newly created resource.
 
 <pre class=screen>
 # continued from the previous example
-<samp class=p>>>> </samp><kbd class=pp>print(content.decode('utf-8'))</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>print(content.decode('utf-8'))</kbd>                             <span class=u>&#x2460;</span></a>
 <samp class=pp>&lt;?xml version="1.0" encoding="UTF-8"?>
 &lt;status>
- &lt;text>Test update from Python 3&lt;/text>
+<a> &lt;text>Test update from Python 3&lt;/text>                        <span class=u>&#x2461;</span></a>
  &lt;truncated>false&lt;/truncated>
  &lt;created_at>Wed Jun 10 03:53:46 +0000 2009&lt;/created_at>
  &lt;in_reply_to_status_id>&lt;/in_reply_to_status_id>
  &lt;source>api&lt;/source>
- &lt;id>5131472&lt;/id>
+<a> &lt;id>5131472&lt;/id>                                              <span class=u>&#x2462;</span></a>
  &lt;in_reply_to_user_id>&lt;/in_reply_to_user_id>
  &lt;in_reply_to_screen_name>&lt;/in_reply_to_screen_name>
  &lt;favorited>false&lt;/favorited>
@@ -763,47 +769,68 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
 &lt;/user>
 &lt;/status></samp></pre>
 <ol>
-<li>FIXME
+<li>Remember, the data returned by <code>httplib2</code> is always <a href=strings.html#byte-arrays>bytes</a>, not a string. To convert it to a string, you need to decode it using the proper character encoding. Identi.ca&#8217;s <abbr>API</abbr> always returns results in UTF-8, so that part is easy.
+<li>There&#8217;s the text of the status message we just published.
+<li>There&#8217;s the unique identifier for the new status message. Identi.ca uses this to construct a <abbr>URL</abbr> for viewing the message on the web.
 </ol>
 
-<p>FIXME
+<p>And here it is:
 
-<p class=c><img class=fr src=i/identica-screenshot.png alt="screenshot showing published status on identi.ca" width=740 height=449>
+<p class=c><img class=fr src=i/identica-screenshot.png alt="screenshot showing published status message on Identi.ca" width=740 height=449>
 
 <p class=a>&#x2042;
 
 <h2 id=beyond-post>Beyond HTTP POST</h2>
 
-<p>FIXME
+<p><abbr>HTTP</abbr> isn&#8217;t limited to <code>GET</code> and <code>POST</code>. Those are certainly the most common types of requests, especially in web browsers. But web service <abbr>API</abbr>s can go beyond <code>GET</code> and <code>POST</code>, and <code>httplib2</code> is ready.
 
 <pre class=screen>
 # continued from the previous example
 <samp class=p>>>> </samp><kbd class=pp>from xml.etree import ElementTree as etree</kbd>
-<samp class=p>>>> </samp><kbd class=pp>tree = etree.fromstring(content)</kbd>
-<samp class=p>>>> </samp><kbd class=pp>status_id = tree.findtext('id')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = etree.fromstring(content)</kbd>                                          <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>status_id = tree.findtext('id')</kbd>                                           <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>status_id</kbd>
 <samp class=pp>'5131472'</samp>
-<samp class=p>>>> </samp><kbd class=pp>resp, deleted_content = h.request('https://identi.ca/api/statuses/destroy/{0}.xml'.format(status_id), 'DELETE')</kbd>
-<samp>send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1
+<a><samp class=p>>>> </samp><kbd class=pp>url = 'https://identi.ca/api/statuses/destroy/{0}.xml'.format(status_id)</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>resp, deleted_content = h.request(url, 'DELETE')</kbd>                          <span class=u>&#x2463;</span></a></pre>
+<ol>
+<li>The server returned <abbr>XML</abbr>, right? You know <a href=xml.html#xml-parse>how to parse <abbr>XML</abbr></a>.
+<li>The <code>findtext()</code> method finds the first instance of the given expression and extracts its text content. In this case, we&#8217;re just looking for an <code>&lt;id></code> element.
+<li>Based on the text content of the <code>&lt;id></code> element, we can construct a <abbr>URL</abbr> to delete the status message we just published.
+<li>To delete a message, you simply issue an <abbr>HTTP</abbr> <code>DELETE</code> request to that <abbr>URL</abbr>.
+</ol>
+
+<p>This is what goes over the wire:
+
+<pre class=screen>
+<samp><a>send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1      <span class=u>&#x2460;</span></a>
 Host: identi.ca
 Accept-Encoding: identity
 user-agent: Python-httplib2/$Rev: 259 $
 
 '
-reply: 'HTTP/1.1 401 Unauthorized'
-send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1
+<a>reply: 'HTTP/1.1 401 Unauthorized'                             <span class=u>&#x2461;</span></a>
+<a>send: b'DELETE /api/statuses/destroy/5131472.xml HTTP/1.1      <span class=u>&#x2462;</span></a>
 Host: identi.ca
 Accept-Encoding: identity
-authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2
+<a>authorization: Basic SECRET_HASH_CONSTRUCTED_BY_HTTPLIB2       <span class=u>&#x2463;</span></a>
 user-agent: Python-httplib2/$Rev: 259 $
 
 '
-reply: 'HTTP/1.1 200 OK'</samp>
+<a>reply: 'HTTP/1.1 200 OK'                                       <span class=u>&#x2464;</span></a></samp>
 <samp class=p>>>> </samp><kbd class=pp>resp.status</kbd>
 <samp class=pp>200</samp></pre>
 <ol>
-<li>FIXME
+<li>&#8220;Delete this status message, please.&#8221;
+<li>&#8220;I&#8217;m sorry, Dave, I&#8217;m afraid I can&#8217;t do that.&#8221;
+<li>&#8220;Delete this status message, please&hellip;
+<li>&hellip;here&#8217;s my username and password.&#8221;
+<li>&#8220;Consider it done!&#8221;
 </ol>
+
+<p>And just like that, poof, it&#8217;s gone.
+
+<p class=c><img class=fr src=i/identica-deleted.png alt="screenshot showing deleted message on Identi.ca" width=740 height=449>
 
 <p class=a>&#x2042;
 
