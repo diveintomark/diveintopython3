@@ -26,6 +26,399 @@ body{counter-reset:h1 12}
 OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
 -->
 
+<h2 id=file-objects>File Objects</h2>
+
+<p>Python has a built-in function, <code>open()</code>, for opening a file on disk. The <code>open()</code> function returns a <i>file object</i>, which has methods and attributes for getting information about and manipulating the file.
+
+<pre>
+>>> image = open('examples/beauregard-100x100.jpg', 'rb')
+>>> image
+&lt;io.BufferedReader object at 0x00C7A390>
+>>> image.mode
+'rb'
+>>> image.name
+'examples/beauregard-100x100.jpg'
+>>>
+<pre class=screen><samp class=p>>>> </samp><kbd>f = open("/music/_singles/kairo.mp3", "rb")</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>f</kbd>       <span>&#x2461;</span>
+&lt;open file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
+<samp class=p>>>> </samp><kbd>f.mode</kbd>  <span>&#x2462;</span>
+'rb'
+<samp class=p>>>> </samp><kbd>f.name</kbd>  <span>&#x2463;</span>
+'/music/_singles/kairo.mp3'</pre>
+<ol>
+<li>The <code>open</code> method can take up to three parameters: a filename, a mode, and a buffering parameter. Only the first one, the filename, is required; the other two are <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a>. If not specified, the file is opened for reading in text mode. Here you are opening the file for reading in binary mode.  (<code>print open.__doc__</code> displays a great explanation of all the possible modes.)
+<li>The <code>open</code> function returns an object (by now, <a href="#odbchelper.objects" title="2.4. Everything Is an Object">this should not surprise you</a>). A file object has several useful attributes.
+<li>The <var>mode</var> attribute of a file object tells you in which mode the file was opened.
+<li>The <var>name</var> attribute of a file object tells you the name of the file that the file object has open.
+<h3>6.2.1. Reading Files</h3>
+<p>After you open a file, the first thing you'll want to do is read from it, as shown in the next example.
+<div class=example><h3>Example 6.4. Reading a File</h3><pre class=screen>
+
+<pre>
+>>> image
+&lt;io.BufferedReader object at 0x00C7A390>
+>>> image.tell()
+0
+>>> data = image.read(3)
+>>> data
+b'\xff\xd8\xff'
+>>> image.tell()
+3
+>>> image.seek(0)
+0
+>>> data = image.read()
+>>> len(data)
+3150
+
+<samp class=p>>>> </samp><kbd>f</kbd>
+&lt;open file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
+<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2460;</span>
+0
+<samp class=p>>>> </samp><kbd>f.seek(-128, 2)</kbd>       <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2462;</span>
+7542909
+<samp class=p>>>> </samp><kbd>tagData = f.read(128)</kbd> <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd>tagData</kbd>
+<samp>'TAGKAIRO****THE BEST GOA         ***DJ MARY-JANE***            
+Rave Mix    2000http://mp3.com/DJMARYJANE     \037'</samp>
+<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2464;</span>
+7543037</pre>
+<ol>
+<li>A file object maintains state about the file it has open. The <code>tell</code> method of a file object tells you your current position in the open file. Since you haven't done anything with this file    yet, the current position is <code>0</code>, which is the beginning of the file.
+<li>The <code>seek</code> method of a file object moves to another position in the open file. The second parameter specifies what the first one means;
+<code>0</code> means move to an absolute position (counting from the start of the file), <code>1</code> means move to a relative position (counting from the current position), and <code>2</code> means move to a position relative to the end of the file. Since the <abbr>MP3</abbr> tags you're looking for are stored at the end of the file, you use <code>2</code> and tell the file object to move to a position <code>128</code> bytes from the end of the file.
+<li>The <code>tell</code> method confirms that the current file position has moved.
+<li>The <code>read</code> method reads a specified number of bytes from the open file and returns a string with the data that was read. The optional    parameter specifies the maximum number of bytes to read. If no parameter is specified, <code>read</code> will read until the end of the file. (You could have simply said <code>read()</code> here, since you know exactly where you are in the file and you are, in fact, reading the last 128 bytes.)  The read data    is assigned to the <var>tagData</var> variable, and the current position is updated based on how many bytes were read.
+<li>The <code>tell</code> method confirms that the current position has moved. If you do the math, you'll see that after reading 128 bytes, the position    has been incremented by 128.
+<h3>6.2.2. Closing Files</h3>
+<p>Open files consume system resources, and depending on the file mode, other programs may not be able to access them. It's
+   important to close files as soon as you're finished with them.
+<div class=example><h3>Example 6.5. Closing a File</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>f</kbd>
+&lt;open file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
+<samp class=p>>>> </samp><kbd>f.closed</kbd>       <span>&#x2460;</span>
+False
+<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>f</kbd>
+&lt;closed file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
+<samp class=p>>>> </samp><kbd>f.closed</kbd>       <span>&#x2462;</span>
+True
+<samp class=p>>>> </samp><kbd>f.seek(0)</kbd>      <span>&#x2463;</span>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+ValueError: I/O operation on closed file</samp>
+<samp class=p>>>> </samp><kbd>f.tell()</kbd>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+ValueError: I/O operation on closed file</samp>
+<samp class=p>>>> </samp><kbd>f.read()</kbd>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+ValueError: I/O operation on closed file</samp>
+<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2464;</span></pre>
+<ol>
+<li>The <var>closed</var> attribute of a file object indicates whether the object has a file open or not. In this case, the file is still open (<var>closed</var> is <code>False</code>).
+<li>To close a file, call the <code>close</code> method of the file object. This frees the lock (if any) that you were holding on the file, flushes buffered writes (if any)    that the system hadn't gotten around to actually writing yet, and releases the system resources.
+<li>The <var>closed</var> attribute confirms that the file is closed.
+<li>Just because a file is closed doesn't mean that the file object ceases to exist. The variable <var>f</var> will continue to exist until it <a href="#fileinfo.scope" title="Example 5.8. Trying to Implement a Memory Leak">goes out of scope</a> or gets manually deleted. However, none of the methods that manipulate an open file will work once the file has been closed;    they all raise an exception.
+<li>Calling <code>close</code> on a file object whose file is already closed does <em>not</em> raise an exception; it fails silently.
+<h3>6.2.3. Handling <abbr>I/O</abbr> Errors</h3>
+<p>Now you've seen enough to understand the file handling code in the <code>fileinfo.py</code> sample code from teh previous chapter. This example shows how to safely open and read from a file and gracefully handle
+   errors.
+<div class=example><h3 id="fileinfo.files.incode">Example 6.6. File Objects in <code>MP3FileInfo</code></h3><pre><code>
+        try:              <span>&#x2460;</span> fsock = open(filename, "rb", 0) <span>&#x2461;</span> try:              fsock.seek(-128, 2)         <span>&#x2462;</span>     tagdata = fsock.read(128)   <span>&#x2463;</span> finally:      <span>&#x2464;</span>     fsock.close()               . . .
+        except IOError:   <span>&#x2465;</span> pass         </pre>
+<ol>
+<li>Because opening and reading files is risky and may raise an exception, all of this code is wrapped in a <code>try...except</code> block. (Hey, isn't <a href="#odbchelper.indenting" title="2.5. Indenting Code">standardized indentation</a> great?  This is where you start to appreciate it.)
+<li>The <code>open</code> function may raise an <code>IOError</code>. (Maybe the file doesn't exist.)
+<li>The <code>seek</code> method may raise an <code>IOError</code>. (Maybe the file is smaller than 128 bytes.)
+<li>The <code>read</code> method may raise an <code>IOError</code>. (Maybe the disk has a bad sector, or it's on a network drive and the network just went down.)
+<li>This is new: a <code>try...finally</code> block. Once the file has been opened successfully by the <code>open</code> function, you want to make absolutely sure that you close it, even if an exception is raised by the <code>seek</code> or <code>read</code> methods. That's what a <code>try...finally</code> block is for: code in the <code>finally</code> block will <em>always</em> be executed, even if something in the <code>try</code> block raises an exception. Think of it as code that gets executed on the way out, regardless of what happened before.
+<li>At last, you handle your <code>IOError</code> exception. This could be the <code>IOError</code> exception raised by the call to <code>open</code>, <code>seek</code>, or <code>read</code>. Here, you really don't care, because all you're going to do is ignore it silently and continue. (Remember, <code>pass</code> is a Python statement that <a href="#fileinfo.class.simplest" title="Example 5.3. The Simplest Python Class">does nothing</a>.)  That's perfectly legal; &#8220;handling&#8221; an exception can mean explicitly doing nothing. It still counts as handled, and processing will continue normally on the    next line of code after the <code>try...except</code> block.
+<h3>6.2.4. Writing to Files</h3>
+<p>As you would expect, you can also write to files in much the same way that you read from them. There are two basic file modes:
+<div class=itemizedlist>
+<ul>
+<li>"Append" mode will add data to the end of the file.
+<li>"write" mode will overwrite the file.
+</ul>
+<p>Either mode will create the file automatically if it doesn't already exist, so there's never a need for any sort of fiddly
+   "if the log file doesn't exist yet, create a new empty file just so you can open it for the first time" logic. Just open
+   it and start writing.
+<div class=example><h3 id="fileinfo.files.writeandappend">Example 6.7. Writing to Files</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>logfile = open('test.log', 'w')</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>logfile.write('test succeeded')</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>logfile.close()</kbd>
+<samp class=p>>>> </samp><kbd>print file('test.log').read()</kbd>   <span>&#x2462;</span>
+test succeeded
+<samp class=p>>>> </samp><kbd>logfile = open('test.log', 'a')</kbd> <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd>logfile.write('line 2')</kbd>
+<samp class=p>>>> </samp><kbd>logfile.close()</kbd>
+<samp class=p>>>> </samp><kbd>print file('test.log').read()</kbd>   <span>&#x2464;</span>
+test succeededline 2
+</pre>
+<ol>
+<li>You start boldly by creating either the new file <code>test.log</code> or overwrites the existing file, and opening the file for writing. (The second parameter <code>"w"</code> means open the file for writing.)  Yes, that's all as dangerous as it sounds. I hope you didn't care about the previous    contents of that file, because it's gone now.
+<li>You can add data to the newly opened file with the <code>write</code> method of the file object returned by <code>open</code>.
+<li><code>file</code> is a synonym for <code>open</code>. This one-liner opens the file, reads its contents, and prints them.
+<li>You happen to know that <code>test.log</code> exists (since you just finished writing to it), so you can open it and append to it. (The <code>"a"</code> parameter means open the file for appending.)  Actually you could do this even if the file didn't exist, because opening    the file for appending will create the file if necessary. But appending will <em>never</em> harm the existing contents of the file.
+<li>As you can see, both the original line you wrote and the second line you appended are now in <code>test.log</code>. Also note that carriage returns are not included. Since you didn't write them explicitly to the file either time, the    file doesn't include them. You can write a carriage return with the <code>"\n"</code> character. Since you didn't do this, everything you wrote to the file ended up smooshed together on the same line.
+<div class=itemizedlist>
+<h3>Further Reading on File Handling</h3>
+<ul>
+<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses reading and writing files, including how to <a href="http://www.python.org/doc/current/tut/node9.html#SECTION009210000000000000000">read a file one line at a time into a list</a>.
+
+<li><a href="http://www.effbot.org/guides/">eff-bot</a> discusses efficiency and performance of <a href="http://www.effbot.org/guides/readline-performance.htm">various ways of reading a file</a>.
+
+<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/552">common questions about files</a>.
+
+<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/bltin-file-objects.html">all the file object methods</a>.
+
+</ul>
+
+
+
+
+
+<h2 id="kgp.openanything">10.1. Abstracting input sources</h2>
+<p>One of Python's greatest strengths is its dynamic binding, and one powerful use of dynamic binding is the <em>file-like object</em>.
+<p>Many functions which require an input source could simply take a filename, go open the file for reading, read it, and close
+it when they're done. But they don't. Instead, they take a <em>file-like object</em>.
+<p>In the simplest case, a <em>file-like object</em> is any object with a <code>read</code> method with an optional <var>size</var> parameter, which returns a string. When called with no <var>size</var> parameter, it reads everything there is to read from the input source and returns all the data as a single string. When
+called with a <var>size</var> parameter, it reads that much from the input source and returns that much data; when called again, it picks up where it left
+off and returns the next chunk of data.
+<p>This is how <a href="#fileinfo.files" title="6.2. Working with File Objects">reading from real files</a> works; the difference is that you're not limiting yourself to real files. The input source could be anything: a file on
+disk, a web page, even a hard-coded string. As long as you pass a file-like object to the function, and the function simply
+calls the object's <code>read</code> method, the function can handle any kind of input source without specific code to handle each kind.
+<p>In case you were wondering how this relates to <abbr>XML</abbr> processing, <code>minidom.parse</code> is one such function which can take a file-like object.
+<div class=example><h3>Example 10.1. Parsing <abbr>XML</abbr> from a file</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>from xml.dom import minidom</kbd>
+<samp class=p>>>> </samp><kbd>fsock = open('binary.xml')</kbd>    <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>xmldoc = minidom.parse(fsock)</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>fsock.close()</kbd>                 <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>          <span>&#x2463;</span>
+<samp>&lt;?xml version="1.0" ?>
+&lt;grammar>
+&lt;ref id="bit">
+  &lt;p>0&lt;/p>
+  &lt;p>1&lt;/p>
+&lt;/ref>
+&lt;ref id="byte">
+  &lt;p>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>\
+&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;xref id="bit"/>&lt;/p>
+&lt;/ref>
+&lt;/grammar></span></pre>
+<ol>
+<li>First, you open the file on disk. This gives you a <a href="#fileinfo.files" title="6.2. Working with File Objects">file object</a>.
+<li>You pass the file object to <code>minidom.parse</code>, which calls the <code>read</code> method of <var>fsock</var> and reads the <abbr>XML</abbr> document from the file on disk.
+<li>Be sure to call the <code>close</code> method of the file object after you're done with it. <code>minidom.parse</code> will not do this for you.
+<li>Calling the <code>toxml()</code> method on the returned <abbr>XML</abbr> document prints out the entire thing.
+<p>Well, that all seems like a colossal waste of time. After all, you've already seen that <code>minidom.parse</code> can simply take the filename and do all the opening and closing nonsense automatically. And it's true that if you know you're
+just going to be parsing a local file, you can pass the filename and <code>minidom.parse</code> is smart enough to Do The Right Thing&#8482;. But notice how similar -- and easy -- it is to parse an <abbr>XML</abbr> document straight from the Internet.
+<div class=example><h3 id="kgp.openanything.urllib">Example 10.2. Parsing <abbr>XML</abbr> from a <abbr>URL</abbr></h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>import urllib</kbd>
+<samp class=p>>>> </samp><kbd>usock = urllib.urlopen('http://slashdot.org/slashdot.rdf')</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>xmldoc = minidom.parse(usock)</kbd>            <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>usock.close()</kbd>          <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>   <span>&#x2463;</span>
+<samp>&lt;?xml version="1.0" ?>
+&lt;rdf:RDF xmlns="http://my.netscape.com/rdf/simple/0.9/"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+&lt;channel>
+&lt;title>Slashdot&lt;/title>
+&lt;link>http://slashdot.org/&lt;/link>
+&lt;description>News for nerds, stuff that matters&lt;/description>
+&lt;/channel>
+
+&lt;image>
+&lt;title>Slashdot&lt;/title>
+&lt;url>http://images.slashdot.org/topics/topicslashdot.gif&lt;/url>
+&lt;link>http://slashdot.org/&lt;/link>
+&lt;/image>
+
+&lt;item>
+&lt;title>To HDTV or Not to HDTV?&lt;/title>
+&lt;link>http://slashdot.org/article.pl?sid=01/12/28/0421241&lt;/link>
+&lt;/item>
+
+[...snip...]</span></pre>
+<ol>
+<li>As you saw <a href="#dialect.extract.urllib" title="Example 8.5. Introducing urllib">in a previous chapter</a>, <code>urlopen</code> takes a web page <abbr>URL</abbr> and returns a file-like object. Most importantly, this object has a <code>read</code> method which returns the <abbr>HTML</abbr> source of the web page.
+<li>Now you pass the file-like object to <code>minidom.parse</code>, which obediently calls the <code>read</code> method of the object and parses the <abbr>XML</abbr> data that the <code>read</code> method returns. The fact that this <abbr>XML</abbr> data is now coming straight from a web page is completely irrelevant. <code>minidom.parse</code> doesn't know about web pages, and it doesn't care about web pages; it just knows about file-like objects.
+<li>As soon as you're done with it, be sure to close the file-like object that <code>urlopen</code> gives you.
+<li>By the way, this <abbr>URL</abbr> is real, and it really is <abbr>XML</abbr>. It's an <abbr>XML</abbr> representation of the current headlines on <a href="http://slashdot.org/">Slashdot</a>, a technical news and gossip site.
+<div class=example><h3>Example 10.3. Parsing <abbr>XML</abbr> from a string (the easy but inflexible way)</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
+<samp class=p>>>> </samp><kbd>xmldoc = minidom.parseString(contents)</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>
+<samp>&lt;?xml version="1.0" ?>
+&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre>
+<ol>
+<li><code>minidom</code> has a method, <code>parseString</code>, which takes an entire <abbr>XML</abbr> document as a string and parses it. You can use this instead of <code>minidom.parse</code> if you know you already have your entire <abbr>XML</abbr> document in a string.
+<p>OK, so you can use the <code>minidom.parse</code> function for parsing both local files and remote <abbr>URL</abbr>s, but for parsing strings, you use... a different function. That means that if you want to be able to take input from a
+file, a <abbr>URL</abbr>, or a string, you'll need special logic to check whether it's a string, and call the <code>parseString</code> function instead. How unsatisfying.
+<p>If there were a way to turn a string into a file-like object, then you could simply pass this object to <code>minidom.parse</code>. And in fact, there is a module specifically designed for doing just that: <code>StringIO</code>.
+<div class=example><h3 id="kgp.openanything.stringio.example">Example 10.4. Introducing <code>StringIO</code></h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
+<samp class=p>>>> </samp><kbd>import StringIO</kbd>
+<samp class=p>>>> </samp><kbd>ssock = StringIO.StringIO(contents)</kbd>   <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>ssock.read()</kbd>        <span>&#x2461;</span>
+"&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"
+<samp class=p>>>> </samp><kbd>ssock.read()</kbd>        <span>&#x2462;</span>
+''
+<samp class=p>>>> </samp><kbd>ssock.seek(0)</kbd>       <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd>ssock.read(15)</kbd>      <span>&#x2464;</span>
+'&lt;grammar>&lt;ref i'
+<samp class=p>>>> </samp><kbd>ssock.read(15)</kbd>
+"d='bit'>&lt;p>0&lt;/p"
+<samp class=p>>>> </samp><kbd>ssock.read()</kbd>
+'>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>'
+<samp class=p>>>> </samp><kbd>ssock.close()</kbd>       <span>&#x2465;</span></pre>
+<ol>
+<li>The <code>StringIO</code> module contains a single class, also called <code>StringIO</code>, which allows you to turn a string into a file-like object. The <code>StringIO</code> class takes the string as a parameter when creating an instance.
+<li>Now you have a file-like object, and you can do all sorts of file-like things with it. Like <code>read</code>, which returns the original string.
+<li>Calling <code>read</code> again returns an empty string. This is how real file objects work too; once you read the entire file, you can't read any more without explicitly seeking to the beginning of the file. The <code>StringIO</code> object works the same way.
+<li>You can explicitly seek to the beginning of the string, just like seeking through a file, by using the <code>seek</code> method of the <code>StringIO</code> object.
+<li>You can also read the string in chunks, by passing a <var>size</var> parameter to the <code>read</code> method.
+<li>At any time, <code>read</code> will return the rest of the string that you haven't read yet. All of this is exactly how file objects work; hence the term
+<em>file-like object</em>.
+<div class=example><h3>Example 10.5. Parsing <abbr>XML</abbr> from a string (the file-like object way)</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
+<samp class=p>>>> </samp><kbd>ssock = StringIO.StringIO(contents)</kbd>
+<samp class=p>>>> </samp><kbd>xmldoc = minidom.parse(ssock)</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>ssock.close()</kbd>
+<samp class=p>>>> </samp><kbd>print xmldoc.toxml()</kbd>
+<samp>&lt;?xml version="1.0" ?>
+&lt;grammar>&lt;ref id="bit">&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar></span></pre>
+<ol>
+<li>Now you can pass the file-like object (really a <code>StringIO</code>) to <code>minidom.parse</code>, which will call the object's <code>read</code> method and happily parse away, never knowing that its input came from a hard-coded string.
+<p>So now you know how to use a single function, <code>minidom.parse</code>, to parse an <abbr>XML</abbr> document stored on a web page, in a local file, or in a hard-coded string. For a web page, you use <code>urlopen</code> to get a file-like object; for a local file, you use <code>open</code>; and for a string, you use <code>StringIO</code>. Now let's take it one step further and generalize <em>these</em> differences as well.
+<div class=example><h3 id="kgp.openanything.example">Example 10.6. <code>openAnything</code></h3><pre><code>
+def openAnything(source):<span>&#x2460;</span>
+    # try to open with urllib (if source is http, ftp, or file URL)
+    import urllib       
+    try:                
+        return urllib.urlopen(source)      <span>&#x2461;</span>
+    except (IOError, OSError):            
+        pass            
+
+    # try to open with native open function (if source is pathname)
+    try:                
+        return open(source)                <span>&#x2462;</span>
+    except (IOError, OSError):            
+        pass            
+
+    # treat source as string
+    import StringIO     
+    return StringIO.StringIO(str(source))  <span>&#x2463;</span></pre>
+<ol>
+<li>The <code>openAnything</code> function takes a single parameter, <var>source</var>, and returns a file-like object. <var>source</var> is a string of some sort; it can either be a <abbr>URL</abbr> (like <code>'http://slashdot.org/slashdot.rdf'</code>), a full or partial pathname to a local file (like <code>'binary.xml'</code>), or a string that contains actual <abbr>XML</abbr> data to be parsed.
+<li>First, you see if <var>source</var> is a <abbr>URL</abbr>. You do this through brute force: you try to open it as a <abbr>URL</abbr> and silently ignore errors caused by trying to open something which is not a <abbr>URL</abbr>. This is actually elegant in the sense that, if <code>urllib</code> ever supports new types of <abbr>URL</abbr>s in the future, you will also support them without recoding. If <code>urllib</code> is able to open <var>source</var>, then the <code>return</code> kicks you out of the function immediately and the following <code>try</code> statements never execute.
+<li>On the other hand, if <code>urllib</code> yelled at you and told you that <var>source</var> wasn't a valid <abbr>URL</abbr>, you assume it's a path to a file on disk and try to open it. Again, you don't do anything fancy to check whether <var>source</var> is a valid filename or not (the rules for valid filenames vary wildly between different platforms anyway, so you'd probably get them wrong anyway). Instead, you just blindly open the file, and silently trap any errors.
+<li>By this point, you need to assume that <var>source</var> is a string that has hard-coded data in it (since nothing else worked), so you use <code>StringIO</code> to create a file-like object out of it and return that. (In fact, since you're using the <code>str</code> function, <var>source</var> doesn't even need to be a string; it could be any object, and you'll use its string representation, as defined by its <code>__str__</code> <a href="#fileinfo.morespecial" title="5.7. Advanced Special Class Methods">special method</a>.)
+<p>Now you can use this <code>openAnything</code> function in conjunction with <code>minidom.parse</code> to make a function that takes a <var>source</var> that refers to an <abbr>XML</abbr> document somehow (either as a <abbr>URL</abbr>, or a local filename, or a hard-coded <abbr>XML</abbr> document in a string) and parses it.
+<div class=example><h3>Example 10.7. Using <code>openAnything</code> in <code>kgp.py</code></h3><pre><code>
+class KantGenerator:
+    def _load(self, source):
+        sock = toolbox.openAnything(source)
+        xmldoc = minidom.parse(sock).documentElement
+        sock.close()
+        return xmldoc</pre><h2 id="kgp.stdio">10.2. Standard input, output, and error</h2>
+<p><abbr>UNIX</abbr> users are already familiar with the concept of standard input, standard output, and standard error. This section is for
+   the rest of you.
+<p>Standard output and standard error (commonly abbreviated <code>stdout</code> and <code>stderr</code>) are pipes that are built into every <abbr>UNIX</abbr> system. When you <code>print</code> something, it goes to the <code>stdout</code> pipe; when your program crashes and prints out debugging information (like a traceback in Python), it goes to the <code>stderr</code> pipe. Both of these pipes are ordinarily just connected to the terminal window where you are working, so when a program
+prints, you see the output, and when a program crashes, you see the debugging information. (If you're working on a system
+with a window-based Python <abbr>IDE</abbr>, <code>stdout</code> and <code>stderr</code> default to your &#8220;Interactive Window&#8221;.)
+<div class=example><h3>Example 10.8. Introducing <code>stdout</code> and <code>stderr</code></h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>...    </samp>print 'Dive in'             <span>&#x2460;</span>
+<samp>Dive in
+Dive in
+Dive in</samp>
+<samp class=p>>>> </samp><kbd>import sys</kbd>
+<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>...    </samp>sys.stdout.write('Dive in') <span>&#x2461;</span>
+Dive inDive inDive in
+<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>...    </samp>sys.stderr.write('Dive in') <span>&#x2462;</span>
+Dive inDive inDive in</pre>
+<ol>
+<li>As you saw in <a href="#fileinfo.for.counter" title="Example 6.9. Simple Counters">Example 6.9, &#8220;Simple Counters&#8221;</a>, you can use Python's built-in <code>range</code> function to build simple counter loops that repeat something a set number of times.
+<li><code>stdout</code> is a file-like object; calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you're printing, and calls <code>sys.stdout.write</code>.
+<li>In the simplest case, <code>stdout</code> and <code>stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you're in one), or the terminal (if you're running Python from the command line). Like <code>stdout</code>, <code>stderr</code> does not add carriage returns for you; if you want them, add them yourself.
+<p><code>stdout</code> and <code>stderr</code> are both file-like objects, like the ones you discussed in <a href="#kgp.openanything" title="10.1. Abstracting input sources">Section 10.1, &#8220;Abstracting input sources&#8221;</a>, but they are both write-only. They have no <code>read</code> method, only <code>write</code>. Still, they are file-like objects, and you can assign any other file- or file-like object to them to redirect their output.
+<div class=example><h3>Example 10.9. Redirecting output</h3><pre class=screen>
+<samp class=p>[you@localhost kgp]$ </samp>python stdout.py
+Dive in
+<samp class=p>[you@localhost kgp]$ </samp>cat out.log
+This message will be logged instead of displayed</pre><p>(On Windows, you can use <code>type</code> instead of <code>cat</code> to display the contents of a file.)
+<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
+<pre><code>
+#stdout.py
+import sys
+
+print 'Dive in'      <span>&#x2460;</span>
+saveout = sys.stdout <span>&#x2461;</span>
+fsock = open('out.log', 'w')           <span>&#x2462;</span>
+sys.stdout = fsock   <span>&#x2463;</span>
+print 'This message will be logged instead of displayed' <span>&#x2464;</span>
+sys.stdout = saveout <span>&#x2465;</span>
+fsock.close()        <span>&#x2466;</span>
+</pre>
+<ol>
+<li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
+<li>Always save <code>stdout</code> before redirecting it, so you can set it back to normal later.
+<li>Open a file for writing. If the file doesn't exist, it will be created. If the file does exist, it will be overwritten.
+<li>Redirect all further output to the new file you just opened.
+<li>This will be &#8220;printed&#8221; to the log file only; it will not be visible in the <abbr>IDE</abbr> window or on the screen.
+<li>Set <code>stdout</code> back to the way it was before you mucked with it.
+<li>Close the log file.
+<p>Redirecting <code>stderr</code> works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
+<div class=example><h3>Example 10.10. Redirecting error information</h3><pre class=screen>
+<samp class=p>[you@localhost kgp]$ </samp>python stderr.py
+<samp class=p>[you@localhost kgp]$ </samp>cat error.log
+<samp>Traceback (most recent line last):
+  File "stderr.py", line 5, in ?
+    raise Exception, 'this error will be logged'
+Exception: this error will be logged</span></pre><p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
+<pre><code>
+#stderr.py
+import sys
+
+fsock = open('error.log', 'w')               <span>&#x2460;</span>
+sys.stderr = fsock         <span>&#x2461;</span>
+raise Exception, 'this error will be logged' <span>&#x2462;</span> <span>&#x2463;</span>
+</pre>
+<ol>
+<li>Open the log file where you want to store debugging information.
+<li>Redirect standard error by assigning the file object of the newly-opened log file to <code>stderr</code>.
+<li>Raise an exception. Note from the screen output that this does <em>not</em> print anything on screen. All the normal traceback information has been written to <code>error.log</code>.
+<li>Also note that you're not explicitly closing your log file, nor are you setting <code>stderr</code> back to its original value. This is fine, since once the program crashes (because of the exception), Python will clean up and close the file for us, and it doesn't make any difference that <code>stderr</code> is never restored, since, as I mentioned, the program crashes and Python ends. Restoring the original is more important for <code>stdout</code>, if you expect to go do other stuff within the same script afterwards.
+<p>Since it is so common to write error messages to standard error, there is a shorthand syntax that can be used instead of going
+through the hassle of redirecting it outright.
+<div class=example><h3 id="kgp.stdio.print.example">Example 10.11. Printing to <code>stderr</code></h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>print 'entering function'</kbd>
+entering function
+<samp class=p>>>> </samp><kbd>import sys</kbd>
+<samp class=p>>>> </samp><kbd>print >> sys.stderr, 'entering function'</kbd> <span>&#x2460;</span>
+entering function
+</pre>
+<ol>
+<li>This shorthand syntax of the <code>print</code> statement can be used to write to any open file, or file-like object. In this case, you can redirect a single <code>print</code> statement to <code>stderr</code> without affecting subsequent <code>print</code> statements.
+<p>Standard input, on the other hand, is a read-only file object, and it represents the data flowing into the program from some
+previous program. This will likely not make much sense to classic Mac OS users, or even Windows users unless you were ever fluent on the <abbr>MS-DOS</abbr> command line. The way it works is that you can construct a chain of commands in a single line, so that one program's output
+becomes the input for the next program in the chain. The first program simply outputs to standard output (without doing any
+special redirecting itself, just doing normal <code>print</code> statements or whatever), and the next program reads from standard input, and the operating system takes care of connecting
+one program's output to the next program's input.
+
+
+
+
+
+
+
 <p class=v><a href=advanced-classes.html rel=prev title='back to &#8220;Advanced Classes&#8221;'><span class=u>&#x261C;</span></a> <a href=xml.html rel=next title='onward to &#8220;XML&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
