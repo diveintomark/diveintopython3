@@ -611,6 +611,7 @@ user-agent: Python-httplib2/$Rev: 259 $'
 # continued from the previous example
 <a><samp class=p>>>> </samp><kbd class=pp>response2, content2 = h.request('http://diveintopython3.org/examples/feed-301.xml')</kbd>  <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>response2.fromcache</kbd>                                                                  <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>content2 == content</kbd>                                                                  <span class=u>&#x2462;</span></a>
 <samp class=pp>True</samp>
 </pre>
@@ -811,10 +812,10 @@ user-agent: Python-httplib2/$Rev: 259 $
 <samp class=p>>>> </samp><kbd class=pp>resp.status</kbd>
 <samp class=pp>200</samp></pre>
 <ol>
-<li>&#8220;Delete this status message, please.&#8221;
+<li>&#8220;Delete this status message.&#8221;
 <li>&#8220;I&#8217;m sorry, Dave, I&#8217;m afraid I can&#8217;t do that.&#8221;
-<li>&#8220;Delete this status message, please&hellip;
-<li>&hellip;here&#8217;s my username and password.&#8221;
+<li>&#8220;Unauthorized<span class=u title='interrobang!'>&#8253;</span> Hmmph. Delete this status message, <em>please</em>&hellip;
+<li>&hellip;and here&#8217;s my username and password.&#8221;
 <li>&#8220;Consider it done!&#8221;
 </ol>
 
