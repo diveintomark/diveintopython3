@@ -52,7 +52,7 @@ mark{display:inline}
 
 <h3 id=caching>Caching</h3>
 
-<p>The most important thing to understand about any type of web service is that network access is incredibly expensive. I don&#8217;t mean &#8220;dollars and cents&#8221; expensive (although bandwidth ain&#8217;t free). I mean that it takes an extraordinary long time to open a connection, send a request, and retrieve a response from a remote server. Even the fastest broadband connection slower than your local network, which in turn is slower than your local disk.
+<p>The most important thing to understand about any type of web service is that network access is incredibly expensive. I don&#8217;t mean &#8220;dollars and cents&#8221; expensive (although bandwidth ain&#8217;t free). I mean that it takes an extraordinary long time to open a connection, send a request, and retrieve a response from a remote server. Even on the fastest broadband connection, <i>latency</i> (the time it takes to send a request and start retrieving data in a response) can still be higher than you anticipated. A router misbehaves, a packet is dropped, an intermediate proxy is under attack &mdash; there&#8217;s <a href=http://isc.sans.org/>never a dull moment</a> on the public internet, and there may be nothing you can do about it.
 
 <p><abbr>HTTP</abbr> is designed with caching in mind. There is an entire class of devices (called &#8220;caching proxies&#8221;) whose only job is to sit between you and the rest of the world and minimize network access. Your company or <abbr>ISP</abbr> almost certainly maintains caching proxies, even if you&#8217;re unaware of them. They work because caching built into the <abbr>HTTP</abbr> protocol.
 
@@ -171,16 +171,6 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <p><code>httplib2</code> handles permanent redirects for you. Not only will it tell you that a permanent redirect occurred, it will keep track of them locally and automatically rewrite redirected <abbr>URL</abbr>s before requesting them.
 
-<!--
-<h3><code>User-Agent</code></h3>
-
-<p>The <code>User-Agent</code> is simply a way for a client to tell a server who it is when it requests a web page, a syndicated feed, or any sort of web service over <abbr>HTTP</abbr>. When the client requests a resource, it should always announce who it is, as specifically as possible. This helps the server-side administrator figure out who to contact when things go fantastically wrong.
-
-<p>By default, Python sends a generic <code>User-Agent</code>: <code>Python-urllib/1.15</code>. In the next section, you&#8217;ll see how to change this to something more specific.
-
-<p>Note that [FIXME-href] our little one-line script to download an Atom feed did not support any of these <abbr>HTTP</abbr> features. Let&#8217;s see how you can improve it.
-
--->
 <p class=a>&#x2042;
 
 <h2 id=dont-try-this-at-home>How Not To Fetch Data Over HTTP</h2>
@@ -229,7 +219,7 @@ reply: 'HTTP/1.1 200 OK'
 <li>The first line specifies the <abbr>HTTP</abbr> verb you&#8217;re using, and the path of the resource (minus the domain name).
 <li>The second line specifies the domain name from which we&#8217;re requesting this feed.
 <li>The third line specifies the compression algorithms that the client supports. As I mentioned earlier, <a href=#compression><code>urllib.request</code> does not support compression</a> by default.
-<li>The fourth line specifies the name of the library that is making the request. By default, this is <code>Python-urllib</code> plus a version number. Both <code>urllib.request</code> and <code>httplib2</code> support changing the user agent; you&#8217;ll see how to do this later in this chapter. [FIXME really?]
+<li>The fourth line specifies the name of the library that is making the request. By default, this is <code>Python-urllib</code> plus a version number. Both <code>urllib.request</code> and <code>httplib2</code> support changing the user agent, simply by adding a <code>User-Agent</code> header to the request (which will override the default value).
 </ol>
 
 <p>Now let&#8217;s look at what the server sent back in its response.
