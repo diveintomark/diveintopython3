@@ -37,7 +37,7 @@ body{counter-reset:h1 2}
 
 <h2 id=booleans>Booleans</h2>
 <aside>You can use virtually any expression in a boolean context.</aside>
-<p>Booleans are either true or false. Python has two constants, <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
+<p>Booleans are either true or false. Python has two constants, cleverly <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 <pre><code class=pp>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
@@ -52,6 +52,20 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd class=pp>size = -1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
 <samp class=pp>True</samp></pre>
+<p>Due to some legacy issues left over from Python 2, booleans can be treated as numbers. <code>True</code> is <code>1</code>; <code>False</code> is <code>0</code>.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>True + True</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>True + False</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>True * False</kbd>
+<samp class=pp>0</samp>
+<samp class=p>>>> </samp><kbd class=pp>True * False</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+ZeroDivisionError: int division or modulo by zero</samp></pre>
+<p>Ew, ew, ew! Don&#8217;t do that. Forget I even mentioned it.
+
 <p class=a>&#x2042;
 
 <h2 id=numbers>Numbers</h2>
