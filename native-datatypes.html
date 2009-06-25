@@ -150,12 +150,19 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>x * 2</kbd>                         <span class=u>&#x2462;</span></a>
 <samp class=pp>Fraction(2, 3)</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>fractions.Fraction(6, 4)</kbd>      <span class=u>&#x2463;</span></a>
-<samp class=pp>Fraction(3, 2)</samp></pre>
+<samp class=pp>Fraction(3, 2)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fractions.Fraction(0, 0)</kbd>      <span class=u>&#x2464;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "fractions.py", line 96, in __new__
+    raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
+ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <ol>
 <li>To start using fractions, import the <code>fractions</code> module.
 <li>To define a fraction, create a <code>Fraction</code> object and pass in the numerator and denominator.
 <li>You can perform all the usual mathematical operations with fractions. Operations return a new <code>Fraction</code> object. <code>2 * (1/3) = (2/3)</code>
 <li>The <code>Fraction</code> object will automatically reduce fractions. <code>(6/4) = (3/2)</code>
+<li>Python has the good sense not to create a fraction with a zero denominator.
 </ol>
 <h3 id=trig>Trigonometry</h3>
 <p>You can also do basic trigonometry in Python.
