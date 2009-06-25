@@ -334,6 +334,72 @@ ValueError: list.index(x): x not in list</samp></pre>
 <li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
 <li>As you might <em>not</em> expect, if the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later.
 </ol>
+
+<h3 id=removingfromlists>Removing Items From A List</h3>
+
+<aside>Lists never have gaps.</aside>
+
+<p>Lists can expand and contract automatically. You&#8217;ve seen the expansion part. There are several different ways to remove items from a list as well.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>
+<samp class=pp>'b'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>del a_list[1]</kbd>         <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'new', 'mpilgrim', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>             <span class=u>&#x2461;</span></a>
+<samp class=pp>'new'</samp></pre>
+<ol>
+<li>You can use the <dfn>del</dfn> statement to delete a specific item from a list.
+<li>Accessing index <code>1</code> after deleting index <code>1</code> does <em>not</em> result in an error. All items after the deleted item shift their positional index to &#8220;fill the gap&#8221; created by deleting the item.
+</ol>
+
+<p>Don&#8217;t know the positional index? Not a problem; you can remove items by value instead.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'mpilgrim', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'mpilgrim']</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+ValueError: list.remove(x): x not in list</samp></pre>
+<ol>
+<li>You can also remove an item from a list with the <code>remove()</code> method. The <code>remove()</code> method takes a <em>value</em> and removes the first occurrence of that value from the list. Again, all items after the deleted item will have their positional indices bumped down to &#8220;fill the gap.&#8221; Lists never have gaps.
+<li>You can call the <code>remove()</code> method has often as you like, but it will raise an exception if you try to remove a value that isn&#8217;t in the list.
+</ol>
+
+<h3 id=popgoestheweasel>Removing Items From A List: Bonus Round</h3>
+
+<p>Another interesting list method is <code>pop()</code>. The <code>pop()</code> method is yet another way to <a href=#removingfromlists>remove items from a list</a>, but with a twist.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>   <span class=u>&#x2460;</span></a>
+<samp class=pp>'mpilgrim'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop(1)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'b'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'new']</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>
+<samp class=pp>'new'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>
+<samp class=pp>'a'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>   <span class=u>&#x2462;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+IndexError: pop from empty list</samp></pre>
+<li>When called without arguments, the <code>pop()</code> list method removes the last item in the list <em>and returns the value it removed</em>.
+<li>You can pop arbitrary items from a list. Just pass a positional index to the <code>pop()</code> method. It will remove that item, shift all the items after it to &#8220;fill the gap,&#8221; and return the value it removed.
+<li>All around the mulberry bush&hellip; calling <code>pop()</code> on an empty list raises an exception.
+</ol>
+
 <h3 id=lists-in-a-boolean-context>Lists In A Boolean Context</h3>
 <aside>Empty lists are false; all other lists are true.</aside>
 <p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
