@@ -20,7 +20,7 @@ body{counter-reset:h1 2}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>Cast aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let&#8217;s talk about datatypes. In Python, <a href=your-first-python-program.html#declaringfunctions>every variable has a datatype</a>, but you don&#8217;t need to declare it explicitly. Based on each variable&#8217;s original assignment, Python figures out what type it is and keeps tracks of that internally.
+<p class=f>Cast aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let&#8217;s talk about datatypes. In Python, <a href=your-first-python-program.html#declaringfunctions>every value has a datatype</a>, but you don&#8217;t need to declare the datatype of variables. How does that work? Based on each variable&#8217;s original assignment, Python figures out what type it is and keeps tracks of that internally.
 <p>Python has many native datatypes. Here are the important ones:
 <ol>
 <li><b>Booleans</b> are either <code>True</code> or <code>False</code>.
@@ -59,14 +59,17 @@ body{counter-reset:h1 2}
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>type(1)</kbd>                 <span class=u>&#x2460;</span></a>
 <samp class=pp>&lt;class 'int'></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>1 + 1</kbd>                   <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>isinstance(1, int)</kbd>      <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>1 + 1</kbd>                   <span class=u>&#x2462;</span></a>
 <samp class=pp>2</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>1 + 1.0</kbd>                 <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>1 + 1.0</kbd>                 <span class=u>&#x2463;</span></a>
 <samp class=pp>2.0</samp>
 <samp class=p>>>> </samp><kbd class=pp>type(2.0)</kbd>
 <samp class=pp>&lt;class 'float'></samp></pre>
 <ol>
 <li>You can use the <code>type()</code> function to check the type of any value or variable. As you might expect, <code>1</code> is an <code>int</code>.
+<li>Similarly, you can use the <code>isinstance()</code> function to check whether a value or variable is of a given type.
 <li>Adding an <code>int</code> to an <code>int</code> yields an <code>int</code>.
 <li>Adding an <code>int</code> to a <code>float</code> yields a <code>float</code>. Python coerces the <code>int</code> into a <code>float</code> to perform the addition, then returns a <code>float</code> as the result.
 </ol>
