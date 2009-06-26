@@ -453,14 +453,14 @@ IndexError: pop from empty list</samp></pre>
 <h3 id=creating-dictionaries>Creating A Dictionary</h3>
 <p>Creating a dictionary is easy. The syntax is similar to <a href=#sets>sets</a> [FIXME link fails because section is not written yet], but instead of values, you have key-value pairs. Once you have a dictionary, you can look up values by their key.
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict = {'server':'db.diveintopython3.org', 'database':'mysql'}</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict = {'server': 'db.diveintopython3.org', 'database': 'mysql'}</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
 <samp class=pp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict['server']</kbd>                                                  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['server']</kbd>                                                    <span class=u>&#x2461;</span></a>
 'db.diveintopython3.org'
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict['database']</kbd>                                                <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['database']</kbd>                                                  <span class=u>&#x2462;</span></a>
 'mysql'
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict['db.diveintopython3.org']</kbd>                                  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['db.diveintopython3.org']</kbd>                                    <span class=u>&#x2463;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'db.diveintopython3.org'</samp></pre>
