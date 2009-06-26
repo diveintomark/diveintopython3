@@ -277,19 +277,25 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list.append(True)</kbd>           <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['a', 2.0, 3, True]</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['four', 'e'])</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['four', '&Omega;'])</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
-<samp class=pp>['a', 2.0, 3, True, 'four', 'e']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.insert(1, 'a')</kbd>         <span class=u>&#x2463;</span></a>
+<samp class=pp>['a', 2.0, 3, True, 'four', '&Omega;']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.insert(0, '&Omega;')</kbd>         <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
-<samp class=pp>['a', 'a', 2.0, 3, True, 'four', 'e']</samp></pre>
+<samp class=pp>['&Omega;', 'a', 2.0, 3, True, 'four', '&Omega;']</samp></pre>
 <ol>
 <li>The <code>+</code> operator concatenates lists. A list can contain any number of items; there is no size limit (other than available memory). A list can contain items of any datatype; they don&#8217;t all need to be the same type. Here we have a list containing a string, a floating point number, and an integer.
 <li>The <code>append()</code> method adds a single item to the end of the list. (Now we have <em>four</em> different datatypes in the list!)
 <li>Lists are implemented as classes.  &#8220;Creating&#8221; a list is really instantiating a class.  As such, a list has methods that operate on it. The <code>extend()</code> method takes one argument, a list, and appends each of the items of the argument to the original list.
-<li>The <code>insert()</code> method inserts a single item into a list. The first argument is the index of the first item in the list that will get bumped out of position. List items do not need to be unique; for example, there are now two separate items with the value <code>'a'</code>, <code>a_list[0]</code> and <code>a_list[1]</code>.
+<li>The <code>insert()</code> method inserts a single item into a list. The first argument is the index of the first item in the list that will get bumped out of position. List items do not need to be unique; for example, there are now two separate items with the value <code>'&Omega;'</code>: the first item, <code>a_list[0]</code>, and the last item, <code>a_list[6]</code>.
 </ol>
+
+<blockquote class='note compare perl'>
+<p><span class=u>&#x261E;</span><code><var>a_list</var>.insert(0, <var>value</var>)</code> is like the <code>shift()</code> function in Perl. It adds an item to the beginning of the list, and all the other items have their positional index bumped up to make room.
+</blockquote>
+
 <p>Let&#8217;s look closer at the difference between <code>append()</code> and <code>extend()</code>.
+
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'c']</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['d', 'e', 'f'])</kbd>  <span class=u>&#x2460;</span></a>
@@ -378,7 +384,7 @@ ValueError: list.remove(x): x not in list</samp></pre>
 <p>Another interesting list method is <code>pop()</code>. The <code>pop()</code> method is yet another way to <a href=#removingfromlists>remove items from a list</a>, but with a twist.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim']</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim']</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>   <span class=u>&#x2460;</span></a>
 <samp class=pp>'mpilgrim'</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
@@ -395,10 +401,15 @@ ValueError: list.remove(x): x not in list</samp></pre>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 IndexError: pop from empty list</samp></pre>
+<ol>
 <li>When called without arguments, the <code>pop()</code> list method removes the last item in the list <em>and returns the value it removed</em>.
 <li>You can pop arbitrary items from a list. Just pass a positional index to the <code>pop()</code> method. It will remove that item, shift all the items after it to &#8220;fill the gap,&#8221; and return the value it removed.
-<li>All around the mulberry bush&hellip; calling <code>pop()</code> on an empty list raises an exception.
+<li>Calling <code>pop()</code> on an empty list raises an exception.
 </ol>
+
+<blockquote class='note compare perl'>
+<p><span class=u>&#x261E;</span>Calling the <code>pop()</code> list method without an argument is like the <code>pop()</code> function in Perl. It removes the last item from the list and returns the value of the removed item. Perl has another function, <code>shift()</code>, which removes the first item and returns its value; in Python, this is equivalent to <code><var>a_list</var>.pop(0)</code>.
+</blockquote>
 
 <h3 id=lists-in-a-boolean-context>Lists In A Boolean Context</h3>
 <aside>Empty lists are false; all other lists are true.</aside>
