@@ -505,15 +505,18 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp class=p>... </samp><kbd class=pp>            1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>len(SUFFIXES)</kbd>      <span class=u>&#x2460;</span></a>
 <samp class=pp>2</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000]</kbd>     <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>1000 in SUFFIXES</kbd>   <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000]</kbd>     <span class=u>&#x2462;</span></a>
 <samp class=pp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1024]</kbd>     <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1024]</kbd>     <span class=u>&#x2463;</span></a>
 <samp class=pp>['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000][3]</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000][3]</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=pp>'TB'</samp></pre>
 <ol>
-<li>As with <a href=#lists>lists</a><!-- and <a href=#sets>sets</a>-->, the <code>len()</code> function gives you the number of items in a dictionary.
-<li><code>1000</code> is a key in the <code>SUFFIXES</code> dictionary; its value is a list of eight items (eight strings, to be precise).
+<li>Like <a href=#lists>lists</a> and <a href=#sets>sets</a> [FIXME-xref], the <code>len()</code> function gives you the number of keys in a dictionary.
+<li>And like lists and sets, you can use the <code>in</code> operator to test whether a specific key is defined in a dictionary.
+<li><code>1000</code> <em>is</em> a key in the <code>SUFFIXES</code> dictionary; its value is a list of eight items (eight strings, to be precise).
 <li>Similarly, <code>1024</code> is a key in the <code>SUFFIXES</code> dictionary; its value is also a list of eight items.
 <li>Since <code>SUFFIXES[1000]</code> is a list, you can address individual items in the list by their 0-based index.
 </ol>
