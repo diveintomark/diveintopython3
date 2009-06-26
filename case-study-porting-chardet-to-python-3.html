@@ -44,8 +44,7 @@ del{background:#f87}
 <p class=a>&#x2042;
 
 <h2 id=divingin2>Introducing The <code>chardet</code> Module</h2>
-<p>[FIXME download link, possibly on chardet.feedparser.org, possibly local]
-<p>Before we set off porting the code, it would help if you understood how the code worked! This is a brief guide to navigating the code itself.
+<p>Before we set off porting the code, it would help if you understood how the code worked! This is a brief guide to navigating the code itself. The <code>chardet</code> library is too large to include inline here, but you can <a href=http://chardet.feedparser.org/download/>download it from <code>chardet.feedparser.org</code></a>.
 <aside>Encoding detection is really language detection in drag.</aside>
 <p>The main entry point for the detection algorithm is <code>universaldetector.py</code>, which has one class, <code>UniversalDetector</code>. (You might think the main entry point is the <code>detect</code> function in <code>chardet/__init__.py</code>, but that&#8217;s really just a convenience function that creates a <code>UniversalDetector</code> object, calls it, and returns its result.)
 <p>There are 5 categories of encodings that <code>UniversalDetector</code> handles:

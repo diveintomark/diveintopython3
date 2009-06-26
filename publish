@@ -74,5 +74,5 @@ chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt buil
 
 # ship it!
 echo "publishing"
-rsync -essh -avzP build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
-rsync -essh -avzP build/*.html build/examples build/*.txt build/i diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avz build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
+rsync -essh -avz build/*.html build/examples build/*.txt build/i diveintomark.org:~/web/diveintopython3.org/
