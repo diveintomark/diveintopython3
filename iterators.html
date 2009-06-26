@@ -288,8 +288,8 @@ rules = LazyRules()</code></pre>
 <a>        return self           <span class=u>&#x2462;</span></a>
 </code></pre>
 <ol>
-<li>The <code>__iter__()</code> method will be called every time someone &mdash; say, a <code>for</code> loop &mdash; calls <code>iter(rules)</code>.
-<li>This is the place to reset the counter that we&#8217;re going to use to retrieve items from the cache (that we haven&#8217;t built yet &mdash; patience, grasshopper).
+<li>The <code>__iter__()</code> method will be called every time someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>iter(rules)</code>.
+<li>This is the place to reset the counter that we&#8217;re going to use to retrieve items from the cache (that we haven&#8217;t built yet&nbsp;&mdash;&nbsp;patience, grasshopper).
 <li>Finally, the <code>__iter__()</code> method returns <var>self</var>, which signals that this class will take care of returning its own values throughout an iteration.
 </ol>
 
@@ -303,7 +303,7 @@ rules = LazyRules()</code></pre>
 <a>        self.cache.append(funcs)                        <span class=u>&#x2462;</span></a>
         return funcs</code></pre>
 <ol>
-<li>The <code>__next__()</code> method gets called whenever someone &mdash; say, a <code>for</code> loop &mdash; calls <code>next(rules)</code>. This method will only make sense if we start at the end and work backwards. So let&#8217;s do that.
+<li>The <code>__next__()</code> method gets called whenever someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>next(rules)</code>. This method will only make sense if we start at the end and work backwards. So let&#8217;s do that.
 <li>The last part of this function should look familiar, at least. The <code>build_match_and_apply_functions()</code> function hasn&#8217;t changed; it&#8217;s the same as it ever was. <em>Each line of the pattern file will be read exactly once, as late as possible.</em>
 <li>The only difference is that, before returning the match and apply functions (which are stored in the tuple <var>funcs</var>), we&#8217;ve going to save them in <code>self.cache</code>. <em>Each match and apply function will be built exactly once, as late as possible, then cached.</em>
 </ol>
@@ -341,7 +341,7 @@ rules = LazyRules()</code></pre>
         .</code></pre>
 <ol>
 <li><code>self.cache</code> will be a list of the functions we need to match and apply individual rules. (At least <em>that</em> should sound familiar!) <code>self.cache_index</code> keeps track of which cached item we should return next. If we haven&#8217;t exhausted the cache yet (<i>i.e.</i> if the length of <code>self.cache</code> is greater than <code>self.cache_index</code>), then we have a cache hit! Hooray! We can return the match and apply functions from the cache instead of building them from scratch.
-<li>On the other hand, if we don&#8217;t get a hit from the cache, <em>and</em> the file object has been closed (which could happen, further down the method, as you saw in the previous code snippet), then there&#8217;s nothing more we can do. If the file is closed, it means we&#8217;ve exhausted it &mdash; we&#8217;ve already read through every line from the pattern file, and we&#8217;ve already built and cached the match and apply functions for each pattern. The file is exhausted; the cache is exhausted; I&#8217;m exhausted. Wait, what? Hang in there, we&#8217;re almost done.
+<li>On the other hand, if we don&#8217;t get a hit from the cache, <em>and</em> the file object has been closed (which could happen, further down the method, as you saw in the previous code snippet), then there&#8217;s nothing more we can do. If the file is closed, it means we&#8217;ve exhausted it&nbsp;&mdash;&nbsp;we&#8217;ve already read through every line from the pattern file, and we&#8217;ve already built and cached the match and apply functions for each pattern. The file is exhausted; the cache is exhausted; I&#8217;m exhausted. Wait, what? Hang in there, we&#8217;re almost done.
 </ol>
 
 <p>Putting it all together, here&#8217;s what happens when:
@@ -352,7 +352,7 @@ rules = LazyRules()</code></pre>
 <li>Let&#8217;s say, for the sake of argument, that the very first rule matched. If so, no further match and apply functions are built, and no further lines are read from the pattern file.
 <li>Furthermore, for the sake of argument, suppose that the caller calls the <code>plural()</code> function <em>again</em> to pluralize a different word. The <code>for</code> loop in the <code>plural()</code> function will call <code>iter(rules)</code>, which will reset the cache index but will not reset the open file object.
 <li>The first time through, the <code>for</code> loop will ask for a value from <var>rules</var>, which will invoke its <code>__next__()</code> method. This time, however, the cache is primed with a single pair of match and apply functions, corresponding to the patterns in the first line of the pattern file. Since they were built and cached in the course of pluralizing the previous word, they&#8217;re retrieved from the cache. The cache index increments, and the open file is never touched.
-<li>Let&#8217;s say, for the sake of argument, that the first rule does <em>not</em> match this time around. So the <code>for</code> loop comes around again and asks for another value from <var>rules</var>. This invokes the <code>__next__()</code> method a second time. This time, the cache is exhausted &mdash; it only contained one item, and we&#8217;re asking for a second &mdash; so the <code>__next__()</code> method continues. It reads another line from the open file, builds match and apply functions out of the patterns, and caches them.
+<li>Let&#8217;s say, for the sake of argument, that the first rule does <em>not</em> match this time around. So the <code>for</code> loop comes around again and asks for another value from <var>rules</var>. This invokes the <code>__next__()</code> method a second time. This time, the cache is exhausted&nbsp;&mdash;&nbsp;it only contained one item, and we&#8217;re asking for a second&nbsp;&mdash;&nbsp;so the <code>__next__()</code> method continues. It reads another line from the open file, builds match and apply functions out of the patterns, and caches them.
 <li>This read-build-and-cache process will continue as long as the rules being read from the pattern file don&#8217;t match the word we&#8217;re trying to pluralize. If we do find a matching rule before the end of the file, we simply use it and stop, with the file still open. The file pointer will stay wherever we stopped reading, waiting for the next <code>readline()</code> command. In the meantime, the cache now has more items in it, and if we start all over again trying to pluralize a new word, each of those items in the cache will be tried before reading the next line from the pattern file.
 </ul>
 

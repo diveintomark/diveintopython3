@@ -23,7 +23,7 @@ mark{display:inline}
 <h2 id=divingin>Diving In</h2>
 <p class=f>Most of the chapters in this book have centered around a piece of sample code. But <abbr>XML</abbr> isn&#8217;t about code; it&#8217;s about data. One common use of <abbr>XML</abbr> is &#8220;syndication feeds&#8221; that list the latest articles on a blog, forum, or other frequently-updated website. Most popular blogging software can produce a feed and update it whenever new articles, discussion threads, or blog posts are published. You can follow a blog by &#8220;subscribing&#8221; to its feed, and you can follow multiple blogs with a dedicated &#8220;<a href=http://en.wikipedia.org/wiki/List_of_feed_aggregators>feed aggregator</a>&#8221; like <a href=http://www.google.com/reader/>Google Reader</a>.
 
-<p>Here, then, is the <abbr>XML</abbr> data we&#8217;ll be working with in this chapter. It&#8217;s a feed &mdash; specifically, an <a href=http://atompub.org/rfc4287.html>Atom syndication feed</a>.
+<p>Here, then, is the <abbr>XML</abbr> data we&#8217;ll be working with in this chapter. It&#8217;s a feed&nbsp;&mdash;&nbsp;specifically, an <a href=http://atompub.org/rfc4287.html>Atom syndication feed</a>.
 
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
 <pre><code class=pp>&lt;?xml version='1.0' encoding='utf-8'?>
@@ -320,9 +320,9 @@ mark{display:inline}
 <samp class=pp>{}</samp></pre>
 <ol>
 <li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'></code>. The <code>xml:</code> prefix refers to a built-in namespace that every <abbr>XML</abbr> document can use without declaring it.
-<li>The fifth child &mdash; <code>[4]</code> in a <code>0</code>-based list &mdash; is the <code>link</code> element.
+<li>The fifth child&nbsp;&mdash;&nbsp;<code>[4]</code> in a <code>0</code>-based list&nbsp;&mdash;&nbsp;is the <code>link</code> element.
 <li>The <code>link</code> element has three attributes: <code>href</code>, <code>type</code>, and <code>rel</code>.
-<li>The fourth child &mdash; <code>[3]</code> in a <code>0</code>-based list &mdash; is the <code>updated</code> element.
+<li>The fourth child&nbsp;&mdash;&nbsp;<code>[3]</code> in a <code>0</code>-based list&nbsp;&mdash;&nbsp;is the <code>updated</code> element.
 <li>The <code>updated</code> element has no attributes, so its <code>.attrib</code> is just an empty dictionary.
 </ol>
 
@@ -348,7 +348,7 @@ mark{display:inline}
 <samp class=pp>[]</samp></pre>
 <ol>
 <li>The <code>findall()</code> method finds child elements that match a specific query. (More on the query format in a minute.)
-<li>Each element &mdash; including the root element, but also child elements &mdash; has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children. But why aren&#8217;t there any results? Although it may not be obvious, this particular query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
+<li>Each element&nbsp;&mdash;&nbsp;including the root element, but also child elements&nbsp;&mdash;&nbsp;has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children. But why aren&#8217;t there any results? Although it may not be obvious, this particular query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
 <li>This result may also surprise you. <a href=#divingin>There is an <code>author</code> element</a> in this document; in fact, there are three (one in each <code>entry</code>). But those <code>author</code> elements are not <em>direct children</em> of the root element; they are &#8220;grandchildren&#8221; (literally, a child element of a child element). If you want to look for <code>author</code> elements at any nesting level, you can do that, but the query format is slightly different.
 </ol>
 
@@ -391,7 +391,7 @@ mark{display:inline}
  'type': 'text/html',
  'rel': 'alternate'}</samp></pre>
 <ol>
-<li>This query &mdash; <code>//{http://www.w3.org/2005/Atom}link</code> &mdash; is very similar to the previous examples, except for the two slashes at the beginning of the query. Those two slashes mean &#8220;don&#8217;t just look for direct children; I want <em>any</em> elements, regardless of nesting level.&#8221; So the result is a list of four <code>link</code> elements, not just one.
+<li>This query&nbsp;&mdash;&nbsp;<code>//{http://www.w3.org/2005/Atom}link</code>&nbsp;&mdash;&nbsp;is very similar to the previous examples, except for the two slashes at the beginning of the query. Those two slashes mean &#8220;don&#8217;t just look for direct children; I want <em>any</em> elements, regardless of nesting level.&#8221; So the result is a list of four <code>link</code> elements, not just one.
 <li>The first result <em>is</em> a direct child of the root element. As you can see from its attributes, this is the feed-level alternate link that points to the <abbr>HTML</abbr> version of the website that the feed describes.
 <li>The other three results are each entry-level alternate links. Each <code>entry</code> has a single <code>link</code> child element, and because of the double slash at the beginning of the query, this query finds all of them.
 </ol>
@@ -509,7 +509,7 @@ except ImportError:
 <li>At any time, you can serialize any element (and its children) with the ElementTree <code>tostring()</code> function.
 </ol>
 
-<p>Was that serialization surprising to you? The way ElementTree serializes namespaced <abbr>XML</abbr> elements is technically accurate but not optimal. The sample <abbr>XML</abbr> document at the beginning of this chapter defined a <i>default namespace</i> (<code>xmlns='http://www.w3.org/2005/Atom'</code>). Defining a default namespace is useful for documents &mdash; like Atom feeds &mdash; where every element is in the same namespace, because you can declare the namespace once and declare each element with just its local name (<code>&lt;feed></code>, <code>&lt;link></code>, <code>&lt;entry></code>). There is no need to use any prefixes unless you want to declare elements from another namespace.
+<p>Was that serialization surprising to you? The way ElementTree serializes namespaced <abbr>XML</abbr> elements is technically accurate but not optimal. The sample <abbr>XML</abbr> document at the beginning of this chapter defined a <i>default namespace</i> (<code>xmlns='http://www.w3.org/2005/Atom'</code>). Defining a default namespace is useful for documents&nbsp;&mdash;&nbsp;like Atom feeds&nbsp;&mdash;&nbsp;where every element is in the same namespace, because you can declare the namespace once and declare each element with just its local name (<code>&lt;feed></code>, <code>&lt;link></code>, <code>&lt;entry></code>). There is no need to use any prefixes unless you want to declare elements from another namespace.
 
 <p>An <abbr>XML</abbr> parser won&#8217;t &#8220;see&#8221; any difference between an <abbr>XML</abbr> document with a default namespace and an <abbr>XML</abbr> document with a prefixed namespace. The resulting <abbr>DOM</abbr> of this serialization:
 
@@ -566,7 +566,7 @@ except ImportError:
 
 <h2 id=xml-custom-parser>Parsing Broken XML</h2>
 
-<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr> &mdash; your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <a href=http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#parsing><abbr>HTML</abbr> error handling</a> is actually quite well-defined, but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
+<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr>&nbsp;&mdash;&nbsp;your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <a href=http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#parsing><abbr>HTML</abbr> error handling</a> is actually quite well-defined, but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
 
 <p>Some people (myself included) believe that it was a mistake for the inventors of <abbr>XML</abbr> to mandate draconian error handling. Don&#8217;t get me wrong; I can certainly see the allure of simplifying the error handling rules. But in practice, the concept of &#8220;wellformedness&#8221; is trickier than it sounds, especially for <code>XML</code> documents (like Atom feeds) that are published on the web and served over <abbr>HTTP</abbr>. Despite the maturity of <abbr>XML</abbr>, which standardized on draconian error handling in 1997, surveys continually show a significant fraction of Atom feeds on the web are plagued with wellformedness errors.
 

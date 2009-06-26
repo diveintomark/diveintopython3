@@ -119,7 +119,7 @@ if __name__ == '__main__':
 <a><samp class=p>>>> </samp><kbd class=pp>{c for c in ''.join(words)}</kbd>              <span class=u>&#x2463;</span></a>
 <samp class=pp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
 <ol>
-<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth &mdash; wait, that&#8217;s in the set already, so it only gets listed once. Fifth. Sixth &mdash; again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
+<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth&nbsp;&mdash;&nbsp;wait, that&#8217;s in the set already, so it only gets listed once. Fifth. Sixth&nbsp;&mdash;&nbsp;again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
 <li>The same technique works with strings, since a string is just a sequence of characters.
 <li>Given a list of strings, <code>''.join(<var>a_list</var>)</code> concatenates all the strings together into one.
 <li>So, given a list of strings, this set comprehension returns all the unique characters across all the strings, with no duplicates.
@@ -228,7 +228,7 @@ StopIteration</samp></pre>
 <li>That&#8217;s it! Those are all the permutations of <code>[1, 2, 3]</code> taken 2 at a time. Pairs like <code>(1, 1)</code> and <code>(2, 2)</code> never show up, because they contain repeats so they aren&#8217;t valid permutations. When there are no more permutations, the iterator raises a <code>StopIteration</code> exception.
 </ol>
 
-<p>The <code>permutations()</code> function doesn&#8217;t have to take a list. It can take any sequence &mdash; even a string.
+<p>The <code>permutations()</code> function doesn&#8217;t have to take a list. It can take any sequence&nbsp;&mdash;&nbsp;even a string.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import itertools</kbd>
@@ -255,7 +255,7 @@ StopIteration</samp>
  ('C', 'A', 'B'), ('C', 'B', 'A')]</samp></pre>
 <ol>
 <li>A string is just a sequence of characters. For the purposes of finding permutations, the string <code>'ABC'</code> is equivalent to the list <code>['A', 'B', 'C']</code>.
-<li>The first permutation of the 3 items <code>['A', 'B', 'C']</code>, taken 3 at a time, is <code>('A', 'B', 'C')</code>. There are five other permutations &mdash; the same three characters in every conceivable order.
+<li>The first permutation of the 3 items <code>['A', 'B', 'C']</code>, taken 3 at a time, is <code>('A', 'B', 'C')</code>. There are five other permutations&nbsp;&mdash;&nbsp;the same three characters in every conceivable order.
 <li>Since the <code>permutations()</code> function always returns an iterator, an easy way to debug permutations is to pass that iterator to the built-in <code>list()</code> function to see all the permutations immediately.
 </ol>
 
@@ -397,7 +397,7 @@ for guess in itertools.permutations(digits, len(characters)):
 <a><samp class=p>>>> </samp><kbd class=pp>'MARK'.translate(translation_table)</kbd>       <span class=u>&#x2462;</span></a>
 <samp class=pp>'MORK'</samp></pre>
 <ol>
-<li>String translation starts with a translation table, which is just a dictionary that maps one character to another. Actually, &#8220;character&#8221; is incorrect &mdash; the translation table really maps one <em>byte</em> to another.
+<li>String translation starts with a translation table, which is just a dictionary that maps one character to another. Actually, &#8220;character&#8221; is incorrect&nbsp;&mdash;&nbsp;the translation table really maps one <em>byte</em> to another.
 <li>Remember, bytes in Python 3 are integers. The <code>ord()</code> function returns the <abbr>ASCII</abbr> value of a character, which, in the case of A&ndash;Z, is always a byte from 65 to 90.
 <li>The <code>translate()</code> method on a string takes a translation table and runs the string through it. That is, it replaces all occurrences of the keys of the translation table with the corresponding values. In this case, &#8220;translating&#8221; <code>MARK</code> to <code>MORK</code>.
 </ol>
@@ -512,7 +512,7 @@ NameError: name 'x' is not defined</samp>
 NameError: name 'math' is not defined</samp></pre>
 <ol>
 <li>The second and third parameters passed to the <code>eval()</code> function act as the global and local namespaces for evaluating the expression. In this case, they are both empty, which means that when the string <code>"x * 5"</code> is evaluated, there is no reference to <var>x</var> in either the global or local namespace, so <code>eval()</code> throws an exception.
-<li>You can selectively include specific values in the global namespace by listing them individually. Then those &mdash; and only those &mdash; variables will be available during evaluation.
+<li>You can selectively include specific values in the global namespace by listing them individually. Then those&nbsp;&mdash;&nbsp;and only those&nbsp;&mdash;&nbsp;variables will be available during evaluation.
 <li>Even though you just imported the <code>math</code> module, you didn&#8217;t include it in the namespace passed to the <code>eval()</code> function, so the evaluation failed.
 </ol>
 

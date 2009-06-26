@@ -32,7 +32,7 @@ body{counter-reset:h1 2}
 <li><b>Dictionaries</b> are unordered bags of key-value pairs.
 </ol>
 <p>Of course, there are a lot more types than these seven. <a href=your-first-python-program.html#everythingisanobject>Everything is an object</a> in Python, so there are types like <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, and even <i>compiled code</i>. You&#8217;ve already seen some of these: <a href=your-first-python-program.html#runningscripts>modules have names</a>, <a href=your-first-python-program.html#docstrings>functions have <code>docstrings</code></a>, <i class=baa>&amp;</i>c. You&#8217;ll learn about classes in [FIXME xref] and files in [FIXME xref].
-<p>Strings and bytes are important enough &mdash; and complicated enough &mdash; that they get their own chapter. Let&#8217;s look at the others first.
+<p>Strings and bytes are important enough&nbsp;&mdash;&nbsp;and complicated enough&nbsp;&mdash;&nbsp;that they get their own chapter. Let&#8217;s look at the others first.
 <p class=a>&#x2042;
 
 <h2 id=booleans>Booleans</h2>
@@ -272,19 +272,20 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a']</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list = a_list + [2.0, 3]</kbd>    <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                        <span class=u>&#x2461;</span></a>
 <samp class=pp>['a', 2.0, 3]</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.append(True)</kbd>           <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.append(True)</kbd>           <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['a', 2.0, 3, True]</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['four', '&Omega;'])</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['four', '&Omega;'])</kbd>  <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['a', 2.0, 3, True, 'four', '&Omega;']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.insert(0, '&Omega;')</kbd>         <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.insert(0, '&Omega;')</kbd>         <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['&Omega;', 'a', 2.0, 3, True, 'four', '&Omega;']</samp></pre>
 <ol>
-<li>The <code>+</code> operator concatenates lists. A list can contain any number of items; there is no size limit (other than available memory). A list can contain items of any datatype; they don&#8217;t all need to be the same type. Here we have a list containing a string, a floating point number, and an integer.
+<li>The <code>+</code> operator concatenates lists to create a new list. A list can contain any number of items; there is no size limit (other than available memory). However, if memory is a concern, you should be aware that list concatenation creates a second list in memory. In this case, that new list is immediately assigned to the existing variable <var>a_list</var>. So this line of code is really a two-step process&nbsp;&mdash;&nbsp;concatenation then assignment&nbsp;&mdash;&nbsp;which can (temporarily) consume a lot of memory when you&#8217;re dealing with large lists.
+<li>A list can contain items of any datatype, and the items in a single list don&#8217;t all need to be the same type. Here we have a list containing a string, a floating point number, and an integer.
 <li>The <code>append()</code> method adds a single item to the end of the list. (Now we have <em>four</em> different datatypes in the list!)
 <li>Lists are implemented as classes.  &#8220;Creating&#8221; a list is really instantiating a class.  As such, a list has methods that operate on it. The <code>extend()</code> method takes one argument, a list, and appends each of the items of the argument to the original list.
 <li>The <code>insert()</code> method inserts a single item into a list. The first argument is the index of the first item in the list that will get bumped out of position. List items do not need to be unique; for example, there are now two separate items with the value <code>'&Omega;'</code>: the first item, <code>a_list[0]</code>, and the last item, <code>a_list[6]</code>.
@@ -487,7 +488,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <li>You can add new key-value pairs at any time. This syntax is identical to modifying existing values.
 <li>The new dictionary item (key <code>'user'</code>, value <code>'mark'</code>) appears to be in the middle. In fact, it was just a coincidence that the items appeared to be in order in the first example; it is just as much a coincidence that they appear to be out of order now.
 <li>Assigning a value to an existing dictionary key simply replaces the old value with the new one.
-<li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely &mdash; that&#8217;s a capital <kbd>U</kbd> in <kbd>"User"</kbd>. Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one. It may look similar to you, but as far as Python is concerned, it&#8217;s completely different.
+<li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely&nbsp;&mdash;&nbsp;that&#8217;s a capital <kbd>U</kbd> in <kbd>"User"</kbd>. Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one. It may look similar to you, but as far as Python is concerned, it&#8217;s completely different.
 </ol>
 <h3 id=mixed-value-dictionaries>Mixed-Value Dictionaries</h3>
 <p>Dictionaries aren&#8217;t just for strings. Dictionary values can be any datatype, including integers, booleans, arbitrary objects, or even other dictionaries. And within a single dictionary, the values don&#8217;t all need to be the same type; you can mix and match as needed. Dictionary keys are more restricted, but they can be strings, integers, and a few other types. You can also mix and match key datatypes within a dictionary.

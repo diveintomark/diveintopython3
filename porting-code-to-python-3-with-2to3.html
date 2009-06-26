@@ -32,7 +32,7 @@ td pre{padding:0;border:0}
 <h2 id=divingin>Diving in</h2>
 <p class=f>Virtually all Python 2 programs will need at least some tweaking to run properly under Python 3. To help with this transition, Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. <a href=case-study-porting-chardet-to-python-3.html#running2to3>Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can&#8217;t fix automatically. This appendix documents what it <em>can</em> fix automatically.
 <h2 id=print><code>print</code> statement</h2>
-<p>In Python 2, <code><dfn>print</dfn></code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function &mdash; whatever you want to print is passed to <code>print()</code> like any other function.
+<p>In Python 2, <code><dfn>print</dfn></code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function&nbsp;&mdash;&nbsp;whatever you want to print is passed to <code>print()</code> like any other function.
 <table>
 <tr><th>Notes
 <th>Python 2
@@ -58,7 +58,7 @@ td pre{padding:0;border:0}
 <li>To print a single value, call <code>print()</code> with one argument
 <li>To print two values separated by a space, call <code>print()</code> with two arguments.
 <li>This one is a little tricky. In Python 2, if you ended a <code>print</code> statement with a comma, it would print the values separated by spaces, then print a trailing space, then stop without printing a carriage return. In Python 3, the way to do this is to pass <code>end=' '</code> as a keyword argument to the <code>print()</code> function. The <code>end</code> argument defaults to <code>'\n'</code> (a carriage return), so overriding it will suppress the carriage return after printing the other arguments.
-<li>In Python 2, you could redirect the output to a pipe &mdash; like <code>sys.stderr</code> &mdash; by using the <code>>>pipe_name</code> syntax. In Python 3, the way to do this is to pass the pipe in the <code>file</code> keyword argument. The <code>file</code> argument defaults to <code>sys.stdout</code> (standard out), so overriding it will output to a different pipe instead.
+<li>In Python 2, you could redirect the output to a pipe&nbsp;&mdash;&nbsp;like <code>sys.stderr</code>&nbsp;&mdash;&nbsp;by using the <code>>>pipe_name</code> syntax. In Python 3, the way to do this is to pass the pipe in the <code>file</code> keyword argument. The <code>file</code> argument defaults to <code>sys.stdout</code> (standard out), so overriding it will output to a different pipe instead.
 </ol>
 <h2 id=unicodeliteral>Unicode string literals</h2>
 <p>Python 2 had two string types: <dfn>Unicode</dfn> strings and non-Unicode strings. Python 3 has one string type: Unicode strings.
@@ -159,7 +159,7 @@ td pre{padding:0;border:0}
 <ol>
 <li>The simplest form.
 <li>The <code>or</code> operator takes precedence over the <code>in</code> operator, so there is no need for parentheses here.
-<li>On the other hand, you <em>do</em> need parentheses here, for the same reason &mdash; <code>or</code> takes precedence over <code>in</code>.
+<li>On the other hand, you <em>do</em> need parentheses here, for the same reason&nbsp;&mdash;&nbsp;<code>or</code> takes precedence over <code>in</code>.
 <li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form technically doesn&#8217;t need parentheses, but <code>2to3</code> includes them anyway.
 <li>This form definitely needs parentheses, since the <code>in</code> operator takes precedence over the <code>+</code> operator.
 </ol>
@@ -252,7 +252,7 @@ from urllib.error import HTTPError</code></pre>
 </table>
 <ol>
 <li>The old <code>urllib</code> module in Python 2 had a variety of functions, including <code>urlopen()</code> for fetching data and <code>splittype()</code>, <code>splithost()</code>, and <code>splituser()</code> for splitting a <abbr>URL</abbr> into its constituent parts. These functions have been reorganized more logically within the new <code>urllib</code> package. <code>2to3</code> will also change all calls to these functions so they use the new naming scheme.
-<li>The old <code>urllib2</code> module in Python 2 has been folded into the <code>urllib</code> package in Python 3. All your <code>urllib2</code> favorites &mdash; the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends &mdash; are still available.
+<li>The old <code>urllib2</code> module in Python 2 has been folded into the <code>urllib</code> package in Python 3. All your <code>urllib2</code> favorites&nbsp;&mdash;&nbsp;the <code>build_opener()</code> method, <code>Request</code> objects, and <code>HTTPBasicAuthHandler</code> and friends&nbsp;&mdash;&nbsp;are still available.
 <li>The <code>urllib.parse</code> module in Python 3 contains all the parsing functions from the old <code>urlparse</code> module in Python 2.
 <li>The <code>urllib.robotparser</code> module parses <a href=http://www.robotstxt.org/><code>robots.txt</code> files</a>.
 <li>The <code>FancyURLopener</code> class, which handles <abbr>HTTP</abbr> redirects and other status codes, is still available in the new <code>urllib.request</code> module. The <code>urlencode()</code> function has moved to <code>urllib.parse</code>.
@@ -567,7 +567,7 @@ reduce(a, b, c)</code></pre>
 <td><code class=pp>repr('PapayaWhip' + repr(2))</code>
 </table>
 <ol>
-<li>Remember, <var>x</var> can be anything &mdash; a class, a function, a module, a primitive data type, etc. The <code>repr()</code> function works on everything.
+<li>Remember, <var>x</var> can be anything&nbsp;&mdash;&nbsp;a class, a function, a module, a primitive data type, etc. The <code>repr()</code> function works on everything.
 <li>In Python 2, backticks could be nested, leading to this sort of confusing (but valid) expression. The <code>2to3</code> tool is smart enough to convert this into nested calls to <code>repr()</code>.
 </ol>
 <h2 id=except><code>try...except</code> statement</h2>
@@ -1037,7 +1037,7 @@ except:
 <li>The <code>2to3</code> script is smart enough to construct a valid class declaration, even if the class is inherited from one or more base classes.
 </ol>
 <h2 id=nitpick>Matters of style</h2>
-<p>The rest of the &#8220;fixes&#8221; listed here aren&#8217;t really fixes per se. That is, the things they change are matters of style, not substance. They work just as well in Python 3 as they do in Python 2, but the developers of Python have a vested interest in making Python code as uniform as possible. To that end, there is an <a href=http://www.python.org/dev/peps/pep-0008/>official Python style guide</a> which outlines &mdash; in excruciating detail &mdash; all sorts of nitpicky details that you almost certainly don&#8217;t care about. And given that <code>2to3</code> provides such a great infrastructure for converting Python code from one thing to another, the authors took it upon themselves to add a few optional features to improve the readability of your Python programs.
+<p>The rest of the &#8220;fixes&#8221; listed here aren&#8217;t really fixes per se. That is, the things they change are matters of style, not substance. They work just as well in Python 3 as they do in Python 2, but the developers of Python have a vested interest in making Python code as uniform as possible. To that end, there is an <a href=http://www.python.org/dev/peps/pep-0008/>official Python style guide</a> which outlines&nbsp;&mdash;&nbsp;in excruciating detail&nbsp;&mdash;&nbsp;all sorts of nitpicky details that you almost certainly don&#8217;t care about. And given that <code>2to3</code> provides such a great infrastructure for converting Python code from one thing to another, the authors took it upon themselves to add a few optional features to improve the readability of your Python programs.
 <h3 id=set_literal><code>set()</code> literals (explicit)</h3>
 <p>In Python 2, the only way to define a literal set in your code was to call <code>set(a_sequence)</code>. This still works in Python 3, but a clearer way of doing it is to use the new set literal notation: curly braces. (Dictionaries are also defined with curly braces, which makes sense once you think about it, because dictionaries are just sets of key-value pairs.)
 <blockquote class=note>

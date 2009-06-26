@@ -301,7 +301,7 @@ Ran 12 tests in 0.203s
 
 <p>Answer: there&#8217;s only 5000 of them; why don&#8217;t you just build a lookup table?  This idea gets even better when you realize that <em>you don&#8217;t need to use regular expressions at all</em>. As you build the lookup table for converting integers to Roman numerals, you can build the reverse lookup table to convert Roman numerals to integers. By the time you need to check whether an arbitrary string is a valid Roman numeral, you will have collected all the valid Roman numerals. &#8220;Validating&#8221; is reduced to a single dictionary lookup.
 
-<p>And best of all, you already have a complete set of unit tests. You can change over half the code in the module, but the unit tests will stay the same. That means you can prove &mdash; to yourself and to others &mdash; that the new code works just as well as the original.
+<p>And best of all, you already have a complete set of unit tests. You can change over half the code in the module, but the unit tests will stay the same. That means you can prove&nbsp;&mdash;&nbsp;to yourself and to others&nbsp;&mdash;&nbsp;that the new code works just as well as the original.
 
 <p class=d>[<a href=examples/roman10.py>download <code>roman10.py</code></a>]
 <pre><code class=pp>class OutOfRangeError(ValueError): pass
@@ -392,7 +392,7 @@ def build_lookup_tables():
 <a>        to_roman_table.append(roman_numeral)       <span class=u>&#x2462;</span></a>
         from_roman_table[roman_numeral] = integer</code></pre>
 <ol>
-<li>This is a clever bit of programming&hellip; perhaps too clever. The <code>to_roman()</code> function is defined above; it looks up values in the lookup table and returns them. But the <code>build_lookup_tables()</code> function redefines the <code>to_roman()</code> function to actually do work (like the previous examples did, before you added a lookup table). Within the <code>build_lookup_tables()</code> function, calling <code>to_roman()</code> will call this redefined version. Once the <code>build_lookup_tables()</code> function exits, the redefined version disappears &mdash; it is only defined in the local scope of the <code>build_lookup_tables()</code> function.
+<li>This is a clever bit of programming&hellip; perhaps too clever. The <code>to_roman()</code> function is defined above; it looks up values in the lookup table and returns them. But the <code>build_lookup_tables()</code> function redefines the <code>to_roman()</code> function to actually do work (like the previous examples did, before you added a lookup table). Within the <code>build_lookup_tables()</code> function, calling <code>to_roman()</code> will call this redefined version. Once the <code>build_lookup_tables()</code> function exits, the redefined version disappears&nbsp;&mdash;&nbsp;it is only defined in the local scope of the <code>build_lookup_tables()</code> function.
 <li>This line of code will call the redefined <code>to_roman()</code> function, which actually calculates the Roman numeral.
 <li>Once you have the result (from the redefined <code>to_roman()</code> function), you add the integer and its Roman numeral equivalent to both lookup tables.
 </ol>

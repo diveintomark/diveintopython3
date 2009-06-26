@@ -31,7 +31,7 @@ td a:link, td a:visited{border:0}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving in</h2>
-<p class=f>We&#8217;ve already covered a few special method names elsewhere in this book &mdash; &#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sequences, like dictionaries, like functions, like iterators, or even like numbers! This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
+<p class=f>We&#8217;ve already covered a few special method names elsewhere in this book&nbsp;&mdash;&nbsp;&#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sequences, like dictionaries, like functions, like iterators, or even like numbers! This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
 
 <h2 id=basics>Basics</h2>
 
@@ -207,7 +207,7 @@ AttributeError</samp></pre>
 
 <h2 id=acts-like-function>Classes That Act Like Functions</h2>
 
-<p>You can make an instance of a class callable &mdash; exactly like a function is callable &mdash; by defining the <code>__call__()</code> method.
+<p>You can make an instance of a class callable&nbsp;&mdash;&nbsp;exactly like a function is callable&nbsp;&mdash;&nbsp;by defining the <code>__call__()</code> method.
 
 <table>
 <tr><th>Notes
@@ -255,7 +255,7 @@ bytes = zef_file.read(12)
 
 <h2 id=acts-like-list>Classes That Act Like Sequences</h2>
 
-<p>If your class acts as a container for a set of values &mdash; that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value &mdash; then it should probably define the following special methods that make it act like a sequence.
+<p>If your class acts as a container for a set of values&nbsp;&mdash;&nbsp;that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value&nbsp;&mdash;&nbsp;then it should probably define the following special methods that make it act like a sequence.
 
 <table>
 <tr><th>Notes
@@ -358,7 +358,7 @@ class FieldStorage:
 
 <h2 id=acts-like-number>Classes That Act Like Numbers</h2>
 
-<p>Using the appropriate special methods, you can define your own classes that act like numbers. That is, you can add them, subtract them, and perform other mathematical operations on them. This is how <a href=advanced-classes.html#implementing-fractions><dfn>fractions</dfn> are implemented</a> &mdash; the <code><dfn>Fraction</dfn></code> class implements these special methods, then you can do things like this:
+<p>Using the appropriate special methods, you can define your own classes that act like numbers. That is, you can add them, subtract them, and perform other mathematical operations on them. This is how <a href=advanced-classes.html#implementing-fractions><dfn>fractions</dfn> are implemented</a>&nbsp;&mdash;&nbsp;the <code><dfn>Fraction</dfn></code> class implements these special methods, then you can do things like this:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>from fractions import Fraction</kbd>
@@ -635,7 +635,7 @@ class FieldStorage:
 
 <h2 id=rich-comparisons>Classes That Can Be Compared</h2>
 
-<p>I broke this section out from the previous one because comparisons are not strictly the purview of numbers. Many datatypes can be compared &mdash; strings, lists, even dictionaries. If you&#8217;re creating your own class and it makes sense to compare your objects to other objects, you can use the following special methods to implement comparisons.
+<p>I broke this section out from the previous one because comparisons are not strictly the purview of numbers. Many datatypes can be compared&nbsp;&mdash;&nbsp;strings, lists, even dictionaries. If you&#8217;re creating your own class and it makes sense to compare your objects to other objects, you can use the following special methods to implement comparisons.
 
 <table>
 <tr><th>Notes
@@ -755,7 +755,7 @@ def __exit__(self, *args) -> None:
 <a>    self.close()                                       <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>The file object defines both an <code>__enter__()</code> and an <code>__exit__()</code> method. The <code>__enter__()</code> method checks that the file is open; if it&#8217;s not, the <code>_checkClosed()</code> method raises an exception.
-<li>The <code>__enter__()</code> method should almost always return <var>self</var> &mdash; this is the object that the <code>with</code> block will use to dispatch properties and methods.
+<li>The <code>__enter__()</code> method should almost always return <var>self</var>&nbsp;&mdash;&nbsp;this is the object that the <code>with</code> block will use to dispatch properties and methods.
 <li>After the <code>with</code> block, the file object automatically closes. How? In the <code>__exit__()</code> method, it calls <code>self.close()</code>.
 </ol>
 

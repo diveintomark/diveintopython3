@@ -20,7 +20,7 @@ body{counter-reset:h1 5}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>For reasons passing all understanding, I have always been fascinated by languages. Not programming languages. Well yes, programming languages, but also natural languages. Take English. English is a schizophrenic language that borrows words from German, French, Spanish, and Latin (to name a few). Actually, &#8220;borrows&#8221; is the wrong word; &#8220;pillages&#8221; is more like it. Or perhaps &#8220;assimilates&#8221; &mdash; like the Borg. Yes, I like that.
+<p class=f>For reasons passing all understanding, I have always been fascinated by languages. Not programming languages. Well yes, programming languages, but also natural languages. Take English. English is a schizophrenic language that borrows words from German, French, Spanish, and Latin (to name a few). Actually, &#8220;borrows&#8221; is the wrong word; &#8220;pillages&#8221; is more like it. Or perhaps &#8220;assimilates&#8221;&nbsp;&mdash;&nbsp;like the Borg. Yes, I like that.
 <p class=c><code>We are the Borg. Your linguistic and etymological distinctiveness will be added to our own. Resistance is futile.</code>
 <p>In this chapter, you&#8217;re going to learn about plural nouns. Also, functions that return other functions, advanced regular expressions, and generators. But first, let&#8217;s talk about how to make plural nouns. (If you haven&#8217;t read <a href=regular-expressions.html>the chapter on regular expressions</a>, now would be a good time. This chapter assumes you understand the basics of regular expressions, and it quickly descends into more advanced uses.)
 <p>If you grew up in an English-speaking country or learned English in a formal school setting, you&#8217;re probably familiar with the basic rules:
@@ -170,7 +170,7 @@ def plural(noun):
 </ol>
 
 <aside>The &#8220;rules&#8221; variable is a list of functions.</aside>
-<p>The reason this technique works is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>, including functions. The <var>rules</var> data structure contains functions &mdash; not names of functions, but actual function objects. When they get assigned in the <code>for</code> loop, then <var>matches_rule</var> and <var>apply_rule</var> are actual functions that you can call. On the first iteration of the <code>for</code> loop, this is equivalent to calling <code>matches_sxz(noun)</code>, and if it returns a match, calling <code>apply_sxz(noun)</code>.
+<p>The reason this technique works is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>, including functions. The <var>rules</var> data structure contains functions&nbsp;&mdash;&nbsp;not names of functions, but actual function objects. When they get assigned in the <code>for</code> loop, then <var>matches_rule</var> and <var>apply_rule</var> are actual functions that you can call. On the first iteration of the <code>for</code> loop, this is equivalent to calling <code>matches_sxz(noun)</code>, and if it returns a match, calling <code>apply_sxz(noun)</code>.
 
 <p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
 
@@ -392,7 +392,7 @@ def plural(noun):
 
 <p>What have you gained over stage 4? Startup time. In stage 4, when you imported the <code>plural4</code> module, it read the entire patterns file and built a list of all the possible rules, before you could even think about calling the <code>plural()</code> function. With generators, you can do everything lazily: you read the first rule and create functions and try them, and if that works you don&#8217;t ever read the rest of the file or create any other functions.
 
-<p>What have you lost? Performance! Every time you call the <code>plural()</code> function, the <code>rules()</code> generator starts over from the beginning &mdash; which means re-opening the patterns file and reading from the beginning, one line at a time.
+<p>What have you lost? Performance! Every time you call the <code>plural()</code> function, the <code>rules()</code> generator starts over from the beginning&nbsp;&mdash;&nbsp;which means re-opening the patterns file and reading from the beginning, one line at a time.
 
 <p>What if you could have the best of both worlds: minimal startup cost (don&#8217;t execute any code on <code>import</code>), <em>and</em> maximum performance (don&#8217;t build the same functions over and over again). Oh, and you still want to keep the rules in a separate file (because code is code and data is data), just as long as you never have to read the same line twice.
 
