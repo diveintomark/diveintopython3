@@ -322,25 +322,29 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <h3 id=searchinglists>Searching For Values In A List</h3>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>'mpilgrim' in a_list</kbd>      <span class=u>&#x2460;</span></a>
-<samp class=pp>True</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('mpilgrim')</kbd>  <span class=u>&#x2461;</span></a>
-<samp class=pp>3</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('new')</kbd>       <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.count('new')</kbd>       <span class=u>&#x2460;</span></a>
 <samp class=pp>2</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>'c' in a_list</kbd>             <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>'new' in a_list</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>'c' in a_list</kbd>
 <samp class=pp>False</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('c')</kbd>         <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('mpilgrim')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('new')</kbd>       <span class=u>&#x2464;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('c')</kbd>         <span class=u>&#x2465;</span></a>
 <samp class=traceback>Traceback (innermost last):
   File "&lt;interactive input>", line 1, in ?
 ValueError: list.index(x): x not in list</samp></pre>
 <ol>
-<li>To test whether a value is in the list, use the <code>in</code> operator.  It returns <code>True</code> if the value is in the list, or <code>False</code> if it is not. It will not tell you where in the list the value is.
+<li>As you might expect, the <code>count()</code> method returns the number of occurrences of a specific value in a list.
+<li>If all you want to know is whether a value is in the list or not, the <code>in</code> operator is slightly faster than using the <code>count()</code> method. The <code>in</code> operator always returns <code>True</code> or <code>False</code>; it will not tell you where in the list the value is.
 <li>If you need to know exactly where in the list a value is, call the <code>index()</code> method. By default it will search the entire list, although you can specify a second argument of the (<code>0</code>-based) index to start from, and even a third argument of the (<code>0</code>-based) index to stop searching.
-<li>As you might expect, this will return <code>False</code>, because <code>'c'</code> is not a value in <var>a_list</var>.
 <li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
-<li>As you might <em>not</em> expect, if the value is not found in the list, Python raises an exception. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later.
+<li>As you might <em>not</em> expect, if the value is not found in the list, the <code>index()</code> method will raise an exception.
 </ol>
+
+<p>Wait, what? That&#8217;s right: the <code>index()</code> method raises an exception if it doesn&#8217;t find the value in the list. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later. Remember, <a href=#creatinglists><code>-1</code> is a valid list index</a>. If the <code>index()</code> method returned <code>-1</code>, that could lead to some not-so-fun debugging sessions!
 
 <h3 id=removingfromlists>Removing Items From A List</h3>
 
