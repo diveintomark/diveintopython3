@@ -446,12 +446,12 @@ IndexError: pop from empty list</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=dictionaries>Dictionaries</h2>
-<p>One of Python&#8217;s most important datatypes is the dictionary, which defines one-to-one relationships between keys and values.
+<p>One of Python&#8217;s most important datatypes is the dictionary. A dictionary is an unordered set of key-value pairs. When you add a key to a dictionary, you must also add a value for that key. (You can always change the value later.) Python dictionaries are optimized for retrieving the value when you know the key, but not the other way around.
 <blockquote class='note compare perl5'>
 <p><span class=u>&#x261E;</span>A dictionary in Python is like a hash in Perl 5. In Perl 5, variables that store hashes always start with a <code>%</code> character. In Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
 <h3 id=creating-dictionaries>Creating A Dictionary</h3>
-<p>Creating a dictionary is easy. The syntax is similar to <a href=#sets>sets</a>, but instead of values, you have key-value pairs. Once you have a dictionary, you can look up values by their key.
+<p>Creating a dictionary is easy. The syntax is similar to <a href=#sets>sets</a> [FIXME link fails because section is not written yet], but instead of values, you have key-value pairs. Once you have a dictionary, you can look up values by their key.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_dict = {'server':'db.diveintopython3.org', 'database':'mysql'}</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
