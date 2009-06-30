@@ -9,12 +9,8 @@
 of other platforms you've probably never even heard of.
 <p>What's more, Python programs written on one platform can, with a little care, run on <em>any</em> supported platform. For instance, I regularly develop Python programs on Windows and later deploy them on Linux.
 <p>So back to the question that started this section, &#8220;Which Python is right for you?&#8221;  The answer is whichever one runs on the computer you already have.
+
 <h2 id="install.windows">1.2. Python on Windows</h2>
-<p>On Windows, you have a couple choices for installing Python.
-<p>ActiveState makes a Windows installer for Python called ActivePython, which includes a complete version of Python, an <abbr>IDE</abbr> with a Python-aware code editor, plus some Windows extensions for Python that allow complete access to Windows-specific services, <abbr>API</abbr>s, and the Windows Registry.
-<p>ActivePython is freely downloadable, although it is not open source. It is the <abbr>IDE</abbr> I used to learn Python, and I recommend you try it unless you have a specific reason not to. One such reason might be that ActiveState is generally
-several months behind in updating their ActivePython installer when new version of Python are released. If you absolutely need the latest version of Python and ActivePython is still a version behind as you read this, you'll want to use the second option for installing Python on Windows.
-<p>The second option is the &#8220;official&#8221; Python installer, distributed by the people who develop Python itself. It is freely downloadable and open source, and it is always current with the latest version of Python.
 <div class=procedure>
 <h3>Procedure 1.1. Option 1: Installing ActivePython</h3>
 <p>Here is the procedure for installing ActivePython:
