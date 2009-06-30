@@ -10,6 +10,7 @@ cp -R j build/
 cp -R i build/
 rm -f examples/*.pyc
 cp -R examples build/
+cp .htaccess build/
 
 echo "minimizing HTML"
 
@@ -70,10 +71,10 @@ sed -i -e "s|href=index.html|href=/|g" build/*.html
 
 # set file permissions (hg resets these, don't know why)
 chmod 755 build/j build/i
-chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess build/i/* build/i/.htaccess
+chmod 644 build/*.html build/*.css build/examples/*.py build/examples/*.txt build/*.txt build/j/*.js build/j/.htaccess build/i/* build/i/.htaccess build/.htaccess
 
 # ship it!
 echo "publishing"
 rsync -essh -avz build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/dip3/
 rsync -essh -avz build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
-rsync -essh -avz build/examples build/*.txt build/*.html diveintomark.org:~/web/diveintopython3.org/
+rsync -essh -avz build/examples build/*.txt build/*.html build/.htaccess diveintomark.org:~/web/diveintopython3.org/

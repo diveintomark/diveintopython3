@@ -1,0 +1,3 @@
+FileETag MTime Size
+
+SetEnvIfNoCase Request_URI \.html$ dont-vary
