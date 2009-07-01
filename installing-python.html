@@ -6,6 +6,10 @@
 <link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 0}
+.i{list-style:none;margin:0;padding:0}
+#which{padding-top:1.75em}
+h2,.i li{clear:both}
+.i li .ss{float:right;margin:0 0 1.75em 1.75em}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -26,59 +30,173 @@ body{counter-reset:h1 0}
 
 <p>The first thing you need to do with Python is install it. Or do you?
 
-<p>If you're using an account on a hosted server, your ISP may have already installed Python 3. Most popular GNU/Linux distributions come with Python 2 in the default installation; a small but growing number of distributions also include Python 3. (As you&#8217;ll see in this chapter, you can have more than one version of Python installed on your computer.) Mac OS X includes a command-line version of Python 2, although you'll probably want to install a version that includes a more Mac-like graphical interface.
-<p>Windows does not come with any version of Python, but don&#8217;t despair!  There are several ways to point-and-click your way to Python on Windows.
-<p>What's more, Python programs written on one platform can run on <em>any</em> supported platform. For instance, I regularly develop Python programs on Windows and later deploy them on Linux.
+<p>If you're using an account on a hosted server, your <abbr>ISP</abbr> may have already installed Python 3. If you&#8217;re running Linux at home, you may already have Python 3, too. Most popular GNU/Linux distributions come with Python 2 in the default installation; a small but growing number of distributions also include Python 3. (As you&#8217;ll see in this chapter, you can have more than one version of Python installed on your computer.) Mac OS X includes a command-line version of Python 2, but as of this writing it does not include Python 3. Microsoft Windows does not come with any version of Python. But don&#8217;t despair! You can point-and-click your way through installing Python, regardless of what operating system you have.
+
+<p>The easiest way to check for Python 3 on your Linux or Mac OS X system is to get to a command line. On Linux, look in your <b><code>Applications</code></b> menu for a program called <b><code>Terminal</code></b>. (It may be in a submenu like <b><code>Accessories</code></b> or <b><code>System</code></b>.) On Mac OS X, there is an application called <b><code>Terminal.app</code></b> in your <code>/Application/Utilities/</code> folder.
+
+<p>Once you&#8217;re at a command line prompt, just type <kbd>python3</kbd> (all lowercase, no spaces) and see what happens. On my home Linux system, Python 3 is already installed, and this command gets me into the <i>Python <dfn>interactive shell</dfn></i>.
+
+<pre class=screen>
+<samp class=p>mark@atlantis:~$ </samp><kbd>python3</kbd>
+<samp>Python 3.0.1+ (r301:69556, Apr 15 2009, 17:25:52)
+[GCC 4.3.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>></samp></pre>
+
+<p>(Type <kbd>exit</kbd> and press <kbd>ENTER</kbd> to exit the Python interactive shell.)
+
+<p>My <a href=http://cornerhost.com/>web hosting provider</a> also runs Linux and provides command-line access, but my server does not have Python 3 installed. (Boo!)
+
+<pre class=screen>
+<samp class=p>mark@manganese:~$ </samp><kbd>python3</kbd>
+<samp>bash: python3: command not found</samp></pre>
+
 <p>So back to the question that started this section, &#8220;Which Python is right for you?&#8221;  The answer is whichever one runs on the computer you already have.
+
+<p class=a>&#x2042;
 
 <h2 id=windows>Installing on Microsoft Windows</h2>
 
-<p>FIXME
-<p><img src=i/win-install-0-security-warning.png width=409 height=309 alt='[Windows dialog: open file security warning]'>
-<p><img src=i/win-install-1-all-users-or-just-me.png width=499 height=432 alt='[Python installer: select whether to install Python 3.1 for all users of this computer]'>
-<p><img src=i/win-install-2-destination-directory.png width=499 height=432 alt='[Python installer: select destination directory]'>
-<p><img src=i/win-install-3-customize.png width=499 height=432 alt='[Python installer: customize Python 3.1]'>
-<p><img src=i/win-install-3a-disk-usage.png width=499 height=432 alt='[Python installer: disk space requirements]'>
-<p><img src=i/win-install-3b-test-suite.png width=499 height=432 alt='[Python installer: removing Test Suite option will save 7908KB on your hard drive]'>
-<p><img src=i/win-install-4-copying.png width=499 height=432 alt='[Python installer: progress meter]'>
-<p><img src=i/win-install-5-finish.png width=499 height=432 alt='[Python installer: installation completed. Special Windows thanks to Mark Hammond, without whose years of freely shared Windows expertise, Python for Windows would still be Python for DOS.]'>
-<p><img src=i/win-interactive-shell.png width=677 height=715 alt='[Windows Python Shell, a graphical interactive shell for Python]'>
+<p>Windows comes in two architectures these days: 32-bit and 64-bit. Of course, there are lots of different <i>versions</i> of Windows&nbsp;&mdash;&nbsp;XP, Vista, Windows 7&nbsp;&mdash;&nbsp;but Python runs on all of them. The more important distinction is 32-bit v. 64-bit. If you have no idea what architecture you&#8217;re running, it&#8217;s probably 32-bit.
+
+<p>Visit <a href=http://python.org/download/><code>python.org/download/</code></a> and download the appropriate Python 3 Windows installer for your architecture. Your choices will look something like this:
+
+<ul>
+<li><b>Python 3.1 Windows installer</b> (Windows binary&nbsp;&mdash;&nbsp;does not include source)
+<li><b>Python 3.1 Windows AMD64 installer</b> (Windows AMD64 binary&nbsp;&mdash;&nbsp;does not include source)
+</ul>
+
+<p>I don&#8217;t want to include direct download links here, because minor updates of Python happen all the time and I don&#8217;t want to be responsible for you missing important updates. You should always install the most recent version of Python 3.x unless you have some esoteric reason not to.
+
+<ol class=i>
+<li>
+<p class='ss nm'><img src=i/win-install-0-security-warning.png width=409 height=309 alt='[Windows dialog: open file security warning]'>
+<p>Once your download is complete, double-click the <code>.msi</code> file. Windows will pop up a security alert, since you&#8217;re about to be running executable code. The official Python installer is digitally signed by the <a href=http://www.python.org/psf/>Python Software Foundation</a>, the non-profit corporation that oversees Python development. Don&#8217;t accept imitations!
+<p>Click the <code>Run</code> button to launch the Python 3 installer.
+
+<li>
+<p class='ss nm'><img src=i/win-install-1-all-users-or-just-me.png width=499 height=432 alt='[Python installer: select whether to install Python 3.1 for all users of this computer]'>
+<p>The first question the installer will ask you is whether you want to install Python 3 for all users or just for you. The default choice is &#8220;install for all users,&#8221; which is the best choice unless you have a good reason to choose otherwise. (One possible reason why you would want to &#8220;install just for me&#8221; is that you are installing Python on your company&#8217;s computer and you don&#8217;t have administrative rights on your Windows account. But then, why are you installing Python without permission from your company&#8217;s Windows administrator? Don&#8217;t get me in trouble here!)
+<p>Click the <code>Next</code> button to accept your choice of installation type.
+
+<li>
+<p class='ss nm'><img src=i/win-install-2-destination-directory.png width=499 height=432 alt='[Python installer: select destination directory]'>
+
+<li>
+<p class='ss nm'><img src=i/win-install-3-customize.png width=499 height=432 alt='[Python installer: customize Python 3.1]'>
+
+<li>
+<p class='ss nm'><img src=i/win-install-3a-disk-usage.png width=499 height=432 alt='[Python installer: disk space requirements]'>
+
+<li>
+<p class='ss nm'><img src=i/win-install-3b-test-suite.png width=499 height=432 alt='[Python installer: removing Test Suite option will save 7908KB on your hard drive]'>
+
+<li>
+<p class='ss nm'><img src=i/win-install-4-copying.png width=499 height=432 alt='[Python installer: progress meter]'>
+
+<li>
+<p class='ss nm'><img src=i/win-install-5-finish.png width=499 height=432 alt='[Python installer: installation completed. Special Windows thanks to Mark Hammond, without whose years of freely shared Windows expertise, Python for Windows would still be Python for DOS.]'>
+
+<li>
+<p class='ss nm'><img src=i/win-interactive-shell.png width=677 height=715 alt='[Windows Python Shell, a graphical interactive shell for Python]'>
+
+</ol>
+
+<p class=a>&#x2042;
 
 <h2 id=macosx>Installing on Mac OS X</h2>
 
 <p>FIXME
-<p><img src=i/mac-install-0-dmg-contents.png width=752 height=438 alt='[contents of Python installer disk image]'>
-<p><img src=i/mac-install-1-welcome.png width=622 height=442 alt='[Python installer: welcome screen]'>
-<p><img src=i/mac-install-2-information.png width=622 height=442 alt='[Python installer: information about supported architectures, disk space, and acceptable destination folders]'>
-<p><img src=i/mac-install-3-license.png width=622 height=442 alt='[Python installer: software license agreement]'>
-<p><img src=i/mac-install-4-license-dialog.png width=622 height=442 alt='[Python installer: dialog to accept license agreement]'>
-<p><img src=i/mac-install-5-standard-install.png width=622 height=442 alt='[Python installer: standard install screen]'>
-<p><img src=i/mac-install-6-custom-install.png width=622 height=442 alt='[Python installer: custom install screen]'>
-<p><img src=i/mac-install-7-admin-password.png width=622 height=457 alt='[Python installer: dialog to enter administrative password]'>
-<p><img src=i/mac-install-8-progress.png width=622 height=442 alt='[Python installer: progress meter]'>
-<p><img src=i/mac-install-9-succeeded.png width=622 height=442 alt='[Python installer: install succeeded]'>
-<p><img src=i/mac-install-10-application-folder.png width=488 height=482 alt='[contents of /Applications/Python 3.1/ folder]'>
-<p><img src=i/mac-interactive-shell.png width=522 height=538 alt='[Mac Python Shell, a graphical interactive shell for Python]'>
-<p><img src=i/mac-pythonlauncher.png width=432 height=536 alt='[Python Launcher preferences window]'>
+
+<ol class=i>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-0-dmg-contents.png width=752 height=438 alt='[contents of Python installer disk image]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-1-welcome.png width=622 height=442 alt='[Python installer: welcome screen]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-2-information.png width=622 height=442 alt='[Python installer: information about supported architectures, disk space, and acceptable destination folders]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-3-license.png width=622 height=442 alt='[Python installer: software license agreement]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-4-license-dialog.png width=622 height=442 alt='[Python installer: dialog to accept license agreement]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-5-standard-install.png width=622 height=442 alt='[Python installer: standard install screen]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-6-custom-install.png width=622 height=442 alt='[Python installer: custom install screen]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-7-admin-password.png width=622 height=457 alt='[Python installer: dialog to enter administrative password]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-8-progress.png width=622 height=442 alt='[Python installer: progress meter]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-9-succeeded.png width=622 height=442 alt='[Python installer: install succeeded]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-install-10-application-folder.png width=488 height=482 alt='[contents of /Applications/Python 3.1/ folder]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-interactive-shell.png width=522 height=538 alt='[Mac Python Shell, a graphical interactive shell for Python]'>
+
+<li>
+<p class='ss nm'><img src=i/mac-pythonlauncher.png width=432 height=536 alt='[Python Launcher preferences window]'>
+
+</ol>
+
+<p class=a>&#x2042;
 
 <h2 id=ubuntu>Installing on Ubuntu Linux</h2>
 
 <p>FIXME
-<p><img src=i/ubu-install-0-add-remove-programs.png width=920 height=473 alt='[Add/Remove: Canonical-maintained applications]'>
-<p><img src=i/ubu-install-1-all-open-source-applications.png width=920 height=473 alt='[Add/Remove: all open source applications]'>
-<p><img src=i/ubu-install-2-search-python-3.png width=920 height=473 alt='[Add/Remove: search for Python 3]'>
-<p><img src=i/ubu-install-3-select-python-3.png width=920 height=473 alt='[Add/Remove: select Python 3.0 package]'>
-<p><img src=i/ubu-install-4-select-idle.png width=920 height=473 alt='[Add/Remove: select IDLE for Python 3.0 package]'>
-<p><img src=i/ubu-install-5-apply-changes.png width=635 height=364 alt='[Add/Remove: apply changes]'>
-<p><img src=i/ubu-install-6-download-progress.png width=287 height=211 alt='[Add/Remove: download progress meter]'>
-<p><img src=i/ubu-install-7-install-progress.png width=486 height=258 alt='[Add/Remove: installation progress meter]'>
-<p><img src=i/ubu-install-8-success.png width=591 height=296 alt='[Add/Remove: new applications have been installed]'>
-<p><img src=i/ubu-interactive-shell.png width=679 height=687 alt='[Linux Python Shell, a graphical interactive shell for Python]'>
 
+<ol class=i>
+<li>
+<p class='ss nm'><img src=i/ubu-install-0-add-remove-programs.png width=920 height=473 alt='[Add/Remove: Canonical-maintained applications]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-1-all-open-source-applications.png width=920 height=473 alt='[Add/Remove: all open source applications]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-2-search-python-3.png width=920 height=473 alt='[Add/Remove: search for Python 3]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-3-select-python-3.png width=920 height=473 alt='[Add/Remove: select Python 3.0 package]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-4-select-idle.png width=920 height=473 alt='[Add/Remove: select IDLE for Python 3.0 package]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-5-apply-changes.png width=635 height=364 alt='[Add/Remove: apply changes]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-6-download-progress.png width=287 height=211 alt='[Add/Remove: download progress meter]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-7-install-progress.png width=486 height=258 alt='[Add/Remove: installation progress meter]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-install-8-success.png width=591 height=296 alt='[Add/Remove: new applications have been installed]'>
+
+<li>
+<p class='ss nm'><img src=i/ubu-interactive-shell.png width=679 height=687 alt='[Linux Python Shell, a graphical interactive shell for Python]'>
+
+</ol>
+
+<p class=a>&#x2042;
 
 <h2 id=other>Installing on Other Platforms</h2>
 
 <p>FIXME
+
+<p class=a>&#x2042;
 
 <h2 id=editors>Python Editors and IDEs</h2>
 

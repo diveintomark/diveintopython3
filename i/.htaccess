@@ -2,4 +2,3 @@ FileETag MTime Size
 
 ExpiresActive On
 ExpiresDefault "access plus 1 year"
-Header set Cache-Control "max-age=31536000"
