@@ -8,7 +8,7 @@
 body{counter-reset:h1 0}
 .i{list-style:none;margin:0;padding:0}
 #which{padding-top:1.75em}
-h2,.i li{clear:both}
+h2,.i>li{clear:both}
 .i li .ss{float:right;margin:0 0 1.75em 1.75em}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
@@ -43,7 +43,7 @@ h2,.i li{clear:both}
 Type "help", "copyright", "credits" or "license" for more information.
 >>></samp></pre>
 
-<p>(Type <kbd>exit</kbd> and press <kbd>ENTER</kbd> to exit the Python interactive shell.)
+<p>(Type <kbd>exit()</kbd> and press <kbd>ENTER</kbd> to exit the Python interactive shell.)
 
 <p>My <a href=http://cornerhost.com/>web hosting provider</a> also runs Linux and provides command-line access, but my server does not have Python 3 installed. (Boo!)
 
@@ -52,6 +52,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 <samp>bash: python3: command not found</samp></pre>
 
 <p>So back to the question that started this section, &#8220;Which Python is right for you?&#8221;  The answer is whichever one runs on the computer you already have.
+
+<p>[Read on for Windows instructions, or skip to <a href=#macosx>Installing on Mac OS X</a>, <a href=#ubuntu>Installing on Ubuntu Linux</a>, or <a href=#other>Installing on Other Platforms</a>.]
 
 <p class=a>&#x2042;
 
@@ -81,26 +83,45 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 <li>
 <p class='ss nm'><img src=i/win-install-2-destination-directory.png width=499 height=432 alt='[Python installer: select destination directory]'>
+<p>Next, the installer will prompt you to choose a destination directory. The default for all versions of Python 3.1.x is <code>C:\Python31\</code>, which should work well for most users unless you have a specific reason to change it. If you maintain a separate drive letter for installing applications, you can browse to it using the embedded crontrols, or simply type the pathname in the box below. You are not limited to installing Python on the <code>C:</code> drive; you can install it on any drive, in any folder.
+<p>Click the <code>Next</code> button to accept your choice of destination directory.
 
 <li>
 <p class='ss nm'><img src=i/win-install-3-customize.png width=499 height=432 alt='[Python installer: customize Python 3.1]'>
+<p>The next page looks complicated, but it&#8217;s not really. Like many installers, you have the option not to install every single component of Python 3. If disk space is especially tight, you can exclude certain components.
+<ul>
+<li><b>Register Extensions</b> allows you to double-click Python scripts (<code>.py</code> files) and run them. Recommended but not required. (This option doesn&#8217;t require any disk space, so there is little point in excluding it.)
+<li><b>Tcl/Tk</b> is the graphics library used by the Python Shell, which you will use throughout this book. I strongly recommend keeping this option.
+<li><b>Documentation</b> installs a help file that contains much of the information on <a href=http://docs.python.org/><code>docs.python.org</code></a>. Recommended if you are on dialup or have limited Internet access.
+<li><b>Utility Scripts</b> includes the <code>2to3.py</code> script which you&#8217;ll learn about <a href=case-study-porting-chardet-to-python-3.html>later in this book</a>. Required if you want to learn about migrating existing Python 2 code to Python 3. If you have no existing Python 2 code, you can skip this option.
+<li><b>Test Suite</b> is a collection of scripts used to test the Python interpreter itself. We will not use it in this book, nor have I ever used it in the course of programming in Python. Completely optional.
+</ul>
 
 <li>
 <p class='ss nm'><img src=i/win-install-3a-disk-usage.png width=499 height=432 alt='[Python installer: disk space requirements]'>
+<p>If you&#8217;re unsure how much disk space you have, click the <code>Disk Usage</code> button. The installer will list your drive letters, compute how much space is available on each drive, and calculate how much would be left after installation.
+<p>Click the <code>OK</code> button to return to the &#8220;Customizing Python*#8221; page.
 
 <li>
 <p class='ss nm'><img src=i/win-install-3b-test-suite.png width=499 height=432 alt='[Python installer: removing Test Suite option will save 7908KB on your hard drive]'>
+<p>If you decide to exclude an option, select the drop-down button before the option and select &#8220;Entire feature will be unavailable.&#8221; For example, excluding the test suite will save you a whopping 7908<abbr>KB</abbr> of disk space.
+<p>Click the <code>Next</code> button to accept your choice of options.
 
 <li>
 <p class='ss nm'><img src=i/win-install-4-copying.png width=499 height=432 alt='[Python installer: progress meter]'>
+<p>The installer will copy all the necessary files to your chosen destination directory. (This happens so quickly, I had to try it three times to even get a screenshot of it!)
 
 <li>
 <p class='ss nm'><img src=i/win-install-5-finish.png width=499 height=432 alt='[Python installer: installation completed. Special Windows thanks to Mark Hammond, without whose years of freely shared Windows expertise, Python for Windows would still be Python for DOS.]'>
+<p>Click the <code>Finish</code> button to exit the installer.
 
 <li>
 <p class='ss nm'><img src=i/win-interactive-shell.png width=677 height=715 alt='[Windows Python Shell, a graphical interactive shell for Python]'>
+<p>In your <code>Start</code> menu, there should be a new item called <code>Python 3.1</code>. Within that, there is a program called <abbr>IDLE</abbr>. Select this item to run the interactive Python Shell.
 
 </ol>
+
+<p>[Skip to <a href=#idle>using the Python Shell</a>]
 
 <p class=a>&#x2042;
 
@@ -151,6 +172,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 </ol>
 
+<p>[Skip to <a href=#idle>using the Python Shell</a>]
+
 <p class=a>&#x2042;
 
 <h2 id=ubuntu>Installing on Ubuntu Linux</h2>
@@ -190,9 +213,17 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 </ol>
 
+<p>[Skip to <a href=#idle>using the Python Shell</a>]
+
 <p class=a>&#x2042;
 
 <h2 id=other>Installing on Other Platforms</h2>
+
+<p>FIXME
+
+<p class=a>&#x2042;
+
+<h2 id=idle>Using The Python Shell</h2>
 
 <p>FIXME
 
