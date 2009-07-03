@@ -211,38 +211,50 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 <h2 id=ubuntu>Installing on Ubuntu Linux</h2>
 
-<p>FIXME
+<p>Modern Linux distributions are backed by vast repositories of precompiled applications, ready to install. The exact details vary by distribution. In Ubuntu Linux, the easiest way to install Python 3 is through the <code>Add/Remove</code> application in your <code>Applications</code> menu.
 
 <ol class=i>
 <li>
 <p class='ss nm'><img src=i/ubu-install-0-add-remove-programs.png width=920 height=473 alt='[Add/Remove: Canonical-maintained applications]'>
+<p>When you first launch the <code>Add/Remove</code> application, it will show you a list of preselected applications in different categories. Some are already installed; most are not. Because the repository contains over 10,000 applications, there are different filters you can apply to see small parts of the repository. The default filter is &#8220;Canonical-maintained applications,&#8221; which is a small subset of the total number of applications that are officially supported by Canonical, the company that creates and maintains Ubuntu Linux.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-1-all-open-source-applications.png width=920 height=473 alt='[Add/Remove: all open source applications]'>
+<p>Python 3 is not maintained by Canonical, so the first step is to drop down this filter menu and select &#8220;All Open Source applications.&#8221;
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-2-search-python-3.png width=920 height=473 alt='[Add/Remove: search for Python 3]'>
+<p>Once you&#8217;ve widened the filter to include all open source applications, use the Search box immediately after the filter menu to search for <kbd>Python 3</kbd>.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-3-select-python-3.png width=920 height=473 alt='[Add/Remove: select Python 3.0 package]'>
-
+<p>Now the list of applications narrows to just those matching <kbd>Python 3</kbd>. You&#8217;re going to check two packages. The first is <code>Python (v3.0)</code>. This contains the Python interpreter itself.
 <li>
 <p class='ss nm'><img src=i/ubu-install-4-select-idle.png width=920 height=473 alt='[Add/Remove: select IDLE for Python 3.0 package]'>
+<p>The second package you want is immediately above: <code>IDLE (using Python-3.0)</code>. This is a graphical Python Shell that you will use throughout this book.
+<p>After you&#8217;ve checked those two packages, click the <code>Apply Changes</code> button to continue.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-5-apply-changes.png width=635 height=364 alt='[Add/Remove: apply changes]'>
+<p>The package manager will ask you to confirm that you want to add both <code>IDLE (using Python-3.0)</code> and <code>Python (v3.0)</code>.
+<p>Click the <code>Apply</code> button to continue.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-6-download-progress.png width=287 height=211 alt='[Add/Remove: download progress meter]'>
+<p>The package manager will show you a progress meter while it downloads the necessary packages from Canonical&#8217;s Internet repository.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-7-install-progress.png width=486 height=258 alt='[Add/Remove: installation progress meter]'>
+<p>Once the packages are downloaded, the package manager will automatically begin installing them.
 
 <li>
 <p class='ss nm'><img src=i/ubu-install-8-success.png width=591 height=296 alt='[Add/Remove: new applications have been installed]'>
+<p>If all went well, the package manager will confirm that both packages were successfully installed. From here, you can double-click <abbr>IDLE</abbr> to launch the Python Shell, or click the <code>Close</code> button to exit the package manager.
+<p>You can always relaunch the Python Shell by going to your <code>Applications</code> menu, then the <code>Programming</code> submenu, and selecting <abbr>IDLE</abbr>.
 
 <li>
 <p class='ss nm'><img src=i/ubu-interactive-shell.png width=679 height=687 alt='[Linux Python Shell, a graphical interactive shell for Python]'>
+<p>The Python Shell is where you will spend most of your time exploring Python. Examples throughout this book will assume that you can find your way into the Python Shell.
 
 </ol>
 
@@ -252,26 +264,106 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 <h2 id=other>Installing on Other Platforms</h2>
 
-<p>FIXME
+<p>Python 3 is available on a number of different platforms. In particular, it is available in virtually every Linux, <abbr>BSD</abbr>, and Solaris-based distribution. For example, RedHat Linux uses the <code>yum</code> package manager; FreeBSD has its <a href=http://www.freebsd.org/ports/>ports and packages collection</a>; Solaris has <code>pkgadd</code> and friends. A quick web search for <code>Python 3</code> + <i>your operating system</i> will tell you whether a Python 3 package is available, and how to install it.
 
 <p class=a>&#x2042;
 
 <h2 id=idle>Using The Python Shell</h2>
 
-<p>FIXME
+<p>The Python Shell is where you can explore Python syntax, get interactive help on commands, and debug short programs. The graphical Python Shell (named <abbr>IDLE</abbr>) also contains a decent text editor that supports Python syntax coloring and integrates with the Python Shell. If you don&#8217;t already have a favorite text editor, you should give <abbr>IDLE</abbr> a try.
+
+<p>First things first. The Python Shell itself is an amazing interactive playground. Throughout this book, you&#8217;ll see examples like this:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>1 + 1</kbd>
+<samp class=pp>2</samp></pre>
+
+<p>The three angle brackets, <samp class=p>>>></samp>, denote the Python Shell prompt. Don&#8217;t type that part. That&#8217;s just to let you know that this example is meant to be followed in the Python Shell.
+
+<p><kbd class=pp>1 + 1</kbd> is the part you type. You can type any valid Python expression or command in the Python Shell. Don&#8217;t be shy; it won&#8217;t bite! The worst that will happen is you&#8217;ll get an error message. Commands get executed immediately (once you press <kbd>ENTER</kbd>); expressions get evaluated immediately, and the Python Shell prints out the result.
+
+<p><samp class=pp>2</samp> is the result of evaluating this expression. As it happens, <kbd class=pp>1 + 1</kbd> is a valid Python expression. The result, of course, is <samp class=pp>2</samp>.
+
+<p>Let&#8217;s try another one.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>print('Hello world!')</kbd>
+<samp>Hello world!</samp>
+</pre>
+
+<p>Pretty simple, no? But there&#8217;s lots more you can do in the Python shell. If you ever get stuck&nbsp;&mdash;&nbsp;you can&#8217;t remember a command, or you can&#8217;t remember the proper arguments to pass a certain function&nbsp;&mdash;&nbsp;you can get interactive help in the Python Shell. Just type <kbd>help</kbd> and press <kbd>ENTER</kbd>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>help</kbd>
+<samp>Type help() for interactive help, or help(object) for help about object.</samp></pre>
+
+<p>There are two modes of help. You can get help about a single object, which just prints out the documentation and returns you to the Python Shell prompt. You can also enter <i>help mode</i>, where instead of evaluating Python expressions, you just type keywords or command names and it will print out whatever it knows about that command.
+
+<p>To enter the interactive help mode, type <kbd>help()</kbd> and press <kbd>ENTER</kbd>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>help()</kbd>
+Welcome to Python 3.0!  This is the online help utility.
+
+If this is your first time using Python, you should definitely check out
+the tutorial on the Internet at http://docs.python.org/tutorial/.
+
+Enter the name of any module, keyword, or topic to get help on writing
+Python programs and using Python modules.  To quit this help utility and
+return to the interpreter, just type "quit".
+
+To get a list of available modules, keywords, or topics, type "modules",
+"keywords", or "topics".  Each module also comes with a one-line summary
+of what it does; to list the modules whose summaries contain a given word
+such as "spam", type "modules spam".
+</samp>
+<samp class=p>help> </samp></pre>
+
+<p>Note how the prompt changes from <samp class=p>>>></samp> to <samp class=p>help></samp>. This reminds you that you&#8217;re in the interactive help mode. Now you can enter any keyword, command, module name, function name&nbsp;&mdash;&nbsp;pretty much anything Python understands&nbsp;&mdash;&nbsp;and read documentation on it.
+
+<pre class=screen>
+<a><samp class=p>help> </samp><kbd class=pp>print</kbd>                                                                 <span class=u>&#x2460;</span></a>
+<samp>Help on built-in function print in module builtins:
+
+print(...)
+    print(value, ..., sep=' ', end='\n', file=sys.stdout)
+    
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file: a file-like object (stream); defaults to the current sys.stdout.
+    sep:  string inserted between values, default a space.
+    end:  string appended after the last value, default a newline.
+</samp>
+<a><samp class=p>help> </samp><kbd class=pp>PapayaWhip</kbd>                                                            <span class=u>&#x2461;</span></a>
+<samp>no Python documentation found for 'PapayaWhip'
+</samp>
+<a><samp class=p>help> </samp><kbd class=pp>quit</kbd>                                                                  <span class=u>&#x2462;</span></a>
+<samp>
+You are now leaving help and returning to the Python interpreter.
+If you want to ask for help on a particular object directly from the
+interpreter, you can type "help(object)".  Executing "help('string')"
+has the same effect as typing a particular string at the help> prompt.</samp>
+<a><samp class=p>>>> </samp>                                                                        <span class=u>&#x2463;</span></a></pre>
+<ol>
+<li>To get documentation on the <code>print()</code> function, just type <kbd>print</kbd> and press <kbd>ENTER</kbd>. The interactive help mode will display something akin to a man page: the function name, a brief synopsis, the function&#8217;s arguments and their default values, and so on. If the documentation seems opaque to you, don&#8217;t panic. You&#8217;ll learn more about all these concepts in the next few chapters.
+<li>Of course, the interactive help mode doesn&#8217;t know everything. If you type something that isn&#8217;t a Python command, module, function, or other built-in keyword, the interactive help mode will just shrug its virtual shoulders.
+<li>To quit the interactive help mode, type <kbd>quit</kbd> and press <kbd>ENTER</kbd>.
+<li>The prompt changes back to <samp class=p>>>></samp> to signal that you&#8217;ve left the interactive help mode and returned to the Python Shell.
+</ol>
+
+<p><abbr>IDLE</abbr>, the graphical Python Shell, also includes a Python-aware text editor. You&#8217;ll see how to use it in the next chapter.
 
 <p class=a>&#x2042;
 
 <h2 id=editors>Python Editors and IDEs</h2>
 
-<p>FIXME
-<pre>
-http://wiki.python.org/moin/PythonEditors
-http://wiki.python.org/moin/IntegratedDevelopmentEnvironments
-http://pydev.sourceforge.net/
-http://www.activestate.com/komodo/
-http://www.activestate.com/activepython/
-</pre>
+<p><abbr>IDLE</abbr> is not the only game in town when it comes to writing programs in Python. While it&#8217;s useful to get started with learning the language itself, many developers prefer other text editors or Integrated Development Environments (<abbr>IDE</abbr>s). I won&#8217;t cover them here, but the Python community maintains <a href=http://wiki.python.org/moin/PythonEditors>a list of Python-aware editors</a> that covers a wide range of supported platforms and software licenses.
+
+<p>You might also want to check out the <a href=http://wiki.python.org/moin/IntegratedDevelopmentEnvironments>list of Python-aware <abbr>IDE</abbr>s</a>, although few of them support Python 3 yet. One that does is <a href=http://pydev.sourceforge.net/>PyDev</a>, a plugin for <a href=http://eclipse.org/>Eclipse</a> that turns Eclipse into a full-fledged Python <abbr>IDE</abbr>. Both Eclipse and PyDev are cross-platform and open source.
+
+<p>On the commercial front, there is ActiveState&#8217;s <a href=http://www.activestate.com/komodo/>Komodo <abbr>IDE</abbr></a>. It has per-user licensing, but students can get a discount, and a free time-limited trial version is available.
+
+<p>I&#8217;ve been programming in Python for nine years, and I edit my Python programs in <a href=http://www.gnu.org/software/emacs/>GNU Emacs</a> and debug them in the command-line Python Shell. There&#8217;s no right or wrong way to develop in Python. Find a way that works for you!
 
 <p class=v><a href=whats-new.html rel=prev title='back to &#8220;What&#8217;s New In Dive Into Python 3&#8221;'><span class=u>&#x261C;</span></a> <a href=your-first-python-program.html rel=next title='onward to &#8220;Your First Python Program&#8221;'><span class=u>&#x261E;</span></a>
 
