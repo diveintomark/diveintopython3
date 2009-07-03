@@ -19,13 +19,16 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
 <h1>Table of Contents</h1>
 <ol start=-1>
 <li id=whats-new><a href=whats-new.html>What&#8217;s New In &#8220;Dive Into Python 3&#8221;</a>
-<li>Installing Python
+<li><a href=installing-python.html>Installing Python</a>
   <ol>
-  <li>Python on Windows
-  <li>Python on Mac OS X
-  <li>Python on Ubuntu Linux
-  <li>Python from source
-  <li>The interactive shell
+  <li><a href=installing-python.html#divingin>Diving In</a>
+  <li><a href=installing-python.html#which>Which Python Is Right For You?</a>
+  <li><a href=installing-python.html#windows>Installing on Microsoft Windows</a>
+  <li><a href=installing-python.html#macosx>Installing on Mac OS X</a>
+  <li><a href=installing-python.html#ubuntu>Installing on Ubuntu Linux</a>
+  <li><a href=installing-python.html#other>Installing on Other Platforms</a>
+  <li><a href=installing-python.html#idle>Using The Python Shell</a>
+  <li><a href=installing-python.html#editors>Python Editors and IDEs</a>
   </ol>
 <li id=your-first-python-program><a href=your-first-python-program.html>Your first Python program</a>
   <ol>
@@ -165,7 +168,7 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=unit-testing.html#romantest3>More halting, more fire</a>
   <li>...
   </ol>
-<li>Test-first programming
+<li>Advanced Unit Testing
   <ol>
   <li>...
   </ol>
@@ -207,55 +210,32 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
     <li><a href=xml.html#xml-generate>Generating XML</a>
     <li><a href=xml.html#furtherreading>Further Reading</a>
   </ol>
-<li>HTML
+<li>Serializing Python Objects
+<li id=http-web-services><a href=http-web-services.html>HTTP Web Services</a>
   <ol>
-  <li>Diving in
-  <li>html5lib
+  <li><a href=http-web-services.html#divingin>Diving In</a>
+  <li><a href=http-web-services.html#http-features>Features of HTTP</a>
     <ol>
-    <li>Installing html5lib
-    <li>Using html5lib
+    <li><a href=http-web-services.html#caching>Caching</a>
+    <li><a href=http-web-services.html#last-modified>Last-Modified Checking</a>
+    <li><a href=http-web-services.html#etags>ETags</a>
+    <li><a href=http-web-services.html#compression>Compression</a>
+    <li><a href=http-web-services.html#redirects>Redirects</a>
     </ol>
-  <li>Extracting data from HTML documents
-  <li>Building HTML documents
-  <li>Putting it all together
-  <li>Summary
-  </ol>
-<li id=http-web-services>HTTP Web Services
-  <ol>
-  <li>Diving in
-  <li>How not to fetch data over HTTP
-  <li>Features of HTTP
+  <li><a href=http-web-services.html#dont-try-this-at-home>How Not To Fetch Data Over HTTP</a>
+  <li><a href=http-web-services.html#whats-on-the-wire>What&#8217;s On The Wire?</a>
+  <li><a href=http-web-services.html#introducing-httplib2>Introducing <code>httplib2</code></a>
     <ol>
-    <li>User-Agent
-    <li>Redirects
-    <li>Last-Modified/If-Modified-Since
-    <li>ETag-If-None-Match
-    <li>Compression
+    <li><a href=http-web-services.html#httplib2-caching>How <code>httplib2</code> Handles Caching</a>
+    <li><a href=http-web-services.html#httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</a>
+    <li><a href=http-web-services.html#httplib2-compression>How <code>http2lib</code> Handles Compression</a>
+    <li><a href=http-web-services.html#httplib2-redirects>How <code>httplib2</code> Handles Redirects</a>
     </ol>
-  <li>Differences from Python 2
-  <li>httplib2 (note: needs port)
-    <ol>
-    <li>Installing httplib2
-    <li>Why httplib2 is better than http.client
-    </ol>
-  <li>Debugging HTTP web services
-  <li>Setting the User-Agent
-  <li>Handling Last-Modified and ETag
-  <li>Handling redirects
-  <li>Handling compressed data
-  <li>Putting it all together
-  <li>Summary
+  <li><a href=http-web-services.html#beyond-get>Beyond HTTP GET</a>
+  <li><a href=http-web-services.html#beyond-post>Beyond HTTP POST</a>
+  <li><a href=http-web-services.html#furtherreading>Further Reading</a>
   </ol>
-<li>Performance tuning
-  <ol>
-  <li>Diving in
-  <li>Using the timeit module
-  <li>Optimizing regular expressions
-  <li>Optimizing dictionary lookups
-  <li>Optimizing list operations
-  <li>Optimizing string manipulation
-  <li>Summary
-  </ol>
+<li>Threading <i class=baa>&amp;</i> Multiprocessing
 <li>Packaging Python libraries
 <!-- http://pypi.python.org/pypi -->
   <ol>
@@ -269,10 +249,6 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
     <li>Packaging by Linux distributions
     <li>Py2exe
     </ol>
-  </ol>
-<li>Creating graphics with the Python Imaging Library
-  <ol>
-  <li>...<a href=http://www.reddit.com/r/Python/comments/7sj39/dive_into_python_3/c07b3cq>will likely get ported in time</a>...
   </ol>
 <li id=case-study-porting-chardet-to-python-3><a href=case-study-porting-chardet-to-python-3.html>Case study: porting <code>chardet</code> to Python 3</a>
   <ol>
