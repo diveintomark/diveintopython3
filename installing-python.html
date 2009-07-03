@@ -127,49 +127,82 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 <h2 id=macosx>Installing on Mac OS X</h2>
 
-<p>FIXME
+<p>All modern Macintosh computers use the Intel chip (like most Windows PCs). Older Macs used PowerPC chips. You don&#8217;t need to understand the difference, because there&#8217;s just one Mac Python installer for all Macs.
+
+<p>Visit <a href=http://python.org/download/><code>python.org/download/</code></a> and download the Mac installer. It will be called something like <b>Python 3.1 Mac Installer Disk Image</b>, although the version number may vary. Be sure to download version 3.x, not 2.x.
 
 <ol class=i>
 
 <li>
 <p class='ss nm'><img src=i/mac-install-0-dmg-contents.png width=752 height=438 alt='[contents of Python installer disk image]'>
+<p>Your browser should automatically mount the disk image and open a Finder window to show you the contents. (If this doesn&#8217;t happen, you&#8217;ll need to find the disk image in your downloads folder and double-click to mount it. It will be named something like <code>python-3.1.dmg</code>.) The disk image contains a number of text files (<code>Build.txt</code>, <code>License.txt</code>, <code>ReadMe.txt</code>), and the actual installer package, <code>Python.mpkg</code>.
+<p>Double-click the <code>Python.mpkg</code> installer package to launch the Mac Python installer.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-1-welcome.png width=622 height=442 alt='[Python installer: welcome screen]'>
+<p>The first page of the installer gives a brief description of Python itself, then refers you to the <code>ReadMe.txt</code> file (which you didn&#8217;t read, did you?) for more details.
+<p>Click the <code>Continue</code> button to move along.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-2-information.png width=622 height=442 alt='[Python installer: information about supported architectures, disk space, and acceptable destination folders]'>
+<p>The next page actually contains some important information: Python requires Mac OS X 10.3 or later. If you are still running Mac OS X 10.2, you should really upgrade. Apple no longer provides security updates for your operating system, and your computer is probably at risk if you ever go online. Also, you can&#8217;t run Python 3.
+<p>Click the <code>Continue</code> button to advance.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-3-license.png width=622 height=442 alt='[Python installer: software license agreement]'>
+<p>Like all good installers, the Python installer displays the software license agreement. Python is open source, and its license is <a href=http://opensource.org/licenses/>approved by the Open Source Initiative</a>. Python has had a number of owners and sponsors throughout its history, each of which has left its mark on the software license. But the end result is this: Python is open source, and you may use it on any platform, for any purpose, without fee or obligation of reciprocity.
+<p>Click the <code>Continue</code> button once again.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-4-license-dialog.png width=622 height=442 alt='[Python installer: dialog to accept license agreement]'>
+<p>Due to quirks in the standard Apple installer framework, you must &#8220;agree&#8221; to the software license in order to complete the installation. Since Python is open source, you are really &#8220;agreeing&#8221; that the license is granting you additional rights, rather than taking them away.
+<p>Click the <code>Agree</code> button to continue.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-5-standard-install.png width=622 height=442 alt='[Python installer: standard install screen]'>
+<p>The next screen allows you to change your install location. You <strong>must</strong> install Python on your boot drive, but due to limitations of the installer, it does not enforce this. In truth, I have never had the need to change the install location.
+<p>From this screen, you can also customize the installation to exclude certain features. If you want to do this, click the <code>Customize</code> button; otherwise click the <code>Install</code> button.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-6-custom-install.png width=622 height=442 alt='[Python installer: custom install screen]'>
+<p>If you choose a Custom Install, the installer will present you with the following list of features:
+<ul>
+<li><b>Python Framework</b>. This is the guts of Python, and is both selected and disabled because it must be installed.
+<li><b>GUI Applications</b> includes IDLE, the graphical Python Shell which you will use throughout this book. I strongly recommend keeping this option selected.
+<li><b>UNIX command-line tools</b> includes the command-line <code>python3</code> application. I strongly recommend keeping this option, too.
+<li><b>Python Documentation</b> contains much of the information on <a href=http://docs.python.org/><code>docs.python.org</code></a>. Recommended if you are on dialup or have limited Internet access.
+<li><b>Shell profile updater</b> FIXME WTF is this?
+<li><b>Fix system Python</b> FIXME WTF is this too?
+</ul>
+<p>Click the <code>Install</code> button to continue.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-7-admin-password.png width=622 height=457 alt='[Python installer: dialog to enter administrative password]'>
+<p>Because it installs system-wide frameworks and binaries in <code>/usr/local/bin/</code>, the installer will ask you for an administrative password. There is no way to install Mac Python without administrator privileges. (FIXME really?)
+<p>Click the <code>OK</code> button to begin the installation.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-8-progress.png width=622 height=442 alt='[Python installer: progress meter]'>
+<p>The installer will display a progress meter while it installs the features you&#8217;ve selected.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-9-succeeded.png width=622 height=442 alt='[Python installer: install succeeded]'>
+<p>Assuming all went well, the installer will give you a big green checkmark to tell you that the installation completed successfully.
+<p>Click the <code>Close</code> button to exit the installer.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-10-application-folder.png width=488 height=482 alt='[contents of /Applications/Python 3.1/ folder]'>
+<p>Assuming you didn&#8217;t change the install location, you can find the newly installed files in the <code>Python 3.1</code> folder within your <code>/Applications</code> folder. The most important piece is <abbr>IDLE</abbr>, the graphical Python Shell.
+<p>Double-click <abbr>IDLE</abbr> to launch the Python Shell.
 
 <li>
 <p class='ss nm'><img src=i/mac-interactive-shell.png width=522 height=538 alt='[Mac Python Shell, a graphical interactive shell for Python]'>
+<p>The Python Shell is where you will spend most of your time exploring Python. Examples throughout this book will assume that you can find your way into the Python Shell.
 
+<!--
 <li>
 <p class='ss nm'><img src=i/mac-pythonlauncher.png width=432 height=536 alt='[Python Launcher preferences window]'>
-
+-->
 </ol>
 
 <p>[Skip to <a href=#idle>using the Python Shell</a>]
