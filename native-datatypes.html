@@ -442,7 +442,11 @@ IndexError: pop from empty list</samp></pre>
 
 <h2 id=sets>Sets</h2>
 
-<p>FIXME
+<p>A <dfn>set</dfn> is an unordered &#8220;bag&#8221; of unique values. A single set can contain values of any datatype. Once you have a two sets, you can do standard set operations like union, intersection, and set difference.
+
+<h3 id=creating-a-set>Creating A Set</h3>
+
+<p>First things first. Creating a set is easy.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set = {1}</kbd>     <span class=u>&#x2460;</span></a>
@@ -454,12 +458,12 @@ IndexError: pop from empty list</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2}</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>To create a set with one value, put the value in curly brackets (<code>{}</code>).
+<li>Sets are actually implemented as <a href=iterators.html#defining-classes>classes</a>, but don&#8217;t worry about that for now.
+<li>To create a set with multiple values, separate the values with commas and wrap it all up with curly brackets.
 </ol>
 
-<p>You can create a set out of a <a href=#lists>list</a>.
+<p>You can also create a set out of a <a href=#lists>list</a>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', True, False, 42]</kbd>
@@ -469,12 +473,12 @@ IndexError: pop from empty list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                                        <span class=u>&#x2462;</span></a>
 <samp class=pp>['a', 'b', 'mpilgrim', True, False, 42]</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>To create a set from a list, use the <code>set()</code> function. (Pedants who know about how sets are implemented will point out that this is not really calling a function, but instantiating a class. I <em>promise</em> you will learn the difference later in this book. For now, just know that <code>set()</code> acts like a function, and it returns a set.)
+<li>As I mentioned earlier, a single set can contain values of any datatype. And, as I mentioned earlier, sets are <em>unordered</em>. This set does not remember the original order of the list that was used to create it. If you were to add items to this set, it would not remember the order in which you added them.
+<li>The original list is unchanged.
 </ol>
 
-<p>You can create an empty set.
+<p>Don&#8217;t have any values yet? Not a problem. You can create an empty set.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set = set()</kbd>    <span class=u>&#x2460;</span></a>
@@ -485,38 +489,37 @@ IndexError: pop from empty list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>       <span class=u>&#x2463;</span></a>
 <samp class=pp>0</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>not_sure = {}</kbd>    <span class=u>&#x2464;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>type(not_sure)</kbd>   <span class=u>&#x2465;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>type(not_sure)</kbd>
 <samp class=pp>&lt;class 'dict'></samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
-<li>
-<li>
+<li>To create an empty set, call <code>set()</code> with no arguments.
+<li>The printed representation of an empty set looks a bit strange. Were you expecting <code>{}</code>, perhaps? That would denote an empty dictionary, not an empty set. (You&#8217;ll learn about dictionaries later in this chapter.)
+<li>Despite the strange printed representation, this <em>is</em> a set&hellip;
+<li>&hellip;and this set has no members.
+<li>Due to historical quirks carried over from Python 2, you can not create an empty set with two curly brackets. This actually creates an empty dictionary, not an empty set.
 </ol>
 
 <h3 id=modifying-sets>Modifying A Set</h3>
 
-<p>FIXME
+<p>There are two different ways to add values to an existing set: the <code>add()</code> method, and the <code>update()</code> method.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(3)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(4)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
-<samp class=pp>{1, 2, 3}</samp>
+<samp class=pp>{1, 2, 4}</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2461;</span></a>
 <samp class=pp>3</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.add(1)</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=pp>>>> </samp><kbd class=pp>a_set</kbd>
-<samp class=pp>{1, 2, 3}</samp>
+<samp class=pp>{1, 2, 4}</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2463;</span></a>
 <samp class=pp>3</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
+<li>The <code>add()</code> method takes a single argument, which can be any datatype, and adds the given value to the set.
+<li>This set now has 3 members.
+<li>Sets are bags of <em>unique values</em>. If you try to add a value that already exists in the set, it will do nothing. It won&#8217;t raise an error; it&#8217;s just a no-op.
+<li>This set <em>still</em> has 3 members.
 </ol>
 
 <pre class=screen>
@@ -524,23 +527,24 @@ IndexError: pop from empty list</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2, 3}</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.update({2, 4, 6})</kbd>                       <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>                                         <span class=u>&#x2461;</span></a>
 <samp class=pp>{1, 2, 3, 4, 6}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({3, 6, 9}, {1, 2, 3, 5, 8, 13})</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({3, 6, 9}, {1, 2, 3, 5, 8, 13})</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 13}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.update([10, 20, 30])</kbd>                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update([10, 20, 30])</kbd>                    <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 20, 30}</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>The <code>update()</code> method takes one argument, a set, and adds all its members to the original set. It&#8217;s as if you called the <code>add()</code> method with each member of the set.
+<li>Duplicate values are ignored, since sets can not contain duplicates.
+<li>You can actually call the <code>update()</code> method with any number of arguments. When called with two sets, the <code>update()</code> method adds all the members of each set to the original set (dropping duplicates).
+<li>The <code>update()</code> method can take a number of different datatypes, including lists. When called with a list, the <code>update()</code> method adds all the items of the list to the original set.
 </ol>
 
 <h3 id=removing-from-sets>Removing Items From A Set</h3>
 
-<p>FIXME
+<p>There are three ways to remove individual values from a set. The first two, <code>discard()</code> and <code>remove()</code>, have one subtle difference.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
@@ -560,24 +564,35 @@ IndexError: pop from empty list</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 21</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
+<li>The <code>discard()</code> method takes a single value as an argument and removes that value from the set.
+<li>If you call the <code>discard()</code> method with a value that doesn&#8217;t exist in the set, it does nothing. No error; it&#8217;s just a no-op.
+<li>The <code>remove()</code> method also takes a single value as an argument, and it also removes that value from the set.
+<li>Here&#8217;s the difference: if the value doesn&#8217;t exist in the set, the <code>remove()</code> method raises a <code>KeyError</code> exception.
 </ol>
+
+<p>Like lists, sets have a <code>pop()</code> method.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
-<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>                                <span class=u>&#x2460;</span></a>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
 <samp class=pp>3</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
 <samp class=pp>36</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
-<samp class=pp>{6, 10, 45, 15, 21, 28}</samp></pre>
+<samp class=pp>{6, 10, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.clear()</kbd>                              <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>set()</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>                                <span class=u>&#x2462;</span></a>
+<samp class=pp>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 'pop from an empty set'</samp></pre>
 <ol>
-<li>FIXME
+<li>The <code>pop()</code> method removes a single value from a set a returns the value. However, since sets are unordered, there is no &#8220;last&#8221; value in a set, so there is no way to control which value gets removed. It is essentially random.
+<li>The <code>clear()</code> method removes <em>all</em> values from a set, leaving you with an empty set. This is equivalent to <code>a_set = set()</code>, which would create a new empty set and overwrite the previous value of the <var>a_set</var> variable.
+<li>Attempting to pop a value from an empty set will raise a <code>KeyError</code> exception.
 </ol>
 
 <h3 id=common-set-operations>Common Set Operations</h3>
