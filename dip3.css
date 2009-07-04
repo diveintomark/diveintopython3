@@ -70,14 +70,14 @@ pre, kbd, samp, code, var, .b, pre span {
   font: small/2.154 Consolas, 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
   word-spacing: 0;
 }
-span.u {
+.u {
   font: medium/1.75 'Arial Unicode MS', FreeSerif, OpenSymbol, 'DejaVu Sans', sans-serif;
 }
-pre span.u, pre span.u span, .a {
+pre .u, pre .u span, .a {
   font: medium/1.75 'Arial Unicode MS', 'DejaVu Sans', FreeSerif, OpenSymbol, sans-serif;
 }
 .baa {
-  font: oblique large Constantia, Baskerville, Palatino, 'Palatino Linotype', 'URW Palladio L', serif;
+  font: oblique 105% Constantia, Baskerville, Palatino, 'Palatino Linotype', 'URW Palladio L', serif;
 }
 abbr {
   font-variant: small-caps;

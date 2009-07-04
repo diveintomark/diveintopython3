@@ -441,25 +441,214 @@ IndexError: pop from empty list</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=sets>Sets</h2>
+
 <p>FIXME
 
-<!--
-{values} and set()
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = {1}</kbd>     <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(a_set)</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;class 'set'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2}</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
 
-add() and +
-in
-discard() and remove() and pop()
+<p>You can create a set out of a <a href=#lists>list</a>.
 
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', True, False, 42]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = set(a_list)</kbd>                           <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>                                         <span class=u>&#x2461;</span></a>
+<samp class=pp>{'a', False, 'b', True, 'mpilgrim', 42}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>['a', 'b', 'mpilgrim', True, False, 42]</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
 
-union()
-intersection()
-difference()
-symmetric_difference()
+<p>You can create an empty set.
 
-issubset()
-issuperset()
-isdisjoint()
--->
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = set()</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>            <span class=u>&#x2461;</span></a>
+<samp class=pp>set()</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(a_set)</kbd>      <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'set'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>       <span class=u>&#x2463;</span></a>
+<samp class=pp>0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>not_sure = {}</kbd>    <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(not_sure)</kbd>   <span class=u>&#x2465;</span></a>
+<samp class=pp>&lt;class 'dict'></samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+<li>
+<li>
+</ol>
+
+<h3 id=modifying-sets>Modifying A Set</h3>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(3)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2461;</span></a>
+<samp class=pp>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(1)</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2463;</span></a>
+<samp class=pp>3</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+</ol>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({2, 4, 6})</kbd>                       <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3, 4, 6}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({3, 6, 9}, {1, 2, 3, 5, 8, 13})</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 13}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update([10, 20, 30])</kbd>                    <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 20, 30}</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
+
+<h3 id=removing-from-sets>Removing Items From A Set</h3>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 10, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.discard(10)</kbd>                        <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.discard(10)</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.remove(21)</kbd>                         <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.remove(21)</kbd>                         <span class=u>&#x2463;</span></a>
+<samp class=pp>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 21</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+</ol>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<samp class=pp>3</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<samp class=pp>36</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{6, 10, 45, 15, 21, 28}</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<h3 id=common-set-operations>Common Set Operations</h3>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {2, 4, 5, 9, 12, 21, 30, 51, 76, 127, 195}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>30 in a_set</kbd>                                                     <span class=u>&#x2460;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>31 in a_set</kbd>                                                     <span class=u>&#x2461;</span></a>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>b_set = {1, 2, 3, 5, 6, 8, 9, 12, 15, 17, 18, 21}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.union(b_set)</kbd>                                              <span class=u>&#x2462;</span></a>
+<samp class=pp>{1, 2, 195, 4, 5, 6, 8, 12, 76, 15, 17, 18, 3, 21, 30, 51, 9, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.intersection(b_set)</kbd>                                       <span class=u>&#x2463;</span></a>
+<samp class=pp>{9, 2, 12, 5, 21}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.difference(b_set)</kbd>                                         <span class=u>&#x2464;</span></a>
+<samp class=pp>{195, 4, 76, 51, 30, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2465;</span></a>
+<samp class=pp>{1, 3, 4, 6, 8, 76, 15, 17, 18, 195, 127, 30, 51}</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+<li>
+<li>
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.symmetric_difference(a_set)</kbd>                                       <span class=u>&#x2460;</span></a>
+<samp class=pp>{3, 1, 195, 4, 6, 8, 76, 15, 17, 18, 51, 30, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.symmetric_difference(a_set) == a_set.symmetric_difference(b_set)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.union(a_set) == a_set.union(b_set)</kbd>                                <span class=u>&#x2462;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.intersection(a_set) == a_set.intersection(b_set)</kbd>                  <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.difference(a_set) == a_set.difference(b_set)</kbd>                      <span class=u>&#x2464;</span></a>
+<samp class=pp>False</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+<li>
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>b_set = {1, 2, 3, 4}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set.add(5)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>    <span class=u>&#x2462;</span></a>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>
+<samp class=pp>False</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
 
 <p class=a>&#x2042;
 
