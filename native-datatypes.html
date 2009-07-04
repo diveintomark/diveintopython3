@@ -597,33 +597,32 @@ KeyError: 'pop from an empty set'</samp></pre>
 
 <h3 id=common-set-operations>Common Set Operations</h3>
 
-<p>FIXME
+<p>Python&#8217;s <code>set</code> type supports several common set operations.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {2, 4, 5, 9, 12, 21, 30, 51, 76, 127, 195}</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>30 in a_set</kbd>                                                     <span class=u>&#x2460;</span></a>
 <samp class=pp>True</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>31 in a_set</kbd>                                                     <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>31 in a_set</kbd>
 <samp class=pp>False</samp>
 <samp class=p>>>> </samp><kbd class=pp>b_set = {1, 2, 3, 5, 6, 8, 9, 12, 15, 17, 18, 21}</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.union(b_set)</kbd>                                              <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.union(b_set)</kbd>                                              <span class=u>&#x2461;</span></a>
 <samp class=pp>{1, 2, 195, 4, 5, 6, 8, 12, 76, 15, 17, 18, 3, 21, 30, 51, 9, 127}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.intersection(b_set)</kbd>                                       <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.intersection(b_set)</kbd>                                       <span class=u>&#x2462;</span></a>
 <samp class=pp>{9, 2, 12, 5, 21}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.difference(b_set)</kbd>                                         <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.difference(b_set)</kbd>                                         <span class=u>&#x2463;</span></a>
 <samp class=pp>{195, 4, 76, 51, 30, 127}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2464;</span></a>
 <samp class=pp>{1, 3, 4, 6, 8, 76, 15, 17, 18, 195, 127, 30, 51}</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
-<li>
-<li>
+<li>To test whether a value in a member of a set, use the <code>in</code> operator. This works the same as lists.
+<li>The <code>union()</code> method returns a new set containing all the elements that are in <em>either</em> set.
+<li>The <code>intersection()</code> method returns a new set containing all the elements that are in <em>both</em> sets.
+<li>The <code>difference()</code> method returns a new set containing all the elements that are in <var>a_set</var> but not <var>b_set</var>.
+<li>The <code>symmetric_difference()</code> method returns a new set containing all the elements that are in <em>exactly one</em> of the sets.
 </ol>
 
-<p>FIXME
+<p>Three of these methods are symmetric.
 
 <pre class=screen>
 # continued from the previous example
@@ -638,14 +637,14 @@ KeyError: 'pop from an empty set'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>b_set.difference(a_set) == a_set.difference(b_set)</kbd>                      <span class=u>&#x2464;</span></a>
 <samp class=pp>False</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
-<li>
+<li>The symmetric difference of <var>a_set</var> from <var>b_set</var> <em>looks</em> different than the symmetric difference of <var>b_set</var> from <var>a_set</var>, but remember, sets are unordered. Any two sets that contain all the same values (with none left over) are considered equal.
+<li>And that&#8217;s exactly what happens here. Don&#8217;t be fooled by the Python Shell&#8217;s printed representation of these sets. They contain the same values, so they are equal.
+<li>The union of two sets is also symmetric.
+<li>The intersection of two sets is also symmetric.
+<li>The difference of two sets is not symmetric. That makes sense; it&#8217;s analogous to subtracting one number from another. The order of the operands matters.
 </ol>
 
-<p>FIXME
+<p>Finally, there are a few questions you can ask of sets.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
@@ -654,15 +653,15 @@ KeyError: 'pop from an empty set'</samp></pre>
 <samp class=pp>True</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>True</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_set.add(5)</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(5)</kbd>             <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>
 <samp class=pp>False</samp>
 <samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>
 <samp class=pp>False</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li><var>a_set</var> is a <dfn>subset</dfn> of <var>b_set</var>&nbsp;&mdash;&nbsp;all the members of <var>a_set</var> are also members of <var>b_set</var>.
+<li>Asking the same question in reverse, <var>b_set</var> is a <dfn>superset</dfn> of <var>a_set</var>, because all the members of <var>a_set</var> are also members of <var>b_set</var>.
+<li>As soon as you add a value to <var>a_set</var> that is not in <var>b_set</var>, both tests return <code>False</code>.
 </ol>
 
 <h3 id=sets-in-a-boolean-context>Sets In A Boolean Context</h3>
