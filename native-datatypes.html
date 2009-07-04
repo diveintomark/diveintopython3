@@ -426,11 +426,11 @@ IndexError: pop from empty list</samp></pre>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
 <samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
 <samp class=p>...</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([])</kbd>             <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([])</kbd>             <span class=u>&#x2460;</span></a>
 <samp>no, it's false</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(['a'])</kbd>          <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(['a'])</kbd>          <span class=u>&#x2461;</span></a>
 <samp>yes, it's true</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([False])</kbd>        <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([False])</kbd>        <span class=u>&#x2462;</span></a>
 <samp>yes, it's true</samp></pre>
 <ol>
 <li>In a boolean context, an empty list is false.
@@ -648,6 +648,29 @@ KeyError: 21</samp></pre>
 <li>FIXME
 <li>
 <li>
+</ol>
+
+<h3 id=sets-in-a-boolean-context>Sets In A Boolean Context</h3>
+
+<p>You can use sets in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(set())</kbd>          <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({'a'})</kbd>          <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({False})</kbd>        <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp></pre>
+<ol>
+<li>In a boolean context, an empty set is false.
+<li>Any set with at least one item is true.
+<li>Any set with at least one item is true. The value of the items is irrelevant.
 </ol>
 
 <p class=a>&#x2042;
