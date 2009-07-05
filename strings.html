@@ -274,6 +274,28 @@ experience of years.</samp>
 <p><span class=u>&#x261E;</span>The previous example looks a lot like parsing query parameters in a <abbr>URL</abbr>, but real-life <abbr>URL</abbr> parsing is actually more complicated than this. If you&#8217;re dealing with <abbr>URL</abbr> query parameters, you&#8217;re better off using the <a href=http://docs.python.org/3.1/library/urllib.parse.html#urllib.parse.parse_qs><code>urllib.parse.parse_qs()</code></a> function, which handles some non-obvious edge cases.
 </blockquote>
 
+<h3 id=slicingstrings>Slicing A String</h3>
+<p>Once you&#8217;ve defined a string, you can get any part of it as a new string. This is called <i>slicing</i> the string. Slicing strings works exactly the same as <a href=native-datatypes.html#slicinglists>slicing lists</a>, which makes sense, because strings are just sequences of characters.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_string = 'My alphabet starts where your alphabet ends.'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string[3:11]</kbd>           <span class=u>&#x2460;</span></a>
+<samp class=pp>'alphabet'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string[3:-3]</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=pp>'alphabet starts where your alphabet en'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string[0:2]</kbd>            <span class=u>&#x2462;</span></a>
+<samp class=pp>'My'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string[:18]</kbd>            <span class=u>&#x2463;</span></a>
+<samp class=pp>'My alphabet starts'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string[18:]</kbd>            <span class=u>&#x2464;</span></a>
+<samp class=pp>' where your alphabet ends.'</samp></pre>
+<ol>
+<li>You can get a part of a string, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new string containing all the characters of the string, in order, starting with the first slice index (in this case <code>a_string[0]</code>), up to but not including the second slice index (in this case <code>a_string[2]</code>).
+<li>Like slicing lists, you can use negative indices to slice strings.
+<li>Strings are zero-based, so <code>a_string[0:3]</code> returns the first three items of the string, starting at <code>a_string[0]</code>, up to but not including <code>a_string[3]</code>.
+<li>If the left slice index is <code>0</code>, you can leave it out, and <code>0</code> is implied. So <code>a_string[:18]</code> is the same as <code>a_string[0:18]</code>, because the starting <code>0</code> is implied.
+<li>Similarly, if the right slice index is the length of the string, you can leave it out. So <code>a_string[18:]</code> is the same as <code>a_string[18:44]</code>, because this string has 44 characters.  There is a pleasing symmetry here. In this 44-character string, <code>a_string[:18]</code> returns the first 18 characters, and <code>a_string[18:]</code> returns everything but the first 18 characters. In fact, <code>a_string[:<var>n</var>]</code> will always return the first <var>n</var> characters, and <code>a_string[<var>n</var>:]</code> will return the rest, regardless of the length of the string.
+</ol>
+
 <p class=a>&#x2042;
 
 <h2 id=byte-arrays>Strings vs. Bytes</h2>
@@ -306,7 +328,7 @@ TypeError: 'bytes' object does not support item assignment</samp></pre>
 <li>Just like lists and strings, you can use the <code>+</code> operator to concatenate <code>bytes</code> objects. The result is a new <code>bytes</code> object.
 <li>Concatenating a 5-byte <code>bytes</code> object and a 1-byte <code>bytes</code> object gives you a 6-byte <code>bytes</code> object.
 <li>Just like lists and strings, you can use index notation to get individual bytes in a <code>bytes</code> object. The items of a string are strings; the items of a <code>bytes</code> object are integers. Specifically, integers between 0&ndash;255.
-<li>A <code>bytes</code> object is immutable; you can not assign individual bytes. If you need to change individual bytes, you can either use slicing methods (which work the same as strings) and concatenation operators (which also work the same as strings), or you can convert the <code>bytes</code> object into a <code>bytearray</code> object.
+<li>A <code>bytes</code> object is immutable; you can not assign individual bytes. If you need to change individual bytes, you can either use <a href=#slicingstrings>string slicing</a> and concatenation operators (which work the same as strings), or you can convert the <code>bytes</code> object into a <code>bytearray</code> object.
 </ol>
 
 <pre class=screen>
