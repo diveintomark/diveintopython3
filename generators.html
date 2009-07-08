@@ -227,12 +227,13 @@ def build_match_and_apply_functions(pattern, search, replace):
     ('[sxz]$',           '$',  'es'),
     ('[^aeioudgkprt]h$', '$',  'es'),
     ('(qu|[^aeiou])y$',  'y$', 'ies'),
-    ('$',                '$',  's')
+<a>    ('$',                '$',  's')                                 <span class=u>&#x2461;</span></a>
   )
-<a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2461;</span></a>
+<a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2462;</span></a>
          for (pattern, search, replace) in patterns]</code></pre>
 <ol>
-<li>Our pluralization rules are now defined as a tuple of tuples of <em>strings</em> (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
+<li>Our pluralization &#8220;rules&#8221; are now defined as a tuple of tuples of <em>strings</em> (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
+<li>There&#8217;s a slight change here, in the fallback rule. In the previous example, the <code>match_default()</code> function simply returned <code>True</code>, meaning that if none of the more specific rules matched, the code would simply add an <code>s</code> to the end of the given word. This example does something functionally equivalent. The final regular expression asks whether the word has an end (<code>$</code> matches the end of a string). Of course, every string has an end, even an empty string, so this expression always matches. Thus, it serves the same purpose as the <code>match_default()</code> function that always returned <code>True</code>: it ensures that if no more specific rule matches, the code adds an <code>s</code> to the end of the given word.
 <li>This line is magic. It takes the sequence of strings in <var>patterns</var> and turns them into a sequence of functions. How? By &#8220;mapping&#8221; the strings to the <code>build_match_and_apply_functions()</code> function. That is, it takes each triplet of strings and calls the <code>build_match_and_apply_functions()</code> function with those three strings as arguments. The <code>build_match_and_apply_functions()</code> function returns a tuple of two functions. This means that <var>rules</var> ends up being functionally equivalent to the previous example: a list of tuples, where each inner tuple is a pair of functions. The first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
 </ol>
 
