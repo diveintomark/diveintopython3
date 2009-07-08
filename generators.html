@@ -152,11 +152,11 @@ def match_default(noun):
 def apply_default(noun):
     return noun + 's'
 
-<a>rules = [[match_sxz, apply_sxz],               <span class=u>&#x2462;</span></a>
-         [match_h, apply_h],
-         [match_y, apply_y],
-         [match_default, apply_default]
-         ]
+<a>rules = ((match_sxz, apply_sxz),               <span class=u>&#x2462;</span></a>
+         (match_h, apply_h),
+         (match_y, apply_y),
+         (match_default, apply_default)
+         )
 
 def plural(noun):           
 <a>    for matches_rule, apply_rule in rules:       <span class=u>&#x2463;</span></a>
@@ -169,7 +169,7 @@ def plural(noun):
 <li>Since the rules have been broken out into a separate data structure, the new <code>plural()</code> function can be reduced to a few lines of code. Using a <code>for</code> loop, you can pull out the match and apply rules two at a time (one match, one apply) from the <var>rules</var> structure. On the first iteration of the <code>for</code> loop, <var>matches_rule</var> will get <code>match_sxz</code>, and <var>apply_rule</var> will get <code>apply_sxz</code>. On the second iteration (assuming you get that far), <var>matches_rule</var> will be assigned <code>match_h</code>, and <var>apply_rule</var> will be assigned <code>apply_h</code>. The function is guaranteed to return something eventually, because the final match rule (<code>match_default</code>) simply returns <code>True</code>, meaning the corresponding apply rule (<code>apply_default</code>) will always be applied.
 </ol>
 
-<aside>The &#8220;rules&#8221; variable is a list of functions.</aside>
+<aside>The &#8220;rules&#8221; variable is a sequence of pairs of functions.</aside>
 <p>The reason this technique works is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>, including functions. The <var>rules</var> data structure contains functions&nbsp;&mdash;&nbsp;not names of functions, but actual function objects. When they get assigned in the <code>for</code> loop, then <var>matches_rule</var> and <var>apply_rule</var> are actual functions that you can call. On the first iteration of the <code>for</code> loop, this is equivalent to calling <code>matches_sxz(noun)</code>, and if it returns a match, calling <code>apply_sxz(noun)</code>.
 
 <p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
@@ -185,7 +185,7 @@ def plural(noun):
     if match_default(noun):
         return apply_default(noun)</code></pre>
 
-<p>The benefit here is that the <code>plural()</code> function is now simplified. It takes a list of rules, defined elsewhere, and iterates through them in a generic fashion.
+<p>The benefit here is that the <code>plural()</code> function is now simplified. It takes a sequence of rules, defined elsewhere, and iterates through them in a generic fashion.
 
 <ol>
 <li>Get a match rule
@@ -195,7 +195,7 @@ def plural(noun):
 
 <p>The rules could be defined anywhere, in any way. The <code>plural()</code> function doesn&#8217;t care.
 
-<p>Now, was adding this level of abstraction worth it? Well, not yet. Let&#8217;s consider what it would take to add a new rule to the function. In the first example, it would require adding an <code>if</code> statement to the <code>plural()</code> function. In this second example, it would require adding two functions, <code>match_foo()</code> and <code>apply_foo()</code>, and then updating the <var>rules</var> list to specify where in the order the new match and apply functions should be called relative to the other rules.
+<p>Now, was adding this level of abstraction worth it? Well, not yet. Let&#8217;s consider what it would take to add a new rule to the function. In the first example, it would require adding an <code>if</code> statement to the <code>plural()</code> function. In this second example, it would require adding two functions, <code>match_foo()</code> and <code>apply_foo()</code>, and then updating the <var>rules</var> sequence to specify where in the order the new match and apply functions should be called relative to the other rules.
 
 <p>But this is really just a stepping stone to the next section. Let&#8217;s move on&hellip;
 
@@ -203,7 +203,7 @@ def plural(noun):
 
 <h2 id=a-list-of-patterns>A List Of Patterns</h2>
 
-<p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> list and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
+<p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> sequence and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
 
 <p class=d>[<a href=examples/plural3.py>download <code>plural3.py</code></a>]
 <pre><code class=pp>import re
@@ -213,27 +213,27 @@ def build_match_and_apply_functions(pattern, search, replace):
         return re.search(pattern, word)
 <a>    def apply_rule(word):                                       <span class=u>&#x2461;</span></a>
         return re.sub(search, replace, word)
-<a>    return [matches_rule, apply_rule]                           <span class=u>&#x2462;</span></a></code></pre>
+<a>    return (matches_rule, apply_rule)                           <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li><code>build_match_and_apply_functions()</code> is a function that builds other functions dynamically. It takes <var>pattern</var>, <var>search</var> and <var>replace</var>, then defines a <code>matches_rule()</code> function which calls <code>re.search()</code> with the <var>pattern</var> that was passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>matches_rule()</code> function you&#8217;re building. Whoa.
 <li>Building the apply function works the same way. The apply function is a function that takes one parameter, and calls <code>re.sub()</code> with the <var>search</var> and <var>replace</var> parameters that were passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>apply_rule()</code> function you&#8217;re building. This technique of using the values of outside parameters within a dynamic function is called <em>closures</em>. You&#8217;re essentially defining constants within the apply function you&#8217;re building: it takes one parameter (<var>word</var>), but it then acts on that plus two other values (<var>search</var> and <var>replace</var>) which were set when you defined the apply function.
-<li>Finally, the <code>build_match_and_apply_functions()</code> function returns a list of two values: the two functions you just created. The constants you defined within those functions (<var>pattern</var> within the <code>match_rule()</code> function, and <var>search</var> and <var>replace</var> within the <code>apply_rule()</code> function) stay with those functions, even after you return from <code>build_match_and_apply_functions()</code>. That&#8217;s insanely cool.
+<li>Finally, the <code>build_match_and_apply_functions()</code> function returns a tuple of two values: the two functions you just created. The constants you defined within those functions (<var>pattern</var> within the <code>match_rule()</code> function, and <var>search</var> and <var>replace</var> within the <code>apply_rule()</code> function) stay with those functions, even after you return from <code>build_match_and_apply_functions()</code>. That&#8217;s insanely cool.
 </ol>
 
 <p>If this is incredibly confusing (and it should be, this is weird stuff), it may become clearer when you see how to use it.
 
 <pre><code class=pp><a>patterns = \                                                        <span class=u>&#x2460;</span></a>
-  [
-    ['[sxz]$',           '$',  'es'],
-    ['[^aeioudgkprt]h$', '$',  'es'],
-    ['(qu|[^aeiou])y$',  'y$', 'ies'],
-    ['$',                '$',  's']
-  ]
+  (
+    ('[sxz]$',           '$',  'es'),
+    ('[^aeioudgkprt]h$', '$',  'es'),
+    ('(qu|[^aeiou])y$',  'y$', 'ies'),
+    ('$',                '$',  's')
+  )
 <a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2461;</span></a>
          for (pattern, search, replace) in patterns]</code></pre>
 <ol>
-<li>Our pluralization rules are now defined as a list of lists of strings (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
-<li>This line is magic. It takes the list of strings in <var>patterns</var> and turns them into a list of functions. How? By mapping the strings to the <code>build_match_and_apply_functions()</code> function, which just happens to take three strings as parameters and return a list of two functions. This means that <var>rules</var> ends up being exactly the same as the previous example: a list of lists, where each (inner) list is a pair of functions. The first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
+<li>Our pluralization rules are now defined as a tuple of tuples of <em>strings</em> (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
+<li>This line is magic. It takes the sequence of strings in <var>patterns</var> and turns them into a sequence of functions. How? By mapping the strings to the <code>build_match_and_apply_functions()</code> function, which just happens to take three strings as parameters and return a tuple of two functions. This means that <var>rules</var> ends up being functionally equivalent to the previous example: a list of tuples, where each inner tuple is a pair of functions. The first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
 </ol>
 
 <p>Rounding out this version of the script is the main entry point, the <code>plural()</code> function.

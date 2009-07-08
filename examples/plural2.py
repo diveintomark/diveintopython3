@@ -31,11 +31,11 @@ def match_default(noun):
 def apply_default(noun):
     return noun + 's'
 
-rules = [[match_sxz, apply_sxz],
-         [match_h, apply_h],
-         [match_y, apply_y],
-         [match_default, apply_default]
-         ]
+rules = ((match_sxz, apply_sxz),
+         (match_h, apply_h),
+         (match_y, apply_y),
+         (match_default, apply_default)
+         )
 
 def plural(noun):
     for matches_rule, apply_rule in rules:
