@@ -360,12 +360,15 @@ def plural(noun):
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>from fibonacci import fib</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>for n in fib(1000):</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>for n in fib(1000):</kbd>      <span class=u>&#x2460;</span></a>
 <a><samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>    <span class=u>&#x2461;</span></a>
-<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
+<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(fib(1000))</kbd>          <span class=u>&#x2462;</span></a>
+<samp class=pp>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987]</samp></pre>
 <ol>
 <li>You can use a generator like <code>fib()</code> in a <code>for</code> loop directly. The <code>for</code> loop will automatically call the <code>next()</code> function to get values from the <code>fib()</code> generator and assign them to the <code>for</code> loop index variable (<var>n</var>).
 <li>Each time through the <code>for</code> loop, <var>n</var> gets a new value from the <code>yield</code> statement in <code>fib()</code>, and all you have to do is print it out. Once <code>fib()</code> runs out of numbers (<var>a</var> becomes bigger than <var>max</var>, which in this case is <code>1000</code>), then the <code>for</code> loop exits gracefully.
+<li>This is a useful idiom: pass a generator to the <code>list()</code> function, and it will iterate through the entire generator (just like the <code>for</code> loop in the previous example) and return a list of all the values.
 </ol>
 
 <h3 id=a-plural-rule-generator>A Plural Rule Generator</h3>
