@@ -15,9 +15,10 @@ def build_match_and_apply_functions(pattern, search, replace):
     return [matches_rule, apply_rule]
 
 def rules():
-    for line in open('plural5-rules.txt'):
-        pattern, search, replace = line.split(None, 3)
-        yield build_match_and_apply_functions(pattern, search, replace)
+    with open('plural5-rules.txt') as pattern_file:
+        for line in pattern_file:
+            pattern, search, replace = line.split(None, 3)
+            yield build_match_and_apply_functions(pattern, search, replace)
 
 def plural(noun):
     for matches_rule, apply_rule in rules():
