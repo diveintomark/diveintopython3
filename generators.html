@@ -375,20 +375,21 @@ def plural(noun):
 
 <p>Let&#8217;s go back to <code>plural5.py</code> and see how this version of the <code>plural()</code> function works.
 
-<pre><code class=pp>def rules():
-    with open('plural5-rules.txt') as pattern_file:
+<pre><code class=pp>def rules(rules_filename):
+    with open(rules_filename) as pattern_file:
         for line in pattern_file:
-<a>            pattern, search, replace = line.split(None, 3)                   <span class=u>&#x2461;</span></a>
-<a>            yield build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2462;</span></a>
+<a>            pattern, search, replace = line.split(None, 3)                   <span class=u>&#x2460;</span></a>
+<a>            yield build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2461;</span></a>
 
-def plural(noun):
-<a>    for matches_rule, apply_rule in rules():                                 <span class=u>&#x2463;</span></a>
+def plural(noun, rules_filename='plural5-rules.txt'):
+<a>    for matches_rule, apply_rule in rules(rules_filename):                   <span class=u>&#x2462;</span></a>
         if matches_rule(noun):
-            return apply_rule(noun)</code></pre>
+            return apply_rule(noun)
+    raise ValueError('no matching rule for {0}'.format(noun))</code></pre>
 <ol>
 <li>No magic here. Remember that the lines of the rules file have three values separated by whitespace, so you use <code>line.split(None, 3)</code> to get the three &#8220;columns&#8221; and assign them to three local variables.
 <li><em>And then you yield.</em> What do you yield? Two functions, built dynamically with your old friend, <code>build_match_and_apply_functions()</code>, which is identical to the previous examples. In other words, <code>rules()</code> is a generator that spits out match and apply functions <em>on demand</em>.
-<li>Since <code>rules()</code> is a generator, you can use it directly in a <code>for</code> loop. The first time through the <code>for</code> loop, you will call the <code>rules()</code> function, which will open the pattern file, read the first line, dynamically build a match function and an apply function from the patterns on that line, and yield the dynamically built functions. The second time through the <code>for</code> loop, you will pick up exactly where you left off in <code>rules()</code> (which was in the middle of the <code>for line in file(...)</code> loop). The first thing it will do is read the next line of the file (which is still open), dynamically build another match and apply function based on the patterns on that line in the file, and yield the two functions.
+<li>Since <code>rules()</code> is a generator, you can use it directly in a <code>for</code> loop. The first time through the <code>for</code> loop, you will call the <code>rules()</code> function, which will open the pattern file, read the first line, dynamically build a match function and an apply function from the patterns on that line, and yield the dynamically built functions. The second time through the <code>for</code> loop, you will pick up exactly where you left off in <code>rules()</code> (which was in the middle of the <code>for line in pattern_file</code> loop). The first thing it will do is read the next line of the file (which is still open), dynamically build another match and apply function based on the patterns on that line in the file, and yield the two functions.
 </ol>
 
 <p>What have you gained over stage 4? Startup time. In stage 4, when you imported the <code>plural4</code> module, it read the entire patterns file and built a list of all the possible rules, before you could even think about calling the <code>plural()</code> function. With generators, you can do everything lazily: you read the first rule and create functions and try them, and if that works you don&#8217;t ever read the rest of the file or create any other functions.
