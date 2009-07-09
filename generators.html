@@ -304,7 +304,8 @@ rules = []
 def plural(noun):
     for matches_rule, apply_rule in rules():
         if matches_rule(noun):
-            return apply_rule(noun)</code></pre>
+            return apply_rule(noun)
+    raise ValueError('no matching rule for {0}'.format(noun))</code></pre>
 
 <p>How the heck does <em>that</em> work? Let&#8217;s look at an interactive example first.
 
