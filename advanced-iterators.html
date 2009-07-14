@@ -6,6 +6,7 @@
 <link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 7}
+mark{display:inline}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -101,6 +102,26 @@ if __name__ == '__main__':
 <li>The <code>re</code> module is Python&#8217;s implementation of <a href=regular-expressions.html>regular expressions</a>. It has a nifty function called <code>findall()</code> which takes a regular expression pattern and a string, and finds all occurrences of the pattern within the string. In this case, the pattern matches sequences of numbers. The <code>findall()</code> function returns a list of all the substrings that matched the pattern.
 <li>Here the regular expression pattern matches sequences of letters. Again, the return value is a list, and each item in the list is a string that matched the regular expression pattern.
 </ol>
+
+<p>Here&#8217;s another example that will stretch your brain a little.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>re.findall(' s.*? s', "The sixth sick sheikh's sixth sheep's sick.")</kbd>
+<samp class=pp>[' sixth s', " sheikh's s", " sheep's s"]</samp></pre>
+
+<p>Surprised? The regular expression looks for a space, an <code>s</code>, and then the shortest possible series of any character (<code>.*?</code>), then a space, then another <code>s</code>. Well, looking at that input string, I see five matches:
+
+<ol>
+<li><code>The<mark> sixth s</mark>ick sheikh's sixth sheep's sick.</code>
+<li><code>The sixth<mark> sick s</mark>heikh's sixth sheep's sick.</code>
+<li><code>The sixth sick<mark> sheikh's s</mark>ixth sheep's sick.</code>
+<li><code>The sixth sick sheikh's<mark> sixth s</mark>heep's sick.</code>
+<li><code>The sixth sick sheikh's sixth<mark> sheep's s</mark>ick.</code>
+</ol>
+
+<p>But the <code>re.findall()</code> function only returned three matches. Specifically, it returned the first, the third, and the fifth. Why is that? Because <em>it doesn&#8217;t return overlapping matches</em>. The first match overlaps with the second, so the first is returned and the second is skipped. Then the third overlaps with the fourth, so the third is returned and the fourth is skipped. Finally, the fifth is returned. Three matches, not five.
+
+<p>This has nothing to do with the alphametics solver; I just thought it was interesting.
 
 <p class=a>&#x2042;
 
