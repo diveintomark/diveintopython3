@@ -314,8 +314,8 @@ rules = LazyRules()</code></pre>
         return funcs</code></pre>
 <ol>
 <li>The <code>__next__()</code> method gets called whenever someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>next(rules)</code>. This method will only make sense if we start at the end and work backwards. So let&#8217;s do that.
-<li>The last part of this function should look familiar, at least. The <code>build_match_and_apply_functions()</code> function hasn&#8217;t changed; it&#8217;s the same as it ever was. <em>Each line of the pattern file will be read exactly once, as late as possible.</em>
-<li>The only difference is that, before returning the match and apply functions (which are stored in the tuple <var>funcs</var>), we&#8217;ve going to save them in <code>self.cache</code>. <em>Each match and apply function will be built exactly once, as late as possible, then cached.</em>
+<li>The last part of this function should look familiar, at least. The <code>build_match_and_apply_functions()</code> function hasn&#8217;t changed; it&#8217;s the same as it ever was.
+<li>The only difference is that, before returning the match and apply functions (which are stored in the tuple <var>funcs</var>), we&#8217;ve going to save them in <code>self.cache</code>.
 </ol>
 
 <p>Moving backwards&hellip;
