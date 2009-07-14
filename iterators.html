@@ -217,11 +217,9 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
 <pre><code class=pp>class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
-    def __init__(self):
+    def __iter__(self):
         self.pattern_file = open(self.rules_filename)
         self.cache = []
-
-    def __iter__(self):
         self.cache_index = 0
         return self
 
@@ -253,16 +251,17 @@ rules = LazyRules()</code></pre>
 <pre><code class=pp>class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
-<a>    def __init__(self):                                <span class=u>&#x2460;</span></a>
+<a>    def __iter__(self):                                <span class=u>&#x2460;</span></a>
 <a>        self.pattern_file = open(self.rules_filename)  <span class=u>&#x2462;</span></a>
-<a>        self.cache = []                                <span class=u>&#x2461;</span></a></code></pre>
+<a>        self.cache = []                                <span class=u>&#x2461;</span></a>
+        self.cache_index = 0</code></pre>
 <ol>
-<li>The <code>__init__()</code> method is only going to be called once, when you instantiate the class and assign it to <var>rules</var>.
-<li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. You&#8217;ll read it later; no point doing more than you absolutely have to until absolutely necessary!
+<li>The <code>__iter__()</code> method is only going to be called once, after you instantiate the class, assign it to <var>rules</var>, and call <code>iter(rules)</code> to create the iterator.
+<li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. No point doing more than you absolutely have to until absolutely necessary!
 <li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
 </ol>
 
-<p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__init__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
+<p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__iter__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import plural6</kbd>
