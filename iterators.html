@@ -267,22 +267,28 @@ rules = LazyRules()</code></pre>
 <samp class=p>>>> </samp><kbd class=pp>import plural6</kbd>
 <samp class=p>>>> </samp><kbd class=pp>r1 = plural6.LazyRules()</kbd>
 <samp class=p>>>> </samp><kbd class=pp>r2 = plural6.LazyRules()</kbd>
-<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>                               <span class=u>&#x2460;</span>
+<a><samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>                               <span class=u>&#x2460;</span></a>
 <samp class=pp>'plural6-rules.txt'</samp>
 <samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>
 <samp class=pp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd class=pp>r1.__class__.rules_filename</kbd>                     <span class=u>&#x2461;</span>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.rules_filename = 'r2-override.txt'</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>
+<samp class=pp>'r2-override.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>
 <samp class=pp>'plural6-rules.txt'</samp>
-<samp class=p>>>> </samp><kbd class=pp>r1.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span class=u>&#x2462;</span>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.__class__.rules_filename</kbd>                     <span class=u>&#x2462;</span></a>
+<samp class=pp>'plural6-rules.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>
 <samp class=pp>'papayawhip.txt'</samp>
-<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>                               <span class=u>&#x2463;</span>
-<samp class=pp>'papayawhip.txt'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>                               <span class=u>&#x2464;</span></a>
+<samp class=pp>'r2-overridetxt'</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
+<li>Each instance of the class inherits the <var>rules_filename</var> attribute with the value defined by the class.
+<li>Changing the attribute&#8217;s value in one instance does not affect other instances&hellip;
+<li>&hellip;nor does it change the class attribute. You can access the class attribute (as opposed to an individual instance&#8217;s attribute) by using the special <code>__class__</code> attribute to access the class itself.
+<li>If you change the class attribute, all instances that are still inheriting that value (like <var>r1</var> here) will be affected.
+<li>Instances that have overridden that attribute (like <var>r2</var> here) will not be affected.
 </ol>
 
 <p>And now back to our show.
