@@ -158,6 +158,10 @@ body{counter-reset:h1 6}
 
 <p><em>Now</em> you&#8217;re ready to learn how to build an iterator. An iterator is just a class that defines an <code>__iter__()</code> method.
 
+<aside class=ots>
+All three of these class methods, <code>__init__</code>, <code>__iter__</code>, and <code>__next__</code>, begin and end with a pair of underscore (<code>_</code>) characters. Why is that? There&#8217;s nothing magical about it, but it usually indicates that these are &#8220;<dfn>special methods</dfn>.&#8221; The only thing &#8220;special&#8221; about special methods is that they aren&#8217;t called directly; Python calls them when you use some other syntax on the class or an instance of the class. <a href=special-method-names.html>More about special methods</a>.
+</aside>
+
 <p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
 <pre><code class=pp><a>class Fib:                                        <span class=u>&#x2460;</span></a>
 <a>    def __init__(self, max):                      <span class=u>&#x2461;</span></a>

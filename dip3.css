@@ -47,7 +47,7 @@ Classname Legend
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
-
+.ots  = "on the side"              = an aside that is set in normal type (as opposed to a big blue pullquote)
 
 Acknowledgements & Inspirations
 
@@ -282,6 +282,14 @@ aside {
   -moz-border-radius: 1em;
   -webkit-border-radius: 1em;
   border-radius: 1em;
+}
+aside.ots {
+  font-style: normal;
+  font-size: medium;
+  line-height: 1.75;
+}
+aside a {
+  color: #fff !important;
 }
 
 /* previous/next navigation links */
