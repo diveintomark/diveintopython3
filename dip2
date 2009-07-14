@@ -385,15 +385,18 @@ if __name__ == "__main__":
 <td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">When a command is split among several lines with the line-continuation marker (&#8220;<code>\</code>&#8221;), the continued lines can be indented in any manner; Python's normally stringent indentation rules do not apply. If your Python <abbr>IDE</abbr> auto-indents the continued line, you should probably accept its default unless you have a burning reason not to.
 <p><a name="tip.implicitmultiline"></a>Strictly speaking, expressions in parentheses, straight brackets, or curly braces (like <a href="#myparamsdef" title="Example 3.17. Defining the myParams Variable">defining a dictionary</a>) can be split into multiple lines with or without the line continuation character (&#8220;<code>\</code>&#8221;). I like to include the backslash even when it's not required because I think it makes the code easier to read, but that's
 a matter of style.
-<p>Third, you never declared the variable <var>myParams</var>, you just assigned a value to it. This is like VBScript without the <code>option explicit</code> option. Luckily, unlike VBScript, Python will not allow you to reference a variable that has never been assigned a value; trying to do so will raise an exception.
-<h3>3.4.1. Referencing Variables</h3>
-<div class=example><h3 id="odbchelper.unboundvariable">Example 3.18. Referencing an Unbound Variable</h3><pre class=screen><samp class=p>>>> </samp><kbd>x</kbd>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-NameError: There is no variable named 'x'</samp>
-<samp class=p>>>> </samp><kbd>x = 1</kbd>
-<samp class=p>>>> </samp><kbd>x</kbd>
-1</pre><p>You will thank Python for this one day.
+
+
+
+
+
+[unbound variable exception example was here]
+
+
+
+
+
+
 <h3 id="odbchelper.multiassign">3.4.2. Assigning Multiple Values at Once</h3>
 <p>One of the cooler programming shortcuts in Python is using sequences to assign multiple values at once.
 <div class=example><h3>Example 3.19. Assigning multiple values at once</h3><pre class=screen><samp class=p>>>> </samp><kbd>v = ('a', 'b', 'e')</kbd>
@@ -1604,104 +1607,12 @@ AttributeError: 'MP3FileInfo' instance has no attribute '__parse'</span></pre>
 <li>Defining <a href="#fileinfo.private" title="5.9. Private Functions">private attributes and methods</a>
 </ul>
 <div class=chapter>
-<h2 id="filehandling">Chapter 6. Exceptions and File Handling</h2>
-<p>In this chapter, you will dive into exceptions, file objects, <code>for</code> loops, and the <code>os</code> and <code>sys</code> modules. If you've used exceptions in another programming language, you can skim the first section to get a sense of Python's syntax. Be sure to tune in again for file handling.
-<h2 id="fileinfo.exception">6.1. Handling Exceptions</h2>
-<p>Like many other programming languages, Python has exception handling via <code>try...except</code> blocks.
-<table id="compare.exceptions.java" class=note border="0" summary="">
 
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">Python uses <code>try...except</code> to handle exceptions and <code>raise</code> to generate them. Java and <abbr>C++</abbr> use <code>try...catch</code> to handle exceptions, and <code>throw</code> to generate them.
-<p>Exceptions are everywhere in Python. Virtually every module in the standard Python library uses them, and Python itself will raise them in a lot of different circumstances. You've already seen them repeatedly throughout this book.
-<div class=itemizedlist>
-<ul>
-<li><a href="#odbchelper.dict.define" title="Example 3.1. Defining a Dictionary">Accessing a non-existent dictionary key</a> will raise a <code>KeyError</code> exception.
 
-<li><a href="#odbchelper.list.search" title="Example 3.12. Searching a List">Searching a list for a non-existent value</a> will raise a <code>ValueError</code> exception.
 
-<li><a href="#odbchelper.tuplemethods" title="Example 3.16. Tuples Have No Methods">Calling a non-existent method</a> will raise an <code>AttributeError</code> exception.
 
-<li><a href="#odbchelper.unboundvariable" title="Example 3.18. Referencing an Unbound Variable">Referencing a non-existent variable</a> will raise a <code>NameError</code> exception.
 
-<li><a href="#odbchelper.stringformatting.coerce" title="Example 3.22. String Formatting vs. Concatenating">Mixing datatypes without coercion</a> will raise a <code>TypeError</code> exception.
-
-</ul>
-<p>In each of these cases, you were simply playing around in the Python <abbr>IDE</abbr>: an error occurred, the exception was printed (depending on your <abbr>IDE</abbr>, perhaps in an intentionally jarring shade of red), and that was that. This is called an <em>unhandled</em> exception. When the exception was raised, there was no code to explicitly notice it and deal with it, so it bubbled its
-way back to the default behavior built in to Python, which is to spit out some debugging information and give up. In the <abbr>IDE</abbr>, that's no big deal, but if that happened while your actual Python program was running, the entire program would come to a screeching halt.
-<p>An exception doesn't need result in a complete program crash, though. Exceptions, when raised, can be <em>handled</em>. Sometimes an exception is really because you have a bug in your code (like accessing a variable that doesn't exist), but
-many times, an exception is something you can anticipate. If you're opening a file, it might not exist. If you're connecting
-to a database, it might be unavailable, or you might not have the correct security credentials to access it. If you know
-a line of code may raise an exception, you should handle the exception using a <code>try...except</code> block.
-<div class=example><h3>Example 6.1. Opening a Non-Existent File</h3><pre class=screen><samp class=p>>>> </samp><kbd>fsock = open("/notthere", "r")</kbd>      <span>&#x2460;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-IOError: [Errno 2] No such file or directory: '/notthere'</samp>
-<samp class=p>>>> </samp><kbd>try:</kbd>
-<samp class=p>...    </samp>fsock = open("/notthere")       <span>&#x2461;</span>
-<samp class=p>... </samp>except IOError:   <span>&#x2462;</span>
-<samp class=p>...    </samp>print "The file does not exist, exiting gracefully"
-<samp class=p>... </samp>print "This line will always print" <span>&#x2463;</span>
-<samp>The file does not exist, exiting gracefully
-This line will always print</span></pre>
-<ol>
-<li>Using the built-in <code>open</code> function, you can try to open a file for reading (more on <code>open</code> in the next section). But the file doesn't exist, so this raises the <code>IOError</code> exception. Since you haven't provided any explicit check for an <code>IOError</code> exception, Python just prints out some debugging information about what happened and then gives up.
-<li>You're trying to open the same non-existent file, but this time you're doing it within a <code>try...except</code> block.
-<li>When the <code>open</code> method raises an <code>IOError</code> exception, you're ready for it. The <code>except IOError:</code> line catches the exception and executes your own block of code, which in this case just prints a more pleasant error message.
-<li>Once an exception has been handled, processing continues normally on the first line after the <code>try...except</code> block. Note that this line will always print, whether or not an exception occurs. If you really did have a file called
-<code>notthere</code> in your root directory, the call to <code>open</code> would succeed, the <code>except</code> clause would be ignored, and this line would still be executed.
-<p>Exceptions may seem unfriendly (after all, if you don't catch the exception, your entire program will crash), but consider
-the alternative. Would you rather get back an unusable file object to a non-existent file?  You'd need to check its validity
-somehow anyway, and if you forgot, somewhere down the line, your program would give you strange errors somewhere down the
-line that you would need to trace back to the source. I'm sure you've experienced this, and you know it's not fun. With
-exceptions, errors occur immediately, and you can handle them in a standard way at the source of the problem.
-<h3>6.1.1. Using Exceptions For Other Purposes</h3>
-<p>There are a lot of other uses for exceptions besides handling actual error conditions. A common use in the standard Python library is to try to import a module, and then check whether it worked. Importing a module that does not exist will raise
-   an <code>ImportError</code> exception. You can use this to define multiple levels of functionality based on which modules are available at run-time,
-   or to support multiple platforms (where platform-specific code is separated into different modules).
-<p>You can also define your own exceptions by creating a class that inherits from the built-in <code>Exception</code> class, and then raise your exceptions with the <code>raise</code> command. See the further reading section if you're interested in doing this.
-<p>The next example demonstrates how to use an exception to support platform-specific functionality. This code comes from the
-<code>getpass</code> module, a wrapper module for getting a password from the user. Getting a password is accomplished differently on <abbr>UNIX</abbr>, Windows, and Mac OS platforms, but this code encapsulates all of those differences.
-<div class=example><h3 id="crossplatform.example">Example 6.2. Supporting Platform-Specific Functionality</h3><pre><code>
-  # Bind the name getpass to the appropriate function
-  try:
-      import termios, TERMIOS   <span>&#x2460;</span>
-  except ImportError:
-      try:
-          import msvcrt         <span>&#x2461;</span>
-      except ImportError:
-          try:
-              from EasyDialogs import AskPassword <span>&#x2462;</span>
-          except ImportError:
-              getpass = default_getpass           <span>&#x2463;</span>
-          else:                 <span>&#x2464;</span>
-              getpass = AskPassword
-      else:
-          getpass = win_getpass
-  else:
-      getpass = unix_getpass</pre>
-<ol>
-<li><code>termios</code> is a <abbr>UNIX</abbr>-specific module that provides low-level control over the input terminal. If this module is not available (because it's not
-               on your system, or your system doesn't support it), the import fails and Python raises an <code>ImportError</code>, which you catch.
-<li>OK, you didn't have <code>termios</code>, so let's try <code>msvcrt</code>, which is a Windows-specific module that provides an <abbr>API</abbr> to many useful functions in the Microsoft Visual C++ runtime services. If this import fails, Python will raise an <code>ImportError</code>, which you catch.
-<li>If the first two didn't work, you try to import a function from <code>EasyDialogs</code>, which is a Mac OS-specific module that provides functions to pop up dialog boxes of various types. Once again, if this import fails, Python will raise an <code>ImportError</code>, which you catch.
-<li>None of these platform-specific modules is available (which is possible, since Python has been ported to a lot of different platforms), so you need to fall back on a default password input function (which is
-               defined elsewhere in the <code>getpass</code> module). Notice what you're doing here: assigning the function <code>default_getpass</code> to the variable <var>getpass</var>. If you read the official <code>getpass</code> documentation, it tells you that the <code>getpass</code> module defines a <code>getpass</code> function. It does this by binding <var>getpass</var> to the correct function for your platform. Then when you call the <code>getpass</code> function, you're really calling a platform-specific function that this code has set up for you. You don't need to know or
-               care which platform your code is running on -- just call <code>getpass</code>, and it will always do the right thing.
-<li>A <code>try...except</code> block can have an <code>else</code> clause, like an <code>if</code> statement. If no exception is raised during the <code>try</code> block, the <code>else</code> clause is executed afterwards. In this case, that means that the <code>from EasyDialogs import AskPassword</code> import worked, so you should bind <var>getpass</var> to the <code>AskPassword</code> function. Each of the other <code>try...except</code> blocks has similar <code>else</code> clauses to bind <var>getpass</var> to the appropriate function when you find an <code>import</code> that works.
-<div class=itemizedlist>
-<h3>Further Reading on Exception Handling</h3>
-<ul>
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses <a href="http://www.python.org/doc/current/tut/node10.html#SECTION0010400000000000000000">defining and raising your own exceptions, and handling multiple exceptions at once</a>.
-
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/module-exceptions.html">all the built-in exceptions</a>.
-
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> documents the <a href="http://www.python.org/doc/current/lib/module-getpass.html">getpass</a> module.
-
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> documents the <a href="http://www.python.org/doc/current/lib/module-traceback.html"><code>traceback</code> module</a>, which provides low-level access to exception attributes after an exception is raised.
-
-<li><a href="http://www.python.org/doc/current/ref/"><i class=citetitle>Python Reference Manual</i></a> discusses the inner workings of the <a href="http://www.python.org/doc/current/ref/try.html"><code>try...except</code> block</a>.
-
-</ul>
-
+[exception stuff was here]
 
 
 

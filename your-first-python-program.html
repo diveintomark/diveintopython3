@@ -9,6 +9,7 @@ body{counter-reset:h1 1}
 table{border:1px solid #bbb;border-collapse:collapse;margin:auto}
 td,th{border:1px solid #bbb;padding:0 1.75em}
 th{text-align:left}
+mark{display:inline}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -54,12 +55,12 @@ if __name__ == '__main__':
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
 <p>Now let&#8217;s run this program on the command line. On Windows, it will look something like this:
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <p>On Mac OS X or Linux, it would look something like this:
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
@@ -74,7 +75,7 @@ if __name__ == '__main__':
 
 <h2 id=declaringfunctions>Declaring Functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
-<pre><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre class=nd><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 <aside>When you need a function, just declare it.</aside>
 <p>The keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses. Multiple arguments are separated with commas.
 <p>Also note that the function doesn&#8217;t define a return datatype. Python functions do not specify the datatype of their return value; they don&#8217;t even specify whether or not they return a value. (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
@@ -92,7 +93,7 @@ if __name__ == '__main__':
 
 <p>Let&#8217;s take another look at that <code>approximate_size()</code> function declaration:
 
-<pre><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre class=nd><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 
 <p>The second argument, <var>a_kilobyte_is_1024_bytes</var>, specifies a default value of <code>True</code>. This means the argument is <i>optional</i>; you can call the function without it, and Python will act as if you had called it with <code>True</code> as a second parameter.
 
@@ -177,7 +178,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 </samp></pre>
 <ol>
-<li>The first line imports the <code>humansize</code> program as a module -- a chunk of code that you can use interactively, or from a larger Python program. (You&#8217;ll see examples of multi-module Python programs in [FIXME xref].)  Once you import a module, you can reference any of its public functions, classes, or attributes. Modules can do this to access functionality in other modules, and you can do it in the Python interactive shell too. This is an important concept, and you&#8217;ll see a lot more of it throughout this book.
+<li>The first line imports the <code>humansize</code> program as a module&nbsp;&mdash;&nbsp;a chunk of code that you can use interactively, or from a larger Python program. (You&#8217;ll see examples of multi-module Python programs in [FIXME xref].)  Once you import a module, you can reference any of its public functions, classes, or attributes. Modules can do this to access functionality in other modules, and you can do it in the Python interactive shell too. This is an important concept, and you&#8217;ll see a lot more of it throughout this book.
 <li>When you want to use functions defined in imported modules, you need to include the module name. So you can&#8217;t just say <code>approximate_size</code>; it must be <code>humansize.approximate_size</code>. If you&#8217;ve used classes in Java, this should feel vaguely familiar.
 <li>Instead of calling the function as you would expect to, you asked for one of the function&#8217;s attributes, <code>__doc__</code>.
 </ol>
@@ -237,7 +238,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
     raise ValueError('number too large')</code></pre>
 <ol>
 <li>Code blocks are defined by their indentation. By &#8220;code block,&#8221; I mean functions, <code>if</code> statements, <code>for</code> loops, <code>while</code> loops, and so forth. Indenting starts a block and unindenting ends it. There are no explicit braces, brackets, or keywords. This means that whitespace is significant, and must be consistent. In this example, the function code is indented four spaces. It doesn&#8217;t need to be four spaces, it just needs to be consistent. The first line that is not indented marks the end of the function.
-<li>In Python, an <code>if</code> statement is followed by a code block. If the <code>if</code> expression evaluates to true, the indented block is executed, otherwise it falls to the <code>else</code> block (if any). (Note the lack of parentheses around the expression.)
+<li>In Python, an <code>if</code> statement is followed by a code block. If the <code>if</code> expression evaluates to true, the indented block is executed, otherwise it falls to the <code>else</code> block (if any). Note the lack of parentheses around the expression.
 <li>This line is inside the <code>if</code> code block. This <code>raise</code> statement will raise an exception (of type <code>ValueError</code>), but only if <code>size &lt; 0</code>.
 <li>This is <em>not</em> the end of the function. Completely blank lines don&#8217;t count. They can make the code more readable, but they don&#8217;t count as code block delimiters. The function continues on the next line.
 <li>The <code>for</code> loop also marks the start of a code block. Code blocks can contain multiple lines, as long as they are all indented the same amount. This <code>for</code> loop has three lines of code in it. There is no other special syntax for multi-line code blocks. Just indent and get on with your life.
@@ -248,10 +249,80 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 </blockquote>
 <p class=a>&#x2042;
 
+<h2 id=exceptions>Exceptions</h2>
+
+<p>Exceptions are everywhere in Python. Virtually every module in the standard Python library uses them, and Python itself will raise them in a lot of different circumstances. You&#8217;ll see them repeatedly throughout this book.
+
+<p>What is an exception? It&#8217;s an error, an indication that something went wrong. Some programming languages encourage the use of error return codes, which you need to check. Python encourages the use of exceptions, which you need to handle.
+
+<p>When an error occurs in the Python Shell, it prints out some details about the exception and how it happened, and that&#8217;s that. This is called an <em>unhandled</em> exception. When the exception was raised, there was no code to explicitly notice it and deal with it, so it bubbled its way back up to the top level of the Python Shell, which spits out some debugging information and calls it a day. In the shell, that's no big deal, but if that happened while your actual Python program was running, the entire program would come to a screeching halt.
+
+<blockquote class='note compare java'>
+<p><span class=u>&#x261E;</span>Unlike Java, Python functions don&#8217;t declare which exceptions they might raise. It&#8217;s up to you to determine what possible exceptions you need to catch.
+</blockquote>
+
+<p>An exception doesn&#8217;t need result in a complete program crash, though. Exceptions can be <em>handled</em>. Sometimes an exception is really because you have a bug in your code (like accessing a variable that doesn&#8217;t exist), but sometimes an exception is something you can anticipate. If you&#8217;re opening a file, it might not exist. If you&#8217;re importing a module, it might not be installed. If you&#8217;re connecting to a database, it might be unavailable, or you might not have the correct security credentials to access it. If you know a line of code may raise an exception, you should handle the exception using a <code>try...except</code> block.
+
+<blockquote class='note compare java'>
+<p><span class=u>&#x261E;</span>Python uses <code>try...except</code> blocks to handle exceptions, and the <code>raise</code> statement to generate them. Java and <abbr>C++</abbr> use <code>try...catch</code> blocks to handle exceptions, and the <code>throw</code> statement to generate them.
+</blockquote>
+
+<p>The <code>approximate_size()</code> function raises exceptions in two different cases: if the given <var>size</var> is larger than the function is designed to handle, or if it&#8217;s less than zero.
+
+<pre class=nd><code class=pp>if size &lt; 0:
+    raise ValueError('number must be non-negative')</code></pre>
+
+<p>The syntax for raising an exception is simple enough. Use the <code>raise</code> statement, followed by the exception name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a function. (In reality, exceptions are implemented as classes, and this <code>raise</code> statement is actually creating an instance of the <code>ValueError</code> class and passing the string <code>'number must be non-negative'</code> to its initialization method. But <a href=iterators.html#defining-classes>we&#8217;re getting ahead of ourselves</a><span class=u>&#8202;</span><em>!</em><span class=u>&#8202;</span>)
+
+<h3 id=importerror>Catching Import Errors</h3>
+
+<p>One of Python&#8217;s built-in exceptions is <code>ImportError</code>, which is raised when you try to import a module and fail. This can happen for a variety of reasons, but the simplest case is when the module doesn&#8217;t exist in your <a href=#importsearchpath>import search path</a>. You can use this to include optional features in your program. For example, <a href=case-study-porting-chardet-to-python-3.html>the <code>chardet</code> library</a> provides character encoding auto-detection. Perhaps your program wants to use this library <em>if it exists</em>, but continue gracefully if the user hasn&#8217;t installed it. You can do this with a <code>try..except</code> block.
+
+<pre class=nd><code class=pp><mark>try</mark>:
+  import chardet
+<mark>except</mark> ImportError:
+  chardet = None</code></pre>
+
+<p>Later, you can check for the presence of the <code>chardet</code> module with a simple <code>if</code> statement:
+
+<pre class=nd><code class=pp>if chardet:
+  # do something
+else:
+  # continue anyway</code></pre>
+
+<p>Another common use of the <code>ImportError</code> exception is when two modules implement a common <abbr>API</abbr>, but one is more desirable than the other. (Maybe it&#8217;s faster, or it uses less memory.) You can try to import one module but fall back to a different module if the first import fails. For example, <a href=xml.html>the XML chapter</a> talks about two modules that implement a common <abbr>API</abbr>, called the <code>ElementTree</code> <abbr>API</abbr>. The first, <code>lxml</code>, is a third-party module that you need to download and install yourself. The second, <code>xml.etree.ElementTree</code>, is slower but is part of the Python 3 standard library.
+
+<pre class=nd><code class=pp>try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree</code></pre>
+
+<p>By the end of this <code>try..except</code> block, you have imported <em>some</em> module and named it <var>etree</var>. Since both modules implement a common <abbr>API</abbr>, the rest of your code doesn&#8217;t need to keep checking which module got imported. And since the module that <em>did</em> get imported is always called <var>etree</var>, the rest of your code doesn&#8217;t need to be littered with <code>if</code> statements to call differently-named modules.
+
+<h3 id=nameerror>Unbound Variables</h3>
+
+<p>Take another look at this line of code from the <code>approximate_size()</code> function:
+
+<pre class=nd><code class=pp>multiple = 1024 if a_kilobyte_is_1024_bytes else 1000</code></pre>
+
+<p>You never declare the variable <var>multiple</var>, you just assign a value to it. That&#8217;s OK, because Python lets you do that. What Python will <em>not</em> let you do is reference a variable that has never been assigned a value. Trying to do so will raise a <code>NameError</code> exception.
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>x</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'x' is not defined</samp>
+<samp class=p>>>> </samp><kbd class=pp>x = 1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x</kbd>
+<samp class=pp>1</samp></pre>
+
+<p>You will thank Python for this one day.
+
+<p class=a>&#x2042;
+
 <h2 id=runningscripts>Running Scripts</h2>
 <aside>Everything in Python is an object.</aside>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
-<pre><code class=pp>
+<pre class=nd><code class=pp>
 if __name__ == '__main__':
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>
@@ -259,12 +330,12 @@ if __name__ == '__main__':
 <p><span class=u>&#x261E;</span>Like <abbr>C</abbr>, Python uses <code>==</code> for comparison and <code>=</code> for assignment. Unlike <abbr>C</abbr>, Python does not support in-line assignment, so there&#8217;s no chance of accidentally assigning the value you thought you were comparing.
 </blockquote>
 <p>So what makes this <code>if</code> statement special?  Well, modules are objects, and all modules have a built-in attribute <code>__name__</code>. A module&#8217;s <code>__name__</code> depends on how you&#8217;re using the module. If you <code>import</code> the module, then <code>__name__</code> is the module&#8217;s filename, without a directory path or file extension.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
 <samp class=p>>>> </samp><kbd class=pp>humansize.__name__</kbd>
 <samp class=pp>'humansize'</samp></pre>
 <p>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
