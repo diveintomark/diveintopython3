@@ -252,8 +252,8 @@ rules = LazyRules()</code></pre>
     rules_filename = 'plural6-rules.txt'
 
 <a>    def __iter__(self):                                <span class=u>&#x2460;</span></a>
-<a>        self.pattern_file = open(self.rules_filename)  <span class=u>&#x2462;</span></a>
-<a>        self.cache = []                                <span class=u>&#x2461;</span></a>
+<a>        self.pattern_file = open(self.rules_filename)  <span class=u>&#x2461;</span></a>
+<a>        self.cache = []                                <span class=u>&#x2462;</span></a>
         self.cache_index = 0</code></pre>
 <ol>
 <li>The <code>__iter__()</code> method is only going to be called once, after you instantiate the class, assign it to <var>rules</var>, and call <code>iter(rules)</code> to create the iterator.
