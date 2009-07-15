@@ -390,7 +390,7 @@ Wesley</samp></pre>
 <samp class=pp>[(0, 10), (1, 11), (2, 12), (None, 13)]</samp></pre>
 <ol>
 <li>The <code>itertools.chain()</code> function takes two iterators and returns an iterator that contains all the items from the first iterator, followed by all the items from the second iterator. (Actually, it can take any number of iterators, and it chains them all in the order they were passed to the function.)
-<li>The <code>zip()</code> function does something prosaic that turns out to be extremely useful: it any number of sequences and returns an iterator with the first items of each sequence, then the second items of each, then the third, and so on.
+<li>The <code>zip()</code> function does something prosaic that turns out to be extremely useful: it takes any number of sequences and returns an iterator with the first items of each sequence, then the second items of each, then the third, and so on.
 <li>The <code>zip()</code> function stops at the end of the shortest sequence. <code>range(10, 14)</code> has 4 items (10, 11, 12, and 13), but <code>range(0, 3)</code> only has 3, so the <code>zip()</code> function returns an iterator of 3 items.
 <li>On the other hand, the <code>itertools.zip_longest()</code> function stops at the end of the <em>longest</em> sequence, inserting <code>None</code> values for items past the end of the shorter sequences.
 </ol>
