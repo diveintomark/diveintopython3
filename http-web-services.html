@@ -737,17 +737,21 @@ Updates the authenticating user&#8217;s status.  Requires the <code>status</code
 <samp class=p>>>> </samp><kbd class=pp>httplib2.debuglevel = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>h = httplib2.Http('.cache')</kbd>
 <samp class=p>>>> </samp><kbd class=pp>data = {'status': 'Test update from Python 3'}</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>')</kbd>                 <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>h.add_credentials('diveintomark', '<var>MY_SECRET_PASSWORD</var>', 'identi.ca')</kbd>    <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>resp, content = h.request('https://identi.ca/api/statuses/update.xml',</kbd>
-<a><samp class=p>... </samp><kbd class=pp>    'POST',</kbd>                                                             <span class=u>&#x2462;</span></a>
-<a><samp class=p>... </samp><kbd class=pp>    urlencode(data),</kbd>                                                    <span class=u>&#x2463;</span></a>
-<a><samp class=p>... </samp><kbd class=pp>    headers={'Content-Type': 'application/x-www-form-urlencoded'})</kbd>      <span class=u>&#x2464;</span></a></pre>
+<a><samp class=p>... </samp><kbd class=pp>    'POST',</kbd>                                                             <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    urlencode(data),</kbd>                                                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    headers={'Content-Type': 'application/x-www-form-urlencoded'})</kbd>      <span class=u>&#x2463;</span></a></pre>
 <ol>
 <li>This is how <code>httplib2</code> handles authentication. Store your username and password with the <code>add_credentials()</code> method. When <code>httplib2</code> tries to issue the request, the server will respond with a <code>401 Unauthorized</code> status code, and it will list which authentication methods it supports (in the <code>WWW-Authenticate</code> header). <code>httplib2</code> will automatically construct an <code>Authorization</code> header and re-request the <abbr>URL</abbr>.
 <li>The second parameter is the type of <abbr>HTTP</abbr> request, in this case <code>POST</code>.
 <li>The third parameter is the <i>payload</i> to send to the server. We&#8217;re sending the <abbr>URL</abbr>-encoded dictionary with a status message.
 <li>Finally, we need to tell the server that the payload is <abbr>URL</abbr>-encoded data.
 </ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>The third parameter to the <code>add_credentials()</code> method is the domain in which the credentials are valid. You should always specify this! If you leave out the domain and later reuse the <code>httplib2.Http</code> object on a different authenticated site, <code>httplib2</code> might end up leaking one site&#8217;s username and password to the other site.
+</blockquote>
 
 <p>This is what goes over the wire:
 
