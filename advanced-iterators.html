@@ -50,7 +50,7 @@ import itertools
 
 def solve(puzzle):
     words = re.findall('[A-Z]+', puzzle.upper())
-    unique_characters = {c for c in ''.join(words)}
+    unique_characters = set(join(words))
     assert len(unique_characters) <= 10
     first_letters = {word[0] for word in words}
     n = len(first_letters)
@@ -127,30 +127,30 @@ if __name__ == '__main__':
 
 <h2 id=unique-items>Finding the unique items in a sequence</h2>
 
-<p>Set comprehensions make it trivial to find the unique items in a sequence. [FIXME-not sure if I&#8217;m going to cover set comprehensions in an earlier chapter; if not, this is certainly an abrupt and inadequate introduction to the topic.]
+<p><a href=native-datatypes.html#sets>Sets</a> make it trivial to find the unique items in a sequence.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'c', 'b', 'a', 'd', 'b']</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>{c for c in a_list}</kbd>                      <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>set(a_list)</kbd>                      <span class=u>&#x2460;</span></a>
 <samp class=pp>{'a', 'c', 'b', 'd'}</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_string = 'EAST IS EAST'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>{c for c in a_string}</kbd>                    <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>set(a_string)</kbd>                    <span class=u>&#x2461;</span></a>
 <samp class=pp>{'A', ' ', 'E', 'I', 'S', 'T'}</samp>
 <samp class=p>>>> </samp><kbd class=pp>words = ['SEND', 'MORE', 'MONEY']</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>''.join(words)</kbd>                           <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>''.join(words)</kbd>                   <span class=u>&#x2462;</span></a>
 <samp class=pp>'SENDMOREMONEY'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>{c for c in ''.join(words)}</kbd>              <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>set(''.join(words))</kbd>              <span class=u>&#x2463;</span></a>
 <samp class=pp>{'E', 'D', 'M', 'O', 'N', 'S', 'R', 'Y'}</samp></pre>
 <ol>
-<li>Given a list of several strings, a set comprehension with the identity function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth&nbsp;&mdash;&nbsp;wait, that&#8217;s in the set already, so it only gets listed once. Fifth. Sixth&nbsp;&mdash;&nbsp;again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
+<li>Given a list of several strings, the <code>set()</code> function will return a set of unique strings from the list. This makes sense if you think of it like a <code>for</code> loop. Take the first item from the list, put it in the set. Second. Third. Fourth&nbsp;&mdash;&nbsp;wait, that&#8217;s in the set already, so it only gets listed once, because Python sets don&#8217;t allow duplicates. Fifth. Sixth&nbsp;&mdash;&nbsp;again, a duplicate, so it only gets listed once. The end result? All the unique items in the original list, without any duplicates. The original list doesn&#8217;t even need to be sorted first.
 <li>The same technique works with strings, since a string is just a sequence of characters.
 <li>Given a list of strings, <code>''.join(<var>a_list</var>)</code> concatenates all the strings together into one.
-<li>So, given a list of strings, this set comprehension returns all the unique characters across all the strings, with no duplicates.
+<li>So, given a list of strings, this line of code returns all the unique characters across all the strings, with no duplicates.
 </ol>
 
 <p>The alphametics solver uses this technique to get a list of all the unique characters in the puzzle.
 
-<pre class=nd><code class=pp>unique_characters = {c for c in ''.join(words)}</code></pre>
+<pre class=nd><code class=pp>unique_characters = set(''.join(words))</code></pre>
 
 <p>This list is later used to assign digits to characters as the solver iterates through the possible solutions.
 

@@ -9,7 +9,7 @@ import itertools
 
 def solve(puzzle):
     words = re.findall('[A-Z]+', puzzle.upper())
-    unique_characters = {c for c in ''.join(words)}
+    unique_characters = set(''.join(words))
     assert len(unique_characters) <= 10
     first_letters = {word[0] for word in words}
     n = len(first_letters)
