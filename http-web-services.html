@@ -578,7 +578,7 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>response</kbd>                                     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response</kbd>                                                          <span class=u>&#x2460;</span></a>
 <samp class=pp>{'status': '200',
  'content-length': '3070',
 <a> 'content-location': 'http://diveintopython3.org/examples/feed.xml',  <span class=u>&#x2461;</span></a>
@@ -604,23 +604,22 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>response.previous</kbd>           <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response.previous</kbd>                                                     <span class=u>&#x2460;</span></a>
 <samp class=pp>{'status': '302',
  'content-length': '228',
- 'content-location':
- 'http://diveintopython3.org/examples/feed-302.xml',
- 'expires': 'Thu, 16 Jul 2009 20:15:58 GMT',
+ 'content-location': 'http://diveintopython3.org/examples/feed-302.xml',
+ 'expires': 'Thu, 04 Jun 2009 02:21:41 GMT',
  'server': 'Apache',
  'connection': 'close',
  'location': 'http://diveintopython3.org/examples/feed.xml',
  'cache-control': 'max-age=86400',
- 'date': 'Wed, 15 Jul 2009 20:15:58 GMT',
+ 'date': 'Wed, 03 Jun 2009 02:21:41 GMT',
  'content-type': 'text/html; charset=iso-8859-1'}</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>type(response)</kbd>              <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(response)</kbd>                                                        <span class=u>&#x2461;</span></a>
 <samp class=pp>&lt;class 'httplib2.Response'></samp>
 <samp class=p>>>> </samp><kbd class=pp>type(response.previous)</kbd>
 <samp class=pp>&lt;class 'httplib2.Response'></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>response.previous.previous</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response.previous.previous</kbd>                                            <span class=u>&#x2461;</span></a>
 <samp class=p>>>></samp></pre>
 <ol>
 <li>The <var>response.previous</var> attribute holds a reference to the previous response object that <code>httplib2</code> followed to get to the current response object.
