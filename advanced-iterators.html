@@ -365,9 +365,14 @@ Lizzie
 Wesley</samp></pre>
 <ol>
 <li>The <code>itertools.groupby()</code> function takes a sequence and a key function, and returns an iterator that generates pairs. Each pair contains the result of <code>key_function(<var>each item</var>)</code> and another iterator containing all the items that shared that key result.
-<li>In this example, given a list of names sorted by length, <code>itertools.groupby(names, len)</code> will put all the 4-letter names in one iterator, all the 5-letter names in another iterator, and so on. The <code>groupby()</code> function is completely generic; it could group strings by first letter, numbers by their number of factors, or any other key function you can think of.
+<li>In this example, given a list of names <em>already sorted by length</em>, <code>itertools.groupby(names, len)</code> will put all the 4-letter names in one iterator, all the 5-letter names in another iterator, and so on. The <code>groupby()</code> function is completely generic; it could group strings by first letter, numbers by their number of factors, or any other key function you can think of.
 </ol>
 <!-- YO DAWG, WE HEARD YOU LIKE LOOPING, SO WE PUT AN ITERATOR IN YOUR ITERATOR SO YOU CAN LOOP WHILE YOU LOOP. -->
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>The <code>itertools.groupby()</code> function only works if the input sequence is already sorted by the grouping function. In the example above, you grouped a list of names by the <code>len()</code> function. That only worked because the input list was already sorted by length.
+</blockquote>
+
 <p>Are you watching closely?
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>list(range(0, 3))</kbd>
