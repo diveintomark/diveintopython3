@@ -178,7 +178,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <p>Let&#8217;s say you want to download a resource over <abbr>HTTP</abbr>, such as <a href=xml.html>an Atom feed</a>. Being a feed, you&#8217;re not just going to download it once; you&#8217;re going to download it over and over again. (Most feed readers will check for changes once an hour.) Let&#8217;s do it the quick-and-dirty way first, and then see how you can do better.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import urllib.request</kbd>
-<samp class=p>>>> </samp><kbd class=pp>a_url = 'http://diveintopython3.org/examples/feed.xml'
+<samp class=p>>>> </samp><kbd class=pp>a_url = 'http://diveintopython3.org/examples/feed.xml'</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>data = urllib.request.urlopen(a_url).read()</kbd>  <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>                                   <span class=u>&#x2461;</span></a>
 <samp class=pp>&lt;class 'bytes'></samp>
@@ -194,7 +194,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 </samp></pre>
 <ol>
 <li>Downloading anything over <abbr>HTTP</abbr> is incredibly easy in Python; in fact, it&#8217;s a one-liner. The <code>urllib.request</code> module has a handy <code>urlopen()</code> function that takes the address of the page you want, and returns a file-like object that you can just <code>read()</code> from to get the full contents of the page. It just can&#8217;t get any easier.
-<li>The <code>urlopen().read()</code> method always returns <a href=strings.html#byte-arrays>a <code>bytes</code> object, not a string</a>. Remember, bytes are bytes; characters are an abstraction. <abbr>HTTP</abbr> servers don&#8217;t deal in abstractions. If you request a resource, you get bytes. If you want a string, you&#8217;ll have to convert it yourself.
+<li>The <code>urlopen().read()</code> method always returns <a href=strings.html#byte-arrays>a <code>bytes</code> object, not a string</a>. Remember, bytes are bytes; characters are an abstraction. <abbr>HTTP</abbr> servers don&#8217;t deal in abstractions. If you request a resource, you get bytes. If you want it as a string, you&#8217;ll need to <a href=http://feedparser.org/docs/character-encoding.html>determine the character encoding</a> and explicitly convert it to a string.
 </ol>
 
 <p>So what&#8217;s wrong with this? For a quick one-off during testing or development, there&#8217;s nothing wrong with it. I do it all the time. I wanted the contents of the feed, and I got the contents of the feed. The same technique works for any web page. But once you start thinking in terms of a web service that you want to access on a regular basis (<i>e.g.</i> requesting this feed once an hour), then you&#8217;re being inefficient, and you&#8217;re being rude.
@@ -323,12 +323,37 @@ Content-Type: application/xml</samp>
 <li>The primary interface to <code>httplib2</code> is the <code>Http</code> object. For reasons you&#8217;ll see in the next section, you should always pass a directory name when you create an <code>Http</code> object. The directory does not need to exist; <code>httplib2</code> will create it if necessary.
 <li>Once you have an <code>Http</code> object, retrieving data is as simple as calling the <code>request()</code> method with the address of the data you want. This will issue an <abbr>HTTP</abbr> <code>GET</code> request for that <abbr>URL</abbr>. (Later in this chapter, you&#8217;ll see how to issue other <abbr>HTTP</abbr> requests, like <code>POST</code>.)
 <li>The <code>request()</code> method returns two values. The first is an <code>httplib2.Response</code> object, which contains all the <abbr>HTTP</abbr> headers the server returned. For example, a <code>status</code> code of <code>200</code> indicates that the request was successful.
-<li>The <var>content</var> variable contains the actual data that was returned by the <abbr>HTTP</abbr> server. The data is returned as <a href=strings.html#byte-arrays><code>bytes</code>, not <code>str</code></a>. If you want it as a string, you&#8217;ll need to <a href=http://feedparser.org/docs/character-encoding.html>determine the character encoding</a> and explicitly convert it.
+<li>The <var>content</var> variable contains the actual data that was returned by the <abbr>HTTP</abbr> server. The data is returned as <a href=strings.html#byte-arrays>a <code>bytes</code> object, not a string</a>. If you want it as a string, you&#8217;ll need to <a href=http://feedparser.org/docs/character-encoding.html>determine the character encoding</a> and convert it yourself.
 </ol>
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>You probably only need one <code>httplib2.Http</code> object. There are valid reasons for creating more than one, but you should only do so if you know why you need them. &#8220;I need to request data from two different <abbr>URL</abbr>s&#8221; is not a valid reason. Re-use the <code>Http</code> object and just call the <code>request()</code> method twice.
 </blockquote>
+
+<h3 id=why-bytes>A Short Digression To Explain Why <code>httplib2</code> Returns Bytes Instead of Strings</h3>
+
+<p>Bytes. Strings. What a pain. Why can&#8217;t <code>httplib2</code> &#8220;just&#8221; do the conversion for you? Well, it&#8217;s complicated, because the rules for determining the character encoding are specific to what kind of resource you&#8217;re requesting. How could <code>httplib2</code> know what kind of resource you&#8217;re requesting? It&#8217;s usually listed in the <code>Content-Type</code> <abbr>HTTP</abbr> header, but that&#8217;s an optional feature of <abbr>HTTP</abbr> and not all <abbr>HTTP</abbr> servers include it. If that header is not included in the <abbr>HTTP</abbr> response, it&#8217;s left up to the client to guess. (This is commonly called &#8220;content sniffing,&#8221; and it&#8217;s never perfect.)
+
+<p>If you know what sort of resource you&#8217;re expecting (an <abbr>XML</abbr> document in this case), perhaps you could &#8220;just&#8221; pass the returned <code>bytes</code> object to the <a href=xml.html#xml-parse><code>xml.etree.ElementTree.parse()</code> function</a>. That&#8217;ll work as long as the <abbr>XML</abbr> document includes information on its own character encoding (as this one does), but that&#8217;s an optional feature and not all <abbr>XML</abbr> documents do that. If an <abbr>XML</abbr> document doesn&#8217;t include encoding information, the client is supposed to look at the enclosing transport&nbsp;&mdash;&nbsp;<i>i.e.</i> the <code>Content-Type</code> <abbr>HTTP</abbr> header, which can include a <code>charset</code> parameter.
+
+<p>But it&#8217;s worse than that. Now character encoding information can be in two places: within the <abbr>XML</abbr> document itself, and within the <code>Content-Type</code> <abbr>HTTP</abbr> header. If the information is in <em>both</em> places, which one wins? According to <a href=http://www.ietf.org/rfc/rfc3023.txt>RFC 3023</a> (I swear I am not making this up), if the media type given in the <code>Content-Type</code> <abbr>HTTP</abbr> header is <code>application/xml</code>, <code>application/xml-dtd</code>, <code>application/xml-external-parsed-entity</code>, or any one of the subtypes of <code>application/xml</code> such as <code>application/atom+xml</code> or <code>application/rss+xml</code> or even <code>application/rdf+xml</code>, then the encoding is
+
+<ol>
+<li>the encoding given in the <code>charset</code> parameter of the <code>Content-Type</code> <abbr>HTTP</abbr> header, or
+<li>the encoding given in the <code>encoding</code> attribute of the <abbr>XML</abbr> declaration within the document, or
+<li><code>utf-8</code>
+</ol>
+
+<p>On the other hand, if the media type given in the <code>Content-Type</code> <abbr>HTTP</abbr> header is <code>text/xml</code>, <code>text/xml-external-parsed-entity</code>, or a subtype like <code>text/AnythingAtAll+xml</code>, then the encoding attribute of the <abbr>XML</abbr> declaration within the document is ignored completely, and the encoding is
+
+<ol>
+<li>the encoding given in the charset parameter of the <code>Content-Type</code> <abbr>HTTP</abbr> header, or
+<li><code>us-ascii</code>
+</ol>
+
+<p>And that&#8217;s just for <abbr>XML</abbr> documents. For <abbr>HTML</abbr> documents, web browsers have constructed such <a type=application/pdf href=http://www.adambarth.com/papers/2009/barth-caballero-song.pdf>byzantine rules for content-sniffing</a> [<abbr>PDF</abbr>] that <a href=http://www.google.com/search?q=barth+content-type+processing+model>we&#8217;re still trying to figure them all out</a>.
+
+<p>&#8220;<a href=http://code.google.com/p/httplib2/source/checkout>Patches welcome</a>.&#8221;
 
 <h3 id=httplib2-caching>How <code>httplib2</code> Handles Caching</h3>
 
@@ -640,7 +665,7 @@ user-agent: Python-httplib2/$Rev: 259 $'
 <blockquote class=pf>
 <p><b>Identi.ca <abbr>REST</abbr> <abbr>API</abbr> Method: statuses/update</b><br>
 Updates the authenticating user&#8217;s status.  Requires the <code>status</code> parameter specified below.  Request must be a <code>POST</code>.
- 
+
 <dl>
 <dt><abbr>URL</abbr>
 <dd><code>https://identi.ca/api/statuses/update.<i><var>format</var></i></code>
