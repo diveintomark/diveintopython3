@@ -178,7 +178,10 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <p>Let&#8217;s say you want to download a resource over <abbr>HTTP</abbr>, such as <a href=xml.html>an Atom feed</a>. Being a feed, you&#8217;re not just going to download it once; you&#8217;re going to download it over and over again. (Most feed readers will check for changes once an hour.) Let&#8217;s do it the quick-and-dirty way first, and then see how you can do better.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import urllib.request</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>data = urllib.request.urlopen('http://diveintopython3.org/examples/feed.xml').read()</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_url = 'http://diveintopython3.org/examples/feed.xml'
+<a><samp class=p>>>> </samp><kbd class=pp>data = urllib.request.urlopen(a_url).read()</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>                                   <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;class 'bytes'></samp>
 <samp class=p>>>> </samp><kbd class=pp>print(data)</kbd>
 <samp class=pp>&lt;?xml version='1.0' encoding='utf-8'?>
 &lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
@@ -191,6 +194,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 </samp></pre>
 <ol>
 <li>Downloading anything over <abbr>HTTP</abbr> is incredibly easy in Python; in fact, it&#8217;s a one-liner. The <code>urllib.request</code> module has a handy <code>urlopen()</code> function that takes the address of the page you want, and returns a file-like object that you can just <code>read()</code> from to get the full contents of the page. It just can&#8217;t get any easier.
+<li>The <code>urlopen().read()</code> method always returns <a href=strings.html#byte-arrays>a <code>bytes</code> object, not a string</a>. Remember, bytes are bytes; characters are an abstraction. <abbr>HTTP</abbr> servers don&#8217;t deal in abstractions. If you request a resource, you get bytes. If you want a string, you&#8217;ll have to convert it yourself.
 </ol>
 
 <p>So what&#8217;s wrong with this? For a quick one-off during testing or development, there&#8217;s nothing wrong with it. I do it all the time. I wanted the contents of the feed, and I got the contents of the feed. The same technique works for any web page. But once you start thinking in terms of a web service that you want to access on a regular basis (<i>e.g.</i> requesting this feed once an hour), then you&#8217;re being inefficient, and you&#8217;re being rude.
