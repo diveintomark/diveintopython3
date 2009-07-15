@@ -553,6 +553,7 @@ reply: 'HTTP/1.1 200 OK'</samp>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import httplib2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>httplib2.debuglevel = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>h = httplib2.Http('.cache')</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/examples/feed-302.xml')</kbd>  <span class=u>&#x2460;</span></a>
 <samp>connect: (diveintopython3.org, 80)
