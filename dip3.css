@@ -48,6 +48,7 @@ Classname Legend
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
 .ots  = "on the side"              = an aside that is set in normal type (as opposed to a big blue pullquote)
+.xxxl = "ridiculously large"       = text sized 1000% larger than normal type
 
 Acknowledgements & Inspirations
 
@@ -126,7 +127,7 @@ html {
 body {
   margin: 1.75em 28px;
 }
-.c, .a {
+.c, .a, .xxxl {
   clear: both;
   text-align: center;
 }
@@ -152,6 +153,12 @@ form div, #level {
 }
 .pf {
   padding: 0 1.75em;
+}
+.xxxl {
+  font-size:1000%;
+  font-weight:bold;
+  line-height:1;
+  margin:0.7em 0;
 }
 
 /* links */
