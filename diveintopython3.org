@@ -1,0 +1,55 @@
+* Installing Python
+* Your First Python Program
+* TODO mention why from module import * is only allowed at module level
+* Native Datatypes
+* Strings
+* Regular Expressions
+* Closures & Generators
+* Classes & Iterators
+* Advanced Iterators
+** TODO 2nd draft
+* Unit Testing
+** TODO 2nd draft
+* Advanced Unit Testing
+** TODO 1st draft
+* Refactoring
+** TODO 2nd draft
+* Advanced Classes
+** TODO 1st draft
+* Files
+** TODO 1st draft
+* XML
+** TODO 2nd draft
+* Serializing Python Objects
+** TODO 1st draft
+* HTTP Web Services
+** TODO 2nd draft
+* Threading & Multiprocessing
+** TODO 1st draft
+* Packaging Python libraries
+** TODO 1st draft
+* Case Study: Porting chardet to Python 3
+** TODO 2nd draft
+* Where to go from here
+* Porting Code to Python 3 with 2to3
+** TODO 2nd draft
+* Special Method Names
+** TODO 2nd draft
+* Bits to add somewhere
+** TODO section on tuples
+** TODO section (chapter?) on comprehensions
+*** TODO list comprehensions
+*** TODO set comprehensions
+*** TODO dictionary comprehensions
+** TODO section on dictionary views
+several dictionary methods return them
+they're dynamic
+they update when the dictionary changes
+** TODO function annotations?
+** TODO PEP 8 style conventions
+** TODO Decorators
+[[http://docs.python.org/3.1/whatsnew/3.1.html][@unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")]]
+* Meta
+** TODO generate HTML
+** TODO generate PDF
+** TODO all <pre> blocks without numbers should be marked class=nd
