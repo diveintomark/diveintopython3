@@ -45,7 +45,7 @@ body{counter-reset:h1 6}
 
 <p>Let&#8217;s take that one line at a time.
 
-<pre><code class=pp>class Fib:</code></pre>
+<pre class=nd><code class=pp>class Fib:</code></pre>
 
 <p><code>class</code>? What&#8217;s a class?
 
@@ -143,7 +143,7 @@ body{counter-reset:h1 6}
 
 <p>Instance variables are specific to one instance of a class. For example, if you create two <code>Fib</code> instances with different maximum values, they will each remember their own values.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import fibonacci2</kbd>
 <samp class=p>>>> </samp><kbd class=pp>fib1 = fibonacci2.Fib(100)</kbd>
 <samp class=p>>>> </samp><kbd class=pp>fib2 = fibonacci2.Fib(200)</kbd>
@@ -189,7 +189,7 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
 
 <p>Thoroughly confused yet? Excellent. Let&#8217;s see how to call this iterator:
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>from fibonacci2 import Fib</kbd>
 <samp class=p>>>> </samp><kbd class=pp>for n in Fib(1000):</kbd>
 <samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>

@@ -39,10 +39,10 @@ body{counter-reset:h1 2}
 <aside>You can use virtually any expression in a boolean context.</aside>
 <p>Booleans are either true or false. Python has two constants, cleverly <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
-<pre><code class=pp>if size &lt; 0:
+<pre class=nd><code class=pp>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
 <p><var>size</var> is an integer, <code>0</code> is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>size = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
 <samp class=pp>False</samp>
@@ -53,7 +53,7 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
 <samp class=pp>True</samp></pre>
 <p>Due to some legacy issues left over from Python 2, booleans can be treated as numbers. <code>True</code> is <code>1</code>; <code>False</code> is <code>0</code>.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>True + True</kbd>
 <samp class=pp>2</samp>
 <samp class=p>>>> </samp><kbd class=pp>True + False</kbd>
@@ -741,7 +741,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <h3 id=mixed-value-dictionaries>Mixed-Value Dictionaries</h3>
 <p>Dictionaries aren&#8217;t just for strings. Dictionary values can be any datatype, including integers, booleans, arbitrary objects, or even other dictionaries. And within a single dictionary, the values don&#8217;t all need to be the same type; you can mix and match as needed. Dictionary keys are more restricted, but they can be strings, integers, and a few other types. You can also mix and match key datatypes within a dictionary.
 <p>In fact, you&#8217;ve already seen a dictionary with non-string keys and values, in <a href=your-first-python-program.html#divingin>your first Python program</a>.
-<pre><code class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+<pre class=nd><code class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</code></pre>
 <p>Let's tear that apart in the interactive shell.
 <pre class=screen>
@@ -787,7 +787,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <h2 id=none><code>None</code></h2>
 <p><code>None</code> is a special constant in Python. It is a null value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not <code>0</code>. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
 <p><code>None</code> is the only null value. It has its own datatype (<code>NoneType</code>). You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects. All variables whose value is <code>None</code> are equal to each other.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>type(None)</kbd>
 <samp class=pp>&lt;class 'NoneType'></samp>
 <samp class=p>>>> </samp><kbd class=pp>None == False</kbd>
@@ -807,7 +807,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 </pre>
 <h3 id=none-in-a-boolean-context><code>None</code> In A Boolean Context</h3>
 <p>In <a href=#booleans>a boolean context</a>, <code>None</code> is false and <code>not None</code> is true.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
 <samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>

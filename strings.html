@@ -180,7 +180,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>Just to blow your mind, here&#8217;s an example that combines all of the above:
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
 <samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
 <samp class=p>>>> </samp><kbd class=pp>'1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}'.format(sys)</kbd>
@@ -201,7 +201,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
 
-<pre><code class=pp>if size &lt; multiple:
+<pre class=nd><code class=pp>if size &lt; multiple:
     return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
@@ -212,7 +212,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>'{0:.1f} {1}'.format(698.25, 'GB')</kbd>
 <samp class=pp>'698.3 GB'</samp></pre>
 
@@ -414,11 +414,11 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
 
-<pre><code class=pp># -*- coding: windows-1252 -*-</code></pre>
+<pre class=nd><code class=pp># -*- coding: windows-1252 -*-</code></pre>
 
 <p>Technically, the character encoding override can also be on the second line, if the first line is a <abbr>UNIX</abbr>-like hash-bang command.
 
-<pre><code class=pp>#!/usr/bin/python3
+<pre class=nd><code class=pp>#!/usr/bin/python3
 # -*- coding: windows-1252 -*-</code></pre>
 
 <p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.

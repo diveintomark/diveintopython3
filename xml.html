@@ -443,7 +443,7 @@ StopIteration</samp></pre>
 
 <p>For large <abbr>XML</abbr> documents, <code>lxml</code> is significantly faster than the built-in ElementTree libary. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import <code>lxml</code> and fall back to the built-in ElementTree.
 
-<pre><code class=pp>try:
+<pre class=nd><code class=pp>try:
     from lxml import etree
 except ImportError:
     import xml.etree.ElementTree as etree</code></pre>
@@ -582,7 +582,7 @@ except ImportError:
 
 <p>That&#8217;s an error, because the <code>&amp;hellip;</code> entity is not defined in <abbr>XML</abbr>. (It is defined in <abbr>HTML</abbr>.) If you try to parse this broken feed with the default settings, <code>lxml</code> will choke on the undefined entity.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
 <samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed-broken.xml')</kbd>
 <samp class=traceback>Traceback (most recent call last):

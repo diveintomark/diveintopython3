@@ -68,16 +68,14 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=native-datatypes.html#searchinglists>Searching for values in a list</a>
   <li><a href=native-datatypes.html#lists-in-a-boolean-context>Lists in a boolean context</a>
   </ol>
-<!--
 <li><a href=native-datatypes.html#sets>Sets</a>
-    <ol>
-    <li>Creating a new set
-    <li>Modifying a set
-    <li>Deleting items from a set
-    <li>Common operations on sets (union, intersection, and difference)
-    <li>Frozen sets
-    </ol>
--->
+  <ol>
+  <li><a href=native-datatypes.html#creating-a-set>Creating A Set</a>
+  <li><a href=native-datatypes.html#modifying-sets>Modifying A Set</a>
+  <li><a href=native-datatypes.html#removing-from-sets>Removing Items From A Set</a>
+  <li><a href=native-datatypes.html#common-set-operations>Common Set Operations</a>
+  <li><a href=native-datatypes.html#sets-in-a-boolean-context>Sets In A Boolean Context</a>
+  </ol>
 <li><a href=native-datatypes.html#dictionaries>Dictionaries</a>
   <ol>
   <li><a href=native-datatypes.html#creating-dictionaries>Creating a dictionary</a>
@@ -92,21 +90,23 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
 <li><a href=native-datatypes.html#furtherreading>Further reading</a>
 </ol>
 <li id=strings><a href=strings.html>Strings</a>
-<ol>
-<li><a href=strings.html#divingin>Diving in</a>
-<li><a href=strings.html#one-ring-to-rule-them-all>Unicode</a>
   <ol>
-  <li>How strings are stored in memory
-  <li>Converting between different character encodings
-  <li><a href=strings.html#py-encoding>Specifying character encoding in <code>.py</code> files</a>
+  <li><a href=strings.html#boring-stuff>Some Boring Stuff You Need To Understand Before You Can Dive In</a>
+  <li><a href=strings.html#one-ring-to-rule-them-all>Unicode</a>
+  <li><a href=strings.html#divingin>Diving In</a>
+  <li><a href=strings.html#formatting-strings>Formatting Strings</a>
+    <ol>
+    <li><a href=strings.html#compound-field-names>Compound Field Names</a>
+    <li><a href=strings.html#format-specifiers>Format Specifiers</a>
+    </ol>
+  <li><a href=strings.html#common-string-methods>Other Common String Methods</a>
+    <ol>
+    <li><a href=strings.html#slicingstrings>Slicing A String</a>
+    </ol>
+  <li><a href=strings.html#byte-arrays>Strings vs. Bytes</a>
+  <li><a href=strings.html#py-encoding>Postscript: Character Encoding Of Python Source Code</a>
+  <li><a href=strings.html#furtherreading>Further Reading</a>
   </ol>
-<li>Strings in Python 3
-<li>Common string operations
-<li>Formatting strings
-<li><a href=strings.html#string-module>The <code>string</code> module</a>
-<li><a href=strings.html#byte-arrays>Strings vs. bytes</a>
-<li><a href=strings.html#furtherreading>Further reading</a>
-</ol>
 <li id=regular-expressions><a href=regular-expressions.html>Regular expressions</a>
   <ol>
   <li><a href=regular-expressions.html#divingin>Diving in</a>
@@ -360,23 +360,5 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=special-method-names.html#context-managers>Classes That Can Be Used in a <code>with</code> Block</a>
   <li><a href=special-method-names.html#esoterica>Really Esoteric Stuff</a>
   </ol>
-</ul>
-<p>Orphans (not sure where these belong yet):
-<ul>
-  <li>Tuples
-  <li>List comprehensions
-  <li>Set comprehensions
-  <li>Dictionary comprehensions
-  <li>Views (several dictionary methods return them, they're dynamic, update when the dictionary changes, etc.)
-  <li>Function annotations
-  <li>PEP 8 style conventions
-  <li>Decorators
-    <ol>
-    <li><a href=http://docs.python.org/3.1/whatsnew/3.1.html><code>@unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")</code></a>
-    </ol>
-  <li>Importing modules
-    <ol>
-    <li>...mention why from module import * is only allowed at module level
-    </ol>
 </ul>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>

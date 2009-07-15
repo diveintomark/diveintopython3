@@ -58,7 +58,7 @@ mark{display:inline}
 
 <p>Here&#8217;s a concrete example of how caching works. You visit <a href=http://diveintomark.org/><code>diveintomark.org</code></a> in your browser. That page includes a background image, <a href=http://wearehugh.com/m.jpg><code>wearehugh.com/m.jpg</code></a>. When your browser downloads that image, the server includes the following <abbr>HTTP</abbr> headers:
 
-<pre><code>HTTP/1.1 200 OK
+<pre class=nd><code>HTTP/1.1 200 OK
 Date: Sun, 31 May 2009 17:14:04 GMT
 Server: Apache
 Last-Modified: Fri, 22 Aug 2008 04:28:16 GMT
@@ -86,7 +86,7 @@ Content-Type: image/jpeg</code></pre>
 
 <p><abbr>HTTP</abbr> has a solution to this, too. When you request data for the first time, the server can send back a <code>Last-Modified</code> header. This is exactly what it sounds like: the date that the data was changed. That background image referenced from <code>diveintomark.org</code> included a <code>Last-Modified</code> header.
 
-<pre><code>HTTP/1.1 200 OK
+<pre class=nd><code>HTTP/1.1 200 OK
 Date: Sun, 31 May 2009 17:14:04 GMT
 Server: Apache
 <mark>Last-Modified: Fri, 22 Aug 2008 04:28:16 GMT</mark>
@@ -101,7 +101,7 @@ Content-Type: image/jpeg
 
 <p>When you request the same data a second (or third or fourth) time, you can send an <code>If-Modified-Since</code> header with your request, with the date you got back from the server last time. If the data hasn&#8217;t changed since then, the server sends back a special <abbr>HTTP</abbr> <code>304</code> status code, which means &#8220;this data hasn&#8217;t changed since the last time you asked for it.&#8221; You can test this on the command line, using <a href=http://curl.haxx.se/>curl</a>:
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-Modified-Since: Fri, 22 Aug 2008 04:28:16 GMT"</mark> http://wearehugh.com/m.jpg</kbd>
 <samp>HTTP/1.1 304 Not Modified
 Date: Sun, 31 May 2009 18:04:39 GMT
@@ -119,7 +119,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <p>ETags are an alternate way to accomplish the same thing as the <a href=#last-modified>last-modified checking</a>. With Etags, the server sends a hash code in an <code>ETag</code> header along with the data you requested. (Exactly how this hash is determined is entirely up to the server. The only requirement is that it changes when the data changes.) That background image referenced from <code>diveintomark.org</code> had an <code>ETag</code> header.
 
-<pre><code>HTTP/1.1 200 OK
+<pre class=nd><code>HTTP/1.1 200 OK
 Date: Sun, 31 May 2009 17:14:04 GMT
 Server: Apache
 Last-Modified: Fri, 22 Aug 2008 04:28:16 GMT
@@ -136,7 +136,7 @@ The second time you request the same data, you include the ETag hash in an <code
 
 <p>Again with the <kbd>curl</kbd>:
 
-<pre class=screen>
+<pre class='nd screen'>
 <a><samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-None-Match: \"3075-ddc8d800\""</mark> http://wearehugh.com/m.jpg</kbd>  <span class=u>&#x2460;</span></a>
 <samp>HTTP/1.1 304 Not Modified
 Date: Sun, 31 May 2009 18:04:39 GMT
@@ -176,7 +176,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <h2 id=dont-try-this-at-home>How Not To Fetch Data Over HTTP</h2>
 
 <p>Let&#8217;s say you want to download a resource over <abbr>HTTP</abbr>, such as <a href=xml.html>an Atom feed</a>. Being a feed, you&#8217;re not just going to download it once; you&#8217;re going to download it over and over again. (Most feed readers will check for changes once an hour.) Let&#8217;s do it the quick-and-dirty way first, and then see how you can do better.
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import urllib.request</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>data = urllib.request.urlopen('http://diveintopython3.org/examples/feed.xml').read()</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>print(data)</kbd>
@@ -255,7 +255,7 @@ Content-Type: application/xml</samp>
 
 <p>But wait, it gets worse! To see just how inefficient this code is, let&#8217;s request the same feed a second time.
 
-<pre class=screen>
+<pre class='nd screen'>
 # continued from the <a href=#whats-on-the-wire>previous example</a>
 <samp class=p>>>> </samp><kbd class=pp>response2 = urlopen('http://diveintopython3.org/examples/feed.xml')</kbd>
 <samp>send: b'GET /examples/feed.xml HTTP/1.1

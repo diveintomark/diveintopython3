@@ -43,7 +43,7 @@ body{counter-reset:h1 10}
 </ol>
 
 <p>Since your code has a bug, and you now have a test case that tests this bug, the test case will fail:
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest8.py -v</kbd>
 <samp>from_roman should fail with blank string ... FAIL
 from_roman should fail with malformed antecedents ... ok
@@ -264,7 +264,7 @@ def from_roman(s):
 
 <p>You may be skeptical that these two small changes are all that you need. Hey, don&#8217;t take my word for it; see for yourself.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest9.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
@@ -364,7 +364,7 @@ build_lookup_tables()</code></pre>
 
 <p>Let&#8217;s break that down into digestable pieces. Arguably, the most important line is the last one:
 
-<pre><code class=pp>build_lookup_tables()</code></pre>
+<pre class=nd><code class=pp>build_lookup_tables()</code></pre>
 
 <p>You will note that is a function call, but there&#8217;s no <code>if</code> statement around it. This is not an <code>if __name__ == '__main__'</code> block; it gets called <em>when the module is imported</em>. (It is important to understand that modules are only imported once, then cached. If you import an already-imported module, it does nothing. So this code will only get called the first time you import this module.)
 

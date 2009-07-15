@@ -195,13 +195,13 @@ def to_roman(n):
 <li>Here&#8217;s where the rich data structure of <var>roman_numeral_map</var> pays off, because you don&#8217;t need any special logic to handle the subtraction rule. To convert to Roman numerals, simply iterate through <var>roman_numeral_map</var> looking for the largest integer value less than or equal to the input. Once found, add the Roman numeral representation to the end of the output, subtract the corresponding integer value from the input, lather, rinse, repeat.
 </ol>
 <p>If you&#8217;re still not clear how the <code>to_roman()</code> function works, add a <code>print()</code> call to the end of the <code>while</code> loop:
-<pre><code class=pp>
+<pre class=nd><code class=pp>
 while n >= integer:
     result += numeral
     n -= integer
     print('subtracting {0} from input, adding {1} to output'.format(integer, numeral))</code></pre>
 <p>With the debug <code>print()</code> statements, the output looks like this:
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import roman1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(1424)</kbd>
 <samp>subtracting 1000 from input, adding M to output
@@ -211,7 +211,7 @@ subtracting 10 from input, adding X to output
 subtracting 4 from input, adding IV to output
 'MCDXXIV'</samp></pre>
 <p>So the <code>to_roman()</code> function appears to work, at least in this manual spot check. But will it pass the test case you wrote?
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest1.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 
@@ -343,7 +343,7 @@ OK</samp></pre>
 
 <p>Along with testing numbers that are too large, you need to test numbers that are too small. As <a href=#divingin>we noted in our functional requirements</a>, Roman numerals cannot express <code>0</code> or negative numbers.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import roman2</kbd>
 <samp class=p>>>> </samp><kbd class=pp>roman2.to_roman(0)</kbd>
 <samp class=pp>''</samp>
@@ -373,7 +373,7 @@ OK</samp></pre>
 
 <p>Now check that the tests fail:
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest3.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 to_roman should fail with negative input ... FAIL
@@ -422,7 +422,7 @@ FAILED (failures=2)</samp></pre>
 
 <p>I could show you a whole series of unrelated examples to show that the multiple-comparisons-at-once shortcut works, but instead I&#8217;ll just run the unit tests and prove it.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest3.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 to_roman should fail with negative input ... ok
@@ -453,13 +453,13 @@ OK</samp></pre>
 
 <p>Testing for non-integers is not difficult. First, define a <code>NonIntegerError</code> exception.
 
-<pre><code class=pp># roman4.py
+<pre class=nd><code class=pp># roman4.py
 class OutOfRangeError(ValueError): pass
 <mark>class NotIntegerError(ValueError): pass</mark></code></pre>
 
 <p>Next, write a test case that checks for the <code>NonIntegerError</code> exception.
 
-<pre><code class=pp>class ToRomanBadInput(unittest.TestCase):
+<pre class=nd><code class=pp>class ToRomanBadInput(unittest.TestCase):
     .
     .
     .
@@ -469,7 +469,7 @@ class OutOfRangeError(ValueError): pass
 
 <p>Now check that the test fails properly.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest4.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 to_roman should fail with negative input ... ok
@@ -512,7 +512,7 @@ FAILED (failures=1)</samp></pre>
 
 <p>Finally, check that the code does indeed make the test pass.
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3 romantest4.py -v</kbd>
 <samp>to_roman should give known result with known input ... ok
 to_roman should fail with negative input ... ok

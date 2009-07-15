@@ -174,7 +174,7 @@ def plural(noun):
 
 <p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
 
-<pre><code class=pp>
+<pre class=nd><code class=pp>
 def plural(noun):
     if match_sxz(noun):
         return apply_sxz(noun)
@@ -256,7 +256,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 <p>First, let&#8217;s create a text file that contains the rules you want. No fancy data structures, just whitespace-delimited strings in three columns. Let&#8217;s call it <code>plural4-rules.txt</code>.
 
 <p class=d>[<a href=examples/plural4-rules.txt>download <code>plural4-rules.txt</code></a>]
-<pre><code class=pp>[sxz]$               $    es
+<pre class=nd><code class=pp>[sxz]$               $    es
 [^aeioudgkprt]h$     $    es
 [^aeiou]y$          y$    ies
 $                    $    s</code></pre>
@@ -295,7 +295,7 @@ rules = []
 <p>Wouldn&#8217;t it be grand to have a generic <code>plural()</code> function that parses the rules file? Get rules, check for a match, apply appropriate transformation, go to next rule. That&#8217;s all the <code>plural()</code> function has to do, and that&#8217;s all the <code>plural()</code> function should do.
 
 <p class=d>[<a href=examples/plural5.py>download <code>plural5.py</code></a>]
-<pre><code class=pp>def rules():
+<pre class=nd><code class=pp>def rules():
     with open('plural5-rules.txt') as pattern_file:
         for line in pattern_file:
             pattern, search, replace = line.split(None, 3)
