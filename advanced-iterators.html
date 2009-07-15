@@ -344,8 +344,8 @@ StopIteration</samp>
 <samp class=pp>[(4, &lt;itertools._grouper object at 0x00BA8BF0>),
  (5, &lt;itertools._grouper object at 0x00BB4050>),
  (6, &lt;itertools._grouper object at 0x00BB4030>)]</samp>
-<samp class=p>>>> </samp><kbd class=pp>groups = itertools.groupby(names, len)</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>for name_length, name_iter in groups:</kbd>    <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>groups = itertools.groupby(names, len)</kbd>   <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>for name_length, name_iter in groups:</kbd>    <span class=u>&#x2462;</span></a>
 <samp class=p>... </samp><kbd class=pp>    print('Names with {0:d} letters:'.format(name_length))</kbd>
 <samp class=p>... </samp><kbd class=pp>    for name in name_iter:</kbd>
 <samp class=p>... </samp><kbd class=pp>        print(name)</kbd>
@@ -365,6 +365,7 @@ Lizzie
 Wesley</samp></pre>
 <ol>
 <li>The <code>itertools.groupby()</code> function takes a sequence and a key function, and returns an iterator that generates pairs. Each pair contains the result of <code>key_function(<var>each item</var>)</code> and another iterator containing all the items that shared that key result.
+<li>Calling the <code>list()</code> function &#8220;exhausted&#8221; the iterator, <i>i.e.</i> you&#8217;ve already generated every item in the iterator to make the list. There&#8217;s no &#8220;reset&#8221; button on an iterator; you can&#8217;t just start over once you&#8217;ve exhausted it. If you want to loop through it again (say, in the upcoming <code>for</code> loop), you need to call <code>itertools.groupby()</code> again to create a new iterator.
 <li>In this example, given a list of names <em>already sorted by length</em>, <code>itertools.groupby(names, len)</code> will put all the 4-letter names in one iterator, all the 5-letter names in another iterator, and so on. The <code>groupby()</code> function is completely generic; it could group strings by first letter, numbers by their number of factors, or any other key function you can think of.
 </ol>
 <!-- YO DAWG, WE HEARD YOU LIKE LOOPING, SO WE PUT AN ITERATOR IN YOUR ITERATOR SO YOU CAN LOOP WHILE YOU LOOP. -->
