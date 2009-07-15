@@ -578,7 +578,7 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>print(dict(response.items()))</kbd>                                     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>response</kbd>                                     <span class=u>&#x2460;</span></a>
 <samp class=pp>{'status': '200',
  'content-length': '3070',
 <a> 'content-location': 'http://diveintopython3.org/examples/feed.xml',  <span class=u>&#x2461;</span></a>
@@ -597,7 +597,35 @@ reply: 'HTTP/1.1 200 OK'</samp></pre>
 <li>The <var>response</var> you get back from this single call to the <code>request()</code> method is the response from the final <abbr>URL</abbr>.
 <li><code>httplib2</code> adds the final <abbr>URL</abbr> to the <var>response</var> dictionary, as <code>content-location</code>. This is not a header that came from the server; it&#8217;s specific to <code>httplib2</code>.
 <li>Apropos of nothing, this feed is <a href=#httplib2-compression>compressed</a>.
-<li>And cacheable. (This is important, as you&#8217;ll see in the next example.)
+<li>And cacheable. (This is important, as you&#8217;ll see in a minute.)
+</ol>
+
+<p>The <var>response</var> you get back gives you information about the <em>final</em> <abbr>URL</abbr>. What if you want more information about the intermediate <abbr>URL</abbr>s, the ones that eventually redirected to the final <abbr>URL</abbr>? <code>httplib2</code> lets you do that, too.
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>response.previous</kbd>           <span class=u>&#x2460;</span></a>
+<samp class=pp>{'status': '302',
+ 'content-length': '228',
+ 'content-location':
+ 'http://diveintopython3.org/examples/feed-302.xml',
+ 'expires': 'Thu, 16 Jul 2009 20:15:58 GMT',
+ 'server': 'Apache',
+ 'connection': 'close',
+ 'location': 'http://diveintopython3.org/examples/feed.xml',
+ 'cache-control': 'max-age=86400',
+ 'date': 'Wed, 15 Jul 2009 20:15:58 GMT',
+ 'content-type': 'text/html; charset=iso-8859-1'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(response)</kbd>              <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;class 'httplib2.Response'></samp>
+<samp class=p>>>> </samp><kbd class=pp>type(response.previous)</kbd>
+<samp class=pp>&lt;class 'httplib2.Response'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>response.previous.previous</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>></samp></pre>
+<ol>
+<li>The <var>response.previous</var> attribute holds a reference to the previous response object that <code>httplib2</code> followed to get to the current response object.
+<li>Both <var>response</var> and <var>response.previous</var> are <code>httplib2.Response</code> objects.
+<li>That means you can check <var>response.previous.previous</var> to follow the redirect chain backwards even further. (Scenario: one <abbr>URL</abbr> redirects to a second <abbr>URL</abbr> which redirects to a third <abbr>URL</abbr>. It could happen!) In this case, we&#8217;ve already reached the beginning of the redirect chain, so the attribute is <code>None</code>.
 </ol>
 
 <p>What happens if you request the same <abbr>URL</abbr> again?
