@@ -399,6 +399,10 @@ Content-Type: application/xml</samp>
 <li>Here&#8217;s the rub: this &#8220;response&#8221; was generated from <code>httplib2</code>&#8217;s local cache. That directory name you passed in when you created the <code>httplib2.Http</code> object&nbsp;&mdash;&nbsp;that directory holds <code>httplib2</code>&#8217;s cache of all the operations it&#8217;s ever performed.
 </ol>
 
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you want to turn on <code>httplib2</code> debugging, you need to set a module-level constant (<code>httplib2.debuglevel</code>), then create a new <code>httplib2.Http</code> object. If you want to turn off debugging, you need to change the same module-level constant, then create a new <code>httplib2.Http</code> object.
+</blockquote>
+
 <p>You previously requested the data at this <abbr>URL</abbr>. That request was successful (<code>status: 200</code>). That response included not only the feed data, but also a set of <a href=#caching>caching headers</a> that told anyone who was listening that they could cache this resource for up to 24 hours (<code>Cache-Control: max-age=86400</code>, which is 24 hours measured in seconds). <code>httplib2</code> understand and respects those caching headers, and it stored the previous response in the <code>.cache</code> directory (which you passed in when you create the <code>Http</code> object). That cache hasn&#8217;t expired yet, so the second time you request the data at this <abbr>URL</abbr>, <code>httplib2</code> simply returns the cached result without ever hitting the network.
 
 <p>I say &#8220;simply,&#8221; but obviously there is a lot of complexity hidden behind that simplicity. <code>httplib2</code> handles <abbr>HTTP</abbr> caching <em>automatically</em> and <em>by default</em>. If for some reason you need to know whether a response came from the cache, you can check <code>response.fromcache</code>. Otherwise, it Just Works.
