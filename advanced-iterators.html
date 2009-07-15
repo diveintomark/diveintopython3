@@ -532,7 +532,7 @@ for guess in itertools.permutations(digits, len(characters)):
 
 <p>Well, the evil part is evaluating arbitrary expressions from untrusted sources. You should only use <code>eval()</code> on trusted input. Of course, the trick is figuring out what&#8217;s &#8220;trusted.&#8221; But here&#8217;s something I know for certain: you should <b>NOT</b> take this alphametics solver and put it on the internet as a fun little web service. Don&#8217;t make the mistake of thinking, &#8220;Gosh, the function does a lot of string manipulation before getting a string to evaluate; <em>I can&#8217;t imagine</em> how someone could exploit that.&#8221; Someone <b>WILL</b> figure out how to sneak nasty executable code past all that string manipulation (<a href=http://www.matasano.com/log/1032/this-new-vulnerability-dowds-inhuman-flash-exploit/>stranger things have happened</a>), and then you can kiss your server goodbye.
 
-<p>But surely there&#8217;s <em>some</em> way to evaluate expressions safely? To put <code>eval()</code> in a sandbox where it can&#8217;t access or harm the outside world? Well, yeah, but it&#8217;s tricky.
+<p>But surely there&#8217;s <em>some</em> way to evaluate expressions safely? To put <code>eval()</code> in a sandbox where it can&#8217;t access or harm the outside world? Well, yes and no.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>x = 5</kbd>
@@ -568,13 +568,9 @@ NameError: name 'math' is not defined</samp></pre>
 
 <p>Yeah, that means you can still do nasty things, even if you explicitly set the global and local namespaces to empty dictionaries when calling <code>eval()</code>:
 
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm -rf /')", {}, {})</kbd>  <span class=u>&#x2460;</span></a></pre>
-<ol>
-<li>Please don&#8217;t do this.
-</ol>
+<pre class='nd screen'><samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm /some/random/file')", {}, {})</kbd></pre>
 
-<p>Oops. I&#8217;m glad I didn&#8217;t make that alphametics web service. Is there <em>any</em> way to use <code>eval()</code> safely?
+<p>Oops. I&#8217;m glad I didn&#8217;t make that alphametics web service. Is there <em>any</em> way to use <code>eval()</code> safely? Well, yes and no.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>eval("__import__('math').sqrt(5)",</kbd>
@@ -591,10 +587,20 @@ NameError: name '__import__' is not defined</samp>
 NameError: name '__import__' is not defined</samp></pre>
 <ol>
 <li>To evaluate untrusted expressions safely, you need to define a global namespace dictionary that maps <code>"__builtins__"</code> to <code>None</code>, the Python null value. Internally, the &#8220;built-in&#8221; functions are contained within a pseudo-module called <code>"__builtins__"</code>. This pseudo-module (<i>i.e.</i> the set of built-in functions) is made available to evaluated expressions unless you explicitly override it.
-<li>You may do this, but be very, very careful not to make any typos. In particular, be sure you&#8217;ve overridden <code>__builtins__</code> and not <code>__builtin__</code> or <code>__built-ins__</code> or some other variation.
+<li>Be sure you&#8217;ve overridden <code>__builtins__</code>. Not <code>__builtin__</code>, <code>__built-ins__</code>, or some other variation that will work just fine but expose you to catastrophic risks.
 </ol>
 
-<p>So, in the end, it <em>is</em> possible to safely evaluate untrusted Python expressions. Passing <code>{"__builtins__": None}</code> as the second parameter to the <code>eval()</code> function is non-intuitive (and not the default behavior), but it does work. If you understand <em>why</em> it works, you&#8217;re less likely to use <code>eval()</code> incorrectly, in a way that works with trusted input but has potentially devastating consequences with untrusted input.
+<p>So <code>eval()</code> is safe now? Well, yes and no.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>eval("2 ** 2147483647",</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2460;</span></a>
+</pre>
+<ol>
+<li>Even without access to <code>__builtins__</code>, you can still launch a denial-of-service attack. For example, trying to raise <code>2</code> to the <code>2147483647</code><sup>th</sup> power will spike your server&#8217;s <abbr>CPU</abbr> utilization to 100% for quite some time. (If you&#8217;re trying this in the interactive shell, press <kbd>Ctrl-C</kbd> a few times to break out of it.) Technically this expression <em>will</em> return a value eventually, but in the meantime your server will be doing a whole lot of nothing.
+</ol>
+
+<p>In the end, it <em>is</em> possible to safely evaluate untrusted Python expressions, for some definition of &#8220;safe&#8221; that turns out not to be terribly useful in real life. It&#8217;s fine if you&#8217;re just playing around, and it&#8217;s fine if you only ever pass it trusted input. But anything else is just asking for trouble.
 
 <p class=a>&#x2042;
 
