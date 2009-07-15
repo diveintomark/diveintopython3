@@ -477,7 +477,7 @@ reply: 'HTTP/1.1 200 OK'</samp>
 <mark> 'etag': '"7f806d-1a01-9fb97900"',</mark>
 <mark> 'last-modified': 'Tue, 02 Jun 2009 02:51:48 GMT',</mark>
  'server': 'Apache',
- 'status': '304',
+ 'status': '200',
  'vary': 'Accept-Encoding,User-Agent'}</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>len(content)</kbd>                                                  <span class=u>&#x2462;</span></a>
 <samp class=pp>6657</samp></pre>
@@ -544,7 +544,7 @@ reply: 'HTTP/1.1 200 OK'</samp>
  'vary': 'Accept-Encoding,User-Agent'}</samp></pre>
 <ol>
 <li>Every time <code>httplib2</code> sends a request, it includes an <code>Accept-Encoding</code> header to tell the server that it can handle either <code>deflate</code> or <code>gzip</code> compression.
-<li>In this case, the server has responded with a gzip-compressed payload. By the time the <code>request()</code> method returns, <code>httplib2</code> has already decompressed the body of the response and placed it in the <var>content</var> variable. If you&#8217;re curious about whether or not the response was compressed, you can check the <var>response</var> dictionary; otherwise, don&#8217;t worry about it.
+<li>In this case, the server has responded with a gzip-compressed payload. By the time the <code>request()</code> method returns, <code>httplib2</code> has already decompressed the body of the response and placed it in the <var>content</var> variable. If you&#8217;re curious about whether or not the response was compressed, you can check <var>response['-content-encoding']</var>; otherwise, don&#8217;t worry about it.
 </ol>
 
 <h3 id=httplib2-redirects>How <code>httplib2</code> Handles Redirects</h3>
