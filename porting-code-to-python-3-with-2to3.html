@@ -549,7 +549,7 @@ for an_iterator in a_sequence_of_iterators:
 <li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>map()</code> returns an iterator as if it returns a list.
 </ol>
 
-<h2 id=reduce><code>reduce()</code> global function (3.1+)</h2>
+<h2 id=reduce><code>reduce()</code> global function</h2>
 
 <p>In Python 3, the <code><dfn>reduce</dfn>()</code> function has been removed from the global namespace and placed in the <code>functools</code> module.
 
@@ -562,10 +562,6 @@ for an_iterator in a_sequence_of_iterators:
 <td><pre><code class=pp>from functtools import reduce
 reduce(a, b, c)</code></pre>
 </table>
-
-<blockquote class=note>
-<p><span class=u>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>reduce()</code> function automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
-</blockquote>
 
 <h2 id=apply><code>apply()</code> global function</h2>
 
@@ -634,7 +630,7 @@ reduce(a, b, c)</code></pre>
 <li>Even fancier, the old <code>exec</code> statement could also take a local namespace (like the variables defined within a function). In Python 3, the <code>exec()</code> function can do that too.
 </ol>
 
-<h2 id=execfile><code>execfile</code> statement (3.1+)</h2>
+<h2 id=execfile><code>execfile</code> statement</h2>
 
 <p>Like the old <a href=#exec><code>exec</code> statement</a>, the old <code>execfile</code> statement will execute strings as if they were Python code. Where <code>exec</code> took a string, <code>execfile</code> took a filename. In Python 3, the <code>execfile</code> statement has been eliminated. If you really need to take a file of Python code and execute it (but you&#8217;re not willing to simply import it), you can accomplish the same thing by opening the file, reading its contents, calling the global <code>compile()</code> function to force the Python interpreter to compile the code, and then call the new <code>exec()</code> function.
 
@@ -646,10 +642,6 @@ reduce(a, b, c)</code></pre>
 <td><code class=pp><dfn>execfile</dfn>('a_filename')</code>
 <td><code class=pp>exec(compile(open('a_filename').read(), 'a_filename', 'exec'))</code>
 </table>
-
-<blockquote class=note>
-<p><span class=u>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix the <code>execfile</code> statement automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
-</blockquote>
 
 <h2 id=repr><code>repr</code> literals (backticks)</h2>
 
@@ -1131,7 +1123,7 @@ except:
 <p><span class=u>&#x261E;</span><code>types.StringType</code> gets mapped to <code>bytes</code> instead of <code>str</code> because a Python 2 &#8220;string&#8221; (not a Unicode string, just a regular string) is really just a sequence of bytes in a particular character encoding.
 </blockquote>
 
-<h2 id=isinstance><code>isinstance()</code> global function (3.1+)</h2>
+<h2 id=isinstance><code>isinstance()</code> global function</h2>
 
 <p>The <code>isinstance()</code> function checks whether an object is an instance of a particular class or type. In Python 2, you could pass a tuple of types, and <code>isinstance()</code> would return <code>True</code> if the object was any of those types. In Python 3, you can still do this, but passing the same type twice is deprecated.
 
@@ -1143,10 +1135,6 @@ except:
 <td><code class=pp>isinstance(x, (int, float, int))</code>
 <td><code class=pp>isinstance(x, (int, float))</code>
 </table>
-
-<blockquote class=note>
-<p><span class=u>&#x261E;</span>The version of <code>2to3</code> that shipped with Python 3.0 would not fix these cases of <code>isinstance()</code> automatically. The fix first appeared in the <code>2to3</code> script that shipped with Python 3.1.
-</blockquote>
 
 <h2 id=basestring><code>basestring</code> datatype</h2>
 
