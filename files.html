@@ -67,18 +67,21 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <h3 id=file-objects>File Objects</h3>
 
-<p>FIXME
-
-<p>Python has a built-in function, <code>open()</code>, for opening a file on disk. The <code>open()</code> function returns a <i>file object</i>, which has methods and attributes for getting information about and manipulating the file.
+<p>So far, all we know is that Python has a built-in function called <code>open()</code>. The <code>open()</code> function returns a <i>file object</i>, which has methods and attributes for getting information about and manipulating the file.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
-<samp class=p>>>> </samp><kbd class=pp>a_file.name</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.name</kbd>                                              <span class=u>&#x2461;</span></a>
 <samp class=pp>'examples/chinese.txt'</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.mode</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.mode</kbd>                                              <span class=u>&#x2462;</span></a>
 <samp class=pp>'r'</samp>
-<samp class=pp>>>> </samp><kbd class=pp>a_file.encoding</kbd>
+<a><samp class=pp>>>> </samp><kbd class=pp>a_file.encoding</kbd>                                         <span class=u>&#x2463;</span></a>
 <samp class=pp>'utf-8'</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
 
 <!--
 <ol>
