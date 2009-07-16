@@ -516,8 +516,6 @@ for an_iterator in a_sequence_of_iterators:
 <li>Again, no changes are necessary, because the list comprehension will iterate through the entire sequence, and it can do that just as well if <code>filter()</code> returns an iterator as if it returns a list.
 </ol>
 
-<p>FIXME
-
 <h2 id=map><code>map()</code> global function</h2>
 
 <p>In much the same way as <a href=#filter><code>filter()</code></a>, the <code><dfn>map</dfn>()</code> function now returns an iterator. (In Python 2, it returned a list.)
@@ -571,7 +569,7 @@ reduce(a, b, c)</code></pre>
 
 <h2 id=apply><code>apply()</code> global function</h2>
 
-<p>Python 2 had a global function called <code><dfn>apply</dfn>()</code>, which took a function <var>f</var> and a list <code>[a, b, c]</code> and returned <code>f(a, b, c)</code>. In Python 3, the <code>apply()</code> function no longer exists. Instead, there is a new function calling syntax that allows you to pass a list and have Python apply the list as the function&#8217;s arguments.
+<p>Python 2 had a global function called <code><dfn>apply</dfn>()</code>, which took a function <var>f</var> and a list <code>[a, b, c]</code> and returned <code>f(a, b, c)</code>. You can accomplish the same thing by calling the function directly and passing it the list of arguments preceded by an asterisk. In Python 3, the <code>apply()</code> function no longer exists; you must use the asterisk notation.
 
 <table>
 <tr><th>Notes
