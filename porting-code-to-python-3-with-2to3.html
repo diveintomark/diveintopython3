@@ -159,7 +159,7 @@ td pre{padding:0;border:0}
 <ol>
 <li>The simplest form.
 <li>The <code>or</code> operator takes precedence over the <code>in</code> operator, so there is no need for parentheses here.
-<li>On the other hand, you <em>do</em> need parentheses here, for the same reason&nbsp;&mdash;&nbsp;<code>or</code> takes precedence over <code>in</code>.
+<li>On the other hand, you <em>do</em> need parentheses here, for the same reason&nbsp;&mdash;&nbsp;<code>or</code> takes precedence over <code>in</code>. (Note: this code is completely different from the previous line. Python interprets <code>x or y</code> first, which results in either <var>x</var> (if <var>x</var> is <a href=native-datatypes.html#booleans>true in a boolean context</a>) or <var>y</var>. Then it takes that singular value and checks whether it is a key in <var>a_dictionary</var>.)
 <li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form technically doesn&#8217;t need parentheses, but <code>2to3</code> includes them anyway.
 <li>This form definitely needs parentheses, since the <code>in</code> operator takes precedence over the <code>+</code> operator.
 </ol>
