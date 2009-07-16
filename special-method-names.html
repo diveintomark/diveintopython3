@@ -437,7 +437,7 @@ class FieldStorage:
 
 <p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truediv__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
 
-<p>The answer lies in a second set of arithmetic special methods with <i>reflected operands</i>. Given an arithmetic operation that takes two operands (<i>e.g.</i> <code>x / y</code>), there are two ways to go about it:
+<p>There is a second set of arithmetic special methods with <i>reflected operands</i>. Given an arithmetic operation that takes two operands (<i>e.g.</i> <code>x / y</code>), there are two ways to go about it:
 
 <ol>
 <li>Tell <var>x</var> to divide itself by <var>y</var>, or

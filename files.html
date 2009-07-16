@@ -33,8 +33,21 @@ open(..., 'r', encoding='...')
 
 <h3 id=encoding>Character Encoding Rears Its Ugly Head</h3>
 
+<p>Bytes are bytes; <a href=strings.html#byte-arrays>characters are an abstraction</a>. A string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? It decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
+
+<pre>
+# on Windows...
+>>> file = open('examples/chinese.txt')
+>>> a_string = file.read()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Python31\lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: character maps to <undefined>
+>>>
+</pre>
+
 <!--
-OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
 
 "The default encoding is platform dependent (whatever locale.getpreferredencoding() returns)." -- http://docs.python.org/3.1/library/io.html
 -->
