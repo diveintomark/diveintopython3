@@ -33,10 +33,11 @@ open(..., 'r', encoding='...')
 
 <h3 id=encoding>Character Encoding Rears Its Ugly Head</h3>
 
-<p>Bytes are bytes; <a href=strings.html#byte-arrays>characters are an abstraction</a>. A string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? It decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
+<p>Bytes are bytes; <a href=strings.html#byte-arrays>characters are an abstraction</a>. A string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? It decodes the bytes according to a specific character encoding algorithm and returns a sequence of Unicode characters (otherwise known as a string).
 
 <pre>
-# on Windows...
+# This example was created on Windows. Other platforms may
+# behave differently, for reasons outlined below.
 >>> file = open('examples/chinese.txt')
 >>> a_string = file.read()
 Traceback (most recent call last):
@@ -47,10 +48,14 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 >>>
 </pre>
 
-<!--
+<p>What just happened? You didn&#8217;t specify a character encoding, so Python is forced to use the default encoding. What&#8217;s the default encoding? If you look closely at the traceback, you can see that it&#8217;s dying in <code>cp1252.py</code>, meaning that Python is using CP-1252 as the default encoding here. (CP-1252 is a common encoding on computers running Microsoft Windows.) The CP-1252 character set doesn&#8217;t support the characters that are in this file, so the read fails with an ugly <code>UnicodeDecodeError</code>.
 
-"The default encoding is platform dependent (whatever locale.getpreferredencoding() returns)." -- http://docs.python.org/3.1/library/io.html
--->
+<p>But wait, it&#8217;s worse than that! The default encoding is <em>platform-dependent</em>, so this code <em>might</em> work on your computer (if your default encoding is UTF-8), but then it will fail when you distribute it to someone else (whose default encoding is different, like CP-1252).
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you need to get the default character encoding, import the <code>locale</code> module and call <code>locale.getpreferredencoding()</code>. On my Windows laptop, it returns <code>'cp1252'</code>, but on my Linux box upstairs, it returns <code>'UTF8'</code>. I can&#8217;t even maintain consistency in my own house! Your results may be different (even on Windows) depending on which version of your operating system you have installed and how your regional/language settings are configured. This is why it&#8217;s so important to specify the encoding every time you open a file.
+
+</blockquote>
 
 <h3 id=file-objects>File Objects</h3>
 
