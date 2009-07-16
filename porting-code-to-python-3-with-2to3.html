@@ -880,6 +880,8 @@ except:
 
 <p>In Python 2, file objects had an <code><dfn>xreadlines</dfn>()</code> method which returned an iterator that would read the file one line at a time. This was useful in <code>for</code> loops, among other places. In fact, it was so useful, later versions of Python 2 added the capability to file objects themselves.
 
+<p>In Python 3, the <code>xreadlines()</code> method no longer exists. <code>2to3</code> can fix the simple cases, but some edge cases will require manual intervention.
+
 <table>
 <tr><th>Notes
 <th>Python 2
@@ -889,12 +891,12 @@ except:
 <td><code class=pp>for line in a_file:</code>
 <tr><th>&#x2461;
 <td><code class=pp>for line in a_file.xreadlines(5):</code>
-<td><i>no change</i>
+<td><i>no change (broken)</i>
 </table>
 
 <ol>
 <li>If you used to call <code>xreadlines()</code> with no arguments, <code>2to3</code> will convert it to just the file object. In Python 3, this will accomplish the same thing: read the file one line at a time and execute the body of the <code>for</code> loop.
-<li>If you used to call <code>xreadlines()</code> with an argument (the number of lines to read at a time), keep doing that. It still works in Python 3, and <code>2to3</code> will not change it.
+<li>If you used to call <code>xreadlines()</code> with an argument (the number of lines to read at a time), <code>2to3</code> will not fix it, and your code will fail with an <code>AttributeError: '_io.TextIOWrapper' object has no attribute 'xreadlines'</code>. You can manually change <code>xreadlines()</code> to <code>readlines()</code> to get it to work in Python 3. (The <code>readlines()</code> method now returns an iterator, so it is just as efficient as <code>xreadlines()</code> was in Python 2.)
 </ol>
 
 <p class=c><span style='font-size:56px;line-height:0.88'>&#x2603;</span>
