@@ -8,7 +8,7 @@
 h1:before{counter-increment:h1;content:'Appendix A. '}
 h2:before{counter-increment:h2;content:'A.' counter(h2) '. '}
 h3:before{counter-increment:h3;content:'A.' counter(h2) '.' counter(h3) '. '}
-tr + tr th:first-child{font:medium 'Arial Unicode MS',FreeSerif,OpenSymbol,'DejaVu Sans',sans-serif}
+tr + tr th:first-child{font: medium/1.75 'Arial Unicode MS','DejaVu Sans',FreeSerif,OpenSymbol,sans-serif}
 table{width:100%;border-collapse:collapse}
 th,td{width:45%;padding:0 0.5em;border:1px solid #bbb}
 th{text-align:left;vertical-align:baseline}
@@ -258,6 +258,18 @@ from urllib.error import HTTPError</code></pre>
 <li>The <code>FancyURLopener</code> class, which handles <abbr>HTTP</abbr> redirects and other status codes, is still available in the new <code>urllib.request</code> module. The <code>urlencode()</code> function has moved to <code>urllib.parse</code>.
 <li>The <code>Request</code> object is still available in <code>urllib.request</code>, but constants like <code>HTTPError</code> have been moved to <code>urllib.error</code>.
 </ol>
+<p>Did I mention that <code>2to3</code> will rewrite your function calls too? For example, if your Python 2 code imports the <code>urllib</code> module and calls <code>urllib.urlopen()</code> to fetch data, <code>2to3</code> will fix both the import statement and the function call.
+<table>
+<tr><th>Notes
+<th>Python 2
+<th>Python 3
+<tr><th>
+<td><pre><code class=pp>import urllib
+print urllib.urlopen('http://diveintopython3.org/').read()</code></pre>
+<td><pre><code class=pp>import urllib.request, urllib.parse, urllib.error
+print(urllib.request.urlopen('http://diveintopython3.org/').read())</code></pre>
+</table>
+
 <h3 id=dbm><code>dbm</code></h3>
 <p>All the various <abbr>DBM</abbr> clones are now in a single package, <code>dbm</code>. If you need a specific variant like <abbr>GNU</abbr> <abbr>DBM</abbr>, you can import the appropriate module within the <code>dbm</code> package.
 <table>
