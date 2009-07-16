@@ -24,12 +24,20 @@ body{counter-reset:h1 12}
 
 <h2 id=reading>Reading From Text Files</h2>
 
-<p>FIXME
+<p>Before you can read from a file, you need to open it. Opening a file in Python couldn&#8217;t be easier:
 
-<pre>
-open(..., encoding='...')
-open(..., 'r', encoding='...')
-</pre>
+<pre class=nd><code class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</code></pre>
+
+<p>Python has a built-in <code>open()</code> function, which takes a filename as an argument. Here the filename is <code class=pp>'examples/chinese.txt'</code>. There are four interesting things about this filename:
+
+<ol>
+<li>It&#8217;s not just the name of a file; it&#8217;s a combination of a directory path and a filename. A hypothetical file-opening function could have taken two arguments&nbsp;&mdash;&nbsp;a directory path and a filename&nbsp;&mdash;&nbsp;but the <code>open()</code> function only takes one. In Python, whenever you need a &#8220;filename,&#8221; you can include some or all of a directory path as well.
+<li>The directory path uses a forward slash, but I didn&#8217;t say what operating system I was using. Windows uses backward slashes to denote subdirectories, while Mac OS X and Linux use forward slashes. But in Python, forward slashes always Just Work, even on Windows.
+<li>The directory path does not begin with a slash or a drive letter, so it is called a <i>relative path</i>. Relative to what, you might ask? Patience, grasshopper.
+<li>It&#8217;s a string. All modern operating systems (even Windows!) use Unicode to store the names of files and directories. Python 3 fully supports non-<abbr>ASCII</abbr> pathnames.
+</ol>
+
+<p>But that call to the <code>open()</code> function didn&#8217;t stop at the filename. There&#8217;s another argument, called <code>encoding</code>. Oh dear, <a href=strings.html#boring-stuff>that sounds dreadfully familiar</a>.
 
 <h3 id=encoding>Character Encoding Rears Its Ugly Head</h3>
 
@@ -62,6 +70,15 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <p>FIXME
 
 <p>Python has a built-in function, <code>open()</code>, for opening a file on disk. The <code>open()</code> function returns a <i>file object</i>, which has methods and attributes for getting information about and manipulating the file.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_file.name</kbd>
+<samp class=pp>'examples/chinese.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.mode</kbd>
+<samp class=pp>'r'</samp>
+<samp class=pp>>>> </samp><kbd class=pp>a_file.encoding</kbd>
+<samp class=pp>'utf-8'</samp></pre>
 
 <!--
 <ol>
