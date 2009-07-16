@@ -611,7 +611,7 @@ reduce(a, b, c)</code></pre>
 
 <h2 id=exec><code>exec</code> statement</h2>
 
-<p>Just as <a href=#print>the <code>print</code> statement</a> became a function in Python 3, so too has the <code><dfn>exec</dfn></code> statement. The <code>exec()</code> function takes a string which contains arbitrary Python code and executes it as if it were just another statement or expression.
+<p>Just as <a href=#print>the <code>print</code> statement</a> became a function in Python 3, so too has the <code><dfn>exec</dfn></code> statement. The <code>exec()</code> function takes a string which contains arbitrary Python code and executes it as if it were just another statement or expression. <code>exec()</code> is like <a href=advanced-iterators.html#eval><code>eval()</code></a>, but even more powerful and evil. The <code>eval()</code> function can only evaluate a single expression, but <code>exec()</code> can execute multiple statements, imports, function declarations&nbsp;&mdash;&nbsp;essentially an entire Python program in a string.
 
 <table>
 <tr><th>Notes
