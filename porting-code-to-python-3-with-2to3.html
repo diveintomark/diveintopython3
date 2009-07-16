@@ -31,9 +31,11 @@ td pre{padding:0;border:0}
 </blockquote>
 
 <p id=toc>&nbsp;
+
 <h2 id=divingin>Diving in</h2>
 
 <p class=f>Virtually all Python 2 programs will need at least some tweaking to run properly under Python 3. To help with this transition, Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. <a href=case-study-porting-chardet-to-python-3.html#running2to3>Case study: porting <code>chardet</code> to Python 3</a> describes how to run the <code>2to3</code> script, then shows some things it can&#8217;t fix automatically. This appendix documents what it <em>can</em> fix automatically.
+
 <h2 id=print><code>print</code> statement</h2>
 
 <p>In Python 2, <code><dfn>print</dfn></code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function&nbsp;&mdash;&nbsp;whatever you want to print is passed to <code>print()</code> like any other function.
@@ -515,6 +517,7 @@ for an_iterator in a_sequence_of_iterators:
 </ol>
 
 <p>FIXME
+
 <h2 id=map><code>map()</code> global function</h2>
 
 <p>In much the same way as <a href=#filter><code>filter()</code></a>, the <code><dfn>map</dfn>()</code> function now returns an iterator. (In Python 2, it returned a list.)
@@ -897,6 +900,7 @@ except:
 </ol>
 
 <p class=c><span style='font-size:56px;line-height:0.88'>&#x2603;</span>
+
 <h2 id=tuple_params><code>lambda</code> functions that take a tuple instead of multiple parameters</h2>
 
 <p>In Python 2, you could define anonymous <code><dfn>lambda</dfn></code> functions which took multiple parameters by defining the function as taking a tuple with a specific number of items. In effect, Python 2 would &#8220;unpack&#8221; the tuple into named arguments, which you could then reference (by name) within the <code>lambda</code> function. In Python 3, you can still pass a tuple to a <code>lambda</code> function, but the Python interpreter will not unpack the tuple into named arguments. Instead, you will need to reference each argument by its positional index.
