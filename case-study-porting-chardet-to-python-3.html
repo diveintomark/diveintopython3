@@ -737,7 +737,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
         self._mInputState = ePureAscii
 <mark>        self._mLastChar = ''</mark></code></pre>
 <p>And now we have our answer. Do you see it? <var>self._mLastChar</var> is a string, but <var>aBuf</var> is a byte array. And you can&#8217;t concatenate a string to a byte array&nbsp;&mdash;&nbsp;not even a zero-length string.
-<p>So what is <var>self._mLastChar</var> anyway? The answer is in the <code>feed()</code> method, just a few lines down from where the trackback occurred.
+<p>So what is <var>self._mLastChar</var> anyway? In the <code>feed()</code> method, just a few lines down from where the trackback occurred.
 <pre class=nd><code class=pp>if self._mInputState == ePureAscii:
     if self._highBitDetector.search(aBuf):
         self._mInputState = eHighbyte
@@ -853,7 +853,7 @@ def next_state(self, c):
 def feed(self, aBuf):
     for c in aBuf:
         codingState = self._mCodingSM.next_state(c)</code></pre>
-<p>And now we have the answer. Do you see it? In Python 2, <var>aBuf</var> was a string, so <var>c</var> was a 1-character string. (That&#8217;s what you get when you iterate over a string&nbsp;&mdash;&nbsp;all the characters, one by one.) But now, <var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. In other words, there&#8217;s no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!
+<p>Do you see it? In Python 2, <var>aBuf</var> was a string, so <var>c</var> was a 1-character string. (That&#8217;s what you get when you iterate over a string&nbsp;&mdash;&nbsp;all the characters, one by one.) But now, <var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. In other words, there&#8217;s no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!
 <p>Thus:
 <pre class=nd><code class=pp>  def next_state(self, c):
       # for each byte we get its class
