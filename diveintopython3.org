@@ -13,21 +13,24 @@
 * TODO 2nd draft Refactoring
 * TODO 1st draft Advanced Classes
 * TODO 1st draft Files
-** File objects
+** Reading from text files
 *** Opening a file (to read)
-*** Reading data from a file
-*** Closing a file
-*** Checking if a file is closed
-*** with open(...) as file
-*** Reading data from a file one line at a time
-*** Line-endings
-*** Opening a file (to write)
-*** Writing to files
-*** Handling I/O errors
 *** Character encoding
-*** Binary mode
-*** File-like objects
-**** 
+*** File objects
+*** Closing a file
+**** Checking if a file is closed
+**** "with open(...) as file" pattern
+*** Reading data from a file one line at a time
+**** Line-endings
+** Writing to text files
+*** Opening a file (to write)
+*** Character encoding again
+*** write(), writelines(), .writeable
+** Handling I/O errors
+** Binary files
+** File-like objects
+** Standard Input, Output, and Error
+** Further reading
 * TODO 2nd draft XML
 * TODO 1st draft Serializing Python Objects
 * DONE 2nd draft HTTP Web Services
