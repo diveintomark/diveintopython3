@@ -74,7 +74,10 @@ chmod 755 build/examples build/j build/i
 chmod 644 build/*.html build/*.css build/*.txt build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/.htaccess
 
 # ship it!
-echo "publishing"
+echo -n "publishing"
 rsync -essh -a build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/dip3/
+echo -n "."
 rsync -essh -a build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/
+echo -n "."
 rsync -essh -a build/examples build/*.txt build/*.html build/.htaccess diveintomark.org:~/web/diveintopython3.org/
+echo "."
