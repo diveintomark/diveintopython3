@@ -18,7 +18,7 @@ class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
     def __iter__(self):
-        self.pattern_file = open(self.rules_filename)
+        self.pattern_file = open(self.rules_filename, encoding='utf-8')
         self.cache = []
         self.cache_index = 0
         return self

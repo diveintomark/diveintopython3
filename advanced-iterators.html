@@ -309,19 +309,19 @@ StopIteration</samp>
 
 <p class=d>[<a href=examples/favorite-people.txt>download <code>favorite-people.txt</code></a>]
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>names = list(open('examples/favorite-people.txt'))</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>names = list(open('examples/favorite-people.txt', encoding='utf-8'))</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>names</kbd>
 <samp class=pp>['Dora\n', 'Ethan\n', 'Wesley\n', 'John\n', 'Anne\n',
 'Mike\n', 'Chris\n', 'Sarah\n', 'Alex\n', 'Lizzie\n']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>names = [name.rstrip() for name in names]</kbd>           <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>names = [name.rstrip() for name in names]</kbd>                             <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>names</kbd>
 <samp class=pp>['Dora', 'Ethan', 'Wesley', 'John', 'Anne',
 'Mike', 'Chris', 'Sarah', 'Alex', 'Lizzie']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names)</kbd>                               <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names)</kbd>                                                 <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>names</kbd>
 <samp class=pp>['Alex', 'Anne', 'Chris', 'Dora', 'Ethan',
 'John', 'Lizzie', 'Mike', 'Sarah', 'Wesley']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names, key=len)</kbd>                      <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>names = sorted(names, key=len)</kbd>                                        <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>names</kbd>
 <samp class=pp>['Alex', 'Anne', 'Dora', 'John', 'Mike',
 'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']</samp></pre>

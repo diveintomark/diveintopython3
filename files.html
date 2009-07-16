@@ -22,14 +22,6 @@ body{counter-reset:h1 12}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
-<!--
-FIXME move this to character encoding section
-
-OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
-
-"The default encoding is platform dependent (whatever locale.getpreferredencoding() returns)." -- http://docs.python.org/3.1/library/io.html
--->
-
 <h2 id=reading-from-text-files>Reading From Text Files</h2>
 
 <p>FIXME
@@ -41,7 +33,11 @@ open(..., 'r', encoding='...')
 
 <h3 id=encoding>Character Encoding Rears Its Ugly Head</h3>
 
-<p>FIXME
+<!--
+OK, so a string is a sequence of Unicode characters. But a file on disk is not a sequence of Unicode characters; a file on disk is a sequence of bytes. So if you read a &#8220;text file&#8221; from disk, how does Python convert that sequence of bytes into a sequence of characters? The answer is that it decodes the bytes according to a specific character encoding algorithm, and returns a sequence of Unicode characters, otherwise known as a string.
+
+"The default encoding is platform dependent (whatever locale.getpreferredencoding() returns)." -- http://docs.python.org/3.1/library/io.html
+-->
 
 <h3 id=file-objects>File Objects</h3>
 
@@ -134,6 +130,10 @@ ValueError: I/O operation on closed file</samp>
 
 <p>FIXME what's a "line"? (line endings discussion, universal line endings, etc.)
 
+<!--
+A &#8220;line&#8221; of a text file is just what you think it is&nbsp;&mdash;&nbsp;a sequence of characters delimited by a carriage return. Of course, it can&#8217;t really be that simple, can it? Text files can use several different characters to mark the end of a line. Some use a carriage return character, others use a line feed character, and some use both characters at the end of every line. Python handles all of these cases automatically, so you can say, &#8220;Hey, I want to read this text file one line at a time&#8221; and it will Just Work. 
+-->
+
 <h2 id=write>Writing to Text Files</h2>
 
 <p>FIXME
@@ -195,7 +195,7 @@ test succeededline 2
 <li>At last, you handle your <code>IOError</code> exception. This could be the <code>IOError</code> exception raised by the call to <code>open</code>, <code>seek</code>, or <code>read</code>. Here, you really don&#8217;t care, because all you&#8217;re going to do is ignore it silently and continue. (Remember, <code>pass</code> is a Python statement that <a href="#fileinfo.class.simplest" title="Example 5.3. The Simplest Python Class">does nothing</a>.)  That&#8217;s perfectly legal; &#8220;handling&#8221; an exception can mean explicitly doing nothing. It still counts as handled, and processing will continue normally on the    next line of code after the <code>try...except</code> block.
 -->
 
-<h2 id=binary-files>Binary Files</h2>
+<h2 id=binary>Binary Files</h2>
 
 <p>FIXME
 

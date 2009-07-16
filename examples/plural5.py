@@ -15,7 +15,7 @@ def build_match_and_apply_functions(pattern, search, replace):
     return [matches_rule, apply_rule]
 
 def rules(rules_filename):
-    with open(rules_filename) as pattern_file:
+    with open(rules_filename, encoding='utf-8') as pattern_file:
         for line in pattern_file:
             pattern, search, replace = line.split(None, 3)
             yield build_match_and_apply_functions(pattern, search, replace)
