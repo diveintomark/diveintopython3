@@ -227,6 +227,7 @@ td pre{padding:0;border:0}
 <h2 id=imports>Modules that have been renamed or reorganized</h2>
 
 <p>Several modules in the Python Standard Library have been renamed. Several other modules which are related to each other have been combined or reorganized to make their association more logical.
+
 <h3 id=http><code>http</code></h3>
 
 <p>In Python 3, several related <abbr>HTTP</abbr> modules have been combined into a single package, <code>http</code>.
@@ -1256,6 +1257,7 @@ except:
 <h2 id=nitpick>Matters of style</h2>
 
 <p>The rest of the &#8220;fixes&#8221; listed here aren&#8217;t really fixes per se. That is, the things they change are matters of style, not substance. They work just as well in Python 3 as they do in Python 2, but the developers of Python have a vested interest in making Python code as uniform as possible. To that end, there is an <a href=http://www.python.org/dev/peps/pep-0008/>official Python style guide</a> which outlines&nbsp;&mdash;&nbsp;in excruciating detail&nbsp;&mdash;&nbsp;all sorts of nitpicky details that you almost certainly don&#8217;t care about. And given that <code>2to3</code> provides such a great infrastructure for converting Python code from one thing to another, the authors took it upon themselves to add a few optional features to improve the readability of your Python programs.
+
 <h3 id=set_literal><code>set()</code> literals (explicit)</h3>
 
 <p>In Python 2, the only way to define a literal set in your code was to call <code>set(a_sequence)</code>. This still works in Python 3, but a clearer way of doing it is to use the new set literal notation: curly braces. (Dictionaries are also defined with curly braces, which makes sense once you think about it, because dictionaries are just sets of key-value pairs.)
