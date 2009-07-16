@@ -1260,7 +1260,7 @@ except:
 
 <h3 id=set_literal><code>set()</code> literals (explicit)</h3>
 
-<p>In Python 2, the only way to define a literal set in your code was to call <code>set(a_sequence)</code>. This still works in Python 3, but a clearer way of doing it is to use the new set literal notation: curly braces. (Dictionaries are also defined with curly braces, which makes sense once you think about it, because dictionaries are just sets of key-value pairs.)
+<p>In Python 2, the only way to define a literal set in your code was to call <code>set(a_sequence)</code>. This still works in Python 3, but a clearer way of doing it is to use the new set literal notation: curly braces. This works for everything except empty sets, because dictionaries also use curly braces, so <a href=native-datatypes.html#emptyset><code>{}</code> is an empty dictionary, not an empty set</a>.
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>The <code>2to3</code> script will not fix <code>set()</code> literals by default. To enable this fix, specify <kbd>-f set_literal</kbd> on the command line when you call <code>2to3</code>.
