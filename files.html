@@ -71,25 +71,21 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.name</kbd>                                              <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.name</kbd>                                              <span class=u>&#x2460;</span></a>
 <samp class=pp>'examples/chinese.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.encoding</kbd>                                          <span class=u>&#x2461;</span></a>
+<samp class=pp>'utf-8'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_file.mode</kbd>                                              <span class=u>&#x2462;</span></a>
-<samp class=pp>'r'</samp>
-<a><samp class=pp>>>> </samp><kbd class=pp>a_file.encoding</kbd>                                         <span class=u>&#x2463;</span></a>
-<samp class=pp>'utf-8'</samp></pre>
+<samp class=pp>'r'</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>The <code>name</code> attribute reflects the name you passed in to the <code>open()</code> function when you opened the file. It is not normalized to an absolute pathname.
+<li>Likewise, <code>encoding</code> attribute reflects the encoding you passed in to the <code>open()</code> function. If you didn&#8217;t specify the encoding when you opened the file (bad developer!) then the <code>encoding</code> attribute will reflect <code>locale.getpreferredencoding()</code>.
+<li>The <code>mode</code> attribute tells you in which mode the file was opened. You can pass an optional <var>mode</var> parameter to the <code>open()</code> function. You didn&#8217;t specify a mode when you opened this file, so Python defaults to <code>'r'</code>, which means &#8220;open for reading only, in text mode.&#8221; As you&#8217;ll see later in this chapter, the file mode serves several purposes; different modes let you write to a file, append to a file, or open a file in binary mode (in which you deal with bytes instead of strings).
 </ol>
 
-<!--
-<ol>
-<li>The <code>open</code> method can take up to three parameters: a filename, a mode, and a buffering parameter. Only the first one, the filename, is required; the other two are <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a>. If not specified, the file is opened for reading in text mode. Here you are opening the file for reading in binary mode.  (<code>print open.__doc__</code> displays a great explanation of all the possible modes.)
-<li>The <code>open</code> function returns an object (by now, <a href="#odbchelper.objects" title="2.4. Everything Is an Object">this should not surprise you</a>). A file object has several useful attributes.
-<li>The <var>mode</var> attribute of a file object tells you in which mode the file was opened.
-<li>The <var>name</var> attribute of a file object tells you the name of the file that the file object has open.
--->
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>The <a href=http://docs.python.org/3.1/library/io.html#module-interface>documentation for the <code>open()</code> function</a> lists all the possible file modes.
+</blockquote>
 
 <h3 id=read>Reading Data From A Text File</h3>
 
