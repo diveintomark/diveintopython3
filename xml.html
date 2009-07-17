@@ -261,7 +261,7 @@ mark{display:inline}
 <samp class=pp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
 <ol>
 <li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
-<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a file-like object [FIXME xref]. This function parses the entire document at once. If memory is tight, there are ways to <a href=http://effbot.org/zone/element-iterparse.htm>parse an <abbr>XML</abbr> document incrementally instead</a>.
+<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a <a href=files.html#file-like-objects>file-like object</a>. This function parses the entire document at once. If memory is tight, there are ways to <a href=http://effbot.org/zone/element-iterparse.htm>parse an <abbr>XML</abbr> document incrementally instead</a>.
 <li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
 <li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an <abbr>XML</abbr> element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
 </ol>
