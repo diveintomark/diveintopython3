@@ -171,14 +171,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 <li><b>GUI Applications</b> includes IDLE, the graphical Python Shell which you will use throughout this book. I strongly recommend keeping this option selected.
 <li><b>UNIX command-line tools</b> includes the command-line <code>python3</code> application. I strongly recommend keeping this option, too.
 <li><b>Python Documentation</b> contains much of the information on <a href=http://docs.python.org/><code>docs.python.org</code></a>. Recommended if you are on dialup or have limited Internet access.
-<li><b>Shell profile updater</b> FIXME WTF is this?
-<li><b>Fix system Python</b> FIXME WTF is this too?
+<li><b>Shell profile updater</b> controls whether to update your shell profile (used in <code>Terminal.app</code>) to ensure that this version of Python is on the search path of your shell. You probably don&#8217;t need to change this.
+<li><b>Fix system Python</b> should not be changed. (It tells your Mac to use Python 3 as the default Python for all scripts, including built-in system scripts from Apple. This would be very bad, since most of those scripts are written for Python 2, and they would fail to run properly under Python 3.)
 </ul>
 <p>Click the <code>Install</code> button to continue.
 
 <li>
 <p class='ss nm'><img src=i/mac-install-7-admin-password.png width=622 height=457 alt='[Python installer: dialog to enter administrative password]'>
-<p>Because it installs system-wide frameworks and binaries in <code>/usr/local/bin/</code>, the installer will ask you for an administrative password. There is no way to install Mac Python without administrator privileges. (FIXME really?)
+<p>Because it installs system-wide frameworks and binaries in <code>/usr/local/bin/</code>, the installer will ask you for an administrative password. There is no way to install Mac Python without administrator privileges.
 <p>Click the <code>OK</code> button to begin the installation.
 
 <li>
