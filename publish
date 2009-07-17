@@ -44,8 +44,8 @@ java -jar util/yuicompressor-2.4.2.jar build/j/prettify.js > build/j/prettify.mi
 # combine jQuery and our script
 echo "combining JS"
 cat build/j/jquery.min.js build/j/prettify.min.js build/j/dip3.min.js > build/j/$revision.js && \
-    sed -i -e "s|<script src=j/jquery.js></script>||g" build/*.html || && \
-    sed -i -e "s|<script src=j/prettify.js></script>||g" build/*.html || && \
+    sed -i -e "s|<script src=j/jquery.js></script>||g" build/*.html && \
+    sed -i -e "s|<script src=j/prettify.js></script>||g" build/*.html && \
     sed -i -e "s|<script src=j/dip3.js>|<script src=j/${revision}.js>|g" build/*.html || die "Failed to combine JS"
 
 echo "minimizing CSS"
