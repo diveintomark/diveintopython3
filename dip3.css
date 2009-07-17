@@ -323,7 +323,7 @@ aside a {
 
 .str { color: #080; }
 .kwd { color: #008; }
-.com { color: #800; }
+.com, .traceback { color: #800; }
 .typ { color: #606; }
 .lit { color: #066; }
 .pun { color: #660; }
