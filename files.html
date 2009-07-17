@@ -28,13 +28,14 @@ body{counter-reset:h1 12}
 
 <pre class=nd><code class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</code></pre>
 
-<p>Python has a built-in <code>open()</code> function, which takes a filename as an argument. Here the filename is <code class=pp>'examples/chinese.txt'</code>. There are four interesting things about this filename:
+<p>Python has a built-in <code>open()</code> function, which takes a filename as an argument. Here the filename is <code class=pp>'examples/chinese.txt'</code>. There are five interesting things about this filename:
 
 <ol>
 <li>It&#8217;s not just the name of a file; it&#8217;s a combination of a directory path and a filename. A hypothetical file-opening function could have taken two arguments&nbsp;&mdash;&nbsp;a directory path and a filename&nbsp;&mdash;&nbsp;but the <code>open()</code> function only takes one. In Python, whenever you need a &#8220;filename,&#8221; you can include some or all of a directory path as well.
 <li>The directory path uses a forward slash, but I didn&#8217;t say what operating system I was using. Windows uses backward slashes to denote subdirectories, while Mac OS X and Linux use forward slashes. But in Python, forward slashes always Just Work, even on Windows.
 <li>The directory path does not begin with a slash or a drive letter, so it is called a <i>relative path</i>. Relative to what, you might ask? Patience, grasshopper.
 <li>It&#8217;s a string. All modern operating systems (even Windows!) use Unicode to store the names of files and directories. Python 3 fully supports non-<abbr>ASCII</abbr> pathnames.
+<li>It doesn&#8217;t need to be on your local disk. You might have a network drive mounted. That &#8220;file&#8221; might be a figment of <a href=http://en.wikipedia.org/wiki/Filesystem_in_Userspace>an entirely virtual filesystem</a>. If your computer considers it a file and can access it as a file, Python can open it.
 </ol>
 
 <p>But that call to the <code>open()</code> function didn&#8217;t stop at the filename. There&#8217;s another argument, called <code>encoding</code>. Oh dear, <a href=strings.html#boring-stuff>that sounds dreadfully familiar</a>.
@@ -92,47 +93,62 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>
-<samp class=pp>'Dive Into Python 是为有经验的程序员编写的一本 Python 书。\n'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                                            <span class=u>&#x2460;</span></a>
+<samp class=pp>'Dive Into Python 是为有经验的程序员编写的一本 Python 书。\n'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                                            <span class=u>&#x2461;</span></a>
+<samp class=pp>''</samp></pre>
 <ol>
-<li>FIXME
+<li>Once you open a file (with the correct encoding), reading from it is just a matter of calling the file object&#8217;s <code>read()</code> method. The result is a string.
+<li>Perhaps somewhat surprisingly, reading the file again does not raise an exception. Python does not consider reading past end-of-file to be an error; it simply returns an empty string.
 </ol>
 
-<p>FIXME
+<p>What if you want to re-read a file?
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=pp>''</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>   <span class=u>&#x2461;</span></a>
 <samp class=pp>0</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read(16)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(16)</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=pp>'Dive Into Python'</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2463;</span></a>
 <samp class=pp>' '</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2464;</span></a>
 <samp class=pp>'是'</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>    <span class=u>&#x2465;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
 <li>FIXME
+<li>
+<li>
+<li>
+<li>
+<li>
 </ol>
 
 <p>FIXME
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>a_file.seek(17)</kbd>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(17)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=pp>17</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2461;</span></a>
 <samp class=pp>'是'</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>    <span class=u>&#x2462;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
 <li>FIXME
+<li>
+<li>
 </ol>
 
 <p>FIXME
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>
-<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>                         <span class=u>&#x2460;</span></a>
+<samp class=pp>18</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>                          <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;pyshell#12>", line 1, in &lt;module>
     a_file.read(1)
@@ -141,45 +157,48 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 UnicodeDecodeError: 'utf8' codec can't decode byte 0x98 in position 0: unexpected code byte</samp></pre>
 <ol>
 <li>FIXME
+<li>
 </ol>
 
-<h3>6.2.2. Closing Files</h3>
+<h3 id=close>Closing Files</h3>
 
 <p>Open files consume system resources, and depending on the file mode, other programs may not be able to access them. It&#8217;s important to close files as soon as you&#8217;re finished with them.
 
-<!--
-<div class=example><h3>Example 6.5. Closing a File</h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>f</kbd>
-&lt;open file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
-<samp class=p>>>> </samp><kbd>f.closed</kbd>       <span>&#x2460;</span>
-False
-<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2461;</span>
-<samp class=p>>>> </samp><kbd>f</kbd>
-&lt;closed file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
-<samp class=p>>>> </samp><kbd>f.closed</kbd>       <span>&#x2462;</span>
-True
-<samp class=p>>>> </samp><kbd>f.seek(0)</kbd>      <span>&#x2463;</span>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-ValueError: I/O operation on closed file</samp>
-<samp class=p>>>> </samp><kbd>f.tell()</kbd>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-ValueError: I/O operation on closed file</samp>
-<samp class=p>>>> </samp><kbd>f.read()</kbd>
-<samp class=traceback>Traceback (innermost last):
-  File "&lt;interactive input>", line 1, in ?
-ValueError: I/O operation on closed file</samp>
-<samp class=p>>>> </samp><kbd>f.close()</kbd>      <span>&#x2464;</span></pre>
-<ol>
-<li>The <var>closed</var> attribute of a file object indicates whether the object has a file open or not. In this case, the file is still open (<var>closed</var> is <code>False</code>).
-<li>To close a file, call the <code>close</code> method of the file object. This frees the lock (if any) that you were holding on the file, flushes buffered writes (if any)    that the system hadn&#8217;t gotten around to actually writing yet, and releases the system resources.
-<li>The <var>closed</var> attribute confirms that the file is closed.
-<li>Just because a file is closed doesn&#8217;t mean that the file object ceases to exist. The variable <var>f</var> will continue to exist until it <a href="#fileinfo.scope" title="Example 5.8. Trying to Implement a Memory Leak">goes out of scope</a> or gets manually deleted. However, none of the methods that manipulate an open file will work once the file has been closed;    they all raise an exception.
-<li>Calling <code>close</code> on a file object whose file is already closed does <em>not</em> raise an exception; it fails silently.
--->
+<pre class='nd screen'>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd class=pp>a_file.close()</kbd></pre>
 
-<p>FIXME checking if a file is closed
+<p>Well <em>that</em> was anticlimactic.
+
+<p>The file object <var>a_file</var> still exists; calling its <code>close()</code> method doesn&#8217;t destroy the object itself. But it&#8217;s not terribly useful.
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                           <span class=u>&#x2460;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;pyshell#24>", line 1, in &lt;module>
+    a_file.read()
+ValueError: I/O operation on closed file.</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>                          <span class=u>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;pyshell#25>", line 1, in &lt;module>
+    a_file.seek(0)
+ValueError: I/O operation on closed file.</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                           <span class=u>&#x2462;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;pyshell#26>", line 1, in &lt;module>
+    a_file.tell()
+ValueError: I/O operation on closed file.</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.close()</kbd>                          <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.closed</kbd>                           <span class=u>&#x2464;</span></a>
+<samp class=pp>True</samp></pre>
+<ol>
+<li>You can&#8217;t read from a closed file; that raises an <code>IOError</code> exception.
+<li>You can&#8217;t seek in a closed file either.
+<li>There&#8217;s no current position in a closed file, so the <code>tell()</code> method also fails.
+<li>Perhaps surprisingly, calling the <code>close()</code> method on a file object whose file has been closed does <em>not</em> raise an exception. It&#8217;s just a no-op.
+<li>Closed file objects do have one useful attribute: the <code>closed</code> attribute will confirm that the file is closed.
+</ol>
 
 <h3 id=with>Using The <code>with</code> Statement</h3>
 
