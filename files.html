@@ -46,15 +46,14 @@ body{counter-reset:h1 12}
 <pre>
 # This example was created on Windows. Other platforms may
 # behave differently, for reasons outlined below.
->>> file = open('examples/chinese.txt')
->>> a_string = file.read()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+<samp class=p>>>> </samp><kbd class=pp>file = open('examples/chinese.txt')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_string = file.read()</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
   File "C:\Python31\lib\encodings\cp1252.py", line 23, in decode
     return codecs.charmap_decode(input,self.errors,decoding_table)[0]
-UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: character maps to <undefined>
->>>
-</pre>
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: character maps to &lt;undefined></samp>
+<samp class=p>>>> /samp></pre>
 
 <p>What just happened? You didn&#8217;t specify a character encoding, so Python is forced to use the default encoding. What&#8217;s the default encoding? If you look closely at the traceback, you can see that it&#8217;s dying in <code>cp1252.py</code>, meaning that Python is using CP-1252 as the default encoding here. (CP-1252 is a common encoding on computers running Microsoft Windows.) The CP-1252 character set doesn&#8217;t support the characters that are in this file, so the read fails with an ugly <code>UnicodeDecodeError</code>.
 
@@ -134,7 +133,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>
 <samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
-<samp class=pp>Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "&lt;pyshell#12>", line 1, in &lt;module>
     a_file.read(1)
   File "C:\Python31\lib\codecs.py", line 300, in decode
