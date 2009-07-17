@@ -253,7 +253,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <p>Exceptions are everywhere in Python. Virtually every module in the standard Python library uses them, and Python itself will raise them in a lot of different circumstances. You&#8217;ll see them repeatedly throughout this book.
 
-<p>What is an exception? It&#8217;s an error, an indication that something went wrong. Some programming languages encourage the use of error return codes, which you need to check. Python encourages the use of exceptions, which you need to handle.
+<p>What is an exception? Usually it&#8217;s an error, an indication that something went wrong. (Not all exceptions are errors, but never mind that for now.) Some programming languages encourage the use of error return codes, which you need to check. Python encourages the use of exceptions, which you need to handle.
 
 <p>When an error occurs in the Python Shell, it prints out some details about the exception and how it happened, and that&#8217;s that. This is called an <em>unhandled</em> exception. When the exception was raised, there was no code to explicitly notice it and deal with it, so it bubbled its way back up to the top level of the Python Shell, which spits out some debugging information and calls it a day. In the shell, that's no big deal, but if that happened while your actual Python program was running, the entire program would come to a screeching halt.
 
