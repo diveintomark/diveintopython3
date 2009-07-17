@@ -53,7 +53,7 @@ body{counter-reset:h1 12}
   File "C:\Python31\lib\encodings\cp1252.py", line 23, in decode
     return codecs.charmap_decode(input,self.errors,decoding_table)[0]
 UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: character maps to &lt;undefined></samp>
-<samp class=p>>>> /samp></pre>
+<samp class=p>>>> </samp></pre>
 
 <p>What just happened? You didn&#8217;t specify a character encoding, so Python is forced to use the default encoding. What&#8217;s the default encoding? If you look closely at the traceback, you can see that it&#8217;s dying in <code>cp1252.py</code>, meaning that Python is using CP-1252 as the default encoding here. (CP-1252 is a common encoding on computers running Microsoft Windows.) The CP-1252 character set doesn&#8217;t support the characters that are in this file, so the read fails with an ugly <code>UnicodeDecodeError</code>.
 
