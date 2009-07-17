@@ -101,8 +101,6 @@ td a:link, td a:visited{border:0}
 
 <h2 id=computed-attributes>Computed Attributes</h2>
 
-<p>FIXME not sure of the wording/depth required here because I don't yet know if I'm going to cover these in a previous chapter. Let's assume I'm not, and I can move the examples later if need be.
-
 <table>
 <tr><th>Notes
 <th>You Want&hellip;
@@ -733,9 +731,7 @@ class FieldStorage:
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__exit__><code>x.<dfn>__exit__</dfn>()</code></a>
 </table>
 
-<p>This is how the [FIXME-xref] <code>with <var>file</var></code> idiom works.
-
-<p>FIXME-xref to as-yet-unwritten section on function annotations
+<p>This is how the <a href=files.html#with><code>with <var>file</var></code> idiom</a> works.
 
 <pre><code class=pp># excerpt from io.py:
 def _checkClosed(self, msg=None):
@@ -745,12 +741,12 @@ def _checkClosed(self, msg=None):
         raise ValueError('I/O operation on closed file.'
                          if msg is None else msg)
 
-def __enter__(self) -> 'IOBase':
+def __enter__(self):
     '''Context management protocol.  Returns self.'''
 <a>    self._checkClosed()                                <span class=u>&#x2460;</span></a>
 <a>    return self                                        <span class=u>&#x2461;</span></a>
 
-def __exit__(self, *args) -> None:
+def __exit__(self, *args):
     '''Context management protocol.  Calls close()'''
 <a>    self.close()                                       <span class=u>&#x2462;</span></a></code></pre>
 <ol>
