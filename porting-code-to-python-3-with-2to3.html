@@ -38,7 +38,7 @@ td pre{padding:0;border:0}
 
 <h2 id=print><code>print</code> statement</h2>
 
-<p>In Python 2, <code><dfn>print</dfn></code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <code>print()</code> is a function&nbsp;&mdash;&nbsp;whatever you want to print is passed to <code>print()</code> like any other function.
+<p>In Python 2, <code><dfn>print</dfn></code> was a statement. Whatever you wanted to print simply followed the <code>print</code> keyword. In Python 3, <a href=your-first-python-program.html#divingin><code>print()</code> is a function</a>. Whatever you want to print, pass it to <code>print()</code> like any other function.
 
 <table>
 <tr><th>Notes
@@ -71,7 +71,7 @@ td pre{padding:0;border:0}
 
 <h2 id=unicodeliteral>Unicode string literals</h2>
 
-<p>Python 2 had two string types: <dfn>Unicode</dfn> strings and non-Unicode strings. Python 3 has one string type: Unicode strings.
+<p>Python 2 had two string types: <dfn>Unicode</dfn> strings and non-Unicode strings. Python 3 has one string type: <a href=strings.html#divingin>Unicode strings</a>.
 
 <table>
 <tr><th>Notes
@@ -92,7 +92,7 @@ td pre{padding:0;border:0}
 
 <h2 id=unicode><code>unicode()</code> global function</h2>
 
-<p>Python 2 had two global functions to coerce objects into strings: <code>unicode()</code> to coerce them into Unicode strings, and <code>str()</code> to coerce them into non-Unicode strings. Python 3 has only one string type, Unicode strings, so the <code>str()</code> function is all you need. (The <code>unicode()</code> function no longer exists.)
+<p>Python 2 had two global functions to coerce objects into strings: <code>unicode()</code> to coerce them into Unicode strings, and <code>str()</code> to coerce them into non-Unicode strings. Python 3 has only one string type, <a href=strings.html#divingin>Unicode strings</a>, so the <code>str()</code> function is all you need. (The <code>unicode()</code> function no longer exists.)
 
 <table>
 <tr><th>Notes
@@ -105,7 +105,7 @@ td pre{padding:0;border:0}
 
 <h2 id=long><code>long</code> data type</h2>
 
-<p>Python 2 had separate <code>int</code> and <code><dfn>long</dfn></code> types for non-floating-point numbers. An <code>int</code> could not be any larger than <a href=#renames><code>sys.maxint</code></a>, which varied by platform. Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints. In Python 3, there is only one integer type, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2. Since there are no longer two types, there is no need for special syntax to distinguish them.
+<p>Python 2 had separate <code>int</code> and <code><dfn>long</dfn></code> types for non-floating-point numbers. An <code>int</code> could not be any larger than <a href=#renames><code>sys.maxint</code></a>, which varied by platform. Longs were defined by appending an <code>L</code> to the end of the number, and they could be, well, longer than ints. In Python 3, <a href=native-datatypes.html#numbers>there is only one integer type</a>, called <code>int</code>, which mostly behaves like the <code>long</code> type in Python 2. Since there are no longer two types, there is no need for special syntax to distinguish them.
 <p>Further reading: <a href=http://www.python.org/dev/peps/pep-0237/><abbr>PEP</abbr> 237: Unifying Long Integers and Integers</a>.
 
 <table>
@@ -160,7 +160,7 @@ td pre{padding:0;border:0}
 
 <h2 id=has_key><code>has_key()</code> dictionary method</h2>
 
-<p>In Python 2, dictionaries had a <code><dfn>has_key</dfn>()</code> method to test whether the dictionary had a certain key. In Python 3, this method no longer exists. Instead, you need to use the <code>in</code> operator.
+<p>In Python 2, dictionaries had a <code><dfn>has_key</dfn>()</code> method to test whether the dictionary had a certain key. In Python 3, this method no longer exists. Instead, you need to use <a href=native-datatypes.html#mixed-value-dictionaries>the <code>in</code> operator</a>.
 
 <table>
 <tr><th>Notes
@@ -443,7 +443,7 @@ except ImportError:
 
 <h2 id=next><code>next()</code> iterator method</h2>
 
-<p>In Python 2, iterators had a <code><dfn>next</dfn>()</code> method which returned the next item in the sequence. That&#8217;s still true in Python 3, but there is now also a global <code>next()</code> function that takes an iterator as an argument.
+<p>In Python 2, iterators had a <code><dfn>next</dfn>()</code> method which returned the next item in the sequence. That&#8217;s still true in Python 3, but there is now also <a href=generators.html#generators>a global <code>next()</code> function</a> that takes an iterator as an argument.
 
 <table>
 <tr><th>Notes
@@ -667,7 +667,7 @@ reduce(a, b, c)</code></pre>
 
 <h2 id=except><code>try...except</code> statement</h2>
 
-<p>The syntax for catching <dfn>exceptions</dfn> has changed slightly between Python 2 and Python 3.
+<p>The syntax for <a href=your-first-python-program.html#exceptions>catching <dfn>exceptions</dfn></a> has changed slightly between Python 2 and Python 3.
 
 <table>
 <tr><th>Notes
@@ -718,7 +718,7 @@ except:
 
 <h2 id=raise><code>raise</code> statement</h2>
 
-<p>The syntax for raising your own exceptions has changed slightly between Python 2 and Python 3.
+<p>The syntax for <a href=your-first-python-program.html#exceptions>raising your own exceptions</a> has changed slightly between Python 2 and Python 3.
 
 <table>
 <tr><th>Notes
@@ -1152,7 +1152,7 @@ except:
 
 <h2 id=itertools><code>itertools</code> module</h2>
 
-<p>Python 2.3 introduced the <code>itertools</code> module, which defined variants of the global <code>zip()</code>, <code>map()</code>, and <code>filter()</code> functions that returned iterators instead of lists. In Python 3, those global functions return iterators, so those functions in the <code>itertools</code> module have been eliminated.
+<p>Python 2.3 introduced the <code>itertools</code> module, which defined variants of the global <code>zip()</code>, <code>map()</code>, and <code>filter()</code> functions that returned iterators instead of lists. In Python 3, those global functions return iterators, so those functions in the <code>itertools</code> module have been eliminated. (There are still <a href=advanced-iterators.html#more-itertools>lots of useful functions in the <code>itertools</code> module</a>, just not these.)
 
 <table>
 <tr><th>Notes
@@ -1213,7 +1213,7 @@ except:
 
 <h2 id=getcwdu><code>os.getcwdu()</code> function</h2>
 
-<p>Python 2 had a function named <code>os.getcwd()</code>, which returned the current working directory as a (non-Unicode) string. Because modern file systems can handle directory names in any character encoding, Python 2.3 introduced <code>os.getcwdu()</code>. The <code>os.getcwdu()</code> function returned the current working directory as a Unicode string. In Python 3, there is only one string type (Unicode), so <code>os.getcwd()</code> is all you need.
+<p>Python 2 had a function named <code>os.getcwd()</code>, which returned the current working directory as a (non-Unicode) string. Because modern file systems can handle directory names in any character encoding, Python 2.3 introduced <code>os.getcwdu()</code>. The <code>os.getcwdu()</code> function returned the current working directory as a Unicode string. In Python 3, there is <a href=strings.html#divingin>only one string type (Unicode)</a>, so <code>os.getcwd()</code> is all you need.
 
 <table>
 <tr><th>Notes
@@ -1352,8 +1352,6 @@ do_stuff(a_list)</code></pre>
 <td><pre><code class=pp>a_list = sorted(a_sequence)
 do_stuff(a_list)</code></pre>
 </table>
-
-<p>FIXME: once the rest of the book is written, this appendix should contain copious links back to any chapter or section that touches on these features.
 
 <p class=v><a href=where-to-go-from-here.html rel=prev title='back to &#8220;Where To Go From Here&#8221;'><span class=u>&#x261C;</span></a> <a href=special-method-names.html rel=next title='onward to &#8220;Special Method Names&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
