@@ -575,7 +575,6 @@ RefactoringTool: Skipping implicit fixer: ws_comma
 <ins>+print(count, 'tests')</ins>
 RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
-<p>[FIXME explain the difference in import syntax]
 <p>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Time to run the new version. Do you think it&#8217;ll work?
 <p class=a>&#x2042;
 
@@ -599,7 +598,7 @@ if not hasattr(__builtin__, 'False'):
 else:
     False = __builtin__.False
     True = __builtin__.True</code></pre>
-<p>This piece of code is designed to allow this library to run under older versions of Python 2. Prior to Python 2.3 [FIXME-LINK], Python had no built-in <code>bool</code> type. This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.
+<p>This piece of code is designed to allow this library to run under older versions of Python 2. Prior to Python 2.3, Python had no built-in <code>bool</code> type. This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.
 <p>However, Python 3 will always have a <code>bool</code> type, so this entire code snippet is unnecessary. The simplest solution is to replace all instances of <code>constants.True</code> and <code>constants.False</code> with <code>True</code> and <code>False</code>, respectively, then delete this dead code from <code>constants.py</code>.
 <p>So this line in <code>universaldetector.py</code>:
 <pre class=nd><code class=pp>self.done = constants.False</code></pre>
@@ -615,7 +614,7 @@ else:
   File "C:\home\chardet\chardet\universaldetector.py", line 29, in &lt;module>
     import constants, sys
 ImportError: No module named constants</samp></pre>
-<p>What&#8217;s that you say?  No module named <code>constants</code>?  Of course there&#8217;s a module named <code>constants</code>. &hellip;Oh wait, no there isn&#8217;t. Remember when the <code>2to3</code> script fixed up all those import statements?  This library has a lot of relative imports&nbsp;&mdash;&nbsp;that is, modules that import other modules within the library. In Python 3, all import statements are absolute by default [FIXME-LINK PEP 0328]. To do relative imports, you need to do something like this instead:
+<p>What&#8217;s that you say?  No module named <code>constants</code>?  Of course there&#8217;s a module named <code>constants</code>. &hellip;Oh wait, no there isn&#8217;t. Remember when the <code>2to3</code> script fixed up all those import statements?  This library has a lot of relative imports&nbsp;&mdash;&nbsp;that is, modules that import other modules within the library. In Python 3, <a href=http://www.python.org/dev/peps/pep-0328/>all import statements are absolute by default</a>. To do relative imports, you need to do something like this instead:
 <pre class=nd><code class=pp>from . import constants</code></pre>
 <p>But wait. Wasn&#8217;t the <code>2to3</code> script supposed to take care of these for you?  Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code>constants</code> module within the library, and an absolute import of the <code>sys</code> module that is pre-installed in the Python standard library. In Python 2, you could combine these into one import statement. In Python 3, you can&#8217;t, and the <code>2to3</code> script is not smart enough to split the import statement into two.
 <p>The solution is to split the import statement manually. So this two-in-one import:
@@ -624,7 +623,6 @@ ImportError: No module named constants</samp></pre>
 <pre class=nd><code class=pp>from . import constants
 import sys</code></pre>
 <p>There are variations of this problem scattered throughout the <code>chardet</code> library. In some places it&#8217;s &#8220;<code>import constants, sys</code>&#8221;; in other places, it&#8217;s &#8220;<code>import constants, re</code>&#8221;. The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
-<p>FIXME-xref to as-yet-unwritten PEP 8 style section (which says you should put all imports on their own line)
 <p>Onward!
 <h3 id=namefileisnotdefined>Name <var>'file'</var> is not defined</h3>
 <aside>open() is the new file(). PapayaWhip is the new black.</aside>
@@ -635,7 +633,7 @@ import sys</code></pre>
   File "test.py", line 9, in &lt;module>
     for line in file(f, 'rb'):
 NameError: name 'file' is not defined</samp></pre>
-<p>This one surprised me, because I&#8217;ve been using this idiom as long as I can remember. In Python 2, the global <code>file()</code> function was an alias for the <code>open()</code> function, which was the standard way of opening files for reading. In Python 3, the entire system for reading and writing files has been refactored into the <code>io</code> module. [FIXME-LINK PEP 3116]  I&#8217;ll cover the new I/O module in more detail in Chapter FIXME, but for now, the important bit is that the global <code>file()</code> function no longer exists. However, the <code>open()</code> function does still exist. (Technically, it&#8217;s an alias for <var>io.open()</var>, but never mind that right now.)
+<p>This one surprised me, because I&#8217;ve been using this idiom as long as I can remember. In Python 2, the global <code>file()</code> function was an alias for the <code>open()</code> function, which was the standard way of <a href=files.html#reading>opening text files for reading</a>. In Python 3, the global <code>file()</code> function no longer exists, but the <code>open()</code> function still exists.
 <p>Thus, the simplest solution to the problem of the missing <code>file()</code> is to call the <code>open()</code> function instead:
 <pre class=nd><code class=pp>for line in open(f, 'rb'):</code></pre>
 <p>And that&#8217;s all I have to say about that.
