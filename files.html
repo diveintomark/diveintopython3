@@ -89,32 +89,60 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <h3 id=read>Reading Data From A Text File</h3>
 
+<p>After you open a file for reading, you&#8217;ll probably want to read from it at some point.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>
+<samp class=pp>'Dive Into Python 是为有经验的程序员编写的一本 Python 书。\n'</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
 <p>FIXME
 
-<!--
-<p>After you open a file, the first thing you&#8217;ll want to do is read from it, as shown in the next example.
-<div class=example><h3>Example 6.4. Reading a File</h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>f</kbd>
-&lt;open file '/music/_singles/kairo.mp3', mode 'rb' at 010E3988>
-<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2460;</span>
-0
-<samp class=p>>>> </samp><kbd>f.seek(-128, 2)</kbd>       <span>&#x2461;</span>
-<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2462;</span>
-7542909
-<samp class=p>>>> </samp><kbd>tagData = f.read(128)</kbd> <span>&#x2463;</span>
-<samp class=p>>>> </samp><kbd>tagData</kbd>
-<samp>'TAGKAIRO****THE BEST GOA         ***DJ MARY-JANE***            
-Rave Mix    2000http://mp3.com/DJMARYJANE     \037'</samp>
-<samp class=p>>>> </samp><kbd>f.tell()</kbd>              <span>&#x2464;</span>
-7543037</pre>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>
+<samp class=pp>0</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(16)</kbd>
+<samp class=pp>'Dive Into Python'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<samp class=pp>' '</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<samp class=pp>'是'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>
+<samp class=pp>20</samp></pre>
 <ol>
-<li>A file object maintains state about the file it has open. The <code>tell</code> method of a file object tells you your current position in the open file. Since you haven&#8217;t done anything with this file    yet, the current position is <code>0</code>, which is the beginning of the file.
-<li>The <code>seek</code> method of a file object moves to another position in the open file. The second parameter specifies what the first one means;
-<code>0</code> means move to an absolute position (counting from the start of the file), <code>1</code> means move to a relative position (counting from the current position), and <code>2</code> means move to a position relative to the end of the file. Since the <abbr>MP3</abbr> tags you&#8217;re looking for are stored at the end of the file, you use <code>2</code> and tell the file object to move to a position <code>128</code> bytes from the end of the file.
-<li>The <code>tell</code> method confirms that the current file position has moved.
-<li>The <code>read</code> method reads a specified number of bytes from the open file and returns a string with the data that was read. The optional    parameter specifies the maximum number of bytes to read. If no parameter is specified, <code>read</code> will read until the end of the file. (You could have simply said <code>read()</code> here, since you know exactly where you are in the file and you are, in fact, reading the last 128 bytes.)  The read data    is assigned to the <var>tagData</var> variable, and the current position is updated based on how many bytes were read.
-<li>The <code>tell</code> method confirms that the current position has moved. If you do the math, you&#8217;ll see that after reading 128 bytes, the position    has been incremented by 128.
--->
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_file.seek(17)</kbd>
+<samp class=pp>17</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<samp class=pp>'是'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>
+<samp class=pp>20</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
+<samp class=pp>Traceback (most recent call last):
+  File "&lt;pyshell#12>", line 1, in &lt;module>
+    a_file.read(1)
+  File "C:\Python31\lib\codecs.py", line 300, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0x98 in position 0: unexpected code byte</samp></pre>
+<ol>
+<li>FIXME
+</ol>
 
 <h3>6.2.2. Closing Files</h3>
 
