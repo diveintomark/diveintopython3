@@ -44,7 +44,7 @@ body{counter-reset:h1 10}
 
 <p>Since your code has a bug, and you now have a test case that tests this bug, the test case will fail:
 <pre class='nd screen'>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest8.py -v</kbd>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
 <samp>from_roman should fail with blank string ... FAIL
 from_roman should fail with malformed antecedents ... ok
 from_roman should fail with repeated pairs of numerals ... ok
@@ -91,7 +91,7 @@ FAILED (failures=1)</samp></pre>
 </ol>
 
 <pre class=screen>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest8.py -v</kbd>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
 <a><samp>from_roman should fail with blank string ... ok</samp>  <span class=u>&#x2460;</span></a>
 <samp>from_roman should fail with malformed antecedents ... ok
 from_roman should fail with repeated pairs of numerals ... ok
@@ -170,7 +170,7 @@ class RoundtripCheck(unittest.TestCase):
 <p>Now your test cases are up to date with the new requirements, but your code is not, so you expect several of the test cases to fail.
 
 <pre class=screen>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest9.py -v</kbd>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
 from_roman should fail with non-string input ... ok
@@ -265,7 +265,7 @@ def from_roman(s):
 <p>You may be skeptical that these two small changes are all that you need. Hey, don&#8217;t take my word for it; see for yourself.
 
 <pre class='nd screen'>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest9.py -v</kbd>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
 from_roman should fail with non-string input ... ok
@@ -424,7 +424,7 @@ def from_roman(s):
 <p>But does it work? Why yes, yes it does. And I can prove it.
 
 <pre class=screen>
-<samp class=p>you@localhost:~$ </samp><kbd>python3 romantest10.py -v</kbd>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest10.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
 from_roman should fail with non-string input ... ok
