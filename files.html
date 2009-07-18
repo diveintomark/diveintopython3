@@ -225,8 +225,8 @@ ValueError: I/O operation on closed file.</samp>
 <a>        print('{} {}'.format(line_number, a_line.rstrip()))             <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>Using <a href=#with>the <code>with</code> pattern</a>, you safely open the file and let Python close it for you.
-<li>This is it: to read a file one line at a time, use a <code>for</code> loop. That&#8217;s it. Besides having explicit methods like <code>read()</code>, <em>the file object is also an <a href=iterators.html>iterator</a></em> which spits out a single line every time you ask for a value.
-<li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method, you can print out the line number and the line itself. (The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.)
+<li>To read a file one line at a time, use a <code>for</code> loop. That&#8217;s it. Besides having explicit methods like <code>read()</code>, <em>the file object is also an <a href=iterators.html>iterator</a></em> which spits out a single line every time you ask for a value.
+<li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method</a>, you can print out the line number and the line itself. (The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.)
 </ol>
 
 <pre class=screen>
