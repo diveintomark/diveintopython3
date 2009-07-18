@@ -126,7 +126,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <li>16 + 1 + 1 = &hellip; 20?
 </ol>
 
-<p>FIXME
+<p>Let&#8217;s see that again.
 
 <pre class=screen>
 # continued from the previous example
@@ -137,12 +137,14 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                      <span class=u>&#x2462;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>Move to the 17<sup>th</sup> byte.
+<li>Read one character.
+<li>Now you&#8217;re on the 20<sup>th</sup> byte.
 </ol>
 
-<p>FIXME
+<p>Do you see it yet? The <code>seek()</code> and <code>tell()</code> methods always count <em>bytes</em>, but since you opened this file as text, the <code>read()</code> method counts <em>characters</em>. Chinese characters <a href=strings.html#boring-stuff>require multiple bytes to encode in UTF-8</a>. The English characters in the file only require one byte each, so you might be misled into thinking that they&#8217;re counting the same thing. But that&#8217;s only true for some characters.
+
+<p>But wait, it gets worse!
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>                         <span class=u>&#x2460;</span></a>
@@ -155,8 +157,8 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
     (result, consumed) = self._buffer_decode(data, self.errors, final)
 UnicodeDecodeError: 'utf8' codec can't decode byte 0x98 in position 0: unexpected code byte</samp></pre>
 <ol>
-<li>FIXME
-<li>
+<li>Move to the 18<sup>th</sup> byte and try to read one character.
+<li>Why does this fail? Because there isn&#8217;t a character at the 18<sup>th</sup> byte. The nearest character starts at the 17<sup>th</sup> byte (and goes for three bytes). Trying to read a character from the middle will fail with a <code>UnicodeDecodeError</code>.
 </ol>
 
 <h3 id=close>Closing Files</h3>
