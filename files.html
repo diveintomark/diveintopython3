@@ -106,36 +106,35 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                      <span class=u>&#x2460;</span></a>
 <samp class=pp>''</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>   <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>                     <span class=u>&#x2461;</span></a>
 <samp class=pp>0</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(16)</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(16)</kbd>                    <span class=u>&#x2462;</span></a>
 <samp class=pp>'Dive Into Python'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>                     <span class=u>&#x2463;</span></a>
 <samp class=pp>' '</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>
 <samp class=pp>'是'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>    <span class=u>&#x2465;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                      <span class=u>&#x2464;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
-<li>
-<li>
+<li>Since you&#8217;re still at the end of the file, further calls to the file object&#8217;s <code>read()</code> method simply return an empty string.
+<li>The <code>seek()</code> method moves to a specific byte position in a file.
+<li>The <code>read()</code> method can take an optional parameter, the number of characters to read.
+<li>If you like, you can even read one character at a time.
+<li>16 + 1 + 1 = &hellip; 20?
 </ol>
 
 <p>FIXME
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(17)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(17)</kbd>                    <span class=u>&#x2460;</span></a>
 <samp class=pp>17</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>   <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(1)</kbd>                     <span class=u>&#x2461;</span></a>
 <samp class=pp>'是'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                      <span class=u>&#x2462;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
 <li>FIXME
@@ -206,13 +205,42 @@ ValueError: I/O operation on closed file.</samp>
 
 <h3 id=for>Reading Data One Line At A Time</h3>
 
+<p>A &#8220;line&#8221; of a text file is just what you think it is&nbsp;&mdash;&nbsp;you type a few words and press <kbd>ENTER</kbd>, and now you&#8217;re on a new line. A line of text is a sequence of characters delimited by&hellip; what exactly? Well, it&#8217;s complicated, because text files can use several different characters to mark the end of a line. Every operating system has its own convention. Some use a carriage return character, others use a line feed character, and some use both characters at the end of every line.
+
+<p>Now breathe a sigh of relief, because <em>Python handles line endings automatically</em> by default. If you say, &#8220;I want to read this text file one line at a time,&#8221; Python will figure out which kind of line ending the text file uses and and it will all Just Work.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you need fine-grained control over what&#8217;s considered a line ending, you can pass the optional <code>newline</code> parameter to the <code>open()</code> function. See <a href=http://docs.python.org/3.1/library/io.html#module-interface>the <code>open()</code> function documentation</a> for all the gory details.
+</blockquote>
+
+<p>So, how do you actually do it? Read a file one line at a time, that is. It&#8217;s so simple, it&#8217;s beautiful.
+
+<p class=d>[<a href=examples/oneline.py>download <code>oneline.py</code></a>]
+<pre><code class=pp>line_number = 0
+<a>with open('examples/favorite-people.txt', encoding='utf-8') as a_file:  <span class=u>&#x2460;</span></a>
+<a>    for a_line in a_file:                                               <span class=u>&#x2461;</span></a>
+        line_number += 1
+<a>        print('{} {}'.format(line_number, a_line.rstrip()))             <span class=u>&#x2462;</span></a></code></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
+
 <p>FIXME
 
-<p>FIXME what's a "line"? (line endings discussion, universal line endings, etc.)
-
-<!--
-A &#8220;line&#8221; of a text file is just what you think it is&nbsp;&mdash;&nbsp;a sequence of characters delimited by a carriage return. Of course, it can&#8217;t really be that simple, can it? Text files can use several different characters to mark the end of a line. Some use a carriage return character, others use a line feed character, and some use both characters at the end of every line. Python handles all of these cases automatically, so you can say, &#8220;Hey, I want to read this text file one line at a time&#8221; and it will Just Work. 
--->
+<pre class=screen>
+<samp class=p>you@localhost:~/diveintopython3$ </samp><kbd class=pp>python3 examples/oneline.py</kbd>
+<samp class=pp>1 Dora
+2 Ethan
+3 Wesley
+4 John
+5 Anne
+6 Mike
+7 Chris
+8 Sarah
+9 Alex
+10 Lizzie</samp></pre>
 
 <h2 id=writing>Writing to Text Files</h2>
 
