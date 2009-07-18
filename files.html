@@ -201,9 +201,20 @@ ValueError: I/O operation on closed file.</samp>
 <li>Closed file objects do have one useful attribute: the <code>closed</code> attribute will confirm that the file is closed.
 </ol>
 
-<h3 id=with>Using The <code>with</code> Statement</h3>
+<h3 id=with>Closing Files Automatically</h3>
 
-<p>FIXME "with open(...) as file" pattern
+<p>File objects have an explicit <code>close()</code> method, but what happens if your code has a bug and crashes before you call <code>close()</code>? That file could theoretically stay open for much longer than necessary. While you&#8217;re debugging on your local computer, that&#8217;s not a big deal. On a production server, maybe it is.
+
+<p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 3 also adds a cleaner solution: the <code>with</code> statement.
+
+<pre class=nd><code class=pp>with open('examples/chinese.txt', encoding='utf-8') as a_file:
+    a_file.seek(17)
+    a_character = a_file.read(1)
+    print(a_character)</code></pre>
+
+<p>This code calls <code>open()</code>, but it never calls <code>a_file.close()</code>. The <code>with</code> statement starts a code block, like an <code>if</code> statement or a <code>for</code> loop. Inside this code block, you can use the variable <var>a_file</var> as the file object returned from the call to <code>open()</code>. All the regular file object methods are available&nbsp;&mdash;&nbsp;<code>seek()</code>, <code>read()</code>, whatever you need. When the <code>with</code> block ends, <em>Python calls <code>a_file.close()</code> method automatically</em>.
+
+<p>FIXME other with examples
 
 <h3 id=for>Reading Data One Line At A Time</h3>
 
