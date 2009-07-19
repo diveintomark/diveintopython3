@@ -294,67 +294,60 @@ ValueError: I/O operation on closed file.</samp>
 
 <h3 id=encoding-again>Character Encoding Again</h3>
 
-<p>FIXME
+<p>Did you notice the <code>encoding</code> parameter that got passed in to the <code>open()</code> function while you were <a href=#writing>opening a file for writing</a>? It&#8217;s important; don&#8217;t ever leave it out! As you saw in the beginning of this chapter, files don&#8217;t contain <i>strings</i>, they contain <i>bytes</i>. Reading a &#8220;string&#8221; from a text file only works because you told Python what encoding to use to read a stream of bytes and convert it to a string. Writing text to a file presents the same problem in reverse. You can&#8217;t write characters to a file; <a href=strings.html#byte-arrays>characters are an abstraction</a>. In order to write to the file, Python needs to know how to convert your string into a sequence of bytes. The only way to be sure it&#8217;s performing the correct conversion is to specify the <code>encoding</code> parameter when you open the file for writing.
 
 <h3 id=write>Write A Little, Write A Lot</h3>
 
 <p>FIXME write(), writelines(), .writeable
 
-<h2 id=ioerror>Handling I/O Errors</h2>
-
-<p>FIXME
-
-<!--
-<p>Now you&#8217;ve seen enough to understand the file handling code in the <code>fileinfo.py</code> sample code from the previous chapter. This example shows how to safely open and read from a file and gracefully handle
-   errors.
-<div class=example><h3 id="fileinfo.files.incode">Example 6.6. File Objects in <code>MP3FileInfo</code></h3><pre><code>
-        try:              <span class=u>&#x2460;</span> fsock = open(filename, "rb", 0) <span class=u>&#x2461;</span> try:              fsock.seek(-128, 2)         <span class=u>&#x2462;</span>     tagdata = fsock.read(128)   <span class=u>&#x2463;</span> finally:      <span class=u>&#x2464;</span>     fsock.close()               . . .
-        except IOError:   <span class=u>&#x2465;</span> pass         </pre>
-<ol>
-<li>Because opening and reading files is risky and may raise an exception, all of this code is wrapped in a <code>try...except</code> block. (Hey, isn&#8217;t <a href="#odbchelper.indenting" title="2.5. Indenting Code">standardized indentation</a> great?  This is where you start to appreciate it.)
-<li>The <code>open</code> function may raise an <code>IOError</code>. (Maybe the file doesn&#8217;t exist.)
-<li>The <code>seek</code> method may raise an <code>IOError</code>. (Maybe the file is smaller than 128 bytes.)
-<li>The <code>read</code> method may raise an <code>IOError</code>. (Maybe the disk has a bad sector, or it&#8217;s on a network drive and the network just went down.)
-<li>This is new: a <code>try...finally</code> block. Once the file has been opened successfully by the <code>open</code> function, you want to make absolutely sure that you close it, even if an exception is raised by the <code>seek</code> or <code>read</code> methods. That&#8217;s what a <code>try...finally</code> block is for: code in the <code>finally</code> block will <em>always</em> be executed, even if something in the <code>try</code> block raises an exception. Think of it as code that gets executed on the way out, regardless of what happened before.
-<li>At last, you handle your <code>IOError</code> exception. This could be the <code>IOError</code> exception raised by the call to <code>open</code>, <code>seek</code>, or <code>read</code>. Here, you really don&#8217;t care, because all you&#8217;re going to do is ignore it silently and continue. (Remember, <code>pass</code> is a Python statement that <a href="#fileinfo.class.simplest" title="Example 5.3. The Simplest Python Class">does nothing</a>.)  That&#8217;s perfectly legal; &#8220;handling&#8221; an exception can mean explicitly doing nothing. It still counts as handled, and processing will continue normally on the    next line of code after the <code>try...except</code> block.
--->
-
 <h2 id=binary>Binary Files</h2>
 
 <p>FIXME
 
-<pre>
->>> image = open('examples/beauregard-100x100.jpg', 'rb')
->>> image
-&lt;io.BufferedReader object at 0x00C7A390>
->>> image.mode
-'rb'
->>> image.name
-'examples/beauregard-100x100.jpg'
-</pre>
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image = open('examples/beauregard-100x100.jpg', mode='rb')</kbd>        <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.mode</kbd>                                                        <span class=u>&#x2461;</span></a>
+<samp class=pp>'rb'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.name</kbd>                                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>'examples/beauregard.jpg'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.encoding</kbd>                                                    <span class=u>&#x2463;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+<li>
+</ol>
 
-<pre>
->>> image
-&lt;io.BufferedReader object at 0x00C7A390>
->>> image.tell()
-0
->>> data = image.read(3)
->>> data
-b'\xff\xd8\xff'
->>> image.tell()
-3
->>> image.seek(0)
-0
->>> data = image.read()
->>> len(data)
-3150
-</pre>
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=pp>0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>data = image.read(3)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>data</kbd>
+<samp class=pp>b'\xff\xd8\xff'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>            <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'bytes'></samp>
+<samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>
+<samp class=pp>3</samp>
+<samp class=p>>>> </samp><kbd class=pp>an_image.seek(0)</kbd>
+<samp class=pp>0</samp>
+<samp class=p>>>> </samp><kbd class=pp>data = an_image.read()</kbd>
+<samp class=p>>>> </samp><kbd class=pp>len(data)</kbd>
+<samp class=pp>3150</samp></pre>
+<ol>
+<li>FIXME
+<li>
+<li>
+</ol>
 
 <h2 id=file-like-objects>File-like Objects</h2>
 
 <p>One of Python&#8217;s greatest strengths is its dynamic binding, and one powerful use of dynamic binding is the <dfn>file-like object</dfn>.
 
-<p>Your functions which require an input source could simply take a filename, go open the file for reading, read it, and close it when they&#8217;re done. But they shouldn&#8217;t. Instead, they should take a <em>file-like object</em>.
+<p>Your functions which require an input source could simply take a filename as a string, go open the file for reading, read it, and close it when they&#8217;re done. But they shouldn&#8217;t. Instead, they should take a <em>file-like object</em>.
 
 <p>In the simplest case, a <em>file-like object</em> is any object with a <code>read()</code> method with an optional <var>size</var> parameter, which returns a string. When called with no <var>size</var> parameter, it reads everything there is to read from the input source and returns all the data as a single string. When called with a <var>size</var> parameter, it reads that much from the input source and returns that much data. When called again, it picks up where it left off and returns the next chunk of data.
 
@@ -379,13 +372,36 @@ b'\xff\xd8\xff'
 <samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>
 <samp class=pp>'new black.'</samp></pre>
 <ol>
-<li>FIXME
-<li>FIXME Now you have a file-like object, and you can do all sorts of file-like things with it.
+<li>The <code>io</code> module contains the definition of the <code>StringIO</code> class that you can use to treat a string in memory as a file.
+<li>To create a file-like object out of a string, create an instance of the <code>io.StringIO()</code> class and pass it the string you want to use as your &#8220;file&#8221; data. Now you have a file-like object, and you can do all sorts of file-like things with it.
 <li>Calling the <code>read()</code> method &#8220;reads&#8221; the entire &#8220;file,&#8221; which in the case of a <code>StringIO</code> object simply returns the original string.
 <li>Just like a real file, calling the <code>read()</code> method again returns an empty string.
 <li>You can explicitly seek to the beginning of the string, just like seeking through a real file, by using the <code>seek()</code> method of the <code>StringIO</code> object.
 <li>You can also read the string in chunks, by passing a <var>size</var> parameter to the <code>read()</code> method.
 </ol>
+
+<h3 id=gzip>Handling Compressed Files</h3>
+
+<p>The Python standard library contains modules that support reading and writing compressed files. There are a number of different compression schemes; the most popular for single files are <a href=http://docs.python.org/3.1/library/gzip.html>gzip</a> and <a href=http://docs.python.org/3.1/library/bz2.html>bzip2</a>. (You may have also encountered <a href=http://docs.python.org/3.1/library/zipfile.html>PKZIP archives</a> and <a href=http://docs.python.org/3.1/library/tarfile.html>GNU Tar archives</a>. Python has modules for those, too.)
+
+<p>The <code>gzip</code> module lets you create a file-like object for reading or writing a gzip-compressed file. The file-like object it gives you supports the <code>read()</code> method (if you opened it for reading) or the <code>write()</code> method (if you opened it for writing). That means you can use the methods you&#8217;ve already learned for regular files to <em>directly read or write a gzip-compressed file</em>, without creating a temporary file to store the decompressed data.
+
+<p>As an added bonus, it supports the <code>with</code> statement too, so you can let Python automatically close your gzip-compressed file when you&#8217;re done with it.
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~$ </samp><kbd>python3</kbd>
+
+<samp class=p>>>> </samp><kbd class=pp>import gzip</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with gzip.open('out.log.gz', mode='wb') as z_file:</kbd>
+<samp class=p>... </samp><kbd class=pp>  z_file.write('A nine mile walk is no joke, especially in the rain.'.encode('utf-8'))</kbd>
+<samp class=p>... </samp>
+<samp class=p>>>> </samp><kbd class=pp>exit()</kbd>
+
+<samp class=p>you@localhost:~$ </samp><kbd>ls -l out.log.gz</kbd>
+<samp>-rw-r--r--  1 mark mark    79 2009-07-19 14:29 out.log.gz</samp>
+<samp class=p>you@localhost:~$ </samp><kbd>gunzip out.log.gz</kbd>
+<samp class=p>you@localhost:~$ </samp><kbd>cat out.log</kbd>
+<samp>A nine mile walk is no joke, especially in the rain.</samp></pre>
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
 
