@@ -44,6 +44,7 @@ Classname Legend
 .pp = "pretty print"  = apply syntax highlighting to this code block
 .pf = "padded frame"  = black border with internal padding
 .fr = "framed"        = black border, no padding
+.ss = "screenshot"    = image, floated right, with margin
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
@@ -159,6 +160,10 @@ form div, #level {
   font-weight:bold;
   line-height:1;
   margin:0.7em 0;
+}
+.ss {
+  float: right;
+  margin: 0 0 1.75em 1.75em;
 }
 
 /* links */

@@ -16,7 +16,7 @@ body{counter-reset:h1 12}
 <p id=level>Difficulty level: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
 <h1>Files</h1>
 <blockquote class=q>
-<p><span class=u>&#x275D;</span> FIXME <span class=u>&#x275E;</span><br>&mdash; FIXME
+<p><span class=u>&#x275D;</span> A nine mile walk is no joke, especially in the rain. <span class=u>&#x275E;</span><br>&mdash; Harry Kemelman, <cite>The Nine Mile Walk</cite>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -296,16 +296,14 @@ ValueError: I/O operation on closed file.</samp>
 
 <p>Did you notice the <code>encoding</code> parameter that got passed in to the <code>open()</code> function while you were <a href=#writing>opening a file for writing</a>? It&#8217;s important; don&#8217;t ever leave it out! As you saw in the beginning of this chapter, files don&#8217;t contain <i>strings</i>, they contain <i>bytes</i>. Reading a &#8220;string&#8221; from a text file only works because you told Python what encoding to use to read a stream of bytes and convert it to a string. Writing text to a file presents the same problem in reverse. You can&#8217;t write characters to a file; <a href=strings.html#byte-arrays>characters are an abstraction</a>. In order to write to the file, Python needs to know how to convert your string into a sequence of bytes. The only way to be sure it&#8217;s performing the correct conversion is to specify the <code>encoding</code> parameter when you open the file for writing.
 
-<h3 id=write>Write A Little, Write A Lot</h3>
-
-<p>FIXME write(), writelines(), .writeable
-
 <h2 id=binary>Binary Files</h2>
 
-<p>FIXME
+<p class=ss><img src=examples/beauregard.jpg alt='my dog Beauregard' width=100 height=100>
+
+<p>Not every file contains text. Some of them contain pictures of my dog.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>an_image = open('examples/beauregard-100x100.jpg', mode='rb')</kbd>        <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image = open('examples/beauregard.jpg', mode='rb')</kbd>                <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>an_image.mode</kbd>                                                        <span class=u>&#x2461;</span></a>
 <samp class=pp>'rb'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>an_image.name</kbd>                                                        <span class=u>&#x2462;</span></a>
@@ -315,22 +313,24 @@ ValueError: I/O operation on closed file.</samp>
   File "&lt;stdin>", line 1, in &lt;module>
 AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
+<li>Opening a file in binary mode is simple but subtle. The only difference from opening it in text mode is that the <code>mode</code> parameter contains a <code>'b'</code>.
+<li>The file object you get from opening a file in binary mode has many of the same attributes, including <code>mode</code>, which reflects the <code>mode</code> parameter you passed into the <code>open()</code> function.
+<li>File objects for binary files also have a <code>name</code> attribute, just like file objects for text files.
+<li>Here&#8217;s one difference, though: the file object for a binary file has no <code>encoding</code> attribute. That makes sense, right? You&#re reading (or writing) bytes, not strings, so there&#8217;s no conversion for Python to do. What you get out of a binary file is exactly what you put into it, no conversion necessary.
 </ol>
+
+<p>Did I mention you&#8217;re reading bytes? Oh yes you are.
 
 <pre class=screen>
 # continued from the previous example
-<a><samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>
 <samp class=pp>0</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>data = image.read(3)</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>data = image.read(3)</kbd>    <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>data</kbd>
 <samp class=pp>b'\xff\xd8\xff'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>            <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>              <span class=u>&#x2461;</span></a>
 <samp class=pp>&lt;class 'bytes'></samp>
-<samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>         <span class=u>&#x2462;</span></a>
 <samp class=pp>3</samp>
 <samp class=p>>>> </samp><kbd class=pp>an_image.seek(0)</kbd>
 <samp class=pp>0</samp>
@@ -338,9 +338,9 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <samp class=p>>>> </samp><kbd class=pp>len(data)</kbd>
 <samp class=pp>3150</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
+<li>Like text files, you can read binary files a little bit at a time. But there&#8217;s a crucial difference&hellip;
+<li>&hellip;you&#8217;re reading bytes, not strings. Since you opened the file in binary mode, the <code>read()</code> method takes <em>the number of bytes to read</em>, not the number of characters.
+<li>That means that there&#8217;s never <a href=#read>an unexpected mismatch</a> between the number you passed into the <code>read()</code> method and the position index you get out of the <code>tell()</code> method. The <code>read()</code> method reads bytes, and the <code>seek()</code> and <code>tell()</code> methods track the number of bytes read. For binary files, they&#8217;ll always agree.
 </ol>
 
 <h2 id=file-like-objects>File-like Objects</h2>
