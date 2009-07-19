@@ -358,32 +358,32 @@ b'\xff\xd8\xff'
 
 <p>You know, like a real file object. The difference is that you&#8217;re not limiting yourself to real files. The input source that&#8217;s being &#8220;read&#8221; could be anything: a web page, a string in memory, even the output of another program. As long as your functions take a file-like object and simply call the object&#8217;s <code>read()</code> method, you can handle any input source that acts like a file, without specific code to handle each kind of input.
 
-<!--
-<div class=example><h3 id="kgp.openanything.stringio.example">Example 10.4. Introducing <code>StringIO</code></h3><pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
-<samp class=p>>>> </samp><kbd class=pp>import StringIO</kbd>
-<samp class=p>>>> </samp><kbd class=pp>ssock = StringIO.StringIO(contents)</kbd>   <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>        <span>&#x2461;</span>
-"&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"
-<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>        <span>&#x2462;</span>
-''
-<samp class=p>>>> </samp><kbd class=pp>ssock.seek(0)</kbd>       <span>&#x2463;</span>
-<samp class=p>>>> </samp><kbd class=pp>ssock.read(15)</kbd>      <span>&#x2464;</span>
-'&lt;grammar>&lt;ref i'
-<samp class=p>>>> </samp><kbd class=pp>ssock.read(15)</kbd>
-"d='bit'>&lt;p>0&lt;/p"
-<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>
-'>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>'
-<samp class=p>>>> </samp><kbd class=pp>ssock.close()</kbd>       <span>&#x2465;</span></pre>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_string = 'PapayaWhip is the new black.'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>import io</kbd>                                  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file = io.StringIO(a_string)</kbd>             <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                              <span class=u>&#x2462;</span></a>
+<samp class=pp>'PapayaWhip is the new black.'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                              <span class=u>&#x2463;</span></a>
+<samp class=pp>''</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.seek(0)</kbd>                             <span class=u>&#x2464;</span></a>
+<samp class=pp>0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_file.read(10)</kbd>                            <span class=u>&#x2465;</span></a>
+<samp class=pp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                       
+<samp class=pp>10</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.seek(18)</kbd>
+<samp class=pp>18</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>
+<samp class=pp>'new black.'</samp></pre>
 <ol>
-<li>The <code>StringIO</code> module contains a single class, also called <code>StringIO</code>, which allows you to turn a string into a file-like object. The <code>StringIO</code> class takes the string as a parameter when creating an instance.
-<li>Now you have a file-like object, and you can do all sorts of file-like things with it. Like <code>read</code>, which returns the original string.
-<li>Calling <code>read</code> again returns an empty string. This is how real file objects work too; once you read the entire file, you can&#8217;t read any more without explicitly seeking to the beginning of the file. The <code>StringIO</code> object works the same way.
-<li>You can explicitly seek to the beginning of the string, just like seeking through a file, by using the <code>seek</code> method of the <code>StringIO</code> object.
-<li>You can also read the string in chunks, by passing a <var>size</var> parameter to the <code>read</code> method.
-<li>At any time, <code>read</code> will return the rest of the string that you haven&#8217;t read yet. All of this is exactly how file objects work; hence the term
-<em>file-like object</em>.
--->
+<li>FIXME
+<li>FIXME Now you have a file-like object, and you can do all sorts of file-like things with it.
+<li>Calling the <code>read()</code> method &#8220;reads&#8221; the entire &#8220;file,&#8221; which in the case of a <code>StringIO</code> object simply returns the original string.
+<li>Just like a real file, calling the <code>read()</code> method again returns an empty string.
+<li>You can explicitly seek to the beginning of the string, just like seeking through a real file, by using the <code>seek()</code> method of the <code>StringIO</code> object.
+<li>You can also read the string in chunks, by passing a <var>size</var> parameter to the <code>read()</code> method.
+</ol>
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
 
