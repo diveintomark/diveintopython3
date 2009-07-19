@@ -350,20 +350,13 @@ b'\xff\xd8\xff'
 
 <h2 id=file-like-objects>File-like Objects</h2>
 
-<p>FIXME
-
-<!--
 <p>One of Python&#8217;s greatest strengths is its dynamic binding, and one powerful use of dynamic binding is the <dfn>file-like object</dfn>.
 
-<p>Many functions which require an input source could simply take a filename, go open the file for reading, read it, and close it when they&#8217;re done. But they don&#8217;t. Instead, they take a <em>file-like object</em>.
+<p>Your functions which require an input source could simply take a filename, go open the file for reading, read it, and close it when they&#8217;re done. But they shouldn&#8217;t. Instead, they should take a <em>file-like object</em>.
 
-<p>In the simplest case, a <em>file-like object</em> is any object with a <code>read</code> method with an optional <var>size</var> parameter, which returns a string. When called with no <var>size</var> parameter, it reads everything there is to read from the input source and returns all the data as a single string. When
-called with a <var>size</var> parameter, it reads that much from the input source and returns that much data; when called again, it picks up where it left
-off and returns the next chunk of data.
-<p>This is how <a href="#fileinfo.files" title="6.2. Working with File Objects">reading from real files</a> works; the difference is that you&#8217;re not limiting yourself to real files. The input source could be anything: a file on
-disk, a web page, even a hard-coded string. As long as you pass a file-like object to the function, and the function simply
-calls the object&#8217;s <code>read</code> method, the function can handle any kind of input source without specific code to handle each kind.
--->
+<p>In the simplest case, a <em>file-like object</em> is any object with a <code>read()</code> method with an optional <var>size</var> parameter, which returns a string. When called with no <var>size</var> parameter, it reads everything there is to read from the input source and returns all the data as a single string. When called with a <var>size</var> parameter, it reads that much from the input source and returns that much data. When called again, it picks up where it left off and returns the next chunk of data.
+
+<p>You know, like a real file object. The difference is that you&#8217;re not limiting yourself to real files. The input source that&#8217;s being &#8220;read&#8221; could be anything: a web page, a string in memory, even the output of another program. As long as your functions take a file-like object and simply call the object&#8217;s <code>read()</code> method, you can handle any input source that acts like a file, without specific code to handle each kind of input.
 
 <!--
 <div class=example><h3 id="kgp.openanything.stringio.example">Example 10.4. Introducing <code>StringIO</code></h3><pre class=screen>
