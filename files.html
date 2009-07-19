@@ -126,7 +126,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <li>16 + 1 + 1 = &hellip; 20?
 </ol>
 
-<p>Let&#8217;s see that again.
+<p>Let&#8217;s try that again.
 
 <pre class=screen>
 # continued from the previous example
@@ -142,7 +142,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <li>Now you&#8217;re on the 20<sup>th</sup> byte.
 </ol>
 
-<p>Do you see it yet? The <code>seek()</code> and <code>tell()</code> methods always count <em>bytes</em>, but since you opened this file as text, the <code>read()</code> method counts <em>characters</em>. Chinese characters <a href=strings.html#boring-stuff>require multiple bytes to encode in UTF-8</a>. The English characters in the file only require one byte each, so you might be misled into thinking that they&#8217;re counting the same thing. But that&#8217;s only true for some characters.
+<p>Do you see it yet? The <code>seek()</code> and <code>tell()</code> methods always count <em>bytes</em>, but since you opened this file as text, the <code>read()</code> method counts <em>characters</em>. Chinese characters <a href=strings.html#boring-stuff>require multiple bytes to encode in UTF-8</a>. The English characters in the file only require one byte each, so you might be misled into thinking that the <code>seek()</code> and <code>read()</code> methods are counting the same thing. But that&#8217;s only true for some characters.
 
 <p>But wait, it gets worse!
 
@@ -217,8 +217,10 @@ ValueError: I/O operation on closed file.</samp>
 <p>Here&#8217;s the kicker: no matter how or when you exit the <code>with</code> block, Python will close that file&hellip; even if you &#8220;exit&#8221; it via an unhandled exception. That&#8217;s right, even if your code raises an exception and your entire program comes to a screeching halt, that file will get closed. Guaranteed.
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>The <code>with</code> statement is not limited to standard file objects. You can also use it with compressed file objects from <a href=http://docs.python.org/3.1/library/gzip.html><code>gzip.GzipFile</code></a> and <a href=http://docs.python.org/3.1/library/bz2.html><code>bz2.BZ2File</code></a> (<a href=http://docs.python.org/3.1/whatsnew/3.1.html#new-improved-and-deprecated-modules>example)</a>. Nor is it limited to files; you can use it in unit testing to test that certain exceptions are raised when expected (<a href=http://docs.python.org/3.1/whatsnew/3.1.html#new-improved-and-deprecated-modules>example</a>).
+<p><span class=u>&#x261E;</span>In technical terms, the <code>with</code> statement creates a <dfn>runtime context</dfn>. In these examples, the file object acts as a <dfn>context manager</dfn>. Python creates the file object <var>a_file</var> and tells it that it is entering a runtime context. When the <code>with</code> code block is completed, Python tells the file object that it is exiting the runtime context, and the file object calls its own <code>close()</code> method. See <a href=special-method-names.html#context-managers>Appendix B, &#8220;Context Managers&#8221;</a> for details.
 </blockquote>
+
+<p>There&#8217;s nothing file-specific about the <code>with</code> statement; it&#8217;s just a generic framework for creating runtime contexts and telling objects that they&#8217;re entering and exiting a runtime context. If the object in question is a file object, then it does useful file-like things (like closing the file automatically). But that behavior is defined in the file object, not in the <code>with</code> statement. There are lots of other ways to use context managers that have nothing to do with files. You can even create your own, as you&#8217;ll see later in this chapter.
 
 <h3 id=for>Reading Data One Line At A Time</h3>
 
@@ -306,8 +308,8 @@ ValueError: I/O operation on closed file.</samp>
 <p>Now you&#8217;ve seen enough to understand the file handling code in the <code>fileinfo.py</code> sample code from the previous chapter. This example shows how to safely open and read from a file and gracefully handle
    errors.
 <div class=example><h3 id="fileinfo.files.incode">Example 6.6. File Objects in <code>MP3FileInfo</code></h3><pre><code>
-        try:              <span>&#x2460;</span> fsock = open(filename, "rb", 0) <span>&#x2461;</span> try:              fsock.seek(-128, 2)         <span>&#x2462;</span>     tagdata = fsock.read(128)   <span>&#x2463;</span> finally:      <span>&#x2464;</span>     fsock.close()               . . .
-        except IOError:   <span>&#x2465;</span> pass         </pre>
+        try:              <span class=u>&#x2460;</span> fsock = open(filename, "rb", 0) <span class=u>&#x2461;</span> try:              fsock.seek(-128, 2)         <span class=u>&#x2462;</span>     tagdata = fsock.read(128)   <span class=u>&#x2463;</span> finally:      <span class=u>&#x2464;</span>     fsock.close()               . . .
+        except IOError:   <span class=u>&#x2465;</span> pass         </pre>
 <ol>
 <li>Because opening and reading files is risky and may raise an exception, all of this code is wrapped in a <code>try...except</code> block. (Hey, isn&#8217;t <a href="#odbchelper.indenting" title="2.5. Indenting Code">standardized indentation</a> great?  This is where you start to appreciate it.)
 <li>The <code>open</code> function may raise an <code>IOError</code>. (Maybe the file doesn&#8217;t exist.)
@@ -387,113 +389,112 @@ b'\xff\xd8\xff'
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
 
-<p>FIXME
+<p>Command-line gurus are already familiar with the concept of standard input, standard output, and standard error. This section is for the rest of you.
 
-<!--
-<p><abbr>UNIX</abbr> users are already familiar with the concept of standard input, standard output, and standard error. This section is for
-   the rest of you.
-<p>Standard output and standard error (commonly abbreviated <code>stdout</code> and <code>stderr</code>) are pipes that are built into every <abbr>UNIX</abbr> system. When you <code>print</code> something, it goes to the <code>stdout</code> pipe; when your program crashes and prints out debugging information (like a traceback in Python), it goes to the <code>stderr</code> pipe. Both of these pipes are ordinarily just connected to the terminal window where you are working, so when a program
-prints, you see the output, and when a program crashes, you see the debugging information. (If you&#8217;re working on a system
-with a window-based Python <abbr>IDE</abbr>, <code>stdout</code> and <code>stderr</code> default to your &#8220;Interactive Window&#8221;.)
-<div class=example><h3>Example 10.8. Introducing <code>stdout</code> and <code>stderr</code></h3><pre class=screen>
+<p>Standard output and standard error (commonly abbreviated <code>stdout</code> and <code>stderr</code>) are pipes that are built into every <abbr>UNIX</abbr>-like system, including Mac OS X and Linux. When you call the <code>print()</code> function, the thing you&#8217;re printing is sent to the <code>stdout</code> pipe. When your program crashes and prints out a traceback, it goes to the <code>stderr</code> pipe. By default, both of these pipes are just connected to the terminal window where you are working; when your program prints something, you see the output in your terminal window, and when a program crashes, you see the traceback in your terminal window too. In the graphical Python Shell, the <code>stdout</code> and <code>stderr</code> pipes default to your &#8220;Interactive Window&#8221;.)
+
+<pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<samp class=p>...    </samp>print 'Dive in'             <span>&#x2460;</span>
-<samp>Dive in
-Dive in
-Dive in</samp>
+<a><samp class=p>... </samp><kbd class=pp>    print('PapayaWhip')</kbd>        <span class=u>&#x2460;</span></a>
+<samp>PapayaWhip
+PapayaWhip
+PapayaWhip</samp>
 <samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<samp class=p>...    </samp>sys.stdout.write('Dive in') <span>&#x2461;</span>
-Dive inDive inDive in
+<a><samp class=p>... </samp><kbd class=pp>sys.stdout.write('is the')</kbd>     <span class=u>&#x2461;</span></a>
+<samp>is theis theis the</samp>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<samp class=p>...    </samp>sys.stderr.write('Dive in') <span>&#x2462;</span>
-Dive inDive inDive in</pre>
+<a><samp class=p>... </samp><kbd class=pp>sys.stderr.write('new black')</kbd>  <span class=u>&#x2462;</span></a>
+<samp>new blacknew blacknew black</samp></pre>
 <ol>
-<li>As you saw in <a href="#fileinfo.for.counter" title="Example 6.9. Simple Counters">Example 6.9, &#8220;Simple Counters&#8221;</a>, you can use Python&#8217;s built-in <code>range</code> function to build simple counter loops that repeat something a set number of times.
-<li><code>stdout</code> is a file-like object; calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
-<li>In the simplest case, <code>stdout</code> and <code>stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you&#8217;re in one), or the terminal (if you&#8217;re running Python from the command line). Like <code>stdout</code>, <code>stderr</code> does not add carriage returns for you; if you want them, add them yourself.
-<p><code>stdout</code> and <code>stderr</code> are both file-like objects, like the ones you discussed in <a href="#kgp.openanything" title="10.1. Abstracting input sources">Section 10.1, &#8220;Abstracting input sources&#8221;</a>, but they are both write-only. They have no <code>read</code> method, only <code>write</code>. Still, they are file-like objects, and you can assign any other file- or file-like object to them to redirect their output.
-<div class=example><h3>Example 10.9. Redirecting output</h3><pre class=screen>
-<samp class=p>[you@localhost kgp]$ </samp>python stdout.py
-Dive in
-<samp class=p>[you@localhost kgp]$ </samp>cat out.log
-This message will be logged instead of displayed</pre><p>(On Windows, you can use <code>type</code> instead of <code>cat</code> to display the contents of a file.)
-<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
-<pre><code>
-#stdout.py
-import sys
+<li>The <code>print()</code> statement, in a loop. Nothing surprising here.
+<li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>file-like object</a>. Calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
+<li>In the simplest case, <code>sys.stdout</code> and <code>sys.stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you&#8217;re in one), or the terminal (if you&#8217;re running Python from the command line). Like standard output, standard error does not add carriage returns for you. If you want carriage returns, you&#8217;ll need to write carriage return characters.
+</ol>
 
-print 'Dive in'      <span>&#x2460;</span>
-saveout = sys.stdout <span>&#x2461;</span>
-fsock = open('out.log', 'w')           <span>&#x2462;</span>
-sys.stdout = fsock   <span>&#x2463;</span>
-print 'This message will be logged instead of displayed' <span>&#x2464;</span>
-sys.stdout = saveout <span>&#x2465;</span>
-fsock.close()        <span>&#x2466;</span>
-</pre>
+<p><code>sys.stdout</code> and <code>sys.stderr</code> are file-like objects, but they are write-only. Attempting to call their <code>read()</code> method will always raise an <code>IOError</code>.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
+<samp class=p>>>> </samp><kbd class=pp>sys.stdout.read()</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+IOError: not readable</samp></pre>
+
+<h3 id=redirect>Redirecting Standard Output</h3>
+
+<p>So <code>sys.stdout</code> and <code>sys.stderr</code> are file-like objects, albeit ones that only support writing. But they&#8217;re not constants; they&#8217;re variables. That means you can assign them a new value&nbsp;&mdash;&nbsp;another file object, or another file-like object&nbsp;&mdash;&nbsp;and redirect their output.
+
+<p class=d>[<a href=examples/stdout.py>download <code>stdout.py</code></a>]
+<pre><code class=pp>import sys
+
+class RedirectStdoutTo:
+    def __init__(self, out_new):
+        self.out_new = out_new
+
+    def __enter__(self):
+        self.out_old = sys.stdout
+        sys.stdout = self.out_new
+
+    def __exit__(self, *args):
+        sys.stdout = self.out_old
+
+print('A')
+with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):
+    print('B')
+print('C')</code></pre>
+
+<p>Check this out:
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 stdout.py</kbd>
+<samp>A
+C</samp>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat out.log</kbd>
+<samp>B</samp></pre>
+
+<p>Let&#8217;s take the last part first.
+
+<pre><code class=pp>
+<a>print('A')                                                                             <span class=u>&#x2460;</span></a>
+<a>with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):  <span class=u>&#x2461;</span></a>
+<a>    print('B')                                                                         <span class=u>&#x2462;</span></a>
+<a>print('C')                                                                             <span class=u>&#x2463;</span></a></code></pre>
 <ol>
 <li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
-<li>Always save <code>stdout</code> before redirecting it, so you can set it back to normal later.
-<li>Open a file for writing. If the file doesn&#8217;t exist, it will be created. If the file does exist, it will be overwritten.
-<li>Redirect all further output to the new file you just opened.
-<li>This will be &#8220;printed&#8221; to the log file only; it will not be visible in the <abbr>IDE</abbr> window or on the screen.
-<li>Set <code>stdout</code> back to the way it was before you mucked with it.
-<li>Close the log file.
-<p>Redirecting <code>stderr</code> works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
-<div class=example><h3>Example 10.10. Redirecting error information</h3><pre class=screen>
-<samp class=p>[you@localhost kgp]$ </samp>python stderr.py
-<samp class=p>[you@localhost kgp]$ </samp>cat error.log
-<samp>Traceback (most recent line last):
-  File "stderr.py", line 5, in ?
-    raise Exception, 'this error will be logged'
-Exception: this error will be logged</span></pre><p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
-<pre><code>
-#stderr.py
-import sys
+<li>This is <a href=#with>a <code>with</code> statement</a>, which you&#8217;ve seen before. But unlike all previous example, this one doesn&#8217;t stop at <code>as a_file</code>. Instead, there&#8217;s a comma and another function call. The <code>with</code> statement can actually take <em>a comma-separated list of contexts</em>. The first is a context you&#8217;ve seen several times already: it opens a file, assigns the file object to <var>a_file</var>, and closes the file automatically when the context ends. The second context is a custom-built context that redirects <code>sys.stdout</code> to the file object that was created in the first context.
+<li>Because this <code>print()</code> statement is executed with the contexts created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
+<li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The first context closed the file; the second context changed <code>sys.stdout</code> back to its original value. That means that this call to the <code>print()</code> function will once again print to the screen.
+</ol>
 
-fsock = open('error.log', 'w')               <span>&#x2460;</span>
-sys.stderr = fsock         <span>&#x2461;</span>
-raise Exception, 'this error will be logged' <span>&#x2462;</span> <span>&#x2463;</span>
-</pre>
+<p>Now take a look at the <code>RedirectStdoutTo</code> class. It is a custom context manager. Upon entering the context, it redirects <code>sys.stdout</code> to a given file-like object. Upon exiting the context, it restores <code>sys.stdout</code> to its original value.
+
+<pre><code class=pp>class RedirectStdoutTo:
+<a>    def __init__(self, out_new):    <span class=u>&#x2460;</span></a>
+        self.out_new = out_new
+
+<a>    def __enter__(self):            <span class=u>&#x2461;</span></a>
+        self.out_old = sys.stdout
+        sys.stdout = self.out_new
+
+<a>    def __exit__(self, *args):      <span class=u>&#x2462;</span></a>
+        sys.stdout = self.out_old</code></pre>
 <ol>
-<li>Open the log file where you want to store debugging information.
-<li>Redirect standard error by assigning the file object of the newly-opened log file to <code>stderr</code>.
-<li>Raise an exception. Note from the screen output that this does <em>not</em> print anything on screen. All the normal traceback information has been written to <code>error.log</code>.
-<li>Also note that you&#8217;re not explicitly closing your log file, nor are you setting <code>stderr</code> back to its original value. This is fine, since once the program crashes (because of the exception), Python will clean up and close the file for us, and it doesn&#8217;t make any difference that <code>stderr</code> is never restored, since, as I mentioned, the program crashes and Python ends. Restoring the original is more important for <code>stdout</code>, if you expect to go do other stuff within the same script afterwards.
-<p>Since it is so common to write error messages to standard error, there is a shorthand syntax that can be used instead of going
-through the hassle of redirecting it outright.
-<div class=example><h3 id="kgp.stdio.print.example">Example 10.11. Printing to <code>stderr</code></h3><pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>print 'entering function'</kbd>
-entering function
-<samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
-<samp class=p>>>> </samp><kbd class=pp>print >> sys.stderr, 'entering function'</kbd> <span>&#x2460;</span>
-entering function
-</pre>
-<ol>
-<li>This shorthand syntax of the <code>print</code> statement can be used to write to any open file, or file-like object. In this case, you can redirect a single <code>print</code> statement to <code>stderr</code> without affecting subsequent <code>print</code> statements.
-<p>Standard input, on the other hand, is a read-only file object, and it represents the data flowing into the program from some
-previous program. This will likely not make much sense to classic Mac OS users, or even Windows users unless you were ever fluent on the <abbr>MS-DOS</abbr> command line. The way it works is that you can construct a chain of commands in a single line, so that one program&#8217;s output
-becomes the input for the next program in the chain. The first program simply outputs to standard output (without doing any
-special redirecting itself, just doing normal <code>print</code> statements or whatever), and the next program reads from standard input, and the operating system takes care of connecting
-one program&#8217;s output to the next program&#8217;s input.
--->
+<li>The <code>__init__()</code> method is called immediately after an instance is created. It takes one parameter, the file-like object that you want to use as standard output for the life of the context. This method just saves the file-like object in an instance variable so other methods can use it later.
+<li>The <code>__enter__()</code> method is a <a href=iterators.html#a-fibonacci-iterator>special class method</a>; Python calls it when entering a context (<i>i.e.</i> at the beginning of the <code>with</code> statement). This method saves the current value of <code>sys.stdout</code> in <var>self.out_old</var>, then redirects standard output by assigning <var>self.out_new</var> to <var>sys.stdout</var>.
+<li>The <code>__exit__()</code> method is another special class method; Python calls it when exiting the context (<i>i.e.</i> at the end of the <code>with</code> statement). This method restores standard output to its original value by assigning the saved <var>self.out_old</var> value to <var>sys.stdout</var>.
+</ol>
+
+<p>Redirecting standard error works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
 
 <h2 id=furtherreading>Further Reading</h2>
 
-<p>FIXME
-
-<!--
 <ul>
-<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses reading and writing files, including how to <a href="http://www.python.org/doc/current/tut/node9.html#SECTION009210000000000000000">read a file one line at a time into a list</a>.
-
-<li><a href="http://www.effbot.org/guides/">eff-bot</a> discusses efficiency and performance of <a href="http://www.effbot.org/guides/readline-performance.htm">various ways of reading a file</a>.
-
-<li><a href="http://www.faqts.com/knowledge-base/index.phtml/fid/199/">Python Knowledge Base</a> answers <a href="http://www.faqts.com/knowledge-base/index.phtml/fid/552">common questions about files</a>.
-
-<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> summarizes <a href="http://www.python.org/doc/current/lib/bltin-file-objects.html">all the file object methods</a>.
-
+<li><a href=http://docs.python.org/tutorial/inputoutput.html#reading-and-writing-files>Reading and writing files</a> in the Python.org tutorial
+<li><a href=http://docs.python.org/3.1/library/io.html><code>io</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/sys.html#sys.stdout><code>sys.stdout</code> and <code>sys.stderr</code></a>
+<li><a href=http://en.wikipedia.org/wiki/Filesystem_in_Userspace><abbr>FUSE</abbr> on Wikipedia</a>
 </ul>
--->
 
 <p class=v><a href=advanced-classes.html rel=prev title='back to &#8220;Advanced Classes&#8221;'><span class=u>&#x261C;</span></a> <a href=xml.html rel=next title='onward to &#8220;XML&#8221;'><span class=u>&#x261E;</span></a>
 
