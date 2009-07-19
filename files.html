@@ -212,9 +212,13 @@ ValueError: I/O operation on closed file.</samp>
     a_character = a_file.read(1)
     print(a_character)</code></pre>
 
-<p>This code calls <code>open()</code>, but it never calls <code>a_file.close()</code>. The <code>with</code> statement starts a code block, like an <code>if</code> statement or a <code>for</code> loop. Inside this code block, you can use the variable <var>a_file</var> as the file object returned from the call to <code>open()</code>. All the regular file object methods are available&nbsp;&mdash;&nbsp;<code>seek()</code>, <code>read()</code>, whatever you need. When the <code>with</code> block ends, <em>Python calls <code>a_file.close()</code> method automatically</em>.
+<p>This code calls <code>open()</code>, but it never calls <code>a_file.close()</code>. The <code>with</code> statement starts a code block, like an <code>if</code> statement or a <code>for</code> loop. Inside this code block, you can use the variable <var>a_file</var> as the file object returned from the call to <code>open()</code>. All the regular file object methods are available&nbsp;&mdash;&nbsp;<code>seek()</code>, <code>read()</code>, whatever you need. When the <code>with</code> block ends, <em>Python calls <code>a_file.close()</code> automatically</em>.
 
-<p>FIXME other with examples
+<p>Here&#8217;s the kicker: no matter how or when you exit the <code>with</code> block, Python will close that file&hellip; even if you &#8220;exit&#8221; it via an unhandled exception. That&#8217;s right, even if your code raises an exception and your entire program comes to a screeching halt, that file will get closed. Guaranteed.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>The <code>with</code> statement is not limited to standard file objects. You can also use it with compressed file objects from <a href=http://docs.python.org/3.1/library/gzip.html><code>gzip.GzipFile</code></a> and <a href=http://docs.python.org/3.1/library/bz2.html><code>bz2.BZ2File</code></a> (<a href=http://docs.python.org/3.1/whatsnew/3.1.html#new-improved-and-deprecated-modules>example)</a>. Nor is it limited to files; you can use it in unit testing to test that certain exceptions are raised when expected (<a href=http://docs.python.org/3.1/whatsnew/3.1.html#new-improved-and-deprecated-modules>example</a>).
+</blockquote>
 
 <h3 id=for>Reading Data One Line At A Time</h3>
 
