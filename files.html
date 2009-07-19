@@ -259,37 +259,36 @@ ValueError: I/O operation on closed file.</samp>
 
 <h2 id=writing>Writing to Text Files</h2>
 
-<p>FIXME
+<p>You can write to files in much the same way that you read from them. First you open a file and get a file object, then you use methods on the file object to write data to the file, then you close the file.
 
-<!--
-<p>As you would expect, you can also write to files in much the same way that you read from them. There are two basic file modes:
-<div class=itemizedlist>
+<p>To open a file for writing, use the <code>open()</code> method and specify the write mode. There are two file modes for writing:
+
 <ul>
-<li>"Append" mode will add data to the end of the file.
-<li>"write" mode will overwrite the file.
+<li>&#8220;Write&#8221; mode will overwrite the file. Pass <code>mode='w'</code> to the <code>open()</code> function.
+<li>&#8220;Append&#8221; mode will add data to the end of the file. Pass <code>mode='a'</code> to the <code>open()</code> function.
 </ul>
-<p>Either mode will create the file automatically if it doesn&#8217;t already exist, so there&#8217;s never a need for any sort of fiddly
-   "if the log file doesn't exist yet, create a new empty file just so you can open it for the first time" logic. Just open
-   it and start writing.
-<div class=example><h3 id="fileinfo.files.writeandappend">Example 6.7. Writing to Files</h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>logfile = open('test.log', 'w')</kbd> <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>logfile.write('test succeeded')</kbd> <span>&#x2461;</span>
-<samp class=p>>>> </samp><kbd>logfile.close()</kbd>
-<samp class=p>>>> </samp><kbd>print file('test.log').read()</kbd>   <span>&#x2462;</span>
-test succeeded
-<samp class=p>>>> </samp><kbd>logfile = open('test.log', 'a')</kbd> <span>&#x2463;</span>
-<samp class=p>>>> </samp><kbd>logfile.write('line 2')</kbd>
-<samp class=p>>>> </samp><kbd>logfile.close()</kbd>
-<samp class=p>>>> </samp><kbd>print file('test.log').read()</kbd>   <span>&#x2464;</span>
-test succeededline 2
-</pre>
+
+<p>Either mode will create the file automatically if it doesn&#8217;t already exist, so there&#8217;s never a need for any sort of fiddly &#8220;if the file doesn&#8217;t exist yet, create a new empty file just so you can open it for the first time&#8221; function. Just open a file and start writing.
+
+<p>You should always close a file as soon as you&#8217;re done writing to it, to release the file handle and ensure that the data is actually written to disk. As with reading data from a file, you can call the file object&#8217;s <code>close()</code> method, or you can use the <code>with</code> statement and let Python close the file for you. I bet you can guess which technique I recommend.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('test.log', mode='w', encoding='utf-8') as a_file:</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    a_file.write('test succeeded')</kbd>                            <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>with open('test.log', encoding='utf-8') as a_file:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print(a_file.read())</kbd>                              
+<samp class=pp>test succeeded</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('test.log', mode='a', encoding='utf-8') as a_file:</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=p>... </samp><kbd class=pp>    a_file.write('and again')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('test.log', encoding='utf-8') as a_file:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print(a_file.read())</kbd>                              
+<a><samp class=pp>test succeededand again</samp>                                           <span class=u>&#x2463;</span></a></pre>
 <ol>
-<li>You start boldly by creating either the new file <code>test.log</code> or overwrites the existing file, and opening the file for writing. (The second parameter <code>"w"</code> means open the file for writing.)  Yes, that&#8217;s all as dangerous as it sounds. I hope you didn&#8217;t care about the previous    contents of that file, because it&#8217;s gone now.
-<li>You can add data to the newly opened file with the <code>write</code> method of the file object returned by <code>open</code>.
-<li><code>file</code> is a synonym for <code>open</code>. This one-liner opens the file, reads its contents, and prints them.
-<li>You happen to know that <code>test.log</code> exists (since you just finished writing to it), so you can open it and append to it. (The <code>"a"</code> parameter means open the file for appending.)  Actually you could do this even if the file didn&#8217;t exist, because opening    the file for appending will create the file if necessary. But appending will <em>never</em> harm the existing contents of the file.
-<li>As you can see, both the original line you wrote and the second line you appended are now in <code>test.log</code>. Also note that carriage returns are not included. Since you didn&#8217;t write them explicitly to the file either time, the    file doesn&#8217;t include them. You can write a carriage return with the <code>"\n"</code> character. Since you didn&#8217;t do this, everything you wrote to the file ended up smooshed together on the same line.
--->
+<li>You start boldly by creating the new file <code>test.log</code> (or overwriting the existing file), and opening the file for writing. The <code>mode='w'</code> parameter means open the file for writing. Yes, that&#8217;s all as dangerous as it sounds. I hope you didn&#8217;t care about the previous contents of that file (if any), because that data is gone now.
+<li>You can add data to the newly opened file with the <code>write</code> method of the file object returned by the <code>open()</code> function. After the <code>with</code> block ends, Python automatically closes the file.
+<li>That was so fun, let&#8217;s do it again. But this time, with <code>mode='a'</code> to append to the file instead of overwriting it. Appending will <em>never</em> harm the existing contents of the file.
+<li>Both the original line you wrote and the second line you appended are now in the file <code>test.log</code>. Also note that carriage returns are not included. Since you didn&#8217;t write them explicitly to the file either time, the file doesn&#8217;t include them. You can write a carriage return with the <code>'\n'</code> character. Since you didn&#8217;t do this, everything you wrote to the file ended up on one line.
+</ol>
 
 <h3 id=encoding-again>Character Encoding Again</h3>
 
@@ -368,21 +367,21 @@ calls the object&#8217;s <code>read</code> method, the function can handle any k
 
 <!--
 <div class=example><h3 id="kgp.openanything.stringio.example">Example 10.4. Introducing <code>StringIO</code></h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
-<samp class=p>>>> </samp><kbd>import StringIO</kbd>
-<samp class=p>>>> </samp><kbd>ssock = StringIO.StringIO(contents)</kbd>   <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>ssock.read()</kbd>        <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd class=pp>contents = "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import StringIO</kbd>
+<samp class=p>>>> </samp><kbd class=pp>ssock = StringIO.StringIO(contents)</kbd>   <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>        <span>&#x2461;</span>
 "&lt;grammar>&lt;ref id='bit'>&lt;p>0&lt;/p>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>"
-<samp class=p>>>> </samp><kbd>ssock.read()</kbd>        <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>        <span>&#x2462;</span>
 ''
-<samp class=p>>>> </samp><kbd>ssock.seek(0)</kbd>       <span>&#x2463;</span>
-<samp class=p>>>> </samp><kbd>ssock.read(15)</kbd>      <span>&#x2464;</span>
+<samp class=p>>>> </samp><kbd class=pp>ssock.seek(0)</kbd>       <span>&#x2463;</span>
+<samp class=p>>>> </samp><kbd class=pp>ssock.read(15)</kbd>      <span>&#x2464;</span>
 '&lt;grammar>&lt;ref i'
-<samp class=p>>>> </samp><kbd>ssock.read(15)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>ssock.read(15)</kbd>
 "d='bit'>&lt;p>0&lt;/p"
-<samp class=p>>>> </samp><kbd>ssock.read()</kbd>
+<samp class=p>>>> </samp><kbd class=pp>ssock.read()</kbd>
 '>&lt;p>1&lt;/p>&lt;/ref>&lt;/grammar>'
-<samp class=p>>>> </samp><kbd>ssock.close()</kbd>       <span>&#x2465;</span></pre>
+<samp class=p>>>> </samp><kbd class=pp>ssock.close()</kbd>       <span>&#x2465;</span></pre>
 <ol>
 <li>The <code>StringIO</code> module contains a single class, also called <code>StringIO</code>, which allows you to turn a string into a file-like object. The <code>StringIO</code> class takes the string as a parameter when creating an instance.
 <li>Now you have a file-like object, and you can do all sorts of file-like things with it. Like <code>read</code>, which returns the original string.
@@ -404,16 +403,16 @@ calls the object&#8217;s <code>read</code> method, the function can handle any k
 prints, you see the output, and when a program crashes, you see the debugging information. (If you&#8217;re working on a system
 with a window-based Python <abbr>IDE</abbr>, <code>stdout</code> and <code>stderr</code> default to your &#8220;Interactive Window&#8221;.)
 <div class=example><h3>Example 10.8. Introducing <code>stdout</code> and <code>stderr</code></h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
 <samp class=p>...    </samp>print 'Dive in'             <span>&#x2460;</span>
 <samp>Dive in
 Dive in
 Dive in</samp>
-<samp class=p>>>> </samp><kbd>import sys</kbd>
-<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
+<samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
 <samp class=p>...    </samp>sys.stdout.write('Dive in') <span>&#x2461;</span>
 Dive inDive inDive in
-<samp class=p>>>> </samp><kbd>for i in range(3):</kbd>
+<samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
 <samp class=p>...    </samp>sys.stderr.write('Dive in') <span>&#x2462;</span>
 Dive inDive inDive in</pre>
 <ol>
@@ -471,10 +470,10 @@ raise Exception, 'this error will be logged' <span>&#x2462;</span> <span>&#x2463
 <p>Since it is so common to write error messages to standard error, there is a shorthand syntax that can be used instead of going
 through the hassle of redirecting it outright.
 <div class=example><h3 id="kgp.stdio.print.example">Example 10.11. Printing to <code>stderr</code></h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>print 'entering function'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>print 'entering function'</kbd>
 entering function
-<samp class=p>>>> </samp><kbd>import sys</kbd>
-<samp class=p>>>> </samp><kbd>print >> sys.stderr, 'entering function'</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
+<samp class=p>>>> </samp><kbd class=pp>print >> sys.stderr, 'entering function'</kbd> <span>&#x2460;</span>
 entering function
 </pre>
 <ol>
