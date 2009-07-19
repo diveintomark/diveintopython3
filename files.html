@@ -316,7 +316,7 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <li>Opening a file in binary mode is simple but subtle. The only difference from opening it in text mode is that the <code>mode</code> parameter contains a <code>'b'</code>.
 <li>The file object you get from opening a file in binary mode has many of the same attributes, including <code>mode</code>, which reflects the <code>mode</code> parameter you passed into the <code>open()</code> function.
 <li>File objects for binary files also have a <code>name</code> attribute, just like file objects for text files.
-<li>Here&#8217;s one difference, though: the file object for a binary file has no <code>encoding</code> attribute. That makes sense, right? You&#re reading (or writing) bytes, not strings, so there&#8217;s no conversion for Python to do. What you get out of a binary file is exactly what you put into it, no conversion necessary.
+<li>Here&#8217;s one difference, though: the file object for a binary file has no <code>encoding</code> attribute. That makes sense, right? You&#8217;re reading (or writing) bytes, not strings, so there&#8217;s no conversion for Python to do. What you get out of a binary file is exactly what you put into it, no conversion necessary.
 </ol>
 
 <p>Did I mention you&#8217;re reading bytes? Oh yes you are.
