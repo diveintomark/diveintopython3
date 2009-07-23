@@ -670,6 +670,10 @@ class FieldStorage:
 <td><a href=http://www.python.org/doc/3.0/reference/datamodel.html#object.__bool__><code>x.<dfn>__bool__</dfn>()</code></a>
 </table>
 
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you define a <code>__lt__()</code> method but no <code>__gt__()</code> method, Python will use the <code>__lt__()</code> method with operands swapped. However, Python will not combine methods. For example, if you define a <code>__lt__()</code> method and a <code>__eq()__</code> method and try to test whether <code>x &lt;= y</code>, Python will not call <code>__lt__()</code> and <code>__eq()__</code> in sequence. It will only call the <code>__le__()</code> method.
+</blockquote>
+
 <h2 id=pickle>Classes That Can Be Serialized</h2>
 <!--see http://docs.python.org/3.0/library/pickle.html:-->
 
