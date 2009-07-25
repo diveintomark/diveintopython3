@@ -205,7 +205,7 @@ AssertionError: Only for very large values of 2</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>tuple(ord(c) for c in unique_characters)</kbd>   <span class=u>&#x2463;</span></a>
 <samp class=pp>(69, 68, 77, 79, 78, 83, 82, 89)</samp></pre>
 <ol>
-<li>A generator expression is like an anonymous function that yields values. The expression itself looks like a list comprehension [FIXME xref], but it&#8217;s wrapped in parentheses instead of square brackets.
+<li>A generator expression is like an anonymous function that yields values. The expression itself looks like a <a href=comprehensions.htmllist-comprehensions>list comprehension</a>, but it&#8217;s wrapped in parentheses instead of square brackets.
 <li>The generator expression returns&hellip; an iterator.
 <li>Calling <code>next(<var>gen</var>)</code> returns the next value from the iterator.
 <li>If you like, you can iterate through all the possible values and return a tuple, list, or set, by passing the generator expression to <code>tuple()</code>, <code>list()</code>, or <code>set()</code>. In these cases, you don&#8217;t need an extra set of parentheses&nbsp;&mdash;&nbsp;just pass the &#8220;bare&#8221; expression <code>ord(c) for c in unique_characters</code> to the <code>tuple()</code> function, and Python figures out that it&#8217;s a generator expression.
@@ -408,7 +408,7 @@ Wesley</samp></pre>
  'N': '5', 'S': '1', 'R': '6', 'Y': '7'}</samp></pre>
 <ol>
 <li>Given a list of letters and a list of digits (each represented here as 1-character strings), the <code>zip</code> function will create a pairing of letters and digits, in order.
-<li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. (This isn&#8217;t the only way to do it, of course. You could use a dictionary comprehension [FIXME xref] to create the dictionary directly.) Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no &#8220;order&#8221; per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
+<li>Why is that cool? Because that data structure happens to be exactly the right structure to pass to the <code>dict()</code> function to create a dictionary that uses letters as keys and their associated digits as values. (This isn&#8217;t the only way to do it, of course. You could use a <a href=comprehensions.html#dictionary-comprehensions>dictionary comprehension</a> to create the dictionary directly.) Although the printed representation of the dictionary lists the pairs in a different order (dictionaries have no &#8220;order&#8221; per se), you can see that each letter is associated with the digit, based on the ordering of the original <var>characters</var> and <var>guess</var> sequences.
 </ol>
 
 <p id=guess>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
@@ -635,7 +635,7 @@ NameError: name '__import__' is not defined</samp></pre>
 
 <p>Many, many thanks to Raymond Hettinger for agreeing to relicense his code so I could port it to Python 3 and use it as the basis for this chapter.
 
-<p class=v><a href=iterators.html rel=prev title='back to &#8220;Iterators&#8221;'><span class=u>&#x261C;</span></a> <a href=unit-testing.html rel=next title='onward to &#8220;Unit Testing&#8221;'><span class=u>&#x261E;</span></a>
+<p class=v><a href=iterators.html rel=prev title='back to &#8220;Classes &amp; Iterators&#8221;'><span class=u>&#x261C;</span></a> <a href=unit-testing.html rel=next title='onward to &#8220;Unit Testing&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next class=todo><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>

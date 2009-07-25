@@ -5,7 +5,7 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-body{counter-reset:h1 12}
+body{counter-reset:h1 11}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -259,6 +259,8 @@ ValueError: I/O operation on closed file.</samp>
 9 Alex
 10 Lizzie</samp></pre>
 
+<p class=a>&#x2042;
+
 <h2 id=writing>Writing to Text Files</h2>
 
 <p>You can write to files in much the same way that you read from them. First you open a file and get a file object, then you use methods on the file object to write data to the file, then you close the file.
@@ -295,6 +297,8 @@ ValueError: I/O operation on closed file.</samp>
 <h3 id=encoding-again>Character Encoding Again</h3>
 
 <p>Did you notice the <code>encoding</code> parameter that got passed in to the <code>open()</code> function while you were <a href=#writing>opening a file for writing</a>? It&#8217;s important; don&#8217;t ever leave it out! As you saw in the beginning of this chapter, files don&#8217;t contain <i>strings</i>, they contain <i>bytes</i>. Reading a &#8220;string&#8221; from a text file only works because you told Python what encoding to use to read a stream of bytes and convert it to a string. Writing text to a file presents the same problem in reverse. You can&#8217;t write characters to a file; <a href=strings.html#byte-arrays>characters are an abstraction</a>. In order to write to the file, Python needs to know how to convert your string into a sequence of bytes. The only way to be sure it&#8217;s performing the correct conversion is to specify the <code>encoding</code> parameter when you open the file for writing.
+
+<p class=a>&#x2042;
 
 <h2 id=binary>Binary Files</h2>
 
@@ -342,6 +346,8 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <li>&hellip;you&#8217;re reading bytes, not strings. Since you opened the file in binary mode, the <code>read()</code> method takes <em>the number of bytes to read</em>, not the number of characters.
 <li>That means that there&#8217;s never <a href=#read>an unexpected mismatch</a> between the number you passed into the <code>read()</code> method and the position index you get out of the <code>tell()</code> method. The <code>read()</code> method reads bytes, and the <code>seek()</code> and <code>tell()</code> methods track the number of bytes read. For binary files, they&#8217;ll always agree.
 </ol>
+
+<p class=a>&#x2042;
 
 <h2 id=file-like-objects>File-like Objects</h2>
 
@@ -402,6 +408,8 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <samp class=p>you@localhost:~$ </samp><kbd>gunzip out.log.gz</kbd>
 <samp class=p>you@localhost:~$ </samp><kbd>cat out.log</kbd>
 <samp>A nine mile walk is no joke, especially in the rain.</samp></pre>
+
+<p class=a>&#x2042;
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
 
@@ -503,6 +511,8 @@ C</samp>
 
 <p>Redirecting standard error works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
 
+<p class=a>&#x2042;
+
 <h2 id=furtherreading>Further Reading</h2>
 
 <ul>
@@ -512,7 +522,7 @@ C</samp>
 <li><a href=http://en.wikipedia.org/wiki/Filesystem_in_Userspace><abbr>FUSE</abbr> on Wikipedia</a>
 </ul>
 
-<p class=v><a href=advanced-classes.html rel=prev title='back to &#8220;Advanced Classes&#8221;'><span class=u>&#x261C;</span></a> <a href=xml.html rel=next title='onward to &#8220;XML&#8221;'><span class=u>&#x261E;</span></a>
+<p class=v><a href=refactoring.html rel=prev title='back to &#8220;Refactoring&#8221;'><span class=u>&#x261C;</span></a> <a href=xml.html rel=next title='onward to &#8220;XML&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>

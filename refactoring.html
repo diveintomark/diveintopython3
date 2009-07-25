@@ -26,7 +26,7 @@ body{counter-reset:h1 10}
 <a><samp class=p>>>> </samp><kbd class=pp>roman7.from_roman('')</kbd> <span class=u>&#x2460;</span></a>
 <samp class=pp>0</samp></pre>
 <ol>
-<li>Remember in the [FIXME-xref] previous section when you kept seeing that an empty string would match the regular expression you were using to check for valid Roman numerals? Well, it turns out that this is still true for the final version of the regular expression. And that&#8217;s a bug; you want an empty string to raise an <code>InvalidRomanNumeralError</code> exception just like any other sequence of characters that don&#8217;t represent a valid Roman numeral.
+<li>This is a bug. An empty string should raise an <code>InvalidRomanNumeralError</code> exception, just like any other sequence of characters that don&#8217;t represent a valid Roman numeral.
 </ol>
 
 <p>After reproducing the bug, and before fixing it, you should write a test case that fails, thus illustrating the bug.
@@ -120,7 +120,7 @@ Ran 11 tests in 0.156s
 <h2 id=changing-requirements>Handling Changing Requirements</h2>
 <p>Despite your best efforts to pin your customers to the ground and extract exact requirements from them on pain of horrible nasty things involving scissors and hot wax, requirements will change. Most customers don&#8217;t know what they want until they see it, and even if they do, they aren&#8217;t that good at articulating what they want precisely enough to be useful. And even if they do, they&#8217;ll want more in the next release anyway. So be prepared to update your test cases as requirements change.
 
-<p>Suppose, for instance, that you wanted to expand the range of the Roman numeral conversion functions. Remember [FIXME-xref] the rule that said that no character could be repeated more than three times?  Well, the Romans were willing to make an exception to that rule by having 4 <code>M</code> characters in a row to represent <code>4000</code>. If you make this change, you&#8217;ll be able to expand the range of convertible numbers from <code>1..3999</code> to <code>1..4999</code>. But first, you need to make some changes to your test cases.
+<p>Suppose, for instance, that you wanted to expand the range of the Roman numeral conversion functions. Normally, no character in a Roman numeral can be repeated more than three times in a row. But the Romans were willing to make an exception to that rule by having 4 <code>M</code> characters in a row to represent <code>4000</code>. If you make this change, you&#8217;ll be able to expand the range of convertible numbers from <code>1..3999</code> to <code>1..4999</code>. But first, you need to make some changes to your test cases.
 
 <p class=d>[<a href=examples/roman8.py>download <code>roman8.py</code></a>]
 <pre><code class=pp>class KnownValues(unittest.TestCase):
@@ -471,7 +471,7 @@ OK</samp></pre>
 <li>Refactoring mercilessly to improve performance, scalability, readability, maintainability, or whatever other -ility you&#8217;re lacking
 </ul>
 
-<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next class=todo><span class=u>&#x261E;</span></a>
+<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a href=files.html rel=next title='onward to &#8220;Files&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/prettify.js></script>

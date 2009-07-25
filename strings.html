@@ -5,7 +5,7 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-body{counter-reset:h1 3}
+body{counter-reset:h1 4}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -264,11 +264,9 @@ experience of years.</samp>
 
 <ol>
 <li>The <code><dfn>split</dfn>()</code> string method takes one argument, a delimiter, and split a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
-<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We want to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
+<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We can use a <a href=comprehensions.html#list-comprehensions>list comprehension</a> to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
 <li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
 </ol>
-
-<p>[FIXME - this is the first time we've seen a list comprehension. Add a forward or backward reference once we have a full section explaining them.]
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>The previous example looks a lot like parsing query parameters in a <abbr>URL</abbr>, but real-life <abbr>URL</abbr> parsing is actually more complicated than this. If you&#8217;re dealing with <abbr>URL</abbr> query parameters, you&#8217;re better off using the <a href=http://docs.python.org/3.1/library/urllib.parse.html#urllib.parse.parse_qs><code>urllib.parse.parse_qs()</code></a> function, which handles some non-obvious edge cases.
@@ -459,7 +457,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
 </ul>
 
-<p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span class=u>&#x261E;</span></a>
+<p class=v><a href=comprehensions.html rel=prev title='back to &#8220;Comprehensions&#8221;'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>

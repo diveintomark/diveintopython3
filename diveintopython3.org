@@ -2,6 +2,10 @@
 * Your First Python Program
 ** TODO mention why from module import * is only allowed at module level
 * Native Datatypes
+** TODO section (chapter?) on comprehensions
+*** TODO list comprehensions
+*** TODO set comprehensions
+*** TODO dictionary comprehensions
 * Strings
 * Regular Expressions
 * Closures & Generators
@@ -44,16 +48,10 @@
 * TODO 2nd draft Special Method Names
 * Bits to add somewhere
 ** TODO section on tuples
-** TODO section (chapter?) on comprehensions
-*** TODO list comprehensions
-*** TODO set comprehensions
-*** TODO dictionary comprehensions
 ** TODO section on dictionary views
 several dictionary methods return them
 they're dynamic
 they update when the dictionary changes
-** TODO function annotations?
-** TODO PEP 8 style conventions
 ** TODO Decorators
 [[http://docs.python.org/3.1/whatsnew/3.1.html][@unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")]]
 * Meta

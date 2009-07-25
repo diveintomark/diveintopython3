@@ -5,7 +5,7 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-body{counter-reset:h1 4}
+body{counter-reset:h1 5}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -259,13 +259,13 @@ body{counter-reset:h1 4}
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '''
     ^                   # beginning of string
-    M{0,3}              # thousands - 0 to 3 M's
-    (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
-                        #            or 500-800 (D, followed by 0 to 3 C's)
-    (XC|XL|L?X{0,3})    # tens - 90 (XC), 40 (XL), 0-30 (0 to 3 X's),
-                        #        or 50-80 (L, followed by 0 to 3 X's)
-    (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 I's),
-                        #        or 5-8 (V, followed by 0 to 3 I's)
+    M{0,3}              # thousands - 0 to 3 Ms
+    (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 Cs),
+                        #            or 500-800 (D, followed by 0 to 3 Cs)
+    (XC|XL|L?X{0,3})    # tens - 90 (XC), 40 (XL), 0-30 (0 to 3 Xs),
+                        #        or 50-80 (L, followed by 0 to 3 Xs)
+    (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 Is),
+                        #        or 5-8 (V, followed by 0 to 3 Is)
     $                   # end of string
     '''</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span class=u>&#x2460;</span></a>
@@ -437,7 +437,7 @@ AttributeError: 'NoneType' object has no attribute 'groups'</samp></pre>
 <li><code>(x)</code> in general is a <em>remembered group</em>. You can get the value of what matched by using the <code>groups()</code> method of the object returned by <code>re.search</code>.
 </ul>
 <p>Regular expressions are extremely powerful, but they are not the correct solution for every problem. You should learn enough about them to know when they are appropriate, when they will solve your problems, and when they will cause more problems than they solve.
-<p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span class=u>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Generators&#8221;'><span class=u>&#x261E;</span></a>
+<p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span class=u>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Closures &amp; Generators&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/prettify.js></script>
