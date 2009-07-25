@@ -5,7 +5,7 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-body{counter-reset:h1 7}
+body{counter-reset:h1 8}
 mark{display:inline}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
@@ -50,7 +50,7 @@ import itertools
 
 def solve(puzzle):
     words = re.findall('[A-Z]+', puzzle.upper())
-    unique_characters = set(join(words))
+    unique_characters = set(''.join(words))
     assert len(unique_characters) <= 10, 'Too many letters'
     first_letters = {word[0] for word in words}
     n = len(first_letters)
