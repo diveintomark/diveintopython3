@@ -20,30 +20,203 @@ body{counter-reset:h1 3}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>FIXME
+<p class=f>This chapter will teach you about list comprehensions, dictionary comprehensions, and set comprehensions: three related concepts centered around one very powerful technique. But first, I want to take a little detour into two modules that will help you navigate your local file system.
+
+<h2 id=os>The <code>os</code> module</h2>
+
+<p>Python 3 comes with a module called <code>os</code>, which stands for &#8220;operating system.&#8221; The <a href=http://docs.python.org/3.1/library/os.html><code>os</code> module</a> contains a plethora of functions to get information on&nbsp;&mdash;&nbsp;and in some cases, to manipulate&nbsp;&mdash;&nbsp;local directories, files, processes, and environment variables. Python does its best to offer a unified <abbr>API</abbr> across <a href=installing-python.html>all supported operating systems</a> so your programs can run on any computer with as little platform-specific code as possible.
+
+<h3 id=getcwd>The Current Working Directory</h3>
+
+<p>When you&#8217;re just getting started with Python, you&#8217;re going to spend a lot of time in <a href=installing-python.html#idle>the Python Shell</a>. Throughout this book, you will see examples that go like this:
+
+<ol>
+<li>Import one of the modules in the <a href=examples/><code>examples</code> folder</a>
+<li>Call a function in that module
+<li>Explain the result
+</ol>
+
+<p>If you don&#8217;t know about the current working directory, step 1 will probably fail with an <code>ImportError</code>. Why? Because Python will look for the example module in <a href=your-first-python-program.html#importsearchpath>the import search path</a>, but it won&#8217;t find it because the <code>examples</code> folder isn&#8217;t one of the directories in the search path. To get past this, you can do one of two things:
+
+<ol>
+<li>Add the <code>examples</code> folder to the import search path
+<li>Change the current working directory to the <code>examples</code> folder
+</ol>
+
+<p>The current working directory is an invisible property that Python holds in memory at all times. There is always a current working directory, whether you&#8217;re in the Python Shell, running your own Python script from the command line, or running a Python <abbr>CGI</abbr> script on a web server somewhere.
+
+<p>The <code>os</code> module contains two functions to deal with the current working directory.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>import os</kbd>                                            <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>                                   <span class=u>&#x2461;</span></a>
+<samp class=pp>C:\Python31</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>os.chdir('/Users/pilgrim/diveintopython3/examples')</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>                                   <span class=u>&#x2463;</span></a>
+<samp class=pp>C:\Users\pilgrim\diveintopython3\examples</samp></pre>
+<ol>
+<li>When you run the graphical Python Shell, the current working directory starts as the directory where the Python Shell executable is. On Windows, this depends on where you installed Python; the default directory is <code>c:\Python31</code>. If you run the Python Shell from the command line, the current working directory starts as the directory you were in when you ran <code>python3</code>.
+<li>FIXME
+<li>FIXME
+<li>FIXME
+</ol>
+
+<h3 id=ospath>The <code>os.path</code> module</h3>
+
+<p>FIXME The <code>os.path</code> module has several functions for manipulating files and directories. Here, we're looking at handling pathnames and listing the contents of a directory.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>import os</kbd>
+<samp class=p>>>> </samp><kbd>os.path.join("c:\\music\\ap\\", "mahadeva.mp3")</kbd> <span>&#x2460;</span> <span>&#x2461;</span>
+'c:\\music\\ap\\mahadeva.mp3'
+<samp class=p>>>> </samp><kbd>os.path.join("c:\\music\\ap", "mahadeva.mp3")</kbd>   <span>&#x2462;</span>
+'c:\\music\\ap\\mahadeva.mp3'
+<samp class=p>>>> </samp><kbd>os.path.expanduser("~")</kbd>       <span>&#x2463;</span>
+'c:\\Documents and Settings\\mpilgrim\\My Documents'
+<samp class=p>>>> </samp><kbd>os.path.join(os.path.expanduser("~"), "Python")</kbd> <span>&#x2464;</span>
+'c:\\Documents and Settings\\mpilgrim\\My Documents\\Python'</pre>
+<ol>
+<li><code>os.path</code> is a reference to a module -- which module depends on your platform. Just as <a href="#crossplatform.example" title="Example 6.2. Supporting Platform-Specific Functionality"><code>getpass</code></a> encapsulates differences between platforms by setting <var>getpass</var> to a platform-specific function, <code>os</code> encapsulates differences between platforms by setting <var>path</var> to a platform-specific module.
+<li>The <code>join</code> function of <code>os.path</code> constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings. (Note that dealing
+            with pathnames on Windows is annoying because the backslash character must be escaped.)
+<li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since
+<code>addSlashIfNecessary</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
+<li><code>expanduser</code> will expand a pathname that uses <code>~</code> to represent the current user's home directory. This works on any platform where users have a home directory, like Windows,
+<abbr>UNIX</abbr>, and Mac OS X; it has no effect on Mac OS.
+<li>Combining these techniques, you can easily construct pathnames for directories and files under the user's home directory.
+</ol>
+
+<p>FIXME
+
+<pre class=screen><samp class=p>>>> </samp><kbd>os.path.split("c:\\music\\ap\\mahadeva.mp3")</kbd>      <span>&#x2460;</span>
+('c:\\music\\ap', 'mahadeva.mp3')
+<samp class=p>>>> </samp><kbd>(filepath, filename) = os.path.split("c:\\music\\ap\\mahadeva.mp3")</kbd> <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>filepath</kbd>      <span>&#x2462;</span>
+'c:\\music\\ap'
+<samp class=p>>>> </samp><kbd>filename</kbd>      <span>&#x2463;</span>
+'mahadeva.mp3'
+<samp class=p>>>> </samp><kbd>(shortname, extension) = os.path.splitext(filename)</kbd>                 <span>&#x2464;</span>
+<samp class=p>>>> </samp><kbd>shortname</kbd>
+'mahadeva'
+<samp class=p>>>> </samp><kbd>extension</kbd>
+'.mp3'</pre>
+<ol>
+<li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename. Remember when I said you could use
+<a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a> to return multiple values from a function?  Well, <code>split</code> is such a function.
+<li>You assign the return value of the <code>split</code> function into a tuple of two variables. Each variable receives the value of the corresponding element of the returned tuple.
+<li>The first variable, <var>filepath</var>, receives the value of the first element of the tuple returned from <code>split</code>, the file path.
+<li>The second variable, <var>filename</var>, receives the value of the second element of the tuple returned from <code>split</code>, the filename.
+<li><code>os.path</code> also contains a function <code>splitext</code>, which splits a filename and returns a tuple containing the filename and the file extension.  You use the same technique
+            to assign each of them to separate variables.
+</ol>
+
+<p>FIXME
+
+<pre class=screen><samp class=p>>>> </samp><kbd>os.listdir("c:\\music\\_singles\\")</kbd>              <span>&#x2460;</span>
+<samp>['a_time_long_forgotten_con.mp3', 'hellraiser.mp3',
+'kairo.mp3', 'long_way_home1.mp3', 'sidewinder.mp3', 
+'spinning.mp3']</samp>
+<samp class=p>>>> </samp><kbd>dirname = "c:\\"</kbd>
+<samp class=p>>>> </samp><kbd>os.listdir(dirname)</kbd>            <span>&#x2461;</span>
+<samp>['AUTOEXEC.BAT', 'boot.ini', 'CONFIG.SYS', 'cygwin',
+'docbook', 'Documents and Settings', 'Incoming', 'Inetpub', 'IO.SYS',
+'MSDOS.SYS', 'Music', 'NTDETECT.COM', 'ntldr', 'pagefile.sys',
+'Program Files', 'Python20', 'RECYCLER',
+'System Volume Information', 'TEMP', 'WINNT']</samp>
+<samp class=p>>>> </samp><kbd>[f for f in os.listdir(dirname)</kbd>
+<samp class=p>...    </samp>if os.path.isfile(os.path.join(dirname, f))] <span>&#x2462;</span>
+<samp>['AUTOEXEC.BAT', 'boot.ini', 'CONFIG.SYS', 'IO.SYS', 'MSDOS.SYS',
+'NTDETECT.COM', 'ntldr', 'pagefile.sys']</samp>
+<samp class=p>>>> </samp><kbd>[f for f in os.listdir(dirname)</kbd>
+<samp class=p>...    </samp>if os.path.isdir(os.path.join(dirname, f))]  <span>&#x2463;</span>
+<samp>['cygwin', 'docbook', 'Documents and Settings', 'Incoming',
+'Inetpub', 'Music', 'Program Files', 'Python20', 'RECYCLER',
+'System Volume Information', 'TEMP', 'WINNT']</samp></pre>
+<ol>
+<li>The <code>listdir</code> function takes a pathname and returns a list of the contents of the directory.
+<li><code>listdir</code> returns both files and folders, with no indication of which is which.
+<li>You can use <a href="#apihelper.filter" title="4.5. Filtering Lists">list filtering</a> and the <code>isfile</code> function of the <code>os.path</code> module to separate the files from the folders. <code>isfile</code> takes a pathname and returns 1 if the path represents a file, and 0 otherwise. Here you're using <code><code>os.path</code>.<code>join</code></code> to ensure a full pathname, but <code>isfile</code> also works with a partial path, relative to the current working directory. You can use <code>os.getcwd()</code> to get the current working directory.
+<li><code>os.path</code> also has a <code>isdir</code> function which returns 1 if the path represents a directory, and 0 otherwise. You can use this to get a list of the subdirectories
+            within a directory.
+</ol>
+
+<h2 id=glob>The <code>glob</code> module</h2>
+
+<p>FIXME
+
+<pre><code>def listDirectory(directory, fileExtList):
+    "get list of file info objects for files of particular extensions"
+    fileList = [os.path.normcase(f)
+                for f in os.listdir(directory)]            <span>&#x2460;</span> <span>&#x2461;</span>
+    fileList = [os.path.join(directory, f) 
+               for f in fileList
+                if os.path.splitext(f)[1] in fileExtList]  <span>&#x2462;</span> <span>&#x2463;</span> <span>&#x2464;</span></code></pre>
+<ol>
+<li><code>os.listdir(directory)</code> returns a list of all the files and folders in <var>directory</var>.
+<li>Iterating through the list with <var>f</var>, you use <code>os.path.normcase(f)</code> to normalize the case according to operating system defaults. <code>normcase</code> is a useful little function that compensates for case-insensitive operating systems that think that <code>mahadeva.mp3</code> and <code>mahadeva.MP3</code> are the same file. For instance, on Windows and Mac OS, <code>normcase</code> will convert the entire filename to lowercase; on <abbr>UNIX</abbr>-compatible systems, it will return the filename unchanged.
+<li>Iterating through the normalized list with <var>f</var> again, you use <code>os.path.splitext(f)</code> to split each filename into name and extension.
+<li>For each file, you see if the extension is in the list of file extensions you care about (<var>fileExtList</var>, which was passed to the <code>listDirectory</code> function).
+<li>For each file you care about, you use <code>os.path.join(directory, f)</code> to construct the full pathname of the file, and return a list of the full pathnames.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Whenever possible, you should use the functions in <code>os</code> and <code>os.path</code> for file, directory, and path manipulations. These modules are wrappers for platform-specific modules, so functions like <code>os.path.split()</code> work on <abbr>UNIX</abbr>, Windows, Mac OS X, and any other platform supported by Python.
+</blockquote>
+
+<p>There is one other way to get the contents of a directory. It's very powerful, and it uses the sort of wildcards that you may already be familiar with from working on the command line.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>os.listdir("c:\\music\\_singles\\")</kbd>               <span>&#x2460;</span>
+<samp>['a_time_long_forgotten_con.mp3', 'hellraiser.mp3',
+'kairo.mp3', 'long_way_home1.mp3', 'sidewinder.mp3',
+'spinning.mp3']</samp>
+<samp class=p>>>> </samp><kbd>import glob</kbd>
+<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\_singles\\*.mp3')</kbd>           <span>&#x2461;</span>
+<samp>['c:\\music\\_singles\\a_time_long_forgotten_con.mp3',
+'c:\\music\\_singles\\hellraiser.mp3',
+'c:\\music\\_singles\\kairo.mp3',
+'c:\\music\\_singles\\long_way_home1.mp3',
+'c:\\music\\_singles\\sidewinder.mp3',
+'c:\\music\\_singles\\spinning.mp3']</samp>
+<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\_singles\\s*.mp3')</kbd>          <span>&#x2462;</span>
+<samp>['c:\\music\\_singles\\sidewinder.mp3',
+'c:\\music\\_singles\\spinning.mp3']</samp>
+<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\*\\*.mp3')</kbd><span>&#x2463;</span>
+</pre>
+<ol>
+<li>As you saw earlier, <code>os.listdir</code> simply takes a directory path and lists all files and directories in that directory.
+<li>The <code>glob</code> module, on the other hand, takes a wildcard and returns the full path of all files and directories matching the wildcard.
+             Here the wildcard is a directory path plus "*.mp3", which will match all <code>.mp3</code> files. Note that each element of the returned list already includes the full path of the file.
+<li>If you want to find all the files in a specific directory that start with "s" and end with ".mp3", you can do that too.
+<li>Now consider this scenario: you have a <code>music</code> directory, with several subdirectories within it, with <code>.mp3</code> files within each subdirectory. You can get a list of all of those with a single call to <code>glob</code>, by using two wildcards at once. One wildcard is the <code>"*.mp3"</code> (to match <code>.mp3</code> files), and one wildcard is <em>within the directory path itself</em>, to match any subdirectory within <code>c:\music</code>. That's a crazy amount of power packed into one deceptively simple-looking function!
+</ol>
 
 <h2 id=list-comprehensions>List Comprehensions</h2>
 
-<p>FIXME
-<!--
 <p>One of the most powerful features of Python is the list comprehension, which provides a compact way of mapping a list into another list by applying a function to each
    of the elements of the list.
-<div class=example><h3>Example 3.24. Introducing List Comprehensions</h3><pre class=screen><samp class=p>>>> </samp><kbd>li = [1, 9, 8, 4]</kbd>
-<samp class=p>>>> </samp><kbd>[elem*2 for elem in li]</kbd>      <span>&#x2460;</span>
+
+<pre class=screen><samp class=p>>>> </samp><kbd>li = [1, 9, 8, 4]</kbd>
+<samp class=p>>>> </samp><kbd>[elem * 2 for elem in li]</kbd>      <span>&#x2460;</span>
 [2, 18, 16, 8]
 <samp class=p>>>> </samp><kbd>li</kbd>         <span>&#x2461;</span>
 [1, 9, 8, 4]
-<samp class=p>>>> </samp><kbd>li = [elem*2 for elem in li]</kbd> <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>li = [elem * 2 for elem in li]</kbd> <span>&#x2462;</span>
 <samp class=p>>>> </samp><kbd>li</kbd>
 [2, 18, 16, 8]</pre>
 <ol>
 <li>To make sense of this, look at it from right to left. <var>li</var> is the list you're mapping. Python loops through <var>li</var> one element at a time, temporarily assigning the value of each element to the variable <var>elem</var>. Python then applies the function <code><var>elem</var>*2</code> and appends that result to the returned list.
 <li>Note that list comprehensions do not change the original list.
 <li>It is safe to assign the result of a list comprehension to the variable that you're mapping. Python constructs the new list in memory, and when the list comprehension is complete, it assigns the result to the variable.
+</ol>
 
-<p>Here are the list comprehensions in the <code>buildConnectionString</code> function that you declared in <a href="#odbchelper">Chapter 2</a>:<pre><code>
-["%s=%s" % (k, v) for k, v in params.items()]</pre><p>First, notice that you're calling the <code>items</code> function of the <var>params</var> dictionary. This function returns a list of tuples of all the data in the dictionary.
-<div class=example><h3 id="odbchelper.items">Example 3.25. The <code>keys</code>, <code>values</code>, and <code>items</code> Functions</h3><pre class=screen><samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+<p>FIXME Here are the list comprehensions in the <code>buildConnectionString</code> function that you declared in <a href="#odbchelper">Chapter 2</a>:
+
+<pre><code>["%s=%s" % (k, v) for k, v in params.items()]</code></pre>
+
+<p>First, notice that you're calling the <code>items</code> function of the <var>params</var> dictionary. This function returns a list of tuples of all the data in the dictionary.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
 <samp class=p>>>> </samp><kbd>params.keys()</kbd>   <span>&#x2460;</span>
 ['server', 'uid', 'database', 'pwd']
 <samp class=p>>>> </samp><kbd>params.values()</kbd> <span>&#x2461;</span>
@@ -55,9 +228,13 @@ body{counter-reset:h1 3}
             (remember that elements in a dictionary are unordered), but it is a list.
 <li>The <code>values</code> method returns a list of all the values. The list is in the same order as the list returned by <code>keys</code>, so <code>params.values()[n] == params[params.keys()[n]]</code> for all values of <var>n</var>.
 <li>The <code>items</code> method returns a list of tuples of the form <code>(<var>key</var>, <var>value</var>)</code>. The list contains all the data in the dictionary.
+</ol>
+
 <p>Now let's see what <code>buildConnectionString</code> does. It takes a list, <code><var>params</var>.<code>items</code>()</code>, and maps it to a new list by applying string formatting to each element. The new list will have the same number of elements
 as <code><var>params</var>.<code>items</code>()</code>, but each element in the new list will be a string that contains both a key and its associated value from the <var>params</var> dictionary.
-<div class=example><h3>Example 3.26. List Comprehensions in <code>buildConnectionString</code>, Step by Step</h3><pre class=screen><samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
 <samp class=p>>>> </samp><kbd>params.items()</kbd>
 [('server', 'mpilgrim'), ('uid', 'sa'), ('database', 'master'), ('pwd', 'secret')]
 <samp class=p>>>> </samp><kbd>[k for k, v in params.items()]</kbd>                <span>&#x2460;</span>
@@ -71,7 +248,7 @@ as <code><var>params</var>.<code>items</code>()</code>, but each element in the 
 <li>Here you're doing the same thing, but ignoring the value of <var>k</var>, so this list comprehension ends up being equivalent to <code><var>params</var>.<code>values</code>()</code>.
 <li>Combining the previous two examples with some simple <a href="#odbchelper.stringformatting" title="3.5. Formatting Strings">string formatting</a>, you get a list of strings that include both the key and value of each element of the dictionary. This looks suspiciously
             like the <a href="#odbchelper.output">output</a> of the program. All that remains is to join the elements in this list into a single string.
--->
+</ol>
 
 <p class=a>&#x2042;
 
@@ -89,7 +266,7 @@ as <code><var>params</var>.<code>items</code>()</code>, but each element in the 
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
-<li>FIXME
+<li><a href=http://docs.python.org/3.1/library/os.html><code>os</code> module</a>
 </ul>
 <p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span class=u>&#x261C;</span></a> <a href=strings.html rel=next title='onward to &#8220;Strings&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
