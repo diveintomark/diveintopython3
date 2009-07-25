@@ -5,7 +5,7 @@
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
-body{counter-reset:h1 8}
+body{counter-reset:h1 9}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -25,7 +25,7 @@ body{counter-reset:h1 8}
 <ol>
 <li>There is only one correct way to represent a particular number as a Roman numeral.
 <li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number (that is, it can only be interpreted one way).
-<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. (The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>, but you&#8217;re not going to deal with that. For the purposes of this chapter, let&#8217;s stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.)
+<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>. For the purposes of this chapter, let&#8217;s stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.
 <li>There is no way to represent <code>0</code> in Roman numerals.
 <li>There is no way to represent negative numbers in Roman numerals.
 <li>There is no way to represent fractions or non-integer numbers in Roman numerals.
@@ -525,9 +525,152 @@ Ran 5 tests in 0.000s
 
 OK</samp></pre>
 
-<p>Now stop coding.
+<p>The <code>to_roman()</code> function passes all of its tests, and I can&#8217;t think of any more tests, so it&#8217;s time to move on to <code>from_roman()</code>.
 
-<p class=v><a rel=prev class=todo><span class=u>&#x261C;</span></a> <a rel=next class=todo><span class=u>&#x261E;</span></a>
+<p class=a>&#x2042;
+
+<h2 id=romantest5>A Pleasing Symmetry</h2>
+
+<p>Converting a string from a Roman numeral to an integer sounds more difficult than converting an integer to a Roman numeral. Certainly there is the issue of validation. It&#8217;s easy to check if an integer is greater than <code>0</code>, but a bit harder to check whether a string is a valid Roman numeral. But we already constructed <a href=regular-expressions.html#romannumerals>a regular expression to check for Roman numerals</a>, so that part is done.
+
+<p>That leaves the problem of converting the string itself. As we&#8217;ll see in a minute, thanks to the rich data structure we defined to map individual Roman numerals to integer values, the nitty-gritty of the <code>from_roman()</code> function is as straightforward as the <code>to_roman()</code> function.
+
+<p>But first, the tests. We&#8217;ll need a &#8220;known values&#8221; test to spot-check for accuracy. Our test suite already contains <a href=#romantest1>a mapping of known values</a>; let&#8217;s reuse that.
+
+<pre class=nd><code>    def test_from_roman_known_values(self):
+        '''from_roman should give known result with known input'''
+        for integer, numeral in self.known_values:
+            result = roman5.from_roman(numeral)
+            self.assertEqual(integer, result)</code></pre>
+
+<p>There&#8217;s a pleasing symmetry here. The <code>to_roman()</code> and <code>from_roman()</code> functions are inverses of each other. The first converts integers to specially-formatted strings, the second converts specially-formated strings to integers. In theory, we should be able to &#8220;round-trip&#8221; a number by passing to the <code>to_roman()</code> function to get a string, then passing that string to the <code>from_roman()</code> function to get an integer, and end up with the same number. In mathematical terms,
+
+<pre class=nd><code>x = f(g(x)) for all values of x</code></pre>
+
+<p>In this case, &#8220;all values&#8221; means any number between <code>1..3999</code>, since that is the valid range of inputs to the <code>to_roman()</code> function. We can express this symmetry in a test case that runs through all the values <code>1..3999</code>, calls <code>to_roman()</code>, calls <code>from_roman()</code>, and checks that the output is the same as the original input.
+
+<pre class=nd><code>class RoundtripCheck(unittest.TestCase):
+    def test_roundtrip(self):
+        '''from_roman(to_roman(n))==n for all n'''
+        for integer in range(1, 4000):
+            numeral = roman5.to_roman(integer)
+            result = roman5.from_roman(numeral)
+            self.assertEqual(integer, result)</code></pre>
+
+<p>These new tests won&#8217;t even fail yet. We haven&#8217;t defined a <code>from_roman()</code> function at all, so they&#8217;ll just raise errors.
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
+<samp>E.E....
+======================================================================
+ERROR: test_from_roman_known_values (__main__.KnownValues)
+from_roman should give known result with known input
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest5.py", line 78, in test_from_roman_known_values
+    result = roman5.from_roman(numeral)
+AttributeError: 'module' object has no attribute 'from_roman'
+
+======================================================================
+ERROR: test_roundtrip (__main__.RoundtripCheck)
+from_roman(to_roman(n))==n for all n
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest5.py", line 103, in test_roundtrip
+    result = roman5.from_roman(numeral)
+AttributeError: 'module' object has no attribute 'from_roman'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.019s
+
+FAILED (errors=2)</samp></pre>
+
+<p>A quick stub function will solve that problem.
+
+<pre class=nd><code># roman5.py
+def from_roman(s):
+    '''convert Roman numeral to integer'''</code></pre>
+
+<p>Now the test cases will actually fail.
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
+<samp>F.F....
+======================================================================
+FAIL: test_from_roman_known_values (__main__.KnownValues)
+from_roman should give known result with known input
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest5.py", line 79, in test_from_roman_known_values
+    self.assertEqual(integer, result)
+AssertionError: 1 != None
+
+======================================================================
+FAIL: test_roundtrip (__main__.RoundtripCheck)
+from_roman(to_roman(n))==n for all n
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest5.py", line 104, in test_roundtrip
+    self.assertEqual(integer, result)
+AssertionError: 1 != None
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=2)</samp></pre>
+
+<p>Now it&#8217;s time to write the <code>from_roman()</code> function.
+
+<pre><code>def from_roman(s):
+    """convert Roman numeral to integer"""
+    result = 0
+    index = 0
+    for numeral, integer in romanNumeralMap:
+        while s[index:index+len(numeral)] == numeral:  <span>&#x2460;</span>
+            result += integer
+            index += len(numeral)
+    return result</code></pre>
+<ol>
+<li>The pattern here is the same as the <a href=#romantest1><code>to_roman()</code></a> function. You iterate through your Roman numeral data structure (a tuple of tuples), but instead of matching the highest integer values as often as possible, you match the &#8220;highest&#8221; Roman numeral character strings as often as possible.
+</ol>
+
+<p>If you're not clear how <code>from_roman()</code> works, add a <code>print</code> statement to the end of the <code>while</code> loop:
+
+<pre><code>def from_roman(s):
+    """convert Roman numeral to integer"""
+    result = 0
+    index = 0
+    for numeral, integer in romanNumeralMap:
+        while s[index:index+len(numeral)] == numeral:
+            result += integer
+            index += len(numeral)
+<mark>            print('found', numeral, 'of length', len(numeral), ', adding', integer)</mark></code></pre>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import roman5</kbd>
+<samp class=p>>>> </samp><kbd class=pp>roman5.from_roman('MCMLXXII')</kbd>
+<samp class=pp>found M , of length 1, adding 1000
+found CM of length 2, adding 900
+found L of length 1, adding 50
+found X of length 1, adding 10
+found X of length 1, adding 10
+found I of length 1, adding 1
+found I of length 1, adding 1
+1972</samp></pre>
+
+<p>Time to re-run the tests.
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
+<samp>.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.060s
+
+OK</samp></pre>
+
+<p>Two pieces of exciting news here. The first is that the <code>from_roman()</code> function works for good input, at least for all the <a href=#romantest1>known values</a>. The second is that the &#8220;round trip&#8221; test also passed. Combined with the known values tests, you can be reasonably sure that both the <code>to_roman()</code> and <code>from_roman()</code> functions work properly for all possible good values. (This is not guaranteed; it is theoretically possible that <code>to_roman()</code> has a bug that produces the wrong Roman numeral for some particular set of inputs, <em>and</em> that <code>from_roman()</code> has a reciprocal bug that produces the same wrong integer values for exactly that set of Roman numerals that <code>to_roman()</code> generated incorrectly. Depending on your application and your requirements, this possibility may bother you; if so, write more comprehensive test cases until it doesn't bother you.)
+
+<p class=v><a href=advanced-iterators.html rel=prev title='back to &#8220;Advanced Iterators&#8221;'><span class=u>&#x261C;</span></a> <a href=unit-testing.html rel=next title='onward to &#8220;Unit Testing&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/prettify.js></script>
