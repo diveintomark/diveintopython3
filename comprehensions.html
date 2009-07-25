@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+<meta charset=utf-8>
+<title>Comprehensions - Dive into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 3}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+</head>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=root value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#comprehensions>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=beginner>&#x2666;&#x2666;&#x2662;&#x2662;&#x2662;</span>
+<h1>Comprehensions</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> FIXME <span class=u>&#x275E;</span><br>&mdash; FIXME
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>FIXME
+
+<h2 id=list-comprehensions>List Comprehensions</h2>
+
+<p>FIXME
+<!--
+<p>One of the most powerful features of Python is the list comprehension, which provides a compact way of mapping a list into another list by applying a function to each
+   of the elements of the list.
+<div class=example><h3>Example 3.24. Introducing List Comprehensions</h3><pre class=screen><samp class=p>>>> </samp><kbd>li = [1, 9, 8, 4]</kbd>
+<samp class=p>>>> </samp><kbd>[elem*2 for elem in li]</kbd>      <span>&#x2460;</span>
+[2, 18, 16, 8]
+<samp class=p>>>> </samp><kbd>li</kbd>         <span>&#x2461;</span>
+[1, 9, 8, 4]
+<samp class=p>>>> </samp><kbd>li = [elem*2 for elem in li]</kbd> <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>li</kbd>
+[2, 18, 16, 8]</pre>
+<ol>
+<li>To make sense of this, look at it from right to left. <var>li</var> is the list you're mapping. Python loops through <var>li</var> one element at a time, temporarily assigning the value of each element to the variable <var>elem</var>. Python then applies the function <code><var>elem</var>*2</code> and appends that result to the returned list.
+<li>Note that list comprehensions do not change the original list.
+<li>It is safe to assign the result of a list comprehension to the variable that you're mapping. Python constructs the new list in memory, and when the list comprehension is complete, it assigns the result to the variable.
+
+<p>Here are the list comprehensions in the <code>buildConnectionString</code> function that you declared in <a href="#odbchelper">Chapter 2</a>:<pre><code>
+["%s=%s" % (k, v) for k, v in params.items()]</pre><p>First, notice that you're calling the <code>items</code> function of the <var>params</var> dictionary. This function returns a list of tuples of all the data in the dictionary.
+<div class=example><h3 id="odbchelper.items">Example 3.25. The <code>keys</code>, <code>values</code>, and <code>items</code> Functions</h3><pre class=screen><samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+<samp class=p>>>> </samp><kbd>params.keys()</kbd>   <span>&#x2460;</span>
+['server', 'uid', 'database', 'pwd']
+<samp class=p>>>> </samp><kbd>params.values()</kbd> <span>&#x2461;</span>
+['mpilgrim', 'sa', 'master', 'secret']
+<samp class=p>>>> </samp><kbd>params.items()</kbd>  <span>&#x2462;</span>
+[('server', 'mpilgrim'), ('uid', 'sa'), ('database', 'master'), ('pwd', 'secret')]</pre>
+<ol>
+<li>The <code>keys</code> method of a dictionary returns a list of all the keys. The list is not in the order in which the dictionary was defined
+            (remember that elements in a dictionary are unordered), but it is a list.
+<li>The <code>values</code> method returns a list of all the values. The list is in the same order as the list returned by <code>keys</code>, so <code>params.values()[n] == params[params.keys()[n]]</code> for all values of <var>n</var>.
+<li>The <code>items</code> method returns a list of tuples of the form <code>(<var>key</var>, <var>value</var>)</code>. The list contains all the data in the dictionary.
+<p>Now let's see what <code>buildConnectionString</code> does. It takes a list, <code><var>params</var>.<code>items</code>()</code>, and maps it to a new list by applying string formatting to each element. The new list will have the same number of elements
+as <code><var>params</var>.<code>items</code>()</code>, but each element in the new list will be a string that contains both a key and its associated value from the <var>params</var> dictionary.
+<div class=example><h3>Example 3.26. List Comprehensions in <code>buildConnectionString</code>, Step by Step</h3><pre class=screen><samp class=p>>>> </samp><kbd>params = {"server":"mpilgrim", "database":"master", "uid":"sa", "pwd":"secret"}</kbd>
+<samp class=p>>>> </samp><kbd>params.items()</kbd>
+[('server', 'mpilgrim'), ('uid', 'sa'), ('database', 'master'), ('pwd', 'secret')]
+<samp class=p>>>> </samp><kbd>[k for k, v in params.items()]</kbd>                <span>&#x2460;</span>
+['server', 'uid', 'database', 'pwd']
+<samp class=p>>>> </samp><kbd>[v for k, v in params.items()]</kbd>                <span>&#x2461;</span>
+['mpilgrim', 'sa', 'master', 'secret']
+<samp class=p>>>> </samp><kbd>["%s=%s" % (k, v) for k, v in params.items()]</kbd> <span>&#x2462;</span>
+['server=mpilgrim', 'uid=sa', 'database=master', 'pwd=secret']</pre>
+<ol>
+<li>Note that you're using two variables to iterate through the <code>params.items()</code> list. This is another use of <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a>. The first element of <code>params.items()</code> is <code>('server', 'mpilgrim')</code>, so in the first iteration of the list comprehension, <var>k</var> will get <code>'server'</code> and <var>v</var> will get <code>'mpilgrim'</code>. In this case, you're ignoring the value of <var>v</var> and only including the value of <var>k</var> in the returned list, so this list comprehension ends up being equivalent to <code><var>params</var>.<code>keys</code>()</code>.
+<li>Here you're doing the same thing, but ignoring the value of <var>k</var>, so this list comprehension ends up being equivalent to <code><var>params</var>.<code>values</code>()</code>.
+<li>Combining the previous two examples with some simple <a href="#odbchelper.stringformatting" title="3.5. Formatting Strings">string formatting</a>, you get a list of strings that include both the key and value of each element of the dictionary. This looks suspiciously
+            like the <a href="#odbchelper.output">output</a> of the program. All that remains is to join the elements in this list into a single string.
+-->
+
+<p class=a>&#x2042;
+
+<h2 id=set-comprehensions>Set Comprehensions</h2>
+
+<p>FIXME
+
+<p class=a>&#x2042;
+
+<h2 id=dictionary-comprehensions>Dictionary Comprehensions</h2>
+
+<p>FIXME
+
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Further Reading</h2>
+<ul>
+<li>FIXME
+</ul>
+<p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span class=u>&#x261C;</span></a> <a href=strings.html rel=next title='onward to &#8220;Strings&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>
