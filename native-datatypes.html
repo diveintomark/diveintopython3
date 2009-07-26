@@ -499,7 +499,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <p><span class=u>&#x261E;</span>Tuples can be converted into lists, and vice-versa. The built-in <code>tuple()</code> function takes a list and returns a tuple with the same elements, and the <code>list()</code> function takes a tuple and returns a list. In effect, <code>tuple()</code> freezes a list, and <code>list()</code> thaws a tuple.
 </blockquote>
 
-<h3 id=multivar>Assigning Multiple Values At Once</h>
+<h3 id=multivar>Assigning Multiple Values At Once</h3>
 
 <p>Here&#8217;s a cool programming shortcut: in Python, you can use a tuple to assign multiple values at once.
 
@@ -519,8 +519,8 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <p>This has all kinds of uses. I often want to assign names to a range of values. In <abbr>C</abbr>, you would use <code>enum</code> and manually list each constant and its associated value, which seems especially tedious when the values are consecutive. In Python, you can use the built-in <code>range()</code> function with multi-variable assignment to quickly assign consecutive values.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)</kbd>  <span class=u>&#x2461;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>MONDAY</kbd>                                                                       <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>MONDAY</kbd>                                                                       <span class=u>&#x2461;</span></a>
 <samp class=pp>0</samp>
 <samp class=p>>>> </samp><kbd class=pp>TUESDAY</kbd>
 <samp class=pp>1</samp>
