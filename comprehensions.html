@@ -194,11 +194,11 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd>a_list = [1, 9, 8, 4]</kbd>
-<a><samp class=p>>>> </samp><kbd>[elem * 2 for elem in a_list]</kbd>          <span>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd>[elem * 2 for elem in a_list]</kbd>           <span class=u>&#x2460;</span></a>
 <samp class=pp>[2, 18, 16, 8]</samp>
-<a><samp class=p>>>> </samp><kbd>a_list</kbd>                                 <span>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_list</kbd>                                  <span class=u>&#x2461;</span></a>
 <samp class=pp>[1, 9, 8, 4]</samp>
-<a><samp class=p>>>> </samp><kbd>a_list = [elem * 2 for elem in a_list]</kbd> <span>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd>a_list = [elem * 2 for elem in a_list]</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd>a_list</kbd>
 <samp class=pp>[2, 18, 16, 8]</samp></pre>
 <ol>
@@ -207,16 +207,51 @@ body{counter-reset:h1 3}
 <li>It is safe to assign the result of a list comprehension to the variable that you&#8217;re mapping. Python constructs the new list in memory, and when the list comprehension is complete, it assigns the result to the original variable.
 </ol>
 
-<p>FIXME
+<p>You can use any Python expression in a list comprehension, including the functions in the <code>os</code> module for manipulating files and directories.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>                                              <span class=u>&#x2460;</span></a>
 <samp class=pp>['feed-broken.xml', 'feed-ns0.xml', 'feed.xml']</samp>
-<samp class=p>>>> </samp><kbd class=pp>[os.path.abspath(filename) for filename in glob.glob('*.xml')]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>[os.path.abspath(filename) for filename in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>['c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml']</samp>
 </pre>
+<ol>
+<li>FIXME
+<li>
+</ol>
+
+<p>List comprehensions can also filter items, producing a result that may be smaller than the original list.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>[f for f in glob.glob('*.py') if os.stat(f).st_size > 6000]</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>['pluraltest6.py',
+ 'romantest10.py',
+ 'romantest6.py',
+ 'romantest7.py',
+ 'romantest8.py',
+ 'romantest9.py']</samp>
+</pre>
+<ol>
+<li>To filter a list, you can include an <code>if</code> clause at the end of the list comprehension. The expression after the <code>if</code> keyword will be evaluated for each item in the list. If the expression evaluates to <code>True</code>, the item will be included in the output. This list comprehension looks at the list of all <code>.py</code> files in the current directory, and the <code>if</code> expression filters that list by testing whether the size of each file is greater than <code>6000</code> bytes. There are six such files, so the list comprehension returns a list of six filenames.
+</ol>
+
+<p>All the examples of list comprehensions so far have featured simple expressions&nbsp;&mdash;&nbsp;multiply a number by a constant, call a single function, or simply return the original list item (after filtering). But there&#8217;s no limit to how complex a list comprehension can be.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>[(os.stat(f).st_size, os.path.abspath(f)) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=pp>[(3074, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml'),
+ (3386, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml'),
+ (3070, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml')]</samp></pre>
+<ol>
+<li>This list comprehension finds all the <code>.xml</code> files in the current working directory, gets the size of each file, and returns a tuple of the file size and the absolute path of each file.
+</ol>
+
+<p>FIXME
 
 <pre>
 >>> print("\n".join(["{0:>8} {1}".format(humansize.approximate_size(os.stat(f).st_size, False), os.path.abspath(f)) for f in glob.glob('*.py')]))
