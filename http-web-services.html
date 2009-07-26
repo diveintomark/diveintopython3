@@ -36,8 +36,8 @@ mark{display:inline}
 <p>Python 3 comes with two different libraries for interacting with <abbr>HTTP</abbr> web services:
 
 <ul>
-<li><a href=http://docs.python.org/3.0/library/http.client.html><code>http.client</code></a> is a low-level library that implements <a href=http://www.w3.org/Protocols/rfc2616/rfc2616.html><abbr>RFC</abbr> 2616</a>, the <abbr>HTTP</abbr> protocol.
-<li><a href=http://docs.python.org/3.0/library/urllib.request.html><code>urllib.request</code></a> is an abstraction layer built on top of <code>http.client</code>. It provides a standard <abbr>API</abbr> for accessing both <abbr>HTTP</abbr> and <abbr>FTP</abbr> servers, automatically follows <abbr>HTTP</abbr> redirects, and handles some common forms of <abbr>HTTP</abbr> authentication.
+<li><a href=http://docs.python.org/3.1/library/http.client.html><code>http.client</code></a> is a low-level library that implements <a href=http://www.w3.org/Protocols/rfc2616/rfc2616.html><abbr>RFC</abbr> 2616</a>, the <abbr>HTTP</abbr> protocol.
+<li><a href=http://docs.python.org/3.1/library/urllib.request.html><code>urllib.request</code></a> is an abstraction layer built on top of <code>http.client</code>. It provides a standard <abbr>API</abbr> for accessing both <abbr>HTTP</abbr> and <abbr>FTP</abbr> servers, automatically follows <abbr>HTTP</abbr> redirects, and handles some common forms of <abbr>HTTP</abbr> authentication.
 </ul>
 
 <p>So which one should you use? Neither of them. Instead, you should use <a href=http://code.google.com/p/httplib2/><code>httplib2</code></a>, an open source third-party library that implements <abbr>HTTP</abbr> more fully than <code>http.client</code> but provides a better abstraction than <code>urllib.request</code>.
@@ -213,7 +213,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <samp><a>send: b'GET /examples/feed.xml HTTP/1.1                                 <span class=u>&#x2462;</span></a>
 <a>Host: diveintopython3.org                                               <span class=u>&#x2463;</span></a>
 <a>Accept-Encoding: identity                                               <span class=u>&#x2464;</span></a>
-<a>User-Agent: Python-urllib/3.0'                                          <span class=u>&#x2465;</span></a>
+<a>User-Agent: Python-urllib/3.1'                                          <span class=u>&#x2465;</span></a>
 Connection: close
 reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp></pre>
@@ -265,7 +265,7 @@ Content-Type: application/xml</samp>
 <samp>send: b'GET /examples/feed.xml HTTP/1.1
 Host: diveintopython3.org
 Accept-Encoding: identity
-User-Agent: Python-urllib/3.0'
+User-Agent: Python-urllib/3.1'
 Connection: close
 reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp></pre>
