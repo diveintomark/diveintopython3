@@ -28,6 +28,7 @@ body{counter-reset:h1 2}
 <li><b>Strings</b> are sequences of Unicode characters, <i>e.g.</i> an <abbr>HTML</abbr> document.
 <li><b>Bytes</b> and <b>byte arrays</b>, <i>e.g.</i> a <abbr>JPEG</abbr> image file.
 <li><b>Lists</b> are ordered sequences of values.
+<li><b>Tuples</b> are ordered, immutable sequences of values.
 <li><b>Sets</b> are unordered bags of values.
 <li><b>Dictionaries</b> are unordered bags of key-value pairs.
 </ol>
@@ -37,7 +38,7 @@ body{counter-reset:h1 2}
 
 <h2 id=booleans>Booleans</h2>
 <aside>You can use virtually any expression in a boolean context.</aside>
-<p>Booleans are either true or false. Python has two constants, cleverly <code>True</code> and <code>False</code>, which can be used to assign boolean values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
+<p>Booleans are either true or false. Python has two constants, cleverly <code><dfn>True</dfn></code> and <code><dfn>False</dfn></code>, which can be used to assign <dfn>boolean</dfn> values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 <pre class=nd><code class=pp>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
@@ -69,7 +70,7 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=numbers>Numbers</h2>
-<p>Numbers are awesome. There are so many to choose from. Python supports both integers and floating point numbers. There&#8217;s no type declaration to distinguish them; Python tells them apart by the presence or absence of a decimal point.
+<p>Numbers are awesome. There are so many to choose from. Python supports both <dfn>integer</dfn>s and <dfn>floating point</dfn> numbers. There&#8217;s no type declaration to distinguish them; Python tells them apart by the presence or absence of a <dfn>decimal</dfn> point.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>type(1)</kbd>                 <span class=u>&#x2460;</span></a>
 <samp class=pp>&lt;class 'int'></samp>
@@ -213,7 +214,7 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=lists>Lists</h2>
-<p>Lists are Python&#8217;s workhorse datatype. When I say &#8220;list,&#8221; you might be thinking &#8220;array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c.&#8221; Don&#8217;t think that. Lists are much cooler than that.
+<p>Lists are Python&#8217;s workhorse datatype. When I say &#8220;<dfn>list</dfn>,&#8221; you might be thinking &#8220;array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c.&#8221; Don&#8217;t think that. Lists are much cooler than that.
 <blockquote class='note compare perl5'>
 <p><span class=u>&#x261E;</span>A list in Python is like an array in Perl 5. In Perl 5, variables that store arrays always start with the <code>@</code> character; in Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
@@ -440,6 +441,66 @@ IndexError: pop from empty list</samp></pre>
 
 <p class=a>&#x2042;
 
+<h2 id=tuples>Tuples</h2>
+
+<p>A <dfn>tuple</dfn> is an immutable list.  A tuple can not be changed in any way once it is created.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple = ("a", "b", "mpilgrim", "z", "example")</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_tuple</kbd>
+<samp class=pp>('a', 'b', 'mpilgrim', 'z', 'example')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[0]</kbd>                                        <span class=u>&#x2461;</span></a>
+<samp class=pp>'a'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[-1]</kbd>                                       <span class=u>&#x2462;</span></a>
+<samp class=pp>'example'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[1:3]</kbd>                                      <span class=u>&#x2463;</span></a>
+<samp class=pp>('b', 'mpilgrim')</samp></pre>
+<ol>
+<li>A tuple is defined in the same way as a list, except that the whole set of elements is enclosed in parentheses instead of square brackets.
+<li>The elements of a tuple have a defined order, just like a list. Tuple indices are zero-based, just like a list, so the first element of a non-empty tuple is always <code>a_tuple[0]</code>.
+<li>Negative indices count from the end of the tuple, just like a list.
+<li>Slicing works too, just like a list. When you slice a list, you get a new list; when you slice a tuple, you get a new tuple.
+</ol>
+
+<p>The major difference between tuples and lists is that tuples can not be changed. In technical terms, tuples are <dfn>immutable</dfn>. In practical terms, they have no methods that would allow you to change them. Lists have methods like <code>append()</code>, <code>extend()</code>, <code>insert()</code>, <code>remove()</code>, and <code>pop()</code>. Tuples have none of these methods. You can slice a tuple (because that creates a new tuple), and you can check whether a tuple contains a particular value (because that doesn&#8217;t change the tuple), and&hellip; that&#8217;s about it.
+
+<pre class=screen>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd class=pp>a_tuple</kbd>
+<samp class=pp>('a', 'b', 'mpilgrim', 'z', 'example')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.append("new")</kbd>               <span class=u>&#x2460;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+AttributeError: 'tuple' object has no attribute 'append'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.remove("z")</kbd>                 <span class=u>&#x2461;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+AttributeError: 'tuple' object has no attribute 'remove'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.index("example")</kbd>            <span class=u>&#x2462;</span></a>
+<samp class=pp>4</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>"z" in a_tuple</kbd>                      <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp></pre>
+<ol>
+<li>You can&#8217;t add elements to a tuple. Tuples have no <code>append()</code> or <code>extend()</code> method.
+<li>You can&#8217;t remove elements from a tuple. Tuples have no <code>remove()</code> or <code>pop()</code> method.
+<li>You <em>can</em> find elements in a tuple, since this doesn&#8217;t change the tuple.
+<li>You can also use the <code>in</code> operator to check if an element exists in the tuple.
+</ol>
+
+<p>So what are tuples good for?</p> 
+
+<ul> 
+<li>Tuples are faster than lists.  If you&#8217;re defining a constant set of values and all you&#8217;re ever going to do with it is iterate through it, use a tuple instead of a list.
+<li>It makes your code safer if you &#8220;write-protect&#8221; data that doesn&#8217;t need to be changed. Using a tuple instead of a list is like having an implied <code>assert</code> statement that shows this data is constant, and that special thought (and a specific function) is required to override that.
+<li>Some tuples can be used as dictionary keys, as you&#8217;ll see later in this chapter. (Lists can never be used as dictionary keys.)
+</ul>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Tuples can be converted into lists, and vice-versa. The built-in <code>tuple()</code> function takes a list and returns a tuple with the same elements, and the <code>list()</code> function takes a tuple and returns a list. In effect, <code>tuple()</code> freezes a list, and <code>list()</code> thaws a tuple.
+</blockquote>
+
+<p class=a>&#x2042;
+
 <h2 id=sets>Sets</h2>
 
 <p>A <dfn>set</dfn> is an unordered &#8220;bag&#8221; of unique values. A single set can contain values of any datatype. Once you have a two sets, you can do standard set operations like union, intersection, and set difference.
@@ -493,7 +554,7 @@ IndexError: pop from empty list</samp></pre>
 <samp class=pp>&lt;class 'dict'></samp></pre>
 <ol>
 <li>To create an empty set, call <code>set()</code> with no arguments.
-<li>The printed representation of an empty set looks a bit strange. Were you expecting <code>{}</code>, perhaps? That would denote an empty dictionary, not an empty set. (You&#8217;ll learn about dictionaries later in this chapter.)
+<li>The printed representation of an empty set looks a bit strange. Were you expecting <code>{}</code>, perhaps? That would denote an empty dictionary, not an empty set. You&#8217;ll learn about dictionaries later in this chapter.
 <li>Despite the strange printed representation, this <em>is</em> a set&hellip;
 <li>&hellip;and this set has no members.
 <li>Due to historical quirks carried over from Python 2, you can not create an empty set with two curly brackets. This actually creates an empty dictionary, not an empty set.
@@ -690,7 +751,8 @@ KeyError: 'pop from an empty set'</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=dictionaries>Dictionaries</h2>
-<p>One of Python&#8217;s most important datatypes is the dictionary. A dictionary is an unordered set of key-value pairs. When you add a key to a dictionary, you must also add a value for that key. (You can always change the value later.) Python dictionaries are optimized for retrieving the value when you know the key, but not the other way around.
+
+<p>A <dfn>dictionary</dfn> is an unordered set of key-value pairs. When you add a key to a dictionary, you must also add a value for that key. (You can always change the value later.) Python dictionaries are optimized for retrieving the value when you know the key, but not the other way around.
 <blockquote class='note compare perl5'>
 <p><span class=u>&#x261E;</span>A dictionary in Python is like a hash in Perl 5. In Perl 5, variables that store hashes always start with a <code>%</code> character. In Python, variables can be named anything, and Python keeps track of the datatype internally.
 </blockquote>
@@ -785,7 +847,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=none><code>None</code></h2>
-<p><code>None</code> is a special constant in Python. It is a null value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not <code>0</code>. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
+<p><code><dfn>None</dfn></code> is a special constant in Python. It is a <dfn>null</dfn> value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not <code>0</code>. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
 <p><code>None</code> is the only null value. It has its own datatype (<code>NoneType</code>). You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects. All variables whose value is <code>None</code> are equal to each other.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>type(None)</kbd>
@@ -822,8 +884,13 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
-<li><a href=http://docs.python.org/3.0/library/fractions.html>The <code>fractions</code> module</a>
-<li><a href=http://docs.python.org/3.0/library/math.html>The <code>math</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#boolean-operations-and-or-not>Boolean operations</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#numeric-types-int-float-long-complex>Numeric types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#sequence-types-str-unicode-list-tuple-buffer-xrange>Sequence types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#set-types-set-frozenset>Set types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#mapping-types-dict>Mapping types</a>
+<li><a href=http://docs.python.org/3.1/library/fractions.html><code>fractions</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/math.html><code>math</code> module</a>
 <li><a href=http://www.python.org/dev/peps/pep-0237/><abbr>PEP</abbr> 237: Unifying Long Integers and Integers</a>
 <li><a href=http://www.python.org/dev/peps/pep-0238/><abbr>PEP</abbr> 238: Changing the Division Operator</a>
 </ul>
