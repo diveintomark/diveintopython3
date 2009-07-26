@@ -50,145 +50,99 @@ body{counter-reset:h1 3}
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>import os</kbd>                                            <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>                                   <span class=u>&#x2461;</span></a>
-<samp class=pp>C:\Python31</samp>
+<samp>C:\Python31</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>os.chdir('/Users/pilgrim/diveintopython3/examples')</kbd>  <span class=u>&#x2462;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>                                   <span class=u>&#x2463;</span></a>
-<samp class=pp>C:\Users\pilgrim\diveintopython3\examples</samp></pre>
+<samp>C:\Users\pilgrim\diveintopython3\examples</samp></pre>
 <ol>
-<li>When you run the graphical Python Shell, the current working directory starts as the directory where the Python Shell executable is. On Windows, this depends on where you installed Python; the default directory is <code>c:\Python31</code>. If you run the Python Shell from the command line, the current working directory starts as the directory you were in when you ran <code>python3</code>.
-<li>FIXME
-<li>FIXME
-<li>FIXME
+<li>The <code>os</code> module comes with Python; you can import it anytime, anywhere.
+<li>Use the <code>os.getcwd()</code> function to get the current working directory. When you run the graphical Python Shell, the current working directory starts as the directory where the Python Shell executable is. On Windows, this depends on where you installed Python; the default directory is <code>c:\Python31</code>. If you run the Python Shell from the command line, the current working directory starts as the directory you were in when you ran <code>python3</code>.
+<li>Use the <code>os.chdir()</code> function to change the current working directory.
+<li>When I called the <code>os.chdir()</code> function, I used a Linux-style pathname (forward slashes, no drive letter) even though I&#8217;m on Windows. This is one of the places where Python tries to paper over the differences between operating systems.
 </ol>
 
 <h3 id=ospath>The <code>os.path</code> module</h3>
 
-<p>FIXME The <code>os.path</code> module has several functions for manipulating files and directories. Here, we're looking at handling pathnames and listing the contents of a directory.
+<p>While we&#8217;re on the subject of directories, I want to point out the <code>os.path</code> submodule. <code>os.path</code> contains functions for manipulating filenames and directory names.
+
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>import os</kbd>
-<samp class=p>>>> </samp><kbd>os.path.join("c:\\music\\ap\\", "mahadeva.mp3")</kbd> <span>&#x2460;</span> <span>&#x2461;</span>
-'c:\\music\\ap\\mahadeva.mp3'
-<samp class=p>>>> </samp><kbd>os.path.join("c:\\music\\ap", "mahadeva.mp3")</kbd>   <span>&#x2462;</span>
-'c:\\music\\ap\\mahadeva.mp3'
-<samp class=p>>>> </samp><kbd>os.path.expanduser("~")</kbd>       <span>&#x2463;</span>
-'c:\\Documents and Settings\\mpilgrim\\My Documents'
-<samp class=p>>>> </samp><kbd>os.path.join(os.path.expanduser("~"), "Python")</kbd> <span>&#x2464;</span>
-'c:\\Documents and Settings\\mpilgrim\\My Documents\\Python'</pre>
+<samp class=p>>>> </samp><kbd class=pp>import os</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join('/Users/pilgrim/diveintopython3/examples/', 'humansize.py'))</kbd>              <span class=u>&#x2460;</span></a>
+<samp class=pp>/Users/pilgrim/diveintopython3/examples/humansize.py</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join('/Users/pilgrim/diveintopython3/examples', 'humansize.py'))</kbd>               <span class=u>&#x2461;</span></a>
+<samp class=pp>/Users/pilgrim/diveintopython3/examples\humansize.py</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.path.expanduser('~'))</kbd>                                                               <span class=u>&#x2462;</span></a>
+<samp class=pp>c:\Users\pilgrim</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join(os.path.expanduser('~'), 'diveintopython3', 'examples', 'humansize.py'))</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>c:\Users\pilgrim\diveintopython3\examples\humansize.py</samp></pre>
 <ol>
-<li><code>os.path</code> is a reference to a module -- which module depends on your platform. Just as <a href="#crossplatform.example" title="Example 6.2. Supporting Platform-Specific Functionality"><code>getpass</code></a> encapsulates differences between platforms by setting <var>getpass</var> to a platform-specific function, <code>os</code> encapsulates differences between platforms by setting <var>path</var> to a platform-specific module.
-<li>The <code>join</code> function of <code>os.path</code> constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings. (Note that dealing
-            with pathnames on Windows is annoying because the backslash character must be escaped.)
-<li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since
-<code>addSlashIfNecessary</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
-<li><code>expanduser</code> will expand a pathname that uses <code>~</code> to represent the current user's home directory. This works on any platform where users have a home directory, like Windows,
-<abbr>UNIX</abbr>, and Mac OS X; it has no effect on Mac OS.
-<li>Combining these techniques, you can easily construct pathnames for directories and files under the user's home directory.
+<li>The <code>os.path.join()</code> function constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings.
+<li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since <code>addSlashIfNecessary()</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
+<li>The <code>os.path.expanduser()</code> function will expand a pathname that uses <code>~</code> to represent the current user&#8217;s home directory. This works on any platform where users have a home directory, including Linux, Mac OS X, and Windows.
+<li>Combining these techniques, you can easily construct pathnames for directories and files under the user&#8217;s home directory.
 </ol>
 
-<p>FIXME
+<p><code>os.path</code> also contains functions to split full pathnames, directory names, and filenames into their constituent parts.
 
-<pre class=screen><samp class=p>>>> </samp><kbd>os.path.split("c:\\music\\ap\\mahadeva.mp3")</kbd>      <span>&#x2460;</span>
-('c:\\music\\ap', 'mahadeva.mp3')
-<samp class=p>>>> </samp><kbd>(filepath, filename) = os.path.split("c:\\music\\ap\\mahadeva.mp3")</kbd> <span>&#x2461;</span>
-<samp class=p>>>> </samp><kbd>filepath</kbd>      <span>&#x2462;</span>
-'c:\\music\\ap'
-<samp class=p>>>> </samp><kbd>filename</kbd>      <span>&#x2463;</span>
-'mahadeva.mp3'
-<samp class=p>>>> </samp><kbd>(shortname, extension) = os.path.splitext(filename)</kbd>                 <span>&#x2464;</span>
-<samp class=p>>>> </samp><kbd>shortname</kbd>
-'mahadeva'
-<samp class=p>>>> </samp><kbd>extension</kbd>
-'.mp3'</pre>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>pathname = '/Users/pilgrim/diveintopython3/examples/humansize.py'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>os.path.split(pathname)</kbd>                                        <span class=u>&#x2460;</span></a>
+<samp class=pp>('/Users/pilgrim/diveintopython3/examples', 'humansize.py')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>(dirname, filename) = os.path.split(pathname)</kbd>                  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>dirname</kbd>                                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>'/Users/pilgrim/diveintopython3/examples'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>filename</kbd>                                                       <span class=u>&#x2463;</span></a>
+<samp class=pp>'humansize.py'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>(shortname, extension) = os.path.splitext(filename)</kbd>            <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>shortname</kbd>
+<samp class=pp>'humansize'</samp>
+<samp class=p>>>> </samp><kbd class=pp>extension</kbd>
+<samp class=pp>'.py'</samp></pre>
 <ol>
-<li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename. Remember when I said you could use
-<a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a> to return multiple values from a function?  Well, <code>split</code> is such a function.
+<li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename. Remember when I said you could use <a href=native-datatypes.html#multivar>multi-variable assignment</a> to return multiple values from a function? The <code>os.path.split()</code> function does exactly that.
 <li>You assign the return value of the <code>split</code> function into a tuple of two variables. Each variable receives the value of the corresponding element of the returned tuple.
-<li>The first variable, <var>filepath</var>, receives the value of the first element of the tuple returned from <code>split</code>, the file path.
-<li>The second variable, <var>filename</var>, receives the value of the second element of the tuple returned from <code>split</code>, the filename.
-<li><code>os.path</code> also contains a function <code>splitext</code>, which splits a filename and returns a tuple containing the filename and the file extension.  You use the same technique
-            to assign each of them to separate variables.
-</ol>
-
-<p>FIXME
-
-<pre class=screen><samp class=p>>>> </samp><kbd>os.listdir("c:\\music\\_singles\\")</kbd>              <span>&#x2460;</span>
-<samp>['a_time_long_forgotten_con.mp3', 'hellraiser.mp3',
-'kairo.mp3', 'long_way_home1.mp3', 'sidewinder.mp3', 
-'spinning.mp3']</samp>
-<samp class=p>>>> </samp><kbd>dirname = "c:\\"</kbd>
-<samp class=p>>>> </samp><kbd>os.listdir(dirname)</kbd>            <span>&#x2461;</span>
-<samp>['AUTOEXEC.BAT', 'boot.ini', 'CONFIG.SYS', 'cygwin',
-'docbook', 'Documents and Settings', 'Incoming', 'Inetpub', 'IO.SYS',
-'MSDOS.SYS', 'Music', 'NTDETECT.COM', 'ntldr', 'pagefile.sys',
-'Program Files', 'Python20', 'RECYCLER',
-'System Volume Information', 'TEMP', 'WINNT']</samp>
-<samp class=p>>>> </samp><kbd>[f for f in os.listdir(dirname)</kbd>
-<samp class=p>...    </samp>if os.path.isfile(os.path.join(dirname, f))] <span>&#x2462;</span>
-<samp>['AUTOEXEC.BAT', 'boot.ini', 'CONFIG.SYS', 'IO.SYS', 'MSDOS.SYS',
-'NTDETECT.COM', 'ntldr', 'pagefile.sys']</samp>
-<samp class=p>>>> </samp><kbd>[f for f in os.listdir(dirname)</kbd>
-<samp class=p>...    </samp>if os.path.isdir(os.path.join(dirname, f))]  <span>&#x2463;</span>
-<samp>['cygwin', 'docbook', 'Documents and Settings', 'Incoming',
-'Inetpub', 'Music', 'Program Files', 'Python20', 'RECYCLER',
-'System Volume Information', 'TEMP', 'WINNT']</samp></pre>
-<ol>
-<li>The <code>listdir</code> function takes a pathname and returns a list of the contents of the directory.
-<li><code>listdir</code> returns both files and folders, with no indication of which is which.
-<li>You can use <a href="#apihelper.filter" title="4.5. Filtering Lists">list filtering</a> and the <code>isfile</code> function of the <code>os.path</code> module to separate the files from the folders. <code>isfile</code> takes a pathname and returns 1 if the path represents a file, and 0 otherwise. Here you're using <code><code>os.path</code>.<code>join</code></code> to ensure a full pathname, but <code>isfile</code> also works with a partial path, relative to the current working directory. You can use <code>os.getcwd()</code> to get the current working directory.
-<li><code>os.path</code> also has a <code>isdir</code> function which returns 1 if the path represents a directory, and 0 otherwise. You can use this to get a list of the subdirectories
-            within a directory.
+<li>The first variable, <var>dirname</var>, receives the value of the first element of the tuple returned from the <code>os.path.split()</code> function, the file path.
+<li>The second variable, <var>filename</var>, receives the value of the second element of the tuple returned from the <code>os.path.split()</code> function, the filename.
+<li><code>os.path</code> also contains the <code>os.path.splitext()</code> function, which splits a filename and returns a tuple containing the filename and the file extension.  You use the same technique to assign each of them to separate variables.
 </ol>
 
 <h2 id=glob>The <code>glob</code> module</h2>
 
-<p>FIXME
-
-<pre><code>def listDirectory(directory, fileExtList):
-    "get list of file info objects for files of particular extensions"
-    fileList = [os.path.normcase(f)
-                for f in os.listdir(directory)]            <span>&#x2460;</span> <span>&#x2461;</span>
-    fileList = [os.path.join(directory, f) 
-               for f in fileList
-                if os.path.splitext(f)[1] in fileExtList]  <span>&#x2462;</span> <span>&#x2463;</span> <span>&#x2464;</span></code></pre>
-<ol>
-<li><code>os.listdir(directory)</code> returns a list of all the files and folders in <var>directory</var>.
-<li>Iterating through the list with <var>f</var>, you use <code>os.path.normcase(f)</code> to normalize the case according to operating system defaults. <code>normcase</code> is a useful little function that compensates for case-insensitive operating systems that think that <code>mahadeva.mp3</code> and <code>mahadeva.MP3</code> are the same file. For instance, on Windows and Mac OS, <code>normcase</code> will convert the entire filename to lowercase; on <abbr>UNIX</abbr>-compatible systems, it will return the filename unchanged.
-<li>Iterating through the normalized list with <var>f</var> again, you use <code>os.path.splitext(f)</code> to split each filename into name and extension.
-<li>For each file, you see if the extension is in the list of file extensions you care about (<var>fileExtList</var>, which was passed to the <code>listDirectory</code> function).
-<li>For each file you care about, you use <code>os.path.join(directory, f)</code> to construct the full pathname of the file, and return a list of the full pathnames.
-</ol>
-
-<blockquote class=note>
-<p><span class=u>&#x261E;</span>Whenever possible, you should use the functions in <code>os</code> and <code>os.path</code> for file, directory, and path manipulations. These modules are wrappers for platform-specific modules, so functions like <code>os.path.split()</code> work on <abbr>UNIX</abbr>, Windows, Mac OS X, and any other platform supported by Python.
-</blockquote>
-
-<p>There is one other way to get the contents of a directory. It's very powerful, and it uses the sort of wildcards that you may already be familiar with from working on the command line.
+<p>The <code>glob</code> module is another tool in the Python standard library. It&#8217;s an easy way to get the contents of a directory programmatically, and it uses the sort of wildcards that you may already be familiar with from working on the command line.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd>os.listdir("c:\\music\\_singles\\")</kbd>               <span>&#x2460;</span>
-<samp>['a_time_long_forgotten_con.mp3', 'hellraiser.mp3',
-'kairo.mp3', 'long_way_home1.mp3', 'sidewinder.mp3',
-'spinning.mp3']</samp>
-<samp class=p>>>> </samp><kbd>import glob</kbd>
-<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\_singles\\*.mp3')</kbd>           <span>&#x2461;</span>
-<samp>['c:\\music\\_singles\\a_time_long_forgotten_con.mp3',
-'c:\\music\\_singles\\hellraiser.mp3',
-'c:\\music\\_singles\\kairo.mp3',
-'c:\\music\\_singles\\long_way_home1.mp3',
-'c:\\music\\_singles\\sidewinder.mp3',
-'c:\\music\\_singles\\spinning.mp3']</samp>
-<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\_singles\\s*.mp3')</kbd>          <span>&#x2462;</span>
-<samp>['c:\\music\\_singles\\sidewinder.mp3',
-'c:\\music\\_singles\\spinning.mp3']</samp>
-<samp class=p>>>> </samp><kbd>glob.glob('c:\\music\\*\\*.mp3')</kbd><span>&#x2463;</span>
-</pre>
+<samp class=p>>>> </samp><kbd class=pp>os.chdir('/Users/pilgrim/diveintopython3/')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import glob</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('examples/*.xml')</kbd>                  <span class=u>&#x2460;</span></a>
+<samp class=pp>['examples\\feed-broken.xml',
+ 'examples\\feed-ns0.xml',
+ 'examples\\feed.xml']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>os.chdir('examples/')</kbd>                        <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*test*.py')</kbd>                       <span class=u>&#x2462;</span></a>
+<samp class=pp>['alphameticstest.py',
+ 'pluraltest1.py',
+ 'pluraltest2.py',
+ 'pluraltest3.py',
+ 'pluraltest4.py',
+ 'pluraltest5.py',
+ 'pluraltest6.py',
+ 'romantest1.py',
+ 'romantest10.py',
+ 'romantest2.py',
+ 'romantest3.py',
+ 'romantest4.py',
+ 'romantest5.py',
+ 'romantest6.py',
+ 'romantest7.py',
+ 'romantest8.py',
+ 'romantest9.py']</samp></pre>
 <ol>
-<li>As you saw earlier, <code>os.listdir</code> simply takes a directory path and lists all files and directories in that directory.
-<li>The <code>glob</code> module, on the other hand, takes a wildcard and returns the full path of all files and directories matching the wildcard.
-             Here the wildcard is a directory path plus "*.mp3", which will match all <code>.mp3</code> files. Note that each element of the returned list already includes the full path of the file.
-<li>If you want to find all the files in a specific directory that start with "s" and end with ".mp3", you can do that too.
-<li>Now consider this scenario: you have a <code>music</code> directory, with several subdirectories within it, with <code>.mp3</code> files within each subdirectory. You can get a list of all of those with a single call to <code>glob</code>, by using two wildcards at once. One wildcard is the <code>"*.mp3"</code> (to match <code>.mp3</code> files), and one wildcard is <em>within the directory path itself</em>, to match any subdirectory within <code>c:\music</code>. That's a crazy amount of power packed into one deceptively simple-looking function!
+<li>The <code>glob</code> module takes a wildcard and returns the path of all files and directories matching the wildcard. In this example, the wildcard is a directory path plus &#8220;<code>*.xml</code>&#8221;, which will match all <code>.xml</code> files in the <code>examples</code> subdirectory.
+<li>Now change the current working directory to the <code>examples</code> subdirectory. The <code>os.chdir()</code> function can take relative pathnames.
+<li>You can include multiple wildcards in your glob pattern. This example finds all the files in the current working directory that end in a <code>.py</code> extension and contain the word <code>test</code> anywhere in their filename.
 </ol>
+
+<p>Now you&#8217;re ready to learn about comprehensions.
 
 <h2 id=list-comprehensions>List Comprehensions</h2>
 
@@ -249,6 +203,51 @@ as <code><var>params</var>.<code>items</code>()</code>, but each element in the 
 <li>Combining the previous two examples with some simple <a href="#odbchelper.stringformatting" title="3.5. Formatting Strings">string formatting</a>, you get a list of strings that include both the key and value of each element of the dictionary. This looks suspiciously
             like the <a href="#odbchelper.output">output</a> of the program. All that remains is to join the elements in this list into a single string.
 </ol>
+
+<p>FIXME
+
+<pre>
+>>> print("\n".join(["{0:>8} {1}".format(humansize.approximate_size(os.stat(f).st_size, False), os.path.abspath(f)) for f in glob.glob('*.py')]))
+  2.5 KB c:\Users\pilgrim\diveintopython3\examples\alphametics.py
+  2.5 KB c:\Users\pilgrim\diveintopython3\examples\alphameticstest.py
+  1.5 KB c:\Users\pilgrim\diveintopython3\examples\fibonacci.py
+  1.8 KB c:\Users\pilgrim\diveintopython3\examples\fibonacci2.py
+  2.5 KB c:\Users\pilgrim\diveintopython3\examples\humansize.py
+  0.2 KB c:\Users\pilgrim\diveintopython3\examples\oneline.py
+  1.9 KB c:\Users\pilgrim\diveintopython3\examples\plural1.py
+  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural2.py
+  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural3.py
+  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural4.py
+  2.4 KB c:\Users\pilgrim\diveintopython3\examples\plural5.py
+  2.8 KB c:\Users\pilgrim\diveintopython3\examples\plural6.py
+  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest1.py
+  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest2.py
+  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest3.py
+  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest4.py
+  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest5.py
+  6.1 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest6.py
+  0.5 KB c:\Users\pilgrim\diveintopython3\examples\regression.py
+  2.2 KB c:\Users\pilgrim\diveintopython3\examples\roman1.py
+  3.4 KB c:\Users\pilgrim\diveintopython3\examples\roman10.py
+  2.3 KB c:\Users\pilgrim\diveintopython3\examples\roman2.py
+  2.3 KB c:\Users\pilgrim\diveintopython3\examples\roman3.py
+  2.5 KB c:\Users\pilgrim\diveintopython3\examples\roman4.py
+  2.7 KB c:\Users\pilgrim\diveintopython3\examples\roman5.py
+  3.6 KB c:\Users\pilgrim\diveintopython3\examples\roman6.py
+  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman7.py
+  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman8.py
+  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman9.py
+  4.0 KB c:\Users\pilgrim\diveintopython3\examples\romantest1.py
+  6.7 KB c:\Users\pilgrim\diveintopython3\examples\romantest10.py
+  4.2 KB c:\Users\pilgrim\diveintopython3\examples\romantest2.py
+  4.5 KB c:\Users\pilgrim\diveintopython3\examples\romantest3.py
+  4.7 KB c:\Users\pilgrim\diveintopython3\examples\romantest4.py
+  5.3 KB c:\Users\pilgrim\diveintopython3\examples\romantest5.py
+  6.1 KB c:\Users\pilgrim\diveintopython3\examples\romantest6.py
+  6.3 KB c:\Users\pilgrim\diveintopython3\examples\romantest7.py
+  6.5 KB c:\Users\pilgrim\diveintopython3\examples\romantest8.py
+  6.6 KB c:\Users\pilgrim\diveintopython3\examples\romantest9.py
+  0.4 KB c:\Users\pilgrim\diveintopython3\examples\stdout.py</pre>
 
 <p class=a>&#x2042;
 
