@@ -177,12 +177,12 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                                                   <span class=u>&#x2464;</span></a>
 <samp class=pp>['/home/mark/py', 
  '', 
- '/usr/lib/python30.zip', 
- '/usr/lib/python3.0', 
- '/usr/lib/python3.0/plat-linux2@EXTRAMACHDEPPATH@', 
- '/usr/lib/python3.0/lib-dynload', 
- '/usr/lib/python3.0/dist-packages', 
- '/usr/local/lib/python3.0/dist-packages']</samp></pre>
+ '/usr/lib/python31.zip', 
+ '/usr/lib/python3.1', 
+ '/usr/lib/python3.1/plat-linux2@EXTRAMACHDEPPATH@', 
+ '/usr/lib/python3.1/lib-dynload', 
+ '/usr/lib/python3.1/dist-packages', 
+ '/usr/local/lib/python3.1/dist-packages']</samp></pre>
 <ol>
 <li>Importing the <code>sys</code> module makes all of its functions and attributes available.
 <li><code>sys.path</code> is a list of directory names that constitute the current search path. (Yours will look different, depending on your operating system, what version of Python you&#8217;re running, and where it was originally installed.)  Python will look through these directories (in this order) for a <code>.py</code> file whose name matches what you&#8217;re trying to import.
@@ -341,7 +341,7 @@ if __name__ == '__main__':
 <samp class=pp>'humansize'</samp></pre>
 <p>But you can also run the module directly as a standalone program, in which case <code>__name__</code> will be a special default value, <code>__main__</code>. Python will evaluate this <code>if</code> statement, find a true expression, and execute the <code>if</code> code block. In this case, to print two values.
 <pre class='nd screen'>
-<samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python30\python.exe humansize.py</kbd>
+<samp class=p>c:\home\diveintopython3> </samp><kbd>c:\python31\python.exe humansize.py</kbd>
 <samp>1.0 TB
 931.3 GiB</samp></pre>
 <p>And that&#8217;s your first Python program!
@@ -350,9 +350,9 @@ if __name__ == '__main__':
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href=http://www.python.org/dev/peps/pep-0257/>PEP 257: Docstring Conventions</a> explains what distinguishes a good <code>docstring</code> from a great <code>docstring</code>.
-<li><a href=http://docs.python.org/3.0/tutorial/controlflow.html#documentation-strings>Python Tutorial: Documentation Strings</a> also touches on the subject.
+<li><a href=http://docs.python.org/3.1/tutorial/controlflow.html#documentation-strings>Python Tutorial: Documentation Strings</a> also touches on the subject.
 <li><a href=http://www.python.org/dev/peps/pep-0008/>PEP 8: Style Guide for Python Code</a> discusses good indentation style.
-<li><a href=http://docs.python.org/3.0/reference/><cite>Python Reference Manual</cite></a> explains what it means to say that <a href=http://docs.python.org/3.0/reference/datamodel.html#objects-values-and-types>everything in Python is an object</a>, because some people are <a href=http://www.douglasadams.com/dna/pedants.html>pedants</a> and like to discuss that sort of thing at great length.
+<li><a href=http://docs.python.org/3.1/reference/><cite>Python Reference Manual</cite></a> explains what it means to say that <a href=http://docs.python.org/3.1/reference/datamodel.html#objects-values-and-types>everything in Python is an object</a>, because some people are <a href=http://www.douglasadams.com/dna/pedants.html>pedants</a> and like to discuss that sort of thing at great length.
 </ul>
 <p class=v><a rel=prev href=installing-python.html title='back to &#8220;Installing Python&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=native-datatypes.html title='onward to &#8220;Native Datatypes&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
