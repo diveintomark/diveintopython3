@@ -63,7 +63,7 @@ body{counter-reset:h1 3}
 
 <h3 id=ospath>Working With Filenames and Directory Names</h3>
 
-<p>While we&#8217;re on the subject of directories, I want to point out the <code>os.path</code> submodule. <code>os.path</code> contains functions for manipulating filenames and directory names.
+<p>While we&#8217;re on the subject of directories, I want to point out the <code>os.path</code> module. <code>os.path</code> contains functions for manipulating filenames and directory names.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os</kbd>
@@ -151,18 +151,19 @@ body{counter-reset:h1 3}
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>                 <span class=u>&#x2460;</span></a>
 <samp class=pp>c:\Users\pilgrim\diveintopython3\examples</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>metadata = os.stat('feed.xml')</kbd>     <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>metadata.st_mtime</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata.st_mtime</kbd>                  <span class=u>&#x2462;</span></a>
 <samp class=pp>1247520344.9537716</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>import time</kbd>                        <span class=u>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>time.localtime(metadata.st_mtime)</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>import time</kbd>                        <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>time.localtime(metadata.st_mtime)</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=pp>time.struct_time(tm_year=2009, tm_mon=7, tm_mday=13, tm_hour=17,
   tm_min=25, tm_sec=44, tm_wday=0, tm_yday=194, tm_isdst=1)</samp>
 </pre>
 <ol>
-<li>FIXME
-<li>FIXME
-<li>FIXME
-<li>FIXME
+<li>The current working directory is the <code>examples</code> folder.
+<li><code>feed.xml</code> is a file in the <code>examples</code> folder. Calling the <code>os.stat()</code> function returns an object that contains several different types of metadata about the file.
+<li><code>st_mtime</code> is the modification time, but it&#8217;s in a format that isn&#8217;t terribly useful. (Technically, it&#8217;s the number of seconds since the Epoch, which is defined as the first second of January 1st, 1970. Seriously.)
+<li>The <code>time</code> module is part of the Python standard library. It contains functions to convert between different time representations, format time values into strings, and fiddle with timezones.
+<li>The <code>time.localtime()</code> function converts a time value from seconds-since-the-Epoch (from the <code>st_mtime</code> property returned from the <code>os.stat()</code> function) into a more useful structure of year, month, day, hour, minute, second, and so on. This file was last modified on July 13, 2009, at around 5:25 PM.
 </ol>
 
 <pre class=screen>
@@ -173,8 +174,8 @@ body{counter-reset:h1 3}
 <a.<samp class=p>>>> </samp><kbd class=pp>humansize.approximate_size(metadata.st_size)</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>'3.0 KiB'</samp></pre>
 <ol>
-<li>FIXME
-<li>FIXME
+<li>The <code>os.stat()</code> function also returns the size of a file, in the <code>st_size</code> property. The file <code>feed.xml</code> is <code>3070</code> bytes.
+<li>You can pass the <code>st_size</code> property to the <a href=your-first-python-program.html#divingin><code>approximate_size()</code> function</a>.
 </ol>
 
 <h3 id=abspath>Constructing Absolute Pathnames</h3>
@@ -188,7 +189,7 @@ body{counter-reset:h1 3}
 <samp class=p>>>> </samp><kbd class=pp>print(os.path.abspath('feed.xml'))</kbd>
 <samp class=pp>c:\Users\pilgrim\diveintopython3\examples\feed.xml</samp></pre>
 
-<h2 id=list-comprehensions>List Comprehensions</h2>
+<h2 id=listcomprehension>List Comprehensions</h2>
 
 <p>A <dfn>list comprehension</dfn> provides a compact way of mapping a list into another list by applying a function to each of the elements of the list.
 
@@ -211,19 +212,19 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>                                              <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>                                <span class=u>&#x2460;</span></a>
 <samp class=pp>['feed-broken.xml', 'feed-ns0.xml', 'feed.xml']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>[os.path.abspath(filename) for filename in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>[os.path.abspath(f) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>['c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml']</samp>
 </pre>
 <ol>
-<li>FIXME
-<li>
+<li>This returns a list of all the <code>.xml</code> files in the current working directory.
+<li>This list comprehension takes that list of <code>.xml</code> files and transforms it into a list of full pathnames.
 </ol>
 
-<p>List comprehensions can also filter items, producing a result that may be smaller than the original list.
+<p>List comprehensions can also filter items, producing a result that can be smaller than the original list.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
@@ -243,76 +244,110 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>[(os.stat(f).st_size, os.path.abspath(f)) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>[(os.stat(f).st_size, os.path.abspath(f)) for f in glob.glob('*.xml')]</kbd>             <span class=u>&#x2460;</span></a>
 <samp class=pp>[(3074, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml'),
  (3386, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml'),
- (3070, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml')]</samp></pre>
+ (3070, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml')]</samp>
+<samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>[(humansize.approximate_size(os.stat(f).st_size), f) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>[('3.0 KiB', 'feed-broken.xml'),
+ ('3.3 KiB', 'feed-ns0.xml'),
+ ('3.0 KiB', 'feed.xml')]</samp></pre>
 <ol>
-<li>This list comprehension finds all the <code>.xml</code> files in the current working directory, gets the size of each file, and returns a tuple of the file size and the absolute path of each file.
+<li>This list comprehension finds all the <code>.xml</code> files in the current working directory, gets the size of each file (by calling the <code>os.stat()</code> function), and constructs a tuple of the file size and the absolute path of each file (by calling the <code>os.path.abspath()</code> function).
+<li>This comprehension builds on the previous one to call the <a href=your-first-python-program.html#divingin><code>approximate_size()</code> function</a> with the file size of each <code>.xml</code> file.
 </ol>
 
-<p>FIXME
+<p class=a>&#x2042;
 
-<pre>
->>> print("\n".join(["{0:>8} {1}".format(humansize.approximate_size(os.stat(f).st_size, False), os.path.abspath(f)) for f in glob.glob('*.py')]))
-  2.5 KB c:\Users\pilgrim\diveintopython3\examples\alphametics.py
-  2.5 KB c:\Users\pilgrim\diveintopython3\examples\alphameticstest.py
-  1.5 KB c:\Users\pilgrim\diveintopython3\examples\fibonacci.py
-  1.8 KB c:\Users\pilgrim\diveintopython3\examples\fibonacci2.py
-  2.5 KB c:\Users\pilgrim\diveintopython3\examples\humansize.py
-  0.2 KB c:\Users\pilgrim\diveintopython3\examples\oneline.py
-  1.9 KB c:\Users\pilgrim\diveintopython3\examples\plural1.py
-  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural2.py
-  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural3.py
-  2.3 KB c:\Users\pilgrim\diveintopython3\examples\plural4.py
-  2.4 KB c:\Users\pilgrim\diveintopython3\examples\plural5.py
-  2.8 KB c:\Users\pilgrim\diveintopython3\examples\plural6.py
-  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest1.py
-  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest2.py
-  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest3.py
-  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest4.py
-  3.0 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest5.py
-  6.1 KB c:\Users\pilgrim\diveintopython3\examples\pluraltest6.py
-  0.5 KB c:\Users\pilgrim\diveintopython3\examples\regression.py
-  2.2 KB c:\Users\pilgrim\diveintopython3\examples\roman1.py
-  3.4 KB c:\Users\pilgrim\diveintopython3\examples\roman10.py
-  2.3 KB c:\Users\pilgrim\diveintopython3\examples\roman2.py
-  2.3 KB c:\Users\pilgrim\diveintopython3\examples\roman3.py
-  2.5 KB c:\Users\pilgrim\diveintopython3\examples\roman4.py
-  2.7 KB c:\Users\pilgrim\diveintopython3\examples\roman5.py
-  3.6 KB c:\Users\pilgrim\diveintopython3\examples\roman6.py
-  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman7.py
-  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman8.py
-  3.7 KB c:\Users\pilgrim\diveintopython3\examples\roman9.py
-  4.0 KB c:\Users\pilgrim\diveintopython3\examples\romantest1.py
-  6.7 KB c:\Users\pilgrim\diveintopython3\examples\romantest10.py
-  4.2 KB c:\Users\pilgrim\diveintopython3\examples\romantest2.py
-  4.5 KB c:\Users\pilgrim\diveintopython3\examples\romantest3.py
-  4.7 KB c:\Users\pilgrim\diveintopython3\examples\romantest4.py
-  5.3 KB c:\Users\pilgrim\diveintopython3\examples\romantest5.py
-  6.1 KB c:\Users\pilgrim\diveintopython3\examples\romantest6.py
-  6.3 KB c:\Users\pilgrim\diveintopython3\examples\romantest7.py
-  6.5 KB c:\Users\pilgrim\diveintopython3\examples\romantest8.py
-  6.6 KB c:\Users\pilgrim\diveintopython3\examples\romantest9.py
-  0.4 KB c:\Users\pilgrim\diveintopython3\examples\stdout.py</pre>
+<h2 id=dictionarycomprehension>Dictionary Comprehensions</h2>
+
+<p>A <dfn>dictionary comprehension</dfn> is like a list comprehension, but it constructs a dictionary instead of a list.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata = [(f, os.stat(f)) for f in glob.glob('*test*.py')]</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata[0]</kbd>                                                     <span class=u>&#x2461;</span></a>
+<samp class=pp>('alphameticstest.py', nt.stat_result(st_mode=33206, st_ino=0, st_dev=0,
+ st_nlink=0, st_uid=0, st_gid=0, st_size=2509, st_atime=1247520344,
+ st_mtime=1247520344, st_ctime=1247520344))</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata_dict = {f:os.stat(f) for f in glob.glob('*test*.py')}</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(metadata_dict)</kbd>                                             <span class=u>&#x2463;</span></a>
+<samp>&lt;class 'dict'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(metadata_dict.keys())</kbd>                                      <span class=u>&#x2464;</span></a>
+<samp class=pp>['romantest8.py', 'pluraltest1.py', 'pluraltest2.py', 'pluraltest5.py',
+ 'pluraltest6.py', 'romantest7.py', 'romantest10.py', 'romantest4.py',
+ 'romantest9.py', 'pluraltest3.py', 'romantest1.py', 'romantest2.py',
+ 'romantest3.py', 'romantest5.py', 'romantest6.py', 'alphameticstest.py',
+ 'pluraltest4.py']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata_dict['alphameticstest.py'].st_size</kbd>                     <span class=u>&#x2465;</span></a>
+<samp class=pp>2509</samp></pre>
+<ol>
+<li>This is not a dictionary comprehension; it&#8217;s a <a href=#listcomprehension>list comprehension</a>. It finds all <code>.py</code> files with <code>test</code> in their name, then constructs a tuple of the filename and the file metadata (from calling the <code>os.stat()</code> function).
+<li>Each item of the resulting list is a tuple.
+<li>This is a dictionary comprehension. The syntax is similar to a list comprehension, with two differences. First, it is enclosed in curly braces instead of square brackets. Second, instead of a single expression for each item, it contains two expressions separated by a colon. The expression before the colon (<code>f</code> in this example) is the dictionary key; the expression after the colon (<code>os.stat(f)</code> in this example) is the value.
+<li>A dictionary comprehension returns a dictionary.
+<li>The keys of this particular dictionary are simply the filenames returned from the call to <code>glob.glob('*test*.py')</code>.
+<li>The value associated with each key is the return value from the <code>os.stat()</code> function. That means we can &#8220;look up&#8221; a file by name in this dictionary to get its file metadata. One of the pieces of metadata is <code>st_size</code>, the file size. The file <code>alphameticstest.py</code> is <code>2509</code> bytes long.
+</ol>
+
+<p>Like list comprehensions, you can include an <code>if</code> clause in a dictionary comprehension to filter the input sequence based on an expression which is evaluated with each item.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import os, glob, humansize</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict = {os.path.splitext(f)[0]:humansize.approximate_size(os.stat(f).st_size) \     </kbd>
+<samp class=p>... </samp><kbd class=pp>                  for f in glob.glob('*') if os.stat(f).st_size > 6000}</kbd>                     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>list(humansize_dict.keys())</kbd>                                                                 <span class=u>&#x2461;</span></a>
+<samp class=pp>['romantest9', 'romantest8', 'romantest7', 'romantest6', 'romantest10', 'pluraltest6']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict['romantest9']</kbd>                                                                <span class=u>&#x2462;</span></a>
+<samp class=pp>'6.5 KiB'</samp></pre>
+<ol>
+<li>This dictionary comprehension constructs a list of all the files in the current working directory (<code>glob.glob('*')</code>), filters that list to include only those files larger than <code>6000</code> bytes (<code>if os.stat(f).st_size > 6000</code>), and uses that filtered list to construct a dictionary whose keys are the filename minus the extension (<code>os.path.splitext(f)[0]</code>) and whose values are the approximate size of each file (<code>humansize.approximate_size(os.stat(f).st_size)</code>).
+<li>As you saw in a previous example, there are six such files, thus there are six items in this dictionary.
+<li>The value of each key is the string returned from the <code>approximate_size()</code> function.
+</ol>
+
+<h3 id=stupiddicttricks>Other Fun Stuff To Do With Dictionary Comprehensions</h3>
+
+<p>Here&#8217;s a trick with dictionary comprehensions that might be useful someday: swapping the keys and values of a dictionary.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_dict = {'a': 1, 'b': 2, 'c': 3}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>{value:key for key, value in a_dict.items()}</kbd>
+<samp class=pp>{1: 'a', 2: 'b', 3: 'c'}</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=set-comprehensions>Set Comprehensions</h2>
+<h2 id=setcomprehension>Set Comprehensions</h2>
 
-<p>FIXME
+<p>Not to be left out, sets have their own comprehension syntax as well. It is remarkably similar to the syntax for dictionary comprehensions. The only difference is that sets just have values instead of key:value pairs.
 
-<p class=a>&#x2042;
-
-<h2 id=dictionary-comprehensions>Dictionary Comprehensions</h2>
-
-<p>FIXME
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = set(range(10))</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>{x ** 2 for x in a_set}</kbd>           <span class=u>&#x2460;</span></a>
+<samp class=pp>{0, 1, 4, 81, 64, 9, 16, 49, 25, 36}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>{x for x in a_set if x % 2 == 0}</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>{0, 8, 2, 4, 6}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>{2**x for x in range(10)}</kbd>         <span class=u>&#x2462;</span></a>
+<samp class=pp>{32, 1, 2, 4, 8, 64, 128, 256, 16, 512}</samp>
+</pre>
+<ol>
+<li>Set comprehensions can take a set as input. This set comprehension calculates the squares of the set of numbers from <code>0</code> to <code>9</code>.
+<li>Like list comprehensions and dictionary comprehensions, set comprehensions can contain an <code>if</code> clause to filter each item before returning it in the result set.
+<li>Set comprehensions do not need to take a set as input; they can take any sequence.
+</ol>
 
 <p class=a>&#x2042;
 
 <h2 id=furtherreading>Further Reading</h2>
 <ul>
 <li><a href=http://docs.python.org/3.1/library/os.html><code>os</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/os.path.html><code>os.path</code> module</a>
+<li><a href=http://docs.python.org/3.1/tutorial/datastructures.html#list-comprehensions>List comprehensions</a>
+<li><a href=http://docs.python.org/3.1/tutorial/datastructures.html#nested-list-comprehensions>Nested list comprehensions</a>
+<li><a href=http://docs.python.org/3.1/tutorial/datastructures.html#looping-techniques>Looping techniques</a>
 </ul>
 <p class=v><a href=native-datatypes.html rel=prev title='back to &#8220;Native Datatypes&#8221;'><span class=u>&#x261C;</span></a> <a href=strings.html rel=next title='onward to &#8220;Strings&#8221;'><span class=u>&#x261E;</span></a>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
