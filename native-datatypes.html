@@ -634,7 +634,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <li>The <code>update()</code> method takes one argument, a set, and adds all its members to the original set. It&#8217;s as if you called the <code>add()</code> method with each member of the set.
 <li>Duplicate values are ignored, since sets can not contain duplicates.
 <li>You can actually call the <code>update()</code> method with any number of arguments. When called with two sets, the <code>update()</code> method adds all the members of each set to the original set (dropping duplicates).
-<li>The <code>update()</code> method can take a number of different datatypes, including lists. When called with a list, the <code>update()</code> method adds all the items of the list to the original set.
+<li>The <code>update()</code> method can take objects of a number of different datatypes, including lists. When called with a list, the <code>update()</code> method adds all the items of the list to the original set.
 </ol>
 
 <h3 id=removing-from-sets>Removing Items From A Set</h3>
@@ -685,7 +685,7 @@ KeyError: 21</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'pop from an empty set'</samp></pre>
 <ol>
-<li>The <code>pop()</code> method removes a single value from a set a returns the value. However, since sets are unordered, there is no &#8220;last&#8221; value in a set, so there is no way to control which value gets removed. It is essentially random.
+<li>The <code>pop()</code> method removes a single value from a set and returns the value. However, since sets are unordered, there is no &#8220;last&#8221; value in a set, so there is no way to control which value gets removed. It is essentially random.
 <li>The <code>clear()</code> method removes <em>all</em> values from a set, leaving you with an empty set. This is equivalent to <code>a_set = set()</code>, which would create a new empty set and overwrite the previous value of the <var>a_set</var> variable.
 <li>Attempting to pop a value from an empty set will raise a <code>KeyError</code> exception.
 </ol>
@@ -710,7 +710,7 @@ KeyError: 'pop from an empty set'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2464;</span></a>
 <samp class=pp>{1, 3, 4, 6, 8, 76, 15, 17, 18, 195, 127, 30, 51}</samp></pre>
 <ol>
-<li>To test whether a value in a member of a set, use the <code>in</code> operator. This works the same as lists.
+<li>To test whether a value is a member of a set, use the <code>in</code> operator. This works the same as lists.
 <li>The <code>union()</code> method returns a new set containing all the elements that are in <em>either</em> set.
 <li>The <code>intersection()</code> method returns a new set containing all the elements that are in <em>both</em> sets.
 <li>The <code>difference()</code> method returns a new set containing all the elements that are in <var>a_set</var> but not <var>b_set</var>.
