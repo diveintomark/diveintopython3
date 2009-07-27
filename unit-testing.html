@@ -131,7 +131,7 @@ if __name__ == '__main__':
 <li>This is a list of integer/numeral pairs that I verified manually. It includes the lowest ten numbers, the highest number, every number that translates to a single-character Roman numeral, and a random sampling of other valid numbers. The point of a unit test is not to test every possible input, but to test a representative sample.
 <li>Every individual test is its own method, which must take no parameters and return no value. If the method exits normally without raising an exception, the test is considered passed; if the method raises an exception, the test is considered failed.
 <li>Here you call the actual <code>to_roman()</code> function. (Well, the function hasn&#8217;t be written yet, but once it is, this is the line that will call it.)  Notice that you have now defined the <abbr>API</abbr> for the <code>to_roman()</code> function: it must take an integer (the number to convert) and return a string (the Roman numeral representation). If the <abbr>API</abbr> is different than that, this test is considered failed. Also notice that you are not trapping any exceptions when you call <code>to_roman()</code>. This is intentional. <code>to_roman()</code> shouldn&#8217;t raise an exception when you call it with valid input, and these input values are all valid. If <code>to_roman()</code> raises an exception, this test is considered failed.
-<li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>testToRomanKnownValues</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
+<li>Assuming the <code>to_roman()</code> function was defined correctly, called correctly, completed successfully, and returned a value, the last step is to check whether it returned the <em>right</em> value. This is a common question, and the <code>TestCase</code> class provides a method, <code>assertEqual</code>, to check whether two values are equal. If the result returned from <code>to_roman()</code> (<var>result</var>) does not match the known value you were expecting (<var>numeral</var>), <code>assertEqual</code> will raise an exception and the test will fail. If the two values are equal, <code>assertEqual</code> will do nothing. If every value returned from <code>to_roman()</code> matches the known value you expect, <code>assertEqual</code> never raises an exception, so <code>test_to_roman_values</code> eventually exits normally, which means <code>to_roman()</code> has passed this test.
 </ol>
 <aside>Write a test that fails, then code until it passes.</aside>
 <p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you&#8217;ve written any code, you&#8217;re doing it wrong&nbsp;&mdash;&nbsp;your tests aren&#8217;t testing your code at all! Write a test that fails, then code until it passes.
@@ -146,7 +146,8 @@ def to_roman(n):
 <p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what&#8217;s going on as each test case runs. With any luck, your output should look like this:
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest1.py -v</kbd>
-<samp><a>to_roman should give known result with known input ... FAIL            <span class=u>&#x2460;</span></a>
+<a><samp>test_to_roman_known_values (__main__.KnownValues)</samp>                      <span class=u>&#x2460;</span></a>
+<a><samp>to_roman should give known result with known input ... FAIL</samp>            <span class=u>&#x2461;</span></a>
 
 ======================================================================
 FAIL: to_roman should give known result with known input
@@ -154,14 +155,15 @@ FAIL: to_roman should give known result with known input
 Traceback (most recent call last):
   File "romantest1.py", line 73, in test_to_roman_known_values
     self.assertEqual(numeral, result)
-<a>AssertionError: 'I' != None                                            <span class=u>&#x2461;</span></a>
+<a>AssertionError: 'I' != None                                            <span class=u>&#x2462;</span></a>
 
 ----------------------------------------------------------------------
-<a>Ran 1 test in 0.016s                                                   <span class=u>&#x2462;</span></a>
+<a>Ran 1 test in 0.016s                                                   <span class=u>&#x2463;</span></a>
 
-<a>FAILED (failures=1)                                                    <span class=u>&#x2463;</span></a></samp></pre>
+<a>FAILED (failures=1)                                                    <span class=u>&#x2464;</span></a></samp></pre>
 <ol>
-<li>Running the script runs <code>unittest.main()</code>, which runs each test case. Each test case is a method within each class in <code>romantest.py</code> that inherits from <code>unittest.TestCase</code>. For each test case, the <code>unittest</code> module will print out the <code>docstring</code> of the method and whether that test passed or failed. As expected, this test case fails.
+<li>Running the script runs <code>unittest.main()</code>, which runs each test case. Each test case is a method within a class in <code>romantest.py</code>. There is no required organization of these test classes; they can each contain a single test method, or you can have one class that contains multiple test methods. The only requirement is that each test class must inherit from <code>unittest.TestCase</code>.
+<li>For each test case, the <code>unittest</code> module will print out the <code>docstring</code> of the method and whether that test passed or failed. As expected, this test case fails.
 <li>For each failed test case, <code>unittest</code> displays the trace information showing exactly what happened. In this case, the call to <code>assertEqual()</code> raised an <code>AssertionError</code> because it was expecting <code>to_roman(1)</code> to return <code>'I'</code>, but it didn&#8217;t. (Since there was no explicit return statement, the function returned <code>None</code>, the Python null value.)
 <li>After the detail of each test, <code>unittest</code> displays a summary of how many tests were performed and how long it took.
 <li>Overall, the unit test failed because at least one test case did not pass. When a test case doesn&#8217;t pass, <code>unittest</code> distinguishes between failures and errors. A failure is a call to an <code>assertXYZ</code> method, like <code>assertEqual</code> or <code>assertRaises</code>, that fails because the asserted condition is not true or the expected exception was not raised. An error is any other sort of exception raised in the code you&#8217;re testing or the unit test case itself.
@@ -213,7 +215,8 @@ subtracting 4 from input, adding IV to output
 <p>So the <code>to_roman()</code> function appears to work, at least in this manual spot check. But will it pass the test case you wrote?
 <pre class='nd screen'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest1.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
 
 ----------------------------------------------------------------------
 Ran 1 test in 0.016s
@@ -259,7 +262,9 @@ OK</samp></pre>
 <p>So what happens when you run the test suite with this new test?
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_too_large (__main__.ToRomanBadInput)
 <a>to_roman should fail with large input ... ERROR                         <span class=u>&#x2460;</span></a>
 
 ======================================================================
@@ -288,7 +293,9 @@ FAILED (errors=1)</samp></pre>
 <p>Now run the test suite again.
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_too_large (__main__.ToRomanBadInput)
 <a>to_roman should fail with large input ... FAIL                          <span class=u>&#x2460;</span></a>
 
 ======================================================================
@@ -326,7 +333,9 @@ FAILED (failures=1)</samp></pre>
 <p>Does this make the test pass? Let&#8217;s find out.
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_too_large (__main__.ToRomanBadInput)
 <a>to_roman should fail with large input ... ok                            <span class=u>&#x2460;</span></a>
 
 ----------------------------------------------------------------------
@@ -375,9 +384,13 @@ OK</samp></pre>
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest3.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_negative (__main__.ToRomanBadInput)
 to_roman should fail with negative input ... FAIL
+test_too_large (__main__.ToRomanBadInput)
 to_roman should fail with large input ... ok
+test_zero (__main__.ToRomanBadInput)
 to_roman should fail with 0 input ... FAIL
 
 ======================================================================
@@ -424,9 +437,13 @@ FAILED (failures=2)</samp></pre>
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest3.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_negative (__main__.ToRomanBadInput)
 to_roman should fail with negative input ... ok
+test_too_large (__main__.ToRomanBadInput)
 to_roman should fail with large input ... ok
+test_zero (__main__.ToRomanBadInput)
 to_roman should fail with 0 input ... ok
 
 ----------------------------------------------------------------------
@@ -471,10 +488,15 @@ class OutOfRangeError(ValueError): pass
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest4.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_negative (__main__.ToRomanBadInput)
 to_roman should fail with negative input ... ok
+test_non_integer (__main__.ToRomanBadInput)
 to_roman should fail with non-integer input ... FAIL
+test_too_large (__main__.ToRomanBadInput)
 to_roman should fail with large input ... ok
+test_zero (__main__.ToRomanBadInput)
 to_roman should fail with 0 input ... ok
 
 ======================================================================
@@ -514,10 +536,15 @@ FAILED (failures=1)</samp></pre>
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest4.py -v</kbd>
-<samp>to_roman should give known result with known input ... ok
+<samp>test_to_roman_known_values (__main__.KnownValues)
+to_roman should give known result with known input ... ok
+test_negative (__main__.ToRomanBadInput)
 to_roman should fail with negative input ... ok
+test_non_integer (__main__.ToRomanBadInput)
 to_roman should fail with non-integer input ... ok
+test_too_large (__main__.ToRomanBadInput)
 to_roman should fail with large input ... ok
+test_zero (__main__.ToRomanBadInput)
 to_roman should fail with 0 input ... ok
 
 ----------------------------------------------------------------------
