@@ -74,10 +74,10 @@ FAILED (failures=1)</samp></pre>
 
 <pre><code class=pp>def from_roman(s):
     '''convert Roman numeral to integer'''
-<a>    if not s:  <span class=u>&#x2460;</span></a>
+<a>    if not s:                                                                  <span class=u>&#x2460;</span></a>
         raise InvalidRomanNumeralError, 'Input can not be blank'
     if not re.search(romanNumeralPattern, s):
-        raise InvalidRomanNumeralError, 'Invalid Roman numeral: {0}'.format(s)
+<a>        raise InvalidRomanNumeralError, 'Invalid Roman numeral: {}'.format(s)  <span class=u>&#x2461;</span></a>
 
     result = 0
     index = 0
@@ -88,6 +88,7 @@ FAILED (failures=1)</samp></pre>
     return result</code></pre>
 <ol>
 <li>Only two lines of code are required: an explicit check for an empty string, and a <code>raise</code> statement.
+<li>I don&#8217;t think I&#8217;ve mentioned this yet anywhere in this book, so let this serve as your final lesson in <a href=strings.html#formatting-strings>string formatting</a>. Starting in Python 3.1, you can skip the numbers when using positional indexes in a format specifier. That is, instead of using the format specifier <code>{0}</code> to refer to the first parameter to the <code>format()</code> method, you can simply use <code>{}</code> and Python will fill in the proper positional index for you. This works for any number of arguments; the first <code>{}</code> is <code>{0}</code>, the second <code>{}</code> is <code>{1}</code>, and so forth.
 </ol>
 
 <pre class=screen>
