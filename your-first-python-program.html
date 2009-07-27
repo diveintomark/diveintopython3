@@ -103,7 +103,7 @@ if __name__ == '__main__':
 <a>    print(approximate_size(1000000000000, False))  <span class=u>&#x2460;</span></a>
 <a>    print(approximate_size(1000000000000))         <span class=u>&#x2461;</span></a></code></pre>
 <ol>
-<li>This calls the <code>approximate_size()</code> function with two argument. Within the <code>approximate_size()</code> function, <var>a_kilobyte_is_1024_bytes</var> will be <code>False</code>, since you explicitly passed <code>False</code> as the second argument.
+<li>This calls the <code>approximate_size()</code> function with two arguments. Within the <code>approximate_size()</code> function, <var>a_kilobyte_is_1024_bytes</var> will be <code>False</code>, since you explicitly passed <code>False</code> as the second argument.
 <li>This calls the <code>approximate_size()</code> function with only one argument. But that&#8217;s OK, because the second argument is optional! Since the caller doesn&#8217;t specify, the second argument defaults to <code>True</code>, as defined by the function declaration.
 </ol>
 
@@ -159,6 +159,38 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 </blockquote>
 <p class=a>&#x2042;
 
+<h2 id=importsearchpath>The <code>import</code> Search Path</h2>
+<p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You&#8217;ll learn more about lists in <a href=native-datatypes.html#lists>Native Datatypes</a>.)
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>import sys</kbd>                                                 <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                                                   <span class=u>&#x2461;</span></a>
+<samp class=pp>['', 
+ '/usr/lib/python31.zip', 
+ '/usr/lib/python3.1',
+ '/usr/lib/python3.1/plat-linux2@EXTRAMACHDEPPATH@', 
+ '/usr/lib/python3.1/lib-dynload', 
+ '/usr/lib/python3.1/dist-packages', 
+ '/usr/local/lib/python3.1/dist-packages']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>sys</kbd>                                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;module 'sys' (built-in)></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path.insert(0, '/home/mark/diveintopython3/examples')</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                                                   <span class=u>&#x2464;</span></a>
+<samp class=pp>['/home/mark/py', 
+ '', 
+ '/usr/lib/python30.zip', 
+ '/usr/lib/python3.0', 
+ '/usr/lib/python3.0/plat-linux2@EXTRAMACHDEPPATH@', 
+ '/usr/lib/python3.0/lib-dynload', 
+ '/usr/lib/python3.0/dist-packages', 
+ '/usr/local/lib/python3.0/dist-packages']</samp></pre>
+<ol>
+<li>Importing the <code>sys</code> module makes all of its functions and attributes available.
+<li><code>sys.path</code> is a list of directory names that constitute the current search path. (Yours will look different, depending on your operating system, what version of Python you&#8217;re running, and where it was originally installed.)  Python will look through these directories (in this order) for a <code>.py</code> file whose name matches what you&#8217;re trying to import.
+<li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files. Some, like the <code>sys</code> module, are <i>built-in modules</i>; they are actually baked right into Python itself. Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python! (The <code>sys</code> module is written in <abbr>C</abbr>.)
+<li>You can add a new directory to Python&#8217;s search path at runtime by adding the directory name to <code>sys.path</code>, and then Python will look in that directory as well, whenever you try to import a module. The effect lasts as long as Python is running.
+<li>By using <code>sys.path.insert(0, <var>new_path</var>)</code>, you inserted a new directory as the first item of the <code>sys.path</code> list, and therefore at the beginning of Python&#8217;s search path. This is almost always what you want. In case of naming conflicts (for example, if Python ships with version 2 of a particular library but you want to use version 3), this ensures that your modules will be found and used instead of the modules that came with Python.
+</ol>
+
 <h2 id=everythingisanobject>Everything Is An Object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
@@ -185,37 +217,6 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <blockquote class='note compare perl5'>
 <p><span class=u>&#x261E;</span><code>import</code> in Python is like <code>require</code> in Perl. Once you <code>import</code> a Python module, you access its functions with <code><var>module</var>.<var>function</var></code>; once you <code>require</code> a Perl module, you access its functions with <code><var>module</var>::<var>function</var></code>.
 </blockquote>
-<h3 id=importsearchpath>The <code>import</code> Search Path</h3>
-<p>Before this goes any further, I want to briefly mention the library search path. Python looks in several places when you try to import a module. Specifically, it looks in all the directories defined in <code>sys.path</code>. This is just a list, and you can easily view it or modify it with standard list methods. (You&#8217;ll learn more about lists in <a href=native-datatypes.html#lists>Native Datatypes</a>.)
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>import sys</kbd>                           <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                             <span class=u>&#x2461;</span></a>
-<samp class=pp>['', 
- '/usr/lib/python30.zip', 
- '/usr/lib/python3.0',
- '/usr/lib/python3.0/plat-linux2@EXTRAMACHDEPPATH@', 
- '/usr/lib/python3.0/lib-dynload', 
- '/usr/lib/python3.0/dist-packages', 
- '/usr/local/lib/python3.0/dist-packages']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>sys</kbd>                                  <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;module 'sys' (built-in)></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>sys.path.insert(0, '/home/mark/py')</kbd>  <span class=u>&#x2463;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>sys.path</kbd>                             <span class=u>&#x2464;</span></a>
-<samp class=pp>['/home/mark/py', 
- '', 
- '/usr/lib/python30.zip', 
- '/usr/lib/python3.0', 
- '/usr/lib/python3.0/plat-linux2@EXTRAMACHDEPPATH@', 
- '/usr/lib/python3.0/lib-dynload', 
- '/usr/lib/python3.0/dist-packages', 
- '/usr/local/lib/python3.0/dist-packages']</samp></pre>
-<ol>
-<li>Importing the <code>sys</code> module makes all of its functions and attributes available.
-<li><code>sys.path</code> is a list of directory names that constitute the current search path. (Yours will look different, depending on your operating system, what version of Python you&#8217;re running, and where it was originally installed.)  Python will look through these directories (in this order) for a <code>.py</code> file whose name matches what you&#8217;re trying to import.
-<li>Actually, I lied; the truth is more complicated than that, because not all modules are stored as <code>.py</code> files. Some, like the <code>sys</code> module, are <i>built-in modules</i>; they are actually baked right into Python itself. Built-in modules behave just like regular modules, but their Python source code is not available, because they are not written in Python! (The <code>sys</code> module is written in <abbr>C</abbr>.)
-<li>You can add a new directory to Python&#8217;s search path at runtime by adding the directory name to <code>sys.path</code>, and then Python will look in that directory as well, whenever you try to import a module. The effect lasts as long as Python is running.
-<li>By using <code>sys.path.insert(0, <var>new_path</var>)</code>, you inserted a new directory as the first item of the <code>sys.path</code> list, and therefore at the beginning of Python&#8217;s search path. This is almost always what you want. In case of naming conflicts (for example, if Python ships with version 2 of a particular library but you want to use version 3), this ensures that your modules will be found and used instead of the modules that came with Python.
-</ol>
 <h3 id=whatsanobject>What&#8217;s An Object?</h3>
 <p>Everything in Python is an object, and everything can have attributes and methods. All functions have a built-in attribute <code>__doc__</code>, which returns the <var>docstring</var> defined in the function&#8217;s source code. The <code>sys</code> module is an object which has (among other things) an attribute called <var>path</var>. And so forth.
 <p>Still, this doesn&#8217;t answer the more fundamental question: what is an object?  Different programming languages define &#8220;object&#8221; in different ways. In some, it means that <em>all</em> objects <em>must</em> have attributes and methods; in others, it means that all objects are subclassable. In Python, the definition is looser. Some objects have neither attributes nor methods, <em>but they could</em>. Not all objects are subclassable. But everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function.
