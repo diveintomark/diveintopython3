@@ -12,8 +12,8 @@
 * Classes & Iterators
 * DONE 2nd draft Advanced Iterators
   SCHEDULED: <2009-07-15 Wed> CLOSED: [2009-07-15 Wed 20:57]
-* TODO 2nd draft Unit Testing
-* TODO 2nd draft Refactoring
+* DONE 2nd draft Unit Testing
+* DONE 2nd draft Refactoring
 * DONE 1st draft Files
   SCHEDULED: <2009-07-16 Thu> CLOSED: [2009-07-19 Sun 15:26]
 ** Reading from text files
@@ -34,7 +34,7 @@
 ** File-like objects
 ** Standard Input, Output, and Error
 ** Further reading
-* TODO 2nd draft XML
+* DONE 2nd draft XML
 * TODO 1st draft Serializing Python Objects
 * DONE 2nd draft HTTP Web Services
   CLOSED: [2009-07-15 Wed 20:57]
