@@ -365,6 +365,30 @@ mark{display:inline}
 <li>Perhaps surprisingly, this query does not find the <code>author</code> elements in this document. Why not? Because this is just a shortcut for <code>tree.getroot().findall('{http://www.w3.org/2005/Atom}author')</code>, which means &#8220;find all the <code>author</code> elements that are children of the root element.&#8221; The <code>author</code> elements are not children of the root element; they&#8217;re children of the <code>entry</code> elements. Thus the query doesn&#8217;t return any matches.
 </ol>
 
+<p>There is also a <code>find()</code> method which returns the first matching element. This is useful for situations where you are only expecting one match, or if there are multiple matches, you only care about the first one.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>entries = tree.findall('{http://www.w3.org/2005/Atom}entry')</kbd>           <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>len(entries)</kbd>
+<samp class=p>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>title_element = entries[0].find('{http://www.w3.org/2005/Atom}title')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>title_element.text</kbd>
+<samp class=pp>'Dive into history, 2009 edition'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>foo_element = entries[0].find('{http://www.w3.org/2005/Atom}foo')</kbd>      <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>foo_element</kbd>
+<samp class=p>>>> </samp><kbd class=pp>type(foo_element)</kbd>
+<samp class=pp>&lt;class 'NoneType'></samp>
+</pre>
+<ol>
+<li>You saw this in the previous example. It finds all the <code>atom:entry</code> elements.
+<li>The <code>find()</code> method takes an ElementTree query and returns the first matching element.
+<li>There are no elements in this entry named <code>foo</code>, so this returns <code>None</code>.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>There is a &#8220;gotcha&#8221; with the <code>find()</code> method that will eventually bite you. In a boolean context, ElementTree element objects will evaluate to <code>False</code> if they contain no children (<i>i.e.</i> if <code>len(element)</code> is <code>0</code>). The means that <code>if element.find('...')</code> is not testing whether the <code>find()</code> method found a matching element; it&#8217;s testing whether that matching element has any child elements! To test whether the <code>find()</code> method returned an element, use <code>if element.find('...') is not None</code>.
+</blockquote>
+
 <p>There <em>is</em> a way to search for <em>descendant</em> elements, <i>i.e.</i> children, grandchildren, and any element at any nesting level.
 
 <pre class=screen>
