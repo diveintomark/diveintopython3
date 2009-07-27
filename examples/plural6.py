@@ -17,8 +17,10 @@ def build_match_and_apply_functions(pattern, search, replace):
 class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
-    def __iter__(self):
+    def __init__(self):
         self.pattern_file = open(self.rules_filename, encoding='utf-8')
+
+    def __iter__(self):
         self.cache = []
         self.cache_index = 0
         return self

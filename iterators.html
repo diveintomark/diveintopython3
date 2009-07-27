@@ -217,8 +217,10 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
 <pre><code class=pp>class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
-    def __iter__(self):
+    def __init__(self):
         self.pattern_file = open(self.rules_filename, encoding='utf-8')
+
+    def __iter__(self):
         self.cache = []
         self.cache_index = 0
         return self
@@ -251,14 +253,16 @@ rules = LazyRules()</code></pre>
 <pre><code class=pp>class LazyRules:
     rules_filename = 'plural6-rules.txt'
 
-<a>    def __iter__(self):                                                  <span class=u>&#x2460;</span></a>
-<a>        self.pattern_file = open(self.rules_filename, encoding='utf-8')  <span class=u>&#x2461;</span></a>
+    def __init__(self):
+<a>        self.pattern_file = open(self.rules_filename, encoding='utf-8')  <span class=u>&#x2460;</span></a>
+
+<a>    def __iter__(self):                                                  <span class=u>&#x2461;</span></a>
 <a>        self.cache = []                                                  <span class=u>&#x2462;</span></a>
         self.cache_index = 0</code></pre>
 <ol>
-<li>The <code>__iter__()</code> method is only going to be called once, after you instantiate the class, assign it to <var>rules</var>, and call <code>iter(rules)</code> to create the iterator.
-<li>Since this is only going to get called once, it&#8217;s the perfect place to open the pattern file. No point doing more than you absolutely have to until absolutely necessary!
-<li>Also, this is a good place to initialize the cache, which you&#8217;ll use later as you read the patterns from the pattern file.
+<li>When we instantiate the <code>LazyRules</code> class, open the pattern file but don&#8217;t read anything from it. (That comes later.)
+<li>The <code>__iter__()</code> method is going to be called after you instantiate the class, assign it to <var>rules</var>, and call <code>iter(rules)</code> to create the iterator. It would also get called again if you created a new iterator from the same <var>rules</var> object.
+<li>That means that this is a right place to initialize the cache and the cache index position. You&#8217;ll use these later (in the <code>__next__()</code> method) as you read the patterns from the pattern file.
 </ol>
 
 <p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__iter__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.

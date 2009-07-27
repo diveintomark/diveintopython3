@@ -43,7 +43,7 @@
 * DONE 2nd draft Case Study: Porting chardet to Python 3
 * Where to go from here
 * DONE 2nd draft Porting Code to Python 3 with 2to3
-* TODO 2nd draft Special Method Names
+* DONE 2nd draft Special Method Names
 * Bits to add somewhere
 ** DONE section on tuples
 ** TODO section on dictionary views
