@@ -264,7 +264,7 @@ experience of years.</samp>
 
 <ol>
 <li>The <code><dfn>split</dfn>()</code> string method takes one argument, a delimiter, and split a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
-<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We can use a <a href=comprehensions.html#list-comprehensions>list comprehension</a> to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
+<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We can use a <a href=comprehensions.html#listcomprehension>list comprehension</a> to iterate over the entire list and split each string into two strings based on the first equals sign. (In theory, a value could contain an equals sign too. If we just used <code>'key=value=foo'.split('=')</code>, we would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
 <li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
 </ol>
 
