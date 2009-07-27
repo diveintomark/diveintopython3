@@ -219,7 +219,7 @@ reply: 'HTTP/1.1 200 OK'
 &hellip;further debugging information omitted&hellip;</samp></pre>
 <ol>
 <li>As I mentioned at the beginning of the chapter, <code>urllib.request</code> relies on another standard Python library, <code>http.client</code>. Normally you don&#8217;t need to touch <code>http.client</code> directly. (The <code>urllib.request</code> module imports it automatically.) But we import it here so we can toggle the debugging flag on the <code>HTTPConnection</code> class that <code>urllib.request</code> uses to connect to the <abbr>HTTP</abbr> server.
-<li>Now that the debugging flag is set, information on the the <abbr>HTTP</abbr> request and response is printed out in real time. As you can see, when you request the Atom feed, the <code>urllib.request</code> module sends five lines to the server.
+<li>Now that the debugging flag is set, information on the <abbr>HTTP</abbr> request and response is printed out in real time. As you can see, when you request the Atom feed, the <code>urllib.request</code> module sends five lines to the server.
 <li>The first line specifies the <abbr>HTTP</abbr> verb you&#8217;re using, and the path of the resource (minus the domain name).
 <li>The second line specifies the domain name from which we&#8217;re requesting this feed.
 <li>The third line specifies the compression algorithms that the client supports. As I mentioned earlier, <a href=#compression><code>urllib.request</code> does not support compression</a> by default.
@@ -451,7 +451,7 @@ reply: 'HTTP/1.1 200 OK'
 
 <h3 id=httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</h3>
 
-<p>The <code>Cache-Control</code> and <code>Expires</code> <a href=#caching>caching headers</a> are called <i>freshness indicators</i>. They tell caches in no uncertain terms that you can completely avoid all network access until the cache expires. And that&#8217;s exactly the behavior you saw <a href=#httplib2-caching>in the previous section</a>: given a strong validator, <code>httplib2</code> <em>does not generate a single byte of network activity</em> to serve up cached data (unless you explicitly <a href=#bypass-the-cache>bypass the cache</a>, of course).
+<p>The <code>Cache-Control</code> and <code>Expires</code> <a href=#caching>caching headers</a> are called <i>freshness indicators</i>. They tell caches in no uncertain terms that you can completely avoid all network access until the cache expires. And that&#8217;s exactly the behavior you saw <a href=#httplib2-caching>in the previous section</a>: given a freshness indicator, <code>httplib2</code> <em>does not generate a single byte of network activity</em> to serve up cached data (unless you explicitly <a href=#bypass-the-cache>bypass the cache</a>, of course).
 
 <p>But what about the case where the data <em>might</em> have changed, but hasn&#8217;t? <abbr>HTTP</abbr> defines <a href=#last-modified><code>Last-Modified</code></a> and <a href=#etags><code>Etag</code></a> headers for this purpose. These headers are called <i>validators</i>. If the local cache is no longer fresh, a client can send the validators with the next request to see if the data has actually changed. If the data hasn&#8217;t changed, the server sends back a <code>304</code> status code <em>and no data</em>. So there&#8217;s still a round-trip over the network, but you end up downloading fewer bytes.
 
