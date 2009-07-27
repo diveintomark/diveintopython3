@@ -244,7 +244,7 @@ def build_match_and_apply_functions(pattern, search, replace):
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
 <ol>
-<li>Since the <var>rules</var> list is the same as the previous example (really, it is), it should come as no surprise that the <code>plural()</code> function hasn&#8217;t changed at all. It&#8217;s completely generic; it takes a list of rule functions and calls them in order. It doesn&#8217;t care how the rules are defined. In the previous example, they were defined as seperate named functions. Now they are built dynamically by mapping the output of the <code>build_match_and_apply_functions()</code> function onto a list of raw strings. It doesn&#8217;t matter; the <code>plural()</code> function still works the same way.
+<li>Since the <var>rules</var> list is the same as the previous example (really, it is), it should come as no surprise that the <code>plural()</code> function hasn&#8217;t changed at all. It&#8217;s completely generic; it takes a list of rule functions and calls them in order. It doesn&#8217;t care how the rules are defined. In the previous example, they were defined as separate named functions. Now they are built dynamically by mapping the output of the <code>build_match_and_apply_functions()</code> function onto a list of raw strings. It doesn&#8217;t matter; the <code>plural()</code> function still works the same way.
 </ol>
 
 <p class=a>&#x2042;
