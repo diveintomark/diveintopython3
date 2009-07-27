@@ -254,9 +254,9 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <p>Exceptions are everywhere in Python. Virtually every module in the standard Python library uses them, and Python itself will raise them in a lot of different circumstances. You&#8217;ll see them repeatedly throughout this book.
 
-<p>What is an exception? Usually it&#8217;s an error, an indication that something went wrong. (Not all exceptions are errors, but never mind that for now.) Some programming languages encourage the use of error return codes, which you need to check. Python encourages the use of exceptions, which you need to handle.
+<p>What is an exception? Usually it&#8217;s an error, an indication that something went wrong. (Not all exceptions are errors, but never mind that for now.) Some programming languages encourage the use of error return codes, which you <em>check</em>. Python encourages the use of exceptions, which you <em>handle</em>.
 
-<p>When an error occurs in the Python Shell, it prints out some details about the exception and how it happened, and that&#8217;s that. This is called an <em>unhandled</em> exception. When the exception was raised, there was no code to explicitly notice it and deal with it, so it bubbled its way back up to the top level of the Python Shell, which spits out some debugging information and calls it a day. In the shell, that's no big deal, but if that happened while your actual Python program was running, the entire program would come to a screeching halt.
+<p>When an error occurs in the Python Shell, it prints out some details about the exception and how it happened, and that&#8217;s that. This is called an <em>unhandled</em> exception. When the exception was raised, there was no code to explicitly notice it and deal with it, so it bubbled its way back up to the top level of the Python Shell, which spits out some debugging information and calls it a day. In the shell, that's no big deal, but if that happened while your actual Python program was running, the entire program would come to a screeching halt if nothing handles the exception. Maybe that&#8217;s what you want, maybe it isn&#8217;t.
 
 <blockquote class='note compare java'>
 <p><span class=u>&#x261E;</span>Unlike Java, Python functions don&#8217;t declare which exceptions they might raise. It&#8217;s up to you to determine what possible exceptions you need to catch.
@@ -274,6 +274,10 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
     raise ValueError('number must be non-negative')</code></pre>
 
 <p>The syntax for raising an exception is simple enough. Use the <code>raise</code> statement, followed by the exception name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a function. (In reality, exceptions are implemented as classes, and this <code>raise</code> statement is actually creating an instance of the <code>ValueError</code> class and passing the string <code>'number must be non-negative'</code> to its initialization method. But <a href=iterators.html#defining-classes>we&#8217;re getting ahead of ourselves</a><span class=u>&#8202;</span><em>!</em><span class=u>&#8202;</span>)
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>You don&#8217;t need to handle an exception in the function that raises it. If one function doesn&#8217;t handle it, the exception is passed to the calling function, then that function&#8217;s calling function, and so on &#8220;up the stack.&#8221; If the exception is never handled, your program will crash, Python will print a &#8220;traceback&#8221; to standard error, and that&#8217;s the end of that. Again, maybe that&#8217;s what you want; it depends on what your program does.
+</blockquote>
 
 <h3 id=importerror>Catching Import Errors</h3>
 
