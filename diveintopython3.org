@@ -42,7 +42,7 @@
 * TODO 1st draft Packaging Python libraries
 * DONE 2nd draft Case Study: Porting chardet to Python 3
 * Where to go from here
-* TODO 2nd draft Porting Code to Python 3 with 2to3
+* DONE 2nd draft Porting Code to Python 3 with 2to3
 * TODO 2nd draft Special Method Names
 * Bits to add somewhere
 ** DONE section on tuples
