@@ -374,7 +374,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
       .
 <del>-     self._mLastChar = ''</del>
 <ins>+     self._mLastChar = b''</ins></code></pre>
-<p>Searching the entire codebase for &#8220;<code>mLastChar</code>&#8221; turns up a similar problem in <code>mbcharsetprober.py</code>, but instead of tracking the last character, it tracks the last <em>two</em> characters. The <code>MultiByteCharSetProber</code> class uses a list of 1-character strings to track the last two characters; in Python 3, it needs to use a list of integers.
+<p>Searching the entire codebase for &#8220;<code>mLastChar</code>&#8221; turns up a similar problem in <code>mbcharsetprober.py</code>, but instead of tracking the last character, it tracks the last <em>two</em> characters. The <code>MultiByteCharSetProber</code> class uses a list of 1-character strings to track the last two characters. In Python 3, it needs to use a list of integers, because it&#8217;s not really tracking characters, it&#8217;s tracking bytes. (Bytes are just integers from <code>0-255</code>.)
 <pre class=nd><code class=pp>  class MultiByteCharSetProber(CharSetProber):
       def __init__(self):
           CharSetProber.__init__(self)
@@ -535,7 +535,6 @@ tests\Big5\0804.blogspot.com.xml</samp>
   File "C:\home\chardet\chardet\jpcntx.py", line 176, in get_order
     if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \
 TypeError: unorderable types: int() >= str()</samp></pre>
-<p>Did you notice? This time around, the code passed the first test case (<code>tests\ascii\howto.diveintomark.org.xml</code>). You&#8217;re making real progress here.
 <p>So what&#8217;s this all about? &#8220;Unorderable types&#8221;? Once again, the difference between byte arrays and strings is rearing its ugly head. Take a look at the code:
 <pre class=nd><code class=pp>class SJISContextAnalysis(JapaneseContextAnalysis):
     def get_order(self, aStr):
@@ -556,15 +555,16 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <mark>        order, charLen = self.get_order(aBuf[i:i+2])</mark></code></pre>
 <p>Oh look, it&#8217;s our old friend, <var>aBuf</var>. As you might have guessed from every other issue we&#8217;ve encountered in this chapter, <var>aBuf</var> is a byte array. Here, the <code>feed()</code> method isn&#8217;t just passing it on wholesale; it&#8217;s slicing it. But as you saw <a href=#unsupportedoperandtypeforplus>earlier in this chapter</a>, slicing a byte array returns a byte array, so the <var>aStr</var> parameter that gets passed to the <code>get_order()</code> method is still a byte array.
 <p>And what is this code trying to do with <var>aStr</var>? It&#8217;s taking the first element of the byte array and comparing it to a string of length 1. In Python 2, that worked, because <var>aStr</var> and <var>aBuf</var> were strings, and <var>aStr[0]</var> would be a string, and you can compare strings for inequality. But in Python 3, <var>aStr</var> and <var>aBuf</var> are byte arrays, <var>aStr[0]</var> is an integer, and you can&#8217;t compare integers and strings for inequality without explicitly coercing one of them.
-<p>In this case, there&#8217;s no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you&#8217;re comparing to are all constants. Let&#8217;s change them from 1-character strings to integers.
+<p>In this case, there&#8217;s no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you&#8217;re comparing to are all constants. Let&#8217;s change them from 1-character strings to integers. And while we&#8217;re at it, let&#8217;s change <var>aStr</var> to <var>aBuf</var>, since it&#8217;s not actually a string.
 <pre class=nd><code class=pp>  class SJISContextAnalysis(JapaneseContextAnalysis):
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
+<ins>+     def get_order(self, aBuf):</ins>
           if not aStr: return -1, 1
           # find out current char's byte length
 <del>-         if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \</del>
-<del>-            ((aStr[0] >= '\xE0') and (aStr[0] &lt;= '\xFC')):</del>
+<del>-            ((aBuf[0] >= '\xE0') and (aBuf[0] &lt;= '\xFC')):</del>
 <ins>+         if ((aStr[0] >= 0x81) and (aStr[0] &lt;= 0x9F)) or \</ins>
-<ins>+            ((aStr[0] >= 0xE0) and (aStr[0] &lt;= 0xFC)):</ins>
+<ins>+            ((aBuf[0] >= 0xE0) and (aBuf[0] &lt;= 0xFC)):</ins>
               charLen = 2
           else:
               charLen = 1
@@ -575,24 +575,25 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <del>-                (aStr[1] >= '\x9F') and \</del>
 <del>-                (aStr[1] &lt;= '\xF1'):</del>
 <del>-                return ord(aStr[1]) - 0x9F, charLen</del>
-<ins>+             if (aStr[0] == 0x202) and \</ins>
-<ins>+                (aStr[1] >= 0x9F) and \</ins>
-<ins>+                (aStr[1] &lt;= 0xF1):</ins>
-<ins>+                return aStr[1] - 0x9F, charLen</ins>
+<ins>+             if (aBuf[0] == 0x202) and \</ins>
+<ins>+                (aBuf[1] >= 0x9F) and \</ins>
+<ins>+                (aBuf[1] &lt;= 0xF1):</ins>
+<ins>+                return aBuf[1] - 0x9F, charLen</ins>
 
           return -1, charLen
 
   class EUCJPContextAnalysis(JapaneseContextAnalysis):
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
+<ins>+     def get_order(self, aBuf):</ins>
           if not aStr: return -1, 1
           # find out current char's byte length
 <del>-         if (aStr[0] == '\x8E') or \</del>
 <del>-           ((aStr[0] >= '\xA1') and (aStr[0] &lt;= '\xFE')):</del>
-<ins>+         if (aStr[0] == 0x8E) or \</ins>
-<ins>+           ((aStr[0] >= 0xA1) and (aStr[0] &lt;= 0xFE)):</ins>
+<ins>+         if (aBuf[0] == 0x8E) or \</ins>
+<ins>+           ((aBuf[0] >= 0xA1) and (aStr[0] &lt;= 0xFE)):</ins>
               charLen = 2
 <del>-         elif aStr[0] == '\x8F':</del>
-<ins>+         elif aStr[0] == 0x8F:</ins>
+<ins>+         elif aBuf[0] == 0x8F:</ins>
               charLen = 3
           else:
               charLen = 1
@@ -603,10 +604,10 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <del>-              (aStr[1] >= '\xA1') and \</del>
 <del>-              (aStr[1] &lt;= '\xF3'):</del>
 <del>-                 return ord(aStr[1]) - 0xA1, charLen</del>
-<ins>+           if (aStr[0] == 0xA4) and \</ins>
-<ins>+              (aStr[1] >= 0xA1) and \</ins>
-<ins>+              (aStr[1] &lt;= 0xF3):</ins>
-<ins>+               return aStr[1] - 0xA1, charLen</ins>
+<ins>+           if (aBuf[0] == 0xA4) and \</ins>
+<ins>+              (aBuf[1] >= 0xA1) and \</ins>
+<ins>+              (aBuf[1] &lt;= 0xF3):</ins>
+<ins>+               return aBuf[1] - 0xA1, charLen</ins>
 
         return -1, charLen</code></pre>
 <p>Searching the entire codebase for occurrences of the <code>ord()</code> function uncovers the same problem in <code>chardistribution.py</code>:
@@ -635,11 +636,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = EUCTW_TABLE_SIZE
           self._mTypicalDistributionRatio = EUCTW_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if aStr[0] >= '\xC4':</del>
 <del>-             return 94 * (ord(aStr[0]) - 0xC4) + ord(aStr[1]) - 0xA1</del>
-<ins>+         if aStr[0] >= 0xC4:</ins>
-<ins>+             return 94 * (aStr[0] - 0xC4) + aStr[1] - 0xA1</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if aBuf[0] >= 0xC4:</ins>
+<ins>+             return 94 * (aBuf[0] - 0xC4) + aBuf[1] - 0xA1</ins>
           else:
               return -1
 
@@ -650,11 +652,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = EUCKR_TABLE_SIZE
           self._mTypicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if aStr[0] >= '\xB0':</del>
 <del>-             return 94 * (ord(aStr[0]) - 0xB0) + ord(aStr[1]) - 0xA1</del>
-<ins>+         if aStr[0] >= '\xB0':</ins>
-<ins>+             return 94 * (aStr[0] - 0xB0) + aStr[1] - 0xA1</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if aBuf[0] >= '\xB0':</ins>
+<ins>+             return 94 * (aBuf[0] - 0xB0) + aBuf[1] - 0xA1</ins>
           else:
               return -1;
 
@@ -665,11 +668,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = GB2312_TABLE_SIZE
           self._mTypicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if (aStr[0] >= '\xB0') and (aStr[1] >= '\xA1'):</del>
 <del>-             return 94 * (ord(aStr[0]) - 0xB0) + ord(aStr[1]) - 0xA1</del>
-<ins>+         if (aStr[0] >= 0xB0) and (aStr[1] >= 0xA1):</ins>
-<ins>+             return 94 * (aStr[0] - 0xB0) + aStr[1] - 0xA1</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if (aBuf[0] >= 0xB0) and (aBuf[1] >= 0xA1):</ins>
+<ins>+             return 94 * (aBuf[0] - 0xB0) + aBuf[1] - 0xA1</ins>
           else:
               return -1;
 
@@ -680,16 +684,17 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = BIG5_TABLE_SIZE
           self._mTypicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if aStr[0] >= '\xA4':</del>
 <del>-             if aStr[1] >= '\xA1':</del>
 <del>-                 return 157 * (ord(aStr[0]) - 0xA4) + ord(aStr[1]) - 0xA1 + 63</del>
-<ins>+         if aStr[0] >= 0xA4:</ins>
-<ins>+             if aStr[1] >= 0xA1:</ins>
-<ins>+                 return 157 * (aStr[0] - 0xA4) + aStr[1] - 0xA1 + 63</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if aBuf[0] >= 0xA4:</ins>
+<ins>+             if aBuf[1] >= 0xA1:</ins>
+<ins>+                 return 157 * (aBuf[0] - 0xA4) + aBuf[1] - 0xA1 + 63</ins>
               else:
 <del>-                 return 157 * (ord(aStr[0]) - 0xA4) + ord(aStr[1]) - 0x40</del>
-<ins>+                 return 157 * (aStr[0] - 0xA4) + aStr[1] - 0x40</ins>
+<ins>+                 return 157 * (aBuf[0] - 0xA4) + aBuf[1] - 0x40</ins>
           else:
               return -1
 
@@ -700,21 +705,22 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = JIS_TABLE_SIZE
           self._mTypicalDistributionRatio = JIS_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if (aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F'):</del>
 <del>-             order = 188 * (ord(aStr[0]) - 0x81)</del>
 <del>-         elif (aStr[0] >= '\xE0') and (aStr[0] &lt;= '\xEF'):</del>
 <del>-             order = 188 * (ord(aStr[0]) - 0xE0 + 31)</del>
-<ins>+         if (aStr[0] >= 0x81) and (aStr[0] &lt;= 0x9F):</ins>
-<ins>+             order = 188 * (aStr[0] - 0x81)</ins>
-<ins>+         elif (aStr[0] >= 0xE0) and (aStr[0] &lt;= 0xEF):</ins>
-<ins>+             order = 188 * (aStr[0] - 0xE0 + 31)</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if (aBuf[0] >= 0x81) and (aBuf[0] &lt;= 0x9F):</ins>
+<ins>+             order = 188 * (aBuf[0] - 0x81)</ins>
+<ins>+         elif (aBuf[0] >= 0xE0) and (aBuf[0] &lt;= 0xEF):</ins>
+<ins>+             order = 188 * (aBuf[0] - 0xE0 + 31)</ins>
           else:
               return -1;
 <del>-         order = order + ord(aStr[1]) - 0x40</del>
 <del>-         if aStr[1] > '\x7F':</del>
-<ins>+         order = order + aStr[1] - 0x40</ins>
-<ins>+         if aStr[1] > 0x7F:</ins>
+<ins>+         order = order + aBuf[1] - 0x40</ins>
+<ins>+         if aBuf[1] > 0x7F:</ins>
               order =- 1
           return order
 
@@ -725,11 +731,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           self._mTableSize = JIS_TABLE_SIZE
           self._mTypicalDistributionRatio = JIS_TYPICAL_DISTRIBUTION_RATIO
 
-      def get_order(self, aStr):
+<del>-     def get_order(self, aStr):</del>
 <del>-         if aStr[0] >= '\xA0':</del>
 <del>-             return 94 * (ord(aStr[0]) - 0xA1) + ord(aStr[1]) - 0xA1</del>
-<ins>+         if aStr[0] >= 0xA0:</ins>
-<ins>+             return 94 * (aStr[0] - 0xA1) + aStr[1] - 0xA1</ins>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+         if aBuf[0] >= 0xA0:</ins>
+<ins>+             return 94 * (aBuf[0] - 0xA1) + aBuf[1] - 0xA1</ins>
           else:
               return -1</code></pre>
 <h3 id=reduceisnotdefined>Global name <code>'reduce'</code> is not defined</h3>
