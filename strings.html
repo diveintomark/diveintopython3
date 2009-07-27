@@ -210,11 +210,11 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code><dfn>printf</dfn>()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
 </blockquote>
 
-<p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.25</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.3 GB'</code>, because <code>698.25</code> gets rounded to one decimal place, then the suffix is appended after the number.
+<p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.24</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.2 GB'</code>, because <code>698.24</code> gets rounded to one decimal place, then the suffix is appended after the number.
 
 <pre class='nd screen'>
-<samp class=p>>>> </samp><kbd class=pp>'{0:.1f} {1}'.format(698.25, 'GB')</kbd>
-<samp class=pp>'698.3 GB'</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>'{0:.1f} {1}'.format(698.24, 'GB')</kbd>
+<samp class=pp>'698.2 GB'</samp></pre>
 
 <p>For all the gory details on format specifiers, consult the <a href=http://docs.python.org/3.0/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> in the official Python documentation.
 
