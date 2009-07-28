@@ -305,7 +305,66 @@ Content-Type: application/xml</samp>
 
 <h2 id=introducing-httplib2>Introducing <code>httplib2</code></h2>
 
-<p>FIXME paragraph/example on downloading and installing it.
+<p>Before you can use <code>httplib2</code>, you&#8217;ll need to install it. Visit <a href=http://code.google.com/p/httplib2/><code>code.google.com/p/httplib2/</code></a> and download the latest version. <code>httplib2</code> is available for Python 2.x and Python 3.x; make sure you get the Python 3 version, named something like <code>httplib2-python3-0.5.0.zip</code>.
+
+<p>Unzip the archive, open a terminal window, and go to the newly created <code>httplib2</code> directory. On Windows, open the <code>Start</code> menu, select <code>Run...</code>, type <kbd>cmd.exe</kbd> and press <kbd>ENTER</kbd>.
+
+<pre class=screen>
+<samp class=p>c:\Users\pilgrim\Downloads> </samp><kbd><mark>dir</mark></kbd>
+<samp> Volume in drive C has no label.
+ Volume Serial Number is DED5-B4F8
+
+ Directory of c:\Users\pilgrim\Downloads
+
+07/28/2009  12:36 PM    &lt;DIR>          .
+07/28/2009  12:36 PM    &lt;DIR>          ..
+07/28/2009  12:36 PM    &lt;DIR>          httplib2-python3-0.5.0
+07/28/2009  12:33 PM            18,997 httplib2-python3-0.5.0.zip
+               1 File(s)         18,997 bytes
+               3 Dir(s)  61,496,684,544 bytes free</samp>
+
+<samp class=p>c:\Users\pilgrim\Downloads> </samp><kbd><mark>cd httplib2-python3-0.5.0</mark></kbd>
+<samp class=p>c:\Users\pilgrim\Downloads\httplib2-python3-0.5.0> </samp><kbd><mark>c:\python31\python.exe setup.py install</mark></kbd>
+<samp>running install
+running build
+running build_py
+running install_lib
+creating c:\python31\Lib\site-packages\httplib2
+copying build\lib\httplib2\iri2uri.py -> c:\python31\Lib\site-packages\httplib2
+copying build\lib\httplib2\__init__.py -> c:\python31\Lib\site-packages\httplib2
+byte-compiling c:\python31\Lib\site-packages\httplib2\iri2uri.py to iri2uri.pyc
+byte-compiling c:\python31\Lib\site-packages\httplib2\__init__.py to __init__.pyc
+running install_egg_info
+Writing c:\python31\Lib\site-packages\httplib2-python3_0.5.0-py3.1.egg-info</samp></pre>
+
+<p>On Mac OS X, run the <code>Terminal.app</code> application in your <code>/Applications/Utilities/</code> folder. On Linux, run the <code>Terminal</code> application, which is usually in your <code>Applications</code> menu under <code>Accessories</code> or <code>System</code>.
+
+<pre class=screen>
+<samp class=p>you@localhost:~/Desktop$ </samp><kbd><mark>unzip httplib2-python3-0.5.0.zip</mark></kbd>
+<samp>Archive:  httplib2-python3-0.5.0.zip
+  inflating: httplib2-python3-0.5.0/README
+  inflating: httplib2-python3-0.5.0/setup.py
+  inflating: httplib2-python3-0.5.0/PKG-INFO
+  inflating: httplib2-python3-0.5.0/httplib2/__init__.py
+  inflating: httplib2-python3-0.5.0/httplib2/iri2uri.py</samp>
+<samp class=p>you@localhost:~/Desktop$ </samp><kbd><mark>cd httplib2-python3-0.5.0/</mark></kbd>
+<samp class=p>you@localhost:~/Desktop/httplib2-python3-0.5.0$ </samp><kbd><mark>sudo python3 setup.py install</mark></kbd>
+<samp>running install
+running build
+running build_py
+creating build
+creating build/lib.linux-x86_64-3.0
+creating build/lib.linux-x86_64-3.0/httplib2
+copying httplib2/iri2uri.py -> build/lib.linux-x86_64-3.0/httplib2
+copying httplib2/__init__.py -> build/lib.linux-x86_64-3.0/httplib2
+running install_lib
+creating /usr/local/lib/python3.0/dist-packages/httplib2
+copying build/lib.linux-x86_64-3.0/httplib2/iri2uri.py -> /usr/local/lib/python3.0/dist-packages/httplib2
+copying build/lib.linux-x86_64-3.0/httplib2/__init__.py -> /usr/local/lib/python3.0/dist-packages/httplib2
+byte-compiling /usr/local/lib/python3.0/dist-packages/httplib2/iri2uri.py to iri2uri.pyc
+byte-compiling /usr/local/lib/python3.0/dist-packages/httplib2/__init__.py to __init__.pyc
+running install_egg_info
+Writing /usr/local/lib/python3.0/dist-packages/httplib2-python3_0.5.0.egg-info</samp></pre>
 
 <p>To use <code>httplib2</code>, create an instance of the <code>httplib2.Http</code> class.
 
