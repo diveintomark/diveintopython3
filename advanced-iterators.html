@@ -253,8 +253,8 @@ gen = ord_map(unique_characters)</code></pre>
   File "&lt;stdin>", line 1, in <module>
 StopIteration</samp></pre>
 <ol>
-<li>The <code>itertools</code> module has all kinds of fun stuff in it, including a <ocde>permutations()</code> function that does all the hard work of finding permutations.
-<li>The <code>permutations()</code> function takes a sequence (here a list of three integers) and a number, which is the number of items you want in each smaller group. The function returns an iterator, which you can use in a <code>foor</code> loop or any old place that iterates. Here I&#8217;ll step through the iterator manually to show all the values.
+<li>The <code>itertools</code> module has all kinds of fun stuff in it, including a <code>permutations()</code> function that does all the hard work of finding permutations.
+<li>The <code>permutations()</code> function takes a sequence (here a list of three integers) and a number, which is the number of items you want in each smaller group. The function returns an iterator, which you can use in a <code>for</code> loop or any old place that iterates. Here I&#8217;ll step through the iterator manually to show all the values.
 <li>The first permutation of <code>[1, 2, 3]</code> taken 2 at a time is <code>(1, 2)</code>.
 <li>Note that permutations are ordered: <code>(2, 1)</code> is different than <code>(1, 2)</code>.
 <li>That&#8217;s it! Those are all the permutations of <code>[1, 2, 3]</code> taken 2 at a time. Pairs like <code>(1, 1)</code> and <code>(2, 2)</code> never show up, because they contain repeats so they aren&#8217;t valid permutations. When there are no more permutations, the iterator raises a <code>StopIteration</code> exception.
