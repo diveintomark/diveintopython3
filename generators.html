@@ -301,7 +301,7 @@ rules = []
             pattern, search, replace = line.split(None, 3)
             yield build_match_and_apply_functions(pattern, search, replace)
 
-def plural(noun):
+def plural(noun, rules_filename='plural5-rules.txt'):
     for matches_rule, apply_rule in rules():
         if matches_rule(noun):
             return apply_rule(noun)
