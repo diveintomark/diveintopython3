@@ -93,6 +93,13 @@ $(document).ready(function() {
 	hideTOC();
 	prettyPrint();
 
+	/* on-hover permalink markers on each section header */
+	$('*:header[id]').each(function() {
+		$('<a class=hl>#</a>').
+		    attr('href', '#' + this.id).
+		    appendTo(this);
+	    });
+
 	/* "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks */
 	$("pre > code").each(function(i) {
 		var pre = $(this.parentNode);

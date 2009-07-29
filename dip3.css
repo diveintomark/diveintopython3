@@ -45,6 +45,7 @@ Classname Legend
 .pf = "padded frame"  = black border with internal padding
 .fr = "framed"        = black border, no padding
 .ss = "screenshot"    = image, floated right, with margin
+.hl = "header link"   = auto-inserted pilcrow after h2 and h3 section headers
 
 .note = "note/caution/important"   = indented block for tips/gotchas/language comparisons
 .baa  = "best available ampersand" = wrapper block for ampersands
@@ -184,6 +185,17 @@ a:visited {
 .c a {
   color: inherit;
 }
+a.hl:link,a.hl:visited {
+  color: #fff;
+  padding-left: 0.2em;
+  text-decoration: none;
+  border: 0;
+}
+a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
+  background: transparent;
+  color: gainsboro;
+}
+
 
 /* code blocks */
 
