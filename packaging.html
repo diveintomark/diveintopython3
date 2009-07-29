@@ -12,7 +12,7 @@ body{counter-reset:h1 16}
 <meta name=viewport content='initial-scale=1.0'>
 </head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input name=q size=25>&nbsp;<input type=submit name=root value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#serializing>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#packaging>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span class=u title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
 <h1>Packaging Python Libraries</h1>
 <blockquote class=q>
@@ -22,12 +22,81 @@ body{counter-reset:h1 16}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
+<pre><code class=pp># setup.py
+from distutils.core import setup
+VERSION = '0.5.0'
+setup(name='httplib2',
+      version=VERSION, 
+      author='Joe Gregorio',
+      author_email='joe@example.com',
+      url='http://code.google.com/p/httplib2/',
+      download_url='http://httplib2.googlecode.com/files/httplib2-python3-{}.tar.gz'.format(VERSION),
+      description='A comprehensive HTTP client library.',
+      license='MIT',
+      packages=['httplib2'],
+      classifiers=[
+          'Development Status :: 4 - Beta',
+          'Environment :: Web Environment',
+          'Intended Audience :: Developers',
+          'License :: OSI Approved :: MIT License',
+          'Operating System :: OS Independent',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 3',
+          'Topic :: Internet :: WWW/HTTP',
+          'Topic :: Software Development :: Libraries',
+      ],
+)
+</code></pre>
+
 <p class=a>&#x2042;
+
+<h2 id=overview>Overview of the Packaging Process</h2>
+
+<h2 id=structure>Directory Structure</h2>
+
+<h2 id=setuppy>Writing Your Setup Script</h2>
+
+<h3 id=check>Checking Your Setup Script for Errors</h3>
+
+<h2 id=setupcfg>Writing Your Setup Configuration File</h2>
+
+<h2 id=sdist>Creating Source Distributions</h2>
+
+<!-- formats -->
+
+<h2 id=bdist>Creating Binary Distributions</h2>
+
+<!-- python3 setup.py bdist --help-formats -->
+
+<h3 id=wininst>Building A Windows Installer</h3>
+
+<!-- 32-bit vs. 64-bit -->
+<!-- UAC -->
+
+<h3 id=rpm>Building a Linux RPM Package</h3>
+
+<h2 id=pypi>The Python Package Index</h2>
+
+<h3 id=register-user>Registering Yourself</h3>
+
+<h3 id=register-package>Registering Your Python Library</h3>
+
+<h3 id=upload>Uploading New Versions</h3>
+
+<!--
+@jessenoller sez:
+ * distutils, how to make a setup.py (and include data files, tests, docs, etc for a project)
+ * how to upload it to pypi properly (label it for python 3 for the love of pete)
+ * how to build build bdist/RPMs/DEBs.
+ * If you can - and I've forgotten how much distutils supports of this, cover dependency management.
+ * Oh, I almost forgot - cover the Per-User Site packages stuff, PEP 370
+-->
 
 <h2 id=furtherreading>Further Reading</h2>
 
 <ul>
 <li><a href=http://docs.python.org/3.1/distutils/>Distributing Python Modules</a>
+<li><a href=http://www.python.org/dev/peps/pep-0370/><abbr>PEP</abbr> 370: Per user <code>site-packages</code> directory</a>
 </ul>
 
 <p class=v><a rel=prev href=multiprocessing.html title='back to &#8220;Threading &amp; Multiprocessing&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=case-study-porting-chardet-to-python-3.html title='onward to &#8220;Case Study: Porting chardet to Python 3&#8221;'><span class=u>&#x261E;</span></a>
