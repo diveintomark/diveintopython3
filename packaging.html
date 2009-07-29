@@ -196,13 +196,49 @@ A comprehensive HTTP client library, ``httplib2`` supports many features left ou
  * Oh, I almost forgot - cover the Per-User Site packages stuff, PEP 370
 -->
 
-<h2 id=furtherreading>Further Reading</h2>
+<h2 id=future>The Many Possible Futures of Python Packaging</h2>
+
+<p>Distutils is not the be-all and end-all of Python packaging, but as of this writing (August 2009), it&#8217;s the only one that works in Python 3. There are a number of other frameworks for Python 2; some focus on installation, others on testing and deployment. Some or all of these may end up being ported to Python 3 in the future.
+
+<p>These frameworks focus on installation:
 
 <ul>
-<li><a href=http://docs.python.org/3.1/distutils/>Distributing Python Modules</a>
+<li><a href=http://pypi.python.org/pypi/setuptools>Setuptools</a>
+<li><a href=http://pypi.python.org/pypi/pip>Pip</a>
+<li><a href=http://bitbucket.org/tarek/distribute/src/tip/README.txt>Distribute</a>
+</ul>
+
+<p>These focus on testing and deployment:
+
+<ul>
+<li><a href=http://pypi.python.org/pypi/virtualenv><code>virtualenv</code></a>
+<li><a href=http://pypi.python.org/pypi/zc.buildout><code>zc.buildout</code></a>
+<li><a href=http://www.blueskyonmars.com/projects/paver/>Paver</a>
+<li><a href=http://fabfile.org/>Fabric</a>
+<li><a href=http://www.py2exe.org/><code>py2exe</code>
+</ul>
+
+<h2 id=furtherreading>Further Reading</h2>
+
+<p>On Distutils:
+
+<ul>
+<li><a href=http://docs.python.org/3.1/distutils/>Distributing Python Modules with Distutils</a>
 <li><a href=http://docs.python.org/3.1/distutils/apiref.html#module-distutils.core>Core Distutils functionality</a> lists all the possible arguments to the <code>setup()</code> function
-<li><a href=http://www.python.org/dev/peps/pep-0370/><abbr>PEP</abbr> 370: Per user <code>site-packages</code> directory</a>
 <li><a href=http://wiki.python.org/moin/Distutils/Cookbook>Distutils Cookbook</a>
+<li><a href=http://www.python.org/dev/peps/pep-0370/><abbr>PEP</abbr> 370: Per user <code>site-packages</code> directory</a>
+<li><a href=http://jessenoller.com/2009/07/19/pep-370-per-user-site-packages-and-environment-stew/><abbr>PEP</abbr> 370 and &#8220;environment stew&#8221;</a>
+</ul>
+
+<p>On other packaging frameworks:
+
+<ul>
+<li><a href=http://groups.google.com/group/django-developers/msg/5407cdb400157259>The Python packaging ecosystem</a>
+<li><a href=http://www.b-list.org/weblog/2008/dec/14/packaging/>On ackaging</a>
+<li><a href=http://blog.ianbicking.org/2008/12/14/a-few-corrections-to-on-packaging/>A few corrections to &#8220;On packaging&#8221;</a>
+<li><a href=http://www.b-list.org/weblog/2008/dec/15/pip/>Why I like Pip</a>
+<li><a href=http://cournape.wordpress.com/2009/04/01/python-packaging-a-few-observations-cabal-for-a-solution/>Python packaging: a few observations</a>
+<li><a href=http://jacobian.org/writing/nobody-expects-python-packaging/>Nobody expects Python packaging!</a>
 </ul>
 
 <p class=v><a rel=prev href=multiprocessing.html title='back to &#8220;Threading &amp; Multiprocessing&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=case-study-porting-chardet-to-python-3.html title='onward to &#8220;Case Study: Porting chardet to Python 3&#8221;'><span class=u>&#x261E;</span></a>
