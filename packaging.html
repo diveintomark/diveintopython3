@@ -20,9 +20,15 @@ body{counter-reset:h1 16}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>FIXME
+<p class=f>So you want to release a Python library. Excellent. The world needs more Python libraries.
 
-<pre><code class=pp># setup.py
+<p>Python 3 comes with a packaging framework called Distutils. Distutils is many things: a build tool (for you), an installation tool (for your users), a package metadata format (for search engines), and more. It integrates with the <a href=http://pypi.python.org/>Python Package Index</a>, a central repository for open source Python libraries.
+
+<p>All of these facets of Distutils center around the <i>setup script</i>, traditionally called <code>setup.py</code>. In fact, you&#8217;ve already seen a Distutils setup script: <a href=http-web-services.html#introducing-httplib2>you used one to install <code>httplib2</code></a> in the &#8220;HTTP Web Services&#8221; chapter.
+
+<p>In this chapter, we&#8217;ll see how the setup script for <a href=http://code.google.com/p/httplib2/><code>httplib2</code></a> works and step through the process of releasing your own Python library.
+
+<pre><code class=pp># httplib2's setup.py
 from distutils.core import setup
 VERSION = '0.5.0'
 setup(name='httplib2',
@@ -45,16 +51,113 @@ setup(name='httplib2',
           'Topic :: Internet :: WWW/HTTP',
           'Topic :: Software Development :: Libraries',
       ],
-)
-</code></pre>
+        long_description="""
+
+A comprehensive HTTP client library, ``httplib2`` supports many features left out of other HTTP libraries.
+
+**HTTP and HTTPS**
+  HTTPS support is only available if the socket module was compiled with SSL support. 
+ 
+
+**Keep-Alive**
+  Supports HTTP 1.1 Keep-Alive, keeping the socket open and performing multiple requests over the same connection if possible. 
+
+
+**Authentication**
+  The following three types of HTTP Authentication are supported. These can be used over both HTTP and HTTPS.
+
+  * Digest
+  * Basic
+  * WSSE
+
+**Caching**
+  The module can optionally operate with a private cache that understands the Cache-Control: 
+  header and uses both the ETag and Last-Modified cache validators. Both file system
+  and memcached based caches are supported.
+
+
+**All Methods**
+  The module can handle any HTTP request method, not just GET and POST.
+
+
+**Redirects**
+  Automatically follows 3XX redirects on GETs.
+
+
+**Compression**
+  Handles both 'deflate' and 'gzip' types of compression.
+
+
+**Lost update support**
+  Automatically adds back ETags into PUT requests to resources we have already cached. This implements Section 3.2 of Detecting the Lost Update Problem Using Unreserved Checkout
+
+
+**Unit Tested**
+  A large and growing set of unit tests.
+        """
+)</code></pre>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span><code>httplib2</code> is open source, but there&#8217;s no requirement that you release your own Python libraries under any particular license. The process described in this chapter will work for any Python library, regardless of license.
+</blockquote>
 
 <p class=a>&#x2042;
 
-<h2 id=overview>Overview of the Packaging Process</h2>
+<h2 id=cantdo>Things Distutils Can&#8217;t Do For You</h2>
+
+<p>Releasing your first Python library is a daunting process. (Releasing your second one is easier.) Distutils tries to automate as much of it as possible, but there are some things you simply must do yourself.
+
+<ul>
+<li><b>Choose a license</b>. This is a complicated topic, fraught with politics and peril. If you wish to release your software as open source, I humbly offer five pieces of advice:
+<ol>
+<li>Don&#8217;t write your own license.
+<li>Don&#8217;t write your own license.
+<li>Don&#8217;t write your own license.
+<li>It doesn&#8217;t need to be <abbr>GPL</abbr>, but <a href=http://www.dwheeler.com/essays/gpl-compatible.html>it needs to be <abbr>GPL</abbr>-compatible</a>.
+<li>Don&#8217;t write your own license.
+</ol>
+<li><b>Classify your library</b> using the Trove classification system. I&#8217;ll explain what this means later in this chapter.
+<li><b>Write a &#8220;read me&#8221; file</b>. Don&#8217;t skimp on this. At a minimum, it should give your users an overview of what your library does and how to install it.
+</ul>
 
 <h2 id=structure>Directory Structure</h2>
 
+<p>To start packaging your Python library, you need to get your files and directories in order. The <code>httplib2</code> directory looks like this:
+
+<pre class=screen>
+<a>httplib2/                 <span class=u>&#x2460;</span></a>
+|
+<a>+--README.txt             <span class=u>&#x2461;</span></a>
+|
+<a>+--setup.py               <span class=u>&#x2462;</span></a>
+|
+<a>+--httplib2/              <span class=u>&#x2463;</span></a>
+   |
+   +--__init__.py
+   |
+   +--iri2uri.py</pre>
+<ol>
+<li>Make a root directory to hold everything. Give it the same name as your Python module.
+<li>To accomodate Windows users, your &#8220;read me&#8221; file should include a <code>.txt</code> extension, and it should use Windows-style carriage returns. Just because <em>you</em> use a fancy text editor that runs from the command line and includes its own macro language, that doesn&#8217;t mean you need to make life difficult for your users. (Your users use Notepad. Sad but true.) Even if you&#8217;re on Linux or Mac OS X, your fancy text editor undoubtedly has an option to save files with Windows-style carriage returns.
+<li>Your Distutils setup script should be named <code>setup.py</code> unless you have a good reason not to. You do not have a good reason not to.
+<li>If your Python library is a single <code>.py</code> file, you should put it in the root directory along with your &#8220;read me&#8221; file and your setup script. If your library is a directory with a main <code>__init__.py</code> script, like <code>httplib2</code>, you should put the entire directory here. Yes, that means you&#8217;ll have an <code>httplib2/</code> directory within an <code>httplib2/</code> directory. Trust me, that&#8217;s not a problem. In fact, any other arrangement would be a problem.
+</ol>
+
+<p>Depending on the license you chose, you may include the license text within your <code>.py</code> files themselves, or you may have a separate file containing license text, or both. <abbr>GPL</abbr>-licensed programs generally include a file called <code>COPYING</code> that includes the entire text of the <abbr>GPL</abbr>. If you have a separate license file, it should go in the root directory along with your &#8220;read me&#8221; file and your setup script.
+
 <h2 id=setuppy>Writing Your Setup Script</h2>
+
+<p>The Distutils setup script is a Python script. In theory, it can do anything Python can do. In practice, it should do as little as possible, in as standard a way as possible. Setup scripts should be boring. The more exotic your installation process is, the more exotic your bug reports will be.
+
+<p>The first line of every Distutils setup script is always the same:
+
+<pre class=nd><code class=pp>from distutils.core import setup</code></pre>
+
+<p>This imports the <code>setup()</code> function, which is the main entry point into Distutils. 95% of all Distutils setup scripts consist of a single call to <code>setup()</code> and nothing else. (I totally just made up that statistic, but if your Distutils setup script is doing more than calling the Distutils <code>setup()</code> function, you should have a good reason.)
+
+<p>...FIXME...required setup() parameters, optional but recommended setup() parameters, always use named parameters, etc.
+
+<h3 id=trove>Classifying Your Package</h3>
 
 <h3 id=check>Checking Your Setup Script for Errors</h3>
 
@@ -62,7 +165,8 @@ setup(name='httplib2',
 
 <h2 id=sdist>Creating Source Distributions</h2>
 
-<!-- formats -->
+<!-- archive formats -->
+<!-- manifest -->
 
 <h2 id=bdist>Creating Binary Distributions</h2>
 
@@ -96,7 +200,9 @@ setup(name='httplib2',
 
 <ul>
 <li><a href=http://docs.python.org/3.1/distutils/>Distributing Python Modules</a>
+<li><a href=http://docs.python.org/3.1/distutils/apiref.html#module-distutils.core>Core Distutils functionality</a> lists all the possible arguments to the <code>setup()</code> function
 <li><a href=http://www.python.org/dev/peps/pep-0370/><abbr>PEP</abbr> 370: Per user <code>site-packages</code> directory</a>
+<li><a href=http://wiki.python.org/moin/Distutils/Cookbook>Distutils Cookbook</a>
 </ul>
 
 <p class=v><a rel=prev href=multiprocessing.html title='back to &#8220;Threading &amp; Multiprocessing&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=case-study-porting-chardet-to-python-3.html title='onward to &#8220;Case Study: Porting chardet to Python 3&#8221;'><span class=u>&#x261E;</span></a>
