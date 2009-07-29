@@ -7,12 +7,12 @@ import sys
 # These selectors are kept regardless of whether this script thinks they are used.
 # Most of these match nodes that are dynamically inserted or manipulated by script
 # after the page has loaded, which is why a static analysis thinks they're unused.
-SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun', '.tag', '.atn', '.atv', '.dec', 'pre .u', 'pre .u span', 'li ol', '.hl')
+SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun', '.tag', '.atn', '.atv', '.dec', 'pre .u', 'pre .u span', 'li ol', 'a.hl:link', 'a.hl:visited', 'a.hl:hover', 'h2[id]:hover a.hl', 'h3[id]:hover a.hl')
 
 filename = sys.argv[1]
 pqd = pq(filename=filename)
 raw_data = open(filename, 'rb').read()
-if raw_data.count('<pre><code') or raw_data.count('<pre class=screen>'):
+if raw_data.count('<pre'):
     def keep(s):
         for selector in SELECTOR_EXCEPTIONS:
             if s == selector: return True
