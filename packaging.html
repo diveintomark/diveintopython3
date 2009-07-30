@@ -49,7 +49,7 @@ setup(name='httplib2',
           'Programming Language :: Python',
           'Programming Language :: Python :: 3',
           'Topic :: Internet :: WWW/HTTP',
-          'Topic :: Software Development :: Libraries',
+          'Topic :: Software Development :: Libraries :: Python Modules',
       ],
         long_description="""
 
@@ -157,14 +157,14 @@ A comprehensive HTTP client library, ``httplib2`` supports many features left ou
 
 <p>...FIXME...required setup() parameters, optional but recommended setup() parameters, always use named parameters, etc.
 
-<h3 id=trove>Classifying Your Package</h3>
+<h2 id=trove>Classifying Your Package</h2>
 
 <p>The Python Package Index (&#8220;PyPI&#8221;) contains thousands of Python libraries. Proper classification metadata will allow people to find yours more easily.
 
 <p>The PyPI classification system is based on <a href=http://sourceforge.net/softwaremap/>SourceForce&#8217;s software map</a>. Classifiers are strings, but they are <em>not</em> freeform.
 
 <ul>
-<li><b>Development Status</b>. Is your software beta quality? Alpha quality? Pre-alpha? Pick one, and be honest.
+<li><b>Development Status</b>. Is your software beta quality? Alpha quality? Pre-alpha?
 <li><b>Environment</b>. FIXME (optional, multiples allowed)
 <li><b>Framework</b>. Does your software rely on a larger Python framework like <a href=http://www.djangoproject.com/>Django</a> or <a href=http://www.zope.org/>Zope</a>? If not, you can omit this classifier.
 <li><b>Intended Audience</b>. Who would download your software? End users looking for desktop software? System administrators? Scientists? Other Python developers?
@@ -182,20 +182,58 @@ A comprehensive HTTP client library, ``httplib2`` supports many features left ou
 <p>You should <em>always</em> include at least these four classifiers:
 
 <ul>
-<li><code>"Programming Language :: Python"</code>
-<li><code>"Programming Language :: Python :: 3"</code>. If you do not include this, your package will not show up in <a href='http://pypi.python.org/pypi?:action=browse&c=533&show=all'>this list of Python 3-compatible libraries</a>, which linked from the sidebar of every single page of <code>pypi.python.org</code>.
-<li><code>"License :: <i>whatever</i>"</code>. This is <em>the absolute first thing I look for</em> when I&#8217;m evaluating third-party libraries. Don&#8217;t make me hunt for this vital information.
-<li><code>"Operating System :: <i>whatever</i>"</code>. If your software only runs on Windows, I want to know sooner rather than later. If it runs everywhere, use the classifier <code>"Operating System :: OS Independent"</code>.
+<li><code>"Programming Language :: Python"</code> and <code>"Programming Language :: Python :: 3"</code>. If you do not include these, your package will not show up in <a href='http://pypi.python.org/pypi?:action=browse&c=533&show=all'>this list of Python 3-compatible libraries</a>, which linked from the sidebar of every single page of <code>pypi.python.org</code>.
+<li><code>"License :: <i>whatever</i>"</code>. This is <em>the absolute first thing I look for</em> when I&#8217;m evaluating third-party libraries. Don&#8217;t make me hunt for this vital information. Don&#8217;t include more than one license classifier unless your software is explicitly available under multiple licenses (and don&#8217;t release software under multiple licenses unless you&#8217;re forced to do so).
+<li><code>"Operating System :: <i>whatever</i>"</code>. If your software only runs on Windows (or Mac OS X, or Linux), I want to know sooner rather than later. If your software works anywhere without any platform-specific code, use the classifier <code>"Operating System :: OS Independent"</code>. Multiple classifiers are allowed.
 </ul>
 
 <p>I <em>strongly</em> recommend that you also include the following classifications:
 
 <ul>
-<li><code>"Development Status :: <i>whatever</i>"</code>. Be honest.
-<li><code>"Intended Audience :: <i>whatever</i>"</code>. 
+<li><code>"Development Status :: <i>whatever</i>"</code>. Pick one. Be honest.
+<li><code>"Intended Audience :: <i>whatever</i>"</code>. Pick one. The most common choices are <code>Developers</code>, <code>End Users/Desktop</code>, <code>Science/Research</code>, and <code>System Administrators</code>.
+<li><code>"Topic :: <i>whatever</i>"</code>. There are <a href='http://pypi.python.org/pypi?:action=list_classifiers'>a large number of topics available</a>. Choose all that apply.
 </ul>
 
-<p>FIXME - look at several examples, including httplib2
+<h3 id=trove-examples>Examples of Good Package Classifiers</h3>
+
+<p>By way of example, here are the classifiers for <a href=http://pypi.python.org/pypi/Django/>Django</a>, a production-ready, cross-platform, <abbr>BSD</abbr>-licensed content management system that runs on your web server. (Django is not yet compatible with Python 3, so the <code>Programming Language :: Python :: Python 3</code> classifier is not listed.)
+
+<pre><code>Programming Language :: Python
+License :: OSI Approved :: BSD License
+Operating System :: OS Independent
+Development Status :: 5 - Production/Stable
+Environment :: Web Environment
+Framework :: Django
+Intended Audience :: Developers
+Topic :: Internet :: WWW/HTTP
+Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Topic :: Internet :: WWW/HTTP :: WSGI
+Topic :: Software Development :: Libraries :: Python Modules</code></pre>
+
+<p>Here are the classifiers for <a href=http://pypi.python.org/pypi/chardet><code>chardet</code></a>, the character encoding detection library covered in <a href=case-study-porting-chardet-to-python-3.html>Case Study: Porting <code>chardet</code> to Python 3</a>. <code>chardet</code> is beta quality, cross-platform, Python 3-compatible, <abbr>LGPL</abbr>-licensed, and intended for developers to integrate into their own products.
+
+<pre><code>Programming Language :: Python
+Programming Language :: Python :: Python 3
+License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+Operating System :: OS Independent
+Development Status :: 4 - Beta
+Environment :: Other Environment
+Intended Audience :: Developers
+Topic :: Text Processing :: Linguistic
+Topic :: Software Development :: Libraries :: Python Modules</code></pre>
+
+<p>And here are the classifiers for <a href=http://pypi.python.org/pypi/httplib2><code>httplib2</code>, the <abbr>HTTP</abbr> module I mentioned at the beginning of this chapter. <code>httplib2</code> is beta quality, cross-platform, <abbr>MIT</abbr>-licensed, and intended for Python developers.
+
+<pre><code>Programming Language :: Python
+Programming Language :: Python :: 3
+License :: OSI Approved :: MIT License
+Operating System :: OS Independent
+Development Status :: 4 - Beta
+Environment :: Web Environment
+Intended Audience :: Developers
+Topic :: Internet :: WWW/HTTP
+Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <h3 id=check>Checking Your Setup Script for Errors</h3>
 
