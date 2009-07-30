@@ -198,7 +198,60 @@ RefactoringTool: Skipping implicit fixer: ws_comma
 <ins>+print(count, 'tests')</ins>
 RefactoringTool: Files that were modified:
 RefactoringTool: test.py</samp></pre>
-<p>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Time to run the new version. Do you think it&#8217;ll work?
+<p>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Speaking of which, what <em>was</em> the problem with all those import statements? To answer that, you need to understand how the <code>chardet</code> module is split into multiple files.
+
+<p class=a>&#x2042;
+
+<h2 id=multifile-modules>A Short Digression Into Multi-File Modules</h2>
+
+<p><code>chardet</code> is a <i>multi-file module</i>. I could have chosen to put all the code in one file (named <code>chardet.py</code>), but I didn&#8217;t. Instead, I made a directory (named <code>chardet</code>), then I made an <code>__init__.py</code> file in that directory. <em>If Python sees an <code>__init__.py</code> file in a directory, it assumes that all of the files in that directory are part of the same module.</em> The module&#8217;s name is the name of the directory. Files within the directory can reference other files within the same directory, or even within subdirectories. (More on that in a minute.) But the entire collection of files is presented to other Python code as a single module&nbsp;&mdash;&nbsp;as if all the functions and classes were in a single <code>.py</code> file.
+
+<p>What goes in the <code>__init__.py</code> file? Nothing. Everything. Something in between. The <code>__init__.py</code> file doesn&#8217;t need to define anything; it can literally be an empty file. Or you can use it to define your main entry point functions. Or you put all your functions in it. Or all but one.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>A directory with an <code>__init__.py</code> file is always treated as a multi-file module. Without an <code>__init__.py</code> file, a directory is just a directory of unrelated <code>.py</code> files.
+</blockquote>
+
+<p>Let&#8217;s see how that works in practice.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import chardet</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dir(chardet)</kbd>             <span class=u>&#x2460;</span></a>
+<samp class=pp>['__builtins__', '__doc__', '__file__', '__name__',
+ '__package__', '__path__', '__version__', 'detect']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>chardet</kbd>                  <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;module 'chardet' from 'C:\Python31\lib\site-packages\chardet\__init__.py'></samp></pre>
+<ol>
+<li>Other than the usual class attributes, the only thing in the <code>chardet</code> module is a <code>detect()</code> function.
+<li>Here&#8217;s your first clue that the <code>chardet</code> module is more than just a file: the &#8220;module&#8221; is listed as the <code>__init__.py</code> file within the <code>chardet/</code> directory.
+</ol>
+
+<p>Let&#8217;s take a peek in that <code>__init__.py</code> file.
+
+<pre><code class=pp><a>def detect(aBuf):                              <span class=u>&#x2460;</span></a>
+<a>    from . import universaldetector            <span class=u>&#x2461;</span></a>
+    u = universaldetector.UniversalDetector()
+    u.reset()
+    u.feed(aBuf)
+    u.close()
+    return u.result</code></pre>
+<ol>
+<li>The <code>__init__.py</code> file defines the <code>detect()</code> function, which is the main entry point into the <code>chardet</code> library.
+<li>But the <code>detect()</code> function hardly has any code! In fact, all it really does is import the <code>universaldetector</code> module and start using it. But where is <code>universaldetector</code> defined?
+</ol>
+
+<p>The answer lies in that odd-looking <code>import</code> statement:
+
+<pre class=nd><code class=pp>from . import universaldetector</code></pre>
+
+<p>Translated into English, that means &#8220;import the <code>universaldetector</code> module; that&#8217;s in the same directory I am,&#8221; where &#8220;I&#8221; is the <code>chardet/__init__.py</code> file. This is called a <i>relative import</i>. It&#8217;s a way for the files within a multi-file module to reference each other, without worrying about naming conflicts with other modules you may have installed in <a href=your-first-python-program.html#importsearchpath>your import search path</a>. This <code>import</code> statement will <em>only</em> look for the <code>universaldetector</code> module within the <code>chardet/</code> directory itself.
+
+<p>These two concepts&nbsp;&mdash;&nbsp;<code>__init__.py</code> and relative imports&nbsp;&mdash;&nbsp;mean that you can break up your module into as many pieces as you like. The <code>chardet</code> module comprises 36 <code>.py</code> files&nbsp;&mdash;&nbsp;36! Yet all you need to do to start using it is <code>import chardet</code>, then you can call the main <code>chardet.detect()</code> function. Unbeknowst to your code, the <code>detect()</code> function is actually defined in the <code>chardet/__init__.py</code> file. Also unbeknowst to you, the <code>detect()</code> function uses a relative import to reference a class defined in <code>chardet/universaldetector.py</code>, which in turn uses relative imports on five other files, all contained in the <code>chardet/</code> directory.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you ever find yourself writing a large library in Python (or more likely, when you realize that your small library has grown into a large one), take the time to refactor it into a multi-file module. It&#8217;s one of the many things Python is good at, so take advantage of it.
+</blockquote>
+
 <p class=a>&#x2042;
 
 <h2 id=manual>Fixing What <code>2to3</code> Can&#8217;t</h2>
@@ -227,7 +280,7 @@ else:
 <pre class=nd><code class=pp>self.done = constants.False</code></pre>
 <p>Becomes
 <pre class=nd><code class=pp>self.done = False</code></pre>
-<p>Ah, wasn&#8217;t that satisfying?  The code is shorter and more readable already.
+<p>Ah, wasn&#8217;t that satisfying? The code is shorter and more readable already.
 <h3 id=nomodulenamedconstants>No module named <code>constants</code></h3>
 <p>Time to run <code>test.py</code> again and see how far it gets.
 <pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
@@ -237,9 +290,11 @@ else:
   File "C:\home\chardet\chardet\universaldetector.py", line 29, in &lt;module>
     import constants, sys
 ImportError: No module named constants</samp></pre>
-<p>What&#8217;s that you say?  No module named <code>constants</code>?  Of course there&#8217;s a module named <code>constants</code>. &hellip;Oh wait, no there isn&#8217;t. Remember when the <code>2to3</code> script fixed up all those import statements?  This library has a lot of relative imports&nbsp;&mdash;&nbsp;that is, modules that import other modules within the library. In Python 3, <a href=http://www.python.org/dev/peps/pep-0328/>all import statements are absolute by default</a>. To do relative imports, you need to do something like this instead:
+<p>What&#8217;s that you say? No module named <code>constants</code>? Of course there&#8217;s a module named <code>constants</code>. It&#8217;s right there, in <code>chardet/constants.py</code>.
+
+<p>Remember when the <code>2to3</code> script fixed up all those import statements? This library has a lot of relative imports&nbsp;&mdash;&nbsp;that is, <a href=#multifile-modules>modules that import other modules within the same library</a>&nbsp;&mdash;&nbsp;but <em>the logic behind relative imports has changed in Python 3</em>. In Python 2, you could just <code>import constants</code> and it would look in the <code>chardet/</code> directory first. In Python 3, <a href=http://www.python.org/dev/peps/pep-0328/>all import statements are absolute by default</a>. If you want to do a relative import in Python 3, you need to be explicit about it:
 <pre class=nd><code class=pp>from . import constants</code></pre>
-<p>But wait. Wasn&#8217;t the <code>2to3</code> script supposed to take care of these for you?  Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code>constants</code> module within the library, and an absolute import of the <code>sys</code> module that is pre-installed in the Python standard library. In Python 2, you could combine these into one import statement. In Python 3, you can&#8217;t, and the <code>2to3</code> script is not smart enough to split the import statement into two.
+<p>But wait. Wasn&#8217;t the <code>2to3</code> script supposed to take care of these for you? Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code>constants</code> module within the library, and an absolute import of the <code>sys</code> module that is pre-installed in the Python standard library. In Python 2, you could combine these into one import statement. In Python 3, you can&#8217;t, and the <code>2to3</code> script is not smart enough to split the import statement into two.
 <p>The solution is to split the import statement manually. So this two-in-one import:
 <pre class=nd><code class=pp>import constants, sys</code></pre>
 <p>Needs to become two separate imports:
@@ -283,7 +338,7 @@ TypeError: can't use a string pattern on a bytes-like object</samp></pre>
     .
     if self._mInputState == ePureAscii:
         if self._highBitDetector.search(aBuf):</code></pre>
-<p>And what is <var>aBuf</var>?  Let&#8217;s backtrack further to a place that calls <code>UniversalDetector.feed()</code>. One place that calls it is the test harness, <code>test.py</code>.
+<p>And what is <var>aBuf</var>? Let&#8217;s backtrack further to a place that calls <code>UniversalDetector.feed()</code>. One place that calls it is the test harness, <code>test.py</code>.
 <pre class=nd><code class=pp>u = UniversalDetector()
 .
 .
