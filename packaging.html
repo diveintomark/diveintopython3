@@ -118,15 +118,15 @@ This version requires Python 3 or later; a Python 2 version is available separat
 <li>Make a root directory to hold everything. Give it the same name as your Python module.
 <li>To accomodate Windows users, your &#8220;read me&#8221; file should include a <code>.txt</code> extension, and it should use Windows-style carriage returns. Just because <em>you</em> use a fancy text editor that runs from the command line and includes its own macro language, that doesn&#8217;t mean you need to make life difficult for your users. (Your users use Notepad. Sad but true.) Even if you&#8217;re on Linux or Mac OS X, your fancy text editor undoubtedly has an option to save files with Windows-style carriage returns.
 <li>Your Distutils setup script should be named <code>setup.py</code> unless you have a good reason not to. You do not have a good reason not to.
-<li>If your Python software is a single <code>.py</code> file, you should put it in the root directory along with your &#8220;read me&#8221; file and your setup script. If it&#8217;s a multi-file module (<i>i.e.</i> a directory with a main <code>__init__.py</code> script), like <code>httplib2</code>, you should put the entire directory here. Yes, that means you&#8217;ll have an <code>httplib2/</code> directory within an <code>httplib2/</code> directory. Trust me, that&#8217;s not a problem. In fact, any other arrangement would be a problem.
+<li>If your Python software is a single <code>.py</code> file, you should put it in the root directory along with your &#8220;read me&#8221; file and your setup script. But <code>httplib2</code> is not a single <code>.py</code> file; it&#8217;s <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>. But that&#8217;s OK! Just put the <code>httplib2</code> directory in the root directory, so you have an <code>__init__.py</code> file within an <code>httplib2/</code> directory within the <code>httplib2/</code> root directory. That&#8217;s not a problem; in fact, it will simplify your packaging process.
 </ol>
 
-<p>The <code>chardet</code> directory looks slightly different. In addition to the <code>README.txt</code> file, it has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING</code> which contains the complete text of the <abbr>LGPL</abbr>.
+<p>The <code>chardet</code> directory looks slightly different. Like <code>httplib2</code>, it&#8217;s <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, so there&#8217;s a <code>chardet/</code> directory within the <code>chardet/</code> root directory. In addition to the <code>README.txt</code> file, <code>chardet</code> has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING.txt</code> which contains the complete text of the <abbr>LGPL</abbr>.
 
 <pre class=nd><code>
 chardet/
 |
-+--COPYING
++--COPYING.txt
 |
 +--setup.py
 |
@@ -197,7 +197,7 @@ setup(
     ...
 )</code></pre>
 
-<p>FIXME
+<p>The <code>packages</code> parameter highlights an unfortunate vocabulary overlap in the distribution process. We&#8217;ve been talking about the &#8220;package&#8221; as the thing you&#8217;re building (and potentially listing in The Python &#8220;Package&#8221; Index). But that&#8217;s not what this <code>packages</code> parameter refers to. It refers to the fact that the <code>chardet</code> module is <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, sometimes known as&hellip; a &#8220;package.&#8221; The <code>packages</code> parameter tells Distutils to include the <code>chardet/</code> directory, its <code>__init__.py</code> file, and all the other <code>.py</code> files that constitute the <code>chardet</code> module. That&#8217;s kind of important; all this happy talk about documentation and metadata is irrelevant if you forget to include the actual code!
 
 <p class=a>&#x2042;
 
@@ -272,7 +272,7 @@ Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <p>FIXME
 
-<pre class=nd><code>include COPYING
+<pre class=nd><code>include COPYING.txt
 recursive-include docs *.html *.png *.gif</code></pre>
 
 <h2 id=check>Checking Your Setup Script for Errors</h2>
