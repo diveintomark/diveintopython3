@@ -199,6 +199,8 @@ setup(
 
 <p>The <code>packages</code> parameter highlights an unfortunate vocabulary overlap in the distribution process. We&#8217;ve been talking about the &#8220;package&#8221; as the thing you&#8217;re building (and potentially listing in The Python &#8220;Package&#8221; Index). But that&#8217;s not what this <code>packages</code> parameter refers to. It refers to the fact that the <code>chardet</code> module is <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, sometimes known as&hellip; a &#8220;package.&#8221; The <code>packages</code> parameter tells Distutils to include the <code>chardet/</code> directory, its <code>__init__.py</code> file, and all the other <code>.py</code> files that constitute the <code>chardet</code> module. That&#8217;s kind of important; all this happy talk about documentation and metadata is irrelevant if you forget to include the actual code!
 
+<p>The <code>httplib2</code> library is also a multi-file module, has a similar directory structure, and a similar <code>packages</code>
+
 <p class=a>&#x2042;
 
 <h2 id=trove>Classifying Your Package</h2>
@@ -270,10 +272,35 @@ Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <h2 id=manifest>Specifying Additional Files With A Manifest</h2>
 
-<p>FIXME
+<p>By default, Distutils will include the following files in your release package:
 
-<pre class=nd><code>include COPYING.txt
-recursive-include docs *.html *.png *.gif</code></pre>
+<ul>
+<li><code>README.txt</code>
+<li><code>setup.py</code>
+<li>The <code>.py</code> files needed by the multi-file modules listed in the <code>packages</code> parameter
+<li>The individual <code>.py</code> files listed in the <code>py_modules</code> parameter
+</ul>
+
+<p>That will cover <a href=#structure>all the files in the <code>httplib2</code> project</a>. But for the <code>chardet</code> project, we also want to include the <code>COPYING.txt</code> license file and the entire <code>docs/</code> directory that contains images and  <abbr>HTML</abbr> files. To tell Distutils to include these additional files and directories when it builds the <code>chardet</code> release package, you need a <i>manifest file</i>.
+
+<p>A manifest file is a text file called <code>MANIFEST.in</code>. Place it in the project&#8217;s root directory, next to <code>README.txt</code> and <code>setup.py</code>. Manifest files are <em>not</em> Python scripts; they are text files that contain a series of &#8220;commands&#8221; in a Distutils-defined format. Manifest commands allow you to include or exclude specific files and directories.
+
+<p>This is the entire manifest file for the <code>chardet</code> project:
+
+<pre class=nd><code><a>include COPYING.txt                          <span class=u>&#x2460;</span></a>
+<a>recursive-include docs *.html *.png *.gif    <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>The first line is self-explanatory: include the <code>COPYING.txt</code> file from the project&#8217;s root directory.
+<li>The second line is a bit more complicated. The <code>recursive-include</code> command takes a directory name and one or more filenames. The filenames aren&#8217;t limited to specific files; they can include wildcards. This line means &#8220;See that <code>docs/</code> directory in the project&#8217;s root directory? Look in there (recursively) for <code>.html</code>, <code>.png</code>, and <code>.gif</code> files. I want all of them in my release package.&#8221;
+</ol>
+
+<p>All manifest commands preserve the directory structure that you set up in your project directory. That <code>recursive-include</code> command is not going to put a bunch of <code>.html</code> and <code>.png</code> files in the root directory of the release package. It&#8217;s going to maintain the existing <code>docs/</code> directory structure, but only include those files inside that directory that match the given wildcards. (I didn&#8217;t mention it earlier, but the <code>chardet</code> documentation is actually written in <abbr>XML</abbr> and converted to <abbr>HTML</abbr> by a separate script. I don&#8217;t want to include the <abbr>XML</abbr> files in the release package, just the <abbr>HTML</abbr> and the images.)
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Manifest files have their own unique format. See <a href=http://docs.python.org/3.1/distutils/sourcedist.html#manifest>Specifying the files to distribute</a> and <a href=http://docs.python.org/3.1/distutils/commandref.html#sdist-cmd>the manifest template commands</a> for details.
+</blockquote>
+
+<p>To reiterate: you only need to create a manifest file if you want to include files that Distutils doesn&#8217;t include by default. If you do need a manifest file, it should only include the files and directories that Distutils wouldn&#8217;t otherwise find on its own.
 
 <h2 id=check>Checking Your Setup Script for Errors</h2>
 
