@@ -186,63 +186,6 @@ print "z=",z          <span>&#x2464;</span>
 
 
 <h2 id="kgp.packages">9.2. Packages</h2>
-<p>Actually parsing an <abbr>XML</abbr> document is very simple: one line of code. However, before you get to that line of code, you need to take a short detour
-   to talk about packages.
-<div class=example><h3>Example 9.5. Loading an <abbr>XML</abbr> document (a sneak peek)</h3><pre class=screen>
-<samp class=p>>>> </samp><kbd>from xml.dom import minidom</kbd> <span>&#x2460;</span>
-<samp class=p>>>> </samp>xmldoc = minidom.parse('~/diveintopython3/common/py/kgp/binary.xml')</pre>
-<ol>
-<li>This is a syntax you haven't seen before. It looks almost like the <code>from <var>module</var> import</code> you know and love, but the <code>"."</code> gives it away as something above and beyond a simple import. In fact, <code>xml</code> is what is known as a package, <code>dom</code> is a nested package within <code>xml</code>, and <code>minidom</code> is a module within <code>xml.dom</code>.
-<p>That sounds complicated, but it's really not. Looking at the actual implementation may help. Packages are little more than
-directories of modules; nested packages are subdirectories. The modules within a package (or a nested package) are still
-just <code>.py</code> files, like always, except that they're in a subdirectory instead of the main <code>lib/</code> directory of your Python installation.
-<div class=example><h3>Example 9.6. File layout of a package</h3><pre class=screen>Python21/           root Python installation (home of the executable)
-|
-+--lib/             library directory (home of the standard library modules)
-   |
-   +-- xml/         xml package (really just a directory with other stuff in it)
-       |
-       +--sax/      xml.sax package (again, just a directory)
-       |
-       +--dom/      xml.dom package (contains minidom.py)
-       |
-       +--parsers/  xml.parsers package (used internally)</pre><p>So when you say <code>from xml.dom import minidom</code>, Python figures out that that means &#8220;look in the <code>xml</code> directory for a <code>dom</code> directory, and look in <em>that</em> for the <code>minidom</code> module, and import it as <code>minidom</code>&#8221;. But Python is even smarter than that; not only can you import entire modules contained within a package, you can selectively import
-specific classes or functions from a module contained within a package. You can also import the package itself as a module.
-The syntax is all the same; Python figures out what you mean based on the file layout of the package, and automatically does the right thing.
-<div class=example><h3>Example 9.7. Packages are modules, too</h3><pre class=screen><samp class=p>>>> </samp><kbd>from xml.dom import minidom</kbd>         <span>&#x2460;</span>
-<samp class=p>>>> </samp><kbd>minidom</kbd>
-&lt;module 'xml.dom.minidom' from 'C:\Python21\lib\xml\dom\minidom.pyc'>
-<samp class=p>>>> </samp><kbd>minidom.Element</kbd>
-&lt;class xml.dom.minidom.Element at 01095744>
-<samp class=p>>>> </samp><kbd>from xml.dom.minidom import Element</kbd> <span>&#x2461;</span>
-<samp class=p>>>> </samp><kbd>Element</kbd>
-&lt;class xml.dom.minidom.Element at 01095744>
-<samp class=p>>>> </samp><kbd>minidom.Element</kbd>
-&lt;class xml.dom.minidom.Element at 01095744>
-<samp class=p>>>> </samp><kbd>from xml import dom</kbd>                 <span>&#x2462;</span>
-<samp class=p>>>> </samp><kbd>dom</kbd>
-&lt;module 'xml.dom' from 'C:\Python21\lib\xml\dom\__init__.pyc'>
-<samp class=p>>>> </samp><kbd>import xml</kbd>        <span>&#x2463;</span>
-<samp class=p>>>> </samp><kbd>xml</kbd>
-&lt;module 'xml' from 'C:\Python21\lib\xml\__init__.pyc'></pre>
-<ol>
-<li>Here you're importing a module (<code>minidom</code>) from a nested package (<code>xml.dom</code>). The result is that <code>minidom</code> is imported into your <a href="#dialect.locals" title="8.5. locals and globals">namespace</a>, and in order to reference classes within the <code>minidom</code> module (like <code>Element</code>), you need to preface them with the module name.
-<li>Here you are importing a class (<code>Element</code>) from a module (<code>minidom</code>) from a nested package (<code>xml.dom</code>). The result is that <code>Element</code> is imported directly into your namespace. Note that this does not interfere with the previous import; the <code>Element</code> class can now be referenced in two ways (but it's all still the same class).
-<li>Here you are importing the <code>dom</code> package (a nested package of <code>xml</code>) as a module in and of itself. Any level of a package can be treated as a module, as you'll see in a moment. It can even
-            have its own attributes and methods, just the modules you've seen before.
-<li>Here you are importing the root level <code>xml</code> package as a module.
-<p>So how can a package (which is just a directory on disk) be imported and treated as a module (which is always a file on disk)?
-The answer is the magical <code>__init__.py</code> file. You see, packages are not simply directories; they are directories with a specific file, <code>__init__.py</code>, inside. This file defines the attributes and methods of the package. For instance, <code>xml.dom</code> contains a <code>Node</code> class, which is defined in <code>xml/dom/__init__.py</code>. When you import a package as a module (like <code>dom</code> from <code>xml</code>), you're really importing its <code>__init__.py</code> file.
-<table class=note border="0" summary="">
-
-<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">A package is a directory with the special <code>__init__.py</code> file in it. The <code>__init__.py</code> file defines the attributes and methods of the package. It doesn't need to define anything; it can just be an empty file,
-      but it has to exist. But if <code>__init__.py</code> doesn't exist, the directory is just a directory, not a package, and it can't be imported or contain modules or nested packages.
-<p>So why bother with packages?  Well, they provide a way to logically group related modules. Instead of having an <code>xml</code> package with <code>sax</code> and <code>dom</code> packages inside, the authors could have chosen to put all the <code>sax</code> functionality in <code>xmlsax.py</code> and all the <code>dom</code> functionality in <code>xmldom.py</code>, or even put all of it in a single module. But that would have been unwieldy (as of this writing, the <abbr>XML</abbr> package has over 3000 lines of code) and difficult to manage (separate source files mean multiple people can work on different
-areas simultaneously).
-<p>If you ever find yourself writing a large subsystem in Python (or, more likely, when you realize that your small subsystem has grown into a large one), invest some time designing a good
-package architecture. It's one of the many things Python is good at, so take advantage of it.
-<h2 id="kgp.parse">9.3. Parsing <abbr>XML</abbr></h2>
-<p>As I was saying, actually parsing an <abbr>XML</abbr> document is very simple: one line of code. Where you go from there is up to you.
 
 
 
