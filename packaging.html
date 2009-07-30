@@ -6,6 +6,7 @@
 <link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 17}
+mark{display:inline}
 </style>
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -120,7 +121,7 @@ This version requires Python 3 or later; a Python 2 version is available separat
 <li>If your Python software is a single <code>.py</code> file, you should put it in the root directory along with your &#8220;read me&#8221; file and your setup script. If it&#8217;s a multi-file module (<i>i.e.</i> a directory with a main <code>__init__.py</code> script), like <code>httplib2</code>, you should put the entire directory here. Yes, that means you&#8217;ll have an <code>httplib2/</code> directory within an <code>httplib2/</code> directory. Trust me, that&#8217;s not a problem. In fact, any other arrangement would be a problem.
 </ol>
 
-<p>The <code>chardet</code> directory looks slightly different. Instead of a &#8220;read me&#8221; file, it has <abbr>HTML</abbr>-formatted documentation in a <code>docs/</code> directory. Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING</code> which contains the complete text of the <abbr>LGPL</abbr>.
+<p>The <code>chardet</code> directory looks slightly different. In addition to the <code>README.txt</code> file, it has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING</code> which contains the complete text of the <abbr>LGPL</abbr>.
 
 <pre class='nd screen'>
 chardet/
@@ -129,13 +130,15 @@ chardet/
 |
 +--setup.py
 |
++--README.txt
+|
 +--docs/
 |  |
 |  +--index.html
 |  |
 |  +--usage.html
 |  |
-|  +--...
+|  +--images/ ...
 |
 +--chardet/
    |
@@ -170,7 +173,7 @@ chardet/
 <li><b>url</b>, the home page of your project. This can be your <a href=http://pypi.python.org/>PyPI</a> package page if you don&#8217;t have a separate project website.
 </ul>
 
-<p>Although not required, I recommend that you also include
+<p>Although not required, I recommend that you also include the following in your setup script:
 
 <ul>
 <li><b>description</b>, a one-line summary of the project.
@@ -181,6 +184,20 @@ chardet/
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>Setup script metadata is defined in <a href=http://www.python.org/dev/peps/pep-0314/><abbr>PEP</abbr> 314</a>.
 </blockquote>
+
+<p>Now let&#8217;s look at the <code>chardet</code> setup script. It has all of these required and recommended parameters, plus one I haven&#8217;t mentioned yet: <code>packages</code>.
+
+<pre class=nd><code class=pp>from distutils.core import setup
+setup(
+    name = 'chardet',
+    <mark>packages = ['chardet']</mark>,
+    version = '1.0.2',
+    description = 'Universal encoding detector',
+    author='Mark Pilgrim',
+    ...
+)</code></pre>
+
+<p>FIXME
 
 <p class=a>&#x2042;
 
@@ -251,14 +268,72 @@ Intended Audience :: Developers
 Topic :: Internet :: WWW/HTTP
 Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
-<h3 id=check>Checking Your Setup Script for Errors</h3>
+<h2 id=manifest>Specifying Additional Files With A Manifest</h2>
+
+<p>FIXME
+
+<pre class=nd><code>include COPYING
+recursive-include docs *.html *.png *.gif</code></pre>
+
+<h2 id=check>Checking Your Setup Script for Errors</h2>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py check</kbd>
+<samp>running check
+warning: check: missing required meta-data: version</samp></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py check</kbd>
+<samp>running check</samp></pre>
 
 <p class=a>&#x2042;
 
 <h2 id=sdist>Creating Source Distributions</h2>
 
 <!-- archive formats -->
-<!-- manifest -->
+
+<pre class=screen>
+FIXME need to redo this now that we have a MANIFEST.in file
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py sdist</mark></kbd>
+<samp>running sdist
+running check
+reading manifest file 'MANIFEST'
+creating chardet-1.0.2
+creating chardet-1.0.2\chardet
+copying files to chardet-1.0.2...
+copying setup.py -> chardet-1.0.2
+copying chardet\__init__.py -> chardet-1.0.2\chardet
+copying chardet\big5freq.py -> chardet-1.0.2\chardet
+...
+copying chardet\universaldetector.py -> chardet-1.0.2\chardet
+copying chardet\utf8prober.py -> chardet-1.0.2\chardet
+creating dist
+creating 'dist\chardet-1.0.2.zip' and adding 'chardet-1.0.2' to it
+adding 'chardet-1.0.2\PKG-INFO'
+adding 'chardet-1.0.2\setup.py'
+adding 'chardet-1.0.2\chardet\big5freq.py'
+adding 'chardet-1.0.2\chardet\big5prober.py'
+...
+adding 'chardet-1.0.2\chardet\universaldetector.py'
+adding 'chardet-1.0.2\chardet\utf8prober.py'
+adding 'chardet-1.0.2\chardet\__init__.py'
+removing 'chardet-1.0.2' (and everything under it)</samp>
+
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
+<samp> Volume in drive C has no label.
+ Volume Serial Number is DED5-B4F8
+
+ Directory of c:\Users\pilgrim\chardet\dist
+
+07/30/2009  04:47 AM    &lt;DIR>          .
+07/30/2009  04:47 AM    &lt;DIR>          ..
+07/30/2009  04:47 AM           175,367 <mark>chardet-1.0.2.zip</mark>
+               1 File(s)        175,367 bytes
+               2 Dir(s)  62,235,222,016 bytes free</samp></pre>
 
 <p class=a>&#x2042;
 
@@ -266,9 +341,54 @@ Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <!-- python3 setup.py bdist --help-formats -->
 
+<!-- http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers -->
+
 <h3 id=wininst>Building A Windows Installer</h3>
 
-<!-- 32-bit vs. 64-bit -->
+<pre class=screen>
+FIXME probably need to redo this too
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py bdist_wininst</mark></kbd>
+<samp>running bdist_wininst
+running build
+running build_py
+installing to build\bdist.win32\wininst
+running install_lib
+creating build\bdist.win32\wininst
+creating build\bdist.win32\wininst\PURELIB
+creating build\bdist.win32\wininst\PURELIB\chardet
+copying build\lib\chardet\big5freq.py -> build\bdist.win32\wininst\PURELIB\chardet
+copying build\lib\chardet\big5prober.py -> build\bdist.win32\wininst\PURELIB\chardet
+copying build\lib\chardet\chardistribution.py -> build\bdist.win32\wininst\PURELIB\chardet
+...
+copying build\lib\chardet\universaldetector.py -> build\bdist.win32\wininst\PURELIB\chardet
+copying build\lib\chardet\utf8prober.py -> build\bdist.win32\wininst\PURELIB\chardet
+copying build\lib\chardet\__init__.py -> build\bdist.win32\wininst\PURELIB\chardet
+running install_egg_info
+Writing build\bdist.win32\wininst\PURELIB\chardet-1.0.2-py3.1.egg-info
+creating 'c:\users\pilgrim\appdata\local\temp\tmp58b9n5.zip' and adding '.' to it
+adding 'PURELIB\chardet-1.0.2-py3.1.egg-info'
+adding 'PURELIB\chardet\big5freq.py'
+adding 'PURELIB\chardet\big5prober.py'
+adding 'PURELIB\chardet\chardistribution.py'
+...
+adding 'PURELIB\chardet\universaldetector.py'
+adding 'PURELIB\chardet\utf8prober.py'
+adding 'PURELIB\chardet\__init__.py'
+removing 'build\bdist.win32\wininst' (and everything under it)</samp>
+
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
+ Volume in drive C has no label.
+ Volume Serial Number is DED5-B4F8
+
+ Directory of c:\Users\pilgrim\chardet\dist
+
+07/30/2009  03:52 AM    &lt;DIR>          .
+07/30/2009  03:52 AM    &lt;DIR>          ..
+07/30/2009  03:52 AM           371,236 <mark>chardet-1.0.2.win32.exe</mark>
+               2 File(s)        546,603 bytes
+               2 Dir(s)  62,235,119,616 bytes free</samp></pre>
+
+<!-- works on non-Windows (as long as the package is pure-Python) -->
 <!-- UAC -->
 
 <h3 id=rpm>Building a Linux RPM Package</h3>
