@@ -300,14 +300,14 @@ Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <h2 id=check>Checking Your Setup Script for Errors</h2>
 
-<p>FIXME
+<p>There&#8217;s a lot to keep track of. Distutils comes with a built-in validation command that checks that all the required metadata is present in your setup script. For example, if you forget to include the <code>version</code> parameter, Distutils will can remind you.
 
 <pre class=screen>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py check</kbd>
 <samp>running check
 warning: check: missing required meta-data: version</samp></pre>
 
-<p>FIXME
+<p>Once you include a <code>version</code> parameter (and all the other required bits of metadata), the <code>check</code> command will look like this:
 
 <pre class=screen>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py check</kbd>
