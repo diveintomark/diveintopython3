@@ -25,9 +25,9 @@ mark{display:inline}
 
 <p>Python 3 comes with a packaging framework called Distutils. Distutils is many things: a build tool (for you), an installation tool (for your users), a package metadata format (for search engines), and more. It integrates with the <a href=http://pypi.python.org/>Python Package Index</a> (&#8220;PyPI&#8221;), a central repository for open source Python libraries.
 
-<p>All of these facets of Distutils center around the <i>setup script</i>, traditionally called <code>setup.py</code>. In fact, you&#8217;ve already seen several Distutils setup scripts in this book: <a href=http-web-services.html#introducing-httplib2>you used one to install <code>httplib2</code></a> in &#8220;HTTP Web Services,&#8221; and <a href=case-study-porting-chardet-to-python-3.html>another to install <code>chardet</code></a> in &#8220;Case Study: Porting <code>chardet</code> to Python 3.&#8221;
+<p>All of these facets of Distutils center around the <i>setup script</i>, traditionally called <code>setup.py</code>. In fact, you&#8217;ve already seen several Distutils setup scripts in this book. You used Distutils to install <code>httplib2</code> in <a href=http-web-services.html#introducing-httplib2>HTTP Web Services</a> and again to install <code>chardet</code> in <a href=case-study-porting-chardet-to-python-3.html>Case Study: Porting <code>chardet</code> to Python 3</a>.
 
-<p>In this chapter, you&#8217;ll learn how the setup script for <code>chardet</code> works and step through the process of releasing your own Python software.
+<p>In this chapter, you&#8217;ll learn how the setup scripts for <code>chardet</code> and <code>httplib2</code> work, and you&#8217;ll step through the process of releasing your own Python software.
 
 <pre><code class=pp># chardet's setup.py
 from distutils.core import setup
@@ -205,15 +205,11 @@ setup(
 
 <h2 id=trove>Classifying Your Package</h2>
 
-<p>The Python Package Index (&#8220;PyPI&#8221;) contains thousands of Python libraries. Proper classification metadata will allow people to find yours more easily.
+<p>The Python Package Index (&#8220;PyPI&#8221;) contains thousands of Python libraries. Proper classification metadata will allow people to find yours more easily. PyPI lets you <a href='http://pypi.python.org/pypi?:action=browse'>browse packages by classifier</a>. You can even select multiple classifiers to narrow your search. Classifiers are not invisible metadata that you can just ignore!
 
-<p>The <code>classifiers</code> parameter to the Distutils <code>setup()</code> function is a list of strings. These strings are <em>not</em> freeform. All of your classifier strings should come from <a href='http://pypi.python.org/pypi?:action=list_classifiers'>this master list on PyPI</a>.
+<p>To classify your software, pass a <code>classifiers</code> parameter to the Distutils <code>setup()</code> function. The <code>classifers</code> parameter is a list of strings. These strings are <em>not</em> freeform. All classifier strings should come from <a href='http://pypi.python.org/pypi?:action=list_classifiers'>this list on PyPI</a>.
 
-<blockquote class=note>
-<p><span class=u>&#x261E;</span>The Python Package Index lets you <a href='http://pypi.python.org/pypi?:action=browse'>browse packages by classifier</a>. You can even select multiple classifiers to narrow your search. Classifiers are not invisible metadata that you can just ignore! They&#8217;re quite visible and very useful.
-</blockquote>
-
-<p>The entire <code>classifiers</code> parameter is optional. You can write a Distutils setup script without any classifiers at all. <strong>Don&#8217;t do that.</strong> You should <em>always</em> include at least these classifiers:
+<p>Classifiers are optional. You can write a Distutils setup script without any classifiers at all. <strong>Don&#8217;t do that.</strong> You should <em>always</em> include at least these classifiers:
 
 <ul>
 <li><b>Programming Language</b>. In particular, you should include both <code>"Programming Language :: Python"</code> and <code>"Programming Language :: Python :: 3"</code>. If you do not include these, your package will not show up in <a href='http://pypi.python.org/pypi?:action=browse&amp;c=533&amp;show=all'>this list of Python 3-compatible libraries</a>, which linked from the sidebar of every single page of <code>pypi.python.org</code>.
