@@ -123,7 +123,7 @@ This version requires Python 3 or later; a Python 2 version is available separat
 
 <p>The <code>chardet</code> directory looks slightly different. In addition to the <code>README.txt</code> file, it has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING</code> which contains the complete text of the <abbr>LGPL</abbr>.
 
-<pre class='nd screen'>
+<pre class=nd><code>
 chardet/
 |
 +--COPYING
@@ -214,7 +214,7 @@ setup(
 <p>You should <em>always</em> include at least these four classifiers:
 
 <ul>
-<li><b>Programming Language</b>. In particular, you should include both <code>"Programming Language :: Python"</code> and <code>"Programming Language :: Python :: 3"</code>. If you do not include these, your package will not show up in <a href='http://pypi.python.org/pypi?:action=browse&c=533&show=all'>this list of Python 3-compatible libraries</a>, which linked from the sidebar of every single page of <code>pypi.python.org</code>.
+<li><b>Programming Language</b>. In particular, you should include both <code>"Programming Language :: Python"</code> and <code>"Programming Language :: Python :: 3"</code>. If you do not include these, your package will not show up in <a href='http://pypi.python.org/pypi?:action=browse&amp;c=533&amp;show=all'>this list of Python 3-compatible libraries</a>, which linked from the sidebar of every single page of <code>pypi.python.org</code>.
 <li><b>License</b>. This is <em>the absolute first thing I look for</em> when I&#8217;m evaluating third-party libraries. Don&#8217;t make me hunt for this vital information. Don&#8217;t include more than one license classifier unless your software is explicitly available under multiple licenses (and don&#8217;t release software under multiple licenses unless you&#8217;re forced to do so).
 <li><b>Operating System</b>. If your software only runs on Windows (or Mac OS X, or Linux), I want to know sooner rather than later. If your software runs anywhere without any platform-specific code, use the classifier <code>"Operating System :: OS Independent"</code>. Multiple <code>Operating System</code> classifiers are only necessary if your software requires specific support for each platform. (This is not common.)
 </ul>
@@ -294,7 +294,9 @@ warning: check: missing required meta-data: version</samp></pre>
 
 <h2 id=sdist>Creating Source Distributions</h2>
 
-<!-- archive formats -->
+<pre>
+archive formats?
+</pre>
 
 <pre class=screen>
 FIXME need to redo this now that we have a MANIFEST.in file
@@ -339,9 +341,13 @@ removing 'chardet-1.0.2' (and everything under it)</samp>
 
 <h2 id=bdist>Creating Binary Distributions</h2>
 
-<!-- python3 setup.py bdist --help-formats -->
+<pre>
+python3 setup.py bdist --help-formats
+</pre>
 
-<!-- http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers -->
+<pre>
+http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers
+</pre>
 
 <h3 id=wininst>Building A Windows Installer</h3>
 
@@ -377,7 +383,7 @@ adding 'PURELIB\chardet\__init__.py'
 removing 'build\bdist.win32\wininst' (and everything under it)</samp>
 
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
- Volume in drive C has no label.
+<samp> Volume in drive C has no label.
  Volume Serial Number is DED5-B4F8
 
  Directory of c:\Users\pilgrim\chardet\dist
@@ -388,8 +394,13 @@ removing 'build\bdist.win32\wininst' (and everything under it)</samp>
                2 File(s)        546,603 bytes
                2 Dir(s)  62,235,119,616 bytes free</samp></pre>
 
-<!-- works on non-Windows (as long as the package is pure-Python) -->
-<!-- UAC -->
+<pre>
+works on non-Windows (as long as the package is pure-Python)
+</pre>
+
+<pre>
+UAC?
+</pre>
 
 <h3 id=rpm>Building a Linux RPM Package</h3>
 
@@ -403,14 +414,14 @@ removing 'build\bdist.win32\wininst' (and everything under it)</samp>
 
 <h3 id=upload>Uploading New Versions</h3>
 
-<!--
+<pre>
 @jessenoller sez:
  * distutils, how to make a setup.py (and include data files, tests, docs, etc for a project)
  * how to upload it to pypi properly (label it for python 3 for the love of pete)
  * how to build build bdist/RPMs/DEBs.
  * If you can - and I've forgotten how much distutils supports of this, cover dependency management.
  * Oh, I almost forgot - cover the Per-User Site packages stuff, PEP 370
--->
+</pre>
 
 <p class=a>&#x2042;
 
