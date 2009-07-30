@@ -159,7 +159,7 @@ chardet/
 
 <pre class=nd><code class=pp>from distutils.core import setup</code></pre>
 
-<p>This imports the <code>setup()</code> function, which is the main entry point into Distutils. 95% of all Distutils setup scripts consist of a single call to <code>setup()</code> and nothing else. (I totally just made up that statistic, but if your Distutils setup script is doing more than calling the Distutils <code>setup()</code> function, you should have a good reason.)
+<p>This imports the <code>setup()</code> function, which is the main entry point into Distutils. 95% of all Distutils setup scripts consist of a single call to <code>setup()</code> and nothing else. (I totally just made up that statistic, but if your Distutils setup script is doing more than calling the Distutils <code>setup()</code> function, you should have a good reason. Do you have a good reason? I didn&#8217;t think so.)
 
 <p>The <code>setup()</code> function <a href=http://docs.python.org/3.1/distutils/apiref.html#distutils.core.setup>can take dozens of parameters</a>. For the sanity of everyone involved, you must use <a href=your-first-python-program.html#optional-arguments>named arguments</a> for every parameter. This is not merely a convention; it&#8217;s a hard requirement. Your setup script will crash if you try to call the <code>setup()</code> function with non-named arguments.
 
