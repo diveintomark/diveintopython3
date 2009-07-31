@@ -26,8 +26,15 @@ body{counter-reset:h1 13}
 
 <h2 id=furtherreading>Further Reading</h2>
 
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Many articles about the <code>pickle</code> module make references to <code>cPickle</code>. In Python 2, there were two implementations of the <code>pickle</code> module, one written in pure Python and another written in C (but still callable from Python). In Python 3, <a href=porting-code-to-python-3-with-2to3.html#othermodules>these two modules have been consolidated</a>, so you should always just <code>import pickle</code>. You may find these articles useful, but you should ignore the now-obsolete information about <code>cPickle</code>.
+</blockquote>
+
 <ul>
-<li>FIXME
+<li><a href=http://wiki.python.org/moin/UsingPickle>Using <code>pickle</code></a>
+<li><a href=http://www.doughellmann.com/PyMOTW/pickle/><code>pickle</code> and <code>cPickle</code>&nbsp;&mdash;&nbsp;Python object serialization</a>
+<li><a href=http://www.ibm.com/developerworks/library/l-pypers.html>Python persistence management</a>
+<li><a href=http://www.doughellmann.com/PyMOTW/json/><code>json</code>&nbsp;&mdash;&nbsp;JavaScript Object Notation Serializer</a>
 </ul>
 
 <p class=v><a rel=prev href=xml.html title='back to &#8220;XML&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=http-web-services.html title='onward to &#8220;HTTP Web Services&#8221;'><span class=u>&#x261E;</span></a>

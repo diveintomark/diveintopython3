@@ -34,7 +34,7 @@ from distutils.core import setup
 setup(
     name = "chardet",
     packages = ["chardet"],
-    version = "1.0.1",
+    version = "1.0.2",
     description = "Universal encoding detector",
     author = "Mark Pilgrim",
     author_email = "mark@diveintomark.org",
@@ -121,7 +121,7 @@ This version requires Python 3 or later; a Python 2 version is available separat
 <li>If your Python software is a single <code>.py</code> file, you should put it in the root directory along with your &#8220;read me&#8221; file and your setup script. But <code>httplib2</code> is not a single <code>.py</code> file; it&#8217;s <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>. But that&#8217;s OK! Just put the <code>httplib2</code> directory in the root directory, so you have an <code>__init__.py</code> file within an <code>httplib2/</code> directory within the <code>httplib2/</code> root directory. That&#8217;s not a problem; in fact, it will simplify your packaging process.
 </ol>
 
-<p>The <code>chardet</code> directory looks slightly different. Like <code>httplib2</code>, it&#8217;s <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, so there&#8217;s a <code>chardet/</code> directory within the <code>chardet/</code> root directory. In addition to the <code>README.txt</code> file, <code>chardet</code> has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING.txt</code> which contains the complete text of the <abbr>LGPL</abbr>.
+<p>The <code>chardet</code> directory looks slightly different. Like <code>httplib2</code>, it&#8217;s <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, so there&#8217;s a <code>chardet/</code> directory within the <code>chardet/</code> root directory. In addition to the <code>README.txt</code> file, <code>chardet</code> has <abbr>HTML</abbr>-formatted documentation in the <code>docs/</code> directory. The <code>docs/</code> directory contains several <code>.html</code> and <code>.css</code> files and an <code>images/</code> subdirectory, which contains several <code>.png</code> and <code>.gif</code> files. (This will be important later.) Also, in keeping with the convention for <abbr>(L)GPL</abbr>-licensed software, it has a separate file called <code>COPYING.txt</code> which contains the complete text of the <abbr>LGPL</abbr>.
 
 <pre class=nd><code>
 chardet/
@@ -283,11 +283,11 @@ Topic :: Software Development :: Libraries :: Python Modules</code></pre>
 
 <p>This is the entire manifest file for the <code>chardet</code> project:
 
-<pre class=nd><code><a>include COPYING.txt                          <span class=u>&#x2460;</span></a>
-<a>recursive-include docs *.html *.png *.gif    <span class=u>&#x2461;</span></a></code></pre>
+<pre class=nd><code><a>include COPYING.txt                                <span class=u>&#x2460;</span></a>
+<a>recursive-include docs *.html *.css *.png *.gif    <span class=u>&#x2461;</span></a></code></pre>
 <ol>
 <li>The first line is self-explanatory: include the <code>COPYING.txt</code> file from the project&#8217;s root directory.
-<li>The second line is a bit more complicated. The <code>recursive-include</code> command takes a directory name and one or more filenames. The filenames aren&#8217;t limited to specific files; they can include wildcards. This line means &#8220;See that <code>docs/</code> directory in the project&#8217;s root directory? Look in there (recursively) for <code>.html</code>, <code>.png</code>, and <code>.gif</code> files. I want all of them in my release package.&#8221;
+<li>The second line is a bit more complicated. The <code>recursive-include</code> command takes a directory name and one or more filenames. The filenames aren&#8217;t limited to specific files; they can include wildcards. This line means &#8220;See that <code>docs/</code> directory in the project&#8217;s root directory? Look in there (recursively) for <code>.html</code>, <code>.css</code>, <code>.png</code>, and <code>.gif</code> files. I want all of them in my release package.&#8221;
 </ol>
 
 <p>All manifest commands preserve the directory structure that you set up in your project directory. That <code>recursive-include</code> command is not going to put a bunch of <code>.html</code> and <code>.png</code> files in the root directory of the release package. It&#8217;s going to maintain the existing <code>docs/</code> directory structure, but only include those files inside that directory that match the given wildcards. (I didn&#8217;t mention it earlier, but the <code>chardet</code> documentation is actually written in <abbr>XML</abbr> and converted to <abbr>HTML</abbr> by a separate script. I don&#8217;t want to include the <abbr>XML</abbr> files in the release package, just the <abbr>HTML</abbr> and the images.)
@@ -320,6 +320,7 @@ warning: check: missing required meta-data: version</samp></pre>
 <p>Distutils supports building multiple types of release packages. At a minimum, you should build a &#8220;source distribution&#8221; that contains your source code, your Distutils setup script, your &#8220;read me&#8221; file, and whatever <a href=#manifest>additional files you want to include</a>. To build a source distribution, pass the <code>sdist</code> command to your Distutils setup script.
 
 <pre class=screen>
+FIXME again
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py sdist</mark></kbd>
 <samp>running sdist
 running check
