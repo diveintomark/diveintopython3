@@ -315,30 +315,47 @@ warning: check: missing required meta-data: version</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=sdist>Creating Source Distributions</h2>
+<h2 id=sdist>Creating a Source Distribution</h2>
 
-<pre>
-archive formats?
-</pre>
+<p>Distutils supports building multiple types of release packages. At a minimum, you should build a &#8220;source distribution&#8221; that contains your source code, your Distutils setup script, your &#8220;read me&#8221; file, and whatever <a href=#manifest>additional files you want to include</a>. To build a source distribution, pass the <code>sdist</code> command to the Distutils setup script.
 
 <pre class=screen>
-FIXME need to redo this now that we have a MANIFEST.in file
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py sdist</mark></kbd>
 <samp>running sdist
 running check
-reading manifest file 'MANIFEST'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'MANIFEST'
 creating chardet-1.0.2
 creating chardet-1.0.2\chardet
+creating chardet-1.0.2\docs
+creating chardet-1.0.2\docs\images
 copying files to chardet-1.0.2...
+copying COPYING -> chardet-1.0.2
+copying README.txt -> chardet-1.0.2
 copying setup.py -> chardet-1.0.2
 copying chardet\__init__.py -> chardet-1.0.2\chardet
 copying chardet\big5freq.py -> chardet-1.0.2\chardet
 ...
 copying chardet\universaldetector.py -> chardet-1.0.2\chardet
 copying chardet\utf8prober.py -> chardet-1.0.2\chardet
+copying docs\faq.html -> chardet-1.0.2\docs
+copying docs\history.html -> chardet-1.0.2\docs
+copying docs\how-it-works.html -> chardet-1.0.2\docs
+copying docs\index.html -> chardet-1.0.2\docs
+copying docs\license.html -> chardet-1.0.2\docs
+copying docs\supported-encodings.html -> chardet-1.0.2\docs
+copying docs\usage.html -> chardet-1.0.2\docs
+copying docs\images\caution.png -> chardet-1.0.2\docs\images
+copying docs\images\important.png -> chardet-1.0.2\docs\images
+copying docs\images\note.png -> chardet-1.0.2\docs\images
+copying docs\images\permalink.gif -> chardet-1.0.2\docs\images
+copying docs\images\tip.png -> chardet-1.0.2\docs\images
+copying docs\images\warning.png -> chardet-1.0.2\docs\images
 creating dist
 creating 'dist\chardet-1.0.2.zip' and adding 'chardet-1.0.2' to it
+adding 'chardet-1.0.2\COPYING'
 adding 'chardet-1.0.2\PKG-INFO'
+adding 'chardet-1.0.2\README.txt'
 adding 'chardet-1.0.2\setup.py'
 adding 'chardet-1.0.2\chardet\big5freq.py'
 adding 'chardet-1.0.2\chardet\big5prober.py'
@@ -346,86 +363,113 @@ adding 'chardet-1.0.2\chardet\big5prober.py'
 adding 'chardet-1.0.2\chardet\universaldetector.py'
 adding 'chardet-1.0.2\chardet\utf8prober.py'
 adding 'chardet-1.0.2\chardet\__init__.py'
-removing 'chardet-1.0.2' (and everything under it)</samp>
+adding 'chardet-1.0.2\docs\faq.html'
+adding 'chardet-1.0.2\docs\history.html'
+adding 'chardet-1.0.2\docs\how-it-works.html'
+adding 'chardet-1.0.2\docs\index.html'
+adding 'chardet-1.0.2\docs\license.html'
+adding 'chardet-1.0.2\docs\supported-encodings.html'
+adding 'chardet-1.0.2\docs\usage.html'
+adding 'chardet-1.0.2\docs\images\caution.png'
+adding 'chardet-1.0.2\docs\images\important.png'
+adding 'chardet-1.0.2\docs\images\note.png'
+adding 'chardet-1.0.2\docs\images\permalink.gif'
+adding 'chardet-1.0.2\docs\images\tip.png'
+adding 'chardet-1.0.2\docs\images\warning.png'
+removing 'chardet-1.0.2' (and everything under it)</samp></pre>
 
+<p>Several things to note here:
+
+<ul>
+<li>Distutils noticed the manifest file (<code>MANIFEST.in</code>).
+<li>Distutils successfully parsed the manifest file and added the additional files we wanted&nbsp;&mdash;&nbsp;<code>COPYING.txt</code> and the <abbr>HTML</abbr> and image files in the <code>docs/</code> directory.
+<li>If you look in your project directory, you&#8217;ll see that Distutils created a <code>dist/</code> directory. Within the <code>dist/</code> directory the <code>.zip</code> file that you can distribute.
+</ul>
+
+<pre class=screen>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
 <samp> Volume in drive C has no label.
  Volume Serial Number is DED5-B4F8
 
  Directory of c:\Users\pilgrim\chardet\dist
 
-07/30/2009  04:47 AM    &lt;DIR>          .
-07/30/2009  04:47 AM    &lt;DIR>          ..
-07/30/2009  04:47 AM           175,367 <mark>chardet-1.0.2.zip</mark>
-               1 File(s)        175,367 bytes
-               2 Dir(s)  62,235,222,016 bytes free</samp></pre>
+07/30/2009  06:29 PM    &lt;DIR>          .
+07/30/2009  06:29 PM    &lt;DIR>          ..
+07/30/2009  06:29 PM           206,440 <mark>chardet-1.0.2.zip</mark>
+               1 File(s)        206,440 bytes
+               2 Dir(s)  61,424,635,904 bytes free</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=bdist>Creating Binary Distributions</h2>
+<h2 id=bdist>Creating a Graphical Installer</h2>
 
-<pre>
-python3 setup.py bdist --help-formats
-</pre>
+<p>FIXME
 
-<pre>
-http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers
-</pre>
-
-<h3 id=wininst>Building A Windows Installer</h3>
+<p>http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers
 
 <pre class=screen>
-FIXME probably need to redo this too
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py bdist_wininst</mark></kbd>
-<samp>running bdist_wininst
+<samp>c:\Users\pilgrim\chardet>c:\python31\python.exe setup.py bdist_wininst
+running bdist_wininst
 running build
 running build_py
+creating build
+creating build\lib
+creating build\lib\chardet
+copying chardet\big5freq.py -> build\lib\chardet
+copying chardet\big5prober.py -> build\lib\chardet
+...
+copying chardet\universaldetector.py -> build\lib\chardet
+copying chardet\utf8prober.py -> build\lib\chardet
+copying chardet\__init__.py -> build\lib\chardet
 installing to build\bdist.win32\wininst
 running install_lib
+creating build\bdist.win32
 creating build\bdist.win32\wininst
 creating build\bdist.win32\wininst\PURELIB
 creating build\bdist.win32\wininst\PURELIB\chardet
 copying build\lib\chardet\big5freq.py -> build\bdist.win32\wininst\PURELIB\chardet
 copying build\lib\chardet\big5prober.py -> build\bdist.win32\wininst\PURELIB\chardet
-copying build\lib\chardet\chardistribution.py -> build\bdist.win32\wininst\PURELIB\chardet
 ...
 copying build\lib\chardet\universaldetector.py -> build\bdist.win32\wininst\PURELIB\chardet
 copying build\lib\chardet\utf8prober.py -> build\bdist.win32\wininst\PURELIB\chardet
 copying build\lib\chardet\__init__.py -> build\bdist.win32\wininst\PURELIB\chardet
 running install_egg_info
 Writing build\bdist.win32\wininst\PURELIB\chardet-1.0.2-py3.1.egg-info
-creating 'c:\users\pilgrim\appdata\local\temp\tmp58b9n5.zip' and adding '.' to it
+creating 'c:\users\pilgrim\appdata\local\temp\tmp2f4h7e.zip' and adding '.' to it
 adding 'PURELIB\chardet-1.0.2-py3.1.egg-info'
 adding 'PURELIB\chardet\big5freq.py'
 adding 'PURELIB\chardet\big5prober.py'
-adding 'PURELIB\chardet\chardistribution.py'
 ...
 adding 'PURELIB\chardet\universaldetector.py'
 adding 'PURELIB\chardet\utf8prober.py'
 adding 'PURELIB\chardet\__init__.py'
-removing 'build\bdist.win32\wininst' (and everything under it)</samp>
+removing 'build\bdist.win32\wininst' (and everything under it)</samp></pre>
 
+<p>FIXME
+
+<pre class='nd screen'>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
-<samp> Volume in drive C has no label.
- Volume Serial Number is DED5-B4F8
+<samp>c:\Users\pilgrim\chardet>dir dist
+ Volume in drive C has no label.
+ Volume Serial Number is AADE-E29F
 
  Directory of c:\Users\pilgrim\chardet\dist
 
-07/30/2009  03:52 AM    &lt;DIR>          .
-07/30/2009  03:52 AM    &lt;DIR>          ..
-07/30/2009  03:52 AM           371,236 <mark>chardet-1.0.2.win32.exe</mark>
-               2 File(s)        546,603 bytes
-               2 Dir(s)  62,235,119,616 bytes free</samp></pre>
+07/30/2009  10:14 PM    &lt;DIR>          .
+07/30/2009  10:14 PM    &lt;DIR>          ..
+07/30/2009  10:14 PM           371,236 <mark>chardet-1.0.2.win32.exe</mark>
+07/30/2009  06:29 PM           206,440 chardet-1.0.2.zip
+               2 File(s)        577,676 bytes
+               2 Dir(s)  61,424,070,656 bytes free</samp></pre>
 
-<pre>
-works on non-Windows (as long as the package is pure-Python)
-</pre>
+<h3 id=linux>Building Installable Packages for Other Operating Systems</h3>
 
-<pre>
-UAC?
-</pre>
+<p>Distutils can help you <a href=http://docs.python.org/3.1/distutils/builtdist.html#creating-rpm-packages>build installable packages for Linux users</a>. In my opinion, this probably isn&#8217;t worth your time. If you want your software distributed for Linux, your time would be better spent working with community members who specialize in packaging software for major Linux distributions.
 
-<h3 id=rpm>Building a Linux RPM Package</h3>
+<p>For example, my <code>chardet</code> library is <a href=http://packages.debian.org/python-chardet>in the Debian GNU/Linux repositories</a> (and therefore <a href=http://packages.ubuntu.com/python-chardet>in the Ubuntu repositories</a> as well). I had nothing to do with this; the packages just showed up there one day. The Debian community has <a href=http://www.debian.org/doc/packaging-manuals/python-policy/>their own policies for packaging Python libraries</a>, and the Debian <code>python-chardet</code> package is designed to follow these conventions. And since the package lives in Debian&#8217;s repositories, Debian users will receive security updates and/or new versions, depending on the system-wide settings they&#8217;ve chosen to manage their own computers.
+
+<p>The Linux packages that Distutils builds offer none of these advantages. Your time is better spent elsewhere.
 
 <p class=a>&#x2042;
 
