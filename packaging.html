@@ -317,7 +317,7 @@ warning: check: missing required meta-data: version</samp></pre>
 
 <h2 id=sdist>Creating a Source Distribution</h2>
 
-<p>Distutils supports building multiple types of release packages. At a minimum, you should build a &#8220;source distribution&#8221; that contains your source code, your Distutils setup script, your &#8220;read me&#8221; file, and whatever <a href=#manifest>additional files you want to include</a>. To build a source distribution, pass the <code>sdist</code> command to the Distutils setup script.
+<p>Distutils supports building multiple types of release packages. At a minimum, you should build a &#8220;source distribution&#8221; that contains your source code, your Distutils setup script, your &#8220;read me&#8221; file, and whatever <a href=#manifest>additional files you want to include</a>. To build a source distribution, pass the <code>sdist</code> command to your Distutils setup script.
 
 <pre class=screen>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py sdist</mark></kbd>
@@ -403,14 +403,13 @@ removing 'chardet-1.0.2' (and everything under it)</samp></pre>
 
 <h2 id=bdist>Creating a Graphical Installer</h2>
 
-<p>FIXME
+<p>In my opinion, every Python library deserves a graphical installer for Windows users. It&#8217;s easy to make (even if you don&#8217;t run Windows yourself), and Windows users appreciate it.
 
-<p>http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers
+<p>Distutils can <a href=http://docs.python.org/3.1/distutils/builtdist.html#creating-windows-installers>create a graphical Windows installer for you</a>, by passing the <code>bdist_wininst</code> command to your Distutils setup script.
 
 <pre class=screen>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py bdist_wininst</mark></kbd>
-<samp>c:\Users\pilgrim\chardet>c:\python31\python.exe setup.py bdist_wininst
-running bdist_wininst
+<samp>running bdist_wininst
 running build
 running build_py
 creating build
@@ -444,11 +443,7 @@ adding 'PURELIB\chardet\big5prober.py'
 adding 'PURELIB\chardet\universaldetector.py'
 adding 'PURELIB\chardet\utf8prober.py'
 adding 'PURELIB\chardet\__init__.py'
-removing 'build\bdist.win32\wininst' (and everything under it)</samp></pre>
-
-<p>FIXME
-
-<pre class='nd screen'>
+removing 'build\bdist.win32\wininst' (and everything under it)</samp>
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>dir dist</mark></kbd>
 <samp>c:\Users\pilgrim\chardet>dir dist
  Volume in drive C has no label.
