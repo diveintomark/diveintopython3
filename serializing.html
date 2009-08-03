@@ -22,7 +22,296 @@ body{counter-reset:h1 13}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell = 1</kbd></pre>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell = 2</kbd></pre>
+
 <p class=a>&#x2042;
+
+<h2 id=pickle-simple>Serializing Simple Python Objects</h2>
+
+<p>FIXME - introduction to pickle module, concepts, what datatypes can be pickled w/o additional work
+
+<h3 id=dump>Saving to (and Loading from) a File</h3>
+
+<p>The <code>pickle</code> module works with data structures. Let&#8217;s build one.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry = {}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['title'] = 'Dive into history, 2009 edition'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['article_link'] = 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['comments_link'] = None</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['internal_id'] = b'\xde\xd5\xb4\xf8'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['tags'] = ('diveintopython', 'docbook', 'html')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['published'] = True</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import time</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['published_date'] = time.strptime('Fri Mar 27 22:20:42 2009')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['published_date']</kbd>
+<samp class=pp>time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1)</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'wb') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    pickle.dump(entry, f)</kbd>
+<samp class=p>... </samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre class=screen>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>ls -l entry.pickle</kbd>
+<samp>-rw-r--r-- 1 you  you  324 Aug  3 13:34 entry.pickle</samp>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat entry.pickle</kbd>
+<samp>comments_linkqNXtagsqXdiveintopythonqXdocbookqXhtmlq?qX publishedq?
+XlinkXJhttp://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition
+q   Xpublished_dateq
+ctime
+struct_time
+?qRqXtitleqXDive into history, 2009 editionqu.</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME now switch to your second Python Shell
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'entry' is not defined</samp>
+<samp class=p>>>> </samp><kbd class=pp>import pickle</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry = pickle.load(f)</kbd>
+<samp class=p>... </samp>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=pp>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry2 = pickle.load(f)</kbd>
+<samp class=p>... </samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>
+<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>
+<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<h3 id=dumps>Saving to (and Loading from) an Object in Memory</h3>
+
+<p>FIXME
+
+<h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads (Again!)</h3>
+
+<p>FIXME - discussion of pickle protocol versions, backward incompatibility of protocol version 3 due to bytes/strings separation in Python 3, link to http://docs.python.org/3.1/library/pickle.html#data-stream-format
+
+<p class=a>&#x2042;
+
+<h2 id=pickle-advanced>Serializing Complex Python Objects</h2>
+
+<p>FIXME - discussion of pickling class instances, stateful objects, __getstate__ and __setstate__, links to http://docs.python.org/3.1/library/pickle.html#pickle-inst and http://docs.python.org/3.1/library/pickle.html#pickle-state
+
+<h2 id=pickle-security>Security Concerns with Pickled Objects</h2>
+
+<p>FIXME - pickled objects can be modified in memory, in transit, or on disk; no checksums; no built-in guarantee that the pickle you're loading is the pickle you dumped; never unpickle untrusted input; xref to "eval() is evil" discussion in advanced-iterators chapter
+
+<h2 id=json>Serializing Python Objects to be Read by Other Languages</h2>
+
+<p>The data format used by the <code>pickle</code> module is Python-specific. It makes no attempt to be compatible with other programming languages. If cross-language compatibility is one of your requirements, you need to look at other serialization formats.
+
+<p>One format that <em>is</em> designed to be used by multiple programming languages is <a href=http://json.org/><abbr>JSON</abbr></a>. 
+
+<p>FIXME - pickle format is python-specific; JSON format is designed to be cross-language (in fact, it was originally designed for JavaScript, hence the name); differences with pickle format (table or list); json module implements dumping and loading JSON-formatted data structures; JSON format is string-based (and always encoded as UTF-8 where bytes are required); compact vs. pretty-printing; JSONEncoder; JSONDecoder; iterencode
+
+<h3 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h3>
+
+<pre>
+[source: help(json)]
+
++---------------+-------------------+
+| JSON          | Python            |
++===============+===================+
+| object        | dict              |
++---------------+-------------------+
+| array         | list              |
++---------------+-------------------+
+| string        | unicode           |
++---------------+-------------------+
+| number (int)  | int, long         |
++---------------+-------------------+
+| number (real) | float             |
++---------------+-------------------+
+| true          | True              |
++---------------+-------------------+
+| false         | False             |
++---------------+-------------------+
+| null          | None              |
++---------------+-------------------+
+</pre>
+
+<h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=pp>FIXME</samp>
+<samp class=p>>>> </samp><kbd class=pp>import json</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry)</kbd>
+<samp class=p>... </samp>
+<samp class=traceback>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre><code class=pp># customserializer.py
+def to_json(python_object):
+    if isinstance(python_object, bytes):
+        return {'__class__': 'bytes',
+                '__value__': list(python_object)}
+    raise TypeError(repr(python_object) + ' is not JSON serializable')</code></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default = customserializer.to_json)</kbd>
+<samp class=p>... </samp>
+<samp class=traceback>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<pre><code class=pp># customserializer.py
+def to_json(python_object):
+    if isinstance(python_object, time.struct_time):
+        return {'__class__': 'time.asctime',
+                '__value__': time.asctime(python_object)}
+    if isinstance(python_object, bytes):
+        return {'__class__': 'bytes',
+                '__value__': list(python_object)}
+    raise TypeError(repr(python_object) + ' is not JSON serializable')</code></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default = customserializer.to_json)</kbd>
+<samp class=p>... </samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>ls -l example.json</kbd>
+<samp class=pp>FIXME</samp>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat example.json</kbd>
+<samp class=pp>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>del entry</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'entry' is not defined</samp>
+<samp class=p>>>> </samp><kbd class=pp>import json</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry = json.load(f)</kbd>
+<samp class=p>... </samp>
+<samp class=traceback>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre><code class=pp># customserializer.py
+def from_json(json_object):
+    if '__class__' in json_object:
+        if json_object['__class__'] == 'time.asctime':
+            return time.strptime(json_object['__value__'])
+        if json_object['__class__'] == 'bytes':
+            return bytes(json_object['__value__'])
+    return json_object</code></pre>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry = json.load(f, object_hook = customserializer.from_json)</kbd>
+<samp class=p>... </samp>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=pp>FIXME</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
+<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry2 = json.load(f, object_hook = customserializer.from_json)</kbd>
+<samp class=p>... </samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry['tags']</kbd>
+<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>
+<samp class=pp>['diveintopython', 'docbook', 'html']</samp></pre>
+<ol>
+<li>FIXME
+</ol>
+
+<p>FIXME
 
 <h2 id=furtherreading>Further Reading</h2>
 
@@ -31,10 +320,12 @@ body{counter-reset:h1 13}
 </blockquote>
 
 <ul>
-<li><a href=http://wiki.python.org/moin/UsingPickle>Using <code>pickle</code></a>
+<li><a href=http://docs.python.org/3.1/library/pickle.html><code>pickle</code> module</a>
 <li><a href=http://www.doughellmann.com/PyMOTW/pickle/><code>pickle</code> and <code>cPickle</code>&nbsp;&mdash;&nbsp;Python object serialization</a>
+<li><a href=http://wiki.python.org/moin/UsingPickle>Using <code>pickle</code></a>
 <li><a href=http://www.ibm.com/developerworks/library/l-pypers.html>Python persistence management</a>
 <li><a href=http://www.doughellmann.com/PyMOTW/json/><code>json</code>&nbsp;&mdash;&nbsp;JavaScript Object Notation Serializer</a>
+<li><a href=http://blog.quaternio.net/2009/07/16/json-encoding-and-decoding-with-custom-objects-in-python/>JSON encoding and ecoding with custom objects in Python</a>
 </ul>
 
 <p class=v><a rel=prev href=xml.html title='back to &#8220;XML&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=http-web-services.html title='onward to &#8220;HTTP Web Services&#8221;'><span class=u>&#x261E;</span></a>
