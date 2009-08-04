@@ -88,4 +88,4 @@ rsync -essh -a build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/
     rsync -essh -a build/examples build/*.txt build/*.html build/.htaccess diveintomark.org:~/web/diveintopython3.org/ && \
     echo "." || die "Failed to publish to remote server"
 
-Snarl_CMD snShowMessage 10 "Dive Into Python 3" "Published." "C:\Users\pilgrim\site-lisp\todochiku-icons\clean.png"
+[ -n "$(which Snarl_CMD 2>/dev/null)" ] && Snarl_CMD snShowMessage 10 "Dive Into Python 3" "Published." "C:\Users\pilgrim\site-lisp\todochiku-icons\clean.png"
