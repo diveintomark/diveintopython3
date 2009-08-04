@@ -448,7 +448,7 @@ StopIteration</samp></pre>
 
 <h2 id=xml-lxml>Going Further With lxml</h2>
 
-<p><a href=http://codespeak.net/lxml/><code>lxml</code></a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install <code>lxml</code> manually</a>.
+<p><a href=http://codespeak.net/lxml/><code>lxml</code></a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath 1.0 support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install <code>lxml</code> manually</a>.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>from lxml import etree</kbd>                   <span class=u>&#x2460;</span></a>
@@ -495,7 +495,7 @@ except ImportError:
 <li>After doing some quick <a href=strings.html#formatting-strings>string formatting</a> (because otherwise these compound queries get ridiculously long), this query searches for Atom <code>author</code> elements that have an Atom <code>uri</code> element as a child. This only returns two <code>author</code> elements, the ones in the first and second <code>entry</code>. The <code>author</code> in the last <code>entry</code> contains only a <code>name</code>, not a <code>uri</code>.
 </ol>
 
-<p>Not enough for you? <code>lxml</code> also integrates support for arbitrary XPath expressions. I&#8217;m not going to go into depth about XPath syntax; that could be a whole book unto itself! But I will show you how it integrates into <code>lxml</code>.
+<p>Not enough for you? <code>lxml</code> also integrates support for arbitrary XPath 1.0 expressions. I&#8217;m not going to go into depth about XPath syntax; that could be a whole book unto itself! But I will show you how it integrates into <code>lxml</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
