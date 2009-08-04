@@ -295,14 +295,14 @@ rules = []
 <p>Wouldn&#8217;t it be grand to have a generic <code>plural()</code> function that parses the rules file? Get rules, check for a match, apply appropriate transformation, go to next rule. That&#8217;s all the <code>plural()</code> function has to do, and that&#8217;s all the <code>plural()</code> function should do.
 
 <p class=d>[<a href=examples/plural5.py>download <code>plural5.py</code></a>]
-<pre class=nd><code class=pp>def rules():
+<pre class=nd><code class=pp>def rules(rules_filename):
     with open('plural5-rules.txt', encoding='utf-8') as pattern_file:
         for line in pattern_file:
             pattern, search, replace = line.split(None, 3)
             yield build_match_and_apply_functions(pattern, search, replace)
 
 def plural(noun, rules_filename='plural5-rules.txt'):
-    for matches_rule, apply_rule in rules():
+    for matches_rule, apply_rule in rules(rules_filename):
         if matches_rule(noun):
             return apply_rule(noun)
     raise ValueError('no matching rule for {0}'.format(noun))</code></pre>
