@@ -613,8 +613,9 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <p>In this case, there&#8217;s no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you&#8217;re comparing to are all constants. Let&#8217;s change them from 1-character strings to integers. And while we&#8217;re at it, let&#8217;s change <var>aStr</var> to <var>aBuf</var>, since it&#8217;s not actually a string.
 <pre class=nd><code class=pp>  class SJISContextAnalysis(JapaneseContextAnalysis):
 <del>-     def get_order(self, aStr):</del>
+<del>-      if not aStr: return -1, 1
 <ins>+     def get_order(self, aBuf):</ins>
-          if not aStr: return -1, 1
+<ins>+      if not aBuf: return -1, 1
           # find out current char's byte length
 <del>-         if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \</del>
 <del>-            ((aBuf[0] >= '\xE0') and (aBuf[0] &lt;= '\xFC')):</del>
@@ -625,11 +626,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
               charLen = 1
 
           # return its order if it is hiragana
-          if len(aStr) > 1:
+<del>-      if len(aStr) > 1:
 <del>-             if (aStr[0] == '\202') and \</del>
 <del>-                (aStr[1] >= '\x9F') and \</del>
 <del>-                (aStr[1] &lt;= '\xF1'):</del>
 <del>-                return ord(aStr[1]) - 0x9F, charLen</del>
+<ins>+      if len(aBuf) > 1:
 <ins>+             if (aBuf[0] == 0x202) and \</ins>
 <ins>+                (aBuf[1] >= 0x9F) and \</ins>
 <ins>+                (aBuf[1] &lt;= 0xF1):</ins>
@@ -639,8 +641,9 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 
   class EUCJPContextAnalysis(JapaneseContextAnalysis):
 <del>-     def get_order(self, aStr):</del>
+<del>-      if not aStr: return -1, 1
 <ins>+     def get_order(self, aBuf):</ins>
-          if not aStr: return -1, 1
+<ins>+      if not aBuf: return -1, 1
           # find out current char's byte length
 <del>-         if (aStr[0] == '\x8E') or \</del>
 <del>-           ((aStr[0] >= '\xA1') and (aStr[0] &lt;= '\xFE')):</del>
@@ -654,11 +657,12 @@ TypeError: unorderable types: int() >= str()</samp></pre>
               charLen = 1
 
         # return its order if it is hiragana
-        if len(aStr) > 1:
+<del>-    if len(aStr) > 1:
 <del>-           if (aStr[0] == '\xA4') and \</del>
 <del>-              (aStr[1] >= '\xA1') and \</del>
 <del>-              (aStr[1] &lt;= '\xF3'):</del>
 <del>-                 return ord(aStr[1]) - 0xA1, charLen</del>
+<ins>+    if len(aBuf) > 1:
 <ins>+           if (aBuf[0] == 0xA4) and \</ins>
 <ins>+              (aBuf[1] >= 0xA1) and \</ins>
 <ins>+              (aBuf[1] &lt;= 0xF3):</ins>
