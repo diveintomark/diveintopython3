@@ -386,7 +386,7 @@ mark{display:inline}
 </ol>
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>There is a &#8220;gotcha&#8221; with the <code>find()</code> method that will eventually bite you. In a boolean context, ElementTree element objects will evaluate to <code>False</code> if they contain no children (<i>i.e.</i> if <code>len(element)</code> is <code>0</code>). The means that <code>if element.find('...')</code> is not testing whether the <code>find()</code> method found a matching element; it&#8217;s testing whether that matching element has any child elements! To test whether the <code>find()</code> method returned an element, use <code>if element.find('...') is not None</code>.
+<p><span class=u>&#x261E;</span>There is a &#8220;gotcha&#8221; with the <code>find()</code> method that will eventually bite you. In a boolean context, ElementTree element objects will evaluate to <code>False</code> if they contain no children (<i>i.e.</i> if <code>len(element)</code> is <code>0</code>). This means that <code>if element.find('...')</code> is not testing whether the <code>find()</code> method found a matching element; it&#8217;s testing whether that matching element has any child elements! To test whether the <code>find()</code> method returned an element, use <code>if element.find('...') is not None</code>.
 </blockquote>
 
 <p>There <em>is</em> a way to search for <em>descendant</em> elements, <i>i.e.</i> children, grandchildren, and any element at any nesting level.
