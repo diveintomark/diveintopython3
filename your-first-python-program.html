@@ -191,6 +191,8 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <li>By using <code>sys.path.insert(0, <var>new_path</var>)</code>, you inserted a new directory as the first item of the <code>sys.path</code> list, and therefore at the beginning of Python&#8217;s search path. This is almost always what you want. In case of naming conflicts (for example, if Python ships with version 2 of a particular library but you want to use version 3), this ensures that your modules will be found and used instead of the modules that came with Python.
 </ol>
 
+<p class=a>&#x2042;
+
 <h2 id=everythingisanobject>Everything Is An Object</h2>
 <p>In case you missed it, I just said that Python functions have attributes, and that those attributes are available at runtime. A function, like everything else in Python, is an object.
 <p>Run the interactive Python shell and follow along:
