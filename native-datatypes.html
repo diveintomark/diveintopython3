@@ -186,9 +186,9 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>             <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true(1)</kbd>                         <span class=u>&#x2461;</span></a>
 <samp>yes, it's true</samp>
@@ -423,9 +423,9 @@ IndexError: pop from empty list</samp></pre>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true([])</kbd>             <span class=u>&#x2460;</span></a>
 <samp>no, it's false</samp>
@@ -506,20 +506,25 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true(())</kbd>             <span class=u>&#x2460;</span></a>
 <samp>no, it's false</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(('a'))</kbd>          <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(('a', 'b'))</kbd>     <span class=u>&#x2461;</span></a>
 <samp>yes, it's true</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>is_it_true((False))</kbd>        <span class=u>&#x2462;</span></a>
-<samp>yes, it's true</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true((False,))</kbd>       <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type((False))</kbd>              <span class=u>&#x2463;</span></a>
+<samp class=pp>&lt;class 'bool'></samp>
+<samp class=p>>>> </samp><kbd class=pp>type((False,))</kbd>
+<samp class=pp>&lt;class 'tuple'></samp></pre>
 <ol>
 <li>In a boolean context, an empty tuple is false.
 <li>Any tuple with at least one item is true.
-<li>Any tuple with at least one item is true. The value of the items is irrelevant.
+<li>Any tuple with at least one item is true. The value of the items is irrelevant. But what&#8217;s that comma doing there?
+<li>To create a tuple of one item, you need a comma after the value. Without the comma, Python just assumes you have an extra pair of parentheses, which is harmless, but it doesn&#8217;t create a tuple.
 </ol>
 
 <h3 id=multivar>Assigning Multiple Values At Once</h3>
@@ -789,9 +794,9 @@ KeyError: 'pop from an empty set'</samp></pre>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true(set())</kbd>          <span class=u>&#x2460;</span></a>
 <samp>no, it's false</samp>
@@ -889,9 +894,9 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true({})</kbd>             <span class=u>&#x2460;</span></a>
 <samp>no, it's false</samp>
@@ -929,9 +934,9 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
 <samp class=p>... </samp><kbd class=pp>  else:</kbd>
-<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
 <samp class=p>...</samp>
 <samp class=p>>>> </samp><kbd class=pp>is_it_true(None)</kbd>
 <samp>no, it's false</samp>
