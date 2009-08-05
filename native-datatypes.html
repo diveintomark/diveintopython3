@@ -499,6 +499,29 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <p><span class=u>&#x261E;</span>Tuples can be converted into lists, and vice-versa. The built-in <code>tuple()</code> function takes a list and returns a tuple with the same elements, and the <code>list()</code> function takes a tuple and returns a list. In effect, <code>tuple()</code> freezes a list, and <code>list()</code> thaws a tuple.
 </blockquote>
 
+<h3 id=tuples-in-a-boolean-context>Tuples In A Boolean Context</h3>
+
+<p>You can use tuples in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('yes, it's true')</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('no, it's false')</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(())</kbd>             <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(('a'))</kbd>          <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true((False))</kbd>        <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp></pre>
+<ol>
+<li>In a boolean context, an empty tuple is false.
+<li>Any tuple with at least one item is true.
+<li>Any tuple with at least one item is true. The value of the items is irrelevant.
+</ol>
+
 <h3 id=multivar>Assigning Multiple Values At Once</h3>
 
 <p>Here&#8217;s a cool programming shortcut: in Python, you can use a tuple to assign multiple values at once.
