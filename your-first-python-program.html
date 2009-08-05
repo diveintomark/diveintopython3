@@ -324,6 +324,30 @@ NameError: name 'x' is not defined</samp>
 
 <p>You will thank Python for this one day.
 
+<h3 id=case>Everything is Case-Sensitive</h3>
+
+<p>All names in Python are case-sensitive: variable names, function names, class names, module names, exception names. If you can get it, set it, call it, construct it, import it, or raise it, it&#8217;s case-sensitive.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>an_integer = 1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>an_integer</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd>AN_INTEGER</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'AN_INTEGER' is not defined</samp>
+<samp class=p>>>> </samp><kbd>An_Integer</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'An_Integer' is not defined</samp>
+<samp class=p>>>> </samp><kbd>an_inteGer</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'an_inteGer' is not defined</samp>
+</pre>
+
+<p>And so on.
+
 <p class=a>&#x2042;
 
 <h2 id=runningscripts>Running Scripts</h2>
