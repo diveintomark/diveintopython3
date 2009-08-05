@@ -570,9 +570,9 @@ OK</samp></pre>
             result = roman5.from_roman(numeral)
             self.assertEqual(integer, result)</code></pre>
 
-<p>There&#8217;s a pleasing symmetry here. The <code>to_roman()</code> and <code>from_roman()</code> functions are inverses of each other. The first converts integers to specially-formatted strings, the second converts specially-formated strings to integers. In theory, we should be able to &#8220;round-trip&#8221; a number by passing to the <code>to_roman()</code> function to get a string, then passing that string to the <code>from_roman()</code> function to get an integer, and end up with the same number. In mathematical terms,
+<p>There&#8217;s a pleasing symmetry here. The <code>to_roman()</code> and <code>from_roman()</code> functions are inverses of each other. The first converts integers to specially-formatted strings, the second converts specially-formated strings to integers. In theory, we should be able to &#8220;round-trip&#8221; a number by passing to the <code>to_roman()</code> function to get a string, then passing that string to the <code>from_roman()</code> function to get an integer, and end up with the same number.
 
-<pre class=nd><code class=pp>x = f(g(x)) for all values of x</code></pre>
+<pre class=nd><code class=pp>n = from_roman(to_roman(n)) for all values of n</code></pre>
 
 <p>In this case, &#8220;all values&#8221; means any number between <code>1..3999</code>, since that is the valid range of inputs to the <code>to_roman()</code> function. We can express this symmetry in a test case that runs through all the values <code>1..3999</code>, calls <code>to_roman()</code>, calls <code>from_roman()</code>, and checks that the output is the same as the original input.
 
@@ -652,7 +652,7 @@ FAILED (failures=2)</samp></pre>
     """convert Roman numeral to integer"""
     result = 0
     index = 0
-    for numeral, integer in romanNumeralMap:
+    for numeral, integer in roman_numeral_map:
         while s[index:index+len(numeral)] == numeral:  <span class=u>&#x2460;</span>
             result += integer
             index += len(numeral)
@@ -667,7 +667,7 @@ FAILED (failures=2)</samp></pre>
     """convert Roman numeral to integer"""
     result = 0
     index = 0
-    for numeral, integer in romanNumeralMap:
+    for numeral, integer in roman_numeral_map:
         while s[index:index+len(numeral)] == numeral:
             result += integer
             index += len(numeral)
