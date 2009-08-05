@@ -141,12 +141,21 @@ $(document).ready(function() {
 	var hip = {'background-color':'#eee','cursor':'default'};
 	var unhip = {'background-color':'inherit','cursor':'inherit'};
 	$("pre.code, pre.screen").each(function() {
-		$(this).find("a:not([href])").each(function(i) {
+		var s = '';
+		var ol = $(this).next("ol");
+		var refs = $(this).find("a:not([href])");
+		refs.each(function(i) {
+			var li = ol.find("li:nth-child(" + (i+1) + ")");
+			s += "<tr><td style='text-align:center;vertical-align:baseline;margin:0;width:2em'><span class='u'>&#x" + (parseInt('2460', 16) + i).toString(16) + ";</span></td><td style='vertical-align:top;margin:0'>" + li.html() + "</td></tr>";
+		    });
+		ol.replaceWith("<table style='width:100%;border-collapse:collapse;margin:0'>" + s + "</table>");
+		refs.each(function(i) {
 			var a = $(this);
-			var li = a.parents("pre").next("ol").find("li:nth-child(" + (i+1) + ")");
+			var li = a.parents("pre").next("table").find("tr:nth-child(" + (i+1) + ") td:nth-child(2)");
 			li.add(a).hover(function() { a.css(hip); li.css(hip); },
 					function() { a.css(unhip); li.css(unhip); });
 		    });
+
 	    });
 	
 	/* synchronized highlighting on callouts and their associated table rows */
