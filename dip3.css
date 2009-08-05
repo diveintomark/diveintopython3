@@ -76,7 +76,7 @@ pre, kbd, samp, code, var, .b, pre span {
 .u {
   font: medium/1.75 'Arial Unicode MS', FreeSerif, OpenSymbol, 'DejaVu Sans', sans-serif;
 }
-pre .u, pre .u span, .a {
+pre .u, td .u, pre .u span, .a {
   font: medium/1.75 'Arial Unicode MS', 'DejaVu Sans', FreeSerif, OpenSymbol, sans-serif;
 }
 .baa {

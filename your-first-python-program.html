@@ -275,7 +275,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <pre class=nd><code class=pp>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
 
-<p>The syntax for raising an exception is simple enough. Use the <code>raise</code> statement, followed by the exception name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a function. (In reality, exceptions are implemented as classes, and this <code>raise</code> statement is actually creating an instance of the <code>ValueError</code> class and passing the string <code>'number must be non-negative'</code> to its initialization method. But <a href=iterators.html#defining-classes>we&#8217;re getting ahead of ourselves</a><span class=u>&#8202;</span><em>!</em><span class=u>&#8202;</span>)
+<p>The syntax for raising an exception is simple enough. Use the <code>raise</code> statement, followed by the exception name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a function. (In reality, exceptions are implemented as classes, and this <code>raise</code> statement is actually creating an instance of the <code>ValueError</code> class and passing the string <code>'number must be non-negative'</code> to its initialization method. But <a href=iterators.html#defining-classes>we&#8217;re getting ahead of ourselves</a>!)
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>You don&#8217;t need to handle an exception in the function that raises it. If one function doesn&#8217;t handle it, the exception is passed to the calling function, then that function&#8217;s calling function, and so on &#8220;up the stack.&#8221; If the exception is never handled, your program will crash, Python will print a &#8220;traceback&#8221; to standard error, and that&#8217;s the end of that. Again, maybe that&#8217;s what you want; it depends on what your program does.
@@ -306,7 +306,7 @@ except ImportError:
 
 <p>By the end of this <code>try..except</code> block, you have imported <em>some</em> module and named it <var>etree</var>. Since both modules implement a common <abbr>API</abbr>, the rest of your code doesn&#8217;t need to keep checking which module got imported. And since the module that <em>did</em> get imported is always called <var>etree</var>, the rest of your code doesn&#8217;t need to be littered with <code>if</code> statements to call differently-named modules.
 
-<h3 id=nameerror>Unbound Variables</h3>
+<h2 id=nameerror>Unbound Variables</h2>
 
 <p>Take another look at this line of code from the <code>approximate_size()</code> function:
 
@@ -323,6 +323,30 @@ NameError: name 'x' is not defined</samp>
 <samp class=pp>1</samp></pre>
 
 <p>You will thank Python for this one day.
+
+<h2 id=case>Everything is Case-Sensitive</h2>
+
+<p>All names in Python are case-sensitive: variable names, function names, class names, module names, exception names. If you can get it, set it, call it, construct it, import it, or raise it, it&#8217;s case-sensitive.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>an_integer = 1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>an_integer</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd>AN_INTEGER</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'AN_INTEGER' is not defined</samp>
+<samp class=p>>>> </samp><kbd>An_Integer</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'An_Integer' is not defined</samp>
+<samp class=p>>>> </samp><kbd>an_inteGer</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'an_inteGer' is not defined</samp>
+</pre>
+
+<p>And so on.
 
 <p class=a>&#x2042;
 
