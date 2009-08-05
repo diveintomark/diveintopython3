@@ -29,7 +29,7 @@ mark{display:inline}
 
 <p>In this chapter, you&#8217;ll learn how the setup scripts for <code>chardet</code> and <code>httplib2</code> work, and you&#8217;ll step through the process of releasing your own Python software.
 
-<pre><code class=pp># chardet's setup.py
+<pre class=pp><code># chardet's setup.py
 from distutils.core import setup
 setup(
     name = "chardet",
@@ -157,7 +157,7 @@ chardet/
 
 <p>The first line of every Distutils setup script is always the same:
 
-<pre class=nd><code class=pp>from distutils.core import setup</code></pre>
+<pre class='nd pp'><code>from distutils.core import setup</code></pre>
 
 <p>This imports the <code>setup()</code> function, which is the main entry point into Distutils. 95% of all Distutils setup scripts consist of a single call to <code>setup()</code> and nothing else. (I totally just made up that statistic, but if your Distutils setup script is doing more than calling the Distutils <code>setup()</code> function, you should have a good reason. Do you have a good reason? I didn&#8217;t think so.)
 
@@ -187,7 +187,7 @@ chardet/
 
 <p>Now let&#8217;s look at the <code>chardet</code> setup script. It has all of these required and recommended parameters, plus one I haven&#8217;t mentioned yet: <code>packages</code>.
 
-<pre class=nd><code class=pp>from distutils.core import setup
+<pre class='nd pp'><code>from distutils.core import setup
 setup(
     name = 'chardet',
     <mark>packages = ['chardet']</mark>,

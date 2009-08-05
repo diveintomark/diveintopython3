@@ -26,7 +26,7 @@ mark{display:inline}
 <h2 id=divingin>Diving In</h2>
 <p class=f>Books about programming usually start with a bunch of boring chapters about fundamentals and eventually work up to building something useful. Let&#8217;s skip all that. Here is a complete, working Python program. It probably makes absolutely no sense to you. Don&#8217;t worry about that, because you&#8217;re going to dissect it line by line. But read through it first and see what, if anything, you can make of it.
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
-<pre><code class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+<pre class=pp><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
 <h2 id=declaringfunctions>Declaring Functions</h2>
 <p>Python has functions like most other languages, but it does not have separate header files like <abbr>C++</abbr> or <code>interface</code>/<code>implementation</code> sections like Pascal. When you need a function, just declare it, like this:
-<pre class=nd><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre class='nd pp'><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 <aside>When you need a function, just declare it.</aside>
 <p>The keyword <code>def</code> starts the function declaration, followed by the function name, followed by the arguments in parentheses. Multiple arguments are separated with commas.
 <p>Also note that the function doesn&#8217;t define a return datatype. Python functions do not specify the datatype of their return value; they don&#8217;t even specify whether or not they return a value. (In fact, every Python function returns a value; if the function ever executes a <code>return</code> statement, it will return that value, otherwise it will return <code>None</code>, the Python null value.)
@@ -93,13 +93,13 @@ if __name__ == '__main__':
 
 <p>Let&#8217;s take another look at that <code>approximate_size()</code> function declaration:
 
-<pre class=nd><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
+<pre class='nd pp'><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):</code></pre>
 
 <p>The second argument, <var>a_kilobyte_is_1024_bytes</var>, specifies a default value of <code>True</code>. This means the argument is <i>optional</i>; you can call the function without it, and Python will act as if you had called it with <code>True</code> as a second parameter.
 
 <p>Now look at the bottom of the script:
 
-<pre><code class=pp>if __name__ == '__main__':
+<pre class=pp><code>if __name__ == '__main__':
 <a>    print(approximate_size(1000000000000, False))  <span class=u>&#x2460;</span></a>
 <a>    print(approximate_size(1000000000000))         <span class=u>&#x2461;</span></a></code></pre>
 <ol>
@@ -137,7 +137,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 <p>I won&#8217;t bore you with a long finger-wagging speech about the importance of documenting your code. Just know that code is written once but read many times, and the most important audience for your code is yourself, six months after writing it (<i>i.e.</i> after you&#8217;ve forgotten everything but need to fix something). Python makes it easy to write readable code, so take advantage of it. You&#8217;ll thank me in six months.
 <h3 id=docstrings>Documentation Strings</h3>
 <p>You can document a Python function by giving it a documentation string (<code>docstring</code> for short). In this program, the <code>approximate_size()</code> function has a <code>docstring</code>:
-<pre class=nd><code class=pp>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
+<pre class='nd pp'><code>def approximate_size(size, a_kilobyte_is_1024_bytes=True):
     '''Convert a file size to human-readable form.
 
     Keyword arguments:
@@ -228,7 +228,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <h2 id=indentingcode>Indenting Code</h2>
 <p>Python functions have no explicit <code>begin</code> or <code>end</code>, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon (<code>:</code>) and the indentation of the code itself.
-<pre><code class=pp><a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>def approximate_size(size, a_kilobyte_is_1024_bytes=True):  <span class=u>&#x2460;</span></a>
 <a>    if size &lt; 0:                                            <span class=u>&#x2461;</span></a>
 <a>        raise ValueError('number must be non-negative')     <span class=u>&#x2462;</span></a>
 <a>                                                            <span class=u>&#x2463;</span></a>
@@ -272,7 +272,7 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <p>The <code>approximate_size()</code> function raises exceptions in two different cases: if the given <var>size</var> is larger than the function is designed to handle, or if it&#8217;s less than zero.
 
-<pre class=nd><code class=pp>if size &lt; 0:
+<pre class='nd pp'><code>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
 
 <p>The syntax for raising an exception is simple enough. Use the <code>raise</code> statement, followed by the exception name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a function. (In reality, exceptions are implemented as classes, and this <code>raise</code> statement is actually creating an instance of the <code>ValueError</code> class and passing the string <code>'number must be non-negative'</code> to its initialization method. But <a href=iterators.html#defining-classes>we&#8217;re getting ahead of ourselves</a>!)
@@ -285,21 +285,21 @@ SyntaxError: non-keyword arg after keyword arg</samp></pre>
 
 <p>One of Python&#8217;s built-in exceptions is <code>ImportError</code>, which is raised when you try to import a module and fail. This can happen for a variety of reasons, but the simplest case is when the module doesn&#8217;t exist in your <a href=#importsearchpath>import search path</a>. You can use this to include optional features in your program. For example, <a href=case-study-porting-chardet-to-python-3.html>the <code>chardet</code> library</a> provides character encoding auto-detection. Perhaps your program wants to use this library <em>if it exists</em>, but continue gracefully if the user hasn&#8217;t installed it. You can do this with a <code>try..except</code> block.
 
-<pre class=nd><code class=pp><mark>try</mark>:
+<pre class='nd pp'><code><mark>try</mark>:
   import chardet
 <mark>except</mark> ImportError:
   chardet = None</code></pre>
 
 <p>Later, you can check for the presence of the <code>chardet</code> module with a simple <code>if</code> statement:
 
-<pre class=nd><code class=pp>if chardet:
+<pre class='nd pp'><code>if chardet:
   # do something
 else:
   # continue anyway</code></pre>
 
 <p>Another common use of the <code>ImportError</code> exception is when two modules implement a common <abbr>API</abbr>, but one is more desirable than the other. (Maybe it&#8217;s faster, or it uses less memory.) You can try to import one module but fall back to a different module if the first import fails. For example, <a href=xml.html>the XML chapter</a> talks about two modules that implement a common <abbr>API</abbr>, called the <code>ElementTree</code> <abbr>API</abbr>. The first, <code>lxml</code>, is a third-party module that you need to download and install yourself. The second, <code>xml.etree.ElementTree</code>, is slower but is part of the Python 3 standard library.
 
-<pre class=nd><code class=pp>try:
+<pre class='nd pp'><code>try:
     from lxml import etree
 except ImportError:
     import xml.etree.ElementTree as etree</code></pre>
@@ -310,7 +310,7 @@ except ImportError:
 
 <p>Take another look at this line of code from the <code>approximate_size()</code> function:
 
-<pre class=nd><code class=pp>multiple = 1024 if a_kilobyte_is_1024_bytes else 1000</code></pre>
+<pre class='nd pp'><code>multiple = 1024 if a_kilobyte_is_1024_bytes else 1000</code></pre>
 
 <p>You never declare the variable <var>multiple</var>, you just assign a value to it. That&#8217;s OK, because Python lets you do that. What Python will <em>not</em> let you do is reference a variable that has never been assigned a value. Trying to do so will raise a <code>NameError</code> exception.
 <pre class='nd screen'>
@@ -353,7 +353,7 @@ NameError: name 'an_inteGer' is not defined</samp>
 <h2 id=runningscripts>Running Scripts</h2>
 <aside>Everything in Python is an object.</aside>
 <p>Python modules are objects and have several useful attributes. You can use this to easily test your modules as you write them, by including a special block of code that executes when you run the Python file on the command line. Take the last few lines of <code>humansize.py</code>:
-<pre class=nd><code class=pp>
+<pre class='nd pp'><code>
 if __name__ == '__main__':
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))</code></pre>

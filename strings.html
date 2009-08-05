@@ -106,7 +106,7 @@ My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&m
 <p>Let&#8217;s take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
-<pre><code class=pp><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>&#x2460;</span></a>
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
@@ -201,7 +201,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
 <p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
 
-<pre class=nd><code class=pp>if size &lt; multiple:
+<pre class='nd pp'><code>if size &lt; multiple:
     return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
 <p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
@@ -412,11 +412,11 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
 
-<pre class=nd><code class=pp># -*- coding: windows-1252 -*-</code></pre>
+<pre class='nd pp'><code># -*- coding: windows-1252 -*-</code></pre>
 
 <p>Technically, the character encoding override can also be on the second line, if the first line is a <abbr>UNIX</abbr>-like hash-bang command.
 
-<pre class=nd><code class=pp>#!/usr/bin/python3
+<pre class='nd pp'><code>#!/usr/bin/python3
 # -*- coding: windows-1252 -*-</code></pre>
 
 <p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.

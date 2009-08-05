@@ -200,7 +200,6 @@ a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
 /* code blocks */
 
 pre {
-  white-space: pre-wrap;
   padding-left: 2.154em;
   border-left: 1px solid #ddd;
 }
@@ -323,10 +322,10 @@ aside a {
   border: 0;
   display: block;
 }
-.v a:first-child {
+.v a {
   float: left;
 }
-.v a:last-child {
+.v a + a {
   float: right;
 }
 .v span {

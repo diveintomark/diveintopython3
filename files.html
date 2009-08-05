@@ -26,7 +26,7 @@ body{counter-reset:h1 11}
 
 <p>Before you can read from a file, you need to open it. Opening a file in Python couldn&#8217;t be easier:
 
-<pre class=nd><code class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</code></pre>
+<pre class='nd pp'><code>a_file = open('examples/chinese.txt', encoding='utf-8')</code></pre>
 
 <p>Python has a built-in <code>open()</code> function, which takes a filename as an argument. Here the filename is <code class=pp>'examples/chinese.txt'</code>. There are five interesting things about this filename:
 
@@ -207,7 +207,7 @@ ValueError: I/O operation on closed file.</samp>
 
 <p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 3 also adds a cleaner solution: the <code>with</code> statement.
 
-<pre class=nd><code class=pp>with open('examples/chinese.txt', encoding='utf-8') as a_file:
+<pre class='nd pp'><code>with open('examples/chinese.txt', encoding='utf-8') as a_file:
     a_file.seek(17)
     a_character = a_file.read(1)
     print(a_character)</code></pre>
@@ -235,7 +235,7 @@ ValueError: I/O operation on closed file.</samp>
 <p>So, how do you actually do it? Read a file one line at a time, that is. It&#8217;s so simple, it&#8217;s beautiful.
 
 <p class=d>[<a href=examples/oneline.py>download <code>oneline.py</code></a>]
-<pre><code class=pp>line_number = 0
+<pre class=pp><code>line_number = 0
 <a>with open('examples/favorite-people.txt', encoding='utf-8') as a_file:  <span class=u>&#x2460;</span></a>
 <a>    for a_line in a_file:                                               <span class=u>&#x2461;</span></a>
         line_number += 1
@@ -450,7 +450,7 @@ IOError: not readable</samp></pre>
 <p>So <code>sys.stdout</code> and <code>sys.stderr</code> are file-like objects, albeit ones that only support writing. But they&#8217;re not constants; they&#8217;re variables. That means you can assign them a new value&nbsp;&mdash;&nbsp;another file object, or another file-like object&nbsp;&mdash;&nbsp;and redirect their output.
 
 <p class=d>[<a href=examples/stdout.py>download <code>stdout.py</code></a>]
-<pre><code class=pp>import sys
+<pre class=pp><code>import sys
 
 class RedirectStdoutTo:
     def __init__(self, out_new):
@@ -479,7 +479,7 @@ C</samp>
 
 <p>Let&#8217;s take the last part first.
 
-<pre><code class=pp>
+<pre class=pp><code>
 <a>print('A')                                                                             <span class=u>&#x2460;</span></a>
 <a>with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):  <span class=u>&#x2461;</span></a>
 <a>    print('B')                                                                         <span class=u>&#x2462;</span></a>
@@ -493,7 +493,7 @@ C</samp>
 
 <p>Now take a look at the <code>RedirectStdoutTo</code> class. It is a custom context manager. Upon entering the context, it redirects <code>sys.stdout</code> to a given file-like object. Upon exiting the context, it restores <code>sys.stdout</code> to its original value.
 
-<pre><code class=pp>class RedirectStdoutTo:
+<pre class=pp><code>class RedirectStdoutTo:
 <a>    def __init__(self, out_new):    <span class=u>&#x2460;</span></a>
         self.out_new = out_new
 

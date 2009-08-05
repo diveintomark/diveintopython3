@@ -38,7 +38,7 @@ body{counter-reset:h1 6}
 <h2 id=i-know>I Know, Let&#8217;s Use Regular Expressions!</h2>
 <p>So you&#8217;re looking at words, which, at least in English, means you&#8217;re looking at strings of characters. You have rules that say you need to find different combinations of characters, then do different things to them. This sounds like a job for regular expressions!
 <p class=d>[<a href=examples/plural1.py>download <code>plural1.py</code></a>]
-<pre><code class=pp>import re
+<pre class=pp><code>import re
 
 def plural(noun):          
 <a>    if re.search('[sxz]$', noun):             <span class=u>&#x2460;</span></a>
@@ -74,7 +74,7 @@ def plural(noun):
 
 <p>And now, back to the <code>plural()</code> function&hellip;
 
-<pre><code class=pp>def plural(noun):          
+<pre class=pp><code>def plural(noun):          
     if re.search('[sxz]$', noun):            
 <a>        return re.sub('$', 'es', noun)         <span class=u>&#x2460;</span></a>
 <a>    elif re.search('[^aeioudgkprt]h$', noun):  <span class=u>&#x2461;</span></a>
@@ -126,7 +126,7 @@ def plural(noun):
 <p>Now you&#8217;re going to add a level of abstraction. You started by defining a list of rules: if this, do that, otherwise go to the next rule. Let&#8217;s temporarily complicate part of the program so you can simplify another part.
 
 <p class=d>[<a href=examples/plural2.py>download <code>plural2.py</code></a>]
-<pre><code class=pp>import re
+<pre class=pp><code>import re
 
 def match_sxz(noun):
     return re.search('[sxz]$', noun)
@@ -174,7 +174,7 @@ def plural(noun):
 
 <p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
 
-<pre class=nd><code class=pp>
+<pre class='nd pp'><code>
 def plural(noun):
     if match_sxz(noun):
         return apply_sxz(noun)
@@ -206,7 +206,7 @@ def plural(noun):
 <p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> sequence and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
 
 <p class=d>[<a href=examples/plural3.py>download <code>plural3.py</code></a>]
-<pre><code class=pp>import re
+<pre class=pp><code>import re
 
 def build_match_and_apply_functions(pattern, search, replace):
 <a>    def matches_rule(word):                                     <span class=u>&#x2460;</span></a>
@@ -222,7 +222,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 
 <p>If this is incredibly confusing (and it should be, this is weird stuff), it may become clearer when you see how to use it.
 
-<pre><code class=pp><a>patterns = \                                                        <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>patterns = \                                                        <span class=u>&#x2460;</span></a>
   (
     ('[sxz]$',           '$',  'es'),
     ('[^aeioudgkprt]h$', '$',  'es'),
@@ -239,7 +239,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 
 <p>Rounding out this version of the script is the main entry point, the <code>plural()</code> function.
 
-<pre><code class=pp>def plural(noun):
+<pre class=pp><code>def plural(noun):
 <a>    for matches_rule, apply_rule in rules:  <span class=u>&#x2460;</span></a>
         if matches_rule(noun):
             return apply_rule(noun)</code></pre>
@@ -256,7 +256,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 <p>First, let&#8217;s create a text file that contains the rules you want. No fancy data structures, just whitespace-delimited strings in three columns. Let&#8217;s call it <code>plural4-rules.txt</code>.
 
 <p class=d>[<a href=examples/plural4-rules.txt>download <code>plural4-rules.txt</code></a>]
-<pre class=nd><code class=pp>[sxz]$               $    es
+<pre class='nd pp'><code>[sxz]$               $    es
 [^aeioudgkprt]h$     $    es
 [^aeiou]y$          y$    ies
 $                    $    s</code></pre>
@@ -264,7 +264,7 @@ $                    $    s</code></pre>
 <p>Now let&#8217;s see how you can use this rules file.
 
 <p class=d>[<a href=examples/plural4.py>download <code>plural4.py</code></a>]
-<pre><code class=pp>import re
+<pre class=pp><code>import re
 
 <a>def build_match_and_apply_functions(pattern, search, replace):  <span class=u>&#x2460;</span></a>
     def matches_rule(word):
@@ -295,7 +295,7 @@ rules = []
 <p>Wouldn&#8217;t it be grand to have a generic <code>plural()</code> function that parses the rules file? Get rules, check for a match, apply appropriate transformation, go to next rule. That&#8217;s all the <code>plural()</code> function has to do, and that&#8217;s all the <code>plural()</code> function should do.
 
 <p class=d>[<a href=examples/plural5.py>download <code>plural5.py</code></a>]
-<pre class=nd><code class=pp>def rules(rules_filename):
+<pre class='nd pp'><code>def rules(rules_filename):
     with open('plural5-rules.txt', encoding='utf-8') as pattern_file:
         for line in pattern_file:
             pattern, search, replace = line.split(None, 3)
@@ -343,7 +343,7 @@ def plural(noun, rules_filename='plural5-rules.txt'):
 <h3 id=a-fibonacci-generator>A Fibonacci Generator</h3>
 
 <p class=d>[<a href=examples/fibonacci.py>download <code>fibonacci.py</code></a>]
-<pre><code class=pp>def fib(max):
+<pre class=pp><code>def fib(max):
 <a>    a, b = 0, 1          <span class=u>&#x2460;</span></a>
     while a &lt; max:
 <a>        yield a          <span class=u>&#x2461;</span></a>
@@ -375,7 +375,7 @@ def plural(noun, rules_filename='plural5-rules.txt'):
 
 <p>Let&#8217;s go back to <code>plural5.py</code> and see how this version of the <code>plural()</code> function works.
 
-<pre><code class=pp>def rules(rules_filename):
+<pre class=pp><code>def rules(rules_filename):
     with open(rules_filename, encoding='utf-8') as pattern_file:
         for line in pattern_file:
 <a>            pattern, search, replace = line.split(None, 3)                   <span class=u>&#x2460;</span></a>

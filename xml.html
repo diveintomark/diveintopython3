@@ -26,7 +26,7 @@ mark{display:inline}
 <p>Here, then, is the <abbr>XML</abbr> data we&#8217;ll be working with in this chapter. It&#8217;s a feed&nbsp;&mdash;&nbsp;specifically, an <a href=http://atompub.org/rfc4287.html>Atom syndication feed</a>.
 
 <p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
-<pre><code class=pp>&lt;?xml version='1.0' encoding='utf-8'?>
+<pre class=pp><code>&lt;?xml version='1.0' encoding='utf-8'?>
 &lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
   &lt;title>dive into mark&lt;/title>
   &lt;subtitle>currently between addictions&lt;/subtitle>
@@ -99,7 +99,7 @@ mark{display:inline}
 
 <p><abbr>XML</abbr> is a generalized way of describing hierarchical structured data. An <abbr>XML</abbr> <i>document</i> contains one or more <i>elements</i>, which are delimited by <i>start and end tags</i>. This is a complete (albeit boring) <abbr>XML</abbr> document:
 
-<pre class=nd><code class=pp><a>&lt;foo>   <span class=u>&#x2460;</span></a>
+<pre class='nd pp'><code><a>&lt;foo>   <span class=u>&#x2460;</span></a>
 <a>&lt;/foo>  <span class=u>&#x2461;</span></a></code></pre>
 <ol>
 <li>This is the <i>start tag</i> of the <code>foo</code> element.
@@ -108,19 +108,19 @@ mark{display:inline}
 
 <p>Elements can be <i>nested</i> to any depth. An element <code>bar</code> inside an element <code>foo</code> is said to be a <i>subelement</i> or <i>child</i> of <code>foo</code>.
 
-<pre class=nd><code class=pp>&lt;foo>
+<pre class='nd pp'><code>&lt;foo>
   <mark>&lt;bar>&lt;/bar></mark>
 &lt;/foo>
 </code></pre>
 
 <p>The first element in every <abbr>XML</abbr> document is called the <i>root element</i>. An <abbr>XML</abbr> document can only have one root element. The following is <strong>not an <abbr>XML</abbr> document</strong>, because it has two root elements:
 
-<pre class=nd><code class=pp>&lt;foo>&lt;/foo>
+<pre class='nd pp'><code>&lt;foo>&lt;/foo>
 &lt;bar>&lt;/bar></code></pre>
 
 <p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element and separated by whitespace. <i>Attribute names</i> can not be repeated within an element. <i>Attribute values</i> must be quoted. You may use either single or double quotes.
 
-<pre class=nd><code class=pp><a>&lt;foo <mark>lang='en'</mark>>                          <span class=u>&#x2460;</span></a>
+<pre class='nd pp'><code><a>&lt;foo <mark>lang='en'</mark>>                          <span class=u>&#x2460;</span></a>
 <a>  &lt;bar id='papayawhip' <mark>lang="fr"</mark>>&lt;/bar>  <span class=u>&#x2461;</span></a>
 &lt;/foo>
 </code></pre>
@@ -133,22 +133,22 @@ mark{display:inline}
 
 <p>Elements can have <i>text content</i>.
 
-<pre class=nd><code class=pp>&lt;foo lang='en'>
+<pre class='nd pp'><code>&lt;foo lang='en'>
   &lt;bar lang='fr'><mark>PapayaWhip</mark>&lt;/bar>
 &lt;/foo>
 </code></pre>
 
 <p>Elements that contain no text and no children are <i>empty</i>.
 
-<pre class=nd><code class=pp>&lt;foo>&lt;/foo></code></pre>
+<pre class='nd pp'><code>&lt;foo>&lt;/foo></code></pre>
 
 <p>There is a shorthand for writing empty elements. By putting a <code>/</code> character in the start tag, you can skip the end tag altogther. The <abbr>XML</abbr> document in the previous example could be written like this instead:
 
-<pre class=nd><code class=pp>&lt;foo<mark>/</mark>></code></pre>
+<pre class='nd pp'><code>&lt;foo<mark>/</mark>></code></pre>
 
 <p>Like Python functions can be declared in different <i>modules</i>, <abbr>XML</abbr> elements can be declared in different <i>namespaces</i>. Namespaces usually look like URLs. You use an <code>xmlns</code> declaration to define a <i>default namespace</i>. A namespace declaration looks similar to an attribute, but it has a different purpose.
 
-<pre class=nd><code class=pp><a>&lt;feed <mark>xmlns='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
+<pre class='nd pp'><code><a>&lt;feed <mark>xmlns='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
 <a>  &lt;title>dive into mark&lt;/title>             <span class=u>&#x2461;</span></a>
 &lt;/feed>
 </code></pre>
@@ -159,7 +159,7 @@ mark{display:inline}
 
 <p>You can also use an <code>xmlns:<var>prefix</var></code> declaration to define a namespace and associate it with a <i>prefix</i>. Then each element in that namespace must be explicitly declared with the prefix.
 
-<pre class=nd><code class=pp><a>&lt;atom:feed <mark>xmlns:atom='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
+<pre class='nd pp'><code><a>&lt;atom:feed <mark>xmlns:atom='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
 <a>  &lt;atom:title>dive into mark&lt;/atom:title>             <span class=u>&#x2461;</span></a>
 &lt;/atom:feed></code></pre>
 <ol>
@@ -171,7 +171,7 @@ mark{display:inline}
 
 <p>Finally, <abbr>XML</abbr> documents can contain <a href=strings.html#one-ring-to-rule-them-all>character encoding information</a> on the first line, before the root element. (If you&#8217;re curious how a document can contain information which needs to be known before the document can be parsed, <a href=http://www.w3.org/TR/REC-xml/#sec-guessing-no-ext-info>Section F of the <abbr>XML</abbr> specification</a> details how to resolve this Catch-22.)
 
-<pre class=nd><code class=pp>&lt;?xml version='1.0' <mark>encoding='utf-8'</mark>?></code></pre>
+<pre class='nd pp'><code>&lt;?xml version='1.0' <mark>encoding='utf-8'</mark>?></code></pre>
 
 <p>And now you know just enough <abbr>XML</abbr> to be dangerous!
 
@@ -185,7 +185,7 @@ mark{display:inline}
 
 <p>At the top level is the <i>root element</i>, which every Atom feed shares: the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace.
 
-<pre><code class=pp><a>&lt;feed xmlns='http://www.w3.org/2005/Atom'  <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>&lt;feed xmlns='http://www.w3.org/2005/Atom'  <span class=u>&#x2460;</span></a>
 <a>      xml:lang='en'>                       <span class=u>&#x2461;</span></a></code></pre>
 <ol>
 <li><code>http://www.w3.org/2005/Atom</code> is the Atom namespace.
@@ -194,7 +194,7 @@ mark{display:inline}
 
 <p>An Atom feed contains several pieces of information about the feed itself. These are declared as children of the root-level <code>feed</code> element.
 
-<pre><code class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+<pre class=pp><code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
 <a>  &lt;title>dive into mark&lt;/title>                                             <span class=u>&#x2460;</span></a>
 <a>  &lt;subtitle>currently between addictions&lt;/subtitle>                         <span class=u>&#x2461;</span></a>
 <a>  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>                                <span class=u>&#x2462;</span></a>
@@ -216,7 +216,7 @@ mark{display:inline}
 
 <p>After the feed-level metadata is the list of the most recent articles. An article looks like this:
 
-<pre><code class=pp>&lt;entry>
+<pre class=pp><code>&lt;entry>
 <a>  &lt;author>                                                                 <span class=u>&#x2460;</span></a>
     &lt;name>Mark&lt;/name>
     &lt;uri>http://diveintomark.org/&lt;/uri>
@@ -467,7 +467,7 @@ StopIteration</samp></pre>
 
 <p>For large <abbr>XML</abbr> documents, <code>lxml</code> is significantly faster than the built-in ElementTree libary. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import <code>lxml</code> and fall back to the built-in ElementTree.
 
-<pre class=nd><code class=pp>try:
+<pre class='nd pp'><code>try:
     from lxml import etree
 except ImportError:
     import xml.etree.ElementTree as etree</code></pre>
@@ -537,11 +537,11 @@ except ImportError:
 
 <p>An <abbr>XML</abbr> parser won&#8217;t &#8220;see&#8221; any difference between an <abbr>XML</abbr> document with a default namespace and an <abbr>XML</abbr> document with a prefixed namespace. The resulting <abbr>DOM</abbr> of this serialization:
 
-<pre class=nd><code class=pp>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
+<pre class='nd pp'><code>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
 
 <p>is identical to the <abbr>DOM</abbr> of this serialization:
 
-<pre class=nd><code class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
+<pre class='nd pp'><code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
 
 <p>The only practical difference is that the second serialization is several characters shorter. If we were to recast our entire sample feed with a <code>ns0:</code> prefix in every start and end tag, it would add 4 characters per start tag &times; 79 tags + 4 characters for the namespace declaration itself, for a total of 316 characters. Assuming <a href=strings.html#byte-arrays>UTF-8 encoding</a>, that&#8217;s 316 extra bytes. (After gzipping, the difference drops to 21 bytes, but still, 21 bytes is 21 bytes.) Maybe that doesn&#8217;t matter to you, but for something like an Atom feed, which may be downloaded several thousand times whenever it changes, saving a few bytes per request can quickly add up.
 
@@ -602,7 +602,7 @@ except ImportError:
 
 <p>Here is a fragment of a broken <abbr>XML</abbr> document. I&#8217;ve highlighted the wellformedness error.
 
-<pre class=nd><code class=pp>&lt;?xml version='1.0' encoding='utf-8'?>
+<pre class='nd pp'><code>&lt;?xml version='1.0' encoding='utf-8'?>
 &lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
   &lt;title>dive into <mark>&amp;hellip;</mark>&lt;/title>
 ...

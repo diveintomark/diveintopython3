@@ -45,7 +45,7 @@ E = 4</code></pre>
 <p>In this chapter, we&#8217;ll dive into an incredible Python program originally written by Raymond Hettinger. This program solves alphametic puzzles <em>in just 14 lines of code</em>.
 
 <p class=d>[<a href=examples/alphametics.py>download <code>alphametics.py</code></a>]
-<pre><code class=pp>import re
+<pre class=pp><code>import re
 import itertools
 
 def solve(puzzle):
@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
 <p>The alphametics solver uses this technique to get a list of all the unique characters in the puzzle.
 
-<pre class=nd><code class=pp>unique_characters = set(''.join(words))</code></pre>
+<pre class='nd pp'><code>unique_characters = set(''.join(words))</code></pre>
 
 <p>This list is later used to assign digits to characters as the solver iterates through the possible solutions.
 
@@ -178,11 +178,11 @@ AssertionError: Only for very large values of 2</samp></pre>
 
 <p>Therefore, this line of code:
 
-<pre class=nd><code class=pp>assert len(unique_characters) <= 10, 'Too many letters'</code></pre>
+<pre class='nd pp'><code>assert len(unique_characters) <= 10, 'Too many letters'</code></pre>
 
 <p>&hellip;is equivalent to this:
 
-<pre class=nd><code class=pp>if len(unique_characters) > 10:
+<pre class='nd pp'><code>if len(unique_characters) > 10:
     raise AssertionError('Too many letters')</code></pre>
 
 <p>The alphametics solver uses this exact <code>assert</code> statement to bail out early if the puzzle contains more than ten unique letters. Since each letter is assigned a unique digit, and there are only ten digits, a puzzle with more than ten unique letters can not possibly have a solution.
@@ -217,7 +217,7 @@ AssertionError: Only for very large values of 2</samp></pre>
 
 <p>Here&#8217;s another way to accomplish the same thing, using a <a href=generators.html>generator function</a>:
 
-<pre class=nd><code class=pp>def ord_map(a_string):
+<pre class='nd pp'><code>def ord_map(a_string):
     for c in a_string:
         yield ord(c)
 
@@ -413,7 +413,7 @@ Wesley</samp></pre>
 
 <p id=guess>The alphametics solver uses this technique to create a dictionary that maps letters in the puzzle to digits in the solution, for each possible solution.
 
-<pre class=nd><code class=pp>characters = tuple(ord(c) for c in sorted_characters)
+<pre class='nd pp'><code>characters = tuple(ord(c) for c in sorted_characters)
 digits = tuple(ord(c) for c in '0123456789')
 ...
 for guess in itertools.permutations(digits, len(characters)):

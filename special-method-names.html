@@ -220,7 +220,7 @@ AttributeError</samp></pre>
 
 <p>The <a href=http://docs.python.org/3.1/library/zipfile.html><code>zipfile</code> module</a> uses this to define a class that can <dfn>decrypt</dfn> an <dfn>encrypted</dfn> <dfn>zip</dfn> file with a given password. The zip <dfn>decryption</dfn> algorithm requires you to store state during decryption. Defining the decryptor as a class allows you to maintain this state within a single instance of the decryptor class.  The state is initialized in the <code>__init__()</code> method and updated as the file is <dfn>decrypted</dfn>. But since the class is also &#8220;callable&#8221; like a function, you can pass the instance as the first argument of the <code>map()</code> function, like so:
 
-<pre><code class=pp># excerpt from zipfile.py
+<pre class=pp><code># excerpt from zipfile.py
 class _ZipDecrypter:
 .
 .
@@ -272,7 +272,7 @@ bytes = zef_file.read(12)
 
 <p id=acts-like-list-example>The <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
 
-<pre><code class=pp># A script which responds to http://example.com/search?q=cgi
+<pre class=pp><code># A script which responds to http://example.com/search?q=cgi
 import cgi
 fs = cgi.FieldStorage()
 <a>if 'q' in fs:                                               <span class=u>&#x2460;</span></a>
@@ -326,7 +326,7 @@ class FieldStorage:
 
 <p>The <a href=#acts-like-list-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
 
-<pre><code class=pp># A script which responds to http://example.com/search?q=cgi
+<pre class=pp><code># A script which responds to http://example.com/search?q=cgi
 import cgi
 fs = cgi.FieldStorage()
 if 'q' in fs:
@@ -737,7 +737,7 @@ class FieldStorage:
 
 <p>This is how the <a href=files.html#with><code>with <var>file</var></code> idiom</a> works.
 
-<pre><code class=pp># excerpt from io.py:
+<pre class=pp><code># excerpt from io.py:
 def _checkClosed(self, msg=None):
     '''Internal: raise an ValueError if file is closed
     '''

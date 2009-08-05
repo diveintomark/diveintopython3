@@ -189,7 +189,7 @@ NameError: name 'entry' is not defined</samp>
 
 <p>FIXME
 
-<pre><code class=pp># customserializer.py
+<pre class=pp><code># customserializer.py
 def to_json(python_object):
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
@@ -213,7 +213,7 @@ def to_json(python_object):
 <li>FIXME
 </ol>
 
-<pre><code class=pp># customserializer.py
+<pre class=pp><code># customserializer.py
 def to_json(python_object):
     if isinstance(python_object, time.struct_time):
         return {'__class__': 'time.asctime',
@@ -270,7 +270,7 @@ NameError: name 'entry' is not defined</samp>
 
 <p>FIXME
 
-<pre><code class=pp># customserializer.py
+<pre class=pp><code># customserializer.py
 def from_json(json_object):
     if '__class__' in json_object:
         if json_object['__class__'] == 'time.asctime':

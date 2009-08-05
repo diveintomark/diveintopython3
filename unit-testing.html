@@ -57,7 +57,7 @@ body{counter-reset:h1 9}
 </ol>
 <p>It is not immediately obvious how this code does&hellip; well, <em>anything</em>. It defines a class which has no <code>__init__()</code> method. The class <em>does</em> have another method, but it is never called. The entire script has a <code>__main__</code> block, but it doesn&#8217;t reference the class or its method. But it does do something, I promise.
 <p class=d>[<a href=examples/romantest1.py>download <code>romantest1.py</code></a>]
-<pre><code class=pp>import roman1
+<pre class=pp><code>import roman1
 import unittest
 
 <a>class KnownValues(unittest.TestCase):               <span class=u>&#x2460;</span></a>
@@ -135,7 +135,7 @@ if __name__ == '__main__':
 </ol>
 <aside>Write a test that fails, then code until it passes.</aside>
 <p>Once you have a test case, you can start coding the <code>to_roman()</code> function. First, you should stub it out as an empty function and make sure the tests fail. If the tests succeed before you&#8217;ve written any code, your tests aren&#8217;t testing your code at all! Unit testing is a dance: tests lead, code follows. Write a test that fails, then code until it passes.
-<pre><code class=pp># roman1.py
+<pre class=pp><code># roman1.py
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
@@ -170,7 +170,7 @@ Traceback (most recent call last):
 </ol>
 <p><em>Now</em>, finally, you can write the <code>to_roman()</code> function.
 <p class=d>[<a href=examples/roman1.py>download <code>roman1.py</code></a>]
-<pre><code class=pp>roman_numeral_map = (('M',  1000),
+<pre class=pp><code>roman_numeral_map = (('M',  1000),
                      ('CM', 900),
                      ('D',  500),
                      ('CD', 400),
@@ -197,7 +197,7 @@ def to_roman(n):
 <li>Here&#8217;s where the rich data structure of <var>roman_numeral_map</var> pays off, because you don&#8217;t need any special logic to handle the subtraction rule. To convert to Roman numerals, simply iterate through <var>roman_numeral_map</var> looking for the largest integer value less than or equal to the input. Once found, add the Roman numeral representation to the end of the output, subtract the corresponding integer value from the input, lather, rinse, repeat.
 </ol>
 <p>If you&#8217;re still not clear how the <code>to_roman()</code> function works, add a <code>print()</code> call to the end of the <code>while</code> loop:
-<pre class=nd><code class=pp>
+<pre class='nd pp'><code>
 while n >= integer:
     result += numeral
     n -= integer
@@ -248,7 +248,7 @@ OK</samp></pre>
 </blockquote>
 <p>What would that test look like?
 <p class=d>[<a href=examples/romantest2.py>download <code>romantest2.py</code></a>]
-<pre><code class=pp><a>class ToRomanBadInput(unittest.TestCase):                                 <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>class ToRomanBadInput(unittest.TestCase):                                 <span class=u>&#x2460;</span></a>
 <a>    def test_too_large(self):                                             <span class=u>&#x2461;</span></a>
         '''to_roman should fail with large input'''
 <a>        self.assertRaises(roman2.OutOfRangeError, roman2.to_roman, 4000)  <span class=u>&#x2462;</span></a></code></pre>
@@ -284,7 +284,7 @@ FAILED (errors=1)</samp></pre>
 <li>Why didn&#8217;t the code execute properly? The traceback tells all. The module you&#8217;re testing doesn&#8217;t have an exception called <code>OutOfRangeError</code>. Remember, you passed this exception to the <code>assertRaises()</code> method, because it&#8217;s the exception you want the function to raise given an out-of-range input. But the exception doesn&#8217;t exist, so the call to the <code>assertRaises()</code> method failed. It never got a chance to test the <code>to_roman()</code> function; it didn&#8217;t get that far.
 </ol>
 <p>To solve this problem, you need to define the <code>OutOfRangeError</code> exception in <code>roman2.py</code>.
-<pre><code class=pp><a>class OutOfRangeError(ValueError):  <span class=u>&#x2460;</span></a>
+<pre class=pp><code><a>class OutOfRangeError(ValueError):  <span class=u>&#x2460;</span></a>
 <a>    pass                            <span class=u>&#x2461;</span></a></code></pre>
 <ol>
 <li>Exceptions are classes. An &#8220;out of range&#8221; error is a kind of value error&nbsp;&mdash;&nbsp;the argument value is out of its acceptable range. So this exception inherits from the built-in <code>ValueError</code> exception. This is not strictly necessary (it could just inherit from the base <code>Exception</code> class), but it feels right.
@@ -316,7 +316,7 @@ FAILED (failures=1)</samp></pre>
 </ol>
 <p>Now you can write the code to make this test pass.
 <p class=d>[<a href=examples/roman2.py>download <code>roman2.py</code></a>]
-<pre><code class=pp>def to_roman(n):
+<pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
     if n > 3999:
 <a>        raise OutOfRangeError('number out of range (must be less than 3999)')  <span class=u>&#x2460;</span></a>
@@ -362,7 +362,7 @@ OK</samp></pre>
 <p>Well <em>that&#8217;s</em> not good. Let&#8217;s add tests for each of these conditions.
 
 <p class=d>[<a href=examples/romantest3.py>download <code>romantest3.py</code></a>]
-<pre><code class=pp>class ToRomanBadInput(unittest.TestCase):
+<pre class=pp><code>class ToRomanBadInput(unittest.TestCase):
     def test_too_large(self):
         '''to_roman should fail with large input'''
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, 4000)  <span class=u>&#x2460;</span></a>
@@ -417,7 +417,7 @@ FAILED (failures=2)</samp></pre>
 <p>Excellent. Both tests failed, as expected. Now let&#8217;s switch over to the code and see what we can do to make them pass.
 
 <p class=d>[<a href=examples/roman3.py>download <code>roman3.py</code></a>]
-<pre><code class=pp>def to_roman(n):
+<pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
 <a>    if not (0 &lt; n &lt; 4000):                                              <span class=u>&#x2460;</span></a>
 <a>        raise OutOfRangeError('number out of range (must be 0..3999)')  <span class=u>&#x2461;</span></a>
@@ -470,13 +470,13 @@ OK</samp></pre>
 
 <p>Testing for non-integers is not difficult. First, define a <code>NonIntegerError</code> exception.
 
-<pre class=nd><code class=pp># roman4.py
+<pre class='nd pp'><code># roman4.py
 class OutOfRangeError(ValueError): pass
 <mark>class NotIntegerError(ValueError): pass</mark></code></pre>
 
 <p>Next, write a test case that checks for the <code>NonIntegerError</code> exception.
 
-<pre class=nd><code class=pp>class ToRomanBadInput(unittest.TestCase):
+<pre class='nd pp'><code>class ToRomanBadInput(unittest.TestCase):
     .
     .
     .
@@ -514,7 +514,7 @@ FAILED (failures=1)</samp></pre>
 
 <p>Write the code that makes the test pass.
 
-<pre><code class=pp>def to_roman(n):
+<pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
     if not (0 &lt; n &lt; 4000):
         raise OutOfRangeError('number out of range (must be 0..3999)')
@@ -564,7 +564,7 @@ OK</samp></pre>
 
 <p>But first, the tests. We&#8217;ll need a &#8220;known values&#8221; test to spot-check for accuracy. Our test suite already contains <a href=#romantest1>a mapping of known values</a>; let&#8217;s reuse that.
 
-<pre class=nd><code class=pp>    def test_from_roman_known_values(self):
+<pre class='nd pp'><code>    def test_from_roman_known_values(self):
         '''from_roman should give known result with known input'''
         for integer, numeral in self.known_values:
             result = roman5.from_roman(numeral)
@@ -572,11 +572,11 @@ OK</samp></pre>
 
 <p>There&#8217;s a pleasing symmetry here. The <code>to_roman()</code> and <code>from_roman()</code> functions are inverses of each other. The first converts integers to specially-formatted strings, the second converts specially-formated strings to integers. In theory, we should be able to &#8220;round-trip&#8221; a number by passing to the <code>to_roman()</code> function to get a string, then passing that string to the <code>from_roman()</code> function to get an integer, and end up with the same number.
 
-<pre class=nd><code class=pp>n = from_roman(to_roman(n)) for all values of n</code></pre>
+<pre class='nd pp'><code>n = from_roman(to_roman(n)) for all values of n</code></pre>
 
 <p>In this case, &#8220;all values&#8221; means any number between <code>1..3999</code>, since that is the valid range of inputs to the <code>to_roman()</code> function. We can express this symmetry in a test case that runs through all the values <code>1..3999</code>, calls <code>to_roman()</code>, calls <code>from_roman()</code>, and checks that the output is the same as the original input.
 
-<pre class=nd><code class=pp>class RoundtripCheck(unittest.TestCase):
+<pre class='nd pp'><code>class RoundtripCheck(unittest.TestCase):
     def test_roundtrip(self):
         '''from_roman(to_roman(n))==n for all n'''
         for integer in range(1, 4000):
@@ -614,7 +614,7 @@ FAILED (errors=2)</samp></pre>
 
 <p>A quick stub function will solve that problem.
 
-<pre class=nd><code class=pp># roman5.py
+<pre class='nd pp'><code># roman5.py
 def from_roman(s):
     '''convert Roman numeral to integer'''</code></pre>
 
@@ -650,7 +650,7 @@ FAILED (failures=2)</samp></pre>
 
 <p>Now it&#8217;s time to write the <code>from_roman()</code> function.
 
-<pre><code class=pp>def from_roman(s):
+<pre class=pp><code>def from_roman(s):
     """convert Roman numeral to integer"""
     result = 0
     index = 0
@@ -665,7 +665,7 @@ FAILED (failures=2)</samp></pre>
 
 <p>If you're not clear how <code>from_roman()</code> works, add a <code>print</code> statement to the end of the <code>while</code> loop:
 
-<pre><code class=pp>def from_roman(s):
+<pre class=pp><code>def from_roman(s):
     """convert Roman numeral to integer"""
     result = 0
     index = 0
@@ -717,7 +717,7 @@ OK</samp></pre>
 
 <p>Thus, one useful test would be to ensure that the <code>from_roman()</code> function should fail when you pass it a string with too many repeated numerals. How many is &#8220;too many&#8221; depends on the numeral.
 
-<pre class=nd><code class=pp>class FromRomanBadInput(unittest.TestCase):
+<pre class='nd pp'><code>class FromRomanBadInput(unittest.TestCase):
     def test_too_many_repeated_numerals(self):
         '''from_roman should fail with too many repeated numerals'''
         for s in ('MMMM', 'DD', 'CCCC', 'LL', 'XXXX', 'VV', 'IIII'):
@@ -725,14 +725,14 @@ OK</samp></pre>
 
 <p>Another useful test would be to check that certain patterns aren&#8217;t repeated. For example, <code>IX</code> is <code>9</code>, but <code>IXIX</code> is never valid.
 
-<pre class=nd><code class=pp>    def test_repeated_pairs(self):
+<pre class='nd pp'><code>    def test_repeated_pairs(self):
         '''from_roman should fail with repeated pairs of numerals'''
         for s in ('CMCM', 'CDCD', 'XCXC', 'XLXL', 'IXIX', 'IVIV'):
             self.assertRaises(roman6.InvalidRomanNumeralError, roman6.from_roman, s)</code></pre>
 
 <p>A third test could check that numerals appear in the correct order, from highest to lowest value. For example, <code>CL</code> is <code>150</code>, but <code>LC</code> is never valid, because the numeral for <code>50</code> can never come before the numeral for <code>100</code>. This test includes a randomly chosen set of invalid antecedents: <code>I</code> before <code>M</code>, <code>V</code> before <code>X</code>, and so on.
 
-<pre class=nd><code class=pp>    def test_malformed_antecedents(self):
+<pre class='nd pp'><code>    def test_malformed_antecedents(self):
         '''from_roman should fail with malformed antecedents'''
         for s in ('IIMXCC', 'VX', 'DCM', 'CMM', 'IXIV',
                   'MCMC', 'XCX', 'IVI', 'LM', 'LD', 'LC'):
@@ -740,7 +740,7 @@ OK</samp></pre>
 
 <p>Each of these tests relies the <code>from_roman()</code> function raising a new exception, <code>InvalidRomanNumeralError</code>, which we haven&#8217;t defined yet.
 
-<pre class=nd><code class=pp># roman6.py
+<pre class='nd pp'><code># roman6.py
 class InvalidRomanNumeralError(ValueError): pass</code></pre>
 
 <p>All three of these tests should fail, since the <code>from_roman()</code> function doesn&#8217;t currently have any validity checking. (If they don&#8217;t fail now, then what the heck are they testing?)
@@ -782,7 +782,7 @@ FAILED (failures=3)</samp></pre>
 
 <p>Good deal. Now, all we need to do is add the <a href=regular-expressions.html#romannumerals>regular expression to test for valid Roman numerals</a> into the <code>from_roman()</code> function.
 
-<pre class=nd><code class=pp>roman_numeral_pattern = re.compile('''
+<pre class='nd pp'><code>roman_numeral_pattern = re.compile('''
     ^                   # beginning of string
     M{0,3}              # thousands - 0 to 3 Ms
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 Cs),

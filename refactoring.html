@@ -31,7 +31,7 @@ body{counter-reset:h1 10}
 
 <p>After reproducing the bug, and before fixing it, you should write a test case that fails, thus illustrating the bug.
 
-<pre><code class=pp>class FromRomanBadInput(unittest.TestCase):  
+<pre class=pp><code>class FromRomanBadInput(unittest.TestCase):  
     .
     .
     .
@@ -72,7 +72,7 @@ FAILED (failures=1)</samp></pre>
 
 <p><em>Now</em> you can fix the bug.
 
-<pre><code class=pp>def from_roman(s):
+<pre class=pp><code>def from_roman(s):
     '''convert Roman numeral to integer'''
 <a>    if not s:                                                                  <span class=u>&#x2460;</span></a>
         raise InvalidRomanNumeralError, 'Input can not be blank'
@@ -124,7 +124,7 @@ Ran 11 tests in 0.156s
 <p>Suppose, for instance, that you wanted to expand the range of the Roman numeral conversion functions. Normally, no character in a Roman numeral can be repeated more than three times in a row. But the Romans were willing to make an exception to that rule by having 4 <code>M</code> characters in a row to represent <code>4000</code>. If you make this change, you&#8217;ll be able to expand the range of convertible numbers from <code>1..3999</code> to <code>1..4999</code>. But first, you need to make some changes to your test cases.
 
 <p class=d>[<a href=examples/roman8.py>download <code>roman8.py</code></a>]
-<pre><code class=pp>class KnownValues(unittest.TestCase):
+<pre class=pp><code>class KnownValues(unittest.TestCase):
     known_values = ( (1, 'I'),
                       .
                       .
@@ -228,7 +228,7 @@ FAILED (errors=3)</samp></pre>
 <p>Now that you have test cases that fail due to the new requirements, you can think about fixing the code to bring it in line with the test cases. (One thing that takes some getting used to when you first start coding unit tests is that the code being tested is never &#8220;ahead&#8221; of the test cases. While it&#8217;s behind, you still have some work to do, and as soon as it catches up to the test cases, you stop coding.)
 
 <p class=d>[<a href=examples/roman9.py>download <code>roman9.py</code></a>]
-<pre><code class=pp>roman_numeral_pattern = re.compile('''
+<pre class=pp><code>roman_numeral_pattern = re.compile('''
     ^                   # beginning of string
 <a>    M{0,4}              # thousands - 0 to 4 M's  <span class=u>&#x2460;</span></a>
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
@@ -305,7 +305,7 @@ Ran 12 tests in 0.203s
 <p>And best of all, you already have a complete set of unit tests. You can change over half the code in the module, but the unit tests will stay the same. That means you can prove&nbsp;&mdash;&nbsp;to yourself and to others&nbsp;&mdash;&nbsp;that the new code works just as well as the original.
 
 <p class=d>[<a href=examples/roman10.py>download <code>roman10.py</code></a>]
-<pre><code class=pp>class OutOfRangeError(ValueError): pass
+<pre class=pp><code>class OutOfRangeError(ValueError): pass
 class NotIntegerError(ValueError): pass
 class InvalidRomanNumeralError(ValueError): pass
 
@@ -365,13 +365,13 @@ build_lookup_tables()</code></pre>
 
 <p>Let&#8217;s break that down into digestable pieces. Arguably, the most important line is the last one:
 
-<pre class=nd><code class=pp>build_lookup_tables()</code></pre>
+<pre class='nd pp'><code>build_lookup_tables()</code></pre>
 
 <p>You will note that is a function call, but there&#8217;s no <code>if</code> statement around it. This is not an <code>if __name__ == '__main__'</code> block; it gets called <em>when the module is imported</em>. (It is important to understand that modules are only imported once, then cached. If you import an already-imported module, it does nothing. So this code will only get called the first time you import this module.)
 
 <p>So what does the <code>build_lookup_tables()</code> function do? I&#8217;m glad you asked.
 
-<pre><code class=pp>to_roman_table = [ None ]
+<pre class=pp><code>to_roman_table = [ None ]
 from_roman_table = {}
 .
 .
@@ -400,7 +400,7 @@ def build_lookup_tables():
 
 <p>Once the lookup tables are built, the rest of the code is both easy and fast.
 
-<pre><code class=pp>def to_roman(n):
+<pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
     if not (0 < n < 5000):
         raise OutOfRangeError('number out of range (must be 1..4999)')
