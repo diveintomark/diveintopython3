@@ -168,7 +168,7 @@ if __name__ == '__main__':
 AssertionError</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>assert 2 + 2 == 5, "Only for very large values of 2"</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "<stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 1, in &lt;module>
 AssertionError: Only for very large values of 2</samp></pre>
 <ol>
 <li>The <code>assert</code> statement is followed by any valid Python expression. In this case, the expression <code>1 + 1 == 2</code> evaluates to <code>True</code>, so the <code>assert</code> statement does nothing.
@@ -178,7 +178,7 @@ AssertionError: Only for very large values of 2</samp></pre>
 
 <p>Therefore, this line of code:
 
-<pre class='nd pp'><code>assert len(unique_characters) <= 10, 'Too many letters'</code></pre>
+<pre class='nd pp'><code>assert len(unique_characters) &lt;= 10, 'Too many letters'</code></pre>
 
 <p>&hellip;is equivalent to this:
 
@@ -250,7 +250,7 @@ gen = ord_map(unique_characters)</code></pre>
 <samp class=pp>(3, 2)</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>                                   <span class=u>&#x2464;</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in <module>
+  File "&lt;stdin>", line 1, in &lt;module>
 StopIteration</samp></pre>
 <ol>
 <li>The <code>itertools</code> module has all kinds of fun stuff in it, including a <code>permutations()</code> function that does all the hard work of finding permutations.
@@ -279,7 +279,7 @@ StopIteration</samp></pre>
 <samp class=pp>('C', 'B', 'A')</samp>
 <samp class=p>>>> </samp><kbd class=pp>next(perms)</kbd>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in <module>
+  File "&lt;stdin>", line 1, in &lt;module>
 StopIteration</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>list(itertools.permutations('ABC', 3))</kbd>    <span class=u>&#x2462;</span></a>
 <samp class=pp>[('A', 'B', 'C'), ('A', 'C', 'B'),
@@ -582,8 +582,8 @@ NameError: name '__import__' is not defined</samp>
 <samp class=p>>>> </samp><kbd class=pp>eval("__import__('subprocess').getoutput('rm -rf /')",</kbd>
 <a><samp class=p>... </samp><kbd class=pp>    {"__builtins__":None}, {})</kbd>          <span class=u>&#x2461;</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in <module>
-  File "&lt;string>", line 1, in <module>
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;string>", line 1, in &lt;module>
 NameError: name '__import__' is not defined</samp></pre>
 <ol>
 <li>To evaluate untrusted expressions safely, you need to define a global namespace dictionary that maps <code>"__builtins__"</code> to <code>None</code>, the Python null value. Internally, the &#8220;built-in&#8221; functions are contained within a pseudo-module called <code>"__builtins__"</code>. This pseudo-module (<i>i.e.</i> the set of built-in functions) is made available to evaluated expressions unless you explicitly override it.
