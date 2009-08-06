@@ -146,7 +146,7 @@ $(document).ready(function() {
 		var refs = $(this).find("a:not([href])");
 		refs.each(function(i) {
 			var li = ol.find("li:nth-child(" + (i+1) + ")");
-			s += "<tr><td style='text-align:center;vertical-align:baseline;margin:0;width:2em'><span class='u'>&#x" + (parseInt('2460', 16) + i).toString(16) + ";</span></td><td style='vertical-align:top;margin:0'>" + li.html() + "</td></tr>";
+			s += "<tr><td style='text-align:center;vertical-align:baseline;margin:0;padding:0;width:2em;border:0'><span class='u'>&#x" + (parseInt('2460', 16) + i).toString(16) + ";</span></td><td style='vertical-align:top;margin:0;padding:0;width:auto;border:0'>" + li.html() + "</td></tr>";
 		    });
 		ol.replaceWith("<table style='width:100%;border-collapse:collapse;margin:0'>" + s + "</table>");
 		refs.each(function(i) {
