@@ -242,7 +242,7 @@ FAILED (errors=3)</samp></pre>
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
-<a>    if not (0 < n < 5000):                        <span class=u>&#x2461;</span></a>
+<a>    if not (0 &lt; n &lt; 5000):                        <span class=u>&#x2461;</span></a>
         raise OutOfRangeError('number out of range (must be 0..4999)')
     if not isinstance(n, int):
         raise NotIntegerError('non-integers can not be converted')
@@ -328,7 +328,7 @@ from_roman_table = {}
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
-    if not (0 < n < 5000):
+    if not (0 &lt; n &lt; 5000):
         raise OutOfRangeError('number out of range (must be 1..4999)')
     if int(n) != n:
         raise NotIntegerError('non-integers can not be converted')
@@ -402,7 +402,7 @@ def build_lookup_tables():
 
 <pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
-    if not (0 < n < 5000):
+    if not (0 &lt; n &lt; 5000):
         raise OutOfRangeError('number out of range (must be 1..4999)')
     if int(n) != n:
         raise NotIntegerError('non-integers can not be converted')
