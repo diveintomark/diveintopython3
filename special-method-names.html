@@ -289,12 +289,13 @@ class FieldStorage:
 <a>        return any(item.name == key for item in self.list)  <span class=u>&#x2462;</span></a>
 
 <a>    def __len__(self):                                      <span class=u>&#x2463;</span></a>
-        return len(self.keys())</code></pre>
+<a>        return len(self.keys())                             <span class=u>&#x2464;</span></a></code></pre>
 <ol>
 <li>Once you create an instance of the <code>cgi.FieldStorage</code> class, you can use the &#8220;<code>in</code>&#8221; operator to check whether a particular parameter was included in the query string.
 <li>The <code>__contains__()</code> method is the magic that makes this work.
 <li>When you say <code>if 'q' in fs</code>, Python looks for the <code>__contains__()</code> method on the <var>fs</var> object, which is defined in <code>cgi.py</code>. The value <code>'q'</code> is passed into the <code>__contains__()</code> method as the <var>key</var> argument.
 <li>The same <code>FieldStorage</code> class also supports returning its length, so you can say <code>len(<var>fs</var>)</code> and it will call the <code>__len__()</code> method on the <code>FieldStorage</code> class to return the number of query parameters that it identified.
+<li>The <code>self.keys()</code> method checks whether <code>self.list is None</code>, so the <code>__len__</code> method doesn&#8217;t need to duplicate this error checking.
 </ol>
 
 <h2 id=acts-like-dict>Classes That Act Like Dictionaries</h2>
