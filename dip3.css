@@ -76,8 +76,9 @@ pre, kbd, samp, code, var, .b, pre span {
 .u {
   font: medium/1.75 'Arial Unicode MS', FreeSerif, OpenSymbol, 'DejaVu Sans', sans-serif;
 }
-pre .u, td .u, pre .u span, .a {
+pre .u, td .u, pre .u span, .a, tr + tr th:first-child {
   font: medium/1.75 'Arial Unicode MS', 'DejaVu Sans', FreeSerif, OpenSymbol, sans-serif;
+  color: #222;
 }
 .baa {
   font: oblique 105% Constantia, Baskerville, Palatino, 'Palatino Linotype', 'URW Palladio L', serif;
@@ -196,7 +197,6 @@ a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
   color: gainsboro;
 }
 
-
 /* code blocks */
 
 pre {
@@ -231,15 +231,41 @@ pre span, .p {
   color: #667;
 }
 
+/* tables */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  width: 45%;
+  padding: 0 0.5em;
+  border: 1px solid #bbb;
+}
+th {
+  text-align: left;
+  vertical-align: baseline;
+}
+td {
+  vertical-align: top;
+}
+th:first-child {
+  width: 10%;
+  text-align: center;
+}
+td pre {
+  padding: 0;
+}
+
 /* overrides */
 
-li ol, .q {
+li ol, .q, th, td, td pre {
   margin: 0;
 }
 code, var, samp {
-  line-height:inherit !important;
+  line-height: inherit !important;
 }
-pre a, td code a, .w a, pre a:hover {
+pre a, td code a, .w a, pre a:hover, td a:link, td a:visited, td pre {
   border: 0;
 }
 
