@@ -22,13 +22,17 @@ body{counter-reset:h1 13}
 <h2 id=divingin>Diving In</h2>
 <p class=f>FIXME
 
-<pre class=screen>
+<p>Open the Python Shell and define the following variable:
+
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>shell = 1</kbd></pre>
 
-<p>FIXME
+<p>Keep that window open. Now open another Python Shell and define the following variable:
 
-<pre class=screen>
+<pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>shell = 2</kbd></pre>
+
+<p>Throughout this chapter, I will use the <code>shell</code> variable to indicate which Python Shell is being used in each example.
 
 <p class=a>&#x2042;
 
@@ -36,14 +40,14 @@ body{counter-reset:h1 13}
 
 <p>FIXME - introduction to pickle module, concepts, what datatypes can be pickled w/o additional work
 
-<h3 id=dump>Saving to (and Loading from) a File</h3>
+<h3 id=dump>Saving to a File</h3>
 
 <p>The <code>pickle</code> module works with data structures. Let&#8217;s build one.
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                                                                              <span class=u>&#x2460;</span></a>
 <samp class=pp>1</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry = {}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry = {}</kbd>                                                                                         <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>entry['title'] = 'Dive into history, 2009 edition'</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['article_link'] = 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['comments_link'] = None</kbd>
@@ -51,22 +55,107 @@ body{counter-reset:h1 13}
 <samp class=p>>>> </samp><kbd class=pp>entry['tags'] = ('diveintopython', 'docbook', 'html')</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['published'] = True</kbd>
 <samp class=p>>>> </samp><kbd class=pp>import time</kbd>
-<samp class=p>>>> </samp><kbd class=pp>entry['published_date'] = time.strptime('Fri Mar 27 22:20:42 2009')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry['published_date'] = time.strptime('Fri Mar 27 22:20:42 2009')</kbd>                                <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>entry['published_date']</kbd>
 <samp class=pp>time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1)</samp></pre>
 <ol>
+<li>Follow along in Python Shell #1.
+<li>The idea here is to build a Python dictionary that could represent something useful, like an <a href=xml.html#xml-structure>entry in an Atom feed</a>. But I also want to ensure that it contains several different types of data, to show off the <code>pickle</code> module. Don&#8217;t read too much into these values.
+<li>The <code>time</code> module contains a data structure (<code>time_struct</code>) to represent a point in time (accurate to one millisecond) and functions to manipulate time structs. The <code>strptime()</code> function takes a formatted string an converts it to a <code>time_struct</code>. This string is in the default format, but you can control that with format codes. See the <a href=http://docs.python.org/3.1/library/time.html><code>time</code> module</a> for more details.
+</ol>
+
+<p>That&#8217;s a handsome-looking Python dictionary. Let&#8217;s save it to a file.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                    <span class=u>&#x2460;</span></a>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>import pickle</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'wb') as f:</kbd>    <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    pickle.dump(entry, f)</kbd>                <span class=u>&#x2462;</span></a>
+<samp class=p>... </samp></pre>
+<ol>
+<li>This is still in Python Shell #1.
+<li>Use the <code>open()</code> function to open a file. Set the file mode to <code>'wb'</code> to open the file for writing <a href=files.html#binary>in binary mode</a>. Wrap it in a <a href=files.html#with><code>with</code> statement</a> to ensure the file is closed automatically when you&#8217;re done with it.
+<li>The <code>dump()</code> function in the <code>pickle</code> module takes a serializable Python data structure, serializes it into a binary, Python-specific format using the latest version of the <code>pickle</code> protocol, and saves it to an open file.
+</ol>
+
+<p>That last sentence was pretty important.
+
+<ul>
+<li>The <code>pickle</code> module takes a Python data structure and saves it to a file.
+<li>To do this, it <i>serializes</i> the data structure using a data format called &#8220;the <code>pickle</code> protocol.&#8221;
+<li>The <code>pickle</code> protocol is Python-specific; there is no guarantee of cross-language compatibility. You probably couldn&#8217;t take the <code>entry.pickle</code> file you just created and do anything useful with it in Perl, <abbr>PHP</abbr>, Java, or any other language.
+<li>Not every Python data structure can be serialized by the <code>pickle</code> module. The <code>pickle</code> protocol has changed several times as new data types have been added to the Python language, but there are still limitations.
+<li>As a result of these changes, there is no guarantee of compatibility between different versions of Python itself. Newer versions of Python support the older serialization formats, but older versions of Python do not support newer formats (since they don&#8217;t support the newer data types).
+<li>Unless you specify otherwise, the functions in the <code>pickle</code> module will use the latest version of the <code>pickle</code> protocol. This ensures that you have maximum flexibility in the types of data you can serialize, but it also means that the resulting file will not be readable by older versions of Python that do not support the latest version of the <code>pickle</code> protocol.
+<li>The latest version of the <code>pickle</code> protocol is a binary protocol. Be sure to open your pickle files <a href=files.html#binary>in binary mode</a>, or the data will get corrupted during writing.
+</ul>
+
+<h3 id=load>Loading from a File</h3>
+
+<p>Now switch to your second Python Shell&nbsp;&mdash;&nbsp;<i>i.e.</i> not the one where you created the <code>entry</code> dictionary.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                    <span class=u>&#x2460;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                    <span class=u>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+NameError: name 'entry' is not defined</samp>
+<samp class=p>>>> </samp><kbd class=pp>import pickle</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>    <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    entry = pickle.load(f)</kbd>               <span class=u>&#x2463;</span></a>
+<samp class=p>... </samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                    <span class=u>&#x2464;</span></a>
+<samp class=pp>{'comments_link': None,
+ 'internal_id': b'\xde\xd5\xb4\xf8',
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ('diveintopython', 'docbook', 'html'),
+ 'article_link':
+ 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
+ 'published': True}</samp></pre>
+<ol>
+<li>FIXME
+<li>FIXME
+<li>FIXME
+<li>FIXME
 <li>FIXME
 </ol>
+
+<p>FIXME
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
-<samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'wb') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    pickle.dump(entry, f)</kbd>
-<samp class=p>... </samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    entry2 = pickle.load(f)</kbd>              <span class=u>&#x2461;</span></a>
+<samp class=p>... </samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>                          <span class=u>&#x2462;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2463;</span></a>
+<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>                    <span class=u>&#x2464;</span></a>
+<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
 <ol>
 <li>FIXME
+<li>
+<li>
+<li>
+<li>
 </ol>
+
+<h3 id=dumps>Saving to (and Loading from) an Object in Memory</h3>
+
+<p>FIXME
+
+<h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads (Again!)</h3>
+
+<p>FIXME - discussion of pickle protocol versions, backward incompatibility of protocol version 3 due to bytes/strings separation in Python 3, link to http://docs.python.org/3.1/library/pickle.html#data-stream-format
+
+<h3 id=debugging>Debugging Pickle Files</h3>
+
+<p>What does the pickle protocol look like? Let&#8217;s jump out of the Python Shell for a moment and take a look at that <code>entry.pickle</code> file we created.
 
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>ls -l entry.pickle</kbd>
@@ -78,54 +167,72 @@ q   Xpublished_dateq
 ctime
 struct_time
 ?qRqXtitleqXDive into history, 2009 editionqu.</samp></pre>
-<ol>
-<li>FIXME
-</ol>
 
-<p>FIXME now switch to your second Python Shell
-
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
-<samp class=pp>2</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
-<samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in &lt;module>
-NameError: name 'entry' is not defined</samp>
-<samp class=p>>>> </samp><kbd class=pp>import pickle</kbd>
-<samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    entry = pickle.load(f)</kbd>
-<samp class=p>... </samp>
-<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
-<samp class=pp>FIXME</samp></pre>
-<ol>
-<li>FIXME
-</ol>
-
-<p>FIXME
+<p>That wasn&#8217;t terribly helpful. You can see the strings, but other datatypes end up as unprintable (or at least unreadable) characters. Fields are not obviously delimited by tabs or spaces. This is not a format you would want to debug by yourself.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>import pickletools</kbd>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    entry2 = pickle.load(f)</kbd>
-<samp class=p>... </samp>
-<samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>
-<samp class=pp>True</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>
-<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>
-<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
-<ol>
-<li>FIXME
-</ol>
-
-<h3 id=dumps>Saving to (and Loading from) an Object in Memory</h3>
-
-<p>FIXME
-
-<h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads (Again!)</h3>
-
-<p>FIXME - discussion of pickle protocol versions, backward incompatibility of protocol version 3 due to bytes/strings separation in Python 3, link to http://docs.python.org/3.1/library/pickle.html#data-stream-format
+<samp class=p>... </samp><kbd class=pp>    pickletools.dis(f)</kbd>
+<samp>    0: \x80 PROTO      3
+    2: }    EMPTY_DICT
+    3: q    BINPUT     0
+    5: (    MARK
+    6: X        BINUNICODE 'published_date'
+   25: q        BINPUT     1
+   27: c        GLOBAL     'time struct_time'
+   45: q        BINPUT     2
+   47: (        MARK
+   48: M            BININT2    2009
+   51: K            BININT1    3
+   53: K            BININT1    27
+   55: K            BININT1    22
+   57: K            BININT1    20
+   59: K            BININT1    42
+   61: K            BININT1    4
+   63: K            BININT1    86
+   65: J            BININT     -1
+   70: t            TUPLE      (MARK at 47)
+   71: q        BINPUT     3
+   73: }        EMPTY_DICT
+   74: q        BINPUT     4
+   76: \x86     TUPLE2
+   77: q        BINPUT     5
+   79: R        REDUCE
+   80: q        BINPUT     6
+   82: X        BINUNICODE 'comments_link'
+  100: q        BINPUT     7
+  102: N        NONE
+  103: X        BINUNICODE 'internal_id'
+  119: q        BINPUT     8
+  121: C        SHORT_BINBYTES 'ÞÕ´ø'
+  127: q        BINPUT     9
+  129: X        BINUNICODE 'tags'
+  138: q        BINPUT     10
+  140: X        BINUNICODE 'diveintopython'
+  159: q        BINPUT     11
+  161: X        BINUNICODE 'docbook'
+  173: q        BINPUT     12
+  175: X        BINUNICODE 'html'
+  184: q        BINPUT     13
+  186: \x87     TUPLE3
+  187: q        BINPUT     14
+  189: X        BINUNICODE 'title'
+  199: q        BINPUT     15
+  201: X        BINUNICODE 'Dive into history, 2009 edition'
+  237: q        BINPUT     16
+  239: X        BINUNICODE 'article_link'
+  256: q        BINPUT     17
+  258: X        BINUNICODE 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'
+  337: q        BINPUT     18
+  339: X        BINUNICODE 'published'
+  353: q        BINPUT     19
+  355: \x88     NEWTRUE
+  356: u        SETITEMS   (MARK at 5)
+  357: .    STOP
+highest protocol among opcodes = 3</samp></pre>
 
 <p class=a>&#x2042;
 
@@ -147,29 +254,39 @@ NameError: name 'entry' is not defined</samp>
 
 <h3 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h3>
 
-<pre>
-[source: help(json)]
+<p>FIXME
 
-+---------------+-------------------+
-| JSON          | Python            |
-+===============+===================+
-| object        | dict              |
-+---------------+-------------------+
-| array         | list              |
-+---------------+-------------------+
-| string        | unicode           |
-+---------------+-------------------+
-| number (int)  | int, long         |
-+---------------+-------------------+
-| number (real) | float             |
-+---------------+-------------------+
-| true          | True              |
-+---------------+-------------------+
-| false         | False             |
-+---------------+-------------------+
-| null          | None              |
-+---------------+-------------------+
-</pre>
+<table>
+<tr><th>Notes
+<th>JSON
+<th>Python 3
+<tr><th>
+<td>object
+<td><a href=native-datatypes.html#dictionaries>dictionary</a>
+<tr><th>
+<td>array
+<td><a href=native-datatypes.html#lists>list</a>
+<tr><th>
+<td>string
+<td><a href=strings.html#divingin>string</a>
+<tr><th>
+<td>integer
+<td><a href=native-datatypes.html#numbers>integer</a>
+<tr><th>
+<td>real number
+<td><a href=native-datatypes.html#numbers>float</a>
+<tr><th>
+<td><code>true</code>
+<td><code><a href=native-datatypes.html#booleans>True</a>
+<tr><th>
+<td><code>false</code>
+<td><code><a href=native-datatypes.html#booleans>False</a></code>
+<tr><th>
+<td><code>null</code>
+<td><code><a href=native-datatypes.html#none>None</a></code>
+</table>
+
+<p>FIXME
 
 <h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
 
