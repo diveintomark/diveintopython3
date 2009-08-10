@@ -40,10 +40,10 @@ if __name__ == '__main__':
     print(type(entry2['tags']))
 
     with open('entry.json', 'w', encoding = 'utf-8') as f:
-        json.dump(entry, f, default = custom_encoder)
+        json.dump(entry, f, default = to_json)
 
     with open('entry.json', 'r', encoding = 'utf-8') as f:
-        entry2 = json.load(f, object_hook = custom_decoder)
+        entry2 = json.load(f, object_hook = from_json)
 
     print(entry == entry2)
     print(type(entry['tags']))
