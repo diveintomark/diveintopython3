@@ -234,6 +234,8 @@ struct_time
   357: .    STOP
 highest protocol among opcodes = 3</samp></pre>
 
+<p>FIXME more here about <i>fix_imports</i> and such?
+
 <p class=a>&#x2042;
 
 <h2 id=pickle-advanced>Serializing Complex Python Objects</h2>
@@ -291,15 +293,27 @@ highest protocol among opcodes = 3</samp></pre>
 <h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>entry</kbd>
 <samp class=pp>FIXME</samp>
 <samp class=p>>>> </samp><kbd class=pp>import json</kbd>
-<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    json.dump(entry)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>   
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry, f)</kbd>
 <samp class=p>... </samp>
-<samp class=traceback>FIXME</samp></pre>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 5, in &lt;module>
+  File "C:\Python31\lib\json\__init__.py", line 178, in dump
+    for chunk in iterable:
+  File "C:\Python31\lib\json\encoder.py", line 408, in _iterencode
+    for chunk in _iterencode_dict(o, _current_indent_level):
+  File "C:\Python31\lib\json\encoder.py", line 382, in _iterencode_dict
+    for chunk in chunks:
+  File "C:\Python31\lib\json\encoder.py", line 416, in _iterencode
+    o = _default(o)
+  File "C:\Python31\lib\json\encoder.py", line 170, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: b'\xde\xd5\xb4\xf8' is not JSON serializable</samp></pre>
 <ol>
 <li>FIXME
 </ol>
@@ -325,10 +339,25 @@ def to_json(python_object):
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
 <samp class=p>... </samp><kbd class=pp>    json.dump(entry, default = customserializer.to_json)</kbd>
 <samp class=p>... </samp>
-<samp class=traceback>FIXME</samp></pre>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 9, in &lt;module>
+    json.dump(entry, f, default=customserializer.to_json)
+  File "C:\Python31\lib\json\__init__.py", line 178, in dump
+    for chunk in iterable:
+  File "C:\Python31\lib\json\encoder.py", line 408, in _iterencode
+    for chunk in _iterencode_dict(o, _current_indent_level):
+  File "C:\Python31\lib\json\encoder.py", line 382, in _iterencode_dict
+    for chunk in chunks:
+  File "C:\Python31\lib\json\encoder.py", line 416, in _iterencode
+    o = _default(o)
+  File "/Users/pilgrim/diveintopython3/examples/customserializer.py", line 12, in to_json
+    raise TypeError(repr(python_object) + ' is not JSON serializable')
+TypeError: time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1) is not JSON serializable</samp></pre>
 <ol>
 <li>FIXME
 </ol>
+
+<p>FIXME
 
 <pre class=pp><code># customserializer.py
 def to_json(python_object):
@@ -359,9 +388,13 @@ def to_json(python_object):
 
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>ls -l example.json</kbd>
-<samp class=pp>FIXME</samp>
+<samp>-rw-r--r-- 1 you  you  391 Aug  3 13:34 entry.json</samp>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat example.json</kbd>
-<samp class=pp>FIXME</samp></pre>
+<samp>{"published_date": {"__class__": "time.asctime", "__value__": "Fri Mar 27 22:20:42 2009"},
+"comments_link": null, "internal_id": {"__class__": "bytes", "__value__": [222, 213, 180, 248]},
+"tags": ["diveintopython", "docbook", "html"], "title": "Dive into history, 2009 edition",
+"article_link": "http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition",
+"published": true}</samp></pre>
 <ol>
 <li>FIXME
 </ol>
@@ -380,7 +413,14 @@ NameError: name 'entry' is not defined</samp>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
 <samp class=p>... </samp><kbd class=pp>    entry = json.load(f)</kbd>
 <samp class=p>... </samp>
-<samp class=traceback>FIXME</samp></pre>
+<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<samp class=pp>{'comments_link': None,
+ 'internal_id': {'__class__': 'bytes', '__value__': [222, 213, 180, 248]},
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ['diveintopython', 'docbook', 'html'],
+ 'article_link': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': {'__class__': 'time.asctime', '__value__': 'Fri Mar 27 22:20:42 2009'},
+ 'published': True}</samp></pre>
 <ol>
 <li>FIXME
 </ol>
@@ -404,7 +444,13 @@ def from_json(json_object):
 <samp class=p>... </samp><kbd class=pp>    entry = json.load(f, object_hook = customserializer.from_json)</kbd>
 <samp class=p>... </samp>
 <samp class=p>>>> </samp><kbd class=pp>entry</kbd>
-<samp class=pp>FIXME</samp></pre>
+<samp class=pp>{'comments_link': None,
+ 'internal_id': b'\xde\xd5\xb4\xf8',
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ['diveintopython', 'docbook', 'html'],
+ 'article_link': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
+ 'published': True}</samp></pre>
 <ol>
 <li>FIXME
 </ol>
