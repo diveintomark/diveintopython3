@@ -16,26 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-function getSearchTerms() {
-    var highlighterParameters = 'q as_q as_epq as_oq query search';
-    var a = new Array();
-    var params = getParamValues(document.referrer/*document.location.href*/, highlighterParameters);
-    var terms;
-    for (i = 0; i < params.length; i++) {
-	terms = parseTerms(params[i]);
-	for (j = 0; j < terms.length; j++) {
-	    if (terms[j] != '') {
-		a.push(terms[j].toLowerCase());
-	    }
-	}
-    }
-    return a;
-}
-        
 function parseTerms(query) {
     var s = query + '';
     s = s.replace(/(^|\s)(site|related|link|info|cache):[^\s]*(\s|$)/ig, ' ');
-    s = s.replace(/[^a-z0-9_-]/ig, ' '); // word chars only.
+    s = s.replace(/[^a-z0-9_\-]/ig, ' '); // word chars only.
     s = s.replace(/(^|\s)-/g, ' '); // +required -excluded ~synonyms
     s = s.replace(/\b(and|not|or)\b/ig, ' ');
     s = s.replace(/\b[a-z0-9]\b/ig, ' '); // one char terms
@@ -43,14 +27,14 @@ function parseTerms(query) {
 }
 
 function getParamValues(url, parameters) {
-    var params = new Array();
+    var params = [];
     var p = parameters.replace(/,/, ' ').split(/\s+/);
     if (url.indexOf('?') > 0) {
 	var qs = url.substr(url.indexOf('?') + 1);
 	var qsa = qs.split('&');
 	for (i = 0; i < qsa.length; i++) {
 	    nameValue = qsa[i].split('=');
-	    if (nameValue.length != 2) continue;
+	    if (nameValue.length != 2) { continue; }
 	    for (j = 0; j < p.length; j++) {
 		if (nameValue[0] == p[j]) {
 		    params.push(unescape(nameValue[1]).toLowerCase().replace(/\+/g, ' '));
@@ -61,6 +45,22 @@ function getParamValues(url, parameters) {
     return params;
 }
 
+function getSearchTerms() {
+    var highlighterParameters = 'q as_q as_epq as_oq query search';
+    var a = [];
+    var params = getParamValues(document.referrer/*document.location.href*/, highlighterParameters);
+    var terms;
+    for (i = 0; i < params.length; i++) {
+	terms = parseTerms(params[i]);
+	for (j = 0; j < terms.length; j++) {
+	    if (terms[j] !== '') {
+		a.push(terms[j].toLowerCase());
+	    }
+	}
+    }
+    return a;
+}
+        
 /*
 
 The rest of this script is
@@ -89,6 +89,33 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 var HS = {'visible': 'hide', 'hidden': 'show'};
+
+function hideTOC() {
+    var toc = '<span class="nm u">&#8227;</span> <a href="javascript:showTOC()">show table of contents</a>';
+    $("#toc").html(toc);
+}
+
+function showTOC() {
+    var toc = '';
+    var old_level = 1;
+    $('h2,h3').each(function(i, h) {
+	    level = parseInt(h.tagName.substring(1), 10);
+	    if (level < old_level) {
+		toc += '</ol>';
+	    } else if (level > old_level) {
+		toc += '<ol>';
+	    }
+	    toc += '<li><a href=#' + h.id + '>' + h.innerHTML + '</a>';
+	    old_level = level;
+	});
+    while (level > 1) {
+	toc += '</ol>';
+	level -= 1;
+    }
+    toc = '<span class="nm u">&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a><ol start=0><li><a href=table-of-contents.html><span class=u>&uarr;</span> Full table of contents</a></li>' + toc.substring(4);
+    $("#toc").html(toc);
+}
+
 $(document).ready(function() {
 	hideTOC();
 	prettyPrint();
@@ -103,7 +130,7 @@ $(document).ready(function() {
 	/* "hide", "open in new window", and (optionally) "download" widgets on code & screen blocks */
 	$("pre > code").each(function(i) {
 		var pre = $(this.parentNode);
-		if (pre.parents("table").length == 0) {
+		if (pre.parents("table").length === 0) {
 		    pre.addClass("code");
 		}
 	    });
@@ -113,7 +140,7 @@ $(document).ready(function() {
 
 		/* wrap code block in a div and insert widget block */
 		$(this).wrapInner('<div class=b></div>');
-		$(this).prepend('<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS['visible'] + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
+		$(this).prepend('<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS.visible + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
 		
 		/* move download link into widget block */
 		$(this).prev("p.d").each(function(i) {
@@ -189,7 +216,7 @@ $(document).ready(function() {
 function toggleCodeBlock(id) {
     $("#" + id).find("div.b").toggle();
     var a = $("#" + id).find("a.toggle");
-    a.text(a.text() == HS['visible'] ? HS['hidden'] : HS['visible']);
+    a.text(a.text() == HS.visible ? HS.hidden : HS.visible);
 }
 
 function plainTextOnClick(id) {
@@ -199,30 +226,4 @@ function plainTextOnClick(id) {
     win.document.open();
     win.document.write('<pre>' + clone.html());
     win.document.close();
-}
-
-function hideTOC() {
-    var toc = '<span class="nm u">&#8227;</span> <a href="javascript:showTOC()">show table of contents</a>';
-    $("#toc").html(toc);
-}
-
-function showTOC() {
-    var toc = '';
-    var old_level = 1;
-    $('h2,h3').each(function(i, h) {
-	    level = parseInt(h.tagName.substring(1));
-	    if (level < old_level) {
-		toc += '</ol>';
-	    } else if (level > old_level) {
-		toc += '<ol>';
-	    }
-	    toc += '<li><a href=#' + h.id + '>' + h.innerHTML + '</a>';
-	    old_level = level;
-	});
-    while (level > 1) {
-	toc += '</ol>';
-	level -= 1;
-    }
-    toc = '<span class="nm u">&#9662;</span> <a href="javascript:hideTOC()">hide table of contents</a><ol start=0><li><a href=table-of-contents.html><span class=u>&uarr;</span> Full table of contents</a></li>' + toc.substring(4);
-    $("#toc").html(toc);
 }
