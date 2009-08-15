@@ -12,7 +12,7 @@ SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun
 filename = sys.argv[1]
 pqd = pq(filename=filename)
 raw_data = open(filename, 'rb').read()
-if raw_data.count('<pre'):
+if raw_data.count('</a><script src=j/'): # HACK HACK HACK
     def keep(s):
         for selector in SELECTOR_EXCEPTIONS:
             if s == selector: return True
