@@ -2,7 +2,7 @@
 
 die () {
   echo "$1" >/dev/stderr
-  Snarl_CMD snShowMessage 10 "Dive Into Python 3" "$1." "C:\Users\pilgrim\site-lisp\todochiku-icons\alert.png"
+  [ -n "$(which Snarl_CMD 2>/dev/null)" ] && Snarl_CMD snShowMessage 10 "Dive Into Python 3" "$1." "C:\Users\pilgrim\site-lisp\todochiku-icons\alert.png"
   exit 1
 }
 
