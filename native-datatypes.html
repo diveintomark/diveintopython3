@@ -42,7 +42,7 @@ body{counter-reset:h1 2}
 <p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 <pre class='nd pp'><code>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
-<p><var>size</var> is an integer, <code>0</code> is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:
+<p><var>size</var> is an integer, 0 is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>size = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
@@ -53,7 +53,7 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd class=pp>size = -1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
 <samp class=pp>True</samp></pre>
-<p>Due to some legacy issues left over from Python 2, booleans can be treated as numbers. <code>True</code> is <code>1</code>; <code>False</code> is <code>0</code>.
+<p>Due to some legacy issues left over from Python 2, booleans can be treated as numbers. <code>True</code> is <code>1</code>; <code>False</code> is 0.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>True + True</kbd>
 <samp class=pp>2</samp>
@@ -107,7 +107,7 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <li>You can explicitly coerce an <code>int</code> to a <code>float</code> by calling the <code>float()</code> function.
 <li>Unsurprisingly, you can also coerce a <code>float</code> to an <code>int</code> by calling <code>int()</code>.
 <li>The <code>int()</code> function will truncate, not round.
-<li>The <code>int()</code> function truncates negative numbers towards <code>0</code>. It&#8217;s a true truncate function, not a a floor function.
+<li>The <code>int()</code> function truncates negative numbers towards 0. It&#8217;s a true truncate function, not a a floor function.
 <li>Floating point numbers are accurate to 15 decimal places.
 <li>Integers can be arbitrarily large.
 </ol>
@@ -132,7 +132,7 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 </pre>
 <ol>
 <li>The <code>/</code> operator performs floating point division. It returns a <code>float</code> even if both the numerator and denominator are <code>int</code>s.
-<li>The <code>//</code> operator performs a quirky kind of integer division. When the result is positive, you can think of it as truncating (not rounding) to <code>0</code> decimal places, but be careful with that.
+<li>The <code>//</code> operator performs a quirky kind of integer division. When the result is positive, you can think of it as truncating (not rounding) to 0 decimal places, but be careful with that.
 <li>When integer-dividing negative numbers, the <code>//</code> operator rounds &#8220;up&#8221; to the nearest integer. Mathematically speaking, it&#8217;s rounding &#8220;down&#8221; since <code>&minus;6</code> is less than <code>&minus;5</code>, but it could trip you up if you expecting it to truncate to <code>&minus;5</code>.
 <li>The <code>//</code> operator doesn&#8217;t always return an integer. If either the numerator or denominator is a <code>float</code>, it will still round to the nearest integer, but the actual return value will be a <code>float</code>.
 <li>The <code>**</code> operator means &#8220;raised to the power of.&#8221;  <code>11<sup>2</sup></code> is <code>121</code>.
@@ -207,8 +207,8 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <samp>no, it's false</samp></pre>
 <ol>
 <li>Did you know you can define your own functions in the Python interactive shell? Just press <kbd>ENTER</kbd> at the end of each line, and <kbd>ENTER</kbd> on a blank line to finish.
-<li>In a boolean context, non-zero integers are true; <code>0</code> is false.
-<li>Non-zero floating point numbers are true; <code>0.0</code> is false. Be careful with this one! If there&#8217;s the slightest rounding error (not impossible, as you saw in the previous section) then Python will be testing <code>0.0000000000001</code> instead of <code>0</code> and will return <code>True</code>.
+<li>In a boolean context, non-zero integers are true; 0 is false.
+<li>Non-zero floating point numbers are true; <code>0.0</code> is false. Be careful with this one! If there&#8217;s the slightest rounding error (not impossible, as you saw in the previous section) then Python will be testing <code>0.0000000000001</code> instead of 0 and will return <code>True</code>.
 <li>Fractions can also be used in a boolean context. <code>Fraction(0, n)</code> is false for all values of <var>n</var>. All other fractions are true.
 </ol>
 <p class=a>&#x2042;
@@ -264,7 +264,7 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <li>You can get a part of a list, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new list containing all the items of the list, in order, starting with the first slice index (in this case <code>a_list[1]</code>), up to but not including the second slice index (in this case <code>a_list[3]</code>).
 <li>Slicing works if one or both of the slice indices is negative. If it helps, you can think of it this way: reading the list from left to right, the first slice index specifies the first item you want, and the second slice index specifies the first item you don&#8217;t want. The return value is everything in between.
 <li>Lists are zero-based, so <code>a_list[0:3]</code> returns the first three items of the list, starting at <code>a_list[0]</code>, up to but not including <code>a_list[3]</code>.
-<li>If the left slice index is <code>0</code>, you can leave it out, and <code>0</code> is implied. So <code>a_list[:3]</code> is the same as <code>a_list[0:3]</code>, because the starting <code>0</code> is implied.
+<li>If the left slice index is 0, you can leave it out, and 0 is implied. So <code>a_list[:3]</code> is the same as <code>a_list[0:3]</code>, because the starting 0 is implied.
 <li>Similarly, if the right slice index is the length of the list, you can leave it out. So <code>a_list[3:]</code> is the same as <code>a_list[3:5]</code>, because this list has five items.  There is a pleasing symmetry here. In this five-item list, <code>a_list[:3]</code> returns the first 3 items, and <code>a_list[3:]</code> returns the last two items. In fact, <code>a_list[:<var>n</var>]</code> will always return the first <var>n</var> items, and <code>a_list[<var>n</var>:]</code> will return the rest, regardless of the length of the list.
 <li>If both slice indices are left out, all items of the list are included. But this is not the same as the original <var>a_list</var> variable. It is a new list that happens to have all the same items. <code>a_list[:]</code> is shorthand for making a complete copy of a list.
 </ol>
@@ -340,7 +340,7 @@ ValueError: list.index(x): x not in list</samp></pre>
 <ol>
 <li>As you might expect, the <code>count()</code> method returns the number of occurrences of a specific value in a list.
 <li>If all you want to know is whether a value is in the list or not, the <code>in</code> operator is slightly faster than using the <code>count()</code> method. The <code>in</code> operator always returns <code>True</code> or <code>False</code>; it will not tell you where in the list the value is.
-<li>If you need to know exactly where in the list a value is, call the <code>index()</code> method. By default it will search the entire list, although you can specify a second argument of the (<code>0</code>-based) index to start from, and even a third argument of the (<code>0</code>-based) index to stop searching.
+<li>If you need to know exactly where in the list a value is, call the <code>index()</code> method. By default it will search the entire list, although you can specify a second argument of the (0-based) index to start from, and even a third argument of the (0-based) index to stop searching.
 <li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
 <li>As you might <em>not</em> expect, if the value is not found in the list, the <code>index()</code> method will raise an exception.
 </ol>
@@ -556,7 +556,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=pp>6</samp></pre>
 <ol>
 <li>The built-in <code>range()</code> function constructs a sequence of integers. (Technically, the <code>range()</code> function returns an <a href=iterators.html>iterator</a>, not a list or a tuple, but you&#8217;ll learn about that distinction later.) <var>MONDAY</var>, <var>TUESDAY</var>, <var>WEDNESDAY</var>, <var>THURSDAY</var>, <var>FRIDAY</var>, <var>SATURDAY</var>, and <var>SUNDAY</var> are the variables you&#8217;re defining. (This example came from the <code>calendar</code> module, a fun little module that prints calendars, like the <abbr>UNIX</abbr> program <code>cal</code>. The <code>calendar</code> module defines integer constants for days of the week.)
-<li>Now each variable has its value: <var>MONDAY</var> is <code>0</code>, <var>TUESDAY</var> is <code>1</code>, and so forth.
+<li>Now each variable has its value: <var>MONDAY</var> is 0, <var>TUESDAY</var> is <code>1</code>, and so forth.
 </ol>
 
 <p>You can also use multi-variable assignment to build functions that return multiple values, simply by returning a tuple of all the values. The caller can treat it as a single tuple, or it can assign the values to individual variables. Many standard Python libraries do this, including the <code>os</code> module, which you'll learn about in <a href=comprehensions.html#os>the next chapter</a>.
@@ -909,7 +909,7 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=none><code>None</code></h2>
-<p><code><dfn>None</dfn></code> is a special constant in Python. It is a <dfn>null</dfn> value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not <code>0</code>. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
+<p><code><dfn>None</dfn></code> is a special constant in Python. It is a <dfn>null</dfn> value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not 0. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
 <p><code>None</code> is the only null value. It has its own datatype (<code>NoneType</code>). You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects. All variables whose value is <code>None</code> are equal to each other.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>type(None)</kbd>

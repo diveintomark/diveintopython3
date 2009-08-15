@@ -349,7 +349,7 @@ def plural(noun, rules_filename='plural5-rules.txt'):
 <a>        yield a          <span class=u>&#x2461;</span></a>
 <a>        a, b = b, a + b  <span class=u>&#x2462;</span></a></code></pre>
 <ol>
-<li>The Fibonacci sequence is a sequence of numbers where each number is the sum of the two numbers before it. It starts with <code>0</code> and <code>1</code>, goes up slowly at first, then more and more rapidly. To start the sequence, you need two variables: <var>a</var> starts at <code>0</code>, and <var>b</var> starts at <code>1</code>.
+<li>The Fibonacci sequence is a sequence of numbers where each number is the sum of the two numbers before it. It starts with 0 and <code>1</code>, goes up slowly at first, then more and more rapidly. To start the sequence, you need two variables: <var>a</var> starts at 0, and <var>b</var> starts at <code>1</code>.
 <li><var>a</var> is the current number in the sequence, so yield it.
 <li><var>b</var> is the next number in the sequence, so assign that to <var>a</var>, but also calculate the next value (<code>a + b</code>) and assign that to <var>b</var> for later use. Note that this happens in parallel; if <var>a</var> is <code>3</code> and <var>b</var> is <code>5</code>, then <code>a, b = b, a + b</code> will set <var>a</var> to <code>5</code> (the previous value of <var>b</var>) and <var>b</var> to <code>8</code> (the sum of the previous values of <var>a</var> and <var>b</var>).
 </ol>

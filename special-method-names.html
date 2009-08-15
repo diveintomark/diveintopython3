@@ -614,7 +614,7 @@ class FieldStorage:
 <td><code class=pp>math.floor(x)</code>
 <td><a href=http://docs.python.org/3.1/library/math.html#math.floor><code>x.<dfn>__floor__</dfn>()</code></a>
 <tr><th>
-<td>truncate <code>x</code> to nearest integer toward <code>0</code>
+<td>truncate <code>x</code> to nearest integer toward 0
 <td><code class=pp>math.trunc(x)</code>
 <td><a href=http://docs.python.org/3.1/library/math.html#math.trunc><code>x.<dfn>__trunc__</dfn>()</code></a>
 <tr><th><a href=http://www.python.org/dev/peps/pep-0357/>PEP 357</a>
@@ -783,15 +783,15 @@ def __exit__(self, *args):
 <td><code class=pp>hash(x)</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__hash__><code>x.<dfn>__hash__</dfn>()</code></a>
 <tr><th>
-<td>to get an attribute&#8217;s value
+<td>to get a property&#8217;s value
 <td><code class=pp>x.color</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__get__><code>type(x).<dfn>__dict__</dfn>['color'].__get__(x, type(x))</code></a>
 <tr><th>
-<td>to set an attribute&#8217;s value
+<td>to set a property&#8217;s value
 <td><code class=pp>x.color = 'PapayaWhip'</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__set__><code>type(x).<dfn>__dict__</dfn>['color'].__set__(x, 'PapayaWhip')</code></a>
 <tr><th>
-<td>to delete an attribute
+<td>to delete a property
 <td><code class=pp>del x.color</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__delete__><code>type(x).<dfn>__dict__</dfn>['color'].__del__(x)</code></a>
 <tr><th>

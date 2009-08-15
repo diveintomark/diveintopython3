@@ -26,7 +26,7 @@ body{counter-reset:h1 9}
 <li>There is only one correct way to represent a particular number as a Roman numeral.
 <li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number (that is, it can only be interpreted one way).
 <li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <code>1</code> through <code>3999</code>. The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value should be multiplied by <code>1000</code>. For the purposes of this chapter, let&#8217;s stipulate that Roman numerals go from <code>1</code> to <code>3999</code>.
-<li>There is no way to represent <code>0</code> in Roman numerals.
+<li>There is no way to represent 0 in Roman numerals.
 <li>There is no way to represent negative numbers in Roman numerals.
 <li>There is no way to represent fractions or non-integer numbers in Roman numerals.
 </ol>
@@ -350,7 +350,7 @@ OK</samp></pre>
 
 <h2 id=romantest3>More Halting, More Fire</h2>
 
-<p>Along with testing numbers that are too large, you need to test numbers that are too small. As <a href=#divingin>we noted in our functional requirements</a>, Roman numerals cannot express <code>0</code> or negative numbers.
+<p>Along with testing numbers that are too large, you need to test numbers that are too small. As <a href=#divingin>we noted in our functional requirements</a>, Roman numerals cannot express 0 or negative numbers.
 
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import roman2</kbd>
@@ -376,7 +376,7 @@ OK</samp></pre>
 <a>        self.assertRaises(roman3.OutOfRangeError, roman3.to_roman, -1)    <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>The <code>test_too_large()</code> method has not changed since the previous step. I&#8217;m including it here to show where the new code fits.
-<li>Here&#8217;s a new test: the <code>test_zero()</code> method. Like the <code>test_too_large()</code> method, it tells the <code>assertRaises()</code> method defined in <code>unittest.TestCase</code> to call our <code>to_roman()</code> function with a parameter of <code>0</code>, and check that it raises the appropriate exception, <code>OutOfRangeError</code>.
+<li>Here&#8217;s a new test: the <code>test_zero()</code> method. Like the <code>test_too_large()</code> method, it tells the <code>assertRaises()</code> method defined in <code>unittest.TestCase</code> to call our <code>to_roman()</code> function with a parameter of 0, and check that it raises the appropriate exception, <code>OutOfRangeError</code>.
 <li>The <code>test_negative()</code> method is almost identical, except it passes <code>-1</code> to the <code>to_roman()</code> function. If either of these new tests does <em>not</em> raise an <code>OutOfRangeError</code> (either because the function returns an actual value, or because it raises some other exception), the test is considered failed.
 </ol>
 
@@ -558,7 +558,7 @@ OK</samp></pre>
 
 <h2 id=romantest5>A Pleasing Symmetry</h2>
 
-<p>Converting a string from a Roman numeral to an integer sounds more difficult than converting an integer to a Roman numeral. Certainly there is the issue of validation. It&#8217;s easy to check if an integer is greater than <code>0</code>, but a bit harder to check whether a string is a valid Roman numeral. But we already constructed <a href=regular-expressions.html#romannumerals>a regular expression to check for Roman numerals</a>, so that part is done.
+<p>Converting a string from a Roman numeral to an integer sounds more difficult than converting an integer to a Roman numeral. Certainly there is the issue of validation. It&#8217;s easy to check if an integer is greater than 0, but a bit harder to check whether a string is a valid Roman numeral. But we already constructed <a href=regular-expressions.html#romannumerals>a regular expression to check for Roman numerals</a>, so that part is done.
 
 <p>That leaves the problem of converting the string itself. As we&#8217;ll see in a minute, thanks to the rich data structure we defined to map individual Roman numerals to integer values, the nitty-gritty of the <code>from_roman()</code> function is as straightforward as the <code>to_roman()</code> function.
 
