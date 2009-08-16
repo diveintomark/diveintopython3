@@ -90,6 +90,13 @@ h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 <li>The <code>__reversed__()</code> method is uncommon. It takes an existing sequence and returns an iterator that yields the items in the sequence in reverse order, from last to first.
 </ol>
 
+<p>As you saw in <a href=iterators.html#a-fibonacci-iterator>the Iterators chapter</a>, a <code>for</code> loop can act on an iterator. In this loop:
+
+<pre class='nd pp'><code>for x in seq:
+    print(x)</code></pre>
+
+<p>Python 3 will call <code>seq.__iter__()</code> to create an iterator, then call the <code>__next__()</code> method on that iterator to get each value of <var>x</var>. When the <code>__next__()</code> method raises a <code>StopIteration</code> exception, the <code>for</code> loop ends gracefully.
+
 <h2 id=computed-attributes>Computed Attributes</h2>
 
 <table>
