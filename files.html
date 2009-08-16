@@ -6,6 +6,7 @@
 <link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 11}
+mark{display:inline}
 </style>
 <link rel=stylesheet type=text/css media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
@@ -239,25 +240,38 @@ ValueError: I/O operation on closed file.</samp>
 <a>with open('examples/favorite-people.txt', encoding='utf-8') as a_file:  <span class=u>&#x2460;</span></a>
 <a>    for a_line in a_file:                                               <span class=u>&#x2461;</span></a>
         line_number += 1
-<a>        print('{} {}'.format(line_number, a_line.rstrip()))             <span class=u>&#x2462;</span></a></code></pre>
+<a>        print('{:>4} {}'.format(line_number, a_line.rstrip()))          <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>Using <a href=#with>the <code>with</code> pattern</a>, you safely open the file and let Python close it for you.
 <li>To read a file one line at a time, use a <code>for</code> loop. That&#8217;s it. Besides having explicit methods like <code>read()</code>, <em>the stream object is also an <a href=iterators.html>iterator</a></em> which spits out a single line every time you ask for a value.
-<li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method</a>, you can print out the line number and the line itself. (The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.)
+<li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method</a>, you can print out the line number and the line itself. The format specifier <code>{:>4}</code> means &#8220;print this argument right-justified within 4 spaces.&#8221; The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.
 </ol>
 
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3$ </samp><kbd class=pp>python3 examples/oneline.py</kbd>
-<samp>1 Dora
-2 Ethan
-3 Wesley
-4 John
-5 Anne
-6 Mike
-7 Chris
-8 Sarah
-9 Alex
-10 Lizzie</samp></pre>
+<samp>   1 Dora
+   2 Ethan
+   3 Wesley
+   4 John
+   5 Anne
+   6 Mike
+   7 Chris
+   8 Sarah
+   9 Alex
+  10 Lizzie</samp></pre>
+
+<blockquote class=pf>
+<p>Did you get this error?
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3$ </samp><kbd class=pp>python3 examples/oneline.py</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "examples/oneline.py", line 4, in &lt;module>
+    print('{:>4} {}'.format(line_number, a_line.rstrip()))
+ValueError: zero length field name in format</samp></pre>
+<p>If so, you&#8217;re probably using Python 3.0. You should really upgrade to Python 3.1.
+<p>Python 3.0 supported string formatting, but only with <a href=strings.html#formatting-strings>explicitly numbered format specifiers</a>. Python 3.1 allows you to omit the argument indexes in your format specifiers. Here is the Python 3.0-compatible version for comparison:
+<pre class='pp nd'><code>print('{<mark>0</mark>:>4} {<mark>1</mark>}'.format(line_number, a_line.rstrip()))</code></pre>
+</blockquote>
 
 <p class=a>&#x2042;
 
