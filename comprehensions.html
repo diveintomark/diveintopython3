@@ -180,7 +180,7 @@ body{counter-reset:h1 3}
 
 <h3 id=abspath>Constructing Absolute Pathnames</h3>
 
-<p>In the previous example, the <code>glob.glob()</code> function returned a list of relative pathnames. The first example had pathnames like <code>'examples\feed.xml'</code>, and the second example had even shorter relative pathnames like <code>'romantest1.py'</code>. As long as you stay in the same current working directory, these relative pathnames will work for opening files or getting file metadata. But if you want to construct an absolute pathname&nbsp;&mdash;&nbsp;<i>i.e.</i> one that includes all the directory names back to the root directory or drive letter&nbsp;&mdash;&nbsp;then you&#8217;ll need the <code>os.path.realpath()</code> function.
+<p>In <a href=#osstat>the previous section</a>, the <code>glob.glob()</code> function returned a list of relative pathnames. The first example had pathnames like <code>'examples\feed.xml'</code>, and the second example had even shorter relative pathnames like <code>'romantest1.py'</code>. As long as you stay in the same current working directory, these relative pathnames will work for opening files or getting file metadata. But if you want to construct an absolute pathname&nbsp;&mdash;&nbsp;<i>i.e.</i> one that includes all the directory names back to the root directory or drive letter&nbsp;&mdash;&nbsp;then you&#8217;ll need the <code>os.path.realpath()</code> function.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os</kbd>
