@@ -501,19 +501,23 @@ C</samp>
 
 <p>Let&#8217;s take the last part first.
 
-<pre class=pp><code>
-<a>print('A')                                                                             <span class=u>&#x2460;</span></a>
-<a>with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):  <span class=u>&#x2461;</span></a>
-<a>    print('B')                                                                         <span class=u>&#x2462;</span></a>
-<a>print('C')                                                                             <span class=u>&#x2463;</span></a></code></pre>
-<ol>
-<li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
-<li>This is <a href=#with>a <code>with</code> statement</a>, which you&#8217;ve seen before. But unlike all previous example, this one doesn&#8217;t stop at <code>as a_file</code>. Instead, there&#8217;s a comma and another function call. The <code>with</code> statement can actually take <em>a comma-separated list of contexts</em>. The first is a context you&#8217;ve seen several times already: it opens a file, assigns the stream object to <var>a_file</var>, and closes the file automatically when the context ends. The second context is a custom-built context that redirects <code>sys.stdout</code> to the stream object that was created in the first context.
-<li>Because this <code>print()</code> statement is executed with the contexts created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
-<li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The first context closed the file; the second context changed <code>sys.stdout</code> back to its original value. That means that this call to the <code>print()</code> function will once again print to the screen.
-</ol>
+<pre class=pp><code>print('A')
+with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):
+    print('B')
+print('C')</code></pre>
 
-<p>Now take a look at the <code>RedirectStdoutTo</code> class. It is a custom context manager. Upon entering the context, it redirects <code>sys.stdout</code> to a given stream object. Upon exiting the context, it restores <code>sys.stdout</code> to its original value.
+<p>That&#8217;s a complicated <code>with</code> statement. Let me rewrite it as something more recognizable.
+
+<pre class=pp><code>with open('out.log', mode='w', encoding='utf-8') as a_file:
+    with RedirectStdoutTo(a_file):
+        print('B')</code></pre>
+
+<p>As the rewrite shows, you actually have <em>two</em> <code>with</code> statements, one nested within the scope of the other. The &#8220;outer&#8221; <code>with</code> statement should be familiar by now: it opens a <abbr>UTF-8</abbr>-encoded text file named <code>out.log</code> for writing and assigns the stream object to a variable named <var>a_file</var>. But that&#8217;s not the only thing odd here. 
+<pre class='nd pp'><code>with RedirectStdoutTo(a_file):</code></pre>
+
+<p>Where&#8217;s the <code>as</code> clause? The <code>with</code> statement doesn&#8217;t actually require one. Just like you can call a function and ignore its return value, you can have a <code>with</code> statement that doesn&#8217;t assign the <code>with</code> context to a variable. In this case, you&#8217;re only interested in the side effects of the <code>RedirectStdoutTo</code> context.
+
+<p>What are those side effects? Take a look inside the <code>RedirectStdoutTo</code> class. This class is a custom <a href=special-method-names.html#context-managers>context manager</a>. Any class can be a context manager by defining two <a href=iterators.html#a-fibonacci-iterator>special methods</a>: <code>__enter__()</code> and <code>__exit__()</code>.
 
 <pre class=pp><code>class RedirectStdoutTo:
 <a>    def __init__(self, out_new):    <span class=u>&#x2460;</span></a>
@@ -529,6 +533,20 @@ C</samp>
 <li>The <code>__init__()</code> method is called immediately after an instance is created. It takes one parameter, the stream object that you want to use as standard output for the life of the context. This method just saves the stream object in an instance variable so other methods can use it later.
 <li>The <code>__enter__()</code> method is a <a href=iterators.html#a-fibonacci-iterator>special class method</a>; Python calls it when entering a context (<i>i.e.</i> at the beginning of the <code>with</code> statement). This method saves the current value of <code>sys.stdout</code> in <var>self.out_old</var>, then redirects standard output by assigning <var>self.out_new</var> to <var>sys.stdout</var>.
 <li>The <code>__exit__()</code> method is another special class method; Python calls it when exiting the context (<i>i.e.</i> at the end of the <code>with</code> statement). This method restores standard output to its original value by assigning the saved <var>self.out_old</var> value to <var>sys.stdout</var>.
+</ol>
+
+<p>Putting it all together:
+
+<pre class=pp><code>
+<a>print('A')                                                                             <span class=u>&#x2460;</span></a>
+<a>with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):  <span class=u>&#x2461;</span></a>
+<a>    print('B')                                                                         <span class=u>&#x2462;</span></a>
+<a>print('C')                                                                             <span class=u>&#x2463;</span></a></code></pre>
+<ol>
+<li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
+<li>This <a href=#with><code>with</code> statement</a> takes <em>a comma-separated list of contexts</em>. The comma-separated list acts like a series of nested <code>with</code> blocks. The first context listed is the &#8220;outer&#8221; block; the last one listed is the &#8220;inner&#8221; block. The first context opens a file; the second context redirects <code>sys.stdout</code> to the stream object that was created in the first context.
+<li>Because this <code>print()</code> statement is executed with the contexts created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
+<li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The context managers form a last-in-first-out stack. Upon exiting, the second context changed <code>sys.stdout</code> back to its original value, then the first context closed the file named <code>out.log</code>. Since standard out has been restored to its original value, calling the <code>print()</code> function will once again print to the screen.
 </ol>
 
 <p>Redirecting standard error works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
