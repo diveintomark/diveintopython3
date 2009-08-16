@@ -65,9 +65,9 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 </blockquote>
 
-<h3 id=file-objects>File Objects</h3>
+<h3 id=file-objects>Stream Objects</h3>
 
-<p>So far, all we know is that Python has a built-in function called <code>open()</code>. The <code>open()</code> function returns a <i>file object</i>, which has methods and attributes for getting information about and manipulating the file.
+<p>So far, all we know is that Python has a built-in function called <code>open()</code>. The <code>open()</code> function returns a <i>stream object</i>, which has methods and attributes for getting information about and manipulating a stream of characters.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_file = open('examples/chinese.txt', encoding='utf-8')</kbd>
@@ -98,7 +98,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <a><samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>                                            <span class=u>&#x2461;</span></a>
 <samp class=pp>''</samp></pre>
 <ol>
-<li>Once you open a file (with the correct encoding), reading from it is just a matter of calling the file object&#8217;s <code>read()</code> method. The result is a string.
+<li>Once you open a file (with the correct encoding), reading from it is just a matter of calling the stream object&#8217;s <code>read()</code> method. The result is a string.
 <li>Perhaps somewhat surprisingly, reading the file again does not raise an exception. Python does not consider reading past end-of-file to be an error; it simply returns an empty string.
 </ol>
 
@@ -119,7 +119,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <a><samp class=p>>>> </samp><kbd class=pp>a_file.tell()</kbd>                      <span class=u>&#x2464;</span></a>
 <samp class=pp>20</samp></pre>
 <ol>
-<li>Since you&#8217;re still at the end of the file, further calls to the file object&#8217;s <code>read()</code> method simply return an empty string.
+<li>Since you&#8217;re still at the end of the file, further calls to the stream object&#8217;s <code>read()</code> method simply return an empty string.
 <li>The <code>seek()</code> method moves to a specific byte position in a file.
 <li>The <code>read()</code> method can take an optional parameter, the number of characters to read.
 <li>If you like, you can even read one character at a time.
@@ -171,7 +171,7 @@ UnicodeDecodeError: 'utf8' codec can't decode byte 0x98 in position 0: unexpecte
 
 <p>Well <em>that</em> was anticlimactic.
 
-<p>The file object <var>a_file</var> still exists; calling its <code>close()</code> method doesn&#8217;t destroy the object itself. But it&#8217;s not terribly useful.
+<p>The stream object <var>a_file</var> still exists; calling its <code>close()</code> method doesn&#8217;t destroy the object itself. But it&#8217;s not terribly useful.
 
 <pre class=screen>
 # continued from the previous example
@@ -197,13 +197,13 @@ ValueError: I/O operation on closed file.</samp>
 <li>You can&#8217;t read from a closed file; that raises an <code>IOError</code> exception.
 <li>You can&#8217;t seek in a closed file either.
 <li>There&#8217;s no current position in a closed file, so the <code>tell()</code> method also fails.
-<li>Perhaps surprisingly, calling the <code>close()</code> method on a file object whose file has been closed does <em>not</em> raise an exception. It&#8217;s just a no-op.
-<li>Closed file objects do have one useful attribute: the <code>closed</code> attribute will confirm that the file is closed.
+<li>Perhaps surprisingly, calling the <code>close()</code> method on a stream object whose file has been closed does <em>not</em> raise an exception. It&#8217;s just a no-op.
+<li>Closed stream objects do have one useful attribute: the <code>closed</code> attribute will confirm that the file is closed.
 </ol>
 
 <h3 id=with>Closing Files Automatically</h3>
 
-<p>File objects have an explicit <code>close()</code> method, but what happens if your code has a bug and crashes before you call <code>close()</code>? That file could theoretically stay open for much longer than necessary. While you&#8217;re debugging on your local computer, that&#8217;s not a big deal. On a production server, maybe it is.
+<p>Stream objects have an explicit <code>close()</code> method, but what happens if your code has a bug and crashes before you call <code>close()</code>? That file could theoretically stay open for much longer than necessary. While you&#8217;re debugging on your local computer, that&#8217;s not a big deal. On a production server, maybe it is.
 
 <p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 3 also adds a cleaner solution: the <code>with</code> statement.
 
@@ -212,15 +212,15 @@ ValueError: I/O operation on closed file.</samp>
     a_character = a_file.read(1)
     print(a_character)</code></pre>
 
-<p>This code calls <code>open()</code>, but it never calls <code>a_file.close()</code>. The <code>with</code> statement starts a code block, like an <code>if</code> statement or a <code>for</code> loop. Inside this code block, you can use the variable <var>a_file</var> as the file object returned from the call to <code>open()</code>. All the regular file object methods are available&nbsp;&mdash;&nbsp;<code>seek()</code>, <code>read()</code>, whatever you need. When the <code>with</code> block ends, <em>Python calls <code>a_file.close()</code> automatically</em>.
+<p>This code calls <code>open()</code>, but it never calls <code>a_file.close()</code>. The <code>with</code> statement starts a code block, like an <code>if</code> statement or a <code>for</code> loop. Inside this code block, you can use the variable <var>a_file</var> as the stream object returned from the call to <code>open()</code>. All the regular stream object methods are available&nbsp;&mdash;&nbsp;<code>seek()</code>, <code>read()</code>, whatever you need. When the <code>with</code> block ends, <em>Python calls <code>a_file.close()</code> automatically</em>.
 
 <p>Here&#8217;s the kicker: no matter how or when you exit the <code>with</code> block, Python will close that file&hellip; even if you &#8220;exit&#8221; it via an unhandled exception. That&#8217;s right, even if your code raises an exception and your entire program comes to a screeching halt, that file will get closed. Guaranteed.
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>In technical terms, the <code>with</code> statement creates a <dfn>runtime context</dfn>. In these examples, the file object acts as a <dfn>context manager</dfn>. Python creates the file object <var>a_file</var> and tells it that it is entering a runtime context. When the <code>with</code> code block is completed, Python tells the file object that it is exiting the runtime context, and the file object calls its own <code>close()</code> method. See <a href=special-method-names.html#context-managers>Appendix B, &#8220;Context Managers&#8221;</a> for details.
+<p><span class=u>&#x261E;</span>In technical terms, the <code>with</code> statement creates a <dfn>runtime context</dfn>. In these examples, the stream object acts as a <dfn>context manager</dfn>. Python creates the stream object <var>a_file</var> and tells it that it is entering a runtime context. When the <code>with</code> code block is completed, Python tells the stream object that it is exiting the runtime context, and the stream object calls its own <code>close()</code> method. See <a href=special-method-names.html#context-managers>Appendix B, &#8220;Context Managers&#8221;</a> for details.
 </blockquote>
 
-<p>There&#8217;s nothing file-specific about the <code>with</code> statement; it&#8217;s just a generic framework for creating runtime contexts and telling objects that they&#8217;re entering and exiting a runtime context. If the object in question is a file object, then it does useful file-like things (like closing the file automatically). But that behavior is defined in the file object, not in the <code>with</code> statement. There are lots of other ways to use context managers that have nothing to do with files. You can even create your own, as you&#8217;ll see later in this chapter.
+<p>There&#8217;s nothing file-specific about the <code>with</code> statement; it&#8217;s just a generic framework for creating runtime contexts and telling objects that they&#8217;re entering and exiting a runtime context. If the object in question is a stream object, then it does useful file-like things (like closing the file automatically). But that behavior is defined in the stream object, not in the <code>with</code> statement. There are lots of other ways to use context managers that have nothing to do with files. You can even create your own, as you&#8217;ll see later in this chapter.
 
 <h3 id=for>Reading Data One Line At A Time</h3>
 
@@ -242,7 +242,7 @@ ValueError: I/O operation on closed file.</samp>
 <a>        print('{} {}'.format(line_number, a_line.rstrip()))             <span class=u>&#x2462;</span></a></code></pre>
 <ol>
 <li>Using <a href=#with>the <code>with</code> pattern</a>, you safely open the file and let Python close it for you.
-<li>To read a file one line at a time, use a <code>for</code> loop. That&#8217;s it. Besides having explicit methods like <code>read()</code>, <em>the file object is also an <a href=iterators.html>iterator</a></em> which spits out a single line every time you ask for a value.
+<li>To read a file one line at a time, use a <code>for</code> loop. That&#8217;s it. Besides having explicit methods like <code>read()</code>, <em>the stream object is also an <a href=iterators.html>iterator</a></em> which spits out a single line every time you ask for a value.
 <li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method</a>, you can print out the line number and the line itself. (The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.)
 </ol>
 
@@ -263,7 +263,7 @@ ValueError: I/O operation on closed file.</samp>
 
 <h2 id=writing>Writing to Text Files</h2>
 
-<p>You can write to files in much the same way that you read from them. First you open a file and get a file object, then you use methods on the file object to write data to the file, then you close the file.
+<p>You can write to files in much the same way that you read from them. First you open a file and get a stream object, then you use methods on the stream object to write data to the file, then you close the file.
 
 <p>To open a file for writing, use the <code>open()</code> method and specify the write mode. There are two file modes for writing:
 
@@ -274,7 +274,7 @@ ValueError: I/O operation on closed file.</samp>
 
 <p>Either mode will create the file automatically if it doesn&#8217;t already exist, so there&#8217;s never a need for any sort of fiddly &#8220;if the file doesn&#8217;t exist yet, create a new empty file just so you can open it for the first time&#8221; function. Just open a file and start writing.
 
-<p>You should always close a file as soon as you&#8217;re done writing to it, to release the file handle and ensure that the data is actually written to disk. As with reading data from a file, you can call the file object&#8217;s <code>close()</code> method, or you can use the <code>with</code> statement and let Python close the file for you. I bet you can guess which technique I recommend.
+<p>You should always close a file as soon as you&#8217;re done writing to it, to release the file handle and ensure that the data is actually written to disk. As with reading data from a file, you can call the stream object&#8217;s <code>close()</code> method, or you can use the <code>with</code> statement and let Python close the file for you. I bet you can guess which technique I recommend.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>with open('test.log', mode='w', encoding='utf-8') as a_file:</kbd>  <span class=u>&#x2460;</span></a>
@@ -289,7 +289,7 @@ ValueError: I/O operation on closed file.</samp>
 <a><samp class=pp>test succeededand again</samp>                                           <span class=u>&#x2463;</span></a></pre>
 <ol>
 <li>You start boldly by creating the new file <code>test.log</code> (or overwriting the existing file), and opening the file for writing. The <code>mode='w'</code> parameter means open the file for writing. Yes, that&#8217;s all as dangerous as it sounds. I hope you didn&#8217;t care about the previous contents of that file (if any), because that data is gone now.
-<li>You can add data to the newly opened file with the <code>write</code> method of the file object returned by the <code>open()</code> function. After the <code>with</code> block ends, Python automatically closes the file.
+<li>You can add data to the newly opened file with the <code>write</code> method of the stream object returned by the <code>open()</code> function. After the <code>with</code> block ends, Python automatically closes the file.
 <li>That was so fun, let&#8217;s do it again. But this time, with <code>mode='a'</code> to append to the file instead of overwriting it. Appending will <em>never</em> harm the existing contents of the file.
 <li>Both the original line you wrote and the second line you appended are now in the file <code>test.log</code>. Also note that carriage returns are not included. Since you didn&#8217;t write them explicitly to the file either time, the file doesn&#8217;t include them. You can write a carriage return with the <code>'\n'</code> character. Since you didn&#8217;t do this, everything you wrote to the file ended up on one line.
 </ol>
@@ -317,10 +317,10 @@ ValueError: I/O operation on closed file.</samp>
   File "&lt;stdin>", line 1, in &lt;module>
 AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></pre>
 <ol>
-<li>Opening a file in binary mode is simple but subtle. The only difference from opening it in text mode is that the <code>mode</code> parameter contains a <code>'b'</code>.
-<li>The file object you get from opening a file in binary mode has many of the same attributes, including <code>mode</code>, which reflects the <code>mode</code> parameter you passed into the <code>open()</code> function.
-<li>File objects for binary files also have a <code>name</code> attribute, just like file objects for text files.
-<li>Here&#8217;s one difference, though: the file object for a binary file has no <code>encoding</code> attribute. That makes sense, right? You&#8217;re reading (or writing) bytes, not strings, so there&#8217;s no conversion for Python to do. What you get out of a binary file is exactly what you put into it, no conversion necessary.
+<li>Opening a file in binary mode is simple but subtle. The only difference from opening it in text mode is that the <code>mode</code> parameter contains a <code>'b'</code> character.
+<li>The stream object you get from opening a file in binary mode has many of the same attributes, including <code>mode</code>, which reflects the <code>mode</code> parameter you passed into the <code>open()</code> function.
+<li>Binary stream objects also have a <code>name</code> attribute, just like text stream objects.
+<li>Here&#8217;s one difference, though: a binary stream object has no <code>encoding</code> attribute. That makes sense, right? You&#8217;re reading (or writing) bytes, not strings, so there&#8217;s no conversion for Python to do. What you get out of a binary file is exactly what you put into it, no conversion necessary.
 </ol>
 
 <p>Did I mention you&#8217;re reading bytes? Oh yes you are.
@@ -349,15 +349,13 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 
 <p class=a>&#x2042;
 
-<h2 id=file-like-objects>File-like Objects</h2>
+<h2 id=file-like-objects>Streams Objects From Non-File Sources</h2>
 
-<p>One of Python&#8217;s greatest strengths is its dynamic binding, and one powerful use of dynamic binding is the <dfn>file-like object</dfn>.
+<p>Imagine you&#8217;re writing a library, and one of your library functions is going to read some data from a file. The function could simply take a filename as a string, go open the file for reading, read it, and close it before exiting. But you shouldn&#8217;t do that.. Instead, your <abbr>API</abbr> should take <em>an arbitrary stream object</em>.
 
-<p>Your functions which require an input source could simply take a filename as a string, go open the file for reading, read it, and close it when they&#8217;re done. But they shouldn&#8217;t. Instead, they should take a <em>file-like object</em>.
+<p>In the simplest case, a stream object is anything with a <code>read()</code> method which takes an optional <var>size</var> parameter and returns a string. When called with no <var>size</var> parameter, the <code>read()</code> method should read everything there is to read from the input source and return all the data as a single value. When called with a <var>size</var> parameter, it reads that much from the input source and returns that much data. When called again, it picks up where it left off and returns the next chunk of data.
 
-<p>In the simplest case, a <em>file-like object</em> is any object with a <code>read()</code> method with an optional <var>size</var> parameter, which returns a string. When called with no <var>size</var> parameter, it reads everything there is to read from the input source and returns all the data as a single string. When called with a <var>size</var> parameter, it reads that much from the input source and returns that much data. When called again, it picks up where it left off and returns the next chunk of data.
-
-<p>You know, like a real file object. The difference is that you&#8217;re not limiting yourself to real files. The input source that&#8217;s being &#8220;read&#8221; could be anything: a web page, a string in memory, even the output of another program. As long as your functions take a file-like object and simply call the object&#8217;s <code>read()</code> method, you can handle any input source that acts like a file, without specific code to handle each kind of input.
+<p>That sounds exactly like the stream object you get from opening a real file. The difference is that <em>you&#8217;re not limiting yourself to real files</em>. The input source that&#8217;s being &#8220;read&#8221; could be anything: a web page, a string in memory, even the output of another program. As long as your functions take a stream object and simply call the object&#8217;s <code>read()</code> method, you can handle any input source that acts like a file, without specific code to handle each kind of input.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_string = 'PapayaWhip is the new black.'</kbd>
@@ -379,7 +377,7 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <samp class=pp>'new black.'</samp></pre>
 <ol>
 <li>The <code>io</code> module contains the definition of the <code>StringIO</code> class that you can use to treat a string in memory as a file.
-<li>To create a file-like object out of a string, create an instance of the <code>io.StringIO()</code> class and pass it the string you want to use as your &#8220;file&#8221; data. Now you have a file-like object, and you can do all sorts of file-like things with it.
+<li>To create a stream object out of a string, create an instance of the <code>io.StringIO()</code> class and pass it the string you want to use as your &#8220;file&#8221; data. Now you have a stream object, and you can do all sorts of stream-like things with it.
 <li>Calling the <code>read()</code> method &#8220;reads&#8221; the entire &#8220;file,&#8221; which in the case of a <code>StringIO</code> object simply returns the original string.
 <li>Just like a real file, calling the <code>read()</code> method again returns an empty string.
 <li>You can explicitly seek to the beginning of the string, just like seeking through a real file, by using the <code>seek()</code> method of the <code>StringIO</code> object.
@@ -388,9 +386,9 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 
 <h3 id=gzip>Handling Compressed Files</h3>
 
-<p>The Python standard library contains modules that support reading and writing compressed files. There are a number of different compression schemes; the most popular for single files are <a href=http://docs.python.org/3.1/library/gzip.html>gzip</a> and <a href=http://docs.python.org/3.1/library/bz2.html>bzip2</a>. (You may have also encountered <a href=http://docs.python.org/3.1/library/zipfile.html>PKZIP archives</a> and <a href=http://docs.python.org/3.1/library/tarfile.html>GNU Tar archives</a>. Python has modules for those, too.)
+<p>The Python standard library contains modules that support reading and writing compressed files. There are a number of different compression schemes; the two most popular on non-Windows systems are <a href=http://docs.python.org/3.1/library/gzip.html>gzip</a> and <a href=http://docs.python.org/3.1/library/bz2.html>bzip2</a>. (You may have also encountered <a href=http://docs.python.org/3.1/library/zipfile.html>PKZIP archives</a> and <a href=http://docs.python.org/3.1/library/tarfile.html>GNU Tar archives</a>. Python has modules for those, too.)
 
-<p>The <code>gzip</code> module lets you create a file-like object for reading or writing a gzip-compressed file. The file-like object it gives you supports the <code>read()</code> method (if you opened it for reading) or the <code>write()</code> method (if you opened it for writing). That means you can use the methods you&#8217;ve already learned for regular files to <em>directly read or write a gzip-compressed file</em>, without creating a temporary file to store the decompressed data.
+<p>The <code>gzip</code> module lets you create a stream object for reading or writing a gzip-compressed file. The stream object it gives you supports the <code>read()</code> method (if you opened it for reading) or the <code>write()</code> method (if you opened it for writing). That means you can use the methods you&#8217;ve already learned for regular files to <em>directly read or write a gzip-compressed file</em>, without creating a temporary file to store the decompressed data.
 
 <p>As an added bonus, it supports the <code>with</code> statement too, so you can let Python automatically close your gzip-compressed file when you&#8217;re done with it.
 
@@ -432,11 +430,11 @@ PapayaWhip</samp>
 <samp>new blacknew blacknew black</samp></pre>
 <ol>
 <li>The <code>print()</code> statement, in a loop. Nothing surprising here.
-<li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>file-like object</a>. Calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
+<li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>stream object</a>. Calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
 <li>In the simplest case, <code>sys.stdout</code> and <code>sys.stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you&#8217;re in one), or the terminal (if you&#8217;re running Python from the command line). Like standard output, standard error does not add carriage returns for you. If you want carriage returns, you&#8217;ll need to write carriage return characters.
 </ol>
 
-<p><code>sys.stdout</code> and <code>sys.stderr</code> are file-like objects, but they are write-only. Attempting to call their <code>read()</code> method will always raise an <code>IOError</code>.
+<p><code>sys.stdout</code> and <code>sys.stderr</code> are stream objects, but they are write-only. Attempting to call their <code>read()</code> method will always raise an <code>IOError</code>.
 
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
@@ -447,7 +445,7 @@ IOError: not readable</samp></pre>
 
 <h3 id=redirect>Redirecting Standard Output</h3>
 
-<p>So <code>sys.stdout</code> and <code>sys.stderr</code> are file-like objects, albeit ones that only support writing. But they&#8217;re not constants; they&#8217;re variables. That means you can assign them a new value&nbsp;&mdash;&nbsp;another file object, or another file-like object&nbsp;&mdash;&nbsp;and redirect their output.
+<p><code>sys.stdout</code> and <code>sys.stderr</code> are stream objects, albeit ones that only support writing. But they&#8217;re not constants; they&#8217;re variables. That means you can assign them a new value&nbsp;&mdash;&nbsp;any other stream object&nbsp;&mdash;&nbsp;to redirect their output.
 
 <p class=d>[<a href=examples/stdout.py>download <code>stdout.py</code></a>]
 <pre class=pp><code>import sys
@@ -486,12 +484,12 @@ C</samp>
 <a>print('C')                                                                             <span class=u>&#x2463;</span></a></code></pre>
 <ol>
 <li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
-<li>This is <a href=#with>a <code>with</code> statement</a>, which you&#8217;ve seen before. But unlike all previous example, this one doesn&#8217;t stop at <code>as a_file</code>. Instead, there&#8217;s a comma and another function call. The <code>with</code> statement can actually take <em>a comma-separated list of contexts</em>. The first is a context you&#8217;ve seen several times already: it opens a file, assigns the file object to <var>a_file</var>, and closes the file automatically when the context ends. The second context is a custom-built context that redirects <code>sys.stdout</code> to the file object that was created in the first context.
+<li>This is <a href=#with>a <code>with</code> statement</a>, which you&#8217;ve seen before. But unlike all previous example, this one doesn&#8217;t stop at <code>as a_file</code>. Instead, there&#8217;s a comma and another function call. The <code>with</code> statement can actually take <em>a comma-separated list of contexts</em>. The first is a context you&#8217;ve seen several times already: it opens a file, assigns the stream object to <var>a_file</var>, and closes the file automatically when the context ends. The second context is a custom-built context that redirects <code>sys.stdout</code> to the stream object that was created in the first context.
 <li>Because this <code>print()</code> statement is executed with the contexts created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
 <li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The first context closed the file; the second context changed <code>sys.stdout</code> back to its original value. That means that this call to the <code>print()</code> function will once again print to the screen.
 </ol>
 
-<p>Now take a look at the <code>RedirectStdoutTo</code> class. It is a custom context manager. Upon entering the context, it redirects <code>sys.stdout</code> to a given file-like object. Upon exiting the context, it restores <code>sys.stdout</code> to its original value.
+<p>Now take a look at the <code>RedirectStdoutTo</code> class. It is a custom context manager. Upon entering the context, it redirects <code>sys.stdout</code> to a given stream object. Upon exiting the context, it restores <code>sys.stdout</code> to its original value.
 
 <pre class=pp><code>class RedirectStdoutTo:
 <a>    def __init__(self, out_new):    <span class=u>&#x2460;</span></a>
@@ -504,7 +502,7 @@ C</samp>
 <a>    def __exit__(self, *args):      <span class=u>&#x2462;</span></a>
         sys.stdout = self.out_old</code></pre>
 <ol>
-<li>The <code>__init__()</code> method is called immediately after an instance is created. It takes one parameter, the file-like object that you want to use as standard output for the life of the context. This method just saves the file-like object in an instance variable so other methods can use it later.
+<li>The <code>__init__()</code> method is called immediately after an instance is created. It takes one parameter, the stream object that you want to use as standard output for the life of the context. This method just saves the stream object in an instance variable so other methods can use it later.
 <li>The <code>__enter__()</code> method is a <a href=iterators.html#a-fibonacci-iterator>special class method</a>; Python calls it when entering a context (<i>i.e.</i> at the beginning of the <code>with</code> statement). This method saves the current value of <code>sys.stdout</code> in <var>self.out_old</var>, then redirects standard output by assigning <var>self.out_new</var> to <var>sys.stdout</var>.
 <li>The <code>__exit__()</code> method is another special class method; Python calls it when exiting the context (<i>i.e.</i> at the end of the <code>with</code> statement). This method restores standard output to its original value by assigning the saved <var>self.out_old</var> value to <var>sys.stdout</var>.
 </ol>
@@ -518,7 +516,7 @@ C</samp>
 <ul>
 <li><a href=http://docs.python.org/tutorial/inputoutput.html#reading-and-writing-files>Reading and writing files</a> in the Python.org tutorial
 <li><a href=http://docs.python.org/3.1/library/io.html><code>io</code> module</a>
-<li><a href=http://docs.python.org/3.1/library/stdtypes.html#file-objects>File objects</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#file-objects>Stream objects</a>
 <li><a href=http://docs.python.org/3.1/library/stdtypes.html#context-manager-types>Context manager types</a>
 <li><a href=http://docs.python.org/3.1/library/sys.html#sys.stdout><code>sys.stdout</code> and <code>sys.stderr</code></a>
 <li><a href=http://en.wikipedia.org/wiki/Filesystem_in_Userspace><abbr>FUSE</abbr> on Wikipedia</a>
