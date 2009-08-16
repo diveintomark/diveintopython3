@@ -414,16 +414,22 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <samp class=p>you@localhost:~$ </samp><kbd>python3</kbd>
 
 <samp class=p>>>> </samp><kbd class=pp>import gzip</kbd>
-<samp class=p>>>> </samp><kbd class=pp>with gzip.open('out.log.gz', mode='wb') as z_file:</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>with gzip.open('out.log.gz', mode='wb') as z_file:</kbd>                                      <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp><kbd class=pp>  z_file.write('A nine mile walk is no joke, especially in the rain.'.encode('utf-8'))</kbd>
 <samp class=p>... </samp>
 <samp class=p>>>> </samp><kbd class=pp>exit()</kbd>
 
-<samp class=p>you@localhost:~$ </samp><kbd>ls -l out.log.gz</kbd>
+<a><samp class=p>you@localhost:~$ </samp><kbd>ls -l out.log.gz</kbd>                                                           <span class=u>&#x2461;</span></a>
 <samp>-rw-r--r--  1 mark mark    79 2009-07-19 14:29 out.log.gz</samp>
-<samp class=p>you@localhost:~$ </samp><kbd>gunzip out.log.gz</kbd>
-<samp class=p>you@localhost:~$ </samp><kbd>cat out.log</kbd>
+<a><samp class=p>you@localhost:~$ </samp><kbd>gunzip out.log.gz</kbd>                                                          <span class=u>&#x2462;</span></a>
+<a><samp class=p>you@localhost:~$ </samp><kbd>cat out.log</kbd>                                                                <span class=u>&#x2463;</span></a>
 <samp>A nine mile walk is no joke, especially in the rain.</samp></pre>
+<ol>
+<li>You should always open gzipped files in binary mode. (Note the <code>'b'</code> character in the <code>mode</code> argument.)
+<li>I constructed this example on Linux. If you&#8217;re not familiar with the command line, this command is showing the &#8220;long listing&#8221; of the gzip-compressed file you just created in the Python Shell. This listing shows that the file exists (good), and that it is 79 bytes long. That&#8217;s actually larger than the string you started with! The gzip file format includes a fixed-length header that contains some metadata about the file, so it&#8217;s inefficient for extremely small files.
+<li>The <code>gunzip</code> command (pronounced &#8220;gee-unzip&#8221;) decompresses the file and stores the contents in a new file named the same as the compressed file but without the <code>.gz</code> file extension.
+<li>The <code>cat</code> command displays the contents of a file. This file contains the string you originally wrote directly to the compressed file <code>out.log.gz</code> from within the Python Shell.
+</ol>
 
 <p class=a>&#x2042;
 
