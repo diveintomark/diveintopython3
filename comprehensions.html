@@ -180,13 +180,13 @@ body{counter-reset:h1 3}
 
 <h3 id=abspath>Constructing Absolute Pathnames</h3>
 
-<p>In the previous example, the <code>glob.glob()</code> function returned a list of relative pathnames. The first example had pathnames like <code>'examples\feed.xml'</code>, and the second example had even shorter relative pathnames like <code>'romantest1.py'</code>. As long as you stay in the same current working directory, these relative pathnames will work for opening files or getting file metadata. But if you want to construct an absolute pathname&nbsp;&mdash;&nbsp;<i>i.e.</i> one that includes all the directory names back to the root directory or drive letter&nbsp;&mdash;&nbsp;then you&#8217;ll need the <code>os.path.abspath()</code> function.
+<p>In the previous example, the <code>glob.glob()</code> function returned a list of relative pathnames. The first example had pathnames like <code>'examples\feed.xml'</code>, and the second example had even shorter relative pathnames like <code>'romantest1.py'</code>. As long as you stay in the same current working directory, these relative pathnames will work for opening files or getting file metadata. But if you want to construct an absolute pathname&nbsp;&mdash;&nbsp;<i>i.e.</i> one that includes all the directory names back to the root directory or drive letter&nbsp;&mdash;&nbsp;then you&#8217;ll need the <code>os.path.realpath()</code> function.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os</kbd>
 <samp class=p>>>> </samp><kbd class=pp>print(os.getcwd())</kbd>
 <samp class=pp>c:\Users\pilgrim\diveintopython3\examples</samp>
-<samp class=p>>>> </samp><kbd class=pp>print(os.path.abspath('feed.xml'))</kbd>
+<samp class=p>>>> </samp><kbd class=pp>print(os.path.realpath('feed.xml'))</kbd>
 <samp class=pp>c:\Users\pilgrim\diveintopython3\examples\feed.xml</samp></pre>
 
 <h2 id=listcomprehension>List Comprehensions</h2>
@@ -212,9 +212,9 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>                                <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>glob.glob('*.xml')</kbd>                                 <span class=u>&#x2460;</span></a>
 <samp class=pp>['feed-broken.xml', 'feed-ns0.xml', 'feed.xml']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>[os.path.abspath(f) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>[os.path.realpath(f) for f in glob.glob('*.xml')]</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>['c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml',
  'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml']</samp>
@@ -244,7 +244,7 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>[(os.stat(f).st_size, os.path.abspath(f)) for f in glob.glob('*.xml')]</kbd>             <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>[(os.stat(f).st_size, os.path.realpath(f)) for f in glob.glob('*.xml')]</kbd>            <span class=u>&#x2460;</span></a>
 <samp class=pp>[(3074, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-broken.xml'),
  (3386, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed-ns0.xml'),
  (3070, 'c:\\Users\\pilgrim\\diveintopython3\\examples\\feed.xml')]</samp>
@@ -254,7 +254,7 @@ body{counter-reset:h1 3}
  ('3.3 KiB', 'feed-ns0.xml'),
  ('3.0 KiB', 'feed.xml')]</samp></pre>
 <ol>
-<li>This list comprehension finds all the <code>.xml</code> files in the current working directory, gets the size of each file (by calling the <code>os.stat()</code> function), and constructs a tuple of the file size and the absolute path of each file (by calling the <code>os.path.abspath()</code> function).
+<li>This list comprehension finds all the <code>.xml</code> files in the current working directory, gets the size of each file (by calling the <code>os.stat()</code> function), and constructs a tuple of the file size and the absolute path of each file (by calling the <code>os.path.realpath()</code> function).
 <li>This comprehension builds on the previous one to call the <a href=your-first-python-program.html#divingin><code>approximate_size()</code> function</a> with the file size of each <code>.xml</code> file.
 </ol>
 
