@@ -120,6 +120,11 @@ p, ul, ol {
   margin: 1.75em 0;
   font-size: medium;
 }
+sup {
+  text-transform: uppercase;
+  vertical-align: text-top;
+  padding-left: 1px;
+}
 
 /* basics */
 
