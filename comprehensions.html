@@ -77,9 +77,9 @@ body{counter-reset:h1 3}
 <samp>c:\Users\pilgrim\diveintopython3\examples\humansize.py</samp></pre>
 <ol>
 <li>The <code>os.path.join()</code> function constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings.
-<li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since <code>addSlashIfNecessary()</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
+<li>In this slightly less trivial case, <code>join</code> will add an extra slash to the pathname before joining it to the filename. It&#8217;s a backslash instead of a forward slash, because I constructed this example on Windows. If you replicate this example on Linux or Mac OS X, you&#8217;ll see a forward slash instead. Python can access the file regardless of what kind of slashes you use in the pathname.
 <li>The <code>os.path.expanduser()</code> function will expand a pathname that uses <code>~</code> to represent the current user&#8217;s home directory. This works on any platform where users have a home directory, including Linux, Mac OS X, and Windows. The returned path does not have a trailing slash, but the <code>os.path.join()</code> function doesn&#8217;t mind.
-<li>Combining these techniques, you can easily construct pathnames for directories and files in the user&#8217;s home directory. The <code>os.path.join()</code> function can take any number of arguments.
+<li>Combining these techniques, you can easily construct pathnames for directories and files in the user&#8217;s home directory. The <code>os.path.join()</code> function can take any number of arguments. I was overjoyed when I discovered this, since <code>addSlashIfNecessary()</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
 </ol>
 
 <p><code>os.path</code> also contains functions to split full pathnames, directory names, and filenames into their constituent parts.
