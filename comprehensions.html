@@ -78,8 +78,8 @@ body{counter-reset:h1 3}
 <ol>
 <li>The <code>os.path.join()</code> function constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings.
 <li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since <code>addSlashIfNecessary()</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
-<li>The <code>os.path.expanduser()</code> function will expand a pathname that uses <code>~</code> to represent the current user&#8217;s home directory. This works on any platform where users have a home directory, including Linux, Mac OS X, and Windows.
-<li>Combining these techniques, you can easily construct pathnames for directories and files under the user&#8217;s home directory.
+<li>The <code>os.path.expanduser()</code> function will expand a pathname that uses <code>~</code> to represent the current user&#8217;s home directory. This works on any platform where users have a home directory, including Linux, Mac OS X, and Windows. The returned path does not have a trailing slash, but the <code>os.path.join()</code> function doesn&#8217;t mind.
+<li>Combining these techniques, you can easily construct pathnames for directories and files in the user&#8217;s home directory. The <code>os.path.join()</code> function can take any number of arguments.
 </ol>
 
 <p><code>os.path</code> also contains functions to split full pathnames, directory names, and filenames into their constituent parts.
@@ -99,8 +99,8 @@ body{counter-reset:h1 3}
 <samp class=p>>>> </samp><kbd class=pp>extension</kbd>
 <samp class=pp>'.py'</samp></pre>
 <ol>
-<li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename. Remember when I said you could use <a href=native-datatypes.html#multivar>multi-variable assignment</a> to return multiple values from a function? The <code>os.path.split()</code> function does exactly that.
-<li>You assign the return value of the <code>split</code> function into a tuple of two variables. Each variable receives the value of the corresponding element of the returned tuple.
+<li>The <code>split</code> function splits a full pathname and returns a tuple containing the path and filename.
+<li>Remember when I said you could use <a href=native-datatypes.html#multivar>multi-variable assignment</a> to return multiple values from a function? The <code>os.path.split()</code> function does exactly that. You assign the return value of the <code>split</code> function into a tuple of two variables. Each variable receives the value of the corresponding element of the returned tuple.
 <li>The first variable, <var>dirname</var>, receives the value of the first element of the tuple returned from the <code>os.path.split()</code> function, the file path.
 <li>The second variable, <var>filename</var>, receives the value of the second element of the tuple returned from the <code>os.path.split()</code> function, the filename.
 <li><code>os.path</code> also contains the <code>os.path.splitext()</code> function, which splits a filename and returns a tuple containing the filename and the file extension.  You use the same technique to assign each of them to separate variables.
