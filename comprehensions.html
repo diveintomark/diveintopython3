@@ -68,13 +68,13 @@ body{counter-reset:h1 3}
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join('/Users/pilgrim/diveintopython3/examples/', 'humansize.py'))</kbd>              <span class=u>&#x2460;</span></a>
-<samp class=pp>/Users/pilgrim/diveintopython3/examples/humansize.py</samp>
+<samp>/Users/pilgrim/diveintopython3/examples/humansize.py</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join('/Users/pilgrim/diveintopython3/examples', 'humansize.py'))</kbd>               <span class=u>&#x2461;</span></a>
-<samp class=pp>/Users/pilgrim/diveintopython3/examples\humansize.py</samp>
+<samp>/Users/pilgrim/diveintopython3/examples\humansize.py</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.path.expanduser('~'))</kbd>                                                               <span class=u>&#x2462;</span></a>
-<samp class=pp>c:\Users\pilgrim</samp>
+<samp>c:\Users\pilgrim</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>print(os.path.join(os.path.expanduser('~'), 'diveintopython3', 'examples', 'humansize.py'))</kbd>  <span class=u>&#x2463;</span></a>
-<samp class=pp>c:\Users\pilgrim\diveintopython3\examples\humansize.py</samp></pre>
+<samp>c:\Users\pilgrim\diveintopython3\examples\humansize.py</samp></pre>
 <ol>
 <li>The <code>os.path.join()</code> function constructs a pathname out of one or more partial pathnames. In this case, it simply concatenates strings.
 <li>In this slightly less trivial case, <code>join</code> will add an extra backslash to the pathname before joining it to the filename. I was overjoyed when I discovered this, since <code>addSlashIfNecessary()</code> is one of the stupid little functions I always need to write when building up my toolbox in a new language. <em>Do not</em> write this stupid little function in Python; smart people have already taken care of it for you.
