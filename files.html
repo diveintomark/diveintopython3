@@ -390,13 +390,17 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <samp class=p>>>> </samp><kbd class=pp>a_file.read()</kbd>
 <samp class=pp>'new black.'</samp></pre>
 <ol>
-<li>The <code>io</code> module contains the definition of the <code>StringIO</code> class that you can use to treat a string in memory as a file.
+<li>The <code>io</code> module defines the <code>StringIO</code> class that you can use to treat a string in memory as a file.
 <li>To create a stream object out of a string, create an instance of the <code>io.StringIO()</code> class and pass it the string you want to use as your &#8220;file&#8221; data. Now you have a stream object, and you can do all sorts of stream-like things with it.
 <li>Calling the <code>read()</code> method &#8220;reads&#8221; the entire &#8220;file,&#8221; which in the case of a <code>StringIO</code> object simply returns the original string.
 <li>Just like a real file, calling the <code>read()</code> method again returns an empty string.
 <li>You can explicitly seek to the beginning of the string, just like seeking through a real file, by using the <code>seek()</code> method of the <code>StringIO</code> object.
 <li>You can also read the string in chunks, by passing a <var>size</var> parameter to the <code>read()</code> method.
 </ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span><code>io.StringIO</code> lets you treat a string as a file. There&#8217;s also a <code>io.BytesIO</code> class, which lets you treat a byte array as a file.
+</blockquote>
 
 <h3 id=gzip>Handling Compressed Files</h3>
 
