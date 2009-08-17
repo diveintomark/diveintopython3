@@ -219,10 +219,10 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
 
     def __init__(self):
         self.pattern_file = open(self.rules_filename, encoding='utf-8')
-
-    def __iter__(self):
         self.cache = []
         self.cache_index = 0
+
+    def __iter__(self):
         return self
 
     def __next__(self):
@@ -255,14 +255,11 @@ rules = LazyRules()</code></pre>
 
     def __init__(self):
 <a>        self.pattern_file = open(self.rules_filename, encoding='utf-8')  <span class=u>&#x2460;</span></a>
-
-<a>    def __iter__(self):                                                  <span class=u>&#x2461;</span></a>
-<a>        self.cache = []                                                  <span class=u>&#x2462;</span></a>
+<a>        self.cache = []                                                  <span class=u>&#x2461;</span></a>
         self.cache_index = 0</code></pre>
 <ol>
 <li>When we instantiate the <code>LazyRules</code> class, open the pattern file but don&#8217;t read anything from it. (That comes later.)
-<li>The <code>__iter__()</code> method is going to be called after you instantiate the class, assign it to <var>rules</var>, and call <code>iter(rules)</code> to create the iterator. It would also get called again if you created a new iterator from the same <var>rules</var> object.
-<li>That means that this is a right place to initialize the cache and the cache index position. You&#8217;ll use these later (in the <code>__next__()</code> method) as you read the patterns from the pattern file.
+<li>After opening the patterns file, initialize the cache and the cache index position. You&#8217;ll use these later (in the <code>__next__()</code> method) as you read lines from the pattern file.
 </ol>
 
 <p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__iter__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
@@ -298,13 +295,11 @@ rules = LazyRules()</code></pre>
 <p>And now back to our show.
 
 <pre class=pp><code><a>    def __iter__(self):       <span class=u>&#x2460;</span></a>
-<a>        self.cache_index = 0  <span class=u>&#x2461;</span></a>
-<a>        return self           <span class=u>&#x2462;</span></a>
+<a>        return self           <span class=u>&#x2461;</span></a>
 </code></pre>
 <ol>
 <li>The <code>__iter__()</code> method will be called every time someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>iter(rules)</code>.
-<li>This is the place to reset the counter that we&#8217;re going to use to retrieve items from the cache (that we haven&#8217;t built yet&nbsp;&mdash;&nbsp;patience, grasshopper).
-<li>Finally, the <code>__iter__()</code> method returns <var>self</var>, which signals that this class will take care of returning its own values throughout an iteration.
+<li>The only thing the <code>__iter__()</code> method needs to do is return an iterator. In this case, it returns <var>self</var>, which signals that this class defines a <code>__next__()</code> method which will take care of returning values throughout the iteration.
 </ol>
 
 <pre class=pp><code><a>    def __next__(self):                                 <span class=u>&#x2460;</span></a>
