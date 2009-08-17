@@ -703,15 +703,17 @@ class FieldStorage:
 <td>to serialize an object (new pickling protocol)
 <td><code class=pp>pickle.dump(x, <var>file</var>, <var>protocol_version</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__reduce_ex__</dfn>(<var>protocol_version</var>)</code></a>
-<tr><th>
+<tr><th>*
 <td>control over how an object is created during unpickling
 <td><code class=pp>x = pickle.load(<var>file</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__getnewargs__</dfn>()</code></a>
-<tr><th>
+<tr><th>*
 <td>to restore an object&#8217;s state after unpickling
 <td><code class=pp>x = pickle.load(<var>file</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickle-state><code>x.<dfn>__setstate__</dfn>()</code></a>
 </table>
+
+<p>* To recreate a serialized object, Python needs to create a new object that looks like the serialized object, then set the values of all the attributes on the new object. The <code>__getnewargs__()</code> method controls how the object is created, then the <code>__setstate__()</code> method controls how the attribute values are restored.
 
 <h2 id=context-managers>Classes That Can Be Used in a <code>with</code> Block</h2>
 
