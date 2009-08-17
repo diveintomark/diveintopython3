@@ -19,10 +19,10 @@ class LazyRules:
 
     def __init__(self):
         self.pattern_file = open(self.rules_filename, encoding='utf-8')
-
-    def __iter__(self):
         self.cache = []
         self.cache_index = 0
+
+    def __iter__(self):
         return self
 
     def __next__(self):
