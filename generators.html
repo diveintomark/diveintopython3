@@ -271,7 +271,7 @@ $                    $    s</code></pre>
         return re.search(pattern, word)
     def apply_rule(word):
         return re.sub(search, replace, word)
-    return [matches_rule, apply_rule]
+    return (matches_rule, apply_rule)
 
 rules = []
 <a>with open('plural4-rules.txt', encoding='utf-8') as pattern_file:  <span class=u>&#x2461;</span></a>
