@@ -65,7 +65,7 @@ Acknowledgements & Inspirations
 
 /* typography */
 
-body, .w a {
+body, .w a, .inherit {
   font: medium/1.75 'Gill Sans', 'Gill Sans MT', Corbel, Helvetica, 'Nimbus Sans L', sans-serif;
   word-spacing: 0.1em;
 }
