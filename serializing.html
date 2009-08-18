@@ -38,7 +38,20 @@ body{counter-reset:h1 13}
 
 <h2 id=pickle-simple>Serializing Simple Python Objects</h2>
 
-<p>FIXME - introduction to pickle module, concepts, what datatypes can be pickled w/o additional work
+<p>The concept of <dfn>serialization</dfn> is simple. You have a data structure in memory that you want to save, reuse, or send to someone else. How would you do that? Well, that depends on how you want to save it, how you want to reuse it, and to whom you want to send it. Many games allow you to save your progress when you quit the game and pick up where you left off when you relaunch the game. (Actually, many non-gaming applications do this as well.) In this case, a data structure that captures &#8220;your progress so far&#8221; needs to be stored on disk when you quit, then loaded from disk when you relaunch. The data is only meant to be used by the same program that created it, never sent over a network, and never read by anything other than the program that created it. Therefore, the interoperability issues are limited to ensuring that later versions of the program can read data written by earlier versions.
+
+<p>For cases like this, the <code>pickle</code> module is ideal. It&#8217;s part of the Python standard library, so it&#8217;s always available. It&#8217;s fast; the bulk of it is written in C, like the Python interpreter itself. It can store arbitrarily complex Python data structures.
+
+<p>What can the <code>pickle</code> module store?
+
+<ul>
+<li>All the <a href=native-datatypes.html>native datatypes</a> that Python supports: booleans, integers, floating point numbers, complex numbers, strings, <code>byte</code> objects, byte arrays, and <code>None</code>.
+<li>Lists, tuples, dictionaries, and sets containing any combination of native datatypes.
+<li>Lists, tuples, dictionaries, and sets containing any combination of lists, tuples, dictionaries, and sets containing any combination of native datatypes (and so on, to <a title='sys.getrecursionlimit()' href=http://docs.python.org/3.1/library/sys.html#sys.getrecursionlimit>the maximum nesting level that Python supports</a>).
+<li>Functions, classes, and instances of classes (with caveats that I&#8217;ll explain shortly).
+</ul>
+
+<p>If this isn&#8217;t enough for you, the <code>pickle</code> module is also extensible, as you&#8217;ll see later in this chapter.
 
 <h3 id=dump>Saving to a File</h3>
 
@@ -76,19 +89,19 @@ body{counter-reset:h1 13}
 <ol>
 <li>This is still in Python Shell #1.
 <li>Use the <code>open()</code> function to open a file. Set the file mode to <code>'wb'</code> to open the file for writing <a href=files.html#binary>in binary mode</a>. Wrap it in a <a href=files.html#with><code>with</code> statement</a> to ensure the file is closed automatically when you&#8217;re done with it.
-<li>The <code>dump()</code> function in the <code>pickle</code> module takes a serializable Python data structure, serializes it into a binary, Python-specific format using the latest version of the <code>pickle</code> protocol, and saves it to an open file.
+<li>The <code>dump()</code> function in the <code>pickle</code> module takes a serializable Python data structure, serializes it into a binary, Python-specific format using the latest version of the pickle protocol, and saves it to an open file.
 </ol>
 
 <p>That last sentence was pretty important.
 
 <ul>
 <li>The <code>pickle</code> module takes a Python data structure and saves it to a file.
-<li>To do this, it <i>serializes</i> the data structure using a data format called &#8220;the <code>pickle</code> protocol.&#8221;
-<li>The <code>pickle</code> protocol is Python-specific; there is no guarantee of cross-language compatibility. You probably couldn&#8217;t take the <code>entry.pickle</code> file you just created and do anything useful with it in Perl, <abbr>PHP</abbr>, Java, or any other language.
-<li>Not every Python data structure can be serialized by the <code>pickle</code> module. The <code>pickle</code> protocol has changed several times as new data types have been added to the Python language, but there are still limitations.
+<li>To do this, it <i>serializes</i> the data structure using a data format called &#8220;the pickle protocol.&#8221;
+<li>The pickle protocol is Python-specific; there is no guarantee of cross-language compatibility. You probably couldn&#8217;t take the <code>entry.pickle</code> file you just created and do anything useful with it in Perl, <abbr>PHP</abbr>, Java, or any other language.
+<li>Not every Python data structure can be serialized by the <code>pickle</code> module. The pickle protocol has changed several times as new data types have been added to the Python language, but there are still limitations.
 <li>As a result of these changes, there is no guarantee of compatibility between different versions of Python itself. Newer versions of Python support the older serialization formats, but older versions of Python do not support newer formats (since they don&#8217;t support the newer data types).
-<li>Unless you specify otherwise, the functions in the <code>pickle</code> module will use the latest version of the <code>pickle</code> protocol. This ensures that you have maximum flexibility in the types of data you can serialize, but it also means that the resulting file will not be readable by older versions of Python that do not support the latest version of the <code>pickle</code> protocol.
-<li>The latest version of the <code>pickle</code> protocol is a binary protocol. Be sure to open your pickle files <a href=files.html#binary>in binary mode</a>, or the data will get corrupted during writing.
+<li>Unless you specify otherwise, the functions in the <code>pickle</code> module will use the latest version of the pickle protocol. This ensures that you have maximum flexibility in the types of data you can serialize, but it also means that the resulting file will not be readable by older versions of Python that do not support the latest version of the pickle protocol.
+<li>The latest version of the pickle protocol is a binary format. Be sure to open your pickle files <a href=files.html#binary>in binary mode</a>, or the data will get corrupted during writing.
 </ul>
 
 <h3 id=load>Loading from a File</h3>
@@ -167,6 +180,7 @@ NameError: name 'entry' is not defined</samp>
 
 <h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads (Again!)</h3>
 
+<p>The pickle protocol has been around for many years, and it has matured as Python itself has matured. 
 <p>FIXME - discussion of pickle protocol versions, backward incompatibility of protocol version 3 due to bytes/strings separation in Python 3, link to http://docs.python.org/3.1/library/pickle.html#data-stream-format
 
 <h3 id=debugging>Debugging Pickle Files</h3>
