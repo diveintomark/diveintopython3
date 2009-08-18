@@ -116,38 +116,54 @@ NameError: name 'entry' is not defined</samp>
  'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
  'published': True}</samp></pre>
 <ol>
-<li>FIXME
-<li>FIXME
-<li>FIXME
-<li>FIXME
-<li>FIXME
+<li>This is Python Shell #2.
+<li>There is no <var>entry</var> variable defined here. You defined an <var>entry</var> variable in Python Shell #1, but that&#8217;s a completely different environment with its own state.
+<li>Open the <code>entry.pickle</code> file you created in Python Shell #1. The <code>pickle</code> module uses a binary data format, so you should always open pickle files in binary mode.
+<li>The <code>pickle.load()</code> function takes a <a href=files.html#file-objects>stream object</a>, reads the serialized data from the stream, creates a new Python object, recreates the serialized data in the new Python object, and returns the new Python object.
+<li>Now the <var>entry</var> variable is a dictionary with familiar-looking keys and values.
 </ol>
 
-<p>FIXME
+<p>The <code>pickle.dump() / pickle.load()</code> cycle results in an identical copy of the original data structure.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                    <span class=u>&#x2460;</span></a>
+<samp class=pp>1</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>    <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    entry2 = pickle.load(f)</kbd>              <span class=u>&#x2462;</span></a>
+<samp class=p>... </samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>                          <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2464;</span></a>
+<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>
+<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
+<ol>
+<li>Switch back to Python Shell #1.
+<li>Open the <code>entry.pickle</code> file.
+<li>Load the serialized data into a new variable, <var>entry2</var>.
+<li>Python confirms that the two dictionaries, <var>entry</var> and <var>entry2</var>, are identical. In this shell, you built <var>entry</var> from the ground up, starting with an empty dictionary and manually assigning values to specific keys. You serialized this dictionary and stored it in the <code>entry.pickle</code> file. Now you&#8217;ve read the serialized data from that file and created a perfect replica of the original data structure.
+<li>For reasons that will become clear later in this chapter, I want to point out that the value of the <code>'tags'</code> key is a tuple, and the value of the <code>'internal_id'</code> key is a <code>bytes</code> object.
+</ol>
+
+<h3 id=dumps>Pickling Without a File</h3>
+
+<p>The examples in the previous section showed how to serialize a Python object directly to a file on disk. But what if you don&#8217;t want or need a file? You can also serialize to a <code>bytes</code> object in memory.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>    <span class=u>&#x2460;</span></a>
-<a><samp class=p>... </samp><kbd class=pp>    entry2 = pickle.load(f)</kbd>              <span class=u>&#x2461;</span></a>
-<samp class=p>... </samp>
-<a><samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>                          <span class=u>&#x2462;</span></a>
-<samp class=pp>True</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2463;</span></a>
-<samp class=pp>('diveintopython', 'docbook', 'html')</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>                    <span class=u>&#x2464;</span></a>
-<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
+<a><samp class=p>>>> </samp><kbd class=pp>b = pickle.dumps(entry)</kbd>     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(b)</kbd>                     <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;class 'bytes'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry3 = pickle.loads(b)</kbd>    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>entry3 == entry</kbd>             <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp></pre>
 <ol>
-<li>FIXME
-<li>
-<li>
-<li>
-<li>
+<li>The <code>pickle.dumps()</code> function (note the <code>'s'</code> at the end of the function name) performs the same serialization as the <code>pickle.dump()</code> function. Instead of taking a stream object and writing the serialized data to a file on disk, it simply returns the serialized data.
+<li>Since the pickle protocol uses a binary data format, the <code>pickle.dumps()</code> function returns a <code>bytes</code> object.
+<li>The <code>pickle.loads()</code> function (again, note the <code>'s'</code> at the end of the function name) performs the same deserialization as the <code>pickle.load()</code> function. Instead of taking a stream object and reading the serialized data from a file, it takes a <code>bytes</code> object containing serialized data, such as the one returned by the <code>pickle.dumps()</code> function.
+<li>The end result is the same: a perfect replica of the original dictionary.
 </ol>
-
-<h3 id=dumps>Saving to (and Loading from) an Object in Memory</h3>
-
-<p>FIXME
 
 <h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads (Again!)</h3>
 
@@ -293,12 +309,12 @@ highest protocol among opcodes = 3</samp></pre>
 <h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                                 <span class=u>&#x2460;</span></a>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>entry</kbd>
 <samp class=pp>FIXME</samp>
 <samp class=p>>>> </samp><kbd class=pp>import json</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>   
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=p>... </samp><kbd class=pp>    json.dump(entry, f)</kbd>
 <samp class=p>... </samp>
 <samp class=traceback>Traceback (most recent call last):
@@ -315,6 +331,7 @@ highest protocol among opcodes = 3</samp></pre>
     raise TypeError(repr(o) + " is not JSON serializable")
 TypeError: b'\xde\xd5\xb4\xf8' is not JSON serializable</samp></pre>
 <ol>
+<li>FIXME
 <li>FIXME
 </ol>
 
