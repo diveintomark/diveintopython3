@@ -287,7 +287,8 @@ def protocol_version(file_object):
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import pickleversion</kbd>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.pickle', 'rb') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    pickleversion.protocol_version(f)</kbd>
+<samp class=p>... </samp><kbd class=pp>    v = pickleversion.protocol_version(f)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>v</kbd>
 <samp class=pp>3</samp></pre>
 
 <p class=a>&#x2042;
