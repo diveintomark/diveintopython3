@@ -297,21 +297,25 @@ def protocol_version(file_object):
 
 <p>FIXME - discussion of pickling class instances, stateful objects, __getstate__ and __setstate__, links to http://docs.python.org/3.1/library/pickle.html#pickle-inst and http://docs.python.org/3.1/library/pickle.html#pickle-state
 
+<!--
 <h2 id=pickle-security>Security Concerns with Pickled Objects</h2>
 
 <p>FIXME - pickled objects can be modified in memory, in transit, or on disk; no checksums; no built-in guarantee that the pickle you're loading is the pickle you dumped; never unpickle untrusted input; xref to "eval() is evil" discussion in advanced-iterators chapter
+-->
 
 <h2 id=json>Serializing Python Objects to be Read by Other Languages</h2>
 
-<p>The data format used by the <code>pickle</code> module is Python-specific. It makes no attempt to be compatible with other programming languages. If cross-language compatibility is one of your requirements, you need to look at other serialization formats.
+<p>The data format used by the <code>pickle</code> module is Python-specific. It makes no attempt to be compatible with other programming languages. If cross-language compatibility is one of your requirements, you need to look at other serialization formats. One such format is <a href=http://json.org/><abbr>JSON</abbr></a>. &#8220;<abbr>JSON</abbr>&#8221; stands for &#8220;JavaScript Object Notation,&#8221; but don&#8217;t let the name fool you&nbsp;&mdash;&nbsp;<abbr>JSON</abbr> is explicitly designed to be usable across multiple programming languages.
 
-<p>One format that <em>is</em> designed to be used by multiple programming languages is <a href=http://json.org/><abbr>JSON</abbr></a>. 
+<p>Python 3 includes a <code>json</code> module in the standard library. Like the <code>pickle</code> module, the <code>json</code> module has functions for serializing data structures, storing the serialized data on disk, loading serialized data from disk, and unserializing the data back into a new Python object. But there are some important differences, too. First of all, the <abbr>JSON</abbr> data format is text-based, not binary. <a href=http://www.ietf.org/rfc/rfc4627.txt>RFC 4627</a> defines the <abbr>JSON</abbr> format and how different types of data must be encoded as text. For example, a boolean value is stored as either the five-character string <code>'false'</code> or the four-character string <code>'true'</code>. All <abbr>JSON</abbr> values are case-sensitive.
 
-<p>FIXME - pickle format is python-specific; JSON format is designed to be cross-language (in fact, it was originally designed for JavaScript, hence the name); differences with pickle format (table or list); json module implements dumping and loading JSON-formatted data structures; JSON format is string-based (and always encoded as UTF-8 where bytes are required); compact vs. pretty-printing; JSONEncoder; JSONDecoder; iterencode
+<p>Second, as with any text-based format, there is the issue of whitespace. <abbr>JSON</abbr> allows arbitrary amounts of whitespace (spaces, tabs, carriage returns, and line feeds) between values. This whitespace is &#8220;insignificant,&#8221; which means that <abbr>JSON</abbr> encoders can add as much or as little whitespace as they like, and <abbr>JSON</abbr> decoders are required to ignore the whitespace between values. This allows you to &#8220;pretty-print&#8221; your <abbr>JSON</abbr> data, nicely nesting values within values at different indentation levels so you can read it in a standard browser or text editor. Python&#8217;s <code>json</code> module has options for pretty-printing during encoding.
+
+<p>Third, there&#8217;s the perennial problem of character encoding. <abbr>JSON</abbr> encodes values as plain text, but as you know, <a href=strings.html>there ain&#8217;t no such thing as &#8220;plain text.&#8221;</a> <abbr>JSON</abbr> must be stored in a Unicode encoding (UTF-32, UTF-16, or the default, UTF-8), and <a href=http://www.ietf.org/rfc/rfc4627.txt>section 3 of RFC 4627</a> defines how to tell which encoding is being used.
 
 <h3 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h3>
 
-<p>FIXME
+<p>Since <abbr>JSON</abbr> is not Python-specific, there are some mismatches in its coverage of Python datatypes. Some of them are simply naming differences, but there is one important datatype that is completely missing. See if you can spot it:
 
 <table>
 <tr><th>Notes
@@ -343,9 +347,11 @@ def protocol_version(file_object):
 <td><code><a href=native-datatypes.html#none>None</a></code>
 </table>
 
-<p>FIXME
+<p>Did you notice what was missing? Bytes! <abbr>JSON</abbr> has no support for <code>bytes</code> objects or byte arrays.
 
 <h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
+
+<p>Even if <abbr>JSON</abbr> has no built-in support for bytes, that doesn&#8217;t mean you can&#8217;t serialize <code>bytes</code> objects. The <code>json</code> module provides extensibility hooks for encoding and decoding unknown datatypes. (By &#8220;unknown,&#8221; I mean &#8220;not defined in <abbr>JSON</abbr>.&#8221; Obviously the <code>json</code> module knows about byte arrays, but it&#8217;s constrained by the limitations of the <abbr>JSON</abbr> specification.) If you want to encode bytes or other datatypes that <abbr>JSON</abbr> doesn&#8217;t support natively, you need to provide custom encoders and decoders for those types.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                                 <span class=u>&#x2460;</span></a>
