@@ -53,7 +53,7 @@ body{counter-reset:h1 13}
 
 <p>If this isn&#8217;t enough for you, the <code>pickle</code> module is also extensible, as you&#8217;ll see later in this chapter.
 
-<h3 id=dump>Saving to a File</h3>
+<h3 id=dump>Saving Data to a Pickle File</h3>
 
 <p>The <code>pickle</code> module works with data structures. Let&#8217;s build one.
 
@@ -104,7 +104,7 @@ body{counter-reset:h1 13}
 <li>The latest version of the pickle protocol is a binary format. Be sure to open your pickle files <a href=files.html#binary>in binary mode</a>, or the data will get corrupted during writing.
 </ul>
 
-<h3 id=load>Loading from a File</h3>
+<h3 id=load>Loading Data from a Pickle File</h3>
 
 <p>Now switch to your second Python Shell&nbsp;&mdash;&nbsp;<i>i.e.</i> not the one where you created the <code>entry</code> dictionary.
 
@@ -313,9 +313,65 @@ def protocol_version(file_object):
 
 <p>Third, there&#8217;s the perennial problem of character encoding. <abbr>JSON</abbr> encodes values as plain text, but as you know, <a href=strings.html>there ain&#8217;t no such thing as &#8220;plain text.&#8221;</a> <abbr>JSON</abbr> must be stored in a Unicode encoding (UTF-32, UTF-16, or the default, UTF-8), and <a href=http://www.ietf.org/rfc/rfc4627.txt>section 3 of RFC 4627</a> defines how to tell which encoding is being used.
 
+<h3 id=json-dump>Saving Data to a <abbr>JSON</abbr> File</h3>
+
+<p><abbr>JSON</abbr> looks remarkably like a data structure you might define manually in JavaScript. This is no accident; you can actually use the JavaScript <code>eval()</code> function to &#8220;decode&#8221; <abbr>JSON</abbr>-serialized data. (The usual <a href=advanced-iterators.html#eval>caveats about untrusted input</a> apply, but the point is that <abbr>JSON</abbr> <em>is</em> valid JavaScript.) As such, <abbr>JSON</abbr> may already look familiar to you.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>basic_entry = {}</kbd>                                           <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>basic_entry['id'] = 256</kbd>
+<samp class=p>>>> </samp><kbd class=pp>basic_entry['title'] = 'Dive into history, 2009 edition'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>basic_entry['tags'] = ('diveintopython', 'docbook', 'html')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>basic_entry['published'] = True</kbd>
+<samp class=p>>>> </samp><kbd class=pp>basic_entry['comments_link'] = None</kbd>
+<samp class=p>>>> </samp><kbd class=pp>import json</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('basic.json', mode='w', encoding='utf-8') as f:</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f)</kbd>                              <span class=u>&#x2462;</span></a></pre>
+<ol>
+<li>We&#8217;re going to create a new data structure instead of re-using the existing <var>entry</var> data structure. Later in this chapter, we&#8217;ll see what happens when we try to encode the more complex data structure in <abbr>JSON</abbr>.
+<li><abbr>JSON</abbr> is a text-based format, which means you need to open this file in text mode and specify a character encoding. You can never go wrong with UTF-8.
+<li>Like the <code>pickle</code> module, the <code>json</code> module defines a <code>dump()</code> function which takes a Python data structure and a writeable stream object. The <code>dump()</code> function serializes the Python data structure and writes it to the stream object. Doing this inside a <code>with</code> statement will ensure that the file is closed properly when we&#8217;re done.
+</ol>
+
+<p>So what does the resulting <abbr>JSON</abbr> serialization look like?
+
+<pre class=screen>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat basic.json</kbd>
+<samp>{"published": true, "tags": ["diveintopython", "docbook", "html"], "comments_link": null,
+"id": 256, "title": "Dive into history, 2009 edition"}</samp></pre>
+
+<p>That&#8217;s certainly <a href=#debugging>more readable than a pickle file</a>. But <abbr>JSON</abbr> can contain arbitrary whitespace between values, and the <code>json</code> module provides an easy way to take advantage of this to create even more readable <abbr>JSON</abbr> files.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>with open('basic-pretty.json', mode='w', encoding='utf-8') as f:</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f, <mark>indent=2</mark>)                    <span class=u>&#x2460;</span></a></kbd></pre>
+<ol>
+<li>If you pass an <var>indent</var> parameter to the <code>json.dump()</code> function, it will make the resulting <abbr>JSON</abbr> file more readable, at the expense of larger file size. The <var>indent</var> parameter is an integer. 0 means &#8220;put each value on its own line.&#8221; A number greater than 0 means &#8220;put each value on its own line, and indent that many spaces.&#8221;
+</ol>
+
+<p>And this is the result:
+
+<pre class=screen>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat basic-pretty.json</kbd>
+<samp>{
+  "published": true, 
+  "tags": [
+    "diveintopython", 
+    "docbook", 
+    "html"
+  ], 
+  "comments_link": null, 
+  "id": 256, 
+  "title": "Dive into history, 2009 edition"
+}</samp></pre>
+
 <h3 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h3>
 
-<p>Since <abbr>JSON</abbr> is not Python-specific, there are some mismatches in its coverage of Python datatypes. Some of them are simply naming differences, but there is one important datatype that is completely missing. See if you can spot it:
+<p>Since <abbr>JSON</abbr> is not Python-specific, there are some mismatches in its coverage of Python datatypes. Some of them are simply naming differences, but there is two important Python datatypes that are completely missing. See if you can spot them:
 
 <table>
 <tr><th>Notes
@@ -336,18 +392,19 @@ def protocol_version(file_object):
 <tr><th>
 <td>real number
 <td><a href=native-datatypes.html#numbers>float</a>
-<tr><th>
+<tr><th>*
 <td><code>true</code>
 <td><code><a href=native-datatypes.html#booleans>True</a>
-<tr><th>
+<tr><th>*
 <td><code>false</code>
 <td><code><a href=native-datatypes.html#booleans>False</a></code>
-<tr><th>
+<tr><th>*
 <td><code>null</code>
 <td><code><a href=native-datatypes.html#none>None</a></code>
+<tfoot><td colspan=3>* Remember that <abbr>JSON</abbr> values are case-sensitive.
 </table>
 
-<p>Did you notice what was missing? Bytes! <abbr>JSON</abbr> has no support for <code>bytes</code> objects or byte arrays.
+<p>Did you notice what was missing? Tuples <i class=baa>&amp;</i> bytes! <abbr>JSON</abbr> has an array type, which the <code>json</code> module maps to a Python list, but it does not have a separate type for &#8220;frozen arrays&#8221; (tuples). And while <abbr>JSON</abbr> supports strings quite nicely, it has no support for <code>bytes</code> objects or byte arrays.
 
 <h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
 
