@@ -505,7 +505,7 @@ def to_json(python_object):
 <li>If so, we&#8217;ll do something similar to the conversion we did with the <code>bytes</code> object: convert the <code>time.struct_time</code> object to a dictionary that only contains <abbr>JSON</abbr>-serializable values. In this case, the easiest way to convert a datetime into a <abbr>JSON</abbr>-serializable value is to convert it to a string with the <code>time.asctime()</code> function. The <code>time.asctime()</code> function will convert that nasty-looking <code>time.struct_time</code> into the string <code>'Fri Mar 27 22:20:42 2009'</code>.
 </ol>
 
-<p>
+<p>With these two custom conversions, the entire <var>entry</var> data structure should serialize to <abbr>JSON</abbr> without any further problems.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
@@ -513,11 +513,6 @@ def to_json(python_object):
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
 <samp class=p>... </samp><kbd class=pp>    json.dump(entry, default=customserializer.to_json)</kbd>
 <samp class=p>... </samp></pre>
-<ol>
-<li>FIXME
-</ol>
-
-<p>FIXME
 
 <pre class=screen>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>ls -l example.json</kbd>
@@ -528,9 +523,8 @@ def to_json(python_object):
 "tags": ["diveintopython", "docbook", "html"], "title": "Dive into history, 2009 edition",
 "article_link": "http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition",
 "published": true}</samp></pre>
-<ol>
-<li>FIXME
-</ol>
+
+<h3 id=json-load>Loading Data from a <abbr>JSON</abbr> File</h3>
 
 <p>FIXME
 
