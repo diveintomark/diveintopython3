@@ -16,7 +16,7 @@ body{counter-reset:h1 13}
 <p id=level>Difficulty level: <span class=u title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
 <h1>Serializing Python Objects</h1>
 <blockquote class=q>
-<p><span class=u>&#x275D;</span> FIXME <span class=u>&#x275E;</span><br>&mdash; FIXME
+<p><span class=u>&#x275D;</span> Every Saturday since we&#8217;ve lived in this apartment, I have awakened at 6:15, poured myself a bowl of cereal, added<br>a quarter-cup of 2% milk, sat on <strong>this</strong> end of <strong>this</strong> couch, turned on BBC America, and watched Doctor Who. <span class=u>&#x275E;</span><br>&mdash; Sheldon, <a href='http://en.wikiquote.org/wiki/The_Big_Bang_Theory#The_Dumpling_Paradox_.5B1.07.5D'>The Big Bang Theory</a>
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
@@ -64,7 +64,7 @@ body{counter-reset:h1 13}
 <samp class=p>>>> </samp><kbd class=pp>entry['title'] = 'Dive into history, 2009 edition'</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['article_link'] = 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['comments_link'] = None</kbd>
-<samp class=p>>>> </samp><kbd class=pp>entry['internal_id'] = b'\xde\xd5\xb4\xf8'</kbd>
+<samp class=p>>>> </samp><kbd class=pp>entry['internal_id'] = b'\xDE\xD5\xB4\xF8'</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['tags'] = ('diveintopython', 'docbook', 'html')</kbd>
 <samp class=p>>>> </samp><kbd class=pp>entry['published'] = True</kbd>
 <samp class=p>>>> </samp><kbd class=pp>import time</kbd>
@@ -121,7 +121,7 @@ NameError: name 'entry' is not defined</samp>
 <samp class=p>... </samp>
 <a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                    <span class=u>&#x2464;</span></a>
 <samp class=pp>{'comments_link': None,
- 'internal_id': b'\xde\xd5\xb4\xf8',
+ 'internal_id': b'\xDE\xD5\xB4\xF8',
  'title': 'Dive into history, 2009 edition',
  'tags': ('diveintopython', 'docbook', 'html'),
  'article_link':
@@ -149,7 +149,7 @@ NameError: name 'entry' is not defined</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2464;</span></a>
 <samp class=pp>('diveintopython', 'docbook', 'html')</samp>
 <samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>
-<samp class=pp>b'\xde\xd5\xb4\xf8'</samp></pre>
+<samp class=pp>b'\xDE\xD5\xB4\xF8'</samp></pre>
 <ol>
 <li>Switch back to Python Shell #1.
 <li>Open the <code>entry.pickle</code> file.
@@ -348,7 +348,7 @@ def protocol_version(file_object):
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>with open('basic-pretty.json', mode='w', encoding='utf-8') as f:</kbd>
-<a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f, <mark>indent=2</mark>)                    <span class=u>&#x2460;</span></a></kbd></pre>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f, <mark style="display:inline">indent=2</mark>)                            <span class=u>&#x2460;</span></a></kbd></pre>
 <ol>
 <li>If you pass an <var>indent</var> parameter to the <code>json.dump()</code> function, it will make the resulting <abbr>JSON</abbr> file more readable, at the expense of larger file size. The <var>indent</var> parameter is an integer. 0 means &#8220;put each value on its own line.&#8221; A number greater than 0 means &#8220;put each value on its own line, and indent that many spaces.&#8221;
 </ol>
@@ -401,7 +401,7 @@ def protocol_version(file_object):
 <tr><th>*
 <td><code>null</code>
 <td><code><a href=native-datatypes.html#none>None</a></code>
-<tfoot><td colspan=3>* Remember that <abbr>JSON</abbr> values are case-sensitive.
+<tfoot><td colspan=3>* All <abbr>JSON</abbr> values are case-sensitive.
 </table>
 
 <p>Did you notice what was missing? Tuples <i class=baa>&amp;</i> bytes! <abbr>JSON</abbr> has an array type, which the <code>json</code> module maps to a Python list, but it does not have a separate type for &#8220;frozen arrays&#8221; (tuples). And while <abbr>JSON</abbr> supports strings quite nicely, it has no support for <code>bytes</code> objects or byte arrays.
@@ -411,13 +411,19 @@ def protocol_version(file_object):
 <p>Even if <abbr>JSON</abbr> has no built-in support for bytes, that doesn&#8217;t mean you can&#8217;t serialize <code>bytes</code> objects. The <code>json</code> module provides extensibility hooks for encoding and decoding unknown datatypes. (By &#8220;unknown,&#8221; I mean &#8220;not defined in <abbr>JSON</abbr>.&#8221; Obviously the <code>json</code> module knows about byte arrays, but it&#8217;s constrained by the limitations of the <abbr>JSON</abbr> specification.) If you want to encode bytes or other datatypes that <abbr>JSON</abbr> doesn&#8217;t support natively, you need to provide custom encoders and decoders for those types.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                                 <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
-<samp class=pp>FIXME</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                                 <span class=u>&#x2460;</span></a>
+<samp class=pp>{'comments_link': None,
+ 'internal_id': b'\xDE\xD5\xB4\xF8',
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ('diveintopython', 'docbook', 'html'),
+ 'article_link': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
+ 'published': True}</samp>
 <samp class=p>>>> </samp><kbd class=pp>import json</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>  <span class=u>&#x2461;</span></a>
-<samp class=p>... </samp><kbd class=pp>    json.dump(entry, f)</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(entry, f)</kbd>                               <span class=u>&#x2462;</span></a>
 <samp class=p>... </samp>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 5, in &lt;module>
@@ -431,32 +437,35 @@ def protocol_version(file_object):
     o = _default(o)
   File "C:\Python31\lib\json\encoder.py", line 170, in default
     raise TypeError(repr(o) + " is not JSON serializable")
-TypeError: b'\xde\xd5\xb4\xf8' is not JSON serializable</samp></pre>
+<mark>TypeError: b'\xDE\xD5\xB4\xF8' is not JSON serializable</mark></samp></pre>
 <ol>
-<li>FIXME
-<li>FIXME
+<li>OK, it&#8217;s time to revisit the <var>entry</var> data structure. This has it all: a boolean value, a <code>None</code> value, a string, a tuple of strings, a <code>bytes</code> object, and a <code>time</code> structure.
+<li>I know I&#8217;ve said it before, but it&#8217;s worth repeating: <abbr>JSON</abbr> is a text-based format. Always open <abbr>JSON</abbr> files in text mode with a UTF-8 character encoding.
+<li>Well <em>that&#8217;s</em> not good. What happened?
 </ol>
 
-<p>FIXME
+<p>Here&#8217;s what happened: the <code>json.dump()</code> function tried to serialize the <code>bytes</code> object <code>b'\xDE\xD5\xB4\xF8'</code>, but it failed, because <abbr>JSON</abbr> has no support for <code>bytes</code> objects. However, if storing bytes is important to you, you can define your own &#8220;mini-serialization format.&#8221;
 
-<pre class=pp><code># customserializer.py
-def to_json(python_object):
-    if isinstance(python_object, bytes):
-        return {'__class__': 'bytes',
-                '__value__': list(python_object)}
-    raise TypeError(repr(python_object) + ' is not JSON serializable')</code></pre>
+<p class=d>[<a href=examples/customserializer.py>download <code>customserializer.py</code></a>]
+<pre class=pp><code>
+<a>def to_json(python_object):                                             <span class=u>&#x2460;</span></a>
+<a>    if isinstance(python_object, bytes):                                <span class=u>&#x2461;</span></a>
+<a>        return {'__class__': 'bytes',
+                '__value__': list(python_object)}                       <span class=u>&#x2462;</span></a></code></pre>
 <ol>
-<li>FIXME
+<li>To define your own &#8220;mini-serialization format&#8221; for a datatype that <abbr>JSON</abbr> doesn&#8217;t support natively, just define a function that takes a Python object as a parameter. This Python object will be the actual object that the <code>json.dump()</code> function is unable to serialize by itself&nbsp;&mdash;&nbsp;in this case, the <code>bytes</code> object <code>b'\xDE\xD5\xB4\xF8'</code>.
+<li>Your custom serialization function should check the type of the Python object that the <code>json.dump()</code> function passed to it. This is not strictly necessary if your function only serializes one datatype, but it makes it crystal clear what case your function is covering, and it makes it easier to extend if you need to add serializations for more datatypes later.
+<li>In this case, I&#8217;ve chosen to convert a <code>bytes</code> object into a dictionary. The <code>__class__</code> key will hold the original datatype (as a string, <code>'bytes'</code>), and the <code>__value__</code> key will hold the actual value. Of course this can&#8217;t be a <code>bytes</code> object; the entire point is to convert it into something that can be serialized in <abbr>JSON</abbr>! A <code>bytes</code> object is just a sequence of integers; each integer is somewhere in the range 0&ndash;255. We can use the <code>list()</code> function to convert the <code>bytes</code> object into a list of integers. So <code>b'\xDE\xD5\xB4\xF8'</code> becomes <code>[222, 213, 180, 248]</code>. (Do the math! It works! The byte <code>\xDE</code> in hexadecimal is 222 in decimal, <code>\xD5</code> is 213, and so on.)
 </ol>
 
-<p>FIXME
+<p>That&#8217;s it; you don&#8217;t need to do anything else. In particular, this custom serialization function <em>returns a Python dictionary</em>, not a string. You&#8217;re not doing the entire serializing-to-<abbr>JSON</abbr> yourself; you&#8217;re only doing the converting-to-a-supported-datatype part. The <code>json.dump()</code> function will do the rest.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
-<samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
-<samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default = customserializer.to_json)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>                                                             <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>                                <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(entry, <mark style="display:inline">default=customserializer.to_json</mark>)</kbd>                              <span class=u>&#x2462;</span></a>
 <samp class=p>... </samp>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 9, in &lt;module>
@@ -470,34 +479,39 @@ def to_json(python_object):
   File "C:\Python31\lib\json\encoder.py", line 416, in _iterencode
     o = _default(o)
   File "/Users/pilgrim/diveintopython3/examples/customserializer.py", line 12, in to_json
-    raise TypeError(repr(python_object) + ' is not JSON serializable')
+<a>    raise TypeError(repr(python_object) + ' is not JSON serializable')                     <span class=u>&#x2463;</span></a>
 TypeError: time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1) is not JSON serializable</samp></pre>
 <ol>
-<li>FIXME
+<li>The <code>customserializer</code> module is where you just defined the <code>to_json()</code> function in the previous example.
+<li>Text mode, UTF-8 encoding, yadda yadda. (You&#8217;ll forget! I forget sometimes! And everything will work right up until the moment that it fails, and then it will fail most spectacularly.)
+<li>This is the important bit: to hook your custom conversion function into the <code>json.dump()</code> function, pass your function into the <code>json.dump()</code> function in the <var>default</var> parameter. (Hooray, <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>!)
+<li>OK, so it didn&#8217;t actually work. But take a look at the exception. The <code>json.dump()</code> function is no longer complaining about being unable to serialize the <code>bytes</code> object. Now it&#8217;s complaining about a completely different object: the <code>time.struct_time</code> object.
 </ol>
 
-<p>FIXME
+<p>While getting a different exception might not seem like progress, it really is! It&#8217;ll just take one more tweak to get past this.
 
-<pre class=pp><code># customserializer.py
+<pre class=pp><code>
+import time
+
 def to_json(python_object):
-    if isinstance(python_object, time.struct_time):
-        return {'__class__': 'time.asctime',
-                '__value__': time.asctime(python_object)}
+<a>    if isinstance(python_object, time.struct_time):          <span class=u>&#x2460;</span></a>
+<a>        return {'__class__': 'time.asctime',
+                '__value__': time.asctime(python_object)}    <span class=u>&#x2461;</span></a>
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
-                '__value__': list(python_object)}
-    raise TypeError(repr(python_object) + ' is not JSON serializable')</code></pre>
+                '__value__': list(python_object)}</code></pre>
 <ol>
-<li>FIXME
+<li>Adding to our existing <code>customserializer.to_json()</code> function, we need to check whether the Python object (that the <code>json.dump()</code> function is having trouble with) is a <code>time.struct_time</code>.
+<li>If so, we&#8217;ll do something similar to the conversion we did with the <code>bytes</code> object: convert the <code>time.struct_time</code> object to a dictionary that only contains <abbr>JSON</abbr>-serializable values. In this case, the easiest way to convert a datetime into a <abbr>JSON</abbr>-serializable value is to convert it to a string with the <code>time.asctime()</code> function. The <code>time.asctime()</code> function will convert that nasty-looking <code>time.struct_time</code> into the string <code>'Fri Mar 27 22:20:42 2009'</code>.
 </ol>
 
-<p>FIXME
+<p>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default = customserializer.to_json)</kbd>
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default=customserializer.to_json)</kbd>
 <samp class=p>... </samp></pre>
 <ol>
 <li>FIXME
@@ -564,7 +578,7 @@ def from_json(json_object):
 <samp class=p>... </samp>
 <samp class=p>>>> </samp><kbd class=pp>entry</kbd>
 <samp class=pp>{'comments_link': None,
- 'internal_id': b'\xde\xd5\xb4\xf8',
+ 'internal_id': b'\xDE\xD5\xB4\xF8',
  'title': 'Dive into history, 2009 edition',
  'tags': ['diveintopython', 'docbook', 'html'],
  'article_link': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',

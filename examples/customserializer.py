@@ -9,7 +9,6 @@ def to_json(python_object):
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
                 '__value__': list(python_object)}
-    raise TypeError(repr(python_object) + ' is not JSON serializable')
 
 def from_json(json_object):
     if '__class__' in json_object:
@@ -24,7 +23,7 @@ if __name__ == '__main__':
     entry['title'] = 'Dive into history, 2009 edition'
     entry['article_link'] = 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'
     entry['comments_link'] = None
-    entry['internal_id'] = b'\xde\xd5\xb4\xf8'
+    entry['internal_id'] = b'\xDE\xD5\xB4\xF8'
     entry['tags'] = ('diveintopython', 'docbook', 'html')
     entry['published'] = True
     entry['published_date'] = time.strptime('Fri Mar 27 22:20:42 2009')
