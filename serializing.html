@@ -20,9 +20,26 @@ body{counter-reset:h1 13}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>FIXME
+<p>The concept of <dfn>serialization</dfn> is simple. You have a data structure in memory that you want to save, reuse, or send to someone else. How would you do that? Well, that depends on how you want to save it, how you want to reuse it, and to whom you want to send it. Many games allow you to save your progress when you quit the game and pick up where you left off when you relaunch the game. (Actually, many non-gaming applications do this as well.) In this case, a data structure that captures &#8220;your progress so far&#8221; needs to be stored on disk when you quit, then loaded from disk when you relaunch. The data is only meant to be used by the same program that created it, never sent over a network, and never read by anything other than the program that created it. Therefore, the interoperability issues are limited to ensuring that later versions of the program can read data written by earlier versions.
 
-<p>Open the Python Shell and define the following variable:
+<p>For cases like this, the <code>pickle</code> module is ideal. It&#8217;s part of the Python standard library, so it&#8217;s always available. It&#8217;s fast; the bulk of it is written in C, like the Python interpreter itself. It can store arbitrarily complex Python data structures.
+
+<p>What can the <code>pickle</code> module store?
+
+<ul>
+<li>All the <a href=native-datatypes.html>native datatypes</a> that Python supports: booleans, integers, floating point numbers, complex numbers, strings, <code>bytes</code> objects, byte arrays, and <code>None</code>.
+<li>Lists, tuples, dictionaries, and sets containing any combination of native datatypes.
+<li>Lists, tuples, dictionaries, and sets containing any combination of lists, tuples, dictionaries, and sets containing any combination of native datatypes (and so on, to <a title='sys.getrecursionlimit()' href=http://docs.python.org/3.1/library/sys.html#sys.getrecursionlimit>the maximum nesting level that Python supports</a>).
+<li>Functions, classes, and instances of classes (with caveats).
+</ul>
+
+<p>If this isn&#8217;t enough for you, the <code>pickle</code> module is also extensible. If you&#8217;re interested in extensibility, check out the links in the <a href=#furtherreading>Further Reading</a> section at the end of the chapter.
+
+<h3 id=administrivia>A Quick Note About The Examples in This Chapter</h3>
+
+<p>This chapter tells a tale with two Python Shells. All of the examples in this chapter are part of a single story arc. You will be asked to switch back and forth between the two Python Shells as I demonstrate the <code>pickle</code> and <code>json</code> modules.
+
+<p>To help keep things straight, open the Python Shell and define the following variable:
 
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>shell = 1</kbd></pre>
@@ -36,24 +53,7 @@ body{counter-reset:h1 13}
 
 <p class=a>&#x2042;
 
-<h2 id=pickle-simple>Serializing Simple Python Objects</h2>
-
-<p>The concept of <dfn>serialization</dfn> is simple. You have a data structure in memory that you want to save, reuse, or send to someone else. How would you do that? Well, that depends on how you want to save it, how you want to reuse it, and to whom you want to send it. Many games allow you to save your progress when you quit the game and pick up where you left off when you relaunch the game. (Actually, many non-gaming applications do this as well.) In this case, a data structure that captures &#8220;your progress so far&#8221; needs to be stored on disk when you quit, then loaded from disk when you relaunch. The data is only meant to be used by the same program that created it, never sent over a network, and never read by anything other than the program that created it. Therefore, the interoperability issues are limited to ensuring that later versions of the program can read data written by earlier versions.
-
-<p>For cases like this, the <code>pickle</code> module is ideal. It&#8217;s part of the Python standard library, so it&#8217;s always available. It&#8217;s fast; the bulk of it is written in C, like the Python interpreter itself. It can store arbitrarily complex Python data structures.
-
-<p>What can the <code>pickle</code> module store?
-
-<ul>
-<li>All the <a href=native-datatypes.html>native datatypes</a> that Python supports: booleans, integers, floating point numbers, complex numbers, strings, <code>bytes</code> objects, byte arrays, and <code>None</code>.
-<li>Lists, tuples, dictionaries, and sets containing any combination of native datatypes.
-<li>Lists, tuples, dictionaries, and sets containing any combination of lists, tuples, dictionaries, and sets containing any combination of native datatypes (and so on, to <a title='sys.getrecursionlimit()' href=http://docs.python.org/3.1/library/sys.html#sys.getrecursionlimit>the maximum nesting level that Python supports</a>).
-<li>Functions, classes, and instances of classes (with caveats that I&#8217;ll explain shortly).
-</ul>
-
-<p>If this isn&#8217;t enough for you, the <code>pickle</code> module is also extensible, as you&#8217;ll see later in this chapter.
-
-<h3 id=dump>Saving Data to a Pickle File</h3>
+<h2 id=dump>Saving Data to a Pickle File</h2>
 
 <p>The <code>pickle</code> module works with data structures. Let&#8217;s build one.
 
@@ -104,7 +104,9 @@ body{counter-reset:h1 13}
 <li>The latest version of the pickle protocol is a binary format. Be sure to open your pickle files <a href=files.html#binary>in binary mode</a>, or the data will get corrupted during writing.
 </ul>
 
-<h3 id=load>Loading Data from a Pickle File</h3>
+<p class=a>&#x2042;
+
+<h2 id=load>Loading Data from a Pickle File</h2>
 
 <p>Now switch to your second Python Shell&nbsp;&mdash;&nbsp;<i>i.e.</i> not the one where you created the <code>entry</code> dictionary.
 
@@ -158,7 +160,9 @@ NameError: name 'entry' is not defined</samp>
 <li>For reasons that will become clear later in this chapter, I want to point out that the value of the <code>'tags'</code> key is a tuple, and the value of the <code>'internal_id'</code> key is a <code>bytes</code> object.
 </ol>
 
-<h3 id=dumps>Pickling Without a File</h3>
+<p class=a>&#x2042;
+
+<h2 id=dumps>Pickling Without a File</h2>
 
 <p>The examples in the previous section showed how to serialize a Python object directly to a file on disk. But what if you don&#8217;t want or need a file? You can also serialize to a <code>bytes</code> object in memory.
 
@@ -178,7 +182,9 @@ NameError: name 'entry' is not defined</samp>
 <li>The end result is the same: a perfect replica of the original dictionary.
 </ol>
 
-<h3 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads Again</h3>
+<p class=a>&#x2042;
+
+<h2 id=protocol-versions>Bytes and Strings Rear Their Ugly Heads Again</h2>
 
 <p>The pickle protocol has been around for many years, and it has matured as Python itself has matured. There are now <a href=http://docs.python.org/3.1/library/pickle.html#data-stream-format>four different versions</a> of the pickle protocol.
 
@@ -190,7 +196,9 @@ NameError: name 'entry' is not defined</samp>
 
 <p>Oh look, <a href=strings.html#byte-arrays>the difference between bytes and strings</a> rears its ugly head again. (If you&#8217;re surprised, you haven&#8217;t been paying attention.) What this means in practice is that, while Python 3 can read data pickled with protocol version 2, Python 2 can not read data pickled with protocol version 3.
 
-<h3 id=debugging>Debugging Pickle Files</h3>
+<p class=a>&#x2042;
+
+<h2 id=debugging>Debugging Pickle Files</h2>
 
 <p>What does the pickle protocol look like? Let&#8217;s jump out of the Python Shell for a moment and take a look at that <code>entry.pickle</code> file we created.
 
@@ -293,16 +301,6 @@ def protocol_version(file_object):
 
 <p class=a>&#x2042;
 
-<h2 id=pickle-advanced>Serializing Complex Python Objects</h2>
-
-<p>FIXME - discussion of pickling class instances, stateful objects, __getstate__ and __setstate__, links to http://docs.python.org/3.1/library/pickle.html#pickle-inst and http://docs.python.org/3.1/library/pickle.html#pickle-state
-
-<!--
-<h2 id=pickle-security>Security Concerns with Pickled Objects</h2>
-
-<p>FIXME - pickled objects can be modified in memory, in transit, or on disk; no checksums; no built-in guarantee that the pickle you're loading is the pickle you dumped; never unpickle untrusted input; xref to "eval() is evil" discussion in advanced-iterators chapter
--->
-
 <h2 id=json>Serializing Python Objects to be Read by Other Languages</h2>
 
 <p>The data format used by the <code>pickle</code> module is Python-specific. It makes no attempt to be compatible with other programming languages. If cross-language compatibility is one of your requirements, you need to look at other serialization formats. One such format is <a href=http://json.org/><abbr>JSON</abbr></a>. &#8220;<abbr>JSON</abbr>&#8221; stands for &#8220;JavaScript Object Notation,&#8221; but don&#8217;t let the name fool you&nbsp;&mdash;&nbsp;<abbr>JSON</abbr> is explicitly designed to be usable across multiple programming languages.
@@ -313,7 +311,9 @@ def protocol_version(file_object):
 
 <p>Third, there&#8217;s the perennial problem of character encoding. <abbr>JSON</abbr> encodes values as plain text, but as you know, <a href=strings.html>there ain&#8217;t no such thing as &#8220;plain text.&#8221;</a> <abbr>JSON</abbr> must be stored in a Unicode encoding (UTF-32, UTF-16, or the default, UTF-8), and <a href=http://www.ietf.org/rfc/rfc4627.txt>section 3 of RFC 4627</a> defines how to tell which encoding is being used.
 
-<h3 id=json-dump>Saving Data to a <abbr>JSON</abbr> File</h3>
+<p class=a>&#x2042;
+
+<h2 id=json-dump>Saving Data to a <abbr>JSON</abbr> File</h2>
 
 <p><abbr>JSON</abbr> looks remarkably like a data structure you might define manually in JavaScript. This is no accident; you can actually use the JavaScript <code>eval()</code> function to &#8220;decode&#8221; <abbr>JSON</abbr>-serialized data. (The usual <a href=advanced-iterators.html#eval>caveats about untrusted input</a> apply, but the point is that <abbr>JSON</abbr> <em>is</em> valid JavaScript.) As such, <abbr>JSON</abbr> may already look familiar to you.
 
@@ -369,7 +369,9 @@ def protocol_version(file_object):
   "title": "Dive into history, 2009 edition"
 }</samp></pre>
 
-<h3 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h3>
+<p class=a>&#x2042;
+
+<h2 id=json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></h2>
 
 <p>Since <abbr>JSON</abbr> is not Python-specific, there are some mismatches in its coverage of Python datatypes. Some of them are simply naming differences, but there is two important Python datatypes that are completely missing. See if you can spot them:
 
@@ -406,7 +408,9 @@ def protocol_version(file_object):
 
 <p>Did you notice what was missing? Tuples <i class=baa>&amp;</i> bytes! <abbr>JSON</abbr> has an array type, which the <code>json</code> module maps to a Python list, but it does not have a separate type for &#8220;frozen arrays&#8221; (tuples). And while <abbr>JSON</abbr> supports strings quite nicely, it has no support for <code>bytes</code> objects or byte arrays.
 
-<h3 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h3>
+<p class=a>&#x2042;
+
+<h2 id=json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></h2>
 
 <p>Even if <abbr>JSON</abbr> has no built-in support for bytes, that doesn&#8217;t mean you can&#8217;t serialize <code>bytes</code> objects. The <code>json</code> module provides extensibility hooks for encoding and decoding unknown datatypes. (By &#8220;unknown,&#8221; I mean &#8220;not defined in <abbr>JSON</abbr>.&#8221; Obviously the <code>json</code> module knows about byte arrays, but it&#8217;s constrained by the limitations of the <abbr>JSON</abbr> specification.) If you want to encode bytes or other datatypes that <abbr>JSON</abbr> doesn&#8217;t support natively, you need to provide custom encoders and decoders for those types.
 
@@ -524,23 +528,25 @@ def to_json(python_object):
 "article_link": "http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition",
 "published": true}</samp></pre>
 
-<h3 id=json-load>Loading Data from a <abbr>JSON</abbr> File</h3>
+<p class=a>&#x2042;
 
-<p>FIXME
+<h2 id=json-load>Loading Data from a <abbr>JSON</abbr> File</h2>
+
+<p>Like the <code>pickle</code> module, the <code>json</code> module has a <code>load()</code> function which takes a stream object, reads <abbr>JSON</abbr>-encoded data from it, and creates a new Python object that mirrors the <abbr>JSON</abbr> data structure.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>2</samp>
-<samp class=p>>>> </samp><kbd class=pp>del entry</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>del entry</kbd>                                             <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>entry</kbd>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 NameError: name 'entry' is not defined</samp>
 <samp class=p>>>> </samp><kbd class=pp>import json</kbd>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    entry = json.load(f)</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    entry = json.load(f)</kbd>                              <span class=u>&#x2461;</span></a>
 <samp class=p>... </samp>
-<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                                 <span class=u>&#x2462;</span></a>
 <samp class=pp>{'comments_link': None,
  'internal_id': {'__class__': 'bytes', '__value__': [222, 213, 180, 248]},
  'title': 'Dive into history, 2009 edition',
@@ -549,28 +555,38 @@ NameError: name 'entry' is not defined</samp>
  'published_date': {'__class__': 'time.asctime', '__value__': 'Fri Mar 27 22:20:42 2009'},
  'published': True}</samp></pre>
 <ol>
-<li>FIXME
+<li>For demonstration purposes, switch to Python Shell #2 and delete the <var>entry</var> data structure that you created earlier in this chapter with the <code>pickle</code> module.
+<li>In the simplest case, the <code>json.load()</code> function works the same as the <code>pickle.load()</code> function. You pass in a stream object and it returns a new Python object.
+<li>I have good news and bad news. Good news first: the <code>json.load()</code> function successfully read the <code>entry.json</code> file you created in Python Shell #1 and created a new Python object that contained the data. Now the bad news: it didn&#8217;t recreate the original <var>entry</var> data structure. The two values <code>'internal_id'</code> and <code>'published_date'</code> were recreated as dictionaries&nbsp;&mdash;&nbsp;specifically, the dictionaries with <abbr>JSON</abbr>-compatible values that you created in the <code>to_json()</code> conversion function.
 </ol>
 
-<p>FIXME
+<p><code>json.load()</code> doesn&#8217;t know anything about any conversion function you may have passed to <code>json.dump()</code>. What you need is the opposite of the <code>to_json()</code> function&nbsp;&mdash;&nbsp;a function that will take a custom-converted <abbr>JSON</abbr> object and convert it back to the original Python datatype.
 
-<pre class=pp><code># customserializer.py
-def from_json(json_object):
-    if '__class__' in json_object:
+<pre class=pp><code>
+<a>def from_json(json_object):                                   <span class=u>&#x2460;</span>
+<a>    if '__class__' in json_object:                            <span class=u>&#x2461;</span>
         if json_object['__class__'] == 'time.asctime':
-            return time.strptime(json_object['__value__'])
+<a>            return time.strptime(json_object['__value__'])    <span class=u>&#x2462;</span>
         if json_object['__class__'] == 'bytes':
-            return bytes(json_object['__value__'])
+<a>            return bytes(json_object['__value__'])            <span class=u>&#x2463;</span>
     return json_object</code></pre>
+<ol>
+<li>This conversion function also takes one parameter and returns one value. But the parameter it takes is not a string, it&#8217;s a Python object&nbsp;&mdash;&nbsp;the result of deserializing a <abbr>JSON</abbr>-encoded string into Python.
+<li>All you need to do is check whether this object contains the <code>'__class__'</code> key that the <code>to_json()</code> function created. If so, the value of the <code>'__class__'</code> key will tell you how to decode the value back into the original Python datatype.
+<li>To decode the time string returned by the <code>time.asctime()</code> function, you use the <code>time.strptime()</code> function. This function takes a formatted datetime string (in a customizable format, but it defaults to the same format that <code>time.asctime()</code> defaults to) and returns a <code>time.struct_time</code>.
+<li>To convert a list of integers back into a <code>bytes</code> object, you can use the <code>bytes()</code> function.
+</ol>
+
+<p>That was it; there were only two datatypes handled in the <code>to_json()</code> function, and now those two datatypes are handled in the <code>from_json()</code> function. This is the result:
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>2</samp>
 <samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    entry = json.load(f, object_hook = customserializer.from_json)</kbd>
+<a><samp class=p>... </samp><kbd class=pp>    entry = json.load(f, object_hook=customserializer.from_json)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp>
-<samp class=p>>>> </samp><kbd class=pp>entry</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry</kbd>                                                             <span class=u>&#x2461;</span></a>
 <samp class=pp>{'comments_link': None,
  'internal_id': b'\xDE\xD5\xB4\xF8',
  'title': 'Dive into history, 2009 edition',
@@ -579,29 +595,30 @@ def from_json(json_object):
  'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
  'published': True}</samp></pre>
 <ol>
-<li>FIXME
+<li>To hook the <code>from_json()</code> function into the deserialization process, pass it as the <var>object_hook</var> parameter to the <code>json.load()</code> function. Functions that take functions; it&#8217;s so handy!
+<li>The <var>entry</var> data structure now contains an <code>'internal_id'</code> key whose value is a <code>bytes</code> object. It also contains a <code>'published_date'</code> key whose value is a <code>time.struct_time</code> object.
 </ol>
 
-<p>FIXME
+<p>There is one final glitch, though.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'r', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    entry2 = json.load(f, object_hook = customserializer.from_json)</kbd>
+<samp class=p>... </samp><kbd class=pp>    entry2 = json.load(f, object_hook=customserializer.from_json)</kbd>
 <samp class=p>... </samp>
-<samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>                                                    <span class=u>&#x2460;</span></a>
 <samp class=pp>False</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry['tags']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry['tags']</kbd>                                                      <span class=u>&#x2461;</span></a>
 <samp class=pp>('diveintopython', 'docbook', 'html')</samp>
-<samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                                                     <span class=u>&#x2462;</span></a>
 <samp class=pp>['diveintopython', 'docbook', 'html']</samp></pre>
 <ol>
-<li>FIXME
+<li>Even after hooking the <code>to_json()</code> function into the serialization, and hooking the <code>from_json()</code> function into the deserialization, we still haven&#8217;t recreated a perfect replica of the original data structure. Why not?
+<li>In the original <var>entry</var> data structure, the value of the <code>'tags'</code> key was a tuple of three strings.
+<li>But in the round-tripped <var>entry2</var> data structure, the value of the <code>'tags'</code> key is a <em>list</em> of three strings. <abbr>JSON</abbr> doesn&#8217;t distinguish between tuples and lists; it only has a single list-like datatype, the array, and the <code>json</code> module silently converts both tuples and lists into <abbr>JSON</abbr> arrays during serialization. For most uses, you can ignore the difference between tuples and lists, but it&#8217;s something to keep in mind as you work with the <code>json</code> module.
 </ol>
-
-<p>FIXME
 
 <h2 id=furtherreading>Further Reading</h2>
 
@@ -609,13 +626,28 @@ def from_json(json_object):
 <p><span class=u>&#x261E;</span>Many articles about the <code>pickle</code> module make references to <code>cPickle</code>. In Python 2, there were two implementations of the <code>pickle</code> module, one written in pure Python and another written in C (but still callable from Python). In Python 3, <a href=porting-code-to-python-3-with-2to3.html#othermodules>these two modules have been consolidated</a>, so you should always just <code>import pickle</code>. You may find these articles useful, but you should ignore the now-obsolete information about <code>cPickle</code>.
 </blockquote>
 
+<p>On pickling with the <code>pickle</code> module:
+
 <ul>
 <li><a href=http://docs.python.org/3.1/library/pickle.html><code>pickle</code> module</a>
 <li><a href=http://www.doughellmann.com/PyMOTW/pickle/><code>pickle</code> and <code>cPickle</code>&nbsp;&mdash;&nbsp;Python object serialization</a>
 <li><a href=http://wiki.python.org/moin/UsingPickle>Using <code>pickle</code></a>
 <li><a href=http://www.ibm.com/developerworks/library/l-pypers.html>Python persistence management</a>
+</ul>
+
+<p>On <abbr>JSON</abbr> and the <code>json</code> module:
+
+<ul>
 <li><a href=http://www.doughellmann.com/PyMOTW/json/><code>json</code>&nbsp;&mdash;&nbsp;JavaScript Object Notation Serializer</a>
 <li><a href=http://blog.quaternio.net/2009/07/16/json-encoding-and-decoding-with-custom-objects-in-python/>JSON encoding and ecoding with custom objects in Python</a>
+</ul>
+
+<p>On pickle extensibility:
+
+<ul>
+<li><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances>Pickling class instances</a>
+<li><a href=http://docs.python.org/3.1/library/pickle.html#persistence-of-external-objects>Persistence of external objects</a>
+<li><a href=http://docs.python.org/3.1/library/pickle.html#handling-stateful-objects>Handling stateful objects</a>
 </ul>
 
 <p class=v><a rel=prev href=xml.html title='back to &#8220;XML&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=http-web-services.html title='onward to &#8220;HTTP Web Services&#8221;'><span class=u>&#x261E;</span></a>
