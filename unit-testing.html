@@ -420,7 +420,7 @@ FAILED (failures=2)</samp></pre>
 <pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
 <a>    if not (0 &lt; n &lt; 4000):                                              <span class=u>&#x2460;</span></a>
-<a>        raise OutOfRangeError('number out of range (must be 0..3999)')  <span class=u>&#x2461;</span></a>
+<a>        raise OutOfRangeError('number out of range (must be 1..3999)')  <span class=u>&#x2461;</span></a>
 
     result = ''
     for numeral, integer in roman_numeral_map:
@@ -517,7 +517,7 @@ FAILED (failures=1)</samp></pre>
 <pre class=pp><code>def to_roman(n):
     '''convert integer to Roman numeral'''
     if not (0 &lt; n &lt; 4000):
-        raise OutOfRangeError('number out of range (must be 0..3999)')
+        raise OutOfRangeError('number out of range (must be 1..3999)')
 <a>    if not isinstance(n, int):                                          <span class=u>&#x2460;</span></a>
 <a>        raise NotIntegerError('non-integers can not be converted')      <span class=u>&#x2461;</span></a>
 
