@@ -459,13 +459,13 @@ StopIteration</samp></pre>
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
  &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp></pre>
 <ol>
-<li>Once imported, <code>lxml</code> provides the same <abbr>API</abbr> as the built-in ElementTree libary.
+<li>Once imported, <code>lxml</code> provides the same <abbr>API</abbr> as the built-in ElementTree library.
 <li><code>parse()</code> function: same as ElementTree.
 <li><code>getroot()</code> method: also the same.
 <li><code>findall()</code> method: exactly the same.
 </ol>
 
-<p>For large <abbr>XML</abbr> documents, <code>lxml</code> is significantly faster than the built-in ElementTree libary. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import <code>lxml</code> and fall back to the built-in ElementTree.
+<p>For large <abbr>XML</abbr> documents, <code>lxml</code> is significantly faster than the built-in ElementTree library. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import <code>lxml</code> and fall back to the built-in ElementTree.
 
 <pre class='nd pp'><code>try:
     from lxml import etree
