@@ -468,13 +468,13 @@ OK</samp></pre>
 <li>Oh, that&#8217;s even worse. Both of these cases should raise an exception. Instead, they give bogus results.
 </ol>
 
-<p>Testing for non-integers is not difficult. First, define a <code>NonIntegerError</code> exception.
+<p>Testing for non-integers is not difficult. First, define a <code>NotIntegerError</code> exception.
 
 <pre class='nd pp'><code># roman4.py
 class OutOfRangeError(ValueError): pass
 <mark>class NotIntegerError(ValueError): pass</mark></code></pre>
 
-<p>Next, write a test case that checks for the <code>NonIntegerError</code> exception.
+<p>Next, write a test case that checks for the <code>NotIntegerError</code> exception.
 
 <pre class='nd pp'><code>class ToRomanBadInput(unittest.TestCase):
     .
