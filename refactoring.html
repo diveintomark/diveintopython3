@@ -225,7 +225,7 @@ FAILED (errors=3)</samp></pre>
 <li>The roundtrip check will also fail as soon as it hits <code>4000</code>, because <code>to_roman()</code> still thinks this is out of range.
 </ol>
 
-<p>Now that you have test cases that fail due to the new requirements, you can think about fixing the code to bring it in line with the test cases. (One thing that takes some getting used to when you first start coding unit tests is that the code being tested is never &#8220;ahead&#8221; of the test cases. While it&#8217;s behind, you still have some work to do, and as soon as it catches up to the test cases, you stop coding.)
+<p>Now that you have test cases that fail due to the new requirements, you can think about fixing the code to bring it in line with the test cases. (When you first start coding unit tests, it might feel strange that the code being tested is never &#8220;ahead&#8221; of the test cases. While it&#8217;s behind, you still have some work to do, and as soon as it catches up to the test cases, you stop coding. After you get used to it, you&#8217;ll wonder how you ever programmed without tests.)
 
 <p class=d>[<a href=examples/roman9.py>download <code>roman9.py</code></a>]
 <pre class=pp><code>roman_numeral_pattern = re.compile('''
