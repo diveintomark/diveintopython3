@@ -543,7 +543,7 @@ except ImportError:
 
 <pre class='nd pp'><code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
 
-<p>The only practical difference is that the second serialization is several characters shorter. If we were to recast our entire sample feed with a <code>ns0:</code> prefix in every start and end tag, it would add 4 characters per start tag &times; 79 tags + 4 characters for the namespace declaration itself, for a total of 316 characters. Assuming <a href=strings.html#byte-arrays>UTF-8 encoding</a>, that&#8217;s 316 extra bytes. (After gzipping, the difference drops to 21 bytes, but still, 21 bytes is 21 bytes.) Maybe that doesn&#8217;t matter to you, but for something like an Atom feed, which may be downloaded several thousand times whenever it changes, saving a few bytes per request can quickly add up.
+<p>The only practical difference is that the second serialization is several characters shorter. If we were to recast our entire sample feed with a <code>ns0:</code> prefix in every start and end tag, it would add 4 characters per start tag &times; 79 tags + 4 characters for the namespace declaration itself, for a total of 320 characters. Assuming <a href=strings.html#byte-arrays>UTF-8 encoding</a>, that&#8217;s 320 extra bytes. (After gzipping, the difference drops to 21 bytes, but still, 21 bytes is 21 bytes.) Maybe that doesn&#8217;t matter to you, but for something like an Atom feed, which may be downloaded several thousand times whenever it changes, saving a few bytes per request can quickly add up.
 
 <p>The built-in ElementTree library does not offer this fine-grained control over serializing namespaced elements, but <code>lxml</code> does.
 
