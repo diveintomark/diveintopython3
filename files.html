@@ -499,6 +499,18 @@ C</samp>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>cat out.log</kbd>
 <samp>B</samp></pre>
 
+<blockquote class=pf>
+<p>Did you get this error?
+<pre class='nd screen'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd class=pp>python3 stdout.py</kbd>
+<samp class=traceback>  File "stdout.py", line 15
+    with open('out.log', mode='w', encoding='utf-8') as a_file, RedirectStdoutTo(a_file):
+                                                              ^
+SyntaxError: invalid syntax</samp></pre>
+<p>If so, you&#8217;re probably using Python 3.0. You should really upgrade to Python 3.1.
+<p>Python 3.0 supported the <code>with</code> statement, but each statement can only use one context manager. Python 3.1 allows you to chain multiple context managers in a single <code>with</code> statement.
+</blockquote>
+
 <p>Let&#8217;s take the last part first.
 
 <pre class=pp><code>print('A')
