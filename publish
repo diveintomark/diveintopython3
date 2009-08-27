@@ -8,6 +8,8 @@ die () {
 
 echo "started build"
 
+revision=`hg tip | grep changeset|cut -d":" -f2|cut -d" " -f4`
+
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
@@ -17,6 +19,21 @@ cp -R i build/
 rm -f examples/*.pyc
 cp -R examples build/
 cp .htaccess build/
+
+echo "building HTML distribution"
+htmldir=build/diveintopython3-r"$revision"
+mkdir "$htmldir"
+cp *.html "$htmldir"/
+cp dip3.css "$htmldir"/
+mkdir "$htmldir"/i
+cp i/*.png "$htmldir"/i/
+mkdir "$htmldir"/j
+cp j/dip3.js j/html5.js j/jquery.js j/prettify.js "$htmldir"/j/
+mkdir "$htmldir"/examples
+cp examples/*.jpg examples/*.json examples/*.pickle examples/*.py examples/*.txt examples/*.xml "$htmldir"/examples/
+cd build/ && \
+    zip -9rq diveintopython3-r"$revision".zip diveintopython3-r"$revision" && \
+cd ..
 
 echo "linting JS"
 
