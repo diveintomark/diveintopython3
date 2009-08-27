@@ -138,7 +138,7 @@ NameError: name 'entry' is not defined</samp>
 <li>Now the <var>entry</var> variable is a dictionary with familiar-looking keys and values.
 </ol>
 
-<p>The <code>pickle.dump() / pickle.load()</code> cycle results in an identical copy of the original data structure.
+<p>The <code>pickle.dump() / pickle.load()</code> cycle results in a new data structure that is equal to the original data structure.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>shell</kbd>                                    <span class=u>&#x2460;</span></a>
@@ -156,7 +156,7 @@ NameError: name 'entry' is not defined</samp>
 <li>Switch back to Python Shell #1.
 <li>Open the <code>entry.pickle</code> file.
 <li>Load the serialized data into a new variable, <var>entry2</var>.
-<li>Python confirms that the two dictionaries, <var>entry</var> and <var>entry2</var>, are identical. In this shell, you built <var>entry</var> from the ground up, starting with an empty dictionary and manually assigning values to specific keys. You serialized this dictionary and stored it in the <code>entry.pickle</code> file. Now you&#8217;ve read the serialized data from that file and created a perfect replica of the original data structure.
+<li>Python confirms that the two dictionaries, <var>entry</var> and <var>entry2</var>, are equal. In this shell, you built <var>entry</var> from the ground up, starting with an empty dictionary and manually assigning values to specific keys. You serialized this dictionary and stored it in the <code>entry.pickle</code> file. Now you&#8217;ve read the serialized data from that file and created a perfect replica of the original data structure.
 <li>For reasons that will become clear later in this chapter, I want to point out that the value of the <code>'tags'</code> key is a tuple, and the value of the <code>'internal_id'</code> key is a <code>bytes</code> object.
 </ol>
 
