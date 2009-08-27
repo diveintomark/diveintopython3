@@ -320,7 +320,6 @@ warning: check: missing required meta-data: version</samp></pre>
 <p>Distutils supports building multiple types of release packages. At a minimum, you should build a &#8220;source distribution&#8221; that contains your source code, your Distutils setup script, your &#8220;read me&#8221; file, and whatever <a href=#manifest>additional files you want to include</a>. To build a source distribution, pass the <code>sdist</code> command to your Distutils setup script.
 
 <pre class=screen>
-FIXME again
 <samp class=p>c:\Users\pilgrim\chardet> </samp><kbd><mark>c:\python31\python.exe setup.py sdist</mark></kbd>
 <samp>running sdist
 running check
@@ -469,35 +468,62 @@ removing 'build\bdist.win32\wininst' (and everything under it)</samp>
 
 <p class=a>&#x2042;
 
-<h2 id=pypi>Adding Your Package to The Python Package Index</h2>
+<h2 id=pypi>Adding Your Software to The Python Package Index</h2>
 
-<p>FIXME
+<p>Uploading software to the Python Package Index is a three step process.
 
-<h3 id=register-user>Registering Yourself</h3>
+<ol>
+<li>Register yourself
+<li>Register your software
+<li>Upload the packages you created with <code>setup.py sdist</code> and <code>setup.py bdist_*</code>
+</ol>
 
-<pre>
-http://pypi.python.org/pypi?:action=register_form
-</pre>
+<p>To register yourself, go to <a href=http://pypi.python.org/pypi?:action=register_form>the PyPI user registration page</a>. Enter your desired username and password, provide a valid email address, and click the <code>Register</code> button. (If you have a <abbr>PGP</abbr> or <abbr>GPG</abbr> key, you can also provide that. If you don&#8217;t have one or don&#8217;t know what that means, don&#8217;t worry about it.) Check your email; within a few minutes, you should receive a message from PyPI with a validation link. Click the link to complete the registration process.
 
-<p>Enter your desired username and password, provide a valid email address, and click the <code>Register</code> button. (If you have a <abbr>PGP</abbr> or <abbr>GPG</abbr> key, you can also provide that. If you don&#8217;t have one or don&#8217;t know what that means, don&#8217;t worry about it.) Check your email; within a few minutes, you should receive a message from PyPI with a validation link. Click the link to complete the registration process.
+<p>Now you need to register your software with PyPI and upload it. You can do this all in one step.
 
+<pre class=screen>
+<a><samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py register sdist bdist_wininst upload</kbd>  <span class=u>&#x2460;</span></a>
+<samp>running register
+We need to know who you are, so please choose either:
+ 1. use your existing login,
+ 2. register as a new user,
+ 3. have the server generate a new password for you (and email it to you), or
+ 4. quit</samp>
+<a><samp class=p>Your selection [default 1]:  </samp><kbd>1</kbd>                                                                 <span class=u>&#x2461;</span></a>
+<a><samp class=p>Username: </samp><kbd>MarkPilgrim</kbd>                                                                          <span class=u>&#x2462;</span></a>
+<samp class=p>Password:</samp>
+<a><samp>Registering chardet to http://pypi.python.org/pypi</samp>                                             <span class=u>&#x2463;</span></a>
+<samp>Server response (200): OK</samp>
+<a><samp>running sdist</samp>                                                                                  <span class=u>&#x2464;</span></a>
+<samp>... output trimmed for brevity ...</samp>
+<a><samp>running bdist_wininst</samp>                                                                          <span class=u>&#x2465;</span></a>
+<samp>... output trimmed for brevity ...</samp>
+<a><samp>running upload</samp>                                                                                 <span class=u>&#x2466;</span></a>
+<samp>Submitting dist\chardet-1.0.2.zip to http://pypi.python.org/pypi
+Server response (200): OK
+Submitting dist\chardet-1.0.2.win32.exe to http://pypi.python.org/pypi
+Server response (200): OK
+I can store your PyPI login so future submissions will be faster.
+(the login will be stored in c:\home\.pypirc)</samp>
+<a><samp class=p>Save your login (y/N)?</samp><kbd class=pp>n</kbd>                                                                        <span class=u>&#x2467;</span></a></pre>
+<ol>
+<li>When you release your project for the first time, Distutils will add your software to the Python Package Index and give it its own <abbr>URL</abbr>. Every time after that, it will simply update the project metadata with any changes you may have made in your <code>setup.py</code> parameters. Next, it builds a source distribution (<code>sdist</code>) and a Windows installer (<code>bdist_wininst</code>), then uploads them to PyPI (<code>upload</code>).
+<li>Type <kbd>1</kbd> or just press <kbd>ENTER</kbd> to select &#8220;use your existing login.&#8221;
+<li>Enter the username and password you selected on the <a href=http://pypi.python.org/pypi?:action=register_form>the PyPI user registration page</a>. Distuils will not echo your password; it will not even echo asterisks in place of characters. Just type your password and press <kbd>ENTER</kbd>.
+<li>Distutils registers your package with the Python Package Index&hellip;
+<li>&hellip;builds your source distribution&hellip;
+<li>&hellip;builds your Windows installer&hellip;
+<li>&hellip;and uploads them both to the Python Package Index.
+<li>If you want to automate the process of releasing new versions, you need to save your PyPI credentials in a local file. This is completely insecure and completely optional.
+</ol>
 
+<p>Congratulations, you now have your own page on the Python Package Index! The address is <code>http://pypi.python.org/pypi/<i>NAME</i></code>, where <i>NAME</i> is the string you passed in the <var>name</var> parameter in your <code>setup.py</code> file.
 
-<h3 id=register-package>Registering Your Package</h3>
+<p>If you want to release a new version, just update your <code>setup.py</code> with the new version number, then run the same upload command again:
 
-<p>FIXME
-
-<h3 id=upload>Uploading New Versions</h3>
-
-<p>FIXME
-
-<pre>
-@jessenoller sez:
- * distutils, how to make a setup.py (and include data files, tests, docs, etc for a project)
- * how to upload it to pypi properly (label it for python 3 for the love of pete)
- * how to build build bdist/RPMs/DEBs.
- * If you can - and I've forgotten how much distutils supports of this, cover dependency management.
- * <mark>Oh, I almost forgot - cover the Per-User Site packages stuff, PEP 370</mark>
+<pre class='nd screen'>
+<samp class=p>c:\Users\pilgrim\chardet> </samp><kbd>c:\python31\python.exe setup.py register sdist bdist_wininst upload</kbd>
 </pre>
 
 <p class=a>&#x2042;
