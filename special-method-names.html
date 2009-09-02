@@ -233,7 +233,7 @@ class _ZipDecrypter:
 <a>    def __call__(self, c):                  <span class=u>&#x2461;</span></a>
         assert isinstance(c, int)
         k = self.key2 | 2
-        c = c ^ (((k * (k^1)) >> 8) & 255)
+        c = c ^ (((k * (k^1)) >> 8) &amp; 255)
         self._UpdateKeys(c)
         return c
 .
