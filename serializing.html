@@ -569,12 +569,13 @@ NameError: name 'entry' is not defined</samp>
 <p><code>json.load()</code> doesn&#8217;t know anything about any conversion function you may have passed to <code>json.dump()</code>. What you need is the opposite of the <code>to_json()</code> function&nbsp;&mdash;&nbsp;a function that will take a custom-converted <abbr>JSON</abbr> object and convert it back to the original Python datatype.
 
 <pre class=pp><code>
-<a>def from_json(json_object):                                   <span class=u>&#x2460;</span>
-<a>    if '__class__' in json_object:                            <span class=u>&#x2461;</span>
+# add this to customserializer.py
+<a>def from_json(json_object):                                   <span class=u>&#x2460;</span></a>
+<a>    if '__class__' in json_object:                            <span class=u>&#x2461;</span></a>
         if json_object['__class__'] == 'time.asctime':
-<a>            return time.strptime(json_object['__value__'])    <span class=u>&#x2462;</span>
+<a>            return time.strptime(json_object['__value__'])    <span class=u>&#x2462;</span></a>
         if json_object['__class__'] == 'bytes':
-<a>            return bytes(json_object['__value__'])            <span class=u>&#x2463;</span>
+<a>            return bytes(json_object['__value__'])            <span class=u>&#x2463;</span></a>
     return json_object</code></pre>
 <ol>
 <li>This conversion function also takes one parameter and returns one value. But the parameter it takes is not a string, it&#8217;s a Python object&nbsp;&mdash;&nbsp;the result of deserializing a <abbr>JSON</abbr>-encoded string into Python.
