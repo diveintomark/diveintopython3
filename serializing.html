@@ -353,7 +353,7 @@ def protocol_version(file_object):
 <samp class=p>>>> </samp><kbd class=pp>with open('basic-pretty.json', mode='w', encoding='utf-8') as f:</kbd>
 <a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f, <mark style="display:inline">indent=2</mark>)                            <span class=u>&#x2460;</span></a></kbd></pre>
 <ol>
-<li>If you pass an <var>indent</var> parameter to the <code>json.dump()</code> function, it will make the resulting <abbr>JSON</abbr> file more readable, at the expense of larger file size. The <var>indent</var> parameter is an integer. 0 means &#8220;put each value on its own line.&#8221; A number greater than 0 means &#8220;put each value on its own line, and indent that many spaces.&#8221;
+<li>If you pass an <var>indent</var> parameter to the <code>json.dump()</code> function, it will make the resulting <abbr>JSON</abbr> file more readable, at the expense of larger file size. The <var>indent</var> parameter is an integer. 0 means &#8220;put each value on its own line.&#8221; A number greater than 0 means &#8220;put each value on its own line, and use this number of spaces to indent nested data structures.&#8221;
 </ol>
 
 <p>And this is the result:
