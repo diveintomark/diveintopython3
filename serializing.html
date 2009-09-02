@@ -474,7 +474,7 @@ def protocol_version(file_object):
 <samp class=pp>1</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>import customserializer</kbd>                                                             <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>                                <span class=u>&#x2461;</span></a>
-<a><samp class=p>... </samp><kbd class=pp>    json.dump(entry, <mark style="display:inline">default=customserializer.to_json</mark>)</kbd>                              <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    json.dump(entry, f, <mark style="display:inline">default=customserializer.to_json</mark>)</kbd>                           <span class=u>&#x2462;</span></a>
 <samp class=p>... </samp>
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 9, in &lt;module>
@@ -521,7 +521,7 @@ def to_json(python_object):
 <samp class=p>>>> </samp><kbd class=pp>shell</kbd>
 <samp class=pp>1</samp>
 <samp class=p>>>> </samp><kbd class=pp>with open('entry.json', 'w', encoding='utf-8') as f:</kbd>
-<samp class=p>... </samp><kbd class=pp>    json.dump(entry, default=customserializer.to_json)</kbd>
+<samp class=p>... </samp><kbd class=pp>    json.dump(entry, f, default=customserializer.to_json)</kbd>
 <samp class=p>... </samp></pre>
 
 <pre class=screen>
