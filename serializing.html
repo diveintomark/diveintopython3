@@ -148,7 +148,9 @@ NameError: name 'entry' is not defined</samp>
 <samp class=p>... </samp>
 <a><samp class=p>>>> </samp><kbd class=pp>entry2 == entry</kbd>                          <span class=u>&#x2463;</span></a>
 <samp class=pp>True</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2 is entry</kbd>                          <span class=u>&#x2463;</span></a>
+<samp class=pp>False</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>entry2['tags']</kbd>                           <span class=u>&#x2465;</span></a>
 <samp class=pp>('diveintopython', 'docbook', 'html')</samp>
 <samp class=p>>>> </samp><kbd class=pp>entry2['internal_id']</kbd>
 <samp class=pp>b'\xDE\xD5\xB4\xF8'</samp></pre>
@@ -157,6 +159,7 @@ NameError: name 'entry' is not defined</samp>
 <li>Open the <code>entry.pickle</code> file.
 <li>Load the serialized data into a new variable, <var>entry2</var>.
 <li>Python confirms that the two dictionaries, <var>entry</var> and <var>entry2</var>, are equal. In this shell, you built <var>entry</var> from the ground up, starting with an empty dictionary and manually assigning values to specific keys. You serialized this dictionary and stored it in the <code>entry.pickle</code> file. Now you&#8217;ve read the serialized data from that file and created a perfect replica of the original data structure.
+<li>Equality is not the same as identity. I said you&#8217;ve created a <em>perfect replica</em> of the original data structure, which is true. But it&#8217;s still a copy.
 <li>For reasons that will become clear later in this chapter, I want to point out that the value of the <code>'tags'</code> key is a tuple, and the value of the <code>'internal_id'</code> key is a <code>bytes</code> object.
 </ol>
 
