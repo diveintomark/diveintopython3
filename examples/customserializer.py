@@ -9,6 +9,7 @@ def to_json(python_object):
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
                 '__value__': list(python_object)}
+    raise TypeError
 
 def from_json(json_object):
     if '__class__' in json_object:

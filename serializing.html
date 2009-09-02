@@ -458,11 +458,13 @@ def protocol_version(file_object):
 <a>def to_json(python_object):                                             <span class=u>&#x2460;</span></a>
 <a>    if isinstance(python_object, bytes):                                <span class=u>&#x2461;</span></a>
 <a>        return {'__class__': 'bytes',
-                '__value__': list(python_object)}                       <span class=u>&#x2462;</span></a></code></pre>
+                '__value__': list(python_object)}                       <span class=u>&#x2462;</span></a>
+<a>    raise TypeError                                                     <span class=u>&#x2463;</span></a></code></pre>
 <ol>
 <li>To define your own &#8220;mini-serialization format&#8221; for a datatype that <abbr>JSON</abbr> doesn&#8217;t support natively, just define a function that takes a Python object as a parameter. This Python object will be the actual object that the <code>json.dump()</code> function is unable to serialize by itself&nbsp;&mdash;&nbsp;in this case, the <code>bytes</code> object <code>b'\xDE\xD5\xB4\xF8'</code>.
 <li>Your custom serialization function should check the type of the Python object that the <code>json.dump()</code> function passed to it. This is not strictly necessary if your function only serializes one datatype, but it makes it crystal clear what case your function is covering, and it makes it easier to extend if you need to add serializations for more datatypes later.
 <li>In this case, I&#8217;ve chosen to convert a <code>bytes</code> object into a dictionary. The <code>__class__</code> key will hold the original datatype (as a string, <code>'bytes'</code>), and the <code>__value__</code> key will hold the actual value. Of course this can&#8217;t be a <code>bytes</code> object; the entire point is to convert it into something that can be serialized in <abbr>JSON</abbr>! A <code>bytes</code> object is just a sequence of integers; each integer is somewhere in the range 0&ndash;255. We can use the <code>list()</code> function to convert the <code>bytes</code> object into a list of integers. So <code>b'\xDE\xD5\xB4\xF8'</code> becomes <code>[222, 213, 180, 248]</code>. (Do the math! It works! The byte <code>\xDE</code> in hexadecimal is 222 in decimal, <code>\xD5</code> is 213, and so on.)
+<li>This line is important. The data structure you&#8217;re serializing may contain types that neither the built-in <abbr>JSON</abbr> serializer nor your custom serializer can handle. In this case, your custom serializer must raise a <code>TypeError</code> so that the <code>json.dump()</code> function knows that your custom serializer did not recognize the type.
 </ol>
 
 <p>That&#8217;s it; you don&#8217;t need to do anything else. In particular, this custom serialization function <em>returns a Python dictionary</em>, not a string. You&#8217;re not doing the entire serializing-to-<abbr>JSON</abbr> yourself; you&#8217;re only doing the converting-to-a-supported-datatype part. The <code>json.dump()</code> function will do the rest.
@@ -506,7 +508,8 @@ def to_json(python_object):
                 '__value__': time.asctime(python_object)}    <span class=u>&#x2461;</span></a>
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
-                '__value__': list(python_object)}</code></pre>
+                '__value__': list(python_object)}
+    raise TypeError</code></pre>
 <ol>
 <li>Adding to our existing <code>customserializer.to_json()</code> function, we need to check whether the Python object (that the <code>json.dump()</code> function is having trouble with) is a <code>time.struct_time</code>.
 <li>If so, we&#8217;ll do something similar to the conversion we did with the <code>bytes</code> object: convert the <code>time.struct_time</code> object to a dictionary that only contains <abbr>JSON</abbr>-serializable values. In this case, the easiest way to convert a datetime into a <abbr>JSON</abbr>-serializable value is to convert it to a string with the <code>time.asctime()</code> function. The <code>time.asctime()</code> function will convert that nasty-looking <code>time.struct_time</code> into the string <code>'Fri Mar 27 22:20:42 2009'</code>.
