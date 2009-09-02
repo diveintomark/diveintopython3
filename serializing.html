@@ -406,7 +406,7 @@ def protocol_version(file_object):
 <tr><th>*
 <td><code>null</code>
 <td><code><a href=native-datatypes.html#none>None</a></code>
-<tfoot><td colspan=3>* All <abbr>JSON</abbr> values are case-sensitive.
+<tfoot><tr><td colspan=3>* All <abbr>JSON</abbr> values are case-sensitive.
 </table>
 
 <p>Did you notice what was missing? Tuples <i class=baa>&amp;</i> bytes! <abbr>JSON</abbr> has an array type, which the <code>json</code> module maps to a Python list, but it does not have a separate type for &#8220;frozen arrays&#8221; (tuples). And while <abbr>JSON</abbr> supports strings quite nicely, it has no support for <code>bytes</code> objects or byte arrays.
