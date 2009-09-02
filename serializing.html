@@ -568,8 +568,7 @@ NameError: name 'entry' is not defined</samp>
 
 <p><code>json.load()</code> doesn&#8217;t know anything about any conversion function you may have passed to <code>json.dump()</code>. What you need is the opposite of the <code>to_json()</code> function&nbsp;&mdash;&nbsp;a function that will take a custom-converted <abbr>JSON</abbr> object and convert it back to the original Python datatype.
 
-<pre class=pp><code>
-# add this to customserializer.py
+<pre class=pp><code># add this to customserializer.py
 <a>def from_json(json_object):                                   <span class=u>&#x2460;</span></a>
 <a>    if '__class__' in json_object:                            <span class=u>&#x2461;</span></a>
         if json_object['__class__'] == 'time.asctime':
