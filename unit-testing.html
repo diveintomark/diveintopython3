@@ -35,11 +35,11 @@ body{counter-reset:h1 9}
 <p>This is called <i>test-driven development</i>, or <abbr>TDD</abbr>. The set of two conversion functions&nbsp;&mdash;&nbsp;<code>to_roman()</code>, and later <code>from_roman()</code>&nbsp;&mdash;&nbsp;can be written and tested as a unit, separate from any larger program that imports them. Python has a framework for unit testing, the appropriately-named <code>unittest</code> module.
 <p>Unit testing is an important part of an overall testing-centric development strategy. If you write unit tests, it is important to write them early and to keep them updated as code and requirements change. Many people advocate writing tests before they write the code they&#8217;re testing, and that&#8217;s the style I&#8217;m going to demonstrate in this chapter. But unit tests are beneficial no matter when you write them.
 <ul>
-<li>Before writing code, it forces you to detail your requirements in a useful fashion.
-<li>While writing code, it keeps you from over-coding. When all the test cases pass, the function is complete.
-<li>When refactoring code, it assures you that the new version behaves the same way as the old version.
-<li>When maintaining code, it helps you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
-<li>When writing code in a team, it increases confidence that the code you&#8217;re about to commit isn&#8217;t going to break someone else&#8217;s code, because you can run their unit tests first. (I&#8217;ve seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn&#8217;t play well with others.)
+<li>Before writing code, writing unit tests forces you to detail your requirements in a useful fashion.
+<li>While writing code, unit tests keep you from over-coding. When all the test cases pass, the function is complete.
+<li>When refactoring code, they can help prove that the new version behaves the same way as the old version.
+<li>When maintaining code, having tests will help you cover your ass when someone comes screaming that your latest change broke their old code. (&#8220;But <em>sir</em>, all the unit tests passed when I checked it in...&#8221;)
+<li>When writing code in a team, having a comprehensive test suite dramatically decreases the chances that your code will break someone else&#8217;s code, because you can run their unit tests first. (I&#8217;ve seen this sort of thing in code sprints. A team breaks up the assignment, everybody takes the specs for their task, writes unit tests for it, then shares their unit tests with the rest of the team. That way, nobody goes off too far into developing code that doesn&#8217;t play well with others.)
 </ul>
 <p class=a>&#x2042;
 
