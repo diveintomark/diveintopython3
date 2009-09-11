@@ -420,6 +420,7 @@ mark{display:inline}
 <li>The other three results are each entry-level alternate links. Each <code>entry</code> has a single <code>link</code> child element, and because of the double slash at the beginning of the query, this query finds all of them.
 </ol>
 
+<!--
 <p>What&#8217;s that? You say you want the power of the <code>findall()</code> method, but you want to work with an iterator instead of building a complete list? ElementTree can do that too.
 
 <pre class=screen>
@@ -441,6 +442,7 @@ StopIteration</samp></pre>
 <li>The <code>getiterator()</code> method can take zero or one arguments. If called with no arguments, it returns an iterator that spits out every element and child element in the entire document. Or, as shown here, you can call it with an element name in standard ElementTree format. This returns an iterator that spits out only elements of that name.
 <li>Repeatedly calling the <code>next()</code> function with this iterator will eventually return every element of the document that matches the query you passed to the <code>getiterator()</code> method.
 </ol>
+-->
 
 <p>Overall, ElementTree&#8217;s <code>findall()</code> method is a very powerful feature, but the query language can be a bit surprising. It is officially described as &#8220;<a href=http://effbot.org/zone/element-xpath.htm>limited support for XPath expressions</a>.&#8221; <a href=http://www.w3.org/TR/xpath>XPath</a> is a W3C standard for querying <abbr>XML</abbr> documents. ElementTree&#8217;s query language is similar enough to XPath to do basic searching, but dissimilar enough that it may annoy you if you already know XPath. Now let&#8217;s look at a third-party <abbr>XML</abbr> library that extends the ElementTree <abbr>API</abbr> with full XPath support.
 
