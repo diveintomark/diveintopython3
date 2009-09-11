@@ -240,7 +240,7 @@ OK</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>roman1.to_roman(9000)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=pp>'MMMMMMMMM'</samp></pre>
 <ol>
-<li>That&#8217;s definitely not what you wanted&nbsp;&mdash;&nbsp;that&#8217;s not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better that it fail quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
+<li>That&#8217;s definitely not what you wanted&nbsp;&mdash;&nbsp;that&#8217;s not even a valid Roman numeral! In fact, each of these numbers is outside the range of acceptable input, but the function returns a bogus value anyway. Silently returning bad values is <em>baaaaaaad</em>; if a program is going to fail, it is far better if it fails quickly and noisily. &#8220;Halt and catch fire,&#8221; as the saying goes. The Pythonic way to halt and catch fire is to raise an exception.
 </ol>
 <p>The question to ask yourself is, &#8220;How can I express this as a testable requirement?&#8221; How&#8217;s this for starters:
 <blockquote>
