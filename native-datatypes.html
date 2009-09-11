@@ -544,7 +544,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <li><var>v</var> is a tuple of three elements, and <code>(x, y, z)</code> is a tuple of three variables. Assigning one to the other assigns each of the values of <var>v</var> to each of the variables, in order.
 </ol>
 
-<p>This has all kinds of uses. I often want to assign names to a range of values. In <abbr>C</abbr>, you would use <code>enum</code> and manually list each constant and its associated value, which seems especially tedious when the values are consecutive. In Python, you can use the built-in <code>range()</code> function with multi-variable assignment to quickly assign consecutive values.
+<p>This has all kinds of uses. Suppose you want to assign names to a range of values. You can use the built-in <code>range()</code> function with multi-variable assignment to quickly assign consecutive values.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)</kbd>  <span class=u>&#x2460;</span></a>
