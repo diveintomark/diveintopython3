@@ -125,7 +125,6 @@ chmod 755 build/examples build/j build/i && \
 
 # ship it!
 echo -n "publishing"
-die "Intentionally aborting without publishing"
 rsync -essh -a build/d/.htaccess build/*.zip diveintomark.org:~/web/diveintopython3.org/d/ && \
     echo -n "." && \
     rsync -essh -a build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/dip3/ && \
