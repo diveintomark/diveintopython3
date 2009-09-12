@@ -54,3 +54,6 @@ h3 {
 ul, ol {
   margin: 1.75em 20pt;
 }
+abbr {
+  text-decoration: none;
+}

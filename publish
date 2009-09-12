@@ -9,10 +9,12 @@ die () {
 echo "started build"
 
 revision=`hg tip | grep changeset|cut -d":" -f2|cut -d" " -f4`
+today=`date +"%Y-%m-%d"`
 
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
+mkdir build/d
 cp robots.txt *.css build/
 cp -R j build/
 cp -R i build/
@@ -21,8 +23,9 @@ cp -R examples build/
 cp .htaccess build/
 
 echo "building HTML distribution"
-htmldir=build/diveintopython3-r"$revision"
-mkdir "$htmldir"
+htmlbasedir=diveintopython3-r"$revision"-"$today"
+htmldir=build/"$htmlbasedir"
+mkdir -p "$htmldir"
 cp *.html "$htmldir"/
 cp dip3.css "$htmldir"/
 mkdir "$htmldir"/i
@@ -32,8 +35,26 @@ cp j/dip3.js j/html5.js j/jquery.js j/prettify.js "$htmldir"/j/
 mkdir "$htmldir"/examples
 cp examples/*.jpg examples/*.json examples/*.pickle examples/*.py examples/*.txt examples/*.xml "$htmldir"/examples/
 cd build/ && \
-    zip -9rq diveintopython3-r"$revision".zip diveintopython3-r"$revision" && \
+    zip -9rq diveintopython3-html-r"$revision"-"$today".zip "$htmlbasedir" && \
 cd ..
+echo "Redirect /d/diveintopython3-html-latest.zip http://diveintopython3.org/d/diveintopython3-html-r$revision-$today.zip" >> build/d/.htaccess
+mv "$htmldir" "$htmldir".html.bak
+
+echo "building PDF distribution"
+python3 util/flatten.py # outputs to build/single.html
+pdfbasedir="$htmlbasedir"
+pdfdir="$htmldir"
+mkdir -p "$pdfdir"
+pdffile="$pdfdir"/diveintopython3-r"$revision".pdf
+prince --style=prince.css --output="$pdffile" build/single.html 2>build/prince.log
+mkdir "$pdfdir"/examples
+cp examples/*.jpg examples/*.json examples/*.pickle examples/*.py examples/*.txt examples/*.xml "$pdfdir"/examples/
+cd build/ && \
+    zip -9rq diveintopython3-pdf-r"$revision"-"$today".zip "$pdfbasedir" && \
+cd ..
+echo "Redirect /d/diveintopython3-pdf-latest.zip http://diveintopython3.org/d/diveintopython3-pdf-r$revision-$today.zip" >> build/d/.htaccess
+mv "$pdfdir" "$pdfdir".pdf.bak
+mv build/single.html build/single.html.bak
 
 echo "linting JS"
 
@@ -104,7 +125,10 @@ chmod 755 build/examples build/j build/i && \
 
 # ship it!
 echo -n "publishing"
-rsync -essh -a build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/dip3/ && \
+die "Intentionally aborting without publishing"
+rsync -essh -a build/d/.htaccess build/*.zip diveintomark.org:~/web/diveintopython3.org/d/ && \
+    echo -n "." && \
+    rsync -essh -a build/i/* build/i/.htaccess diveintomark.org:~/web/wearehugh.com/dip3/ && \
     echo -n "." && \
     rsync -essh -a build/j/$revision.js build/j/html5.js build/j/.htaccess diveintomark.org:~/web/diveintopython3.org/j/ && \
     echo -n "." && \

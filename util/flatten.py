@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import re
+import time
 
 # get list of chapters
 chapters = []
@@ -17,7 +18,7 @@ id_munge = re.compile(" id=(.*?)[ >]")
 
 # munge and combine chapter-specific styles
 out = open('build/single.html', 'w', encoding="utf-8")
-out.write(open('util/single-header.html', encoding="utf-8").read())
+out.write(open('util/single-header.html', encoding="utf-8").read().replace('%%DATE%%', time.strftime('%Y-%m-%d', time.localtime())))
 out.write("<style>\n")
 for filename in chapters:
     include = False
