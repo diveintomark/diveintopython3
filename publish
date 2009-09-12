@@ -120,8 +120,8 @@ sed -i -e "s|=http:|=|g" build/*.html && \
     sed -i -e "s|href=index.html|href=/|g" build/*.html || die "Failed to minimize URLs"
 
 # set file permissions (hg resets these, don't know why)
-chmod 755 build/examples build/j build/i && \
-    chmod 644 build/*.html build/*.css build/*.txt build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/.htaccess || die "Failed to reset file permissions"
+chmod 755 build/examples build/j build/i build/d && \
+    chmod 644 build/*.html build/*.css build/*.txt build/*.zip build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/d/.htaccess build/.htaccess || die "Failed to reset file permissions"
 
 # ship it!
 echo -n "publishing"
