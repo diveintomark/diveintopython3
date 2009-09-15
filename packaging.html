@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<head>
 <meta charset=utf-8>
 <title>Packaging Python Libraries - Dive into Python 3</title>
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
@@ -11,7 +10,6 @@ mark{display:inline}
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
 <meta name=viewport content='initial-scale=1.0'>
-</head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=root value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#packaging>Dive Into Python 3</a> <span class=u>&#8227;</span>
 <p id=level>Difficulty level: <span class=u title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
@@ -85,6 +83,7 @@ This version requires Python 3 or later; a Python 2 version is available separat
 
 <ul>
 <li><b>Choose a license</b>. This is a complicated topic, fraught with politics and peril. If you wish to release your software as open source, I humbly offer five pieces of advice:
+
 <ol>
 <li>Don&#8217;t write your own license.
 <li>Don&#8217;t write your own license.
@@ -198,8 +197,6 @@ setup(
 )</code></pre>
 
 <p>The <code>packages</code> parameter highlights an unfortunate vocabulary overlap in the distribution process. We&#8217;ve been talking about the &#8220;package&#8221; as the thing you&#8217;re building (and potentially listing in The Python &#8220;Package&#8221; Index). But that&#8217;s not what this <code>packages</code> parameter refers to. It refers to the fact that the <code>chardet</code> module is <a href=case-study-porting-chardet-to-python-3.html#multifile-modules>a multi-file module</a>, sometimes known as&hellip; a &#8220;package.&#8221; The <code>packages</code> parameter tells Distutils to include the <code>chardet/</code> directory, its <code>__init__.py</code> file, and all the other <code>.py</code> files that constitute the <code>chardet</code> module. That&#8217;s kind of important; all this happy talk about documentation and metadata is irrelevant if you forget to include the actual code!
-
-<p>The <code>httplib2</code> library is also a multi-file module, has a similar directory structure, and a similar <code>packages</code>
 
 <p class=a>&#x2042;
 
