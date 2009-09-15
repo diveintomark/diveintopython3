@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<head>
 <meta charset=utf-8>
 <title>Table of contents - Dive Into Python 3</title>
 <link rel=stylesheet href=dip3.css>
@@ -13,7 +12,6 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
 <meta name=viewport content='initial-scale=1.0'>
-</head>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8><input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
 <p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> Dive Into Python 3 <span class=u>&#8227;</span>
 <h1>Table of Contents</h1>
@@ -291,38 +289,57 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   </ol>
 <li id=case-study-porting-chardet-to-python-3><a href=case-study-porting-chardet-to-python-3.html>Case study: porting <code>chardet</code> to Python 3</a>
   <ol>
-  <li><a href=case-study-porting-chardet-to-python-3.html#divingin>Introducing <code>chardet</code>: a mini-FAQ</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#divingin>Diving In</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#faq.what>What is Character Encoding Auto-Detection?</a>
     <ol>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.what>What is character encoding auto-detection?</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.impossible>Isn&#8217;t that impossible?</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.who>Who wrote this detection algorithm?</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.yippie>Yippie!  Screw the standards, I&#8217;ll just auto-detect everything!</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#faq.why>Why bother with auto-detection if it&#8217;s slow, inaccurate, and non-standard?</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#faq.impossible>Isn&#8217;t That Impossible?</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#faq.who>Does Such An Algorithm Exist?</a>
     </ol>
-  <li><a href=case-study-porting-chardet-to-python-3.html#divingin2>Diving in</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#divingin2>Introducing The <code>chardet</code> Module</a>
     <ol>
-    <li><a href=case-study-porting-chardet-to-python-3.html#how.bom><code>UTF-n</code> with a BOM</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#how.esc>Escaped encodings</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#how.mb>Multi-byte encodings</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#how.sb>Single-byte encodings</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#how.bom><code>UTF-n</code> With A <abbr>BOM</abbr></a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#how.esc>Escaped Encodings</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#how.mb>Multi-Byte Encodings</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#how.sb>Single-Byte Encodings</a>
     <li><a href=case-study-porting-chardet-to-python-3.html#how.windows1252><code>windows-1252</code></a>
     </ol>
   <li><a href=case-study-porting-chardet-to-python-3.html#running2to3>Running <code>2to3</code></a>
-  <li><a href=case-study-porting-chardet-to-python-3.html#manual>Fixing what <code>2to3</code> can&#8217;t</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#multifile-modules>A Short Digression Into Multi-File Modules</a>
+  <li><a href=case-study-porting-chardet-to-python-3.html#manual>Fixing What <code>2to3</code> Can&#8217;t</a>
     <ol>
     <li><a href=case-study-porting-chardet-to-python-3.html#falseisinvalidsyntax><code>False</code> is invalid syntax</a>
     <li><a href=case-study-porting-chardet-to-python-3.html#nomodulenamedconstants>No module named <code>constants</code></a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#namefileisnotdefined>Name '<var>file</var>' is not defined</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#namefileisnotdefined>Name <var>'file'</var> is not defined</a>
     <li><a href=case-study-porting-chardet-to-python-3.html#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
-    <li><a href=case-study-porting-chardet-to-python-3.html#cantconvertbytesobject>Can&#8217;t convert '<code>bytes</code>' object to <code>str</code> implicitly</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#cantconvertbytesobject>Can't convert <code>'bytes'</code> object to <code>str</code> implicitly</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></a>
+    <li><a href=case-study-porting-chardet-to-python-3.html#reduceisnotdefined>Global name <code>'reduce'</code> is not defined</a>
     </ol>
+  <li><a href=case-study-porting-chardet-to-python-3.html#summary>Summary</a>
   </ol>
 <li id=packaging><a href=packaging.html>Packaging Python libraries</a>
   <ol>
-  <li>...
+  <li><a href=packaging.html#divingin>Diving In</a>
+  <li><a href=packaging.html#cantdo>Things Distutils Can&#8217;t Do For You</a>
+  <li><a href=packaging.html#structure>Directory Structure</a>
+  <li><a href=packaging.html#setuppy>Writing Your Setup Script</a>
+  <li><a href=packaging.html#trove>Classifying Your Package</a>
+    <ol>
+    <li><a href=packaging.html#trove-examples>Examples of Good Package Classifiers</a>
+    </ol>
+  <li><a href=packaging.html#manifest>Specifying Additional Files With A Manifest</a>
+  <li><a href=packaging.html#check>Checking Your Setup Script for Errors</a>
+  <li><a href=packaging.html#sdist>Creating a Source Distribution</a>
+  <li><a href=packaging.html#bdist>Creating a Graphical Installer</a>
+    <ol>
+    <li><a href=packaging.html#linux>Building Installable Packages for Other Operating Systems</a>
+    </ol>
+  <li><a href=packaging.html#pypi>Adding Your Software to The Python Package Index</a>
+  <li><a href=packaging.html#future>The Many Possible Futures of Python Packaging</a>
+  <li><a href=packaging.html#furtherreading>Further Reading</a>
   </ol>
-</ol>
-<ul>
 <li id=porting-code-to-python-3-with-2to3><a href=porting-code-to-python-3-with-2to3.html>Appendix A. Porting code to Python 3 with <code>2to3</code></a>
   <ol>
   <li><a href=porting-code-to-python-3-with-2to3.html#divingin>Diving in</a>
@@ -403,6 +420,6 @@ ul li ol{margin:0;padding:0 0 0 2.5em}
   <li><a href=where-to-go-from-here.html#things-to-read>Things to read</a>
   <li><a href=where-to-go-from-here.html#code>Where to look for Python 3-compatible code</a>
   </ol>
-</ul>
+</ol>
 <p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
