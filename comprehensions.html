@@ -293,14 +293,16 @@ body{counter-reset:h1 3}
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import os, glob, humansize</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict = {os.path.splitext(f)[0]:humansize.approximate_size(os.stat(f).st_size) \     </kbd>
-<samp class=p>... </samp><kbd class=pp>                  for f in glob.glob('*') if os.stat(f).st_size > 6000}</kbd>                     <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>list(humansize_dict.keys())</kbd>                                                                 <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>metadata_dict = {f:os.stat(f) for f in glob.glob('*')}</kbd>                                  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict = {os.path.splitext(f)[0]:humansize.approximate_size(meta.st_size) \     </kbd>
+<samp class=p>... </samp><kbd class=pp>                  for f, meta in metadata_dict.items() if meta.st_size > 6000}</kbd>          <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>list(humansize_dict.keys())</kbd>                                                             <span class=u>&#x2462;</span></a>
 <samp class=pp>['romantest9', 'romantest8', 'romantest7', 'romantest6', 'romantest10', 'pluraltest6']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict['romantest9']</kbd>                                                                <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>humansize_dict['romantest9']</kbd>                                                            <span class=u>&#x2463;</span></a>
 <samp class=pp>'6.5 KiB'</samp></pre>
 <ol>
-<li>This dictionary comprehension constructs a list of all the files in the current working directory (<code>glob.glob('*')</code>), filters that list to include only those files larger than <code>6000</code> bytes (<code>if os.stat(f).st_size > 6000</code>), and uses that filtered list to construct a dictionary whose keys are the filename minus the extension (<code>os.path.splitext(f)[0]</code>) and whose values are the approximate size of each file (<code>humansize.approximate_size(os.stat(f).st_size)</code>).
+<li>This dictionary comprehension constructs a list of all the files in the current working directory (<code>glob.glob('*')</code>), gets the file metadata for each file (<code>os.stat(f)</code>), and constructs a dictionary whose keys are filenames and whose values are the metadata for each file.
+<li>This dictionary comprehension builds on the previous comprehension, filters out files smaller than <code>6000</code> bytes (<code>if meta.st_size > 6000</code>), and uses that filtered list to construct a dictionary whose keys are the filename minus the extension (<code>os.path.splitext(f)[0]</code>) and whose values are the approximate size of each file (<code>humansize.approximate_size(meta.st_size)</code>).
 <li>As you saw in a previous example, there are six such files, thus there are six items in this dictionary.
 <li>The value of each key is the string returned from the <code>approximate_size()</code> function.
 </ol>
