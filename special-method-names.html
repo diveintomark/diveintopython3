@@ -777,7 +777,7 @@ def __exit__(self, *args):
 <td>a class constructor
 <td><code class=pp>x = MyClass()</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__new__><code>x.<dfn>__new__</dfn>()</code></a>
-<tr><th>
+<tr><th>*
 <td>a class destructor
 <td><code class=pp>del x</code>
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__del__><code>x.<dfn>__del__</dfn>()</code></a>
@@ -814,6 +814,8 @@ def __exit__(self, *args):
 <td><code class=pp>issubclass(C, MyABC)</code>
 <td><a href=http://docs.python.org/3.1/library/abc.html#abc.ABCMeta.__subclasshook__><code>MyABC.<dfn>__subclasshook__</dfn>(C)</code></a>
 </table>
+
+<p><sup>*</sup> Exactly when Python calls the <code>__del__()</code> special method is incredibly complicated. To fully understand it, you need to know how <a href=http://www.python.org/doc/3.1/reference/datamodel.html#objects-values-and-types>Python keeps track of objects in memory</a>. Here&#8217;s a good article on <a href=http://www.electricmonk.nl/log/2008/07/07/python-destructor-and-garbage-collection-notes/>Python garbage collection and how it relates to class destructor methods</a>. You should also read about <a href=http://mindtrove.info/articles/python-weak-references/>weak references</a>, the <a href=http://docs.python.org/3.1/library/weakref.html><code>weakref</code> module</a>, and probably the <a href=http://www.python.org/doc/3.1/library/gc.html><code>gc</code> module</a> for good measure.
 
 <h2 id=furtherreading>Further Reading</h2>
 
