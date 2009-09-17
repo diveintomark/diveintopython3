@@ -74,7 +74,7 @@ del{background:#f87}
 <p class=a>&#x2042;
 
 <h2 id=running2to3>Running <code>2to3</code></h2>
-<p>We&#8217;re going to migrate the <code>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy&nbsp;&mdash;&nbsp;a function was renamed or moved to a different modules&nbsp;&mdash;&nbsp;but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code>2to3</code></a>. In this chapter, we&#8217;ll start by running <code>2to3</code> on the <code>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
+<p>We&#8217;re going to migrate the <code>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy&nbsp;&mdash;&nbsp;a function was renamed or moved to a different module&nbsp;&mdash;&nbsp;but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code>2to3</code></a>. In this chapter, we&#8217;ll start by running <code>2to3</code> on the <code>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
 <p>The main <code>chardet</code> package is split across several different files, all in the same directory. The <code>2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code>2to3</code> will convert each of the files in turn.
 <pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
 <samp>RefactoringTool: Skipping implicit fixer: buffer
@@ -617,7 +617,7 @@ TypeError: unorderable types: int() >= str()</samp></pre>
           # find out current char's byte length
 <del>-         if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \</del>
 <del>-            ((aBuf[0] >= '\xE0') and (aBuf[0] &lt;= '\xFC')):</del>
-<ins>+         if ((aStr[0] >= 0x81) and (aStr[0] &lt;= 0x9F)) or \</ins>
+<ins>+         if ((aBuf[0] >= 0x81) and (aBuf[0] &lt;= 0x9F)) or \</ins>
 <ins>+            ((aBuf[0] >= 0xE0) and (aBuf[0] &lt;= 0xFC)):</ins>
               charLen = 2
           else:
@@ -646,7 +646,7 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <del>-         if (aStr[0] == '\x8E') or \</del>
 <del>-           ((aStr[0] >= '\xA1') and (aStr[0] &lt;= '\xFE')):</del>
 <ins>+         if (aBuf[0] == 0x8E) or \</ins>
-<ins>+           ((aBuf[0] >= 0xA1) and (aStr[0] &lt;= 0xFE)):</ins>
+<ins>+           ((aBuf[0] >= 0xA1) and (aBuf[0] &lt;= 0xFE)):</ins>
               charLen = 2
 <del>-         elif aStr[0] == '\x8F':</del>
 <ins>+         elif aBuf[0] == 0x8F:</ins>
