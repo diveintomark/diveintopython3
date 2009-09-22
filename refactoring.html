@@ -73,9 +73,9 @@ FAILED (failures=1)</samp></pre>
 <pre class=pp><code>def from_roman(s):
     '''convert Roman numeral to integer'''
 <a>    if not s:                                                                  <span class=u>&#x2460;</span></a>
-        raise InvalidRomanNumeralError, 'Input can not be blank'
+        raise InvalidRomanNumeralError('Input can not be blank')
     if not re.search(romanNumeralPattern, s):
-<a>        raise InvalidRomanNumeralError, 'Invalid Roman numeral: {}'.format(s)  <span class=u>&#x2461;</span></a>
+<a>        raise InvalidRomanNumeralError('Invalid Roman numeral: {}'.format(s))  <span class=u>&#x2461;</span></a>
 
     result = 0
     index = 0
