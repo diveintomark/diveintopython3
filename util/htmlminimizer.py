@@ -21,6 +21,10 @@ with open(output_file, 'w', encoding="utf-8") as _out, open(input_file, encoding
         if "url(i/" in line:
             line = line.replace("url(i/", "url(http://" + next(available_server) + "/dip3/")
 
+        # remove selected comments (but not all comments, because some are conditional comments for IE compat)
+        line = line.replace('<!-- toc -->', '')
+        line = line.replace('<!-- /toc -->', '')
+
         # replace entities with Unicode characters
         for e in re.findall('&(.+?);', line):
             if e in ('lt', 'amp', 'quot', 'apos', 'nbsp'):
