@@ -8,6 +8,9 @@ die () {
 
 echo "started build"
 
+# build table of contents
+python3 util/buildtoc.py
+
 revision=`hg tip | grep changeset|cut -d":" -f2|cut -d" " -f4`
 today=`date +"%Y-%m-%d"`
 

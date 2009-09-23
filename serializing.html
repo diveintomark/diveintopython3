@@ -457,7 +457,7 @@ def protocol_version(file_object):
 <a>    if isinstance(python_object, bytes):                                <span class=u>&#x2461;</span></a>
 <a>        return {'__class__': 'bytes',
                 '__value__': list(python_object)}                       <span class=u>&#x2462;</span></a>
-<a>    raise TypeError                                                     <span class=u>&#x2463;</span></a></code></pre>
+<a>    raise TypeError(repr(python_object) + ' is not JSON serializable')  <span class=u>&#x2463;</span></a></code></pre>
 <ol>
 <li>To define your own &#8220;mini-serialization format&#8221; for a datatype that <abbr>JSON</abbr> doesn&#8217;t support natively, just define a function that takes a Python object as a parameter. This Python object will be the actual object that the <code>json.dump()</code> function is unable to serialize by itself&nbsp;&mdash;&nbsp;in this case, the <code>bytes</code> object <code>b'\xDE\xD5\xB4\xF8'</code>.
 <li>Your custom serialization function should check the type of the Python object that the <code>json.dump()</code> function passed to it. This is not strictly necessary if your function only serializes one datatype, but it makes it crystal clear what case your function is covering, and it makes it easier to extend if you need to add serializations for more datatypes later.
@@ -507,7 +507,7 @@ def to_json(python_object):
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
                 '__value__': list(python_object)}
-    raise TypeError</code></pre>
+    raise TypeError(repr(python_object) + ' is not JSON serializable')</code></pre>
 <ol>
 <li>Adding to our existing <code>customserializer.to_json()</code> function, we need to check whether the Python object (that the <code>json.dump()</code> function is having trouble with) is a <code>time.struct_time</code>.
 <li>If so, we&#8217;ll do something similar to the conversion we did with the <code>bytes</code> object: convert the <code>time.struct_time</code> object to a dictionary that only contains <abbr>JSON</abbr>-serializable values. In this case, the easiest way to convert a datetime into a <abbr>JSON</abbr>-serializable value is to convert it to a string with the <code>time.asctime()</code> function. The <code>time.asctime()</code> function will convert that nasty-looking <code>time.struct_time</code> into the string <code>'Fri Mar 27 22:20:42 2009'</code>.
