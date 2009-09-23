@@ -506,7 +506,7 @@ except ImportError:
 <a><samp class=p>>>> </samp><kbd class=pp>entries</kbd>                                                            <span class=u>&#x2462;</span></a>
 <samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
 <samp class=p>>>> </samp><kbd class=pp>entry = entries[0]</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>entry.xpath('./atom:title/text()', namespaces=nsmap)</kbd>               <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>entry.xpath('./atom:title/text()', namespaces=NSMAP)</kbd>               <span class=u>&#x2463;</span></a>
 <samp class=pp>['Accessibility is a harsh mistress']</samp></pre>
 <ol>
 <li>To perform XPath queries on namespaced elements, you need to define a namespace prefix mapping. This is just a Python dictionary.
