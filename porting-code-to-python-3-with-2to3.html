@@ -175,10 +175,10 @@ h3:before{counter-increment:h3;content:'A.' counter(h2) '.' counter(h3) '. '}
 
 <ol>
 <li>The simplest form.
-<li>The <code>in</code> operator takes precedence over the <code>or</code> operator, so there is no need for parentheses around <code>(x in a_dictionary)</code> or around <code>(y in a_dictionary)</code>.
-<li>On the other hand, you <em>do</em> need parentheses around <code>(x or y)</code> here, for the same reason&nbsp;&mdash;&nbsp;<code>in</code> takes precedence over <code>or</code>. (Note: this code is completely different from the previous line. Python interprets <code>x or y</code> first, which results in either <var>x</var> (if <var>x</var> is <a href=native-datatypes.html#booleans>true in a boolean context</a>) or <var>y</var>. Then it takes that singular value and checks whether it is a key in <var>a_dictionary</var>.)
-<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form technically doesn&#8217;t need parentheses around <code>(x + y)</code>, but <code>2to3</code> includes them anyway.
-<li>This form definitely needs parentheses around <code>(y in a_dictionary)</code>, since the <code>in</code> operator takes precedence over the <code>+</code> operator.
+<li>The <code>in</code> operator takes precedence over the <code>or</code> operator, so there is no need for parentheses around <code>x in a_dictionary</code> or around <code>y in a_dictionary</code>.
+<li>On the other hand, you <em>do</em> need parentheses around <code>x or y</code> here, for the same reason&nbsp;&mdash;&nbsp;<code>in</code> takes precedence over <code>or</code>. (Note: this code is completely different from the previous line. Python interprets <code>x or y</code> first, which results in either <var>x</var> (if <var>x</var> is <a href=native-datatypes.html#booleans>true in a boolean context</a>) or <var>y</var>. Then it takes that singular value and checks whether it is a key in <var>a_dictionary</var>.)
+<li>The <code>in</code> operator takes precedence over the <code>+</code> operator, so this form technically doesn&#8217;t need parentheses around <code>x + y</code>, but <code>2to3</code> includes them anyway.
+<li>This form definitely needs parentheses around <code>y in a_dictionary</code>, since the <code>in</code> operator takes precedence over the <code>+</code> operator.
 </ol>
 
 <h2 id=dict>Dictionary methods that return lists</h2>
