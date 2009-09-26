@@ -398,7 +398,7 @@ Writing /usr/local/lib/python3.1/dist-packages/httplib2-python3_0.5.0.egg-info</
 <ol>
 <li>the encoding given in the <code>charset</code> parameter of the <code>Content-Type</code> <abbr>HTTP</abbr> header, or
 <li>the encoding given in the <code>encoding</code> attribute of the <abbr>XML</abbr> declaration within the document, or
-<li><code>utf-8</code>
+<li><abbr>UTF-8</abbr>
 </ol>
 
 <p>On the other hand, if the media type given in the <code>Content-Type</code> <abbr>HTTP</abbr> header is <code>text/xml</code>, <code>text/xml-external-parsed-entity</code>, or a subtype like <code>text/AnythingAtAll+xml</code>, then the encoding attribute of the <abbr>XML</abbr> declaration within the document is ignored completely, and the encoding is
@@ -884,7 +884,7 @@ status=Test+update+from+Python+3'
 &lt;/user>
 &lt;/status></samp></pre>
 <ol>
-<li>Remember, the data returned by <code>httplib2</code> is always <a href=strings.html#byte-arrays>bytes</a>, not a string. To convert it to a string, you need to decode it using the proper character encoding. Identi.ca&#8217;s <abbr>API</abbr> always returns results in UTF-8, so that part is easy.
+<li>Remember, the data returned by <code>httplib2</code> is always <a href=strings.html#byte-arrays>bytes</a>, not a string. To convert it to a string, you need to decode it using the proper character encoding. Identi.ca&#8217;s <abbr>API</abbr> always returns results in <abbr>UTF-8</abbr>, so that part is easy.
 <li>There&#8217;s the text of the status message we just published.
 <li>There&#8217;s the unique identifier for the new status message. Identi.ca uses this to construct a <abbr>URL</abbr> for viewing the message on the web.
 </ol>
