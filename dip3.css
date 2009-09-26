@@ -224,7 +224,7 @@ pre a, .w a {
   text-decoration: underline;
 }
 dfn {
-  font-style: normal;
+  font-style: inherit;
 }
 mark {
   font-weight: bold;
