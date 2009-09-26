@@ -451,7 +451,7 @@ PapayaWhip</samp>
 <a><samp class=p>... </samp><kbd class=pp>sys.stderr.write('new black')</kbd>  <span class=u>&#x2462;</span></a>
 <samp>new blacknew blacknew black</samp></pre>
 <ol>
-<li>The <code>print()</code> statement, in a loop. Nothing surprising here.
+<li>The <code>print()</code> function, in a loop. Nothing surprising here.
 <li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>stream object</a>. Calling its <code>write()</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
 <li>In the simplest case, <code>sys.stdout</code> and <code>sys.stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you&#8217;re in one), or the terminal (if you&#8217;re running Python from the command line). Like standard output, standard error does not add carriage returns for you. If you want carriage returns, you&#8217;ll need to write carriage return characters.
 </ol>
@@ -555,8 +555,8 @@ print('C')</code></pre>
 <ol>
 <li>This will print to the <abbr>IDE</abbr> &#8220;Interactive Window&#8221; (or the terminal, if running the script from the command line).
 <li>This <a href=#with><code>with</code> statement</a> takes <em>a comma-separated list of contexts</em>. The comma-separated list acts like a series of nested <code>with</code> blocks. The first context listed is the &#8220;outer&#8221; block; the last one listed is the &#8220;inner&#8221; block. The first context opens a file; the second context redirects <code>sys.stdout</code> to the stream object that was created in the first context.
-<li>Because this <code>print()</code> statement is executed with the contexts created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
-<li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The context managers form a last-in-first-out stack. Upon exiting, the second context changed <code>sys.stdout</code> back to its original value, then the first context closed the file named <code>out.log</code>. Since standard out has been restored to its original value, calling the <code>print()</code> function will once again print to the screen.
+<li>Because this <code>print()</code> function is executed with the context created by the <code>with</code> statement, it will not print to the screen; it will write to the file <code>out.log</code>.
+<li>The <code>with</code> code block is over. Python has told each context manager to do whatever it is they do upon exiting a context. The context managers form a last-in-first-out stack. Upon exiting, the second context changed <code>sys.stdout</code> back to its original value, then the first context closed the file named <code>out.log</code>. Since standard output has been restored to its original value, calling the <code>print()</code> function will once again print to the screen.
 </ol>
 
 <p>Redirecting standard error works exactly the same way, using <code>sys.stderr</code> instead of <code>sys.stdout</code>.
