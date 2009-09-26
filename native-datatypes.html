@@ -224,7 +224,7 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', 'z', 'example']</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
-['a', 'b', 'mpilgrim', 'z', 'example']
+<samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[0]</kbd>                                        <span class=u>&#x2461;</span></a>
 <samp class=pp>'a'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[4]</kbd>                                        <span class=u>&#x2462;</span></a>
@@ -361,7 +361,7 @@ ValueError: list.index(x): x not in list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>             <span class=u>&#x2461;</span></a>
 <samp class=pp>'new'</samp></pre>
 <ol>
-<li>You can use the <dfn>del</dfn> statement to delete a specific item from a list.
+<li>You can use the <code><dfn>del</dfn></code> statement to delete a specific item from a list.
 <li>Accessing index <code>1</code> after deleting index <code>1</code> does <em>not</em> result in an error. All items after the deleted item shift their positional index to &#8220;fill the gap&#8221; created by deleting the item.
 </ol>
 
@@ -681,7 +681,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 3, 36, 6, 45, 15, 28}</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.remove(21)</kbd>                         <span class=u>&#x2463;</span></a>
-<samp class=pp>Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 21</samp></pre>
 <ol>
@@ -707,7 +707,7 @@ KeyError: 21</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>set()</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>                                <span class=u>&#x2462;</span></a>
-<samp class=pp>Traceback (most recent call last):
+<samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'pop from an empty set'</samp></pre>
 <ol>
