@@ -341,12 +341,12 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 # continued from the previous example
 <samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>
 <samp class=pp>0</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>data = image.read(3)</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>data = an_image.read(3)</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>data</kbd>
 <samp class=pp>b'\xff\xd8\xff'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>              <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>type(data)</kbd>               <span class=u>&#x2461;</span></a>
 <samp class=pp>&lt;class 'bytes'></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>         <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>an_image.tell()</kbd>          <span class=u>&#x2462;</span></a>
 <samp class=pp>3</samp>
 <samp class=p>>>> </samp><kbd class=pp>an_image.seek(0)</kbd>
 <samp class=pp>0</samp>
