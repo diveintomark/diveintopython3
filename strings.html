@@ -69,17 +69,17 @@ My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&m
 
 <p class=xxxl>UTF-8
 
-<p>UTF-8 is a <em>variable-length</em> encoding system for Unicode. That is, different characters take up a different number of bytes. For <abbr>ASCII</abbr> characters (A-Z, <i class=baa>&amp;</i>c.) UTF-8 uses just one byte per character. In fact, it uses the exact same bytes; the first 128 characters (0&ndash;127) in UTF-8 are indistinguishable from <abbr>ASCII</abbr>. &#8220;Extended Latin&#8221; characters like &ntilde; and &ouml; end up taking two bytes. (The bytes are not simply the Unicode code point like they would be in UTF-16; there is some serious bit-twiddling involved.) Chinese characters like &#x4E2D; end up taking three bytes. The rarely-used &#8220;astral plane&#8221; characters take four bytes.
+<p>UTF-8 is a <em>variable-length</em> encoding system for Unicode. That is, different characters take up a different number of bytes. For <abbr>ASCII</abbr> characters (A-Z, <i class=baa>&amp;</i>c.) <abbr>UTF-8</abbr> uses just one byte per character. In fact, it uses the exact same bytes; the first 128 characters (0&ndash;127) in <abbr>UTF-8</abbr> are indistinguishable from <abbr>ASCII</abbr>. &#8220;Extended Latin&#8221; characters like &ntilde; and &ouml; end up taking two bytes. (The bytes are not simply the Unicode code point like they would be in UTF-16; there is some serious bit-twiddling involved.) Chinese characters like &#x4E2D; end up taking three bytes. The rarely-used &#8220;astral plane&#8221; characters take four bytes.
 
 <p>Disadvantages: because each character can take a different number of bytes, finding the <var>Nth</var> character is an O(N) operation&nbsp;&mdash;&nbsp;that is, the longer the string, the longer it takes to find a specific character. Also, there is bit-twiddling involved to encode characters into bytes and decode bytes into characters.
 
-<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in UTF-8 uses the exact same stream of bytes on any computer.
+<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in <abbr>UTF-8</abbr> uses the exact same stream of bytes on any computer.
 
 <p class=a>&#x2042;
 
 <h2 id=divingin>Diving In</h2>
 
-<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in UTF-8, or a Python string encoded as CP-1252. &#8220;Is this string UTF-8?&#8221; is an invalid question. UTF-8 is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
+<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in <abbr>UTF-8</abbr>, or a Python string encoded as CP-1252. &#8220;Is this string <abbr>UTF-8</abbr>?&#8221; is an invalid question. <abbr>UTF-8</abbr> is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>s = '深入 Python'</kbd>    <span class=u>&#x2460;</span></a>
@@ -392,7 +392,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <samp class=pp>True</samp></pre>
 <ol>
 <li>This is a string. It has nine characters.
-<li>This is a <code>bytes</code> object. It has 13 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in UTF-8.
+<li>This is a <code>bytes</code> object. It has 13 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <abbr>UTF-8</abbr>.
 <li>This is a <code>bytes</code> object. It has 11 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/GB_18030>GB18030</a>.
 <li>This is a <code>bytes</code> object. It has 11 bytes. It is an <em>entirely different sequence of bytes</em> that you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/Big5>Big5</a>.
 <li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
@@ -402,10 +402,10 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 
 <h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
 
-<p>Python 3 assumes that your source code&nbsp;&mdash;&nbsp;<i>i.e.</i> each <code>.py</code> file&nbsp;&mdash;&nbsp;is encoded in UTF-8.
+<p>Python 3 assumes that your source code&nbsp;&mdash;&nbsp;<i>i.e.</i> each <code>.py</code> file&nbsp;&mdash;&nbsp;is encoded in <abbr>UTF-8</abbr>.
 
 <blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>In Python 2, the <dfn>default</dfn> encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is UTF-8</a>.
+<p><span class=u>&#x261E;</span>In Python 2, the <dfn>default</dfn> encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is <abbr>UTF-8</abbr></a>.
 </blockquote>
 
 <p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:

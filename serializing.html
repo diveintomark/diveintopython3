@@ -310,7 +310,7 @@ def protocol_version(file_object):
 
 <p>Second, as with any text-based format, there is the issue of whitespace. <abbr>JSON</abbr> allows arbitrary amounts of whitespace (spaces, tabs, carriage returns, and line feeds) between values. This whitespace is &#8220;insignificant,&#8221; which means that <abbr>JSON</abbr> encoders can add as much or as little whitespace as they like, and <abbr>JSON</abbr> decoders are required to ignore the whitespace between values. This allows you to &#8220;pretty-print&#8221; your <abbr>JSON</abbr> data, nicely nesting values within values at different indentation levels so you can read it in a standard browser or text editor. Python&#8217;s <code>json</code> module has options for pretty-printing during encoding.
 
-<p>Third, there&#8217;s the perennial problem of character encoding. <abbr>JSON</abbr> encodes values as plain text, but as you know, <a href=strings.html>there ain&#8217;t no such thing as &#8220;plain text.&#8221;</a> <abbr>JSON</abbr> must be stored in a Unicode encoding (UTF-32, UTF-16, or the default, UTF-8), and <a href=http://www.ietf.org/rfc/rfc4627.txt>section 3 of RFC 4627</a> defines how to tell which encoding is being used.
+<p>Third, there&#8217;s the perennial problem of character encoding. <abbr>JSON</abbr> encodes values as plain text, but as you know, <a href=strings.html>there ain&#8217;t no such thing as &#8220;plain text.&#8221;</a> <abbr>JSON</abbr> must be stored in a Unicode encoding (UTF-32, UTF-16, or the default, <abbr>UTF-8</abbr>), and <a href=http://www.ietf.org/rfc/rfc4627.txt>section 3 of RFC 4627</a> defines how to tell which encoding is being used.
 
 <p class=a>&#x2042;
 
@@ -332,7 +332,7 @@ def protocol_version(file_object):
 <a><samp class=p>... </samp><kbd class=pp>    json.dump(basic_entry, f)</kbd>                              <span class=u>&#x2462;</span></a></pre>
 <ol>
 <li>We&#8217;re going to create a new data structure instead of re-using the existing <var>entry</var> data structure. Later in this chapter, we&#8217;ll see what happens when we try to encode the more complex data structure in <abbr>JSON</abbr>.
-<li><abbr>JSON</abbr> is a text-based format, which means you need to open this file in text mode and specify a character encoding. You can never go wrong with UTF-8.
+<li><abbr>JSON</abbr> is a text-based format, which means you need to open this file in text mode and specify a character encoding. You can never go wrong with <abbr>UTF-8</abbr>.
 <li>Like the <code>pickle</code> module, the <code>json</code> module defines a <code>dump()</code> function which takes a Python data structure and a writeable stream object. The <code>dump()</code> function serializes the Python data structure and writes it to the stream object. Doing this inside a <code>with</code> statement will ensure that the file is closed properly when we&#8217;re done.
 </ol>
 
@@ -445,7 +445,7 @@ def protocol_version(file_object):
 <mark>TypeError: b'\xDE\xD5\xB4\xF8' is not JSON serializable</mark></samp></pre>
 <ol>
 <li>OK, it&#8217;s time to revisit the <var>entry</var> data structure. This has it all: a boolean value, a <code>None</code> value, a string, a tuple of strings, a <code>bytes</code> object, and a <code>time</code> structure.
-<li>I know I&#8217;ve said it before, but it&#8217;s worth repeating: <abbr>JSON</abbr> is a text-based format. Always open <abbr>JSON</abbr> files in text mode with a UTF-8 character encoding.
+<li>I know I&#8217;ve said it before, but it&#8217;s worth repeating: <abbr>JSON</abbr> is a text-based format. Always open <abbr>JSON</abbr> files in text mode with a <abbr>UTF-8</abbr> character encoding.
 <li>Well <em>that&#8217;s</em> not good. What happened?
 </ol>
 
@@ -490,7 +490,7 @@ def protocol_version(file_object):
 TypeError: time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1) is not JSON serializable</samp></pre>
 <ol>
 <li>The <code>customserializer</code> module is where you just defined the <code>to_json()</code> function in the previous example.
-<li>Text mode, UTF-8 encoding, yadda yadda. (You&#8217;ll forget! I forget sometimes! And everything will work right up until the moment that it fails, and then it will fail most spectacularly.)
+<li>Text mode, <abbr>UTF-8</abbr> encoding, yadda yadda. (You&#8217;ll forget! I forget sometimes! And everything will work right up until the moment that it fails, and then it will fail most spectacularly.)
 <li>This is the important bit: to hook your custom conversion function into the <code>json.dump()</code> function, pass your function into the <code>json.dump()</code> function in the <var>default</var> parameter. (Hooray, <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>!)
 <li>OK, so it didn&#8217;t actually work. But take a look at the exception. The <code>json.dump()</code> function is no longer complaining about being unable to serialize the <code>bytes</code> object. Now it&#8217;s complaining about a completely different object: the <code>time.struct_time</code> object.
 </ol>

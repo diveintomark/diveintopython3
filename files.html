@@ -57,7 +57,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 
 <p>What just happened? You didn&#8217;t specify a character encoding, so Python is forced to use the default encoding. What&#8217;s the default encoding? If you look closely at the traceback, you can see that it&#8217;s dying in <code>cp1252.py</code>, meaning that Python is using CP-1252 as the default encoding here. (CP-1252 is a common encoding on computers running Microsoft Windows.) The CP-1252 character set doesn&#8217;t support the characters that are in this file, so the read fails with an ugly <code>UnicodeDecodeError</code>.
 
-<p>But wait, it&#8217;s worse than that! The default encoding is <em>platform-dependent</em>, so this code <em>might</em> work on your computer (if your default encoding is UTF-8), but then it will fail when you distribute it to someone else (whose default encoding is different, like CP-1252).
+<p>But wait, it&#8217;s worse than that! The default encoding is <em>platform-dependent</em>, so this code <em>might</em> work on your computer (if your default encoding is <abbr>UTF-8</abbr>), but then it will fail when you distribute it to someone else (whose default encoding is different, like CP-1252).
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>If you need to get the default character encoding, import the <code>locale</code> module and call <code>locale.getpreferredencoding()</code>. On my Windows laptop, it returns <code>'cp1252'</code>, but on my Linux box upstairs, it returns <code>'UTF8'</code>. I can&#8217;t even maintain consistency in my own house! Your results may be different (even on Windows) depending on which version of your operating system you have installed and how your regional/language settings are configured. This is why it&#8217;s so important to specify the encoding every time you open a file.
@@ -141,7 +141,7 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <li>Now you&#8217;re on the 20<sup>th</sup> byte.
 </ol>
 
-<p>Do you see it yet? The <code>seek()</code> and <code>tell()</code> methods always count <em>bytes</em>, but since you opened this file as text, the <code>read()</code> method counts <em>characters</em>. Chinese characters <a href=strings.html#boring-stuff>require multiple bytes to encode in UTF-8</a>. The English characters in the file only require one byte each, so you might be misled into thinking that the <code>seek()</code> and <code>read()</code> methods are counting the same thing. But that&#8217;s only true for some characters.
+<p>Do you see it yet? The <code>seek()</code> and <code>tell()</code> methods always count <em>bytes</em>, but since you opened this file as text, the <code>read()</code> method counts <em>characters</em>. Chinese characters <a href=strings.html#boring-stuff>require multiple bytes to encode in <abbr>UTF-8</abbr></a>. The English characters in the file only require one byte each, so you might be misled into thinking that the <code>seek()</code> and <code>read()</code> methods are counting the same thing. But that&#8217;s only true for some characters.
 
 <p>But wait, it gets worse!
 
