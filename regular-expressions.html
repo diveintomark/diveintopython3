@@ -96,14 +96,14 @@ body{counter-reset:h1 5}
 <samp class=p>>>> </samp><kbd class=pp>import re</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?$'</kbd>        <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M')</kbd>     <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;SRE_Match object at 0106FB58></samp>
+<samp>&lt;_sre.SRE_Match object at 0106FB58></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;SRE_Match object at 0106C290></samp>
+<samp>&lt;_sre.SRE_Match object at 0106C290></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2463;</span></a>
-<samp class=pp>&lt;SRE_Match object at 0106AA38></samp>
+<samp>&lt;_sre.SRE_Match object at 0106AA38></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2464;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, '')</kbd>      <span class=u>&#x2465;</span></a>
-<samp class=pp>&lt;SRE_Match object at 0106F4A8></samp></pre>
+<samp>&lt;_sre.SRE_Match object at 0106F4A8></samp></pre>
 <ol>
 <li>This pattern has three parts. <code>^</code> matches what follows only at the beginning of the string. If this were not specified, the pattern would match no matter where the <code>M</code> characters were, which is not what you want. You want to make sure that the <code>M</code> characters, if they&#8217;re there, are at the beginning of the string. <code>M?</code> optionally matches a single <code>M</code> character. Since this is repeated three times, you&#8217;re matching anywhere from zero to three <code>M</code> characters in a row. And <code>$</code> matches the end of the string. When combined with the <code>^</code> character at the beginning, this means that the pattern must match the entire string, with no other characters before or after the <code>M</code> characters.
 <li>The essence of the <code>re</code> module is the <code>search()</code> function, that takes a regular expression (<var>pattern</var>) and a string (<code>'M'</code>) to try to match against the regular expression. If a match is found, <code>search()</code> returns an object which has various methods to describe the match; if no match is found, <code>search()</code> returns <code>None</code>, the Python null value. All you care about at the moment is whether the pattern matches, which you can tell by just looking at the return value of <code>search()</code>. <code>'M'</code> matches this regular expression, because the first optional <code>M</code> matches and the second and third optional <code>M</code> characters are ignored.
@@ -142,14 +142,14 @@ body{counter-reset:h1 5}
 <samp class=p>>>> </samp><kbd class=pp>import re</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?(CM|CD|D?C?C?C?)$'</kbd>  <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCM')</kbd>             <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;SRE_Match object at 01070390></samp>
+<samp>&lt;_sre.SRE_Match object at 01070390></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MD')</kbd>              <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;SRE_Match object at 01073A50></samp>
+<samp>&lt;_sre.SRE_Match object at 01073A50></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMCCC')</kbd>          <span class=u>&#x2463;</span></a>
-<samp class=pp>&lt;SRE_Match object at 010748A8></samp>
+<samp>&lt;_sre.SRE_Match object at 010748A8></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMC')</kbd>            <span class=u>&#x2464;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, '')</kbd>                <span class=u>&#x2465;</span></a>
-<samp class=pp>&lt;SRE_Match object at 01071D98></samp></pre>
+<samp>&lt;_sre.SRE_Match object at 01071D98></samp></pre>
 <ol>
 <li>This pattern starts out the same as the previous one, checking for the beginning of the string (<code>^</code>), then the thousands place (<code>M?M?M?</code>). Then it has the new part, in parentheses, which defines a set of three mutually exclusive patterns, separated by vertical bars: <code>CM</code>, <code>CD</code>, and <code>D?C?C?C?</code> (which is an optional <code>D</code> followed by zero to three optional <code>C</code> characters). The regular expression parser checks for each of these patterns in order (from left to right), takes the first one that matches, and ignores the rest.
 <li><code>'MCM'</code> matches because the first <code>M</code> matches, the second and third <code>M</code> characters are ignored, and the <code>CM</code> matches (so the <code>CD</code> and <code>D?C?C?C?</code> patterns are never even considered). <code>MCM</code> is the Roman numeral representation of <code>1900</code>.
@@ -168,14 +168,14 @@ body{counter-reset:h1 5}
 <samp class=p>>>> </samp><kbd class=pp>import re</kbd>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?$'</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M')</kbd>     <span class=u>&#x2460;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?$'</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?$'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2462;</span></a>
+<a><samp>>>> </samp><kbd class=pp>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2462;</span></a>
 <samp class=pp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2463;</span></a>
+<a><samp>>>> </samp><kbd class=pp>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2463;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
 <li>This matches the start of the string, and then the first optional <code>M</code>, but not the second and third <code>M</code> (but that&#8217;s okay because they&#8217;re optional), and then the end of the string.
@@ -186,13 +186,13 @@ body{counter-reset:h1 5}
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>pattern = '^M{0,3}$'</kbd>        <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M')</kbd>     <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MM')</kbd>    <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EE090></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMM')</kbd>   <span class=u>&#x2463;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEDA8></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEDA8></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMM')</kbd>  <span class=u>&#x2464;</span></a>
-<samp class=p>>>> </samp></pre>
+<samp>>>> </samp></pre>
 <ol>
 <li>This pattern says: &#8220;Match the start of the string, then anywhere from zero to three <code>M</code> characters, then the end of the string.&#8221;  The 0 and 3 can be any numbers; if you want to match at least one but no more than three <code>M</code> characters, you could say <code>M{1,3}</code>.
 <li>This matches the start of the string, then one <code>M</code> out of a possible three, then the end of the string.
@@ -205,13 +205,13 @@ body{counter-reset:h1 5}
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$'</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMXL')</kbd>     <span class=u>&#x2460;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCML')</kbd>      <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMLX')</kbd>     <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMLXXX')</kbd>   <span class=u>&#x2463;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMLXXXX')</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=p>>>> </samp></pre>
 <ol>
@@ -229,13 +229,13 @@ body{counter-reset:h1 5}
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$'</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MDLV')</kbd>              <span class=u>&#x2460;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMDCLXVI')</kbd>          <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMDCCCLXXXVIII')</kbd>   <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'I')</kbd>                 <span class=u>&#x2463;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp></pre>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp></pre>
 <ol>
 <li>This matches the start of the string, then one of a possible three <code>M</code> characters, then <code>D?C{0,3}</code>. Of that, it matches the optional <code>D</code> and zero of three possible <code>C</code> characters. Moving on, it matches <code>L?X{0,3}</code> by matching the optional <code>L</code> and zero of three possible <code>X</code> characters. Then it matches <code>V?I{0,3}</code> by matching the optional <code>V</code> and zero of three possible <code>I</code> characters, and finally the end of the string. <code>MDLV</code> is the Roman numeral representation of <code>1555</code>.
 <li>This matches the start of the string, then two of a possible three <code>M</code> characters, then the <code>D?C{0,3}</code> with a <code>D</code> and one of three possible <code>C</code> characters; then <code>L?X{0,3}</code> with an <code>L</code> and one of three possible <code>X</code> characters; then <code>V?I{0,3}</code> with a <code>V</code> and one of three possible <code>I</code> characters; then the end of the string. <code>MMDCLXVI</code> is the Roman numeral representation of <code>2666</code>.
@@ -267,11 +267,11 @@ body{counter-reset:h1 5}
     $                   # end of string
     '''</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M', re.VERBOSE)</kbd>                 <span class=u>&#x2460;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MCMLXXXIX', re.VERBOSE)</kbd>         <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'MMMDCCCLXXXVIII', re.VERBOSE)</kbd>   <span class=u>&#x2462;</span></a>
-<samp class=pp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
+<samp>&lt;_sre.SRE_Match object at 0x008EEB48></samp>
 <a><samp class=p>>>> </samp><kbd class=pp>re.search(pattern, 'M')</kbd>                             <span class=u>&#x2463;</span></a></pre>
 <ol>
 <li>The most important thing to remember when using verbose regular expressions is that you need to pass an extra argument when working with them: <code>re.VERBOSE</code> is a constant defined in the <code>re</code> module that signals that the pattern should be treated as a verbose regular expression. As you can see, this pattern has quite a bit of whitespace (all of which is ignored), and several comments (all of which are ignored). Once you ignore the whitespace and the comments, this is exactly the same regular expression as you saw in the previous section, but it&#8217;s a lot more readable.
