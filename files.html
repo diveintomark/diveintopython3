@@ -301,7 +301,7 @@ ValueError: zero length field name in format</samp></pre>
 <a><samp class=pp>test succeededand again</samp>                                           <span class=u>&#x2463;</span></a></pre>
 <ol>
 <li>You start boldly by creating the new file <code>test.log</code> (or overwriting the existing file), and opening the file for writing. The <code>mode='w'</code> parameter means open the file for writing. Yes, that&#8217;s all as dangerous as it sounds. I hope you didn&#8217;t care about the previous contents of that file (if any), because that data is gone now.
-<li>You can add data to the newly opened file with the <code>write</code> method of the stream object returned by the <code>open()</code> function. After the <code>with</code> block ends, Python automatically closes the file.
+<li>You can add data to the newly opened file with the <code>write()</code> method of the stream object returned by the <code>open()</code> function. After the <code>with</code> block ends, Python automatically closes the file.
 <li>That was so fun, let&#8217;s do it again. But this time, with <code>mode='a'</code> to append to the file instead of overwriting it. Appending will <em>never</em> harm the existing contents of the file.
 <li>Both the original line you wrote and the second line you appended are now in the file <code>test.log</code>. Also note that carriage returns are not included. Since you didn&#8217;t write them explicitly to the file either time, the file doesn&#8217;t include them. You can write a carriage return with the <code>'\n'</code> character. Since you didn&#8217;t do this, everything you wrote to the file ended up on one line.
 </ol>
@@ -452,7 +452,7 @@ PapayaWhip</samp>
 <samp>new blacknew blacknew black</samp></pre>
 <ol>
 <li>The <code>print()</code> statement, in a loop. Nothing surprising here.
-<li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>stream object</a>. Calling its <code>write</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
+<li><code>stdout</code> is defined in the <code>sys</code> module, and it is a <a href=#file-like-objects>stream object</a>. Calling its <code>write()</code> function will print out whatever string you give it. In fact, this is what the <code>print</code> function really does; it adds a carriage return to the end of the string you&#8217;re printing, and calls <code>sys.stdout.write</code>.
 <li>In the simplest case, <code>sys.stdout</code> and <code>sys.stderr</code> send their output to the same place: the Python <abbr>IDE</abbr> (if you&#8217;re in one), or the terminal (if you&#8217;re running Python from the command line). Like standard output, standard error does not add carriage returns for you. If you want carriage returns, you&#8217;ll need to write carriage return characters.
 </ol>
 
