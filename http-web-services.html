@@ -779,7 +779,7 @@ Updates the authenticating user&#8217;s status.  Requires the <code>status</code
 <a><samp class=p>>>> </samp><kbd class=pp>from urllib.parse import urlencode</kbd>              <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>data = {'status': 'Test update from Python 3'}</kbd>  <span class=u>&#x2461;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>urlencode(data)</kbd>                                 <span class=u>&#x2462;</span></a>
-<samp>'status=test+update+from+python+3'</samp></pre>
+<samp>'status=Test+update+from+Python+3'</samp></pre>
 <ol>
 <li>Python comes with a utility function to <abbr>URL</abbr>-encode a dictionary: <code>urllib.parse.urlencode()</code>.
 <li>This is the sort of dictionary that the Identi.ca <abbr>API</abbr> is looking for. It contains one key, <code>status</code>, whose value is the text of a single status update.
