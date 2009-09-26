@@ -363,7 +363,7 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 
 <h2 id=file-like-objects>Streams Objects From Non-File Sources</h2>
 
-<p>Imagine you&#8217;re writing a library, and one of your library functions is going to read some data from a file. The function could simply take a filename as a string, go open the file for reading, read it, and close it before exiting. But you shouldn&#8217;t do that.. Instead, your <abbr>API</abbr> should take <em>an arbitrary stream object</em>.
+<p>Imagine you&#8217;re writing a library, and one of your library functions is going to read some data from a file. The function could simply take a filename as a string, go open the file for reading, read it, and close it before exiting. But you shouldn&#8217;t do that. Instead, your <abbr>API</abbr> should take <em>an arbitrary stream object</em>.
 
 <p>In the simplest case, a stream object is anything with a <code>read()</code> method which takes an optional <var>size</var> parameter and returns a string. When called with no <var>size</var> parameter, the <code>read()</code> method should read everything there is to read from the input source and return all the data as a single value. When called with a <var>size</var> parameter, it reads that much from the input source and returns that much data. When called again, it picks up where it left off and returns the next chunk of data.
 
