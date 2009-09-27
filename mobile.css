@@ -37,7 +37,6 @@ Acknowledgements & Inspirations
 
 body, .c, span, pre span, .c, .note, p, ul, ol {
   font:normal 12px/18px sans-serif;
-  word-spacing:0;
 }
 pre, kbd, samp, code, var {
   font:normal 12px/18px monospace;
@@ -60,7 +59,7 @@ html {
   color:#000;
 }
 body {
-  margin:4px 1px 0 1px;
+  margin:4px 2px 0 2px;
 }
 
 /* links */

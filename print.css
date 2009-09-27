@@ -29,8 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 /* typography */
 
 body, .w a {
-  font: 12pt/1.75 'Gill Sans', 'Gill Sans MT', Helvetica, Corbel, 'Nimbus Sans L', sans-serif;
-  word-spacing: 0;
+  font-size: 12pt;
 }
 pre, kbd, samp, code, var, .b {
   font-size: 10pt;
@@ -50,16 +49,13 @@ span {
   font: normal 48pt/0.68 serif;
 }
 p, ul, ol {
-  margin: 1.75em 0;
   font-size: 12pt;
 }
 
 /* basics */
 
-html {
-  background: #fff;
-}
 html, body {
+  background: #fff;
   margin: 0;
   padding: 0;
 }

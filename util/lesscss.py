@@ -10,8 +10,12 @@ import sys
 SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun', '.tag', '.atn', '.atv', '.dec', 'pre .u', 'pre .u span', 'td .u', 'li ol', 'a.hl:link', 'a.hl:visited', 'a.hl:hover', 'h2[id]:hover a.hl', 'h3[id]:hover a.hl')
 
 filename = sys.argv[1]
+cssfilename = sys.argv[2]
 pqd = pq(filename=filename)
-raw_data = open(filename, 'rb').read()
+
+with open(filename, 'rb') as fopen:
+    raw_data = fopen.read()
+
 if raw_data.count('</a><script src=j/'): # HACK HACK HACK
     def keep(s):
         for selector in SELECTOR_EXCEPTIONS:
@@ -22,11 +26,14 @@ else:
     def keep(s):
         return False
 
-original_css = raw_data.split('<style>', 1)[1].split('@media', 1)[0]
+with open(cssfilename, 'rb') as fopen:
+    original_css = fopen.read()
+
 new_css = ''
 for rule in original_css.split('}')[:-1]:
     selectors, properties = rule.split('{', 1)
     selectors = ','.join([s for s in selectors.split(',') if keep(s) or pqd(s.split(':', 1)[0])])
     if selectors:
         new_css += '%s{%s}' % (selectors, properties)
-open(filename, 'wb').write(raw_data.replace(original_css, new_css))
+
+sys.stdout.write(new_css)
