@@ -168,32 +168,36 @@ $(document).ready(function() {
 	var hip = {'background-color':'#eee','cursor':'default'};
 	var unhip = {'background-color':'inherit','cursor':'inherit'};
 	$("pre.code, pre.screen").each(function() {
-		var s = '';
-		var ol = $(this).next("ol");
-		var refs = $(this).find("a:not([href])");
-		refs.each(function(i) {
-			var li = ol.find("li:nth-child(" + (i+1) + ")");
-			s += "<tr><td style='text-align:center;vertical-align:baseline;margin:0;padding:0;width:2em;border:0'><span class='u'>&#x" + (parseInt('2460', 16) + i).toString(16) + ";</span></td><td style='vertical-align:top;margin:0;padding:0;width:auto;border:0'>" + li.html() + "</td></tr>";
-		    });
-		ol.replaceWith("<table style='width:100%;border-collapse:collapse;margin:0'>" + s + "</table>");
-		refs.each(function(i) {
-			var a = $(this);
-			var li = a.parents("pre").next("table").find("tr:nth-child(" + (i+1) + ") td:nth-child(2)");
-			li.add(a).hover(function() { a.css(hip); li.css(hip); },
-					function() { a.css(unhip); li.css(unhip); });
-		    });
-
+		var _this = $(this);
+		window.setTimeout(function() {
+			var s = '';
+			var ol = _this.next("ol");
+			var refs = _this.find("a:not([href])");
+			refs.each(function(i) {
+				var li = ol.find("li:nth-child(" + (i+1) + ")");
+				s += "<tr><td style='text-align:center;vertical-align:baseline;margin:0;padding:0;width:2em;border:0'><span class='u'>&#x" + (parseInt('2460', 16) + i).toString(16) + ";</span></td><td style='vertical-align:top;margin:0;padding:0;width:auto;border:0'>" + li.html() + "</td></tr>";
+			    });
+			ol.replaceWith("<table style='width:100%;border-collapse:collapse;margin:0;border:0'>" + s + "</table>");
+			refs.each(function(i) {
+				var a = $(this);
+				var li = a.parents("pre").next("table").find("tr:nth-child(" + (i+1) + ") td:nth-child(2)");
+				li.add(a).hover(function() { a.css(hip); li.css(hip); },
+						function() { a.css(unhip); li.css(unhip); });
+			    });
+		    }, 0);
 	    });
 	
 	/* synchronized highlighting on callouts and their associated table rows */
 	$("table").each(function() {
 		$(this).find("tr:gt(0)").each(function(i) {
 			var tr = $(this);
-			var li = tr.parents("table").next("ol").find("li:nth-child(" + (i+1) + ")");
-			if (li.length > 0) {
-			    li.add(tr).hover(function() { tr.css(hip); li.css(hip); },
-					     function() { tr.css(unhip); li.css(unhip); });
-			}
+			window.setTimeout(function() {
+				var li = tr.parents("table").next("ol").find("li:nth-child(" + (i+1) + ")");
+				if (li.length > 0) {
+				    li.add(tr).hover(function() { tr.css(hip); li.css(hip); },
+						     function() { tr.css(unhip); li.css(unhip); });
+				}
+			    }, 0);
 		    });
 	    });
 
