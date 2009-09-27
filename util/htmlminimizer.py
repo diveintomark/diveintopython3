@@ -1,9 +1,11 @@
+#!/usr/bin/python3
 """Quick-and-dirty HTML minimizer"""
 
 import sys
 import re
 import html.entities
 import itertools
+import os.path
 
 _SERVERS = ['a.wearehugh.com',
             'b.wearehugh.com',
@@ -52,4 +54,6 @@ with open(output_file, 'w', encoding="utf-8") as _out, open(input_file, encoding
             _out.write(line)
         else:
             _out.write(g)
-    
+        if g.lower() == '<!doctype html>':
+            _out.write('\n<!-- readable source @ http://hg.diveintopython3.org/hgweb.cgi/file/tip/{0} -->\n'.format(os.path.basename(input_file)))
+
