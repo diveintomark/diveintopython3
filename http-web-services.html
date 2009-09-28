@@ -52,6 +52,8 @@ mark{display:inline}
 
 <p>The most important thing to understand about any type of web service is that network access is incredibly expensive. I don&#8217;t mean &#8220;dollars and cents&#8221; expensive (although bandwidth ain&#8217;t free). I mean that it takes an extraordinary long time to open a connection, send a request, and retrieve a response from a remote server. Even on the fastest broadband connection, <i>latency</i> (the time it takes to send a request and start retrieving data in a response) can still be higher than you anticipated. A router misbehaves, a packet is dropped, an intermediate proxy is under attack&nbsp;&mdash;&nbsp;there&#8217;s <a href=http://isc.sans.org/>never a dull moment</a> on the public internet, and there may be nothing you can do about it.
 
+<aside><code>Cache-Control</code> means &#8220;don't bug me until next week.&#8221;</aside>
+
 <p><abbr>HTTP</abbr> is designed with caching in mind. There is an entire class of devices (called &#8220;caching proxies&#8221;) whose only job is to sit between you and the rest of the world and minimize network access. Your company or <abbr>ISP</abbr> almost certainly maintains caching proxies, even if you&#8217;re unaware of them. They work because caching built into the <abbr>HTTP</abbr> protocol.
 
 <p>Here&#8217;s a concrete example of how caching works. You visit <a href=http://diveintomark.org/><code>diveintomark.org</code></a> in your browser. That page includes a background image, <a href=http://wearehugh.com/m.jpg><code>wearehugh.com/m.jpg</code></a>. When your browser downloads that image, the server includes the following <abbr>HTTP</abbr> headers:
@@ -81,6 +83,8 @@ Content-Type: image/jpeg</code></pre>
 <h3 id=last-modified>Last-Modified Checking</h3>
 
 <p>Some data never changes, while other data changes all the time. In between, there is a vast field of data that <em>might</em> have changed, but hasn&#8217;t. CNN.com&#8217;s feed is updated every few minutes, but my weblog&#8217;s feed may not change for days or weeks at a time. In the latter case, I don&#8217;t want to tell clients to cache my feed for weeks at a time, because then when I do actually post something, people may not read it for weeks (because they&#8217;re respecting my cache headers which said &#8220;don&#8217;t bother checking this feed for weeks&#8221;). On the other hand, I don&#8217;t want clients downloading my entire feed once an hour if it hasn&#8217;t changed!
+
+<aside><code>Last-Modified</code> means &#8220;same shit, different day.&#8221;</aside>
 
 <p><abbr>HTTP</abbr> has a solution to this, too. When you request data for the first time, the server can send back a <code>Last-Modified</code> header. This is exactly what it sounds like: the date that the data was changed. That background image referenced from <code>diveintomark.org</code> included a <code>Last-Modified</code> header.
 
@@ -130,7 +134,9 @@ Connection: close
 Content-Type: image/jpeg
 </code></pre>
 
-The second time you request the same data, you include the ETag hash in an <code>If-None-Match</code> header of your request. If the data hasn&#8217;t changed, the server will send you back a <code>304</code> status code. As with the last-modified date checking, the server sends back <em>only</em> the <code>304</code> status code; it doesn&#8217;t send you the same data a second time. By including the ETag hash in your second request, you&#8217;re telling the server that there&#8217;s no need to re-send the same data if it still matches this hash, since <a href=#caching>you still have the data from the last time</a>.
+<aside><code>ETag</code> means &#8220;there&#8217;s nothing new under the sun.&#8221;</aside>
+
+<p>The second time you request the same data, you include the ETag hash in an <code>If-None-Match</code> header of your request. If the data hasn&#8217;t changed, the server will send you back a <code>304</code> status code. As with the last-modified date checking, the server sends back <em>only</em> the <code>304</code> status code; it doesn&#8217;t send you the same data a second time. By including the ETag hash in your second request, you&#8217;re telling the server that there&#8217;s no need to re-send the same data if it still matches this hash, since <a href=#caching>you still have the data from the last time</a>.
 
 <p>Again with the <kbd>curl</kbd>:
 
@@ -160,6 +166,8 @@ Cache-Control: max-age=31536000, public</samp></pre>
 <h3 id=redirects>Redirects</h3>
 
 <p><a href=http://www.w3.org/Provider/Style/URI>Cool <abbr>URI</abbr>s don&#8217;t change</a>, but many <abbr>URI</abbr>s are seriously uncool. Web sites get reorganized, pages move to new addresses. Even web services can reorganize. A syndicated feed at <code>http://example.com/index.xml</code> might be moved to <code>http://example.com/xml/atom.xml</code>. Or an entire domain might move, as an organization expands and reorganizes; <code>http://www.example.com/index.xml</code> becomes <code>http://server-farm-1.example.com/index.xml</code>.
+
+<aside><code>Location</code> means &#8220;look over there!&#8221;</aside>
 
 <p>Every time you request any kind of resource from an <abbr>HTTP</abbr> server, the server includes a status code in its response. Status code <code>200</code> means &#8220;everything&#8217;s normal, here&#8217;s the page you asked for&#8221;. Status code <code>404</code> means &#8220;page not found&#8221;. (You&#8217;ve probably seen 404 errors while browsing the web.) Status codes in the 300&#8217;s indicate some form of redirection.
 
@@ -223,6 +231,8 @@ reply: 'HTTP/1.1 200 OK'
 <li>The third line specifies the compression algorithms that the client supports. As I mentioned earlier, <a href=#compression><code>urllib.request</code> does not support compression</a> by default.
 <li>The fourth line specifies the name of the library that is making the request. By default, this is <code>Python-urllib</code> plus a version number. Both <code>urllib.request</code> and <code>httplib2</code> support changing the user agent, simply by adding a <code>User-Agent</code> header to the request (which will override the default value).
 </ol>
+
+<aside>We&#8217;re downloading 3070 bytes when we could have just downloaded 941.</aside>
 
 <p>Now let&#8217;s look at what the server sent back in its response.
 
@@ -393,6 +403,8 @@ Writing /usr/local/lib/python3.1/dist-packages/httplib2-python3_0.5.0.egg-info</
 
 <p>If you know what sort of resource you&#8217;re expecting (an <abbr>XML</abbr> document in this case), perhaps you could &#8220;just&#8221; pass the returned <code>bytes</code> object to the <a href=xml.html#xml-parse><code>xml.etree.ElementTree.parse()</code> function</a>. That&#8217;ll work as long as the <abbr>XML</abbr> document includes information on its own character encoding (as this one does), but that&#8217;s an optional feature and not all <abbr>XML</abbr> documents do that. If an <abbr>XML</abbr> document doesn&#8217;t include encoding information, the client is supposed to look at the enclosing transport&nbsp;&mdash;&nbsp;<i>i.e.</i> the <code>Content-Type</code> <abbr>HTTP</abbr> header, which can include a <code>charset</code> parameter.
 
+<p class=ss><a style=border:0 href=http://www.cafepress.com/feedparser><img src=http://feedparser.org/img/feedparser.jpg alt="[I support RFC 3023 t-shirt]" width=150 height=150></a>
+
 <p>But it&#8217;s worse than that. Now character encoding information can be in two places: within the <abbr>XML</abbr> document itself, and within the <code>Content-Type</code> <abbr>HTTP</abbr> header. If the information is in <em>both</em> places, which one wins? According to <a href=http://www.ietf.org/rfc/rfc3023.txt>RFC 3023</a> (I swear I am not making this up), if the media type given in the <code>Content-Type</code> <abbr>HTTP</abbr> header is <code>application/xml</code>, <code>application/xml-dtd</code>, <code>application/xml-external-parsed-entity</code>, or any one of the subtypes of <code>application/xml</code> such as <code>application/atom+xml</code> or <code>application/rss+xml</code> or even <code>application/rdf+xml</code>, then the encoding is
 
 <ol>
@@ -455,6 +467,8 @@ Writing /usr/local/lib/python3.1/dist-packages/httplib2-python3_0.5.0.egg-info</
 <li>We also &#8220;received&#8221; an <abbr>HTTP</abbr> status code indicating that the &#8220;request&#8221; was successful.
 <li>Here&#8217;s the rub: this &#8220;response&#8221; was generated from <code>httplib2</code>&#8217;s local cache. That directory name you passed in when you created the <code>httplib2.Http</code> object&nbsp;&mdash;&nbsp;that directory holds <code>httplib2</code>&#8217;s cache of all the operations it&#8217;s ever performed.
 </ol>
+
+<aside>What&#8217;s on the wire? Absolutely nothing.</aside>
 
 <blockquote class=note>
 <p><span class=u>&#x261E;</span>If you want to turn on <code>httplib2</code> debugging, you need to set a module-level constant (<code>httplib2.debuglevel</code>), then create a new <code>httplib2.Http</code> object. If you want to turn off debugging, you need to change the same module-level constant, then create a new <code>httplib2.Http</code> object.
@@ -575,6 +589,8 @@ user-agent: Python-httplib2/$Rev: 259 $'
 </ol>
 
 <h3 id=httplib2-compression>How <code>http2lib</code> Handles Compression</h3>
+
+<aside>&#8220;We have both kinds of music, country AND western.&#8221;</aside>
 
 <p><abbr>HTTP</abbr> supports <a href=#compression>two types of compression</a>. <code>httplib2</code> supports both of them.
 

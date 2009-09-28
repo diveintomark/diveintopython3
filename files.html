@@ -55,6 +55,8 @@ mark{display:inline}
 UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: character maps to &lt;undefined></samp>
 <samp class=p>>>> </samp></pre>
 
+<aside>The default encoding is platform-dependent.</aside>
+
 <p>What just happened? You didn&#8217;t specify a character encoding, so Python is forced to use the default encoding. What&#8217;s the default encoding? If you look closely at the traceback, you can see that it&#8217;s dying in <code>cp1252.py</code>, meaning that Python is using CP-1252 as the default encoding here. (CP-1252 is a common encoding on computers running Microsoft Windows.) The CP-1252 character set doesn&#8217;t support the characters that are in this file, so the read fails with an ugly <code>UnicodeDecodeError</code>.
 
 <p>But wait, it&#8217;s worse than that! The default encoding is <em>platform-dependent</em>, so this code <em>might</em> work on your computer (if your default encoding is <abbr>UTF-8</abbr>), but then it will fail when you distribute it to someone else (whose default encoding is different, like CP-1252).
@@ -100,6 +102,8 @@ UnicodeDecodeError: 'charmap' codec can't decode byte 0x8f in position 28: chara
 <li>Once you open a file (with the correct encoding), reading from it is just a matter of calling the stream object&#8217;s <code>read()</code> method. The result is a string.
 <li>Perhaps somewhat surprisingly, reading the file again does not raise an exception. Python does not consider reading past end-of-file to be an error; it simply returns an empty string.
 </ol>
+
+<aside>Always specify an <code>encoding</code> parameter when you open a file.</aside>
 
 <p>What if you want to re-read a file?
 
@@ -202,6 +206,8 @@ ValueError: I/O operation on closed file.</samp>
 
 <h3 id=with>Closing Files Automatically</h3>
 
+<aside><code>try..finally</code> is good. <code>with</code> is better.</aside>
+
 <p>Stream objects have an explicit <code>close()</code> method, but what happens if your code has a bug and crashes before you call <code>close()</code>? That file could theoretically stay open for much longer than necessary. While you&#8217;re debugging on your local computer, that&#8217;s not a big deal. On a production server, maybe it is.
 
 <p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 2.5 introduced a cleaner solution, which is now the preferred solution in Python 3: the <code>with</code> statement.
@@ -274,6 +280,8 @@ ValueError: zero length field name in format</samp></pre>
 <p class=a>&#x2042;
 
 <h2 id=writing>Writing to Text Files</h2>
+
+<aside>Just open a file and start writing.</aside>
 
 <p>You can write to files in much the same way that you read from them. First you open a file and get a stream object, then you use methods on the stream object to write data to the file, then you close the file.
 
@@ -361,7 +369,9 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 
 <p class=a>&#x2042;
 
-<h2 id=file-like-objects>Streams Objects From Non-File Sources</h2>
+<h2 id=file-like-objects>Stream Objects From Non-File Sources</h2>
+
+<aside>To read from a fake file, just call <code>read()</code>.</aside>
 
 <p>Imagine you&#8217;re writing a library, and one of your library functions is going to read some data from a file. The function could simply take a filename as a string, go open the file for reading, read it, and close it before exiting. But you shouldn&#8217;t do that. Instead, your <abbr>API</abbr> should take <em>an arbitrary stream object</em>.
 
@@ -432,6 +442,8 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <p class=a>&#x2042;
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
+
+<aside><code>sys.stdin</code>, <code>sys.stdout</code>, <code>sys.stderr</code>.</aside>
 
 <p>Command-line gurus are already familiar with the concept of standard input, standard output, and standard error. This section is for the rest of you.
 

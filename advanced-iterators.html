@@ -38,7 +38,7 @@ E = 4</code></pre>
 
 <p>Puzzles like this are called <i>cryptarithms</i> or <i>alphametics</i>. The letters spell out actual words, but if you replace each letter with a digit from <code>0&ndash;9</code>, it also &#8220;spells&#8221; an arithmetic equation. The trick is to figure out which letter maps to each digit. All the occurrences of each letter must map to the same digit, no digit can be repeated, and no &#8220;word&#8221; can start with the digit 0.
 
-<p>The most well-known alphametic puzzle is <code>SEND + MORE = MONEY</code>.
+<aside>The most well-known alphametic puzzle is <code>SEND + MORE = MONEY</code>.</aside>
 
 <p>In this chapter, we&#8217;ll dive into an incredible Python program originally written by Raymond Hettinger. This program solves alphametic puzzles <em>in just 14 lines of code</em>.
 
@@ -106,6 +106,8 @@ if __name__ == '__main__':
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>re.findall(' s.*? s', "The sixth sick sheikh's sixth sheep's sick.")</kbd>
 <samp class=pp>[' sixth s', " sheikh's s", " sheep's s"]</samp></pre>
+
+<aside>This is the <a href=http://en.wikipedia.org/wiki/Tongue-twister>hardest tongue twister</a> in the English language.</aside>
 
 <p>Surprised? The regular expression looks for a space, an <code>s</code>, and then the shortest possible series of any character (<code>.*?</code>), then a space, then another <code>s</code>. Well, looking at that input string, I see five matches:
 
@@ -257,6 +259,8 @@ StopIteration</samp></pre>
 <li>Note that permutations are ordered: <code>(2, 1)</code> is different than <code>(1, 2)</code>.
 <li>That&#8217;s it! Those are all the permutations of <code>[1, 2, 3]</code> taken 2 at a time. Pairs like <code>(1, 1)</code> and <code>(2, 2)</code> never show up, because they contain repeats so they aren&#8217;t valid permutations. When there are no more permutations, the iterator raises a <code>StopIteration</code> exception.
 </ol>
+
+<aside>The <code>itertools</code> module has all kinds of fun stuff.</aside>
 
 <p>The <code>permutations()</code> function doesn&#8217;t have to take a list. It can take any sequence&nbsp;&mdash;&nbsp;even a string.
 
@@ -437,6 +441,8 @@ for guess in itertools.permutations(digits, len(characters)):
 <li>Remember, bytes in Python 3 are integers. The <code>ord()</code> function returns the <abbr>ASCII</abbr> value of a character, which, in the case of A&ndash;Z, is always a byte from 65 to 90.
 <li>The <code>translate()</code> method on a string takes a translation table and runs the string through it. That is, it replaces all occurrences of the keys of the translation table with the corresponding values. In this case, &#8220;translating&#8221; <code>MARK</code> to <code>MORK</code>.
 </ol>
+
+<aside>Now you&#8217;re getting to the <em>really</em> fun part.</aside>
 
 <p>What does this have to do with solving alphametic puzzles? As it turns out, everything.
 

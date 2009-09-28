@@ -34,6 +34,8 @@ body{counter-reset:h1 3}
 <li>Explain the result
 </ol>
 
+<aside>There is always a current working directory.</aside>
+
 <p>If you don&#8217;t know about the current working directory, step 1 will probably fail with an <code>ImportError</code>. Why? Because Python will look for the example module in <a href=your-first-python-program.html#importsearchpath>the import search path</a>, but it won&#8217;t find it because the <code>examples</code> folder isn&#8217;t one of the directories in the search path. To get past this, you can do one of two things:
 
 <ol>
@@ -107,6 +109,8 @@ body{counter-reset:h1 3}
 <h3 id=glob>Listing Directories</h3>
 
 <p>The <code>glob</code> module is another tool in the Python standard library. It&#8217;s an easy way to get the contents of a directory programmatically, and it uses the sort of wildcards that you may already be familiar with from working on the command line.
+
+<aside>The <code>glob</code> module uses shell-like wildcards.</aside>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>os.chdir('/Users/pilgrim/diveintopython3/')</kbd>
@@ -188,6 +192,8 @@ body{counter-reset:h1 3}
 <samp class=pp>c:\Users\pilgrim\diveintopython3\examples\feed.xml</samp></pre>
 
 <h2 id=listcomprehension>List Comprehensions</h2>
+
+<aside>You can use any Python expression in a list comprehension.</aside>
 
 <p>A <dfn>list comprehension</dfn> provides a compact way of mapping a list into another list by applying a function to each of the elements of the list.
 

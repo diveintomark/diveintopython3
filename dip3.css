@@ -345,6 +345,9 @@ aside.ots {
 aside a {
   color: #fff !important;
 }
+aside code {
+  font-size: inherit;
+}
 
 /* previous/next navigation links */
 
