@@ -568,12 +568,12 @@ except ImportError:
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>title = lxml.etree.SubElement(new_feed, 'title',</kbd>          <span class=u>&#x2460;</span></a>
 <a><samp class=p>... </samp><kbd class=pp>    attrib={'type':'html'})</kbd>                               <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2462;</span></a>
 <samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'/>&lt;/feed></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>title.text = 'dive into &amp;hellip;'</kbd>                         <span class=u>&#x2462;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>title.text = 'dive into &amp;hellip;'</kbd>                         <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2464;</span></a>
 <samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'>dive into &amp;amp;hellip;&lt;/title>&lt;/feed></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span class=u>&#x2464;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span class=u>&#x2465;</span></a>
 <samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
 &lt;title type='html'>dive into&amp;amp;hellip;&lt;/title>
 &lt;/feed></samp></pre>
