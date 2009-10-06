@@ -439,6 +439,19 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 <li>The <code>cat</code> command displays the contents of a file. This file contains the string you originally wrote directly to the compressed file <code>out.log.gz</code> from within the Python Shell.
 </ol>
 
+<blockquote class=pf>
+<p>Did you get this error?
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>with gzip.open('out.log.gz', mode='wb') as z_file:</kbd>
+<samp class=p>... </samp><kbd class=pp>        z_file.write('A nine mile walk is no joke, especially in the rain.'.encode('utf-8'))</kbd>
+<samp class=p>... </samp>
+<samp class=traceback>Traceback (most recent call last):
+ File "&lt;stdin>", line 1, in &lt;module>
+AttributeError: 'GzipFile' object has no attribute '__exit__'</samp></pre>
+<p>If so, you&#8217;re probably using Python 3.0. You should really upgrade to Python 3.1.
+<p>Python 3.0 had a <code>gzip</code> module, but it did not support using a gzipped-file object as a context manager. Python 3.1 added the ability to use gzipped-file objects in a <code>with</code> statement.
+</blockquote>
+
 <p class=a>&#x2042;
 
 <h2 id=stdio>Standard Input, Output, and Error</h2>
