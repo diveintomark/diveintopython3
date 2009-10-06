@@ -653,7 +653,7 @@ FAILED (failures=2)</samp></pre>
     result = 0
     index = 0
     for numeral, integer in roman_numeral_map:
-        while s[index:index+len(numeral)] == numeral:  <span class=u>&#x2460;</span>
+<a>        while s[index:index+len(numeral)] == numeral:  <span class=u>&#x2460;</span></a>
             result += integer
             index += len(numeral)
     return result</code></pre>
@@ -663,7 +663,7 @@ FAILED (failures=2)</samp></pre>
 
 <p>If you're not clear how <code>from_roman()</code> works, add a <code>print</code> statement to the end of the <code>while</code> loop:
 
-<pre class=pp><code>def from_roman(s):
+<pre><code>def from_roman(s):
     """convert Roman numeral to integer"""
     result = 0
     index = 0
