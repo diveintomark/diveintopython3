@@ -34,14 +34,14 @@ h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 <tr><th>&#x2460;
 <td>to initialize an instance
 <td><code class=pp>x = MyClass()</code>
-<td><code class=pp>x.<dfn>__init__</dfn>()</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__init__><code class=pp>x.<dfn>__init__</dfn>()</a></code>
 <tr><th>&#x2461;
 <td>the &#8220;official&#8221; representation as a string
 <td><code class=pp><dfn>repr</dfn>(x)</code>
-<td><code class=pp>x.<dfn>__repr__</dfn>()</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__repr__><code class=pp>x.<dfn>__repr__</dfn>()</a></code>
 <tr><th>&#x2462;
 <td>the &#8220;informal&#8221; value as a string
-<td><code class=pp><dfn>str</dfn>(x)</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__str__><code class=pp><dfn>str</dfn>(x)</a></code>
 <td><code class=pp>x.<dfn>__str__</dfn>()</code>
 <tr><th>&#x2463;
 <td>the &#8220;informal&#8221; value as a byte array
@@ -49,7 +49,7 @@ h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 <td><code class=pp>x.<dfn>__bytes__</dfn>()</code>
 <tr><th>&#x2464;
 <td>the value as a formatted string
-<td><code class=pp>format(x, <var>format_spec</var>)</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__format__><code class=pp>format(x, <var>format_spec</var>)</a></code>
 <td><code class=pp>x.<dfn>__format__</dfn>(<var>format_spec</var>)</code>
 </table>
 <ol>
@@ -715,7 +715,7 @@ class FieldStorage:
 
 <h2 id=context-managers>Classes That Can Be Used in a <code>with</code> Block</h2>
 
-<p>Python 3 supports the <code>with</code> statement, which allows you to access an object&#8217;s properties and methods without explicitly referencing the object every time. A <code>with</code> block defines a <a href=http://www.python.org/doc/3.1/library/stdtypes.html#typecontextmanager>runtime context</a>; you &#8220;enter&#8221; the context when you execute the <code>with</code> statement, and you &#8220;exit&#8221; the context after you execute the last statement in the block.
+<p>A <code>with</code> block defines a <a href=http://www.python.org/doc/3.1/library/stdtypes.html#typecontextmanager>runtime context</a>; you &#8220;enter&#8221; the context when you execute the <code>with</code> statement, and you &#8220;exit&#8221; the context after you execute the last statement in the block.
 
 <p>Any class can be used in a <code>with</code> block; no special methods are required. The Python interpreter will automatically set up the runtime context and dispatch all the property and method lookups to your class. However, if you want your class to do something special upon entering or exiting a runtime context, you can define the following special methods.
 
