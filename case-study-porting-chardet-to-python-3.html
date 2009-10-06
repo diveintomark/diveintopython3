@@ -630,7 +630,7 @@ TypeError: unorderable types: int() >= str()</samp></pre>
 <del>-                (aStr[1] &lt;= '\xF1'):</del>
 <del>-                return ord(aStr[1]) - 0x9F, charLen</del>
 <ins>+      if len(aBuf) > 1:</ins>
-<ins>+             if (aBuf[0] == 0x202) and \</ins>
+<ins>+             if (aBuf[0] == 202) and \</ins>
 <ins>+                (aBuf[1] >= 0x9F) and \</ins>
 <ins>+                (aBuf[1] &lt;= 0xF1):</ins>
 <ins>+                return aBuf[1] - 0x9F, charLen</ins>
