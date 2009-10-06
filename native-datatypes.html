@@ -490,7 +490,7 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <ul> 
 <li>Tuples are faster than lists.  If you&#8217;re defining a constant set of values and all you&#8217;re ever going to do with it is iterate through it, use a tuple instead of a list.
 <li>It makes your code safer if you &#8220;write-protect&#8221; data that doesn&#8217;t need to be changed. Using a tuple instead of a list is like having an implied <code>assert</code> statement that shows this data is constant, and that special thought (and a specific function) is required to override that.
-<li>Some tuples can be used as dictionary keys, as you&#8217;ll see later in this chapter. (Lists can never be used as dictionary keys.)
+<li>Some tuples can be used as dictionary keys (specifically, tuples that contain <i>immutable</i> values like strings, numbers, and other tuples). Lists can never be used as dictionary keys, because lists are not immutable.
 </ul>
 
 <blockquote class=note>
