@@ -25,6 +25,11 @@ rm -f examples/*.pyc
 cp -R examples build/
 cp .htaccess build/
 
+echo "validating HTML"
+for f in *.html; do
+  python3 util/validate.py "$f" > /dev/null || die "Failed to validate $f"
+done
+
 echo "building HTML distribution"
 htmlbasedir=diveintopython3-r"$revision"-"$today"
 htmldir=build/"$htmlbasedir"
