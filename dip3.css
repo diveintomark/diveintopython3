@@ -37,7 +37,7 @@ Classname Legend
 .c = "centered"   = centered footer text (also clears floats)
 .a = "asterism"   = section break
 .v = "navigation" = prev/next navigation links (not breadcrumbs)
-.u = "Unicode"    = text contains Unicode characters (requires special font declaration to accomodate *cough* a certain browser)
+.u = "Unicode"    = text contains Unicode characters (requires special font declaration to accommodate *cough* a certain browser)
 
 .nm = "no mobile"     = hide this section on mobile devices
 .nd = "no decoration" = hide the widgets on this code block
