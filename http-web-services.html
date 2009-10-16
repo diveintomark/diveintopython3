@@ -19,9 +19,9 @@ mark{display:inline}
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>HTTP web services are programmatic ways of sending and receiving data from remote servers using nothing but the operations of <abbr>HTTP</abbr>. If you want to get data from the server, use <abbr>HTTP</abbr> <code>GET</code>; if you want to send new data to the server, use <abbr>HTTP</abbr> <code>POST</code>. Some more advanced <abbr>HTTP</abbr> web service <abbr>API</abbr>s also define ways of creating, modifying, and deleting data, using <abbr>HTTP</abbr> <code>PUT</code> and <abbr>HTTP</abbr> <code>DELETE</code>. In other words, the &#8220;verbs&#8221; built into the <abbr>HTTP</abbr> protocol (<code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>) can map directly to application-level operations for retrieving, creating, modifying, and deleting data.
+<p class=f>HTTP web services are programmatic ways of sending and receiving data from remote servers using nothing but the operations of <abbr>HTTP</abbr>. If you want to get data from the server, use <abbr>HTTP</abbr> <code>GET</code>; if you want to send new data to the server, use <abbr>HTTP</abbr> <code>POST</code>. Some more advanced <abbr>HTTP</abbr> web service <abbr>API</abbr>s also allow creating, modifying, and deleting data, using <abbr>HTTP</abbr> <code>PUT</code> and <abbr>HTTP</abbr> <code>DELETE</code>. In other words, the &#8220;verbs&#8221; built into the <abbr>HTTP</abbr> protocol (<code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>) can map directly to application-level operations for retrieving, creating, modifying, and deleting data.
 
-<p>The main advantage of this approach is simplicity, and its simplicity has proven popular. Data&nbsp;&mdash;&nbsp;usually <abbr>XML</abbr> data&nbsp;&mdash;&nbsp;can be built and stored statically, or generated dynamically by a server-side script, and all major programming languages (including Python, of course!) include an <abbr>HTTP</abbr> library for downloading it. Debugging is also easier; because each resource in an <abbr>HTTP</abbr> web service has a unique address (in the form of a <abbr>URL</abbr>), you can load it in your web browser and immediately see the raw data.
+<p>The main advantage of this approach is simplicity, and its simplicity has proven popular. Data&nbsp;&mdash;&nbsp;usually <a href=xml.html><abbr>XML</abbr></a> or <a href=serializing.html#json><abbr>JSON</abbr></a>&nbsp;&mdash;&nbsp;can be built and stored statically, or generated dynamically by a server-side script, and all major programming languages (including Python, of course!) include an <abbr>HTTP</abbr> library for downloading it. Debugging is also easier; because each resource in an <abbr>HTTP</abbr> web service has a unique address (in the form of a <abbr>URL</abbr>), you can load it in your web browser and immediately see the raw data.
 
 <p>Examples of <abbr>HTTP</abbr> web services:
 <ul>
@@ -52,7 +52,7 @@ mark{display:inline}
 
 <p>The most important thing to understand about any type of web service is that network access is incredibly expensive. I don&#8217;t mean &#8220;dollars and cents&#8221; expensive (although bandwidth ain&#8217;t free). I mean that it takes an extraordinary long time to open a connection, send a request, and retrieve a response from a remote server. Even on the fastest broadband connection, <i>latency</i> (the time it takes to send a request and start retrieving data in a response) can still be higher than you anticipated. A router misbehaves, a packet is dropped, an intermediate proxy is under attack&nbsp;&mdash;&nbsp;there&#8217;s <a href=http://isc.sans.org/>never a dull moment</a> on the public internet, and there may be nothing you can do about it.
 
-<aside><code>Cache-Control</code> means &#8220;don't bug me until next week.&#8221;</aside>
+<aside><code>Cache-Control: max-age</code> means &#8220;don't bug me until next week.&#8221;</aside>
 
 <p><abbr>HTTP</abbr> is designed with caching in mind. There is an entire class of devices (called &#8220;caching proxies&#8221;) whose only job is to sit between you and the rest of the world and minimize network access. Your company or <abbr>ISP</abbr> almost certainly maintains caching proxies, even if you&#8217;re unaware of them. They work because caching built into the <abbr>HTTP</abbr> protocol.
 
@@ -72,7 +72,7 @@ Content-Type: image/jpeg</code></pre>
 
 <p>The <code>Cache-Control</code> and <code>Expires</code> headers tell your browser (and any caching proxies between you and the server) that this image can be cached for up to a year. <em>A year!</em> And if, in the next year, you visit another page which also includes a link to this image, your browser will load the image from its cache <em>without generating any network activity whatsoever</em>.
 
-<p>But wait, it gets better. Let&#8217;s say your browser purges the image from your local cache for some reason. Maybe it ran out of disk space; maybe you manually cleared the cache. Whatever. But the <abbr>HTTP</abbr> headers said that this data could be cached by public caching proxies (by virtue of that <code>public</code> keyword in the <code>Cache-Control</code> header). Caching proxies are designed to have tons of storage space, probably far more than your local browser has allocated.
+<p>But wait, it gets better. Let&#8217;s say your browser purges the image from your local cache for some reason. Maybe it ran out of disk space; maybe you manually cleared the cache. Whatever. But the <abbr>HTTP</abbr> headers said that this data could be cached by public caching proxies. (Technically, the important thing is what the headers <em>don&#8217;t</em> say; the <code>Cache-Control</code> header doesn&#8217;t have the <code>private</code> keyword, so this data is cacheable by default.) Caching proxies are designed to have tons of storage space, probably far more than your local browser has allocated.
 
 <p>If your company or <abbr>ISP</abbr> maintain a caching proxy, the proxy may still have the image cached. When you visit <code>diveintomark.org</code> again, your browser will look in its local cache for the image, but it won&#8217;t find it, so it will make a network request to try to download it from the remote server. But if the caching proxy still has a copy of the image, it will intercept that request and serve the image from <em>its</em> cache. That means that your request will never reach the remote server; in fact, it will never leave your company&#8217;s network. That makes for a faster download (fewer network hops) and saves your company money (less data being downloaded from the outside world).
 
@@ -84,7 +84,7 @@ Content-Type: image/jpeg</code></pre>
 
 <p>Some data never changes, while other data changes all the time. In between, there is a vast field of data that <em>might</em> have changed, but hasn&#8217;t. CNN.com&#8217;s feed is updated every few minutes, but my weblog&#8217;s feed may not change for days or weeks at a time. In the latter case, I don&#8217;t want to tell clients to cache my feed for weeks at a time, because then when I do actually post something, people may not read it for weeks (because they&#8217;re respecting my cache headers which said &#8220;don&#8217;t bother checking this feed for weeks&#8221;). On the other hand, I don&#8217;t want clients downloading my entire feed once an hour if it hasn&#8217;t changed!
 
-<aside><code>Last-Modified</code> means &#8220;same shit, different day.&#8221;</aside>
+<aside><code>304: Not Modified</code> means &#8220;same shit, different day.&#8221;</aside>
 
 <p><abbr>HTTP</abbr> has a solution to this, too. When you request data for the first time, the server can send back a <code>Last-Modified</code> header. This is exactly what it sounds like: the date that the data was changed. That background image referenced from <code>diveintomark.org</code> included a <code>Last-Modified</code> header.
 
@@ -101,7 +101,7 @@ Connection: close
 Content-Type: image/jpeg
 </code></pre>
 
-<p>When you request the same data a second (or third or fourth) time, you can send an <code>If-Modified-Since</code> header with your request, with the date you got back from the server last time. If the data hasn&#8217;t changed since then, the server sends back a special <abbr>HTTP</abbr> <code>304</code> status code, which means &#8220;this data hasn&#8217;t changed since the last time you asked for it.&#8221; You can test this on the command line, using <a href=http://curl.haxx.se/>curl</a>:
+<p>When you request the same data a second (or third or fourth) time, you can send an <code>If-Modified-Since</code> header with your request, with the date you got back from the server last time. If the data has changed since then, then the server ignores the <code>If-Modified-Since</code> header and just gives you the new data with a <code>200</code> status code. But if the data <em>hasn&#8217;t</em> changed since then, the server sends back a special <abbr>HTTP</abbr> <code>304</code> status code, which means &#8220;this data hasn&#8217;t changed since the last time you asked for it.&#8221; You can test this on the command line, using <a href=http://curl.haxx.se/>curl</a>:
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-Modified-Since: Fri, 22 Aug 2008 04:28:16 GMT"</mark> http://wearehugh.com/m.jpg</kbd>
@@ -117,7 +117,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support last-modified date checking, but <code>httplib2</code> does.
 
-<h3 id=etags>ETags</h3>
+<h3 id=etags>ETag Checking</h3>
 
 <p>ETags are an alternate way to accomplish the same thing as the <a href=#last-modified>last-modified checking</a>. With Etags, the server sends a hash code in an <code>ETag</code> header along with the data you requested. (Exactly how this hash is determined is entirely up to the server. The only requirement is that it changes when the data changes.) That background image referenced from <code>diveintomark.org</code> had an <code>ETag</code> header.
 
@@ -150,7 +150,7 @@ ETag: "3075-ddc8d800"
 Expires: Mon, 31 May 2010 18:04:39 GMT
 Cache-Control: max-age=31536000, public</samp></pre>
 <ol>
-<li>ETags are commonly enclosed in quotation marks, but <em>the quotation marks are part of the value</em>. They are not delimiters; the only delimiter in the <code>ETag</code> header is the colon between <code>ETag</code> and <code>"3075-ddc8d800"</code>. That means you need to send the quotation marks back to the server in the <code>If-None-Match</code> header.
+<li>ETags are commonly enclosed in quotation marks, but <em>the quotation marks are part of the value</em>. That means you need to send the quotation marks back to the server in the <code>If-None-Match</code> header.
 </ol>
 
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support ETags, but <code>httplib2</code> does.
@@ -159,7 +159,7 @@ Cache-Control: max-age=31536000, public</samp></pre>
 
 <p>When you talk about <abbr>HTTP</abbr> web services, you&#8217;re almost always talking about moving text-based data back and forth over the wire. Maybe it&#8217;s <abbr>XML</abbr>, maybe it&#8217;s <abbr>JSON</abbr>, maybe it&#8217;s just <a href=strings.html#boring-stuff title='there ain&#8217;t no such thing as plain text'>plain text</a>. Regardless of the format, text compresses well. The example feed in <a href=xml.html>the XML chapter</a> is 3070 bytes uncompressed, but would be 941 bytes after gzip compression. That&#8217;s just 30% of the original size!
 
-<p><abbr>HTTP</abbr> supports several compression algorithms. The two most common types are <a href=http://www.ietf.org/rfc/rfc1952.txt>gzip</a> and <a href=http://www.ietf.org/rfc/rfc1951.txt>deflate</a>. When you request a resource over <abbr>HTTP</abbr>, you can ask the server to send it in compressed format. You include an <code>Accept-encoding</code> header in your request that lists which compression algorithms you support. If the server supports any of the same algorithms, it will send you back compressed data (with a <code>Content-encoding</code> header that tells you which algorithm it used). Then it&#8217;s up to you to decompress the data.
+<p><abbr>HTTP</abbr> supports <a href=http://www.iana.org/assignments/http-parameters>several compression algorithms</a>. The two most common types are <a href=http://www.ietf.org/rfc/rfc1952.txt>gzip</a> and <a href=http://www.ietf.org/rfc/rfc1951.txt>deflate</a>. When you request a resource over <abbr>HTTP</abbr>, you can ask the server to send it in compressed format. You include an <code>Accept-encoding</code> header in your request that lists which compression algorithms you support. If the server supports any of the same algorithms, it will send you back compressed data (with a <code>Content-encoding</code> header that tells you which algorithm it used). Then it&#8217;s up to you to decompress the data.
 
 <p>Python&#8217;s <abbr>HTTP</abbr> libraries do not support compression, but <code>httplib2</code> does.
 
@@ -592,7 +592,7 @@ user-agent: Python-httplib2/$Rev: 259 $'
 
 <aside>&#8220;We have both kinds of music, country AND western.&#8221;</aside>
 
-<p><abbr>HTTP</abbr> supports <a href=#compression>two types of compression</a>. <code>httplib2</code> supports both of them.
+<p><abbr>HTTP</abbr> supports <a href=#compression>several types of compression</a>; the two most common types are gzip and deflate. <code>httplib2</code> supports both of these.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>response, content = h.request('http://diveintopython3.org/')</kbd>
