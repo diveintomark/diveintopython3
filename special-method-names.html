@@ -128,7 +128,7 @@ h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 <li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>color</var>, <code>x.color</code> will <em>not</em> call <code>x.__getattr__('color')</code>; it will simply return the already-defined value of <var>x.color</var>.
 <li>The <code>__setattr__()</code> method is called whenever you assign a value to an attribute.
 <li>The <code>__delattr__()</code> method is called whenever you delete an attribute.
-<li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr()__</code> method handles a <var>color</var> attribute dynamically, <code>dir(x)</code> would not list <var>color</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>color</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
+<li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr__()</code> method handles a <var>color</var> attribute dynamically, <code>dir(x)</code> would not list <var>color</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>color</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
 </ol>
 
 <p>The distinction between the <code>__getattr__()</code> and <code>__getattribute__()</code> methods is subtle but important. I can explain it with two examples:
@@ -148,8 +148,8 @@ h3:before{counter-increment:h3;content:'B.' counter(h2) '.' counter(h3) '. '}
 <a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2463;</span></a>
 <samp class=pp>'LemonChiffon'</samp></pre>
 <ol>
-<li>The attribute name is passed into the <code>__getattr()__</code> method as a string.  If the name is <code>'color'</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
-<li>If the attribute name is unknown, the <code>__getattr()__</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
+<li>The attribute name is passed into the <code>__getattr__()</code> method as a string.  If the name is <code>'color'</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
+<li>If the attribute name is unknown, the <code>__getattr__()</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
 <li>The <var>dyn</var> instance does not have an attribute named <var>color</var>, so the <code>__getattr__()</code> method is called to provide a computed value.
 <li>After explicitly setting <var>dyn.color</var>, the <code>__getattr__()</code> method will no longer be called to provide a value for <var>dyn.color</var>, because <var>dyn.color</var> is already defined on the instance.
 </ol>
@@ -668,7 +668,7 @@ class FieldStorage:
 </table>
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>If you define a <code>__lt__()</code> method but no <code>__gt__()</code> method, Python will use the <code>__lt__()</code> method with operands swapped. However, Python will not combine methods. For example, if you define a <code>__lt__()</code> method and a <code>__eq()__</code> method and try to test whether <code>x &lt;= y</code>, Python will not call <code>__lt__()</code> and <code>__eq()__</code> in sequence. It will only call the <code>__le__()</code> method.
+<p><span class=u>&#x261E;</span>If you define a <code>__lt__()</code> method but no <code>__gt__()</code> method, Python will use the <code>__lt__()</code> method with operands swapped. However, Python will not combine methods. For example, if you define a <code>__lt__()</code> method and a <code>__eq__()</code> method and try to test whether <code>x &lt;= y</code>, Python will not call <code>__lt__()</code> and <code>__eq__()</code> in sequence. It will only call the <code>__le__()</code> method.
 </blockquote>
 
 <h2 id=pickle>Classes That Can Be Serialized</h2>
