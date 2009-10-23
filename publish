@@ -17,6 +17,7 @@ today=`date +"%Y-%m-%d"`
 # make build directory and copy original files there for preflighting
 rm -rf build
 mkdir build
+mkdir build/tmp
 mkdir build/d
 cp robots.txt *.css build/
 cp -R j build/
@@ -70,11 +71,23 @@ echo "linting JS"
 js_lint_results=`js j/jslint.js < build/j/dip3.js 2>/dev/null`
 [ "$js_lint_results" = "jslint: No problems found." ] || die "$js_lint_results"
 
+echo "adding per-page dates"
+for f in *.html; do
+  cp "$f" build/tmp/
+  log=`hg log "$f" | grep ^date`
+  num_changes=`echo "$log" | wc -l`
+  lastmodified=`echo "$log" | head -1 | cut -d":" -f2- | cut -d" " -f9-13`
+  lastmodified_pretty=`python3 -c "import time; print(time.strftime('%B %d, %Y', time.strptime('$lastmodified')).replace(' 0', ' '))"`
+  firstmodified=`echo "$log" | tail -1 | cut -d":" -f2- | cut -d" " -f9-13`
+  firstmodified_pretty=`python3 -c "import time; print(time.strftime('%B %d, %Y', time.strptime('$firstmodified')).replace(' 0', ' '))"`
+  sed -i -e "s|<p id=level>|<p id=level>Updated <a title='$num_changes changes since $firstmodified_pretty' href=http://hg.diveintopython3.org/hgweb.cgi/log/tip/$f>$lastmodified_pretty</a> \&bull; |" build/tmp/"$f"
+done
+
 echo "minimizing HTML"
 
 # minimize HTML (NB: this script is quite fragile and relies on knowledge of how I write HTML)
 for f in *.html; do
-  python3 util/htmlminimizer.py "$f" build/"$f" || die "Failed to minimize $f"
+  python3 util/htmlminimizer.py build/tmp/"$f" build/"$f" || die "Failed to minimize $f"
 done
 
 # build sitemap
@@ -84,8 +97,8 @@ echo "adding evil tracking code"
 
 # add Google Analytics script
 for f in build/*.html; do
-  cat "$f" j/ga.js > build/tmp && \
-      mv build/tmp "$f" || die "Could not add tracking code to $f"
+  cat "$f" j/ga.js > build/tmpfile && \
+      mv build/tmpfile "$f" || die "Could not add tracking code to $f"
 done
 
 # minimize JS and CSS
