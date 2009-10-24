@@ -164,7 +164,7 @@ $(document).ready(function() {
 		$(this).css({'position':'static','width':'auto','height':'auto'});
 	    });
 	
-	if (!/*@cc_on!@*/0) {
+	if (!$.browser.msie) {
 	    /* synchronized highlighting on callouts and their associated lines within code & screen blocks */
 	    var hip = {'background-color':'#eee','cursor':'default'};
 	    var unhip = {'background-color':'inherit','cursor':'inherit'};
