@@ -326,6 +326,16 @@ body{counter-reset:h1 3}
 <samp class=p>>>> </samp><kbd class=pp>{value:key for key, value in a_dict.items()}</kbd>
 <samp class=pp>{1: 'a', 2: 'b', 3: 'c'}</samp></pre>
 
+<p>Of course, this only works if the values of the dictionary are immutable, like strings or tuples. If you try this with a dictionary that contains lists, it will fail most spectacularly.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_dict = {'a': [1, 2, 3], 'b': 4, 'c': 5}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>{value:key for key, value in a_dict.items()}</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 1, in &lt;dictcomp>
+TypeError: unhashable type: 'list'</samp></pre>
+
 <p class=a>&#x2042;
 
 <h2 id=setcomprehension>Set Comprehensions</h2>
