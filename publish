@@ -93,14 +93,6 @@ done
 # build sitemap
 ls build/*.html | sed -e "s|build/|http://diveintopython3.org/|g" -e "s|/index.html|/|g" > build/sitemap.txt || die "Failed to build sitemap"
 
-echo "adding evil tracking code"
-
-# add Google Analytics script
-for f in build/*.html; do
-  cat "$f" j/ga.js > build/tmpfile && \
-      mv build/tmpfile "$f" || die "Could not add tracking code to $f"
-done
-
 # minimize JS and CSS
 echo "minimizing JS"
 revision=`hg log|grep changeset|cut -d":" -f3|head -1`
@@ -123,18 +115,16 @@ java -jar util/yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css && \
     sed -i -e "s|;}|}|g" build/p-$revision.css || die "Failed to minimize CSS"
 
 # put CSS inline and remove unused CSS properties on a page-by-page basis
-echo "inlining CSS"
+# minimize URLs by stripping "http:" prefix
+# add asynchronous Google Analytics script in head (after inline styles)
+echo "inlining CSS, minimizing URLs, adding evil tracking code"
+ga=`cat j/ga.js`
 for f in build/*.html; do
   css=`python2.6 util/lesscss.py "$f" "build/$revision.css"` || die "Failed to remove unused CSS"
   mobilecss=`python2.6 util/lesscss.py "$f" "build/m-$revision.css"` || die "Failed to remove unused CSS"
   printcss=`python2.6 util/lesscss.py "$f" "build/p-$revision.css"` || die "Failed to remove unused CSS"
-  sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" "$f" || die "Failed to inline CSS"
+  sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" -e "s|href=index.html|href=/|g" -e "s|</style>|</style>${ga}|g" "$f" || die "Failed to inline CSS"
 done
-
-# minimize URLs
-echo "minimizing URLs"
-sed -i -e "s|=http:|=|g" build/*.html && \
-    sed -i -e "s|href=index.html|href=/|g" build/*.html || die "Failed to minimize URLs"
 
 # set file permissions (hg resets these, don't know why)
 chmod 755 build/examples build/j build/i build/d && \
