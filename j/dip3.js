@@ -98,6 +98,7 @@ function hideTOC() {
 function showTOC() {
     var toc = '';
     var old_level = 1;
+    var level;
     $('h2,h3').each(function(i, h) {
 	    level = parseInt(h.tagName.substring(1), 10);
 	    if (level < old_level) {
