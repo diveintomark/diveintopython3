@@ -95,8 +95,8 @@ ls build/*.html | sed -e "s|build/|http://diveintopython3.org/|g" -e "s|/index.h
 
 # minimize JS and CSS
 echo "minimizing JS"
-java -jar util/yuicompressor-2.4.2.jar build/j/prettify.js > build/j/prettify.min.js && \
-    java -jar util/yuicompressor-2.4.2.jar build/j/dip3.js > build/j/dip3.min.js || die "Failed to minimize JS"
+java -jar util/compiler.jar -js build/j/prettify.js > build/j/prettify.min.js && \
+    java -jar util/compiler.jar -js build/j/dip3.js > build/j/dip3.min.js || die "Failed to minimize JS"
 
 # combine jQuery and our script
 echo "combining JS"
