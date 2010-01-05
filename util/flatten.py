@@ -5,7 +5,7 @@ import time
 
 # get list of chapters
 chapters = []
-for line in open('index.html'):
+for line in open('index.html', encoding="utf-8"):
     if not line.count('<li') or not line.count('<a href'):
         continue
     chapters.append(line.split('<a href=', 1)[1].split('>', 1)[0])
