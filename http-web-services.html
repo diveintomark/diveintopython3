@@ -557,7 +557,7 @@ reply: 'HTTP/1.1 200 OK'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>len(content)</kbd>                                                  <span class=u>&#x2462;</span></a>
 <samp class=pp>6657</samp></pre>
 <ol>
-<li>Instead of the feed, this time we&#8217;re going to download the site&#8217;s home page, which is <abbr>HTML</abbr>. Since this is the first time you&#8217;lve ever requested this page, <code>httplib2</code> has little to work with, and it sends out a minimum of headers with the request.
+<li>Instead of the feed, this time we&#8217;re going to download the site&#8217;s home page, which is <abbr>HTML</abbr>. Since this is the first time you&#8217;ve ever requested this page, <code>httplib2</code> has little to work with, and it sends out a minimum of headers with the request.
 <li>The response contains a multitude of <abbr>HTTP</abbr> headers&hellip; but no caching information. However, it does include both an <code>ETag</code> and <code>Last-Modified</code> header.
 <li>At the time I constructed this example, this page was 6657 bytes. It&#8217;s probably changed since then, but don&#8217;t worry about it.
 </ol>
