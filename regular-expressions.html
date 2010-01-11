@@ -181,7 +181,7 @@ body{counter-reset:h1 5}
 <li>This matches the start of the string, and then the first optional <code>M</code>, but not the second and third <code>M</code> (but that&#8217;s okay because they&#8217;re optional), and then the end of the string.
 <li>This matches the start of the string, and then the first and second optional <code>M</code>, but not the third <code>M</code> (but that&#8217;s okay because it&#8217;s optional), and then the end of the string.
 <li>This matches the start of the string, and then all three optional <code>M</code>, and then the end of the string.
-<li>This matches the start of the string, and then all three optional <code>M</code>, but then does not match the the end of the string (because there is still one unmatched <code>M</code>), so the pattern does not match and returns <code>None</code>.
+<li>This matches the start of the string, and then all three optional <code>M</code>, but then does not match the end of the string (because there is still one unmatched <code>M</code>), so the pattern does not match and returns <code>None</code>.
 </ol>
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>pattern = '^M{0,3}$'</kbd>        <span class=u>&#x2460;</span></a>
