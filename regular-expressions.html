@@ -282,7 +282,7 @@ body{counter-reset:h1 5}
 <p class=a>&#x2042;
 
 <h2 id=phonenumbers>Case study: Parsing Phone Numbers</h2>
-<aside>\d matches any numeric digit (0&ndash;9). \D matches anything but digits.</aside>
+<aside>\d matches any numeric digit (0&ndash;10). \D matches anything but digits.</aside>
 <p>So far you&#8217;ve concentrated on matching whole patterns. Either the pattern matches, or it doesn&#8217;t. But regular expressions are much more powerful than that. When a regular expression <em>does</em> match, you can pick out specific pieces of it. You can find out what matched where.
 <p>This example came from another real-world problem I encountered, again from a previous day job. The problem: parsing an American phone number. The client wanted to be able to enter the number free-form (in a single field), but then wanted to store the area code, trunk, number, and optionally an extension separately in the company&#8217;s database. I scoured the Web and found many examples of regular expressions that purported to do this, but none of them were permissive enough.
 <p>Here are the phone numbers I needed to be able to accept:
@@ -436,7 +436,7 @@ AttributeError: 'NoneType' object has no attribute 'groups'</samp></pre>
 </ul>
 <p>Regular expressions are extremely powerful, but they are not the correct solution for every problem. You should learn enough about them to know when they are appropriate, when they will solve your problems, and when they will cause more problems than they solve.
 <p class=v><a href=strings.html rel=prev title='back to &#8220;Strings&#8221;'><span class=u>&#x261C;</span></a> <a href=generators.html rel=next title='onward to &#8220;Closures &amp; Generators&#8221;'><span class=u>&#x261E;</span></a>
-<p class=c>&copy; 2001&ndash;9 <a href=about.html>Mark Pilgrim</a>
+<p class=c>&copy; 2001&ndash;10 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/prettify.js></script>
 <script src=j/dip3.js></script>
