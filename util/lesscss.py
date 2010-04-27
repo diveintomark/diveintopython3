@@ -1,4 +1,4 @@
-#!/usr/bin/python2.6
+#!/usr/bin/python2.5
 
 from pyquery import PyQuery as pq
 import glob
@@ -12,10 +12,7 @@ SELECTOR_EXCEPTIONS = ('.w', '.b', '.str', '.kwd', '.com', '.typ', '.lit', '.pun
 filename = sys.argv[1]
 cssfilename = sys.argv[2]
 pqd = pq(filename=filename)
-
-with open(filename, 'rb') as fopen:
-    raw_data = fopen.read()
-
+raw_data = open(filename, 'rb').read()
 if raw_data.count('</a><script src=j/'): # HACK HACK HACK
     def keep(s):
         for selector in SELECTOR_EXCEPTIONS:
@@ -26,9 +23,7 @@ else:
     def keep(s):
         return False
 
-with open(cssfilename, 'rb') as fopen:
-    original_css = fopen.read()
-
+original_css = open(cssfilename, 'rb').read();
 new_css = ''
 for rule in original_css.split('}')[:-1]:
     selectors, properties = rule.split('{', 1)
