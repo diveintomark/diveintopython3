@@ -210,7 +210,7 @@ ValueError: I/O operation on closed file.</samp>
 
 <p>Stream objects have an explicit <code>close()</code> method, but what happens if your code has a bug and crashes before you call <code>close()</code>? That file could theoretically stay open for much longer than necessary. While you&#8217;re debugging on your local computer, that&#8217;s not a big deal. On a production server, maybe it is.
 
-<p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 2.5 introduced a cleaner solution, which is now the preferred solution in Python 3: the <code>with</code> statement.
+<p>Python 2 had a solution for this: the <code>try..finally</code> block. That still works in Python 3, and you may see it in other people&#8217;s code or in older code that was <a href=case-study-porting-chardet-to-python-3.html>ported to Python 3</a>. But Python 2.6 introduced a cleaner solution, which is now the preferred solution in Python 3: the <code>with</code> statement.
 
 <pre class='nd pp'><code>with open('examples/chinese.txt', encoding='utf-8') as a_file:
     a_file.seek(17)
