@@ -317,6 +317,42 @@ h3:before {
   counter-increment: h3;
   content: counter(h1) "." counter(h2) "." counter(h3) ". ";
 }
+#appa h1:before {
+  counter-increment: h1;
+  content: 'Appendix A. '
+}
+#appa h2:before {
+  counter-increment: h2;
+  content: 'A.' counter(h2) '. '
+}
+#appa h3:before {
+  counter-increment: h3;
+  content: 'A.' counter(h2) '.' counter(h3) '. '
+}
+#appb h1:before {
+  counter-increment: h1;
+  content: 'Appendix B. '
+}
+#appb h2:before {
+  counter-increment: h2;
+  content: 'B.' counter(h2) '. '
+}
+#appb h3:before {
+  counter-increment: h3;
+  content: 'B.' counter(h2) '.' counter(h3) '. '
+}
+#appc h1:before {
+  counter-increment: h1;
+  content: 'Appendix C. '
+}
+#appc h2:before {
+  counter-increment: h2;
+  content: 'C.' counter(h2) '. '
+}
+#appc h3:before {
+  counter-increment: h3;
+  content: 'C.' counter(h2) '.' counter(h3) '. '
+}
 aside {
   display: block;
   float: right;
