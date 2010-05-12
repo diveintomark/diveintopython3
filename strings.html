@@ -250,13 +250,13 @@ experience of years.</samp>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list = query.split('&amp;')</kbd>                            <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list = query.split('&amp;')</kbd>                                        <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['user=pilgrim', 'database=master', 'password=PapayaWhip']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list_of_lists = [v.split('=', 1) for v in a_list]</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list_of_lists = [v.split('=', 1) for v in a_list if '=' in v]</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list_of_lists</kbd>
 <samp class=pp>[['user', 'pilgrim'], ['database', 'master'], ['password', 'PapayaWhip']]</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict = dict(a_list_of_lists)</kbd>                       <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict = dict(a_list_of_lists)</kbd>                                   <span class=u>&#x2462;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
 <samp class=pp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 

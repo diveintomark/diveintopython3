@@ -115,13 +115,14 @@ java -jar util/yuicompressor-2.4.2.jar build/dip3.css > build/$revision.css && \
 # put CSS inline and remove unused CSS properties on a page-by-page basis
 # minimize URLs by stripping "http:" prefix
 # add asynchronous Google Analytics script in head (after inline styles)
-echo "inlining CSS, minimizing URLs, adding evil tracking code"
+echo "inlining CSS, minimizing URLs, adding evil tracking code and affiliate links"
 ga=`cat j/ga.js`
+plug=`cat j/plug.html`
 for f in build/*.html; do
   css=`python2.5 util/lesscss.py "$f" "build/$revision.css"` || die "Failed to remove unused CSS"
   mobilecss=`python2.5 util/lesscss.py "$f" "build/m-$revision.css"` || die "Failed to remove unused CSS"
   printcss=`python2.5 util/lesscss.py "$f" "build/p-$revision.css"` || die "Failed to remove unused CSS"
-  sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" -e "s|href=index.html|href=/|g" -e "s|</style>|</style>${ga}|g" "$f" || die "Failed to inline CSS"
+  sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" -e "s|href=index.html|href=/|g" -e "s|</style>|</style>${ga}|g" -e "s|<p id=toc>|${plug}<p id=toc>|g" "$f" || die "Failed to inline CSS"
 done
 
 # set file permissions (hg resets these, don't know why)
@@ -129,7 +130,7 @@ chmod 755 build/examples build/j build/i build/d && \
     chmod 644 build/*.html build/*.css build/*.txt build/*.zip build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/d/.htaccess build/.htaccess || die "Failed to reset file permissions"
 
 # ship it!
-#die "Aborting without publishing"
+die "Aborting without publishing"
 echo -n "publishing"
 rsync -essh -a build/d/.htaccess build/*.zip diveintomark.org:~/web/diveintopython3.org/d/ && \
     echo -n "." && \
