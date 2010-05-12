@@ -221,7 +221,7 @@ body{counter-reset:h1 5}
 <li>This matches the start of the string, then the first optional <code>M</code>, then <code>CM</code>, then the optional <code>L</code> and all three optional <code>X</code> characters, then the end of the string. <code>MCMLXXX</code> is the Roman numeral representation of <code>1980</code>.
 <li>This matches the start of the string, then the first optional <code>M</code>, then <code>CM</code>, then the optional <code>L</code> and all three optional <code>X</code> characters, then <em>fails to match</em> the end of the string because there is still one more <code>X</code> unaccounted for. So the entire pattern fails to match, and returns <code>None</code>. <code>MCMLXXXX</code> is not a valid Roman numeral.
 </ol>
-<aside>(A|B) matches either pattern A or pattern B.</aside>
+<aside>(A|B) matches either pattern A or pattern B, but not both.</aside>
 <p>The expression for the ones place follows the same pattern. I&#8217;ll spare you the details and show you the end result.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$'</kbd>
@@ -431,7 +431,7 @@ AttributeError: 'NoneType' object has no attribute 'groups'</samp></pre>
 <li><code>x*</code> matches <code>x</code> zero or more times.
 <li><code>x+</code> matches <code>x</code> one or more times.
 <li><code>x{n,m}</code> matches an <code>x</code> character at least <code>n</code> times, but not more than <code>m</code> times.
-<li><code>(a|b|c)</code> matches either <code>a</code> or <code>b</code> or <code>c</code>.
+<li><code>(a|b|c)</code> matches exactly one of <code>a</code>, <code>b</code> or <code>c</code>.
 <li><code>(x)</code> in general is a <em>remembered group</em>. You can get the value of what matched by using the <code>groups()</code> method of the object returned by <code>re.search</code>.
 </ul>
 <p>Regular expressions are extremely powerful, but they are not the correct solution for every problem. You should learn enough about them to know when they are appropriate, when they will solve your problems, and when they will cause more problems than they solve.
