@@ -130,7 +130,7 @@ chmod 755 build/examples build/j build/i build/d && \
     chmod 644 build/*.html build/*.css build/*.txt build/*.zip build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/d/.htaccess build/.htaccess || die "Failed to reset file permissions"
 
 # ship it!
-die "Aborting without publishing"
+#die "Aborting without publishing"
 echo -n "publishing"
 rsync -essh -a build/d/.htaccess build/*.zip diveintomark.org:~/web/diveintopython3.org/d/ && \
     echo -n "." && \
