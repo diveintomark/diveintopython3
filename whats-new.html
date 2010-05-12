@@ -32,7 +32,7 @@ h3:before{content:''}
 <ul>
 <li>In <a href=files.html>Files</a>, you&#8217;ll learn the difference between reading files in &#8220;binary&#8221; and &#8220;text&#8221; mode. Reading (and writing!) files in text mode requires an <code>encoding</code> parameter. Some text file methods count characters, but other methods count bytes. If your code assumes that one character == one byte, it <em>will</em> break on multi-byte characters.
 <li>In <a href=http-web-services.html><abbr>HTTP</abbr> Web Services</a>, the <code>httplib2</code> module fetches headers and data over <abbr>HTTP</abbr>. <abbr>HTTP</abbr> headers are returned as strings, but the <abbr>HTTP</abbr> body is returned as bytes.
-<li>In <a href=serializing.html>Serializing Python Objects</a>, you&#8217;ll learn why the <code>pickle</code> module in Python 3 defines a new data format that is backwardly incompatible with Python 2. (Hint: it&#8217;s because of bytes and strings.) Also <abbr>JSON</abbr>, which doesn&#8217;t support the <code>bytes</code> type at all. I&#8217;ll show you how to hack around that.
+<li>In <a href=serializing.html>Serializing Python Objects</a>, you&#8217;ll learn why the <code>pickle</code> module in Python 3 defines a new data format that is backwardly incompatible with Python 2. (Hint: it&#8217;s because of bytes and strings.) Also, Python 3 supports serializing objects to and from <abbr>JSON</abbr>, which doesn&#8217;t even have a <code>bytes</code> type. I&#8217;ll show you how to hack around that.
 <li>In <a href=case-study-porting-chardet-to-python-3.html>Case study: porting <code>chardet</code> to Python 3</a>, it&#8217;s just a bloody mess of bytes and strings everywhere.
 </ul>
 
