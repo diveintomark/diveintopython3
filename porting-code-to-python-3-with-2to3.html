@@ -1169,7 +1169,7 @@ except:
 
 <h2 id=sys_exc><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></h2>
 
-<p>Python 2 had three variables in the <code>sys</code> module that you could access while an exception was being handled: <code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code>. (Actually, these date all the way back to Python 1.)  Ever since Python 1.5, these variables have been deprecated in favor of <code>sys.exc_info</code>, which is a tuple that contains all three values. In Python 3, these individual variables have finally gone away; you must use <code>sys.exc_info</code>.
+<p>Python 2 had three variables in the <code>sys</code> module that you could access while an exception was being handled: <code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code>. (Actually, these date all the way back to Python 1.)  Ever since Python 1.5, these variables have been deprecated in favor of <code>sys.exc_info()</code>, which is a function that returns a tuple those three values. In Python 3, these individual variables have finally gone away; you must use the <code>sys.exc_info()</code> function.
 
 <table>
 <tr><th>Notes
