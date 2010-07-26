@@ -41,7 +41,7 @@ body{counter-reset:h1 10}
 </ol>
 
 <p>Since your code has a bug, and you now have a test case that tests this bug, the test case will fail:
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
 <samp>from_roman should fail with blank string ... FAIL
 from_roman should fail with malformed antecedents ... ok
@@ -89,7 +89,7 @@ FAILED (failures=1)</samp></pre>
 <li>I don&#8217;t think I&#8217;ve mentioned this yet anywhere in this book, so let this serve as your final lesson in <a href=strings.html#formatting-strings>string formatting</a>. Starting in Python 3.1, you can skip the numbers when using positional indexes in a format specifier. That is, instead of using the format specifier <code>{0}</code> to refer to the first parameter to the <code>format()</code> method, you can simply use <code>{}</code> and Python will fill in the proper positional index for you. This works for any number of arguments; the first <code>{}</code> is <code>{0}</code>, the second <code>{}</code> is <code>{1}</code>, and so forth.
 </ol>
 
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
 <a><samp>from_roman should fail with blank string ... ok</samp>  <span class=u>&#x2460;</span></a>
 <samp>from_roman should fail with malformed antecedents ... ok
@@ -168,7 +168,7 @@ class RoundtripCheck(unittest.TestCase):
 
 <p>Now your test cases are up to date with the new requirements, but your code is not, so you expect several of the test cases to fail.
 
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
@@ -263,7 +263,7 @@ def from_roman(s):
 
 <p>You may be skeptical that these two small changes are all that you need. Hey, don&#8217;t take my word for it; see for yourself.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok
@@ -422,7 +422,7 @@ def from_roman(s):
 
 <p>But does it work? Why yes, yes it does. And I can prove it.
 
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest10.py -v</kbd>
 <samp>from_roman should fail with blank string ... ok
 from_roman should fail with malformed antecedents ... ok

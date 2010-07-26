@@ -353,6 +353,18 @@ h3:before {
   counter-increment: h3;
   content: 'C.' counter(h2) '.' counter(h3) '. '
 }
+#appd h1:before {
+  counter-increment: h1;
+  content: 'Appendix D. '
+}
+#appd h2:before {
+  counter-increment: h2;
+  content: 'D.' counter(h2) '. '
+}
+#appd h3:before {
+  counter-increment: h3;
+  content: 'D.' counter(h2) '.' counter(h3) '. '
+}
 aside {
   display: block;
   float: right;

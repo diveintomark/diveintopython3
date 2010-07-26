@@ -144,7 +144,7 @@ def to_roman(n):
 <li>At this stage, you want to define the <abbr>API</abbr> of the <code>to_roman()</code> function, but you don&#8217;t want to code it yet. (Your test needs to fail first.) To stub it out, use the Python reserved word <code>pass</code>, which does precisely nothing.
 </ol>
 <p>Execute <code>romantest1.py</code> on the command line to run the test. If you call it with the <code>-v</code> command-line option, it will give more verbose output so you can see exactly what&#8217;s going on as each test case runs. With any luck, your output should look like this:
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest1.py -v</kbd>
 <a><samp>test_to_roman_known_values (__main__.KnownValues)</samp>                      <span class=u>&#x2460;</span></a>
 <a><samp>to_roman should give known result with known input ... FAIL</samp>            <span class=u>&#x2461;</span></a>
@@ -213,7 +213,7 @@ subtracting 10 from input, adding X to output
 subtracting 4 from input, adding IV to output
 'MCDXXIV'</samp></pre>
 <p>So the <code>to_roman()</code> function appears to work, at least in this manual spot check. But will it pass the test case you wrote?
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest1.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 <a>to_roman should give known result with known input ... ok               <span class=u>&#x2460;</span></a>
@@ -260,7 +260,7 @@ OK</samp></pre>
 <p>Pay close attention to this last line of code. Instead of calling <code>to_roman()</code> directly and manually checking that it raises a particular exception (by wrapping it in <a href=your-first-python-program.html#exceptions>a <code>try...except</code> block</a>), the <code>assertRaises</code> method has encapsulated all of that for us. All you do is tell it what exception you&#8217;re expecting (<code>roman2.OutOfRangeError</code>), the function (<code>to_roman()</code>), and the function&#8217;s arguments (<code>4000</code>). The <code>assertRaises</code> method takes care of calling <code>to_roman()</code> and checking that it raises <code>roman2.OutOfRangeError</code>.
 <p>Also note that you&#8217;re passing the <code>to_roman()</code> function itself as an argument; you&#8217;re not calling it, and you&#8217;re not passing the name of it as a string. Have I mentioned recently how handy it is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>?
 <p>So what happens when you run the test suite with this new test?
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -291,7 +291,7 @@ FAILED (errors=1)</samp></pre>
 <li>Exceptions don&#8217;t actually do anything, but you need at least one line of code to make a class. Calling <code>pass</code> does precisely nothing, but it&#8217;s a line of Python code, so that makes it a class.
 </ol>
 <p>Now run the test suite again.
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -331,7 +331,7 @@ FAILED (failures=1)</samp></pre>
 <li>This is straightforward: if the given input (<var>n</var>) is greater than <code>3999</code>, raise an <code>OutOfRangeError</code> exception. The unit test does not check the human-readable string that accompanies the exception, although you could write another test that did check it (but watch out for internationalization issues for strings that vary by the user&#8217;s language or environment).
 </ol>
 <p>Does this make the test pass? Let&#8217;s find out.
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest2.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -382,7 +382,7 @@ OK</samp></pre>
 
 <p>Now check that the tests fail:
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest3.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -435,7 +435,7 @@ FAILED (failures=2)</samp></pre>
 
 <p>I could show you a whole series of unrelated examples to show that the multiple-comparisons-at-once shortcut works, but instead I&#8217;ll just run the unit tests and prove it.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest3.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -486,7 +486,7 @@ class OutOfRangeError(ValueError): pass
 
 <p>Now check that the test fails properly.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest4.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -534,7 +534,7 @@ FAILED (failures=1)</samp></pre>
 
 <p>Finally, check that the code does indeed make the test pass.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest4.py -v</kbd>
 <samp>test_to_roman_known_values (__main__.KnownValues)
 to_roman should give known result with known input ... ok
@@ -586,7 +586,7 @@ OK</samp></pre>
 
 <p>These new tests won&#8217;t even fail yet. We haven&#8217;t defined a <code>from_roman()</code> function at all, so they&#8217;ll just raise errors.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
 <samp>E.E....
 ======================================================================
@@ -622,7 +622,7 @@ def from_roman(s):
 
 <p>Now the test cases will actually fail.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
 <samp>F.F....
 ======================================================================
@@ -689,7 +689,7 @@ found I of length 1, adding 1
 
 <p>Time to re-run the tests.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest5.py</kbd>
 <samp>.......
 ----------------------------------------------------------------------
@@ -745,7 +745,7 @@ class InvalidRomanNumeralError(ValueError): pass</code></pre>
 
 <p>All three of these tests should fail, since the <code>from_roman()</code> function doesn&#8217;t currently have any validity checking. (If they don&#8217;t fail now, then what the heck are they testing?)
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest6.py</kbd>
 <samp>FFF.......
 ======================================================================
@@ -809,7 +809,7 @@ def from_roman(s):
 
 <p>And re-run the tests&hellip;
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest7.py</kbd>
 <samp>..........
 ----------------------------------------------------------------------

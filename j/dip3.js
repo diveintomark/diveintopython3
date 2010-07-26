@@ -141,7 +141,12 @@ $(document).ready(function() {
 
 		/* wrap code block in a div and insert widget block */
 		$(this).wrapInner('<div class=b></div>');
-		$(this).prepend('<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS.visible + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]</div>');
+		var widgetHTML = '<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS.visible + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]';
+		if ($(this).hasClass('cmdline')) {
+		    widgetHTML += ' [<a href="troubleshooting.html#running-python-on-the-command-line">command line help</a>]';
+		}
+		widgetHTML += '</div>';
+		$(this).prepend(widgetHTML);
 		
 		/* move download link into widget block */
 		$(this).prev("p.d").each(function(i) {
@@ -154,6 +159,11 @@ $(document).ready(function() {
 		var postid = postelm.id || ("postautopre" + i);
 		postelm.id = postid;
 		$(this).before('<p class=skip><a href=#' + postid + '>skip over this code listing</a>');
+	    });
+
+	$("pre.screen.cmdline:not(.nd)").each(function(i) {
+		/* add link to command-line help */
+		this.id = "autopre" + i;
 	    });
 	
 	/* make skip links disappear until you tab to them */

@@ -251,7 +251,7 @@ ValueError: I/O operation on closed file.</samp>
 <li>Using <a href=strings.html#formatting-strings>the <code>format()</code> string method</a>, you can print out the line number and the line itself. The format specifier <code>{:>4}</code> means &#8220;print this argument right-justified within 4 spaces.&#8221; The <var>a_line</var> variable contains the complete line, carriage returns and all. The <code>rstrip()</code> string method removes the trailing whitespace, including the carriage return characters.
 </ol>
 
-<pre class=screen>
+<pre class='screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3$ </samp><kbd class=pp>python3 examples/oneline.py</kbd>
 <samp>   1 Dora
    2 Ethan
@@ -418,7 +418,7 @@ AttributeError: '_io.BufferedReader' object has no attribute 'encoding'</samp></
 
 <p>As an added bonus, it supports the <code>with</code> statement too, so you can let Python automatically close your gzip-compressed file when you&#8217;re done with it.
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~$ </samp><kbd>python3</kbd>
 
 <samp class=p>>>> </samp><kbd class=pp>import gzip</kbd>
@@ -515,7 +515,7 @@ print('C')</code></pre>
 
 <p>Check this out:
 
-<pre class='nd screen'>
+<pre class='nd screen cmdline'>
 <samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 stdout.py</kbd>
 <samp>A
 C</samp>
