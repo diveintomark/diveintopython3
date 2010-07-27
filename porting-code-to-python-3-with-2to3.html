@@ -786,7 +786,7 @@ except:
 <ol>
 <li>In the simplest case, the <code>2to3</code> script will simply convert <code>xrange()</code> to <code>range()</code>.
 <li>If your Python 2 code used <code>range()</code>, the <code>2to3</code> script does not know whether you needed a list, or whether an iterator would do. It errs on the side of caution and coerces the return value into a list by calling the <code>list()</code> function.
-<li>If the <code>xrange()</code> function was inside a list comprehension, there is no need to coerce the result to a list, since the list comprehension will work just fine with an iterator.
+<li>If the <code>xrange()</code> function was inside a list comprehension, the <code>2to3</code> script is clever enough <em>not</em> to wrap the <code>range()</code> function with a call to <code>list()</code>. The list comprehension will work just fine with the iterator that the <code>range()</code> function returns.
 <li>Similarly, a <code>for</code> loop will work just fine with an iterator, so there is no need to change anything here.
 <li>The <code>sum()</code> function will also work with an iterator, so <code>2to3</code> makes no changes here either. Like <a href=#dict>dictionary methods that return views instead of lists</a>, this applies to <code>min()</code>, <code>max()</code>, <code>sum()</code>, <code>list()</code>, <code>tuple()</code>, <code>set()</code>, <code>sorted()</code>, <code>any()</code>, and <code>all()</code>.
 </ol>
