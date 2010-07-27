@@ -18,7 +18,7 @@
 </blockquote>
 <p id=toc>&nbsp;
 <h2 id=divingin>Diving In</h2>
-<p class=f>Throughout this book, you&#8217;ve seen examples of &#8220;special methods&#8221;&nbsp;&mdash;&nbsp;certain &#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sequences, like dictionaries, like functions, like iterators, or even like numbers. This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
+<p class=f>Throughout this book, you&#8217;ve seen examples of &#8220;special methods&#8221;&nbsp;&mdash;&nbsp;certain &#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sets, like dictionaries, like functions, like iterators, or even like numbers. This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
 
 <h2 id=basics>Basics</h2>
 
@@ -245,9 +245,9 @@ bytes = zef_file.read(12)
 <li>Given the first 12 bytes of a zip file, decrypt them by mapping the bytes to <var>zd</var>, in effect &#8220;calling&#8221; <var>zd</var> 12 times, which invokes the <code>__call__()</code> method 12 times, which updates its internal state and returns a resulting byte 12 times.
 </ol>
 
-<h2 id=acts-like-list>Classes That Act Like Sequences</h2>
+<h2 id=acts-like-set>Classes That Act Like Sets</h2>
 
-<p>If your class acts as a container for a set of values&nbsp;&mdash;&nbsp;that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value&nbsp;&mdash;&nbsp;then it should probably define the following special methods that make it act like a sequence.
+<p>If your class acts as a container for a set of values&nbsp;&mdash;&nbsp;that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value&nbsp;&mdash;&nbsp;then it should probably define the following special methods that make it act like a set.
 
 <table>
 <tr><th>Notes
@@ -264,7 +264,7 @@ bytes = zef_file.read(12)
 <td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__contains__><code>seq.<dfn>__contains__</dfn>(<var>x</var>)</code></a>
 </table>
 
-<p id=acts-like-list-example>The <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
+<p id=acts-like-set-example>The <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
 
 <pre class=pp><code># A script which responds to http://example.com/search?q=cgi
 import cgi
@@ -319,7 +319,7 @@ class FieldStorage:
 <td><a href=http://docs.python.org/3.1/library/collections.html#collections.defaultdict.__missing__><code>x.<dfn>__missing__</dfn>(<var>nonexistent_key</var>)</code></a>
 </table>
 
-<p>The <a href=#acts-like-list-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
+<p>The <a href=#acts-like-set-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
 
 <pre class=pp><code># A script which responds to http://example.com/search?q=cgi
 import cgi
