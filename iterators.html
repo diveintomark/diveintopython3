@@ -177,7 +177,7 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
         self.a, self.b = self.b, self.a + self.b
 <a>        return fib                                <span class=u>&#x2465;</span></a></code></pre>
 <ol>
-<li>To build an iterator from scratch, <code>fib</code> needs to be a class, not a function.
+<li>To build an iterator from scratch, <code>Fib</code> needs to be a class, not a function.
 <li>&#8220;Calling&#8221; <code>Fib(max)</code> is really creating an instance of this class and calling its <code>__init__()</code> method with <var>max</var>. The <code>__init__()</code> method saves the maximum value as an instance variable so other methods can refer to it later.
 <li>The <code>__iter__()</code> method is called whenever someone calls <code>iter(fib)</code>. (As you&#8217;ll see in a minute, a <code>for</code> loop will call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration initialization (in this case, resetting <code>self.a</code> and <code>self.b</code>, our two counters), the <code>__iter__()</code> method can return any object that implements a <code>__next__()</code> method. In this case (and in most cases), <code>__iter__()</code> simply returns <var>self</var>, since this class implements its own <code>__next__()</code> method.
 <li>The <code>__next__()</code> method is called whenever someone calls <code>next()</code> on an iterator of an instance of a class. That will make more sense in a minute.
