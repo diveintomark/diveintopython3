@@ -143,7 +143,7 @@ $(document).ready(function() {
 		$(this).wrapInner('<div class=b></div>');
 		var widgetHTML = '<div class=w>[<a class=toggle href="javascript:toggleCodeBlock(\'' + this.id + '\')">' + HS.visible + '</a>] [<a href="javascript:plainTextOnClick(\'' + this.id + '\')">open in new window</a>]';
 		if ($(this).hasClass('cmdline')) {
-		    widgetHTML += ' [<a href="troubleshooting.html#running-python-on-the-command-line">command line help</a>]';
+		    widgetHTML += ' [<a href="troubleshooting.html#getting-to-the-command-line">command line help</a>]';
 		}
 		widgetHTML += '</div>';
 		$(this).prepend(widgetHTML);
