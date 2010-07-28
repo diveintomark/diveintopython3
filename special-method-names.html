@@ -255,13 +255,13 @@ bytes = zef_file.read(12)
 <th>So You Write&hellip;
 <th>And Python Calls&hellip;
 <tr><th>
-<td>the length of a sequence
-<td><code class=pp><dfn>len</dfn>(seq)</code>
-<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__len__><code>seq.<dfn>__len__</dfn>()</code></a>
+<td>the number of items
+<td><code class=pp><dfn>len</dfn>(s)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__len__><code>s.<dfn>__len__</dfn>()</code></a>
 <tr><th>
-<td>to know whether a sequence contains a specific value
-<td><code class=pp>x in seq</code>
-<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__contains__><code>seq.<dfn>__contains__</dfn>(<var>x</var>)</code></a>
+<td>to know whether it contains a specific value
+<td><code class=pp>x in s</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__contains__><code>s.<dfn>__contains__</dfn>(<var>x</var>)</code></a>
 </table>
 
 <p id=acts-like-set-example>The <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
