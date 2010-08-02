@@ -384,9 +384,9 @@ AttributeError: 'NoneType' object has no attribute 'groups'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>phonePattern = re.compile(r'(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$')</kbd>  <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>phonePattern.search('work 1-(800) 555.1212 #1234').groups()</kbd>         <span class=u>&#x2461;</span></a>
 <samp class=pp>('800', '555', '1212', '1234')</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>phonePattern.search('800-555-1212').groups()</kbd>                                 <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>phonePattern.search('800-555-1212').groups()</kbd>                        <span class=u>&#x2462;</span></a>
 <samp class=pp>('800', '555', '1212', '')</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>phonePattern.search('80055512121234').groups()</kbd>                               <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>phonePattern.search('80055512121234').groups()</kbd>                      <span class=u>&#x2463;</span></a>
 <samp class=pp>('800', '555', '1212', '1234')</samp></pre>
 <ol>
 <li>Note the lack of <code>^</code> in this regular expression. You are not matching the beginning of the string anymore. There&#8217;s nothing that says you need to match the entire input with your regular expression. The regular expression engine will do the hard work of figuring out where the input string starts to match, and go from there.
