@@ -248,7 +248,8 @@ OK</samp></pre>
 </blockquote>
 <p>What would that test look like?
 <p class=d>[<a href=examples/romantest2.py>download <code>romantest2.py</code></a>]
-<pre class=pp><code><a>class ToRomanBadInput(unittest.TestCase):                                 <span class=u>&#x2460;</span></a>
+<pre class=pp><code>import unittest, roman2
+<a>class ToRomanBadInput(unittest.TestCase):                                 <span class=u>&#x2460;</span></a>
 <a>    def test_too_large(self):                                             <span class=u>&#x2461;</span></a>
         '''to_roman should fail with large input'''
 <a>        self.assertRaises(roman2.OutOfRangeError, roman2.to_roman, 4000)  <span class=u>&#x2462;</span></a></code></pre>
