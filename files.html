@@ -464,16 +464,16 @@ AttributeError: 'GzipFile' object has no attribute '__exit__'</samp></pre>
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<a><samp class=p>... </samp><kbd class=pp>    print('PapayaWhip')</kbd>        <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    print('PapayaWhip')</kbd>            <span class=u>&#x2460;</span></a>
 <samp>PapayaWhip
 PapayaWhip
 PapayaWhip</samp>
 <samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<a><samp class=p>... </samp><kbd class=pp>sys.stdout.write('is the')</kbd>     <span class=u>&#x2461;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    sys.stdout.write('is the')</kbd>     <span class=u>&#x2461;</span></a>
 <samp>is theis theis the</samp>
 <samp class=p>>>> </samp><kbd class=pp>for i in range(3):</kbd>
-<a><samp class=p>... </samp><kbd class=pp>sys.stderr.write('new black')</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    sys.stderr.write('new black')</kbd>  <span class=u>&#x2462;</span></a>
 <samp>new blacknew blacknew black</samp></pre>
 <ol>
 <li>The <code>print()</code> function, in a loop. Nothing surprising here.
