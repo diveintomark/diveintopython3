@@ -2,7 +2,7 @@ import sys
 try:
     import html5lib
 except ImportError:
-    sys.path.insert(0, '/Users/pilgrim/code/html5lib/python3/src/')
+    sys.path.insert(0, '/home/pilgrim/code/html5lib/python3/src/')
     import html5lib
 
 input_filename = sys.argv[1]

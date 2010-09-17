@@ -28,10 +28,10 @@ from_roman_table = {}
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
-    if not (0 < n < 5000):
-        raise OutOfRangeError('number out of range (must be 1..4999)')
     if int(n) != n:
         raise NotIntegerError('non-integers can not be converted')
+    if not (0 < n < 5000):
+        raise OutOfRangeError('number out of range (must be 1..4999)')
     return to_roman_table[n]
 
 def from_roman(s):

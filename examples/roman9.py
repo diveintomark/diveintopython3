@@ -38,10 +38,10 @@ roman_numeral_pattern = re.compile('''
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
-    if not (0 < n < 5000):
-        raise OutOfRangeError('number out of range (must be 1..4999)')
     if not isinstance(n, int):
         raise NotIntegerError('non-integers can not be converted')
+    if not (0 < n < 5000):
+        raise OutOfRangeError('number out of range (must be 1..4999)')
 
     result = ''
     for numeral, integer in roman_numeral_map:

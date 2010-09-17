@@ -240,10 +240,10 @@ FAILED (errors=3)</samp></pre>
 
 def to_roman(n):
     '''convert integer to Roman numeral'''
-<a>    if not (0 &lt; n &lt; 5000):                        <span class=u>&#x2461;</span></a>
-        raise OutOfRangeError('number out of range (must be 1..4999)')
     if not isinstance(n, int):
         raise NotIntegerError('non-integers can not be converted')
+<a>    if not (0 &lt; n &lt; 5000):                        <span class=u>&#x2461;</span></a>
+        raise OutOfRangeError('number out of range (must be 1..4999)')
 
     result = ''
     for numeral, integer in roman_numeral_map:
