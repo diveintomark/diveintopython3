@@ -85,7 +85,7 @@ body{counter-reset:h1 7}
 
 <p>The first argument of every class method, including the <code>__init__()</code> method, is always a reference to the current instance of the class. By convention, this argument is named <var>self</var>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <var>self</var> is not a reserved word in Python, merely a naming convention. Nonetheless, please don&#8217;t call it anything but <var>self</var>; this is a very strong convention.
 
-<p>In the <code>__init__()</code> method, <var>self</var> refers to the newly created object; in other class methods, it refers to the instance whose method was called. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
+<p>In all class methods, <var>self</var> refers to the instance whose method was called. But in the specific case of the <code>__init__()</code> method, the instance whose method was called is also the newly created object. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
 
 <p class=a>&#x2042;
 
