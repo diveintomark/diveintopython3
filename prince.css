@@ -34,7 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
   margin: 30pt;
   padding: 0;
   @bottom-center {
-    font: 12pt/1.75 'Gill Sans', 'Gill Sans MT', Helvetica, Corbel, 'Nimbus Sans L', sans-serif;
+    font: 12pt/1.75 'Gill Sans', 'Gill Sans MT', Helvetica, Corbel, 'Nimbus Sans L', 'Liberation Sans', 'Deja Vu Sans', FreeSans, 'Arial Unicode', Arial, sans-serif;
     content: counter(page);
   }
 }
