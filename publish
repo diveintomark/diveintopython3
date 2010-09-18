@@ -119,9 +119,9 @@ echo "inlining CSS, minimizing URLs, adding evil tracking code and affiliate lin
 ga=`cat j/ga.js`
 plug=`cat j/plug.html`
 for f in build/*.html; do
-  css=`python2.5 util/lesscss.py "$f" "build/$revision.css"` || die "Failed to remove unused CSS"
-  mobilecss=`python2.5 util/lesscss.py "$f" "build/m-$revision.css"` || die "Failed to remove unused CSS"
-  printcss=`python2.5 util/lesscss.py "$f" "build/p-$revision.css"` || die "Failed to remove unused CSS"
+  css=`python2.6 util/lesscss.py "$f" "build/$revision.css"` || die "Failed to remove unused CSS"
+  mobilecss=`python2.6 util/lesscss.py "$f" "build/m-$revision.css"` || die "Failed to remove unused CSS"
+  printcss=`python2.6 util/lesscss.py "$f" "build/p-$revision.css"` || die "Failed to remove unused CSS"
   sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" -e "s|href=index.html|href=/|g" -e "s|</style>|</style>${ga}|g" -e "s|<p id=toc>|${plug}<p id=toc>|g" "$f" || die "Failed to inline CSS"
 done
 
