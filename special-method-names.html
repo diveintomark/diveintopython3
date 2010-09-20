@@ -687,15 +687,15 @@ class FieldStorage:
 <td>a custom object deepcopy
 <td><code class=pp>copy.deepcopy(x)</code>
 <td><a href=http://docs.python.org/3.1/library/copy.html><code>x.<dfn>__deepcopy__</dfn>()</code></a>
-<tr><th>
+<tr><th>*
 <td>to get an object&#8217;s state before pickling
 <td><code class=pp>pickle.dump(x, <var>file</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickle-state><code>x.<dfn>__getstate__</dfn>()</code></a>
-<tr><th>
+<tr><th>*
 <td>to serialize an object
 <td><code class=pp>pickle.dump(x, <var>file</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__reduce__</dfn>()</code></a>
-<tr><th>
+<tr><th>*
 <td>to serialize an object (new pickling protocol)
 <td><code class=pp>pickle.dump(x, <var>file</var>, <var>protocol_version</var>)</code>
 <td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__reduce_ex__</dfn>(<var>protocol_version</var>)</code></a>
