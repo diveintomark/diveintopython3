@@ -101,7 +101,7 @@ Connection: close
 Content-Type: image/jpeg
 </code></pre>
 
-<p>When you request the same data a second (or third or fourth) time, you can send an <code>If-Modified-Since</code> header with your request, with the date you got back from the server last time. If the data has changed since then, then the server ignores the <code>If-Modified-Since</code> header and just gives you the new data with a <code>200</code> status code. But if the data <em>hasn&#8217;t</em> changed since then, the server sends back a special <abbr>HTTP</abbr> <code>304</code> status code, which means &#8220;this data hasn&#8217;t changed since the last time you asked for it.&#8221; You can test this on the command line, using <a href=http://curl.haxx.se/>curl</a>:
+<p>When you request the same data a second (or third or fourth) time, you can send an <code>If-Modified-Since</code> header with your request, with the date you got back from the server last time. If the data has changed since then, then the server gives you the new data with a <code>200</code> status code. But if the data <em>hasn&#8217;t</em> changed since then, the server sends back a special <abbr>HTTP</abbr> <code>304</code> status code, which means &#8220;this data hasn&#8217;t changed since the last time you asked for it.&#8221; You can test this on the command line, using <a href=http://curl.haxx.se/>curl</a>:
 
 <pre class='nd screen'>
 <samp class=p>you@localhost:~$ </samp><kbd>curl -I <mark>-H "If-Modified-Since: Fri, 22 Aug 2008 04:28:16 GMT"</mark> http://wearehugh.com/m.jpg</kbd>
