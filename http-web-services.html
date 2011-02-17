@@ -54,7 +54,7 @@ mark{display:inline}
 
 <aside><code>Cache-Control: max-age</code> means &#8220;don't bug me until next week.&#8221;</aside>
 
-<p><abbr>HTTP</abbr> is designed with caching in mind. There is an entire class of devices (called &#8220;caching proxies&#8221;) whose only job is to sit between you and the rest of the world and minimize network access. Your company or <abbr>ISP</abbr> almost certainly maintains caching proxies, even if you&#8217;re unaware of them. They work because caching built into the <abbr>HTTP</abbr> protocol.
+<p><abbr>HTTP</abbr> is designed with caching in mind. There is an entire class of devices (called &#8220;caching proxies&#8221;) whose only job is to sit between you and the rest of the world and minimize network access. Your company or <abbr>ISP</abbr> almost certainly maintains caching proxies, even if you&#8217;re unaware of them. They work because caching is built into the <abbr>HTTP</abbr> protocol.
 
 <p>Here&#8217;s a concrete example of how caching works. You visit <a href=http://diveintomark.org/><code>diveintomark.org</code></a> in your browser. That page includes a background image, <a href=http://wearehugh.com/m.jpg><code>wearehugh.com/m.jpg</code></a>. When your browser downloads that image, the server includes the following <abbr>HTTP</abbr> headers:
 
@@ -264,10 +264,10 @@ Content-Type: application/xml</samp>
 <li>This response includes an <a href=#etags><code>ETag</code></a> header.
 <li>The data is 3070 bytes long. Notice what <em>isn&#8217;t</em> here: a <code>Content-encoding</code> header. Your request stated that you only accept uncompressed data (<code>Accept-encoding: identity</code>), and sure enough, this response contains uncompressed data.
 <li>This response includes caching headers that state that this feed can be cached for up to 24 hours (86400 seconds).
-<li>And finally, download the actual data by calling <code>response.read()</code>. As you can tell from the <code>len()</code> function, this downloads all 3070 bytes at once.
+<li>And finally, download the actual data by calling <code>response.read()</code>. As you can tell from the <code>len()</code> function, this fetched a total of 3070 bytes.
 </ol>
 
-<p>As you can see, this code is already inefficient: it asked for (and received) uncompressed data. I know for a fact that this server supports <a href=#compression>gzip compression</a>, but <abbr>HTTP</abbr> compression is opt-in. We didn&#8217;t ask for it, so we didn&#8217;t get it. That means we&#8217;re downloading 3070 bytes when we could have just downloaded 941. Bad dog, no biscuit.
+<p>As you can see, this code is already inefficient: it asked for (and received) uncompressed data. I know for a fact that this server supports <a href=#compression>gzip compression</a>, but <abbr>HTTP</abbr> compression is opt-in. We didn&#8217;t ask for it, so we didn&#8217;t get it. That means we&#8217;re fetching 3070 bytes when we could have fetched 941. Bad dog, no biscuit.
 
 <p>But wait, it gets worse! To see just how inefficient this code is, let&#8217;s request the same feed a second time.
 
@@ -307,8 +307,8 @@ Content-Type: application/xml</samp>
 <samp class=pp>True</samp></pre>
 <ol>
 <li>The server is still sending the same array of &#8220;smart&#8221; headers: <code>Cache-Control</code> and <code>Expires</code> to allow caching, <code>Last-Modified</code> and <code>ETag</code> to enable &#8220;not-modified&#8221; tracking. Even the <code>Vary: Accept-Encoding</code> header hints that the server would support compression, if only you would ask for it. But you didn&#8217;t.
-<li>Once again, fetching this data downloads the whole 3070 bytes&hellip;
-<li>&hellip;the exact same 3070 bytes you downloaded last time.
+<li>Once again, this request fetches the whole 3070 bytes&hellip;
+<li>&hellip;the exact same 3070 bytes you got last time.
 </ol>
 
 <p><abbr>HTTP</abbr> is designed to work better than this. <code>urllib</code> speaks <abbr>HTTP</abbr> like I speak Spanish&nbsp;&mdash;&nbsp;enough to get by in a jam, but not enough to hold a conversation. <abbr>HTTP</abbr> is a conversation. It&#8217;s time to upgrade to a library that speaks <abbr>HTTP</abbr> fluently.
