@@ -72,7 +72,7 @@ body{counter-reset:h1 13}
 <ol>
 <li>Follow along in Python Shell #1.
 <li>The idea here is to build a Python dictionary that could represent something useful, like an <a href=xml.html#xml-structure>entry in an Atom feed</a>. But I also want to ensure that it contains several different types of data, to show off the <code>pickle</code> module. Don&#8217;t read too much into these values.
-<li>The <code>time</code> module contains a data structure (<code>time_struct</code>) to represent a point in time (accurate to one millisecond) and functions to manipulate time structs. The <code>strptime()</code> function takes a formatted string an converts it to a <code>time_struct</code>. This string is in the default format, but you can control that with format codes. See the <a href=http://docs.python.org/3.1/library/time.html><code>time</code> module</a> for more details.
+<li>The <code>time</code> module contains a data structure (<code>struct_time</code>) to represent a point in time (accurate to one millisecond) and functions to manipulate time structs. The <code>strptime()</code> function takes a formatted string an converts it to a <code>struct_time</code>. This string is in the default format, but you can control that with format codes. See the <a href=http://docs.python.org/3.1/library/time.html><code>time</code> module</a> for more details.
 </ol>
 
 <p>That&#8217;s a handsome-looking Python dictionary. Let&#8217;s save it to a file.
