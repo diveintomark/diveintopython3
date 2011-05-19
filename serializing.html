@@ -280,7 +280,7 @@ struct_time
   357: .    STOP
 <mark>highest protocol among opcodes = 3</mark></samp></pre>
 
-<p>The most interesting piece of information in that disassembly is on the last line, because it includes the version of the pickle protocol with which this file was saved. There is no explicit version marker in the pickle protocol. To determine which protocol version was used to store a pickle file, you need to look at the markers (&#8220;opcodes&#8221;) within the pickled data and use hard-coded knowledge of which opcodes were introduced with each version of the pickle protocol. The <code>pickle.dis()</code> function does exactly that, and it prints the result in the last line of the disassembly output. Here is a function that returns just the version number, without printing anything:
+<p>The most interesting piece of information in that disassembly is on the last line, because it includes the version of the pickle protocol with which this file was saved. There is no explicit version marker in the pickle protocol. To determine which protocol version was used to store a pickle file, you need to look at the markers (&#8220;opcodes&#8221;) within the pickled data and use hard-coded knowledge of which opcodes were introduced with each version of the pickle protocol. The <code>pickletools.dis()</code> function does exactly that, and it prints the result in the last line of the disassembly output. Here is a function that returns just the version number, without printing anything:
 
 <p class=d>[<a href=examples/pickleversion.py>download <code>pickleversion.py</code></a>]
 <pre class=pp><code>import pickletools
