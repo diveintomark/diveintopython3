@@ -10,7 +10,7 @@ echo "started build"
 # build table of contents
 python3 util/buildtoc.py
 
-revision=`hg tip | grep changeset|cut -d":" -f2|cut -d" " -f4`
+revision=`git rev-parse --short HEAD`
 today=`date +"%Y-%m-%d"`
 
 # make build directory and copy original files there for preflighting
@@ -73,13 +73,13 @@ mv build/single.html build/single.html.bak
 echo "adding per-page dates"
 for f in *.html; do
   cp "$f" build/tmp/
-  log=`hg log "$f" | grep ^date`
+  log=`git log "$f" | grep "^Date"`
   num_changes=`echo "$log" | wc -l`
-  lastmodified=`echo "$log" | head -1 | cut -d":" -f2- | cut -d" " -f9-13`
+  lastmodified=`echo "$log" | head -1 | cut -d":" -f2- | cut -d" " -f4-8`
   lastmodified_pretty=`python3 -c "import time; print(time.strftime('%B %d, %Y', time.strptime('$lastmodified')).replace(' 0', ' '))"`
-  firstmodified=`echo "$log" | tail -1 | cut -d":" -f2- | cut -d" " -f9-13`
+  firstmodified=`echo "$log" | tail -1 | cut -d":" -f2- | cut -d" " -f4-8`
   firstmodified_pretty=`python3 -c "import time; print(time.strftime('%B %d, %Y', time.strptime('$firstmodified')).replace(' 0', ' '))"`
-  sed -i -e "s|<p id=level>|<p id=level>Updated <a title='$num_changes changes since $firstmodified_pretty' href=http://hg.diveintopython3.org/hgweb.cgi/log/tip/$f>$lastmodified_pretty</a> \&bull; |" build/tmp/"$f"
+  sed -i -e "s|<p id=level>|<p id=level>Updated <a title='$num_changes changes since $firstmodified_pretty' href=https://github.com/diveintomark/diveintopython3/blob/master/$f>$lastmodified_pretty</a> \&bull; |" build/tmp/"$f"
 done
 
 echo "minimizing HTML"
@@ -125,7 +125,7 @@ for f in build/*.html; do
   sed -i -e "s|<link rel=stylesheet href=dip3.css>|<style>${css}</style>|g" -e "s|<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>|<style>@media screen and (max-device-width:480px){${mobilecss}}</style>|g" -e "s|<link rel=stylesheet media=print href=print.css>|<style>@media print{${printcss}}</style>|g" -e "s|</style><style>||g" -e "s|href=index.html|href=/|g" -e "s|</style>|</style>${ga}|g" -e "s|<p id=toc>|${plug}<p id=toc>|g" "$f" || die "Failed to inline CSS"
 done
 
-# set file permissions (hg resets these, don't know why)
+# set file permissions
 chmod 755 build/examples build/j build/i build/d && \
     chmod 644 build/*.html build/*.css build/*.txt build/*.zip build/examples/* build/examples/.htaccess build/j/* build/j/.htaccess build/i/* build/i/.htaccess build/d/.htaccess build/.htaccess || die "Failed to reset file permissions"
 

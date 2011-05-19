@@ -55,5 +55,5 @@ with open(output_file, 'w', encoding="utf-8") as _out, open(input_file, encoding
         else:
             _out.write(g)
         if g.lower() == '<!doctype html>':
-            _out.write('\n<!-- readable source @ http://hg.diveintopython3.org/hgweb.cgi/file/tip/{0} -->\n'.format(os.path.basename(input_file)))
+            _out.write('\n<!-- readable source @ https://github.com/diveintomark/diveintopython3/blob/master/{0} -->\n'.format(os.path.basename(input_file)))
 
