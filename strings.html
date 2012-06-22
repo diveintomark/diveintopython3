@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
-<title>Strings - Dive Into Python 3</title>
-<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<title>Strings - Dive Into Python </title><!--[if IE]><script src=j/html5.js></script><![endif]-->
+
 <link rel=stylesheet href=dip3.css>
 <style>
 body{counter-reset:h1 4}
@@ -9,456 +9,457 @@ body{counter-reset:h1 4}
 <link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
 <link rel=stylesheet media=print href=print.css>
 <meta name=viewport content='initial-scale=1.0'>
-<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span class=u>&#8227;</span>
-<p id=level>Difficulty level: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
-<h1>Strings</h1>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Busca></div></form>
+<p>Você está aqui: <a href=index.html>Home</a> <span class=u>‣</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span class=u>‣</span>
+</p><p id=level>Nível de dificuldade: <span class=u title=intermediário>♦♦♦♢♢</span>
+</p><h1>Strings</h1>
 <blockquote class=q>
-<p><span class=u>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
-My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&mdash; Dr. Seuss, On Beyond Zebra!
+<p><span class=u>❝</span> Eu estou lhe dizendo isso porque você é um dos meus amigos.<br> Meu alfabeto começa onde termina o seu alfabeto! <span class=u>❞</span><br>— Dr. Seuss, On Beyond Zebra!
 </blockquote>
-<p id=toc>&nbsp;
-<h2 id=boring-stuff>Some Boring Stuff You Need To Understand Before You Can Dive In</h2>
-<p class=f>Few people think about it, but text is incredibly complicated. Start with the alphabet. The people of <a href=http://en.wikipedia.org/wiki/Bougainville_Province>Bougainville</a> have the smallest alphabet in the world; their <a href=http://en.wikipedia.org/wiki/Rotokas_alphabet>Rotokas alphabet</a> is composed of only 12 letters: A, E, G, I, K, O, P, R, S, T, U, and V. On the other end of the spectrum, languages like Chinese, Japanese, and Korean have thousands of characters. English, of course, has 26 letters&nbsp;&mdash;&nbsp;52 if you count uppercase and lowercase separately&nbsp;&mdash;&nbsp;plus a handful of <i class=baa>!@#$%&amp;</i> punctuation marks.
+</p><p id=toc>&nbsp;
+</p><h2 id=boring-stuff>Algumas Coisas Chatas Que Você Precisa Entender Antes de Poder Mergulhar</h2>
+<p class=f>Poucas pessoas pensam sobre isso, mas o texto é incrivelmente complicado. Comece com o alfabeto. As pessoas de <a href=http://pt.wikipedia.org/wiki/Bougainville_(prov%C3%ADncia)>Bougainville</a> tem o menor alfabeto do mundo; seu <a href=http://pt.wikipedia.org/wiki/Alfabeto_rotokas>alfabeto Rotokas</a> é composto de apenas 12 letras: A, E, G, I, K, O, P, R, S, T, U, e V. Do outro lado da espectro, nos idiomas Chinês, Japonês e Coreano tem milhares de caracteres. Inglês, são 26 letras - 52 se vocẽ contar maiuscúlas e minúsculas separadamente - mais um punhado de <i class=baa>!@#$%&amp;</i> e sinais de pontuação.
 
-<p>When you talk about &#8220;text,&#8221; you&#8217;re probably thinking of &#8220;characters and symbols on my computer screen.&#8221; But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes. Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <i>character encoding</i>. Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk. There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages.
+</p><p>Quando você fala "texto" provavelmente você está pensando em "caracteres e simbolos na tela do computador". Mas os computadores não lidam com caracteres ou simbolos, eles lidam com bits e bytes. Cada pedaço de texto que você já viu na tela do computador é armazenado em uma <i>codificação de caracteres</i> particular. Em termos muito gerais, a codificação de caracteres fornece um mapeamento entre as coisas que você vê na tela e as coisas do seu computador realmente armazena na memória e no disco. Há muitas codificações de caracteres diferentes, algumas otimizadas para determinados idiomas como o russo ou chinês ou Inglês, e outros que podem ser usados ​​para vários idiomas.
 
-<p>In reality, it&#8217;s more complicated than that. Many characters are common to multiple encodings, but each encoding may use a different sequence of bytes to actually store those characters in memory or on disk. So you can think of the character encoding as a kind of decryption key. Whenever someone gives you a sequence of bytes&nbsp;&mdash;&nbsp;a file, a web page, whatever&nbsp;&mdash;&nbsp;and claims it&#8217;s &#8220;text,&#8221; you need to know what character encoding they used so you can decode the bytes into characters. If they give you the wrong key or no key at all, you&#8217;re left with the unenviable task of cracking the code yourself. Chances are you&#8217;ll get it wrong, and the result will be gibberish.
+</p><p>Na realidade, é mais complicado do que isto. Muitos caracteres são comuns a várias codificações, mas cada codificação pode usar uma sequência diferente de bytes e como são realmente armazenados seus caracteres em memória ou disco. Então você pode pensar na codificação de caracteres como uma espécie de chave de decifração. Sempre que alguém lhe dá uma seqüência de bytes - um arquivo, uma página web, qualquer que seja - e afirma que é "texto", você precisa saber qual a codificação de caracteres ele usou para que você possa decodificar os bytes em caracteres. Se te dão a chave errada ou nenhuma chave, você é deixado com uma tarefa inviável de decifrar o código por si só. Provavelmente você irá errar, e o resultado será ininteligível. <aside>Tudo o que você achava que sabia sobre strings está errado.</aside>
 
-<aside>Everything you thought you knew about strings is wrong.</aside>
+</p><p>Certamente você já viu páginas da web como esta, com caracteres de interrogação estranhos aonde deveriam ser apóstrofos. Isto geralmente significa que o autor da página não declarou corretamente qual a codificação, e seu navegador escolheu uma codificação diferente e o resultado foi uma mistura de caracteres esperados e outros não. Em Inglês é apenas desagradável; em outras línguas, o resultado pode ser completamente ilegível.
 
-<p>Surely you&#8217;ve seen web pages like this, with strange question-mark-like characters where apostrophes should be. That usually means the page author didn&#8217;t declare their character encoding correctly, your browser was left guessing, and the result was a mix of expected and unexpected characters. In English it&#8217;s merely annoying; in other languages, the result can be completely unreadable.
+</p><p>Há codificações de caracterese para cada idioma importante no mundo. Uma vez que cada idioma é diferente, e a memória e o espaço em disco têm sido historicamente caro, cada codificação de caracteres é otimizado para um idioma particular. Por isso, quero dizer que cada codificação utiliza os mesmos números (0-255) para representar caracteres do idioma. Por exemplo, você provavelmente está familiarizado com a codificação <abbr>ASCII&lt;/ a0&gt;, que armazena caracteres ingleses com números que variam de 0 a 127. (65 é a letra maiúscula "A", 97 é a letra minúscula "a", <i class=baa> &amp; &lt;/ i1&gt; c). O inglês tem um alfabeto muito simples, para que pode ser completamente expresso em menos de 128 números. Para aqueles de vocês que podem contar na base 2, estes são 7 dos 8 bits em um byte.
 
-<p>There are character encodings for each major language in the world. Since each language is different, and memory and disk space have historically been expensive, each character encoding is optimized for a particular language. By that, I mean each encoding using the same numbers (0&ndash;255) to represent that language&#8217;s characters. For instance, you&#8217;re probably familiar with the <abbr>ASCII</abbr> encoding, which stores English characters as numbers ranging from 0 to 127. (65 is capital &#8220;A&#8221;, 97 is lowercase &#8220;a&#8221;, <i class=baa>&amp;</i>c.)  English has a very simple alphabet, so it can be completely expressed in less than 128 numbers. For those of you who can count in base 2, that&#8217;s 7 out of the 8 bits in a byte.
+</p><p>Idiomas da Europa Ocidental como o francês, espanhol e alemão tem mais letras do que o idioma inglês. Ou, mais precisamente, eles têm letras combinadas com vários sinais diacríticos, como o caracter <code>ñ&lt;/ c0&gt; em espanhol. A codificação mais comum deste idioma é o CP-1252, também chamado "windows-1252"  porque ser largamente utilizado no Microsoft Windows. A codificação CP-1252 compartilha com o <abbr>ASCII&lt;/ a1&gt; os caracteres na faixa de 0-127, mas depois se estende na faixa de 128-255 para caracteres como ñ (241), ü(252), e <i class=baa>&amp;&lt;/ i2&gt; c. É ainda uma codificação single-byte, embora o maior número possível, 255, ainda cabe em um byte.
 
-<p>Western European languages like French, Spanish, and German have more letters than English. Or, more precisely, they have letters combined with various diacritical marks, like the <code>&ntilde;</code> character in Spanish. The most common encoding for these languages is CP-1252, also called &#8220;windows-1252&#8221; because it is widely used on Microsoft Windows. The CP-1252 encoding shares characters with <abbr>ASCII</abbr> in the 0&ndash;127 range, but then extends into the 128&ndash;255 range for characters like n-with-a-tilde-over-it (241), u-with-two-dots-over-it (252), <i class=baa>&amp;</i>c. It&#8217;s still a single-byte encoding, though; the highest possible number, 255, still fits in one byte.
+</p><p>Depois, há idiomas como chinês, japonês e coreano, que tem tantos caracteres que exigem conjuntos com múltiplos bytes por caractere. Ou seja, cada "caracter" é representado por um número de dois bytes de 0 à 65535. Mas diferentes codificações multi-byte ainda compartilham o mesmo problema de codificações single-byte diferentes, ou seja, que cada uma usa os mesmos números para significar coisas diferentes. É justo que o intervalo de números é mais amplo, porque há muito mais caracteres para representar.
 
-<p>Then there are languages like Chinese, Japanese, and Korean, which have so many characters that they require multiple-byte character sets. That is, each &#8220;character&#8221; is represented by a two-byte number from 0&ndash;65535. But different multi-byte encodings still share the same problem as different single-byte encodings, namely that they each use the same numbers to mean different things. It&#8217;s just that the range of numbers is broader, because there are many more characters to represent.
+</p><p>Isso ficou OK num mundo sem rede, onde o "texto" era algo que você digitou para si mesmo e, ocasionalmente foi impresso. Não há muito "texto simples". O código-fonte foi <abbr>ASCII&lt;/ a0&gt;, e os processadores de texto mais usados​​ que definiram os seus próprios formatos(não-texto) de como seria a codificação que  juntamente com seu estilo, <i class=baa>&amp;&lt;/ i1&gt;c. As pessoas que leiam estes documentos com o mesmo programa de processamento de texto como o autor original, então tudo funcionará, mais ou menos.
 
-<p>That was mostly OK in a non-networked world, where &#8220;text&#8221; was something you typed yourself and occasionally printed. There wasn&#8217;t much &#8220;plain text&#8221;. Source code was <abbr>ASCII</abbr>, and everyone else used word processors, which defined their own (non-text) formats that tracked character encoding information along with rich styling, <i class=baa>&amp;</i>c. People read these documents with the same word processing program as the original author, so everything worked, more or less.
+</p><p>Agora pense sobre o surgimento das redes globais como e-mail e web. Lotes de "textos simples" que voam ao redor do globo, sendo o autor em um computador, transmitido através de um segundo computador, e recebidos e apresentados por um terceiro computador. Computadores só podem ver os números, mas os números podem significar coisas diferentes. Oh não! O que fazer? Bem, os sistemas tinham de ser projetado para transportar informações de codificação junto com cada peça de "texto puro." Lembre-se, é a chave de descriptografia que mapeia números legíveis por computador para caracteres legíveis por humanos. Uma chave de descriptografia faltando significa um texto ilegível, ininteligível, ou pior.
 
-<p>Now think about the rise of global networks like email and the web. Lots of &#8220;plain text&#8221; flying around the globe, being authored on one computer, transmitted through a second computer, and received and displayed by a third computer. Computers can only see numbers, but the numbers could mean different things. Oh no! What to do? Well, systems had to be designed to carry encoding information along with every piece of &#8220;plain text.&#8221; Remember, it&#8217;s the decryption key that maps computer-readable numbers to human-readable characters. A missing decryption key means garbled text, gibberish, or worse.
+</p><p>Agora pense em tentar armazenar múltiplos pedaços de texto no mesmo lugar, como na mesma tabela de  banco de dados todos os emails que você já recebeu. Você ainda precisa armazenar a codificação de caracteres junto de cada pedaço de texto para que possa exibi-lo corretamente. Acha que isso é difícil? Tente procurar em seu banco de dados um e-mail, o que significa a conversão a todo momento entre várias codificações. Isto não parece ser divertido?
 
-<p>Now think about trying to store multiple pieces of text in the same place, like in the same database table that holds all the email you&#8217;ve ever received. You still need to store the character encoding alongside each piece of text so you can display it properly. Think that&#8217;s hard? Try searching your email database,  which means converting between multiple encodings on the fly. Doesn&#8217;t that sound fun?
+</p><p>Agora pense sobre a possibilidade de documentos multilingues, onde os caracteres de vários idiomas são próximos uns dos outros no mesmo documento. (Dica: programas que tentam fazer isto normalmente usam escape codes para alterar os "modos". Poof, você está em modo Russo koi8-r, então o 241 significa Я; poof, agora você está em modo Mac Greek, então o 241 significa ώ.) E é claro que você vai querer procurar <em>estes</em>  documentos também.
 
-<p>Now think about the possibility of multilingual documents, where characters from several languages are next to each other in the same document. (Hint: programs that tried to do this typically used escape codes to switch &#8220;modes.&#8221; Poof, you&#8217;re in Russian koi8-r mode, so 241 means Я; poof, now you&#8217;re in Mac Greek mode, so 241 means ώ.) And of course you&#8217;ll want to search <em>those</em> documents, too.
+</p><p>Agora pode chorar muito, porque tudo o que você achava que sabia sobre strings é errado, e não há nenhuma coisa como "texto simples".
 
-<p>Now cry a lot, because everything you thought you knew about strings is wrong, and there ain&#8217;t no such thing as &#8220;plain text.&#8221;
+</p><p class=a>⁂
 
-<p class=a>&#x2042;
+</p><h2 id=one-ring-to-rule-them-all>Unicode</h2>
 
-<h2 id=one-ring-to-rule-them-all>Unicode</h2>
+<p><i>Entrando no <dfn>Unicode</dfn>.</i>
 
-<p><i>Enter <dfn>Unicode</dfn>.</i>
+</p><p>Unicode é uma sistema projetado para representar <em>todos</em> os caracteres de <em>todos</em> idiomas. Unicode representa cada letra, caractere, ou ideograma como um número de 4 bytes. Cada número representa um carácter único utilizado em pelo menos em uma das línguas do mundo. (Nem todos os números são usados, mas mais de 65.535 deles são, de modo que 2 bytes não seriam suficientes). Caracteres que são usados ​​em vários idiomas geralmente têm o mesmo número, a menos que haja uma boa razão etimológica para não. Independentemente disso, há exatamente um número por caracter, e exatamente um caracter por número. Cada número sempre significa apenas uma coisa, não há necessidade para se manter um par. <code>U+0041</code> é sempre <code>'A'</code>, mesmo se seu idioma não tem um <code>'A'</code> nele.
 
-<p>Unicode is a system designed to represent <em>every</em> character from <em>every</em> language. Unicode represents each letter, character, or ideograph as a 4-byte number. Each number represents a unique character used in at least one of the world&#8217;s languages. (Not all the numbers are used, but more than 65535 of them are, so 2 bytes wouldn&#8217;t be sufficient.) Characters that are used in multiple languages generally have the same number, unless there is a good etymological reason not to. Regardless, there is exactly 1 number per character, and exactly 1 character per number. Every number always means just one thing; there are no &#8220;modes&#8221; to keep track of. <code>U+0041</code> is always <code>'A'</code>, even if your language doesn&#8217;t have an <code>'A'</code> in it.
+</p><p>De cara com isto, parece ser uma boa ideia. Uma regra de codificação única à todos. Vários idiomas por documento. Não há mais "modo de comutação" para alternar entre as codificações no meio do caminho. Mas logo em seguida, a pergunta óbvia deve surgir de você. Quatro bytes? Para cada caractere <span class=u title='interrobang!'>‽ &lt;/ s0&gt; Isso parece muito desperdício, especialmente para idiomas como Inglês e Espanhol, que necessitam de menos de um byte (256 números) para expressar todos os caracteres possíveis. Na verdade, é um desperdício, mesmo para idiomas baseados em ideogramas(como o chinês), que nunca precisam de mais de dois bytes por caractere.
 
-<p>On the face of it, this seems like a great idea. One encoding to rule them all. Multiple languages per document. No more &#8220;mode switching&#8221; to switch between encodings mid-stream. But right away, the obvious question should leap out at you. Four bytes? For every single character<span class=u title='interrobang!'>&#8253;</span> That seems awfully wasteful, especially for languages like English and Spanish, which need less than one byte (256 numbers) to express every possible character. In fact, it&#8217;s wasteful even for ideograph-based languages (like Chinese), which never need more than two bytes per character.
+</p><p>Há uma codificação Unicode que usa quatro bytes por caractere. Chama-se UTF-32, porque 32 bits = 4 bytes. UTF-32 é uma codificação simples, cada caractere Unicode usa um número de 4 bytes e representa o caráter com o mesmo número. Isto tem algumas vantagens, sendo a mais importante que você pode encontrar o <var>enésimo&lt;/ v0&gt; caractere de uma string diretamente, porque o <var>enésimo&lt;/ v1&gt; caractere começa no <var>4×N&lt;/ v2&gt; byte. Ele também tem várias desvantagens, sendo a mais óbvia que leva quatro bytes para armazenar cada caracter.
 
-<p>There is a Unicode encoding that uses four bytes per character. It&#8217;s called UTF-32, because 32 bits = 4 bytes. UTF-32 is a straightforward encoding; it takes each Unicode character (a 4-byte number) and represents the character with that same number. This has some advantages, the most important being that you can find the <var>Nth</var> character of a string in constant time, because the <var>Nth</var> character starts at the <var>4&times;Nth</var> byte. It also has several disadvantages, the most obvious being that it takes four freaking bytes to store every freaking character.
+</p><p>Mesmo que haja um monte de caracteres Unicode, verifica-se que a maioria das pessoas nunca vai usar nada além dos primeiros 65535. Assim, há outra codificação Unicode, chamada UTF-16 (porque 16 bits = 2 bytes). UTF-16 codifica todos os caracteres entre 0-65535 com dois bytes, em seguida, usa alguns golpes sujos, se você realmente precisa para representar os caracteres raramente usados ​​ do "plano astral" do Unicode para além de 65535. Vantagem mais óbvia: UTF-16 usa a metade do espaço do UTF-32, porque todos os caracteres requer apenas dois bytes para armazenar, em vez de quatro bytes (exceto para os que não o fazem). E você ainda pode encontrar facilmente o <var>enésimo&lt;/ v0&gt; caractere de uma string diretamente, se você assumir que a string não inclui quaisquer caracter do plano astral, que é uma boa hipótese direita até o momento em que um não é.
 
-<p>Even though there are a lot of Unicode characters, it turns out that most people will never use anything beyond the first 65535. Thus, there is another Unicode encoding, called UTF-16 (because 16 bits = 2 bytes). UTF-16 encodes every character from 0&ndash;65535 as two bytes, then uses some dirty hacks if you actually need to represent the rarely-used &#8220;astral plane&#8221; Unicode characters beyond 65535. Most obvious advantage: UTF-16 is twice as space-efficient as UTF-32, because every character requires only two bytes to store instead of four bytes (except for the ones that don&#8217;t). And you can still easily find the <var>Nth</var> character of a string in constant time, if you assume that the string doesn&#8217;t include any astral plane characters, which is a good assumption right up until the moment that it&#8217;s not.
+</p><p>Mas também há não-óbvias desvantagens para ambos UTF-32 e UTF-16. Diferentes sistemas de computador armazenam bytes individuais de diferentes maneiras. Isso significa que o caractere <code>U+4E2D&lt;/ c0&gt; poderia ser armazenado em UTF-16 como <code>4E 2D &lt;/ c1&gt; ou <code>2D 4E&lt;/ c2&gt;, dependendo se o sistema é big-endian ou little-endian. (Para UTF-32, existem ainda mais possibilidades de ordenamento dos bytes). Enquanto seus documentos nunca deixarem o seu computador, você estará seguro - aplicações diferentes no mesmo computador usam a mesma ordenação dos byte. Mas no minuto em que você deseja transferir documentos entre sistemas, talvez em uma rede mundial de computadores de alguma maneira, você vai precisar de uma forma para indicar que ordem os bytes estão armazenados. Caso contrário, no sistema de recebimento não tem como saber se os dois-byte da seqüência <code>4E 2D </code> signfica <code>U+4E2D</code> ou <code>U+2D4E&lt;/ c5&gt;.
 
-<p>But there are also non-obvious disadvantages to both UTF-32 and UTF-16. Different computer systems store individual bytes in different ways. That means that the character <code>U+4E2D</code> could be stored in UTF-16 as either <code>4E 2D</code> or <code>2D 4E</code>, depending on whether the system is big-endian or little-endian. (For UTF-32, there are even more possible byte orderings.) As long as your documents never leave your computer, you&#8217;re safe&nbsp;&mdash;&nbsp;different applications on the same computer will all use the same byte order. But the minute you want to transfer documents between systems, perhaps on a world wide web of some sort, you&#8217;re going to need a way to indicate which order your bytes are stored. Otherwise, the receiving system has no way of knowing whether the two-byte sequence <code>4E 2D</code> means <code>U+4E2D</code> or <code>U+2D4E</code>.
+</p><p>Para resolver <em>este&lt;/ e0&gt; problema, as codificações multi-byte Unicode definiem uma Marcação de ordem dos Byte("Byte Order Mark"), que é um caractere especial não imprimível que você pode incluir no início do seu documento para indicar qual a ordenação dos bytes. Para UTF-16, o Byte Order Mark é <code>U+FEFF&lt;/ c1&gt;. Se você receber um documento UTF-16 que começa com os bytes <code>FF FE&lt;/ c2&gt;, você sabe qual a ordem dos byte esta é uma maneira, se ele começa com <code>FE FF&lt;/ c3&gt;, você sabe que a ordenação dos bytes é invertida.
 
-<p>To solve <em>this</em> problem, the multi-byte Unicode encodings define a &#8220;Byte Order Mark,&#8221; which is a special non-printable character that you can include at the beginning of your document to indicate what order your bytes are in. For UTF-16, the Byte Order Mark is <code>U+FEFF</code>. If you receive a UTF-16 document that starts with the bytes <code>FF FE</code>, you know the byte ordering is one way; if it starts with <code>FE FF</code>, you know the byte ordering is reversed.
+</p><p>Ainda assim, UTF-16 não é exatamente ideal, especialmente se você está lidando com um monte de caracteres <abbr> ASCII&lt;/ a0&gt;. Se você pensar sobre isso, até mesmo uma página web chinesa vai conter um monte de caracteres <abbr>ASCII&lt;/ A1&gt; - todos os elementos e atributos que cercam os caracteres imprimíveis chineses. Ser capaz de encontrar o <var>enésimo&lt;/ v2&gt; caracter diretamente é bom, mas ainda há um problema irritante desses caracteres do plano astral, o que significa que você não pode <em>garantir&lt;e3/&gt; que todo caractere tem exatamente dois bytes, então você não pode <em>realmente&lt;/ e4&gt; encontrar o <var>enésimo&lt;/ v5&gt; caractere diretamente, a menos que você mantenha um índice separado. E aí rapaz, lá com certeza há um monte de textos <abbr>ASCII&lt;/ a6&gt; no mundo ...
 
-<p>Still, UTF-16 isn&#8217;t exactly ideal, especially if you&#8217;re dealing with a lot of <abbr>ASCII</abbr> characters. If you think about it, even a Chinese web page is going to contain a lot of <abbr>ASCII</abbr> characters&nbsp;&mdash;&nbsp;all the elements and attributes surrounding the printable Chinese characters. Being able to find the <var>Nth</var> character in constant time is nice, but there&#8217;s still the nagging problem of those astral plane characters, which mean that you can&#8217;t <em>guarantee</em> that every character is exactly two bytes, so you can&#8217;t <em>really</em> find the <var>Nth</var> character in constant time unless you maintain a separate index. And boy, there sure is a lot of <abbr>ASCII</abbr> text in the world&hellip;
+</p><p>Outras pessoas ponderaram essas questões, e elas vieram com uma solução:
 
-<p>Other people pondered these questions, and they came up with a solution:
+</p><p class=xxxl>UTF-8
 
-<p class=xxxl>UTF-8
 
-<p>UTF-8 is a <em>variable-length</em> encoding system for Unicode. That is, different characters take up a different number of bytes. For <abbr>ASCII</abbr> characters (A-Z, <i class=baa>&amp;</i>c.) <abbr>UTF-8</abbr> uses just one byte per character. In fact, it uses the exact same bytes; the first 128 characters (0&ndash;127) in <abbr>UTF-8</abbr> are indistinguishable from <abbr>ASCII</abbr>. &#8220;Extended Latin&#8221; characters like &ntilde; and &ouml; end up taking two bytes. (The bytes are not simply the Unicode code point like they would be in UTF-16; there is some serious bit-twiddling involved.) Chinese characters like &#x4E2D; end up taking three bytes. The rarely-used &#8220;astral plane&#8221; characters take four bytes.
 
-<p>Disadvantages: because each character can take a different number of bytes, finding the <var>Nth</var> character is an O(N) operation&nbsp;&mdash;&nbsp;that is, the longer the string, the longer it takes to find a specific character. Also, there is bit-twiddling involved to encode characters into bytes and decode bytes into characters.
+</p><p>UTF-8 é um sistema de codificação de <em>comprimento variável&lt;/ e0&gt; para Unicode. É isto, diferentes caracteres levam um número diferente de bytes. Para caracteres <abbr>ASCII&lt;/ A1&gt; (az, <i class=baa> &amp; &lt;/ i2&gt; c.) O <abbr>UTF-8&lt;/ a3&gt; usa apenas um byte por caractere. Na verdade, ele usa os exatos bytes; os primeiros 128 caracteres (0-127) do &lt;A4&gt;UTF-8&lt;/ a4&gt; são indistinguíveis <abbr>ASCII&lt;/ a5&gt;. A extensão latina de caracteres tem o ñ e ö que usam dois bytes. (Os bytes não são o único ponto no Unicode como é o caso do UTF-16; Há alguns detalhes no arranjo dos bits) Caracteres chineses como o 中 acabam usando três bytes. Os raramente usados caracteres do "plano astral" usam quatro bytes.
 
-<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in <abbr>UTF-8</abbr> uses the exact same stream of bytes on any computer.
+</p><p>Desvantagens: pois cada caracter pode ter um número diferente de bytes, encontrar o <var>enésimo&lt;/ v0&gt; caractere é uma operação O(N) - ou seja, quanto maior for a string, mais tempo demora para encontrar um carácter específico. Além, há um arranjo dos bits para codificar caracteres em bytes e decodificar bytes em caracteres.
 
-<p class=a>&#x2042;
+</p><p>Vantagens: codificação super-eficiente de caracteres <abbr>ASCII</abbr> comuns. Nem pior do que o UTF-16 para extesão latina de caracteres. Melhor do que o UTF-32 para caracteres chineses. Além disso (e você vai ter que confiar em mim, porque eu não estou indo mostrar-lhe a matemática), devido à natureza exata do arranjo dos bits, não há problemas na ordenação dos bytes. Um documento codificado em <abbr>UTF-8</abbr> usa exatamente mesmo arranjo dos bytes em qualquer computador.
 
-<h2 id=divingin>Diving In</h2>
+</p><p class=a>⁂
 
-<p>In Python 3, all strings are sequences of Unicode characters. There is no such thing as a Python string encoded in <abbr>UTF-8</abbr>, or a Python string encoded as CP-1252. &#8220;Is this string <abbr>UTF-8</abbr>?&#8221; is an invalid question. <abbr>UTF-8</abbr> is a way of encoding characters as a sequence of bytes. If you want to take a string and turn it into a sequence of bytes in a particular character encoding, Python 3 can help you with that. If you want to take a sequence of bytes and turn it into a string, Python 3 can help you with that too. Bytes are not characters; bytes are bytes. Characters are an abstraction. A string is a sequence of those abstractions.
+</p><h2 id=divingin>Mergulho em</h2>
 
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>s = '深入 Python'</kbd>    <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>len(s)</kbd>               <span class=u>&#x2461;</span></a>
+<p>Em Python 3, todas as strings são sequências de caracteres Unicode. Não há nenhuma coisa semelhante como uma string Python codificada em <abbr>UTF-8</abbr>, ou uma string Python codificada com CP-1252. "Esta é uma string <abbr>UTF-8&lt;/ a1&gt;?" É uma questão inválida. <abbr>UTF-8&lt;/ a2&gt; é uma forma de codificação de caracteres como uma seqüência de bytes. Se você tiver uma string e quiser transformá-la em uma seqüência de bytes com uma codificação de caracteres particular, Python 3 pode te ajudar com isso. Se você quiser ter uma seqüência de bytes e transformá-la em uma string, Python 3 pode ajudá-lo com isso também Bytes não são caracteres; bytes são bytes. Os caracteres são uma abstração. Uma string é uma seqüência dessas abstrações.
+
+</p><pre class=screen>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s = '深入 Python'</kbd>    <span class=u>①</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(s)</kbd>               <span class=u>②</span></a>
 <samp class=pp>9</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>s[0]</kbd>                 <span class=u>&#x2462;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s[0]</kbd>                 <span class=u>③</span></a>
 <samp class=pp>'深'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>s + ' 3'</kbd>             <span class=u>&#x2463;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s + ' 3'</kbd>             <span class=u>④</span></a>
 <samp class=pp>'深入 Python 3'</samp></pre>
 <ol>
-<li>To create a string, enclose it in quotes. Python strings can be defined with either single quotes (<code>'</code>) or double quotes (<code>"</code>).<!--"-->
-<li>The built-in <code><dfn>len</dfn>()</code> function returns the length of the string, <i>i.e.</i> the number of characters. This is the same function you use to <a href=native-datatypes.html#extendinglists>find the length of a list, tuple, set, or dictionary</a>. A string is like a tuple of characters.
-<li>Just like getting individual items out of a list, you can get individual characters out of a string using index notation.
-<li>Just like lists, you can <dfn>concatenate</dfn> strings using the <code>+</code> operator.
-</ol>
+<li>Para criar uma string, coloque-a entre aspas. Strings Python podem ser definidas com aspas simples (<code> '</code>) ou duplas (<code> "</code>).<!--"-->
+</li><li>A função built-in <code><dfn>len</dfn>()</code> retorna o comprimento da string, <i>ou seja&lt;/ i2&gt; o número de caracteres. Esta é a mesma função que você usa para <a href=native-datatypes.html#extendinglists>encontrar o comprimento de uma lista, tupla, conjunto, ou dicionário</a>. Uma string é como uma tupla de caracteres.
+</li><li>Assim como a obtenção de itens individuais de uma lista, você pode obter caracteres individuais de uma string usando a notação de índice.
+</li><li>Assim como listas, você pode <dfn>concatenar</dfn> strings usando o operador <code>+</code>.
+</li></ol>
 
-<p class=a>&#x2042;
+<p class=a>⁂
 
-<h2 id=formatting-strings>Formatting Strings</h2>
+</p><h2 id=formatting-strings>Formatando Strings</h2>
 
-<aside>Strings can be defined with either single or double quotes.</aside>
-<p>Let&#8217;s take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<aside>Strings podem ser defindas com aspas simples ou duplas.</aside>
+<p>Vamos dar mais uma olhada em <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 
-<p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
-<pre class=pp><code><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>&#x2460;</span></a>
+</p><p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
+
+</p><pre class=pp><code><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>①</span></a>
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
-<a>    '''Convert a file size to human-readable form.                          <span class=u>&#x2461;</span></a>
+<a>    '''Converter um tamanho de arquivo para uma forma legível.                          <span class=u>②</span></a>
 
-    Keyword arguments:
-    size -- file size in bytes
-    a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
-                                if False, use multiples of 1000
+    Argumentos:
+    size -- tamanho do arquivo em bytes
+    a_kilobyte_is_1024_bytes -- Se Verdadeiro(padrão), usa multiplos de 1024
+                                Se Falso, usa multiplos de 1000
 
-    Returns: string
+    Retorna: string
 
-<a>    '''                                                                     <span class=u>&#x2462;</span></a>
+<a>    '''                                                                     <span class=u>③</span></a>
     if size &lt; 0:
-<a>        raise ValueError('number must be non-negative')                     <span class=u>&#x2463;</span></a>
+<a>        raise ValueError('o número deve ser positivo')                     <span class=u>④</span></a>
 
     multiple = 1024 if a_kilobyte_is_1024_bytes else 1000
     for suffix in SUFFIXES[multiple]:
         size /= multiple
         if size &lt; multiple:
-<a>            return '{0:.1f} {1}'.format(size, suffix)                       <span class=u>&#x2464;</span></a>
+<a>            return '{0:.1f} {1}'.format(size, suffix)                       <span class=u>⑤</span></a>
 
-    raise ValueError('number too large')</code></pre>
+    raise ValueError('número muito grande')</code></pre>
 <ol>
-<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; those are each strings.
-<li>Function docstrings are strings. This docstring spans multiple lines, so it uses three-in-a-row quotes to start and end the string.
-<li>These three-in-a-row quotes end the docstring.
-<li>There&#8217;s another string, being passed to the exception as a human-readable error message.
-<li>There&#8217;s a&hellip; whoa, what the heck is that?
-</ol>
+<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>… essas são para strings
+</li><li>Funções docstrings são strings. Esta docstring ocupa diversas linhas, por isso usa três aspas consecutivas para começar e terminar a string.
+</li><li>Estas três aspas consecutivas terminam a docstring.
+</li><li>Há uma outra string, sendo passado para a exceção como uma mensagem de erro legível.
+</li><li>Há uma ... que um, o que diabos é isso?
+</li></ol>
 
-<p>Python 3 supports <dfn>formatting</dfn> values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with a single placeholder.
+<p>Python 3 suporta <dfn>formatação</dfn> de valores em strings. Embora isso possa incluir expressões muito complicadas, o uso mais básico é o de inserir um valor em uma string com um único espaço reservado.
 
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>username = 'mark'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>password = 'PapayaWhip'</kbd>                             <span class=u>&#x2460;</span></a>
-<a><samp class=p>>>> </samp><kbd class=pp>"{0}'s password is {1}".format(username, password)</kbd>  <span class=u>&#x2461;</span></a>
+</p><pre class=screen>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>username = 'mark'</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>password = 'PapayaWhip'</kbd>                             <span class=u>①</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>"{0}'s password is {1}".format(username, password)</kbd>  <span class=u>②</span></a>
 <samp class=pp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
-<li>No, my password is not really <kbd>PapayaWhip</kbd>.
-<li>There&#8217;s a lot going on here. First, that&#8217;s a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code><dfn>format</dfn>()</code> method.
-</ol>
+<li>Não, minha senha não é realmente <kbd>PapayaWhip</kbd>.
+</li><li>Há muita coisa acontecendo aqui. Em primeiro lugar, esta é uma chamada de método em uma string literal. <em>Strings são objetos</em>, e os objetos têm métodos. Em segundo lugar, toda a expressão é avaliada como uma string. Em terceiro lugar, <code>{0}</code> e <code>{1}</code> são <i>campos de substituição</i>, que são substituídos pelos argumentos passados ​​pelo método <dfn><code>format</dfn>()</code>.
+</li></ol>
 
-<h3 id=compound-field-names>Compound Field Names</h3>
+<h3 id=compound-field-names>Campos de Nomes Compostos</h3>
 
-<p>The previous example shows the simplest case, where the replacement fields are simply integers. Integer replacement fields are treated as positional indices into the argument list of the <code>format()</code> method. That means that <code>{0}</code> is replaced by the first argument (<var>username</var> in this case), <code>{1}</code> is replaced by the second argument (<var>password</var>), <i class=baa>&amp;</i>c. You can have as many positional indices as you have arguments, and you can have as many arguments as you want. But replacement fields are much more powerful than that.
+<p>O exemplo anterior mostra o caso mais simples, onde os campos de substituição são simplesmente números inteiros. Campos de substituição de inteiros são tratados como índices posicionais para a lista de argumentos do método <code>format()&lt;/ c0&gt;. Isso significa que <code>{0}</code> é substituído pelo primeiro argumento (<var>username&lt;/ v2&gt; neste caso), <code>{1}&lt;/ c3&gt; é substituído pelo segundo argumento (<var>senha&lt;/ v4&gt;), <i class=baa>&amp;&lt;/ i5&gt;c. Você pode ter tantos índices posicionais como você tem de argumentos, e você pode ter tantos argumentos como quiser. Mas os campos de substituição são muito mais poderosos do que isso.
 
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>si_suffixes</kbd>
+</p><pre class=screen>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>import humansize</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>si_suffixes = humansize.SUFFIXES[1000]</kbd>      <span class=u>①</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>si_suffixes</kbd>
 <samp class=pp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>'1000{0[0]} = 1{0[1]}'.format(si_suffixes)</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>'1000{0[0]} = 1{0[1]}'.format(si_suffixes)</kbd>  <span class=u>②</span></a>
 <samp class=pp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
-<li>Rather than calling any function in the <code>humansize</code> module, you&#8217;re just grabbing one of the data structures it defines: the list of &#8220;SI&#8221; (powers-of-1000) suffixes.
-<li>This looks complicated, but it&#8217;s not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces&nbsp;&mdash;&nbsp;including <code>1000</code>, the equals sign, and the spaces&nbsp;&mdash;&nbsp;is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
-</ol>
+<li>Ao invés de chamar qualquer função no módulo <code>humansize</code>, você está apenas pegando uma das estruturas de dados que ele define: a lista de sufixos "SI" (potência de 1000).
+</li><li>Isso parece complicado, mas não é. <code>{0}</code> remete para o primeiro argumento passado para o método <code>format()&lt;/ c1&gt;, <var>si_suffixes</var>. Mas o <var>si_suffixes</var> é uma lista. Então <code>{0[0]}</code> refere-se ao primeiro item da lista que é o primeiro argumento passado para o método <code>format()</code>: <code>'KB'</code>. Enquanto isso, <code>{0[1]} &lt;/ c7&gt; refere-se ao segundo item da mesma lista: <code>'MB'&lt;/ c8&gt;. Tudo fora as chaves - incluindo <code>1000&lt;/ c9&gt;, o sinal de igual e os espaços - é intocável. O resultado final é a string <code>'1000KB = 1MB'</code>.
+</li></ol>
 
-<aside>{0} is replaced by the 1<sup>st</sup> format() argument. {1} is replaced by the 2<sup>nd</sup>.</aside>
-<p>What this example shows is that <em>format specifiers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names &#8220;just work&#8221;:
+<aside>{0} é substituído pelo 1º argumento format(). {1} é substituído pelo 2º.</aside>
+<p>O que este exemplo mostra é que <em>especificadores de formato podem acessar itens e propriedades de estruturas de dados usando (quase) sintaxe Python&lt;/ e0&gt;. Isto é chamado de <i>Campos de Nomes Compostos</i>. Os seguintes campos de nomes compostos "apenas funciona"
 
-<ul>
-<li>Passing a list, and accessing an item of the list by index (as in the previous example)
-<li>Passing a dictionary, and accessing a value of the dictionary by key
-<li>Passing a module, and accessing its variables and functions by name
-<li>Passing a class instance, and accessing its properties and methods by name
-<li><em>Any combination of the above</em>
-</ul>
+</p><ul>
+<li>Passando uma lista, e acessar um item da lista pelo índice (como no exemplo anterior)
+</li><li>Passando um dicionário, e acessar um valor do dicionário através de uma chave
+</li><li>Passando um módulo, e acessar suas variáveis ​​e funções pelo nome
+</li><li>Passar uma instância de classe, e acessar suas propriedades e métodos pelo nome
+</li><li><em>Qualquer combinação dos anteriores</em>
+</li></ul>
 
-<p>Just to blow your mind, here&#8217;s an example that combines all of the above:
+<p>Só para explodir sua cabeça, aqui está um exemplo que combina todos os itens acima:
 
-<pre class='nd screen'>
-<samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
-<samp class=p>>>> </samp><kbd class=pp>import sys</kbd>
-<samp class=p>>>> </samp><kbd class=pp>'1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}'.format(sys)</kbd>
+</p><pre class='nd screen'>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>import humansize</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>import sys</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>'1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}'.format(sys)</kbd>
 <samp class=pp>'1MB = 1000KB'</samp></pre>
 
-<p>Here&#8217;s how it works:
+<p>Eis como funciona:
 
-<ul>
-<li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the replacement field <code>{0}</code> refers to the <code>sys</code> module.
-<li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the replacement field <code>{0.modules}</code> refers to the dictionary of imported modules.
-<li><code>sys.modules['humansize']</code> is the <code>humansize</code> module which you just imported. The replacement field <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>'humansize'</code>). But within a replacement field, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>). To quote <a href=http://www.python.org/dev/peps/pep-3101/>PEP 3101: Advanced String Formatting</a>, &#8220;The rules for parsing an item key are very simple. If it starts with a digit, then it is treated as a number, otherwise it is used as a string.&#8221;
-<li><code>sys.modules['humansize'].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The replacement field <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
-<li><code>sys.modules['humansize'].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the replacement field <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
-<li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete replacement field <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
-</ul>
+</p><ul>
+<li>O módulo <code>sys&lt;/ c0&gt; contém informações sobre a instância em execução Python. Desde que você acabou de importá-lo, você pode passar o módulo <code>sys&lt;/ c1&gt; como um argumento para o método <code>format()</code>. Assim, o campo de substituição <code>{0}&lt;/ c3&gt; refere-se ao módulo <code>sys&lt;/ c4&gt;.
+</li><li><code>sys.modules</code> é um dicionário de todos os módulos que foram importados nesta instância Python. As chaves são os nomes de módulos como strings, os valores são os objetos do módulo em si. Assim, o campo de substituição <code>{0.modules}</code> refere-se ao dicionário de módulos importados.
+</li><li><code>sys.modules['humansize']</code> é o módulo <code>humansize</code> que você acabou de importar. O campo de substituição <code>{0.modules[humansize]}</code> refere-se ao módulo<code>humansize</code>. Note a pequena diferença de sintaxe aqui. Em um código Python real, as chaves dos dicionários <code>sys.modules</code> são strings, para consultá-las, você precisa colocar aspas em torno do nome do módulo (<i>por exemplo&lt;/ i5&gt; <code> 'humansize '&lt;/ c6&gt;). Mas dentro de um campo de substituição, você ignora as aspas em torno do nome da chave do dicionário (<i>por exemplo&lt;i7 /&gt;, <code>humansize</code>). Para citar <a href=http://www.python.org/dev/peps/pep-3101/>PEP 3101: Formatação Avançada de String&lt;/ a9&gt;, "As regras para analisar um item de chave é muito simples. Se começa com um dígito, em seguida, ele é tratado como um número, caso contrário, é usada como uma string. "
+</li><li><code>sys.modules['humansize'].SUFFIXES</code> é o dicionário do módulo <code>humansize</code>. O campo de substituição <code>{0.modules [humansize].SUFFIXES}&lt;/ c2&gt; refere-se a esse dicionário.
+</li><li><code>sys.modules['humansize'].SUFFIXES[1000]</code> é uma lista de sufixos : <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. Assim o campo de substituição {0.modules[humansize].SUFFIXES[1000]}</code> refere-se a essa lista.
+</li><li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> é o primeiro item da lista de sufixos: <code>'KB'</code>. Portanto, o campo substituição total <code>{0.modules [humansize].SUFFIXES[1000][0]}</code> é substituído pela string de dois caracteres <code>KB&lt;/ c4&gt;.
+</li></ul>
 
-<h3 id=format-specifiers>Format Specifiers</h3>
+<h3 id=format-specifiers>Formatos Específicos</h3>
 
-<p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
+<p>Mas espere! Ainda há mais! Vamos dar mais uma olhada naquela estranha linha de código do <code>humansize.py</code>:
 
-<pre class='nd pp'><code>if size &lt; multiple:
+</p><pre class='nd pp'><code>if size &lt; multiple:
     return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
-<p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
+<p><code>1{1}</code> é substituído pelo segundo argumento passado para o método <code>format()</code>, que é um <var>sufixo</var>. Mas o que é <code>{0:.1f}</code>? São duas coisas: <code>{0}&lt;/ c4&gt;, que você reconhece, e <code>: .1f</code>, que você não conhece. A segunda metade (incluindo e após os dois pontos) define o <i>formato especifico&lt;/ i6&gt;, que apura como a variável substituída deverá ser formatada.
 
-<blockquote class='note compare clang'>
-<p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code><dfn>printf</dfn>()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
+</p><blockquote class='note compare clang'>
+<p><span class=u> ☞ &lt;/ s0&gt; Especificadores de formato permitem que você mude o texto substituto em uma variedade de maneiras úteis, como a função <code> <dfn>printf &lt;d2 /&gt;()</code> em C. Você pode adicionar zero ou espaço de preenchimento, alinhar seqüências de controle, precisão decimal, e até mesmo converter números em hexadecimal.
 </blockquote>
 
-<p>Within a replacement field, a colon (<code>:</code>) marks the start of the format specifier. The format specifier &#8220;<code>.1</code>&#8221; means &#8220;round to the nearest tenth&#8221; (<i>i.e.</i> display only one digit after the decimal point). The format specifier &#8220;<code>f</code>&#8221; means &#8220;fixed-point number&#8221; (as opposed to exponential notation or some other decimal representation). Thus, given a <var>size</var> of <code>698.24</code> and <var>suffix</var> of <code>'GB'</code>, the formatted string would be <code>'698.2 GB'</code>, because <code>698.24</code> gets rounded to one decimal place, then the suffix is appended after the number.
+</p><p>Dentro de um campo de substituição, dois pontos (<code>: &lt;/ c0&gt;) marca o início do especificador de formato. O especificador de formato "<code>.1</code>" significa "volta para o décimo mais próximo" (<i>ou seja&lt;/ i2&gt; exibir apenas um dígito após o ponto decimal). O especificador de formato "<code>f</code>" significa "número de ponto fixo" (em oposição à notação exponencial ou alguma outra representação decimal). Assim, dado um <var>tamanho</var> de <code>698.24</code> e o <var>sufixo&lt;/ v6&gt; <code>'GB'</code>, a string formatada seria <code>'698.2 GB'</code>, porque <code>698.24</code> fica arredondado para uma casa decimal, em seguida, o sufixo é acrescentado após o número.
 
-<pre class='nd screen'>
-<samp class=p>>>> </samp><kbd class=pp>'{0:.1f} {1}'.format(698.24, 'GB')</kbd>
+</p><pre class='nd screen'>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>'{0:.1f} {1}'.format(698.24, 'GB')</kbd>
 <samp class=pp>'698.2 GB'</samp></pre>
 
-<p>For all the gory details on format specifiers, consult the <a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> in the official Python documentation.
+<p>Para todos os detalhes sobre especificadores de formato, consulte a especificação do <a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> na documentação oficial do Python.
 
-<p class=a>&#x2042;
+</p><p class=a>⁂
 
-<h2 id=common-string-methods>Other Common String Methods</h2>
+</p><h2 id=common-string-methods>Outros Métodos Comuns de String</h2>
 
-<p>Besides formatting, strings can do a number of other useful tricks.
+<p>Além de formatação, strings podem fazer uma série de outros truques úteis.
 
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd>s = '''Finished files are the re-</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>... </samp><kbd>sult of years of scientif-</kbd>
-<samp class=p>... </samp><kbd>ic study combined with the</kbd>
-<samp class=p>... </samp><kbd>experience of years.'''</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>s.splitlines()</kbd>                     <span class=u>&#x2461;</span></a>
-<samp class=pp>['Finished files are the re-',
- 'sult of years of scientif-',
- 'ic study combined with the',
- 'experience of years.']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>print(s.lower())</kbd>                   <span class=u>&#x2462;</span></a>
-<samp>finished files are the re-
-sult of years of scientif-
-ic study combined with the
-experience of years.</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>s.lower().count('f')</kbd>               <span class=u>&#x2463;</span></a>
+</p><pre class=screen>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd>s = '''Arquivos acabados são o resul-</kbd>  <span class=u>①</span></a>
+<samp class=p>... </samp><kbd>tado de anos de estudo científi-</kbd>
+<samp class=p>... </samp><kbd>co em conjunto com anos de ex-</kbd>
+<samp class=p>... </samp><kbd>periência.'''</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s.splitlines()</kbd>                     <span class=u>②</span></a>
+<samp class=pp>['Arquivos acabados são o resul-',
+ 'tado de anos de estudo científi-',
+ 'co em conjunto com anos de ex-',
+ 'periência.']</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>print(s.lower())</kbd>                   <span class=u>③</span></a>
+<samp>Arquivos acabados são o resul-
+tado de anos de estudo científi-
+co em conjunto com anos de ex-
+periência.</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s.lower().count('f')</kbd>               <span class=u>④</span></a>
 <samp class=pp>6</samp></pre>
 <ol>
-<li>You can input <dfn>multiline</dfn> strings in the Python interactive shell. Once you start a multiline string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
-<li>The <code><dfn>splitlines</dfn>()</code> method takes one multiline string and returns a list of strings, one for each line of the original. Note that the carriage returns at the end of each line are not included.
-<li>The <code>lower()</code> method converts the entire string to lowercase. (Similarly, the <code>upper()</code> method converts a string to uppercase.)
-<li>The <code>count()</code> method counts the number of occurrences of a substring. Yes, there really are six &#8220;f&#8221;s in that sentence!
-</ol>
+<li>Você pode introduzir <dfn>várias linhas</dfn> de strings no shell interativo do Python. Uma vez que você iniciar uma string de várias linhas com aspas triplas, é só apertar <kbd>ENTER</kbd> e o shell interativo irá pedir-lhe para continuar a string. Digitando o fechamento aspas triplas termina a string, e o próximo <kbd>ENTER</kbd> irá executar o comando (neste caso, atribuindo a string para <var>s&lt;/ v3&gt;).
+</li><li>O método <code><dfn>splitlines</dfn>()</code> pega uma string com várias linhas e retorna uma lista de strings, uma para cada linha do original. Note-se que os retornos do pipe no fim de cada linha não estão incluídos.
+</li><li>O método <code>lower()<code> converte a string toda em letras minúsculas. (Da mesma forma, o método <code>upper()&lt;/ c1&gt; converte uma string toda para letras maiúsculas.)
+</li><li>O método <code>count()</code> conta o número de ocorrências de uma substring. Sim, realmente existem seis "f"s nessa frase!
+</li></ol>
 
-<p>Here&#8217;s another common case. Let&#8217;s say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
+<p>Aqui está outro caso comum. Vamos dizer que você tem uma lista de pares chave-valor, na forma <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, e você quer separá-los e fazer um dicionário no formato <code>{key1: value1, key2: value2}</code>.
 
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list = query.split('&amp;')</kbd>                                        <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+</p><pre class=screen>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_list = query.split('&amp;')</kbd>                                        <span class=u>①</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['user=pilgrim', 'database=master', 'password=PapayaWhip']</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_list_of_lists = [v.split('=', 1) for v in a_list if '=' in v]</kbd>  <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>a_list_of_lists</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_list_of_lists = [v.split('=', 1) for v in a_list if '=' in v]</kbd>  <span class=u>②</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_list_of_lists</kbd>
 <samp class=pp>[['user', 'pilgrim'], ['database', 'master'], ['password', 'PapayaWhip']]</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_dict = dict(a_list_of_lists)</kbd>                                   <span class=u>&#x2462;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_dict = dict(a_list_of_lists)</kbd>                                   <span class=u>③</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_dict</kbd>
 <samp class=pp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 
 <ol>
-<li>The <code><dfn>split</dfn>()</code> string method has one required argument, a delimiter. The method splits a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
-<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We can use a <a href=comprehensions.html#listcomprehension>list comprehension</a> to iterate over the entire list and split each string into two strings based on the first equals sign. The optional second argument to the <code>split()</code> method is the number of times you want to split. <code>1</code> means &#8220;only split once,&#8221; so the <code>split()</code> method will return a two-item list. (In theory, a value could contain an equals sign too. If you just used <code>'key=value=foo'.split('=')</code>, you would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
-<li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
-</ol>
+<li>O método <code><dfn>split</dfn>()</code> para divisão de uma string tem um argumento obrigatório, o delimitador. O método divide uma string em uma lista de strings com base no delimitador. Aqui, o delimitador é um caractere e comercial(&amp;), mas poderia ser qualquer coisa.
+</li><li>Agora, temos uma lista de strings, cada uma com uma chave, seguida por um sinal de igual, seguido por um valor. Podemos usar um <a href=comprehensions.html#listcomprehension>list comprehensino</a> para iterar a lista inteira e dividir cada string em duas strings com base no primeiro sinal de igual. O segundo argumento opcional do método<code>split()</code>, é o número de vezes que deseja dividir. <code>1</code> significa "dividir apenas uma vez", para o método <code>split()</code> retornará dois itens da lista. (Em teoria, um valor pode conter um sinal de igual também. Se você acabou de usar <code>'key=value=foo'.split('=')</code>, você iria acabar com uma lista de três itens <code>['key', 'value', 'foo']</code>.)
+</li><li>Finalmente, o Python pode transformar essa lista-de-listas em um dicionário simplesmente passando-a para a função <code>dict()</code>.
+</li></ol>
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>The previous example looks a lot like parsing query parameters in a <abbr>URL</abbr>, but real-life <abbr>URL</abbr> parsing is actually more complicated than this. If you&#8217;re dealing with <abbr>URL</abbr> query parameters, you&#8217;re better off using the <a href=http://docs.python.org/3.1/library/urllib.parse.html#urllib.parse.parse_qs><code>urllib.parse.parse_qs()</code></a> function, which handles some non-obvious edge cases.
+<p><span class=u>☞</span>O exemplo anterior se parece muito com a análise de parâmetros de consulta em uma URL <abbr> &lt;/ a1&gt;, mas na vida real a análise <abbr>URL&lt;a2 /&gt; é realmente mais complicado do que isso. Se você está lidando com parâmetros <abbr>URL</abbr> de uma query, é melhor você usar a função &lt;A4&gt;<code>urllib.parse.parse_qs()</code></a>, que trata de alguns casos extremos não-óbvios.
 </blockquote>
 
-<h3 id=slicingstrings>Slicing A String</h3>
-<p>Once you&#8217;ve defined a string, you can get any part of it as a new string. This is called <i>slicing</i> the string. Slicing strings works exactly the same as <a href=native-datatypes.html#slicinglists>slicing lists</a>, which makes sense, because strings are just sequences of characters.
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>a_string = 'My alphabet starts where your alphabet ends.'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string[3:11]</kbd>           <span class=u>&#x2460;</span></a>
-<samp class=pp>'alphabet'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string[3:-3]</kbd>           <span class=u>&#x2461;</span></a>
-<samp class=pp>'alphabet starts where your alphabet en'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string[0:2]</kbd>            <span class=u>&#x2462;</span></a>
-<samp class=pp>'My'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string[:18]</kbd>            <span class=u>&#x2463;</span></a>
-<samp class=pp>'My alphabet starts'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string[18:]</kbd>            <span class=u>&#x2464;</span></a>
-<samp class=pp>' where your alphabet ends.'</samp></pre>
+</p><h3 id=slicingstrings>Fatias de Um String</h3>
+<p>Depois de definir uma string, você pode obter qualquer parte dela como uma nova string. Isso é chamado <i>slicing</i>(fatiar) de uma string. Fatiar strings funciona exatamente da mesma forma que <a href=native-datatypes.html#slicinglists>fatiar listas</a>, o que faz sentido, porque strings são apenas seqüências de caracteres.
+</p><pre class=screen>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string = 'Meu alfabeto comeca aonde o seu alfabeto termina.'</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string[4:12]</kbd>           <span class=u>①</span></a>
+<samp class=pp>'alfabeto'</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string[4:-4]</kbd>           <span class=u>②</span></a>
+<samp class=pp>'alfabeto comeca aonde o seu alfabeto term'</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string[0:3]</kbd>            <span class=u>③</span></a>
+<samp class=pp>'Meu'</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string[:19]</kbd>            <span class=u>④</span></a>
+<samp class=pp>'Meu alfabeto comeca'</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string[19:]</kbd>            <span class=u>⑤</span></a>
+<samp class=pp>' aonde o seu alfabeto termina.'</samp></pre>
 <ol>
-<li>You can get a part of a string, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new string containing all the characters of the string, in order, starting with the first slice index.
-<li>Like slicing lists, you can use negative indices to slice strings.
-<li>Strings are zero-based, so <code>a_string[0:2]</code> returns the first two items of the string, starting at <code>a_string[0]</code>, up to but not including <code>a_string[2]</code>.
-<li>If the left slice index is 0, you can leave it out, and 0 is implied. So <code>a_string[:18]</code> is the same as <code>a_string[0:18]</code>, because the starting 0 is implied.
-<li>Similarly, if the right slice index is the length of the string, you can leave it out. So <code>a_string[18:]</code> is the same as <code>a_string[18:44]</code>, because this string has 44 characters.  There is a pleasing symmetry here. In this 44-character string, <code>a_string[:18]</code> returns the first 18 characters, and <code>a_string[18:]</code> returns everything but the first 18 characters. In fact, <code>a_string[:<var>n</var>]</code> will always return the first <var>n</var> characters, and <code>a_string[<var>n</var>:]</code> will return the rest, regardless of the length of the string.
-</ol>
+<li>Você pode obter uma parte de uma string, chamada de "slice", especificando dois índices. O valor de retorno é uma nova string contendo todos os caracteres da string, em ordem, começando com o índice de primeira fatia.
+</li><li>Como cortar listas, você pode usar índices negativos para cortar strings.
+</li><li>Strings são de base zero, assim <code>a_string[0:2]</code> retorna os dois primeiros itens da string, a partir de <code>a_string[0]&lt;/ c1&gt;, até mas não incluindo<code>a_string[2]</code>.
+</li><li>Se o índice da fatia esquerda é 0, você pode deixá-la fora, o 0(zero) é implícito. Assim <code>a_string[:18]&lt;/ c0&gt; é o mesmo que <code>a_string[0:18] &lt;/ c1&gt;, porque o 0(zero) está implícito.
+</li><li>Da mesma forma, se o índice da fatia à direita  é o comprimento da string, você pode deixá-lo fora. Assim <code>a_string[18:]</code> é o mesmo que <code>a_string[18:44]</code>, porque a string tem 49 caracteres. Existe uma simetria agradável aqui. Nesta string de 44 caracteres, <code>a_string[:18]</code> retorna os primeiros 18 caracteres, e <code>a_string[18]:</code> retorna tudo menos os primeiros 18 caracteres. Na verdade, <code>a_string[:<var>n</var>]&lt;/ c4&gt; sempre retornará os primeiro <var>n&lt;/ v6&gt; caracteres, e <code>a_string[<var>n</var>:]&lt;/ c7&gt; retorna o resto, independentemente do comprimento da string.
+</li></ol>
 
-<p class=a>&#x2042;
+<p class=a>⁂
 
-<h2 id=byte-arrays>Strings vs. Bytes</h2>
+</p><h2 id=byte-arrays>Strings vs. Bytes</h2>
 
-<p><dfn>Bytes</dfn> are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
+<p><dfn>Bytes</dfn> são bytes; caracteres são uma abstração. Uma seqüência imutável de caracteres Unicode é chamada de <i>string</i>. Uma seqüência imutável de números entre 0 e 255 é chamado de <i>bytes&lt;/ i2&gt; object.
 
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>by = b'abcd\x65'</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>by</kbd>
+</p><pre class=screen>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = b'abcd\x65'</kbd>  <span class=u>①</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by</kbd>
 <samp class=pp>b'abcde'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>type(by)</kbd>          <span class=u>&#x2461;</span></a>
-<samp class=pp>&lt;class 'bytes'></samp>
-<a><samp class=p>>>> </samp><kbd class=pp>len(by)</kbd>           <span class=u>&#x2462;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>type(by)</kbd>          <span class=u>②</span></a>
+<samp class=pp>&lt;class 'bytes'&gt;</samp>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(by)</kbd>           <span class=u>③</span></a>
 <samp class=pp>5</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by += b'\xff'</kbd>     <span class=u>&#x2463;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>by</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by += b'\xff'</kbd>     <span class=u>④</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by</kbd>
 <samp class=pp>b'abcde\xff'</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>len(by)</kbd>           <span class=u>&#x2464;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(by)</kbd>           <span class=u>⑤</span></a>
 <samp class=pp>6</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by[0]</kbd>             <span class=u>&#x2465;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by[0]</kbd>             <span class=u>⑥</span></a>
 <samp class=pp>97</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by[0] = 102</kbd>       <span class=u>&#x2466;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by[0] = 102</kbd>       <span class=u>⑦</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 TypeError: 'bytes' object does not support item assignment</samp></pre>
 <ol>
-<li>To define a <code>bytes</code> object, use the <code>b''</code> &#8220;<dfn>byte</dfn> literal&#8221; syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
-<li>The type of a <code>bytes</code> object is <code>bytes</code>.
-<li>Just like lists and strings, you can get the length of a <code>bytes</code> object with the built-in <code>len()</code> function.
-<li>Just like lists and strings, you can use the <code>+</code> operator to concatenate <code>bytes</code> objects. The result is a new <code>bytes</code> object.
-<li>Concatenating a 5-byte <code>bytes</code> object and a 1-byte <code>bytes</code> object gives you a 6-byte <code>bytes</code> object.
-<li>Just like lists and strings, you can use index notation to get individual bytes in a <code>bytes</code> object. The items of a string are strings; the items of a <code>bytes</code> object are integers. Specifically, integers between 0&ndash;255.
-<li>A <code>bytes</code> object is immutable; you can not assign individual bytes. If you need to change individual bytes, you can either use <a href=#slicingstrings>string slicing</a> and concatenation operators (which work the same as strings), or you can convert the <code>bytes</code> object into a <code>bytearray</code> object.
-</ol>
+<li>Para definir um <code>bytes</code> object, use o <code>b''</code> com a <dfn>byte</dfn> literal. Cada byte dentro do byte literal pode ser um carácter <abbr>ASCII</abbr> ou um número hexadecimal codificado de <code>\x00</code> a <code>\xff</code> (0–255).
+</li><li>O tipo de um <code>bytes</code> object é <code>bytes</code>.
+</li><li>Assim como listas e strings, você pode obter o comprimento de alguns <code>bytes</code> object com a função built-in <code>len()</code>.
+</li><li>Assim como listas e strings, você pode usar o operador <code>+</code> para concatenar <code>bytes</code> objects. O resultado é um novo <code>bytes</code> object.
+</li><li>Concatenação de um <code>bytes&lt;/ c0&gt; object de 5 bytes e um de 1 byte dá-lhe um <code>bytes</code> object de 6 bytes.
+</li><li>Assim como listas e strings, você pode usar a notação de índice para obter bytes individuais de alguns  <code>bytes</code> object. Os itens de uma string são strings; os itens de um <code>bytes</code> object são inteiros. Especificamente, inteiros entre 0-255.
+</li><li>Um <code>bytes</code> object é imutável, não se pode atribuir bytes individuais. Se você precisa mudar bytes individuais, você pode usar o <a href=#slicingstrings>fatiamento de strings&lt;/ a1&gt; e operadores de concatenação (que funcionam da mesma forma como strings), ou você pode converter os <code>bytes</code> object em um <code>bytearray</code> object.
+</li></ol>
 
 <pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>by = b'abcd\x65'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>barr = bytearray(by)</kbd>  <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>barr</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = b'abcd\x65'</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>barr = bytearray(by)</kbd>  <span class=u>①</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>barr</kbd>
 <samp class=pp>bytearray(b'abcde')</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>len(barr)</kbd>             <span class=u>&#x2461;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(barr)</kbd>             <span class=u>②</span></a>
 <samp class=pp>5</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>barr[0] = 102</kbd>         <span class=u>&#x2462;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>barr</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>barr[0] = 102</kbd>         <span class=u>③</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>barr</kbd>
 <samp class=pp>bytearray(b'fbcde')</samp></pre>
 <ol>
-<li>To convert a <code>bytes</code> object into a mutable <code>bytearray</code> object, use the built-in <code>bytearray()</code> function.
-<li>All the methods and operations you can do on a <code>bytes</code> object, you can do on a <code>bytearray</code> object too.
-<li>The one difference is that, with the <code>bytearray</code> object, you can assign individual bytes using index notation. The assigned value must be an integer between 0&ndash;255.
-</ol>
+<li>Para converter um <code>bytes</code> object em um <code>bytearray</code> object mutável, use a função built-in <code>bytearray()</code>.
+</li><li>Todos os métodos e as operações que você pode fazer em um <code>bytes</code> object, você pode fazer em um <code>bytearray</code> object também.
+</li><li>A única diferença é que, com o <code>bytearray</code> object, você pode atribuir bytes individuais usando a notação de índice. O valor atribuído deve ser um inteiro entre 0-255.
+</li></ol>
 
-<p>The one thing you <em>can never do</em> is mix bytes and strings.
+<p>A única coisa que você <em>nunca pode fazer</em> é misturar bytes e strings.
 
-<pre class=screen>
-<samp class=p>>>> </samp><kbd class=pp>by = b'd'</kbd>
-<samp class=p>>>> </samp><kbd class=pp>s = 'abcde'</kbd>
-<a><samp class=p>>>> </samp><kbd class=pp>by + s</kbd>                       <span class=u>&#x2460;</span></a>
+</p><pre class=screen>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = b'd'</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s = 'abcde'</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by + s</kbd>                       <span class=u>①</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 TypeError: can't concat bytes to str</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>s.count(by)</kbd>                  <span class=u>&#x2461;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s.count(by)</kbd>                  <span class=u>②</span></a>
 <samp class=traceback>Traceback (most recent call last):
-  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 TypeError: Can't convert 'bytes' object to str implicitly</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>s.count(by.decode('ascii'))</kbd>  <span class=u>&#x2462;</span></a>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>s.count(by.decode('ascii'))</kbd>  <span class=u>③</span></a>
 <samp class=pp>1</samp></pre>
 <ol>
-<li>You can&#8217;t concatenate bytes and strings. They are two different data types.
-<li>You can&#8217;t count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&#8221;? Well then, you&#8217;ll need to say that explicitly. Python 3 won&#8217;t <dfn>implicitly</dfn> convert bytes to strings or strings to bytes.
-<li>By an amazing coincidence, this line of code says &#8220;count the occurrences of the string that you would get after decoding this sequence of bytes in this particular character encoding.&#8221;
-</ol>
+<li>Você não pode concatenar bytes e strings. Eles são dois tipos diferentes de dados.
+</li><li>Você não pode contar as ocorrências de bytes em uma string, porque não há bytes em uma string. Uma string é uma sequência de caracteres. Talvez você quis dizer "contar as ocorrências da string que você obteria depois de decodificação dessa seqüência de bytes em uma codificação de caracteres particular"? Bem, então você precisa dizer isso explicitamente. Python 3 não <dfn>implicitamente</dfn> converte bytes em strings ou strings em bytes.
+</li><li>Por uma incrível coincidência, esta linha de código diz "contar as ocorrências da string que você obteria depois de decodificação essa seqüência de bytes nesta codificação de caracteres em particular."
+</li></ol>
 
-<p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code><dfn>decode</dfn>()</code> method that takes a character encoding and returns a string, and strings have an <code><dfn>encode</dfn>()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward&nbsp;&mdash;&nbsp;converting a sequence of bytes in the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string&nbsp;&mdash;&nbsp;even legacy (non-Unicode) encodings.
+<p>E aqui está o link entre strings e bytes: <code>bytes</code> objects têm um método <code><dfn>decodec</dfn>() &lt;/ c1&gt;  que utiliza uma codificação de caracteres e retorna uma string, a strings tem um método <code><dfn>encode</dfn>()&lt;/ c3&gt; que utiliza uma codificação de caracteres e retorna um <code>bytes</code> object. No exemplo anterior, a descodificação foi relativamente simples - a conversão de uma seqüência de bytes em uma seqüência de caracteres na codificação <abbr>ASCII</abbr>. Mas o mesmo processo funciona com qualquer codificação que suporta os caracteres da string - codificações mesmo legado (não-Unicode).
 
-<pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string = '深入 Python'</kbd>         <span class=u>&#x2460;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>len(a_string)</kbd>
+</p><pre class=screen>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string = '深入 Python'</kbd>         <span class=u>①</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(a_string)</kbd>
 <samp class=pp>9</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by = a_string.encode('utf-8')</kbd>    <span class=u>&#x2461;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>by</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = a_string.encode('utf-8')</kbd>    <span class=u>②</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by</kbd>
 <samp class=pp>b'\xe6\xb7\xb1\xe5\x85\xa5 Python'</samp>
-<samp class=p>>>> </samp><kbd class=pp>len(by)</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(by)</kbd>
 <samp class=pp>13</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by = a_string.encode('gb18030')</kbd>  <span class=u>&#x2462;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>by</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = a_string.encode('gb18030')</kbd>  <span class=u>③</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by</kbd>
 <samp class=pp>b'\xc9\xee\xc8\xeb Python'</samp>
-<samp class=p>>>> </samp><kbd class=pp>len(by)</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(by)</kbd>
 <samp class=pp>11</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>by = a_string.encode('big5')</kbd>     <span class=u>&#x2463;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>by</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by = a_string.encode('big5')</kbd>     <span class=u>④</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>by</kbd>
 <samp class=pp>b'\xb2`\xa4J Python'</samp>
-<samp class=p>>>> </samp><kbd class=pp>len(by)</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>len(by)</kbd>
 <samp class=pp>11</samp>
-<a><samp class=p>>>> </samp><kbd class=pp>roundtrip = by.decode('big5')</kbd>    <span class=u>&#x2464;</span></a>
-<samp class=p>>>> </samp><kbd class=pp>roundtrip</kbd>
+<a><samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>roundtrip = by.decode('big5')</kbd>    <span class=u>⑤</span></a>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>roundtrip</kbd>
 <samp class=pp>'深入 Python'</samp>
-<samp class=p>>>> </samp><kbd class=pp>a_string == roundtrip</kbd>
+<samp class=p>&gt;&gt;&gt; </samp><kbd class=pp>a_string == roundtrip</kbd>
 <samp class=pp>True</samp></pre>
 <ol>
-<li>This is a string. It has nine characters.
-<li>This is a <code>bytes</code> object. It has 13 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <abbr>UTF-8</abbr>.
-<li>This is a <code>bytes</code> object. It has 11 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/GB_18030>GB18030</a>.
-<li>This is a <code>bytes</code> object. It has 11 bytes. It is an <em>entirely different sequence of bytes</em> that you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/Big5>Big5</a>.
-<li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
-</ol>
+<li>Essa é uma string. Ele tem nove caracteres.
+</li><li>Este é um <code>bytes</code> object. Tem 13 bytes É a seqüência de bytes que você começa quando você toma uma <var>a_string</var> e codificá-la em <abbr>UTF-8 </abbr>.
+</li><li>Este é um <code>bytes</code> object. Tem 11 bytes. É a seqüência de bytes que você começa quando você toma uma <var> a_string &lt;/ v1&gt; e codificá-la em <a href=http://en.wikipedia.org/wiki/GB_18030>GB18030</a>.
+</li><li>Este é um <code>bytes</code> object. Tem 11 bytes. É uma <em>seqüência totalmente diferente de bytes</em> que você começa quando você pega <var>a_string</var> e codifica em <a href=http://en.wikipedia.org/wiki/Big5>Big5</a>.
+</li><li>Essa é uma string. Ele tem nove caracteres. É uma seqüência de caracters que começa quando você a decodifica usando o algoritmo Big5 de codificação.  Ele é idêntico à string original.
+</li></ol>
 
-<p class=a>&#x2042;
+<p class=a>⁂
 
-<h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
+</p><h2 id=py-encoding>Postscript: Codificação de Caracteres do código fonte Python</h2>
 
-<p>Python 3 assumes that your source code&nbsp;&mdash;&nbsp;<i>i.e.</i> each <code>.py</code> file&nbsp;&mdash;&nbsp;is encoded in <abbr>UTF-8</abbr>.
+<p>Python 3 assume que seu código-fonte - <i>ou seja&lt;/ 0&gt; para cada arquivo <code>.py</code> -. Está codificado em <abbr>UTF-8</abbr>.
 
-<blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>In Python 2, the <dfn>default</dfn> encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is <abbr>UTF-8</abbr></a>.
+</p><blockquote class='note compare python2'>
+<p><span class=u> ☞ &lt;/ s0&gt; Em Python 2, a codificação <dfn>padrão</dfn>para os arquivos <code>. py&lt;/C2&gt; foi <abbr>ASCII</abbr>. Em Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>a codificação padrão é <abbr>UTF-8</abbr></a>.
 </blockquote>
 
-<p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
+</p><p>Se você gostaria de usar uma codificação diferente dentro de seu código Python, você pode colocar uma declaração de codificação na primeira linha de cada arquivo. Esta declaração define um arquivo <code>.py&lt;/ c0&gt; a ser windows-1252:
 
-<pre class='nd pp'><code># -*- coding: windows-1252 -*-</code></pre>
+</p><pre class='nd pp'><code># -*- coding: windows-1252 -*-</code></pre>
 
-<p>Technically, the character encoding override can also be on the second line, if the first line is a <abbr>UNIX</abbr>-like hash-bang command.
+<p>Tecnicamente, a substituição de codificação de caracteres também pode ser na segunda linha, se a primeira linha é um comando hash-tag do <abbr>UNIX</abbr>.
 
-<pre class='nd pp'><code>#!/usr/bin/python3
+</p><pre class='nd pp'><code>#!/usr/bin/python3
 # -*- coding: windows-1252 -*-</code></pre>
 
-<p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
+<p>Para mais informações, consulte <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
 
-<p class=a>&#x2042;
+</p><p class=a>⁂
 
-<h2 id=furtherreading>Further Reading</h2>
+</p><h2 id=furtherreading>Leia mais </h2>
 
-<p>On Unicode in Python:
+<p>Unicode no Python
 
-<ul>
+</p><ul>
 <li><a href=http://docs.python.org/3.1/howto/unicode.html>Python Unicode HOWTO</a>
-<li><a href=http://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit>What&#8217;s New In Python 3: Text vs. Data Instead Of Unicode vs. 8-bit</a>
-<li><a href=http://www.python.org/dev/peps/pep-0261/><abbr>PEP 261</abbr></a> explains how Python handles astral characters outside of the Basic Multilingual Plane (<i>i.e.</i> characters whose ordinal value is greater than 65535)
-</ul>
+</li><li><a href=http://docs.python.org/3.0/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit>What’s New In Python 3: Text vs. Data Instead Of Unicode vs. 8-bit</a>
+</li><li><a href=http://www.python.org/dev/peps/pep-0261/><abbr>PEP 261</abbr></a> explica como o Python lida com caracteres astrais fora do Plano Multilingual Básico (caracteres ou seja, cujo ordinal valor é maior do que 65535)
+</li></ul>
 
-<p>On Unicode in general:
+<p>Unicode em geral:
 
-<ul>
+</p><ul>
 <li><a href=http://www.joelonsoftware.com/articles/Unicode.html>The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)</a>
-<li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode>On the Goodness of Unicode</a>
-<li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings>On Character Strings</a>
-<li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF>Characters vs. Bytes</a>
-</ul>
+</li><li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode>On the Goodness of Unicode</a>
+</li><li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings>On Character Strings</a>
+</li><li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF>Characters vs. Bytes</a>
+</li></ul>
 
-<p>On character encoding in other formats:
+<p>Na codificação de caracteres em outros formatos:
 
-<ul>
+</p><ul>
 <li><a href=http://feedparser.org/docs/character-encoding.html>Character encoding in XML</a>
-<li><a href=http://blog.whatwg.org/the-road-to-html-5-character-encoding>Character encoding in HTML</a>
-</ul>
+</li><li><a href=http://blog.whatwg.org/the-road-to-html-5-character-encoding>Character encoding in HTML</a>
+</li></ul>
 
-<p>On strings and string formatting:
+<p>Em strings e de formatação de strings:
 
-<ul>
-<li><a href=http://docs.python.org/3.1/library/string.html><code>string</code>&nbsp;&mdash;&nbsp;Common string operations</a>
-<li><a href=http://docs.python.org/3.1/library/string.html#formatstrings>Format String Syntax</a>
-<li><a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a>
-<li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
-</ul>
+</p><ul>
+<li><a href=http://docs.python.org/3.1/library/string.html><code>string</code>&nbsp;—&nbsp;Common string operations</a>
+</li><li><a href=http://docs.python.org/3.1/library/string.html#formatstrings>Format String Syntax</a>
+</li><li><a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a>
+</li><li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
+</li></ul>
 
-<p class=v><a href=comprehensions.html rel=prev title='back to &#8220;Comprehensions&#8221;'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to &#8220;Regular Expressions&#8221;'><span class=u>&#x261E;</span></a>
+<p class=v><a href=comprehensions.html rel=prev title="back to “Comprehensions”"><span class=u>☜</span></a> <a href=regular-expressions.html rel=next title="onward to “Regular Expressions”"><span class=u>☞</span></a>
 
-<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+</p><p class=c>© 2001–11 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
 <script src=j/prettify.js></script>
 <script src=j/dip3.js></script>
+</p>
