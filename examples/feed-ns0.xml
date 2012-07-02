@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'>
+  <ns0:title>dive into mark</ns0:title>
+  <ns0:subtitle>currently between addictions</ns0:subtitle>
+  <ns0:id>tag:diveintomark.org,2001-07-29:/</ns0:id>
+  <ns0:updated>2009-03-27T21:56:07Z</ns0:updated>
+  <ns0:link rel='alternate' type='text/html' href='http://diveintomark.org/'/>
+  <ns0:entry>
+    <ns0:author>
+      <ns0:name>Mark</ns0:name>
+      <ns0:uri>http://diveintomark.org/</ns0:uri>
+    </ns0:author>
+    <ns0:title>Dive into history, 2009 edition</ns0:title>
+    <ns0:link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'/>
+    <ns0:id>tag:diveintomark.org,2009-03-27:/archives/20090327172042</ns0:id>
+    <ns0:updated>2009-03-27T21:56:07Z</ns0:updated>
+    <ns0:published>2009-03-27T17:20:42Z</ns0:published>
+    <ns0:category scheme='http://diveintomark.org' term='diveintopython'/>
+    <ns0:category scheme='http://diveintomark.org' term='docbook'/>
+    <ns0:category scheme='http://diveintomark.org' term='html'/>
+    <ns0:summary type='html'>Putting an entire chapter on one page sounds
+      bloated, but consider this &amp;mdash; my longest chapter so far
+      would be 75 printed pages, and it loads in under 5 seconds&amp;hellip;
+      On dialup.</ns0:summary>
+  </ns0:entry>
+  <ns0:entry>
+    <ns0:author>
+      <ns0:name>Mark</ns0:name>
+      <ns0:uri>http://diveintomark.org/</ns0:uri>
+    </ns0:author>
+    <ns0:title>Accessibility is a harsh mistress</ns0:title>
+    <ns0:link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress'/>
+    <ns0:id>tag:diveintomark.org,2009-03-21:/archives/20090321200928</ns0:id>
+    <ns0:updated>2009-03-22T01:05:37Z</ns0:updated>
+    <ns0:published>2009-03-21T20:09:28Z</ns0:published>
+    <ns0:category scheme='http://diveintomark.org' term='accessibility'/>
+    <ns0:summary type='html'>The accessibility orthodoxy does not permit people to
+      question the value of features that are rarely useful and rarely used.</ns0:summary>
+  </ns0:entry>
+  <ns0:entry>
+    <ns0:author>
+      <ns0:name>Mark</ns0:name>
+    </ns0:author>
+    <ns0:title>A gentle introduction to video encoding, part 1: container formats</ns0:title>
+    <ns0:link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats'/>
+    <ns0:id>tag:diveintomark.org,2008-12-18:/archives/20081218155422</ns0:id>
+    <ns0:updated>2009-01-11T19:39:22Z</ns0:updated>
+    <ns0:published>2008-12-18T15:54:22Z</ns0:published>
+    <ns0:category scheme='http://diveintomark.org' term='asf'/>
+    <ns0:category scheme='http://diveintomark.org' term='avi'/>
+    <ns0:category scheme='http://diveintomark.org' term='encoding'/>
+    <ns0:category scheme='http://diveintomark.org' term='flv'/>
+    <ns0:category scheme='http://diveintomark.org' term='GIVE'/>
+    <ns0:category scheme='http://diveintomark.org' term='mp4'/>
+    <ns0:category scheme='http://diveintomark.org' term='ogg'/>
+    <ns0:category scheme='http://diveintomark.org' term='video'/>
+    <ns0:summary type='html'>These notes will eventually become part of a
+      tech talk on video encoding.</ns0:summary>
+  </ns0:entry>
+</ns0:feed>

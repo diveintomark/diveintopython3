@@ -1,0 +1,112 @@
+/*
+
+"Dive Into Python 3" mobile stylesheet for iPhone, Android, and other
+small-screen devices
+
+Copyright (c) 2009, Mark Pilgrim, All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+
+Acknowledgements & Inspirations
+
+"Return of the Mobile Style Sheet" ....................... http://www.alistapart.com/articles/returnofthemobilestylesheet
+"Optimizing Web Content Using Conditional CSS" ........... http://developer.apple.com/safari/library/documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/chapter_3_section_2.html
+*/
+
+/* typography */
+
+body, .c, span, pre span, .c, .note, p, ul, ol {
+  font:normal 12px/18px sans-serif;
+}
+pre, kbd, samp, code, var {
+  font:normal 12px/18px monospace;
+}
+.baa {
+  font:normal 14px/18px serif;
+}
+abbr {
+  font-variant:normal;
+  text-transform:none;
+  letter-spacing:0;
+}
+.c, .note, p, ul, ol, h2, h3 {
+  margin:1.75em 0;
+}
+
+/* basics */
+
+html {
+  color:#000;
+}
+body {
+  margin:4px 2px 0 2px;
+}
+
+/* links */
+
+a {
+  text-decoration:underline;
+  border-bottom:0;
+}
+pre a {
+  text-decoration:none;
+}
+
+/* headers and pullquotes */
+
+h1, h2, h3, pre {
+  padding:0;
+  border:0;
+  letter-spacing:0;
+}
+h1 {
+  margin:0;
+}
+h1, h1 code {
+  font:normal 18px/18px serif;
+}
+h2, h2 code {
+  font:normal 16px/18px serif;
+}
+h3, h3 code {
+  font:normal 14px/18px serif;
+}
+h1:before {
+  content:"";
+}
+
+/* overrides */
+
+.nm, .w, aside, form, form+p, .note span, .q span, .a {
+  display:none;
+}
+dd {
+  margin:0 0 0 1.75em;
+}
+.nav span {
+  font-size:200%;
+}
+.xxxl {
+  font-size: xx-large;
+  line-height: 0.875;
+}

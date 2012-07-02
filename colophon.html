@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<meta name=robots content=noindex>
+<title>Colophon - Dive Into Python 3</title>
+<link rel=stylesheet href=dip3.css>
+<style>
+h1:before,h2:before{content:''}
+.ss{float:right;margin:0 0 1.75em 1.75em}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<h1>Colophon</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> <i lang=fr>Je n&#8217;ai fait celle-ci plus longue que parce que je n&#8217;ai pas eu le loisir de la faire plus courte.</i><br>(I would have written a shorter letter, but I did not have the time.) <span class=u>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Blaise_Pascal>Blaise Pascal</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>This book, like all books, was a labor of love. Oh sure, I got paid the medium-sized bucks for it, but nobody writes technical books for the money. And since this book is available on the web as well as on paper, I spent a lot of time fiddling with webby stuff when I should have been writing.
+
+<p class='ss nm'><img src=i/openclipart.org_media_files_johnny_automatic_5261.png width=314 height=273 alt='[typewriter]'>
+
+<p>The online edition loads as efficiently as possible. Efficiency never happens by accident; I spent many hours making it so. Perhaps too many hours. Yes, almost certainly too many hours. Never underestimate the depths to which a procrastinating writer will sink.
+
+<p>I won&#8217;t bore you with all the details. Wait, yes&nbsp;&mdash;&nbsp;I will bore you with all the details. But here&#8217;s the short version.
+
+<ol>
+<li>HTML is minimized, then served <a href=http://httpd.apache.org/docs/trunk/mod/mod_deflate.html>compressed</a>.
+<li>Scripts and stylesheets are minimized by <a href=http://developer.yahoo.com/yui/compressor/>YUI Compressor</a> (and also served compressed).
+<li>Scripts are combined to reduce HTTP requests.
+<li>Stylesheets are combined and inlined to reduce HTTP requests.
+<li>Unused CSS selectors and properties are <a href=http://hg.diveintopython3.org/file/default/util/lesscss.py>removed on a page-by-page basis</a> with a little help from <a href=http://pyquery.org/>pyquery</a>.
+<li>HTTP caching and other server-side options are optimized based on advice from <a href=http://developer.yahoo.com/yslow/>YSlow</a> and <a href=http://code.google.com/speed/page-speed/>Page Speed</a>.
+<li>Pages use <a href=http://www.alanwood.net/unicode/unicode_samples.html>Unicode characters</a> in place of images wherever possible.
+<li>Images are optimized with <a href=http://optipng.sourceforge.net/>OptiPNG</a>.
+<li>The entire book was <a href=http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition>lovingly hand-authored in HTML 5</a> to avoid markup cruft.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=typography>Typography</h2>
+
+<p>vertical rhythm, best available ampersand, curly quotes/apostrophes, other stuff from webtypography.net
+
+<p class=a>&#x2042;
+
+<h2 id=graphics>Graphics</h2>
+
+<p>Unicode, callouts, font-family issues on Windows
+
+<p class=a>&#x2042;
+
+<h2 id=performance>Performance</h2>
+
+<p>"Dive Into History 2009 edition", minimizing CSS + JS + HTML, inline CSS, optimizing images
+
+<p class=a>&#x2042;
+
+<h2 id=fun>Fun stuff</h2>
+
+<p>Quotes, constrained writing(?), PapayaWhip
+
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Further Reading</h2>
+
+<ul>
+<li><a href=http://webtypography.net/toc/>The Elements of Typographic Style Applied to the Web</a>
+<li><a href=http://www.alistapart.com/articles/settingtypeontheweb>Setting Type on the Web to a Baseline Grid</a>
+<li><a href=http://24ways.org/2006/compose-to-a-vertical-rhythm>Compose to a Vertical Rhythm</a>
+<li><a href=http://simplebits.com/notebook/2008/08/14/ampersands.html>Use the Best Available Ampersand</a>
+<li><a href=http://alanwood.net/unicode/>Unicode Support in HTML, Fonts, and Web Browsers</a>
+<li><a href=http://developer.yahoo.com/yslow/>YSlow</a> for <a href=http://getfirebug.com/>Firebug</a>
+<li><a href=http://developer.yahoo.com/performance/rules.html>Best Practices for Speeding Up Your Web Site</a>
+<li><a href=http://stevesouders.com/hpws/rules.php>14 Rules for Faster-Loading Web Sites</a>
+<li><a href=http://developer.yahoo.com/yui/compressor/>YUI Compressor</a>
+<li><a href=http://code.google.com/speed/page-speed/>Google Page Speed</a>
+<li><a href=http://code.google.com/speed/page-speed/docs/using.html>Using Google Page Speed</a>
+<li><a href=http://optipng.sourceforge.net/>OptiPNG</a>
+</ul>
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/dip3.js></script>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->

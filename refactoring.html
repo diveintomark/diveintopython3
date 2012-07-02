@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Refactoring - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 10}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=root value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#refactoring>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
+<h1>Refactoring</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> After one has played a vast quantity of notes and more notes, it is simplicity that emerges as the crowning reward of art. <span class=u>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin>Fr&eacute;d&eacute;ric Chopin</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Like it or not, bugs happen. Despite your best efforts to write comprehensive <a href=unit-testing.html>unit tests</a>, bugs happen. What do I mean by &#8220;bug&#8221;? A bug is a test case you haven&#8217;t written yet.
+
+<pre class=screen><samp class=p>>>> </samp><kbd class=pp>import roman7</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>roman7.from_roman('')</kbd> <span class=u>&#x2460;</span></a>
+<samp class=pp>0</samp></pre>
+<ol>
+<li>This is a bug. An empty string should raise an <code>InvalidRomanNumeralError</code> exception, just like any other sequence of characters that don&#8217;t represent a valid Roman numeral.
+</ol>
+
+<p>After reproducing the bug, and before fixing it, you should write a test case that fails, thus illustrating the bug.
+
+<pre class=pp><code>class FromRomanBadInput(unittest.TestCase):  
+    .
+    .
+    .
+    def testBlank(self):
+        '''from_roman should fail with blank string'''
+<a>        self.assertRaises(roman6.InvalidRomanNumeralError, roman6.from_roman, '') <span class=u>&#x2460;</span></a></code></pre>
+<ol>
+<li>Pretty simple stuff here. Call <code>from_roman()</code> with an empty string and make sure it raises an <code>InvalidRomanNumeralError</code> exception. The hard part was finding the bug; now that you know about it, testing for it is the easy part.
+</ol>
+
+<p>Since your code has a bug, and you now have a test case that tests this bug, the test case will fail:
+<pre class='nd screen cmdline'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
+<samp>from_roman should fail with blank string ... FAIL
+from_roman should fail with malformed antecedents ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+from_roman should give known result with known input ... ok
+to_roman should give known result with known input ... ok
+from_roman(to_roman(n))==n for all n ... ok
+to_roman should fail with negative input ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+
+======================================================================
+FAIL: from_roman should fail with blank string
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest8.py", line 117, in test_blank
+    self.assertRaises(roman8.InvalidRomanNumeralError, roman8.from_roman, '')
+<mark>AssertionError: InvalidRomanNumeralError not raised by from_roman</mark>
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.171s
+
+FAILED (failures=1)</samp></pre>
+
+<p><em>Now</em> you can fix the bug.
+
+<pre class=pp><code>def from_roman(s):
+    '''convert Roman numeral to integer'''
+<a>    if not s:                                                                  <span class=u>&#x2460;</span></a>
+        raise InvalidRomanNumeralError('Input can not be blank')
+    if not re.search(romanNumeralPattern, s):
+<a>        raise InvalidRomanNumeralError('Invalid Roman numeral: {}'.format(s))  <span class=u>&#x2461;</span></a>
+
+    result = 0
+    index = 0
+    for numeral, integer in romanNumeralMap:
+        while s[index:index+len(numeral)] == numeral:
+            result += integer
+            index += len(numeral)
+    return result</code></pre>
+<ol>
+<li>Only two lines of code are required: an explicit check for an empty string, and a <code>raise</code> statement.
+<li>I don&#8217;t think I&#8217;ve mentioned this yet anywhere in this book, so let this serve as your final lesson in <a href=strings.html#formatting-strings>string formatting</a>. Starting in Python 3.1, you can skip the numbers when using positional indexes in a format specifier. That is, instead of using the format specifier <code>{0}</code> to refer to the first parameter to the <code>format()</code> method, you can simply use <code>{}</code> and Python will fill in the proper positional index for you. This works for any number of arguments; the first <code>{}</code> is <code>{0}</code>, the second <code>{}</code> is <code>{1}</code>, and so forth.
+</ol>
+
+<pre class='screen cmdline'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest8.py -v</kbd>
+<a><samp>from_roman should fail with blank string ... ok</samp>  <span class=u>&#x2460;</span></a>
+<samp>from_roman should fail with malformed antecedents ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+from_roman should give known result with known input ... ok
+to_roman should give known result with known input ... ok
+from_roman(to_roman(n))==n for all n ... ok
+to_roman should fail with negative input ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.156s
+</samp>
+<a><samp>OK</samp>  <span class=u>&#x2461;</span></a></pre>
+<ol>
+<li>The blank string test case now passes, so the bug is fixed.
+<li>All the other test cases still pass, which means that this bug fix didn&#8217;t break anything else. Stop coding.
+</ol>
+
+<p>Coding this way does not make fixing bugs any easier. Simple bugs (like this one) require simple test cases; complex bugs will require complex test cases. In a testing-centric environment, it may <em>seem</em> like it takes longer to fix a bug, since you need to articulate in code exactly what the bug is (to write the test case), then fix the bug itself. Then if the test case doesn&#8217;t pass right away, you need to figure out whether the fix was wrong, or whether the test case itself has a bug in it. However, in the long run, this back-and-forth between test code and code tested pays for itself, because it makes it more likely that bugs are fixed correctly the first time. Also, since you can easily re-run <em>all</em> the test cases along with your new one, you are much less likely to break old code when fixing new code. Today&#8217;s unit test is tomorrow&#8217;s regression test.
+
+<p class=a>&#x2042;
+
+<h2 id=changing-requirements>Handling Changing Requirements</h2>
+<p>Despite your best efforts to pin your customers to the ground and extract exact requirements from them on pain of horrible nasty things involving scissors and hot wax, requirements will change. Most customers don&#8217;t know what they want until they see it, and even if they do, they aren&#8217;t that good at articulating what they want precisely enough to be useful. And even if they do, they&#8217;ll want more in the next release anyway. So be prepared to update your test cases as requirements change.
+
+<p>Suppose, for instance, that you wanted to expand the range of the Roman numeral conversion functions. Normally, no character in a Roman numeral can be repeated more than three times in a row. But the Romans were willing to make an exception to that rule by having 4 <code>M</code> characters in a row to represent <code>4000</code>. If you make this change, you&#8217;ll be able to expand the range of convertible numbers from <code>1..3999</code> to <code>1..4999</code>. But first, you need to make some changes to your test cases.
+
+<p class=d>[<a href=examples/roman8.py>download <code>roman8.py</code></a>]
+<pre class=pp><code>class KnownValues(unittest.TestCase):
+    known_values = ( (1, 'I'),
+                      .
+                      .
+                      .
+                     (3999, 'MMMCMXCIX'),
+<a>                     (4000, 'MMMM'),                                      <span class=u>&#x2460;</span></a>
+                     (4500, 'MMMMD'),
+                     (4888, 'MMMMDCCCLXXXVIII'),
+                     (4999, 'MMMMCMXCIX') )
+
+class ToRomanBadInput(unittest.TestCase):
+    def test_too_large(self):
+        '''to_roman should fail with large input'''
+<a>        self.assertRaises(roman8.OutOfRangeError, roman8.to_roman, 5000)  <span class=u>&#x2461;</span></a>
+
+    .
+    .
+    .
+
+class FromRomanBadInput(unittest.TestCase):
+    def test_too_many_repeated_numerals(self):
+        '''from_roman should fail with too many repeated numerals'''
+<a>        for s in ('MMMMM', 'DD', 'CCCC', 'LL', 'XXXX', 'VV', 'IIII'):     <span class=u>&#x2462;</span></a>
+            self.assertRaises(roman8.InvalidRomanNumeralError, roman8.from_roman, s)
+
+    .
+    .
+    .
+
+class RoundtripCheck(unittest.TestCase):
+    def test_roundtrip(self):
+        '''from_roman(to_roman(n))==n for all n'''
+<a>        for integer in range(1, 5000):                                    <span class=u>&#x2463;</span></a>
+            numeral = roman8.to_roman(integer)
+            result = roman8.from_roman(numeral)
+            self.assertEqual(integer, result)</code></pre>
+<ol>
+<li>The existing known values don&#8217;t change (they&#8217;re all still reasonable values to test), but you need to add a few more in the <code>4000</code> range. Here I&#8217;ve included <code>4000</code> (the shortest), <code>4500</code> (the second shortest), <code>4888</code> (the longest), and <code>4999</code> (the largest).
+<li>The definition of &#8220;large input&#8221; has changed. This test used to call <code>to_roman()</code> with <code>4000</code> and expect an error; now that <code>4000-4999</code> are good values, you need to bump this up to <code>5000</code>.
+<li>The definition of &#8220;too many repeated numerals&#8221; has also changed. This test used to call <code>from_roman()</code> with <code>'MMMM'</code> and expect an error; now that <code>MMMM</code> is considered a valid Roman numeral, you need to bump this up to <code>'MMMMM'</code>.
+<li>The sanity check loops through every number in the range, from <code>1</code> to <code>3999</code>. Since the range has now expanded, this <code>for</code> loop need to be updated as well to go up to <code>4999</code>.
+</ol>
+
+<p>Now your test cases are up to date with the new requirements, but your code is not, so you expect several of the test cases to fail.
+
+<pre class='screen cmdline'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
+<samp>from_roman should fail with blank string ... ok
+from_roman should fail with malformed antecedents ... ok
+from_roman should fail with non-string input ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+<a>from_roman should give known result with known input ... ERROR          <span class=u>&#x2460;</span></a>
+<a>to_roman should give known result with known input ... ERROR            <span class=u>&#x2461;</span></a>
+<a>from_roman(to_roman(n))==n for all n ... ERROR                          <span class=u>&#x2462;</span></a>
+to_roman should fail with negative input ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+
+======================================================================
+ERROR: from_roman should give known result with known input
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest9.py", line 82, in test_from_roman_known_values
+    result = roman9.from_roman(numeral)
+  File "C:\home\diveintopython3\examples\roman9.py", line 60, in from_roman
+    raise InvalidRomanNumeralError('Invalid Roman numeral: {0}'.format(s))
+<mark>roman9.InvalidRomanNumeralError: Invalid Roman numeral: MMMM</mark>
+
+======================================================================
+ERROR: to_roman should give known result with known input
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest9.py", line 76, in test_to_roman_known_values
+    result = roman9.to_roman(integer)
+  File "C:\home\diveintopython3\examples\roman9.py", line 42, in to_roman
+    raise OutOfRangeError('number out of range (must be 0..3999)')
+<mark>roman9.OutOfRangeError: number out of range (must be 0..3999)</mark>
+
+======================================================================
+ERROR: from_roman(to_roman(n))==n for all n
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "romantest9.py", line 131, in testSanity
+    numeral = roman9.to_roman(integer)
+  File "C:\home\diveintopython3\examples\roman9.py", line 42, in to_roman
+    raise OutOfRangeError('number out of range (must be 0..3999)')
+<mark>roman9.OutOfRangeError: number out of range (must be 0..3999)</mark>
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.171s
+
+FAILED (errors=3)</samp></pre>
+<ol>
+<li>The <code>from_roman()</code> known values test will fail as soon as it hits <code>'MMMM'</code>, because <code>from_roman()</code> still thinks this is an invalid Roman numeral.
+<li>The <code>to_roman()</code> known values test will fail as soon as it hits <code>4000</code>, because <code>to_roman()</code> still thinks this is out of range.
+<li>The roundtrip check will also fail as soon as it hits <code>4000</code>, because <code>to_roman()</code> still thinks this is out of range.
+</ol>
+
+<p>Now that you have test cases that fail due to the new requirements, you can think about fixing the code to bring it in line with the test cases. (When you first start coding unit tests, it might feel strange that the code being tested is never &#8220;ahead&#8221; of the test cases. While it&#8217;s behind, you still have some work to do, and as soon as it catches up to the test cases, you stop coding. After you get used to it, you&#8217;ll wonder how you ever programmed without tests.)
+
+<p class=d>[<a href=examples/roman9.py>download <code>roman9.py</code></a>]
+<pre class=pp><code>roman_numeral_pattern = re.compile('''
+    ^                   # beginning of string
+<a>    M{0,4}              # thousands - 0 to 4 Ms  <span class=u>&#x2460;</span></a>
+    (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 Cs),
+                        #            or 500-800 (D, followed by 0 to 3 Cs)
+    (XC|XL|L?X{0,3})    # tens - 90 (XC), 40 (XL), 0-30 (0 to 3 Xs),
+                        #        or 50-80 (L, followed by 0 to 3 Xs)
+    (IX|IV|V?I{0,3})    # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 Is),
+                        #        or 5-8 (V, followed by 0 to 3 Is)
+    $                   # end of string
+    ''', re.VERBOSE)
+
+def to_roman(n):
+    '''convert integer to Roman numeral'''
+    if not isinstance(n, int):
+        raise NotIntegerError('non-integers can not be converted')
+<a>    if not (0 &lt; n &lt; 5000):                        <span class=u>&#x2461;</span></a>
+        raise OutOfRangeError('number out of range (must be 1..4999)')
+
+    result = ''
+    for numeral, integer in roman_numeral_map:
+        while n >= integer:
+            result += numeral
+            n -= integer
+    return result
+
+def from_roman(s):
+    .
+    .
+    .</code></pre>
+<ol>
+<li>You don&#8217;t need to make any changes to the <code>from_roman()</code> function at all. The only change is to <var>roman_numeral_pattern</var>. If you look closely, you&#8217;ll notice that I changed the maximum number of optional <code>M</code> characters from <code>3</code> to <code>4</code> in the first section of the regular expression. This will allow the Roman numeral equivalents of <code>4999</code> instead of <code>3999</code>. The actual <code>from_roman()</code> function is completely generic; it just looks for repeated Roman numeral characters and adds them up, without caring how many times they repeat. The only reason it didn&#8217;t handle <code>'MMMM'</code> before is that you explicitly stopped it with the regular expression pattern matching.
+<li>The <code>to_roman()</code> function only needs one small change, in the range check. Where you used to check <code>0 &lt; n &lt; 4000</code>, you now check <code>0 &lt; n &lt; 5000</code>. And you change the error message that you <code>raise</code> to reflect the new acceptable range (<code>1..4999</code> instead of <code>1..3999</code>). You don&#8217;t need to make any changes to the rest of the function; it handles the new cases already. (It merrily adds <code>'M'</code> for each thousand that it finds; given <code>4000</code>, it will spit out <code>'MMMM'</code>. The only reason it didn&#8217;t do this before is that you explicitly stopped it with the range check.)
+</ol>
+
+<p>You may be skeptical that these two small changes are all that you need. Hey, don&#8217;t take my word for it; see for yourself.
+
+<pre class='nd screen cmdline'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest9.py -v</kbd>
+<samp>from_roman should fail with blank string ... ok
+from_roman should fail with malformed antecedents ... ok
+from_roman should fail with non-string input ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+from_roman should give known result with known input ... ok
+to_roman should give known result with known input ... ok
+from_roman(to_roman(n))==n for all n ... ok
+to_roman should fail with negative input ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.203s
+
+<a>OK  <span class=u>&#x2460;</span></a></samp></pre>
+<ol>
+<li>All the test cases pass. Stop coding.
+</ol>
+
+<p>Comprehensive unit testing means never having to rely on a programmer who says &#8220;Trust me.&#8221;
+
+<p class=a>&#x2042;
+
+<h2 id=refactoring>Refactoring</h2>
+
+<p>The best thing about comprehensive unit testing is not the feeling you get when all your test cases finally pass, or even the feeling you get when someone else blames you for breaking their code and you can actually <em>prove</em> that you didn&#8217;t. The best thing about unit testing is that it gives you the freedom to refactor mercilessly.
+
+<p>Refactoring is the process of taking working code and making it work better. Usually, &#8220;better&#8221; means &#8220;faster&#8221;, although it can also mean &#8220;using less memory&#8221;, or &#8220;using less disk space&#8221;, or simply &#8220;more elegantly&#8221;. Whatever it means to you, to your project, in your environment, refactoring is important to the long-term health of any program.
+
+<p>Here, &#8220;better&#8221; means both &#8220;faster&#8221; and &#8220;easier to maintain.&#8221; Specifically, the <code>from_roman()</code> function is slower and more complex than I&#8217;d like, because of that big nasty regular expression that you use to validate Roman numerals. Now, you might think, &#8220;Sure, the regular expression is big and hairy, but how else am I supposed to validate that an arbitrary string is a valid a Roman numeral?&#8221;
+
+<p>Answer: there&#8217;s only 5000 of them; why don&#8217;t you just build a lookup table?  This idea gets even better when you realize that <em>you don&#8217;t need to use regular expressions at all</em>. As you build the lookup table for converting integers to Roman numerals, you can build the reverse lookup table to convert Roman numerals to integers. By the time you need to check whether an arbitrary string is a valid Roman numeral, you will have collected all the valid Roman numerals. &#8220;Validating&#8221; is reduced to a single dictionary lookup.
+
+<p>And best of all, you already have a complete set of unit tests. You can change over half the code in the module, but the unit tests will stay the same. That means you can prove&nbsp;&mdash;&nbsp;to yourself and to others&nbsp;&mdash;&nbsp;that the new code works just as well as the original.
+
+<p class=d>[<a href=examples/roman10.py>download <code>roman10.py</code></a>]
+<pre class=pp><code>class OutOfRangeError(ValueError): pass
+class NotIntegerError(ValueError): pass
+class InvalidRomanNumeralError(ValueError): pass
+
+roman_numeral_map = (('M',  1000),
+                     ('CM', 900),
+                     ('D',  500),
+                     ('CD', 400),
+                     ('C',  100),
+                     ('XC', 90),
+                     ('L',  50),
+                     ('XL', 40),
+                     ('X',  10),
+                     ('IX', 9),
+                     ('V',  5),
+                     ('IV', 4),
+                     ('I',  1))
+
+to_roman_table = [ None ]
+from_roman_table = {}
+
+def to_roman(n):
+    '''convert integer to Roman numeral'''
+    if not (0 &lt; n &lt; 5000):
+        raise OutOfRangeError('number out of range (must be 1..4999)')
+    if int(n) != n:
+        raise NotIntegerError('non-integers can not be converted')
+    return to_roman_table[n]
+
+def from_roman(s):
+    '''convert Roman numeral to integer'''
+    if not isinstance(s, str):
+        raise InvalidRomanNumeralError('Input must be a string')
+    if not s:
+        raise InvalidRomanNumeralError('Input can not be blank')
+    if s not in from_roman_table:
+        raise InvalidRomanNumeralError('Invalid Roman numeral: {0}'.format(s))
+    return from_roman_table[s]
+
+def build_lookup_tables():
+    def to_roman(n):
+        result = ''
+        for numeral, integer in roman_numeral_map:
+            if n >= integer:
+                result = numeral
+                n -= integer
+                break
+        if n > 0:
+            result += to_roman_table[n]
+        return result
+
+    for integer in range(1, 5000):
+        roman_numeral = to_roman(integer)
+        to_roman_table.append(roman_numeral)
+        from_roman_table[roman_numeral] = integer
+
+build_lookup_tables()</code></pre>
+
+<p>Let&#8217;s break that down into digestable pieces. Arguably, the most important line is the last one:
+
+<pre class='nd pp'><code>build_lookup_tables()</code></pre>
+
+<p>You will note that is a function call, but there&#8217;s no <code>if</code> statement around it. This is not an <code>if __name__ == '__main__'</code> block; it gets called <em>when the module is imported</em>. (It is important to understand that modules are only imported once, then cached. If you import an already-imported module, it does nothing. So this code will only get called the first time you import this module.)
+
+<p>So what does the <code>build_lookup_tables()</code> function do? I&#8217;m glad you asked.
+
+<pre class=pp><code>to_roman_table = [ None ]
+from_roman_table = {}
+.
+.
+.
+def build_lookup_tables():
+<a>    def to_roman(n):                                <span class=u>&#x2460;</span></a>
+        result = ''
+        for numeral, integer in roman_numeral_map:
+            if n >= integer:
+                result = numeral
+                n -= integer
+                break
+        if n > 0:
+            result += to_roman_table[n]
+        return result
+
+    for integer in range(1, 5000):
+<a>        roman_numeral = to_roman(integer)          <span class=u>&#x2461;</span></a>
+<a>        to_roman_table.append(roman_numeral)       <span class=u>&#x2462;</span></a>
+        from_roman_table[roman_numeral] = integer</code></pre>
+<ol>
+<li>This is a clever bit of programming&hellip; perhaps too clever. The <code>to_roman()</code> function is defined above; it looks up values in the lookup table and returns them. But the <code>build_lookup_tables()</code> function redefines the <code>to_roman()</code> function to actually do work (like the previous examples did, before you added a lookup table). Within the <code>build_lookup_tables()</code> function, calling <code>to_roman()</code> will call this redefined version. Once the <code>build_lookup_tables()</code> function exits, the redefined version disappears&nbsp;&mdash;&nbsp;it is only defined in the local scope of the <code>build_lookup_tables()</code> function.
+<li>This line of code will call the redefined <code>to_roman()</code> function, which actually calculates the Roman numeral.
+<li>Once you have the result (from the redefined <code>to_roman()</code> function), you add the integer and its Roman numeral equivalent to both lookup tables.
+</ol>
+
+<p>Once the lookup tables are built, the rest of the code is both easy and fast.
+
+<pre class=pp><code>def to_roman(n):
+    '''convert integer to Roman numeral'''
+    if not (0 &lt; n &lt; 5000):
+        raise OutOfRangeError('number out of range (must be 1..4999)')
+    if int(n) != n:
+        raise NotIntegerError('non-integers can not be converted')
+<a>    return to_roman_table[n]                                            <span class=u>&#x2460;</span></a>
+
+def from_roman(s):
+    '''convert Roman numeral to integer'''
+    if not isinstance(s, str):
+        raise InvalidRomanNumeralError('Input must be a string')
+    if not s:
+        raise InvalidRomanNumeralError('Input can not be blank')
+    if s not in from_roman_table:
+        raise InvalidRomanNumeralError('Invalid Roman numeral: {0}'.format(s))
+<a>    return from_roman_table[s]                                          <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>After doing the same bounds checking as before, the <code>to_roman()</code> function simply finds the appropriate value in the lookup table and returns it.
+<li>Similarly, the <code>from_roman()</code> function is reduced to some bounds checking and one line of code. No more regular expressions. No more looping. O(1) conversion to and from Roman numerals.
+</ol>
+
+<p>But does it work? Why yes, yes it does. And I can prove it.
+
+<pre class='screen cmdline'>
+<samp class=p>you@localhost:~/diveintopython3/examples$ </samp><kbd>python3 romantest10.py -v</kbd>
+<samp>from_roman should fail with blank string ... ok
+from_roman should fail with malformed antecedents ... ok
+from_roman should fail with non-string input ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+from_roman should give known result with known input ... ok
+to_roman should give known result with known input ... ok
+from_roman(to_roman(n))==n for all n ... ok
+to_roman should fail with negative input ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+
+----------------------------------------------------------------------
+<a>Ran 12 tests in 0.031s                                                  <span class=u>&#x2460;</span></a>
+
+OK</samp></pre>
+<ol>
+<li>Not that you asked, but it&#8217;s fast, too! Like, almost 10&times; as fast. Of course, it&#8217;s not entirely a fair comparison, because this version takes longer to import (when it builds the lookup tables). But since the import is only done once, the startup cost is amortized over all the calls to the <code>to_roman()</code> and <code>from_roman()</code> functions. Since the tests make several thousand function calls (the roundtrip test alone makes 10,000), this savings adds up in a hurry!
+</ol>
+
+<p>The moral of the story?
+
+<ul>
+<li>Simplicity is a virtue.
+<li>Especially when regular expressions are involved.
+<li>Unit tests can give you the confidence to do large-scale refactoring.
+</ul>
+
+<p class=a>&#x2042;
+
+<h2 id=summary>Summary</h2>
+
+<p>Unit testing is a powerful concept which, if properly implemented, can both reduce maintenance costs and increase flexibility in any long-term project. It is also important to understand that unit testing is not a panacea, a Magic Problem Solver, or a silver bullet. Writing good test cases is hard, and keeping them up to date takes discipline (especially when customers are screaming for critical bug fixes). Unit testing is not a replacement for other forms of testing, including functional testing, integration testing, and user acceptance testing. But it is feasible, and it does work, and once you&#8217;ve seen it work, you&#8217;ll wonder how you ever got along without it.
+
+<p>These few chapters have covered a lot of ground, and much of it wasn&#8217;t even Python-specific. There are unit testing frameworks for many languages, all of which require you to understand the same basic concepts:
+
+<ul>
+<li>Designing test cases that are specific, automated, and independent
+<li>Writing test cases <em>before</em> the code they are testing
+<li>Writing tests that test good input and check for proper results
+<li>Writing tests that test bad input and check for proper failure responses
+<li>Writing and updating test cases to reflect new requirements
+<li>Refactoring mercilessly to improve performance, scalability, readability, maintainability, or whatever other -ility you&#8217;re lacking
+</ul>
+
+<p class=v><a rel=prev href=unit-testing.html title='back to &#8220;Unit Testing&#8221;'><span class=u>&#x261C;</span></a> <a href=files.html rel=next title='onward to &#8220;Files&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

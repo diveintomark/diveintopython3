@@ -1,0 +1,749 @@
+<div class=example><h3>Example 6.12. Introducing <code><code>sys</code>.modules</code></h3><pre class=screen><samp class=p>>>> </samp><kbd>import sys</kbd>        <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>print '\n'.join(sys.modules.keys())</kbd> <span>&#x2461;</span>
+<samp>win32api
+os.path
+os
+exceptions
+__main__
+ntpath
+nt
+sys
+__builtin__
+site
+signal
+UserDict
+stat</span></pre>
+<ol>
+<li>The <code>sys</code> module contains system-level information, such as the version of Python you're running (<code><code>sys</code>.version</code> or <code><code>sys</code>.version_info</code>), and system-level options such as the maximum allowed recursion depth (<code><code>sys</code>.getrecursionlimit()</code> and <code><code>sys</code>.setrecursionlimit()</code>).
+<li><code><code>sys</code>.modules</code> is a dictionary containing all the modules that have ever been imported since Python was started; the key is the module name, the value is the module object. Note that this is more than just the modules <em>your</em> program has imported. Python preloads some modules on startup, and if you're using a Python <abbr>IDE</abbr>, <code><code>sys</code>.modules</code> contains all the modules imported by all the programs you've run within the <abbr>IDE</abbr>.
+<p>This example demonstrates how to use <code><code>sys</code>.modules</code>.
+<div class=example><h3>Example 6.13. Using <code><code>sys</code>.modules</code></h3><pre class=screen><samp class=p>>>> </samp><kbd>import fileinfo</kbd>         <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>print '\n'.join(sys.modules.keys())</kbd>
+<samp>win32api
+os.path
+os
+fileinfo
+exceptions
+__main__
+ntpath
+nt
+sys
+__builtin__
+site
+signal
+UserDict
+stat</samp>
+<samp class=p>>>> </samp><kbd>fileinfo</kbd>
+&lt;module 'fileinfo' from 'fileinfo.pyc'>
+<samp class=p>>>> </samp><kbd>sys.modules["fileinfo"]</kbd> <span>&#x2461;</span>
+&lt;module 'fileinfo' from 'fileinfo.pyc'></pre>
+<ol>
+<li>As new modules are imported, they are added to <code><code>sys</code>.modules</code>. This explains why importing the same module twice is very fast: Python has already loaded and cached the module in <code><code>sys</code>.modules</code>, so importing the second time is simply a dictionary lookup.
+<li>Given the name (as a string) of any previously-imported module, you can get a reference to the module itself through the <code><code>sys</code>.modules</code> dictionary.
+<p>The next example shows how to use the <code>__module__</code> class attribute with the <code><code>sys</code>.modules</code> dictionary to get a reference to the module in which a class is defined.
+<div class=example><h3>Example 6.14. The <code>__module__</code> Class Attribute</h3><pre class=screen><samp class=p>>>> </samp><kbd>from fileinfo import MP3FileInfo</kbd>
+<samp class=p>>>> </samp><kbd>MP3FileInfo.__module__</kbd>              <span>&#x2460;</span>
+'fileinfo'
+<samp class=p>>>> </samp><kbd>sys.modules[MP3FileInfo.__module__]</kbd> <span>&#x2461;</span>
+&lt;module 'fileinfo' from 'fileinfo.pyc'></pre>
+<ol>
+<li>Every Python class has a built-in <a href="#fileinfo.classattributes" title="5.8. Introducing Class Attributes">class attribute</a> <code>__module__</code>, which is the name of the module in which the class is defined.
+<li>Combining this with the <code><code>sys</code>.modules</code> dictionary, you can get a reference to the module in which a class is defined.
+<p>Now you're ready to see how <code><code>sys</code>.modules</code> is used in <code>fileinfo.py</code>, the sample program introduced in <a href="#fileinfo">Chapter 5</a>. This example shows that portion of the code.
+<div class=example><h3>Example 6.15. <code><code>sys</code>.modules</code> in <code>fileinfo.py</code></h3><pre><code>
+    def getFileInfoClass(filename, module=sys.modules[FileInfo.__module__]):       <span>&#x2460;</span>
+        "get file info class from filename extension"           
+        subclass = "%sFileInfo" % os.path.splitext(filename)[1].upper()[1:]        <span>&#x2461;</span>
+        return hasattr(module, subclass) and getattr(module, subclass) or FileInfo <span>&#x2462;</span></pre>
+<ol>
+<li>This is a function with two arguments; <var>filename</var> is required, but <var>module</var> is <a href="#apihelper.optional" title="4.2. Using Optional and Named Arguments">optional</a> and defaults to the module that contains the <code>FileInfo</code> class. This looks inefficient, because you might expect Python to evaluate the <code><code>sys</code>.modules</code> expression every time the function is called. In fact, Python evaluates default expressions only once, the first time the module is imported. As you'll see later, you never call this
+            function with a <var>module</var> argument, so <var>module</var> serves as a function-level constant.
+<li>You'll plow through this line later, after you dive into the <code>os</code> module. For now, take it on faith that <var>subclass</var> ends up as the name of a class, like <code>MP3FileInfo</code>.
+<li>You already know about <a href="#apihelper.getattr" title="4.4. Getting Object References With getattr"><code>getattr</code></a>, which gets a reference to an object by name. <code>hasattr</code> is a complementary function that checks whether an object has a particular attribute; in this case, whether a module has
+            a particular class (although it works for any object and any attribute, just like <code>getattr</code>). In English, this line of code says, &#8220;If this module has the class named by <var>subclass</var> then return it, otherwise return the base class <code>FileInfo</code>.&#8221;
+<div class=itemizedlist>
+<h3>Further Reading on Modules</h3>
+<ul>
+<li><a href="http://www.python.org/doc/current/tut/tut.html"><i class=citetitle>Python Tutorial</i></a> discusses exactly <a href="http://www.python.org/doc/current/tut/node6.html#SECTION006710000000000000000">when and how default arguments are evaluated</a>.
+
+<li><a href="http://www.python.org/doc/current/lib/"><i class=citetitle>Python Library Reference</i></a> documents the <a href="http://www.python.org/doc/current/lib/module-sys.html"><code>sys</code></a> module.
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<h2 id="dialect.locals">8.5. <code>locals</code> and <code>globals</code></h2>
+<p>Let's digress from <abbr>HTML</abbr> processing for a minute and talk about how Python handles variables. Python has two built-in functions, <code>locals</code> and <code>globals</code>, which provide dictionary-based access to local and global variables.
+<p>Remember <code>locals</code>?  You first saw it here:
+<pre><code>
+    def unknown_starttag(self, tag, attrs):
+        strattrs = "".join([' %s="%s"' % (key, value) for key, value in attrs])
+        self.pieces.append("&lt;%(tag)s%(strattrs)s>" % locals())
+</pre><p>No, wait, you can't learn about <code>locals</code> yet. First, you need to learn about namespaces. This is dry stuff, but it's important, so pay attention.
+<p>Python uses what are called namespaces to keep track of variables. A namespace is just like a dictionary where the keys are names
+of variables and the dictionary values are the values of those variables. In fact, you can access a namespace as a Python dictionary, as you'll see in a minute.
+<p>At any particular point in a Python program, there are several namespaces available. Each function has its own namespace, called the local namespace, which
+keeps track of the function's variables, including function arguments and locally defined variables. Each module has its
+own namespace, called the global namespace, which keeps track of the module's variables, including functions, classes, any
+other imported modules, and module-level variables and constants. And there is the built-in namespace, accessible from any
+module, which holds built-in functions and exceptions.
+<p>When a line of code asks for the value of a variable <var>x</var>, Python will search for that variable in all the available namespaces, in order:
+<div class=orderedlist>
+<ol>
+<li>local namespace - specific to the current function or class method. If the function defines a local variable <var>x</var>, or has an argument <var>x</var>, Python will use this and stop searching.
+
+<li>global namespace - specific to the current module. If the module has defined a variable, function, or class called <var>x</var>, Python will use that and stop searching.
+
+<li>built-in namespace - global to all modules. As a last resort, Python will assume that <var>x</var> is the name of built-in function or variable.
+
+</ol>
+<p>If Python doesn't find <var>x</var> in any of these namespaces, it gives up and raises a <code>NameError</code> with the message <samp>There is no variable named 'x'</samp>, which you saw back in <a href="#odbchelper.unboundvariable" title="Example 3.18. Referencing an Unbound Variable">Example 3.18, &#8220;Referencing an Unbound Variable&#8221;</a>, but you didn't appreciate how much work Python was doing before giving you that error.
+<table class=important border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/important.png" alt="Important" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">Python 2.2 introduced a subtle but important change that affects the namespace search order: nested scopes. In versions of Python prior to 2.2, when you reference a variable within a <a href="#fileinfo.nested" title="Example 6.21. listDirectory">nested function</a> or <a href="#apihelper.lambda" title="4.7. Using lambda Functions"><code>lambda</code> function</a>, Python will search for that variable in the current (nested or <code>lambda</code>) function's namespace, then in the module's namespace. Python 2.2 will search for the variable in the current (nested or <code>lambda</code>) function's namespace, <em>then in the parent function's namespace</em>, then in the module's namespace. Python 2.1 can work either way; by default, it works like Python 2.0, but you can add the following line of code at the top of your module to make your module work like Python 2.2:<pre><code>
+from __future__ import nested_scopes</pre><p>Are you confused yet?  Don't despair!  This is really cool, I promise. Like many things in Python, namespaces are <em>directly accessible at run-time</em>. How?  Well, the local namespace is accessible via the built-in <code>locals</code> function, and the global (module level) namespace is accessible via the built-in <code>globals</code> function.
+<div class=example><h3>Example 8.10. Introducing <code>locals</code></h3><pre class=screen><samp class=p>>>> </samp><kbd>def foo(arg):</kbd> <span>&#x2460;</span>
+<samp class=p>...    </samp>x = 1
+<samp class=p>...    </samp>print locals()
+<samp class=p>...    </samp>
+<samp class=p>>>> </samp><kbd>foo(7)</kbd>        <span>&#x2461;</span>
+{'arg': 7, 'x': 1}
+<samp class=p>>>> </samp><kbd>foo('bar')</kbd>    <span>&#x2462;</span>
+{'arg': 'bar', 'x': 1}</pre>
+<ol>
+<li>The function <code>foo</code> has two variables in its local namespace: <var>arg</var>, whose value is passed in to the function, and <var>x</var>, which is defined within the function.
+<li><code>locals</code> returns a dictionary of name/value pairs. The keys of this dictionary are the names of the variables as strings; the values
+            of the dictionary are the actual values of the variables. So calling <code>foo</code> with <code>7</code> prints the dictionary containing the function's two local variables: <var>arg</var> (<code>7</code>) and <var>x</var> (<code>1</code>).
+<li>Remember, Python has dynamic typing, so you could just as easily pass a string in for <var>arg</var>; the function (and the call to <code>locals</code>) would still work just as well. <code>locals</code> works with all variables of all datatypes.
+<p>What <code>locals</code> does for the local (function) namespace, <code>globals</code> does for the global (module) namespace. <code>globals</code> is more exciting, though, because a module's namespace is more exciting.
+<sup>[<a name="d0e21226" href="#ftn.d0e21226">3</a>]</sup>  Not only does the module's namespace include module-level variables and constants, it includes all the functions and classes
+defined in the module. Plus, it includes anything that was imported into the module.
+<p>Remember the difference between <a href="#fileinfo.fromimport" title="5.2. Importing Modules Using from module import"><code>from <var>module</var> import</code></a> and <a href="#odbchelper.import" title="Example 2.3. Accessing the buildConnectionString Function's docstring"><code>import <var>module</var></code></a>?  With <code>import <var>module</var></code>, the module itself is imported, but it retains its own namespace, which is why you need to use the module name to access
+any of its functions or attributes: <code><var>module</var>.<var>function</var></code>. But with <code>from <var>module</var> import</code>, you're actually importing specific functions and attributes from another module into your own namespace, which is why you
+access them directly without referencing the original module they came from. With the <code>globals</code> function, you can actually see this happen.
+<div class=example><h3 id="dialect.globals.example">Example 8.11. Introducing <code>globals</code></h3>
+<p>Look at the following block of code at the bottom of <code>BaseHTMLProcessor.py</code>:<pre><code>
+if __name__ == "__main__":
+    for k, v in globals().items():             <span>&#x2460;</span>
+        print k, "=", v</pre>
+<ol>
+<li>Just so you don't get intimidated, remember that you've seen all this before. The <code>globals</code> function returns a dictionary, and you're <a href="#dictionaryiter.example" title="Example 6.10. Iterating Through a Dictionary">iterating through the dictionary</a> using the <code>items</code> method and <a href="#odbchelper.multiassign" title="3.4.2. Assigning Multiple Values at Once">multi-variable assignment</a>. The only thing new here is the <code>globals</code> function.
+<p>Now running the script from the command line gives this output (note that your output may be slightly different, depending
+   on your platform and where you installed Python):<pre class=screen><samp class=p>c:\docbook\dip\py></samp> python BaseHTMLProcessor.py</pre><pre><code>
+SGMLParser = sgmllib.SGMLParser                <span>&#x2460;</span>
+htmlentitydefs = &lt;module 'htmlentitydefs' from 'C:\Python23\lib\htmlentitydefs.py'> <span>&#x2461;</span>
+BaseHTMLProcessor = __main__.BaseHTMLProcessor <span>&#x2462;</span>
+__name__ = __main__          <span>&#x2463;</span>
+... rest of output omitted for brevity...</pre>
+<ol>
+<li><code>SGMLParser</code> was imported from <code>sgmllib</code>, using <code>from <var>module</var> import</code>. That means that it was imported directly into the module's namespace, and here it is.
+<li>Contrast this with <code>htmlentitydefs</code>, which was imported using <code>import</code>. That means that the <code>htmlentitydefs</code> module itself is in the namespace, but the <var>entitydefs</var> variable defined within <code>htmlentitydefs</code> is not.
+<li>This module only defines one class, <code>BaseHTMLProcessor</code>, and here it is. Note that the value here is <a href="#fileinfo.classattributes.intro" title="Example 5.17. Introducing Class Attributes">the class itself</a>, not a specific instance of the class.
+<li>Remember the <a href="#odbchelper.ifnametrick"><code>if __name__</code> trick</a>?  When running a module (as opposed to importing it from another module), the built-in <code>__name__</code> attribute is a special value, <code>__main__</code>. Since you ran this module as a script from the command line, <code>__name__</code> is <code>__main__</code>, which is why the little test code to print the <code>globals</code> got executed.
+<table id="tip.localsbyname" class=note border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">Using the <code>locals</code> and <code>globals</code> functions, you can get the value of arbitrary variables dynamically, providing the variable name as a string. This mirrors
+      the functionality of the <a href="#apihelper.getattr" title="4.4. Getting Object References With getattr"><code>getattr</code></a> function, which allows you to access arbitrary functions dynamically by providing the function name as a string.
+<p>There is one other important difference between the <code>locals</code> and <code>globals</code> functions, which you should learn now before it bites you. It will bite you anyway, but at least then you'll remember learning
+it.
+<div class=example><h3 id="dialect.locals.readonly.example">Example 8.12. <code>locals</code> is read-only, <code>globals</code> is not</h3><pre><code>
+def foo(arg):
+    x = 1
+    print locals()    <span>&#x2460;</span>
+    locals()["x"] = 2 <span>&#x2461;</span>
+    print "x=",x      <span>&#x2462;</span>
+
+z = 7
+print "z=",z
+foo(3)
+globals()["z"] = 8    <span>&#x2463;</span>
+print "z=",z          <span>&#x2464;</span>
+</pre>
+<ol>
+<li>Since <code>foo</code> is called with <code>3</code>, this will print <code>{'arg': 3, 'x': 1}</code>. This should not be a surprise.
+<li><code>locals</code> is a function that returns a dictionary, and here you are setting a value in that dictionary. You might think that this
+            would change the value of the local variable <var>x</var> to <code>2</code>, but it doesn't. <code>locals</code> does not actually return the local namespace, it returns a copy. So changing it does nothing to the value of the variables
+            in the local namespace.
+<li>This prints <code>x= 1</code>, not <code>x= 2</code>.
+<li>After being burned by <code>locals</code>, you might think that this <em>wouldn't</em> change the value of <var>z</var>, but it does. Due to internal differences in how Python is implemented (which I'd rather not go into, since I don't fully understand them myself), <code>globals</code> returns the actual global namespace, not a copy: the exact opposite behavior of <code>locals</code>. So any changes to the dictionary returned by <code>globals</code> directly affect your global variables.
+<li>This prints <code>z= 8</code>, not <code>z= 7</code>.
+
+
+
+
+
+[XML stuff was here]
+
+
+
+
+
+<h2 id="kgp.packages">9.2. Packages</h2>
+
+
+
+
+
+
+
+
+<h2 id="kgp.commandline">10.6. Handling command-line arguments</h2>
+<p>Python fully supports creating programs that can be run on the command line, complete with command-line arguments and either short-
+   or long-style flags to specify various options. None of this is <abbr>XML</abbr>-specific, but this script makes good use of command-line processing, so it seemed like a good time to mention it.
+<p>It's difficult to talk about command-line processing without understanding how command-line arguments are exposed to your
+Python program, so let's write a simple program to see them.
+<div class=example><h3>Example 10.20. Introducing <var>sys.argv</var></h3>
+<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
+<pre><code>
+#argecho.py
+import sys
+
+for arg in sys.argv: <span>&#x2460;</span>
+    print arg</pre>
+<ol>
+<li>Each command-line argument passed to the program will be in <var>sys.argv</var>, which is just a list. Here you are printing each argument on a separate line.
+<div class=example><h3>Example 10.21. The contents of <var>sys.argv</var></h3><pre class=screen>
+<samp class=p>[you@localhost py]$ </samp>python argecho.py             <span>&#x2460;</span>
+argecho.py
+<samp class=p>[you@localhost py]$ </samp>python argecho.py abc def     <span>&#x2461;</span>
+<samp>argecho.py
+abc
+def</samp>
+<samp class=p>[you@localhost py]$ </samp>python argecho.py --help      <span>&#x2462;</span>
+<samp>argecho.py
+--help</samp>
+<samp class=p>[you@localhost py]$ </samp>python argecho.py -m kant.xml <span>&#x2463;</span>
+<samp>argecho.py
+-m
+kant.xml</span></pre>
+<ol>
+<li>The first thing to know about <var>sys.argv</var> is that it contains the name of the script you're calling. You will actually use this knowledge to your advantage later,
+            in <a href="#regression" title="Chapter 16. Functional Programming">Chapter 16, <i>Functional Programming</i></a>. Don't worry about it for now.
+<li>Command-line arguments are separated by spaces, and each shows up as a separate element in the <var>sys.argv</var> list.
+<li>Command-line flags, like <code>--help</code>, also show up as their own element in the <var>sys.argv</var> list.
+<li>To make things even more interesting, some command-line flags themselves take arguments. For instance, here you have a flag
+            (<code>-m</code>) which takes an argument (<code>kant.xml</code>). Both the flag itself and the flag's argument are simply sequential elements in the <var>sys.argv</var> list. No attempt is made to associate one with the other; all you get is a list.
+<p>So as you can see, you certainly have all the information passed on the command line, but then again, it doesn't look like
+it's going to be all that easy to actually use it. For simple programs that only take a single argument and have no flags,
+you can simply use <code>sys.argv[1]</code> to access the argument. There's no shame in this; I do it all the time. For more complex programs, you need the <code>getopt</code> module.
+<div class=example><h3>Example 10.22. Introducing <code>getopt</code></h3><pre><code>
+def main(argv):       
+    grammar = "kant.xml"                 <span>&#x2460;</span>
+    try:              
+        opts, args = getopt.getopt(argv, "hg:d", ["help", "grammar="]) <span>&#x2461;</span>
+    except getopt.GetoptError:           <span>&#x2462;</span>
+        usage()        <span>&#x2463;</span>
+        sys.exit(2)   
+
+...
+
+if __name__ == "__main__":
+    main(sys.argv[1:])</pre>
+<ol>
+<li>First off, look at the bottom of the example and notice that you're calling the <code>main</code> function with <code>sys.argv[1:]</code>. Remember, <code>sys.argv[0]</code> is the name of the script that you're running; you don't care about that for command-line processing, so you chop it off
+            and pass the rest of the list.
+<li>This is where all the interesting processing happens. The <code>getopt</code> function of the <code>getopt</code> module takes three parameters: the argument list (which you got from <code>sys.argv[1:]</code>), a string containing all the possible single-character command-line flags that this program accepts, and a list of longer
+            command-line flags that are equivalent to the single-character versions. This is quite confusing at first glance, and is
+            explained in more detail below.
+<li>If anything goes wrong trying to parse these command-line flags, <code>getopt</code> will raise an exception, which you catch. You told <code>getopt</code> all the flags you understand, so this probably means that the end user passed some command-line flag that you don't understand.
+<li>As is standard practice in the <abbr>UNIX</abbr> world, when the script is passed flags it doesn't understand, you print out a summary of proper usage and exit gracefully.
+             Note that I haven't shown the <code>usage</code> function here. You would still need to code that somewhere and have it print out the appropriate summary; it's not automatic.
+<p>So what are all those parameters you pass to the <code>getopt</code> function?  Well, the first one is simply the raw list of command-line flags and arguments (not including the first element,
+the script name, which you already chopped off before calling the <code>main</code> function). The second is the list of short command-line flags that the script accepts.
+<div class=variablelist>
+<h3><code>"hg:d"</code></h3>
+<dl>
+<dt><code>-h</code></dt>
+<dd>print usage summary</dd>
+<dt><code>-g ...</code></dt>
+<dd>use specified grammar file or URL</dd>
+<dt><code>-d</code></dt>
+<dd>show debugging information while parsing</dd>
+</dl>
+<p>The first and third flags are simply standalone flags; you specify them or you don't, and they do things (print help) or change
+state (turn on debugging). However, the second flag (<code>-g</code>) <em>must</em> be followed by an argument, which is the name of the grammar file to read from. In fact it can be a filename or a web address,
+and you don't know which yet (you'll figure it out later), but you know it has to be <em>something</em>. So you tell <code>getopt</code> this by putting a colon after the <code>g</code> in that second parameter to the <code>getopt</code> function.
+<p>To further complicate things, the script accepts either short flags (like <code>-h</code>) or long flags (like <code>--help</code>), and you want them to do the same thing. This is what the third parameter to <code>getopt</code> is for, to specify a list of the long flags that correspond to the short flags you specified in the second parameter.
+<div class=variablelist>
+<h3><code>["help", "grammar="]</code></h3>
+<dl>
+<dt><code>--help</code></dt>
+<dd>print usage summary</dd>
+<dt><code>--grammar ...</code></dt>
+<dd>use specified grammar file or URL</dd>
+</dl>
+<p>Three things of note here:
+<div class=orderedlist>
+<ol>
+<li>All long flags are preceded by two dashes on the command line, but you don't include those dashes when calling <code>getopt</code>. They are understood.
+
+<li>The <code>--grammar</code> flag must always be followed by an additional argument, just like the <code>-g</code> flag. This is notated by an equals sign, <code>"grammar="</code>.
+
+<li>The list of long flags is shorter than the list of short flags, because the <code>-d</code> flag does not have a corresponding long version. This is fine; only <code>-d</code> will turn on debugging. But the order of short and long flags needs to be the same, so you'll need to specify all the short
+      flags that <em>do</em> have corresponding long flags first, then all the rest of the short flags.
+
+</ol>
+<p>Confused yet?  Let's look at the actual code and see if it makes sense in context.
+<div class=example><h3>Example 10.23. Handling command-line arguments in <code>kgp.py</code></h3><pre><code>
+def main(argv):        <span>&#x2460;</span>
+    grammar = "kant.xml"                
+    try:              
+        opts, args = getopt.getopt(argv, "hg:d", ["help", "grammar="])
+    except getopt.GetoptError:          
+        usage()       
+        sys.exit(2)   
+    for opt, arg in opts:                <span>&#x2461;</span>
+        if opt in ("-h", "--help"):      <span>&#x2462;</span>
+            usage()   
+            sys.exit()
+        elif opt == '-d':                <span>&#x2463;</span>
+            global _debug               
+            _debug = 1
+        elif opt in ("-g", "--grammar"): <span>&#x2464;</span>
+            grammar = arg               
+
+    source = "".join(args)               <span>&#x2465;</span>
+
+    k = KantGenerator(grammar, source)
+    print k.output()</pre>
+<ol>
+<li>The <var>grammar</var> variable will keep track of the grammar file you're using. You initialize it here in case it's not specified on the command
+            line (using either the <code>-g</code> or the <code>--grammar</code> flag).
+<li>The <var>opts</var> variable that you get back from <code>getopt</code> contains a list of tuples: <var>flag</var> and <var>argument</var>. If the flag doesn't take an argument, then <var>arg</var> will simply be <code>None</code>. This makes it easier to loop through the flags.
+<li><code>getopt</code> validates that the command-line flags are acceptable, but it doesn't do any sort of conversion between short and long flags.
+             If you specify the <code>-h</code> flag, <var>opt</var> will contain <code>"-h"</code>; if you specify the <code>--help</code> flag, <var>opt</var> will contain <code>"--help"</code>. So you need to check for both.
+<li>Remember, the <code>-d</code> flag didn't have a corresponding long flag, so you only need to check for the short form. If you find it, you set a global
+            variable that you'll refer to later to print out debugging information. (I used this during the development of the script.
+             What, you thought all these examples worked on the first try?)
+<li>If you find a grammar file, either with a <code>-g</code> flag or a <code>--grammar</code> flag, you save the argument that followed it (stored in <var>arg</var>) into the <var>grammar</var> variable, overwriting the default that you initialized at the top of the <code>main</code> function.
+<li>That's it. You've looped through and dealt with all the command-line flags. That means that anything left must be command-line
+            arguments. These come back from the <code>getopt</code> function in the <var>args</var> variable. In this case, you're treating them as source material for the parser. If there are no command-line arguments
+            specified, <var>args</var> will be an empty list, and <var>source</var> will end up as the empty string.
+<h2 id="kgp.alltogether">10.7. Putting it all together</h2>
+<p>You've covered a lot of ground. Let's step back and see how all the pieces fit together.
+<p>To start with, this is a script that <a href="#kgp.commandline" title="10.6. Handling command-line arguments">takes its arguments on the command line</a>, using the <code>getopt</code> module.
+<pre><code>
+def main(argv):       
+...
+    try:              
+        opts, args = getopt.getopt(argv, "hg:d", ["help", "grammar="])
+    except getopt.GetoptError:          
+...
+    for opt, arg in opts:               
+...</pre><p>You create a new instance of the <code>KantGenerator</code> class, and pass it the grammar file and source that may or may not have been specified on the command line.
+<pre><code>
+    k = KantGenerator(grammar, source)</pre><p>The <code>KantGenerator</code> instance automatically loads the grammar, which is an <abbr>XML</abbr> file. You use your custom <code>openAnything</code> function to open the file (which <a href="#kgp.openanything" title="10.1. Abstracting input sources">could be stored in a local file or a remote web server</a>), then use the built-in <code>minidom</code> parsing functions to <a href="#kgp.parse" title="9.3. Parsing XML">parse the <abbr>XML</abbr> into a tree of Python objects</a>.
+<pre><code>
+    def _load(self, source):
+        sock = toolbox.openAnything(source)
+        xmldoc = minidom.parse(sock).documentElement
+        sock.close()</pre><p>Oh, and along the way, you take advantage of your knowledge of the structure of the <abbr>XML</abbr> document to <a href="#kgp.cache" title="10.3. Caching node lookups">set up a little cache of references</a>, which are just elements in the <abbr>XML</abbr> document.
+<pre><code>
+    def loadGrammar(self, grammar):       
+        for ref in self.grammar.getElementsByTagName("ref"):
+            self.refs[ref.attributes["id"].value] = ref     </pre><p>If you specified some source material on the command line, you use that; otherwise you rip through the grammar looking for
+the "top-level" reference (that isn't referenced by anything else) and use that as a starting point.
+<pre><code>
+    def getDefaultSource(self):
+        xrefs = {}
+        for xref in self.grammar.getElementsByTagName("xref"):
+            xrefs[xref.attributes["id"].value] = 1
+        xrefs = xrefs.keys()
+        standaloneXrefs = [e for e in self.refs.keys() if e not in xrefs]
+        return '&lt;xref id="%s"/>' % random.choice(standaloneXrefs)</pre><p>Now you rip through the source material. The source material is also <abbr>XML</abbr>, and you parse it one node at a time. To keep the code separated and more maintainable, you use <a href="#kgp.handler" title="10.5. Creating separate handlers by node type">separate handlers for each node type</a>.
+<pre><code>
+    def parse_Element(self, node): 
+        handlerMethod = getattr(self, "do_%s" % node.tagName)
+        handlerMethod(node)</pre><p>You bounce through the grammar, <a href="#kgp.child" title="10.4. Finding direct children of a node">parsing all the children</a> of each <code>p</code> element,
+<pre><code>
+    def do_p(self, node):
+...
+        if doit:
+            for child in node.childNodes: self.parse(child)</pre><p>replacing <code>choice</code> elements with a random child,
+<pre><code>
+    def do_choice(self, node):
+        self.parse(self.randomChildElement(node))</pre><p>and replacing <code>xref</code> elements with a random child of the corresponding <code>ref</code> element, which you previously cached.
+<pre><code>
+    def do_xref(self, node):
+        id = node.attributes["id"].value
+        self.parse(self.randomChildElement(self.refs[id]))</pre><p>Eventually, you parse your way down to plain text,
+<pre><code>
+    def parse_Text(self, node):    
+        text = node.data
+...
+            self.pieces.append(text)</pre><p>which you print out.
+<pre><code>
+def main(argv):       
+...
+    k = KantGenerator(grammar, source)
+    print k.output()</pre><h2 id="kgp.summary">10.8. Summary</h2>
+<p>Python comes with powerful libraries for parsing and manipulating <abbr>XML</abbr> documents. The <code>minidom</code> takes an <abbr>XML</abbr> file and parses it into Python objects, providing for random access to arbitrary elements. Furthermore, this chapter shows how Python can be used to create a "real" standalone command-line script, complete with command-line flags, command-line arguments,
+   error handling, even the ability to take input from the piped result of a previous program.
+<p>Before moving on to the next chapter, you should be comfortable doing all of these things:
+<div class=itemizedlist>
+<ul>
+<li><a href="#kgp.stdio" title="10.2. Standard input, output, and error">Chaining programs</a> with standard input and output
+
+<li><a href="#kgp.handler" title="10.5. Creating separate handlers by node type">Defining dynamic dispatchers</a> with <code>getattr</code>.
+
+<li><a href="#kgp.commandline" title="10.6. Handling command-line arguments">Using command-line flags</a> and validating them with <code>getopt</code>
+</ul>
+
+
+
+
+
+<p>The following is a complete Python program that acts as a cheap and simple regression testing framework. It takes unit tests that you've written for individual
+modules, collects them all into one big test suite, and runs them all at once. I actually use this script as part of the
+build process for this book; I have unit tests for several of the example programs (not just the <code>roman.py</code> module featured in <a href="#roman" title="Chapter 13. Unit Testing">Chapter 13, <i>Unit Testing</i></a>), and the first thing my automated build script does is run this program to make sure all my examples still work. If this
+regression test fails, the build immediately stops. I don't want to release non-working examples any more than you want to
+download them and sit around scratching your head and yelling at your monitor and wondering why they don't work.
+<div class=example><h3>Example 16.1. <code>regression.py</code></h3>
+<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
+<pre><code>
+"""Regression testing framework
+
+This module will search for scripts in the same directory named
+XYZtest.py. Each such script should be a test suite that tests a
+module through PyUnit. (As of Python 2.1, PyUnit is included in
+the standard library as "unittest".)  This script will aggregate all
+found test suites into one big test suite and run them all at once.
+"""
+
+import sys, os, re, unittest
+
+def regressionTest():
+    path = os.path.abspath(os.path.dirname(sys.argv[0]))   
+    files = os.listdir(path)             
+    test = re.compile("test\.py$", re.IGNORECASE)          
+    files = filter(test.search, files)   
+    filenameToModuleName = lambda f: os.path.splitext(f)[0]
+    moduleNames = map(filenameToModuleName, files)         
+    modules = map(__import__, moduleNames)                 
+    load = unittest.defaultTestLoader.loadTestsFromModule  
+    return unittest.TestSuite(map(load, modules))          
+
+if __name__ == "__main__": 
+    unittest.main(defaultTest="regressionTest")
+</pre><p>Running this script in the same directory as the rest of the example scripts that come with this book will find all the unit
+tests, named <code><var><code>module</code></var>test.py</code>, run them as a single test, and pass or fail them all at once.
+<div class=example><h3>Example 16.2. Sample output of <code>regression.py</code></h3><pre class=screen>
+<samp class=p>[you@localhost py]$ </samp>python regression.py -v
+help should fail with no object ... ok           <span>&#x2460;</span><samp>
+help should return known result for apihelper ... ok
+help should honor collapse argument ... ok
+help should honor spacing argument ... ok
+buildConnectionString should fail with list input ... ok           </span><span>&#x2461;</span><samp>
+buildConnectionString should fail with string input ... ok
+buildConnectionString should fail with tuple input ... ok
+buildConnectionString handles empty dictionary ... ok
+buildConnectionString returns known result with known input ... ok
+from_roman should only accept uppercase input ... ok                </span><span>&#x2462;</span><samp>
+to_roman should always return uppercase ... ok
+from_roman should fail with blank string ... ok
+from_roman should fail with malformed antecedents ... ok
+from_roman should fail with repeated pairs of numerals ... ok
+from_roman should fail with too many repeated numerals ... ok
+from_roman should give known result with known input ... ok
+to_roman should give known result with known input ... ok
+from_roman(to_roman(n))==n for all n ... ok
+to_roman should fail with non-integer input ... ok
+to_roman should fail with negative input ... ok
+to_roman should fail with large input ... ok
+to_roman should fail with 0 input ... ok
+kgp a ref test ... ok
+kgp b ref test ... ok
+kgp c ref test ... ok
+kgp d ref test ... ok
+kgp e ref test ... ok
+kgp f ref test ... ok
+kgp g ref test ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 2.799s
+
+OK</span></pre>
+<ol>
+<li>The first 5 tests are from <code>apihelpertest.py</code>, which tests the example script from <a href="#apihelper" title="Chapter 4. The Power Of Introspection">Chapter 4, <i>The Power Of Introspection</i></a>.
+<li>The next 5 tests are from <code>odbchelpertest.py</code>, which tests the example script from <a href="#odbchelper" title="Chapter 2. Your First Python Program">Chapter 2, <i>Your First Python Program</i></a>.
+<li>The rest are from <code>romantest.py</code>, which you studied in depth in <a href="#roman" title="Chapter 13. Unit Testing">Chapter 13, <i>Unit Testing</i></a>.
+
+
+
+
+
+<h2 id="regression.path">16.2. Finding the path</h2>
+<p>When running Python scripts from the command line, it is sometimes useful to know where the currently running script is located on disk.
+<p>This is one of those obscure little tricks that is virtually impossible to figure out on your own, but simple to remember
+once you see it. The key to it is <code>sys.argv</code>. As you saw in <a href="#kgp" title="Chapter 9. XML Processing">Chapter 9, <i>XML Processing</i></a>, this is a list that holds the list of command-line arguments. However, it also holds the name of the running script, exactly
+as it was called from the command line, and this is enough information to determine its location.
+<div class=example><h3>Example 16.3. <code>fullpath.py</code></h3>
+<p>If you have not already done so, you can <a href="http://diveintopython3.org/download/diveintopython3-examples-5.4.zip" title="Download example scripts">download this and other examples</a> used in this book.
+<pre><code>
+import sys, os
+
+print 'sys.argv[0] =', sys.argv[0]             <span>&#x2460;</span>
+pathname = os.path.dirname(sys.argv[0])        <span>&#x2461;</span>
+print 'path =', pathname
+print 'full path =', os.path.abspath(pathname) <span>&#x2462;</span></pre>
+<ol>
+<li>Regardless of how you run a script, <code>sys.argv[0]</code> will always contain the name of the script, exactly as it appears on the command line. This may or may not include any path
+            information, as you'll see shortly.
+<li><code>os.path.dirname</code> takes a filename as a string and returns the directory path portion. If the given filename does not include any path information,
+<code>os.path.dirname</code> returns an empty string.
+<li><code>os.path.abspath</code> is the key here. It takes a pathname, which can be partial or even blank, and returns a fully qualified pathname.
+<p><code>os.path.abspath</code> deserves further explanation. It is very flexible; it can take any kind of pathname.
+<div class=example><h3>Example 16.4. Further explanation of <code>os.path.abspath</code></h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>import os</kbd>
+<samp class=p>>>> </samp><kbd>os.getcwd()</kbd>      <span>&#x2460;</span>
+/home/you
+<samp class=p>>>> </samp><kbd>os.path.abspath('')</kbd>                <span>&#x2461;</span>
+/home/you
+<samp class=p>>>> </samp><kbd>os.path.abspath('.ssh')</kbd>            <span>&#x2462;</span>
+/home/you/.ssh
+<samp class=p>>>> </samp><kbd>os.path.abspath('/home/you/.ssh')</kbd> <span>&#x2463;</span>
+/home/you/.ssh
+<samp class=p>>>> </samp><kbd>os.path.abspath('.ssh/../foo/')</kbd>    <span>&#x2464;</span>
+/home/you/foo</pre>
+<ol>
+<li><code>os.getcwd()</code> returns the current working directory.
+<li>Calling <code>os.path.abspath</code> with an empty string returns the current working directory, same as <code>os.getcwd()</code>.
+<li>Calling <code>os.path.abspath</code> with a partial pathname constructs a fully qualified pathname out of it, based on the current working directory.
+<li>Calling <code>os.path.abspath</code> with a full pathname simply returns it.
+<li><code>os.path.abspath</code> also <em>normalizes</em> the pathname it returns. Note that this example worked even though I don't actually have a 'foo' directory. <code>os.path.abspath</code> never checks your actual disk; this is all just string manipulation.
+<table id="os.path.abspath.exist.note" class=note border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">The pathnames and filenames you pass to <code>os.path.abspath</code> do not need to exist.
+<table id="os.path.normpath.note" class=note border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%"><code>os.path.abspath</code> not only constructs full path names, it also normalizes them. That means that if you are in the <code>/usr/</code> directory, <code>os.path.abspath('bin/../local/bin')</code> will return <code>/usr/local/bin</code>. It normalizes the path by making it as simple as possible. If you just want to normalize a pathname like this without
+      turning it into a full pathname, use <code>os.path.normpath</code> instead.
+<div class=example><h3>Example 16.5. Sample output from <code>fullpath.py</code></h3><pre class=screen>
+<samp class=p>[you@localhost py]$ </samp>python /home/you/diveintopython3/common/py/fullpath.py <span>&#x2460;</span>
+<samp>sys.argv[0] = /home/you/diveintopython3/common/py/fullpath.py
+path = /home/you/diveintopython3/common/py
+full path = /home/you/diveintopython3/common/py</samp>
+<samp class=p>[you@localhost diveintopython3]$ </samp>python common/py/fullpath.py               <span>&#x2461;</span>
+<samp>sys.argv[0] = common/py/fullpath.py
+path = common/py
+full path = /home/you/diveintopython3/common/py</samp>
+<samp class=p>[you@localhost diveintopython3]$ </samp>cd common/py
+<samp class=p>[you@localhost py]$ </samp>python fullpath.py <span>&#x2462;</span>
+<samp>sys.argv[0] = fullpath.py
+path = 
+full path = /home/you/diveintopython3/common/py</span></pre>
+<ol>
+<li>In the first case, <code>sys.argv[0]</code> includes the full path of the script. You can then use the <code>os.path.dirname</code> function to strip off the script name and return the full directory name, and <code>os.path.abspath</code> simply returns what you give it.
+<li>If the script is run by using a partial pathname, <code>sys.argv[0]</code> will still contain exactly what appears on the command line. <code>os.path.dirname</code> will then give you a partial pathname (relative to the current directory), and <code>os.path.abspath</code> will construct a full pathname from the partial pathname.
+<li>If the script is run from the current directory without giving any path, <code>os.path.dirname</code> will simply return an empty string. Given an empty string, <code>os.path.abspath</code> returns the current directory, which is what you want, since the script was run from the current directory.
+<table id="os.path.abspath.crossplatform.note" class=note border="0" summary="">
+
+<td rowspan="2" align="center" valign="top" width="1%"><img src="images/note.png" alt="Note" title="" width="24" height="24"><td colspan="2" align="left" valign="top" width="99%">Like the other functions in the <code>os</code> and <code>os.path</code> modules, <code>os.path.abspath</code> is cross-platform. Your results will look slightly different than my examples if you're running on Windows (which uses backslash
+      as a path separator) or Mac OS (which uses colons), but they'll still work. That's the whole point of the <code>os</code> module.
+<p><b>Addendum. </b>One reader was dissatisfied with this solution, and wanted to be able to run all the unit tests in the current directory,
+not the directory where <code>regression.py</code> is located. He suggests this approach instead:
+<div class=example><h3 id="regression.path.cwd.example">Example 16.6. Running scripts in the current directory</h3><pre><code>import sys, os, re, unittest
+
+def regressionTest():
+    path = os.getcwd()       <span>&#x2460;</span>
+    sys.path.append(path)    <span>&#x2461;</span>
+    files = os.listdir(path) <span>&#x2462;</span>
+</pre>
+<ol>
+<li>Instead of setting <var>path</var> to the directory where the currently running script is located, you set it to the current working directory instead. This
+            will be whatever directory you were in before you ran the script, which is not necessarily the same as the directory the script
+            is in. (Read that sentence a few times until you get it.)
+<li>Append this directory to the Python library search path, so that when you dynamically import the unit test modules later, Python can find them. You didn't need to do this when <var>path</var> was the directory of the currently running script, because Python always looks in that directory.
+<li>The rest of the function is the same.
+<p>This technique will allow you to re-use this <code>regression.py</code> script on multiple projects. Just put the script in a common directory, then change to the project's directory before running
+   it. All of that project's unit tests will be found and tested, instead of the unit tests in the common directory where <code>regression.py</code> is located.
+
+
+
+
+
+[more functional programming stuff was here]
+
+
+
+
+
+<h2 id="regression.import">16.6. Dynamically importing modules</h2>
+<p>OK, enough philosophizing. Let's talk about dynamically importing modules.
+<p>First, let's look at how you normally import modules. The <code>import <var>module</var></code> syntax looks in the search path for the named module and imports it by name. You can even import multiple modules at once
+this way, with a comma-separated list. You did this on the very first line of this chapter's script.
+<div class=example><h3>Example 16.13. Importing multiple modules at once</h3><pre><code>
+import sys, os, re, unittest <span>&#x2460;</span>
+</pre>
+<ol>
+<li>This imports four modules at once: <code>sys</code> (for system functions and access to the command line parameters), <code>os</code> (for operating system functions like directory listings), <code>re</code> (for regular expressions), and <code>unittest</code> (for unit testing).
+<p>Now let's do the same thing, but with dynamic imports.
+<div class=example><h3>Example 16.14. Importing modules dynamically</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>sys = __import__('sys')</kbd>           <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>os = __import__('os')</kbd>
+<samp class=p>>>> </samp><kbd>re = __import__('re')</kbd>
+<samp class=p>>>> </samp><kbd>unittest = __import__('unittest')</kbd>
+<samp class=p>>>> </samp><kbd>sys</kbd>             <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>&lt;module 'sys' (built-in)></kbd>
+<samp class=p>>>> </samp><kbd>os</kbd>
+<samp class=p>>>> </samp><kbd>&lt;module 'os' from '/usr/local/lib/python2.2/os.pyc'></kbd>
+</pre>
+<ol>
+<li>The built-in <code>__import__</code> function accomplishes the same goal as using the <code>import</code> statement, but it's an actual function, and it takes a string as an argument.
+<li>The variable <var>sys</var> is now the <code>sys</code> module, just as if you had said <code>import sys</code>. The variable <var>os</var> is now the <code>os</code> module, and so forth.
+<p>So <code>__import__</code> imports a module, but takes a string argument to do it. In this case the module you imported was just a hard-coded string,
+but it could just as easily be a variable, or the result of a function call. And the variable that you assign the module
+to doesn't need to match the module name, either. You could import a series of modules and assign them to a list.
+<div class=example><h3>Example 16.15. Importing a list of modules dynamically</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>moduleNames = ['sys', 'os', 're', 'unittest']</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>moduleNames</kbd>
+['sys', 'os', 're', 'unittest']
+<samp class=p>>>> </samp><kbd>modules = map(__import__, moduleNames)</kbd>        <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>modules</kbd>   <span>&#x2462;</span>
+<samp>[&lt;module 'sys' (built-in)>,
+&lt;module 'os' from 'c:\Python22\lib\os.pyc'>,
+&lt;module 're' from 'c:\Python22\lib\re.pyc'>,
+&lt;module 'unittest' from 'c:\Python22\lib\unittest.pyc'>]</samp>
+<samp class=p>>>> </samp><kbd>modules[0].version</kbd>          <span>&#x2463;</span>
+'2.2.2 (#37, Nov 26 2002, 10:24:37) [MSC 32 bit (Intel)]'
+<samp class=p>>>> </samp><kbd>import sys</kbd>
+<samp class=p>>>> </samp><kbd>sys.version</kbd>
+'2.2.2 (#37, Nov 26 2002, 10:24:37) [MSC 32 bit (Intel)]'
+</pre>
+<ol>
+<li><var>moduleNames</var> is just a list of strings. Nothing fancy, except that the strings happen to be names of modules that you could import, if
+            you wanted to.
+<li>Surprise, you wanted to import them, and you did, by mapping the <code>__import__</code> function onto the list. Remember, this takes each element of the list (<var>moduleNames</var>) and calls the function (<code>__import__</code>) over and over, once with each element of the list, builds a list of the return values, and returns the result.
+<li>So now from a list of strings, you've created a list of actual modules. (Your paths may be different, depending on your operating
+            system, where you installed Python, the phase of the moon, etc.)
+<li>To drive home the point that these are real modules, let's look at some module attributes. Remember, <var>modules[0]</var> <em>is</em> the <code>sys</code> module, so <var>modules[0].version</var> <em>is</em> <var>sys.version</var>. All the other attributes and methods of these modules are also available. There's nothing magic about the <code>import</code> statement, and there's nothing magic about modules. Modules are objects. Everything is an object.
+<p>Now you should be able to put this all together and figure out what most of this chapter's code sample is doing.
+<h2 id="regression.alltogether">16.7. Putting it all together</h2>
+<p>You've learned enough now to deconstruct the first seven lines of this chapter's code sample: reading a directory and importing
+   selected modules within it.
+<div class=example><h3>Example 16.16. The <code>regressionTest</code> function</h3><pre><code>
+def regressionTest():
+    path = os.path.abspath(os.path.dirname(sys.argv[0]))   
+    files = os.listdir(path)             
+    test = re.compile("test\.py$", re.IGNORECASE)          
+    files = filter(test.search, files)   
+    filenameToModuleName = lambda f: os.path.splitext(f)[0]
+    moduleNames = map(filenameToModuleName, files)         
+    modules = map(__import__, moduleNames)                 
+load = unittest.defaultTestLoader.loadTestsFromModule  
+return unittest.TestSuite(map(load, modules))          
+</pre><p>Let's look at it line by line, interactively. Assume that the current directory is <code>c:\diveintopython3\py</code>, which contains the examples that come with this book, including this chapter's script. As you saw in <a href="#regression.path" title="16.2. Finding the path">Section 16.2, &#8220;Finding the path&#8221;</a>, the script directory will end up in the <var>path</var> variable, so let's start hard-code that and go from there.
+<div class=example><h3>Example 16.17. Step 1: Get all the files</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>import sys, os, re, unittest</kbd>
+<samp class=p>>>> </samp><kbd>path = r'c:\diveintopython3\py'</kbd>
+<samp class=p>>>> </samp><kbd>files = os.listdir(path)             </kbd>
+<samp class=p>>>> </samp><kbd>files</kbd> <span>&#x2460;</span>
+<samp>['BaseHTMLProcessor.py', 'LICENSE.txt', 'apihelper.py', 'apihelpertest.py',
+'argecho.py', 'autosize.py', 'builddialectexamples.py', 'dialect.py',
+'fileinfo.py', 'fullpath.py', 'kgptest.py', 'makerealworddoc.py',
+'odbchelper.py', 'odbchelpertest.py', 'parsephone.py', 'piglatin.py',
+'plural.py', 'pluraltest.py', 'pyfontify.py', 'regression.py', 'roman.py', 'romantest.py',
+'uncurly.py', 'unicode2koi8r.py', 'urllister.py', 'kgp', 'plural', 'roman',
+'colorize.py']</span>
+</pre>
+<ol>
+<li><var>files</var> is a list of all the files and directories in the script's directory. (If you've been running some of the examples already,
+            you may also see some <code>.pyc</code> files in there as well.)
+<div class=example><h3>Example 16.18. Step 2: Filter to find the files you care about</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>test = re.compile("test\.py$", re.IGNORECASE)</kbd>           <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>files = filter(test.search, files)</kbd>    <span>&#x2461;</span>
+<samp class=p>>>> </samp><kbd>files</kbd>               <span>&#x2462;</span>
+['apihelpertest.py', 'kgptest.py', 'odbchelpertest.py', 'pluraltest.py', 'romantest.py']
+</pre>
+<ol>
+<li>This regular expression will match any string that ends with <code>test.py</code>. Note that you need to escape the period, since a period in a regular expression usually means &#8220;match any single character&#8221;, but you actually want to match a literal period instead.
+<li>The compiled regular expression acts like a function, so you can use it to filter the large list of files and directories,
+            to find the ones that match the regular expression.
+<li>And you're left with the list of unit testing scripts, because they were the only ones named <code>SOMETHINGtest.py</code>.
+<div class=example><h3>Example 16.19. Step 3: Map filenames to module names</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>filenameToModuleName = lambda f: os.path.splitext(f)[0]</kbd> <span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>filenameToModuleName('romantest.py')</kbd>  <span>&#x2461;</span>
+'romantest'
+<samp class=p>>>> </samp><kbd>filenameToModuleName('odchelpertest.py')</kbd>
+'odbchelpertest'
+<samp class=p>>>> </samp><kbd>moduleNames = map(filenameToModuleName, files)</kbd>          <span>&#x2462;</span>
+<samp class=p>>>> </samp><kbd>moduleNames</kbd>         <span>&#x2463;</span>
+['apihelpertest', 'kgptest', 'odbchelpertest', 'pluraltest', 'romantest']
+</pre>
+<ol>
+<li>As you saw in <a href="#apihelper.lambda" title="4.7. Using lambda Functions">Section 4.7, &#8220;Using lambda Functions&#8221;</a>, <code>lambda</code> is a quick-and-dirty way of creating an inline, one-line function. This one takes a filename with an extension and returns
+            just the filename part, using the standard library function <code>os.path.splitext</code> that you saw in <a href="#splittingpathnames.example" title="Example 6.17. Splitting Pathnames">Example 6.17, &#8220;Splitting Pathnames&#8221;</a>.
+<li><var>filenameToModuleName</var> is a function. There's nothing magic about <code>lambda</code> functions as opposed to regular functions that you define with a <code>def</code> statement. You can call the <var>filenameToModuleName</var> function like any other, and it does just what you wanted it to do: strips the file extension off of its argument.
+<li>Now you can apply this function to each file in the list of unit test files, using <code>map</code>.
+<li>And the result is just what you wanted: a list of modules, as strings.
+<div class=example><h3>Example 16.20. Step 4: Mapping module names to modules</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>modules = map(__import__, moduleNames)</kbd><span>&#x2460;</span>
+<samp class=p>>>> </samp><kbd>modules</kbd>             <span>&#x2461;</span>
+<samp>[&lt;module 'apihelpertest' from 'apihelpertest.py'>,
+&lt;module 'kgptest' from 'kgptest.py'>,
+&lt;module 'odbchelpertest' from 'odbchelpertest.py'>,
+&lt;module 'pluraltest' from 'pluraltest.py'>,
+&lt;module 'romantest' from 'romantest.py'>]</samp>
+<samp class=p>>>> </samp><kbd>modules[-1]</kbd>         <span>&#x2462;</span>
+&lt;module 'romantest' from 'romantest.py'>
+</pre>
+<ol>
+<li>As you saw in <a href="#regression.import" title="16.6. Dynamically importing modules">Section 16.6, &#8220;Dynamically importing modules&#8221;</a>, you can use a combination of <code>map</code> and <code>__import__</code> to map a list of module names (as strings) into actual modules (which you can call or access like any other module).
+            
+<li><var>modules</var> is now a list of modules, fully accessible like any other module.
+<li>The last module in the list <em>is</em> the <code>romantest</code> module, just as if you had said <code>import romantest</code>.
+<div class=example><h3>Example 16.21. Step 5: Loading the modules into a test suite</h3><pre class=screen>
+<samp class=p>>>> </samp><kbd>load = unittest.defaultTestLoader.loadTestsFromModule  </kbd>
+<samp class=p>>>> </samp><kbd>map(load, modules)</kbd>   <span>&#x2460;</span>
+<samp>[&lt;unittest.TestSuite tests=[
+  &lt;unittest.TestSuite tests=[&lt;apihelpertest.BadInput testMethod=testNoObject>]>,
+  &lt;unittest.TestSuite tests=[&lt;apihelpertest.KnownValues testMethod=testApiHelper>]>,
+  &lt;unittest.TestSuite tests=[
+    &lt;apihelpertest.ParamChecks testMethod=testCollapse>, 
+    &lt;apihelpertest.ParamChecks testMethod=testSpacing>]>, 
+    ...
+  ]
+]</samp>
+<samp class=p>>>> </samp><kbd>unittest.TestSuite(map(load, modules))</kbd> <span>&#x2461;</span>
+</pre>
+<ol>
+<li>These are real module objects. Not only can you access them like any other module, instantiate classes and call functions,
+            you can also introspect into the module to figure out which classes and functions it has in the first place. That's what
+            the <code>loadTestsFromModule</code> method does: it introspects into each module and returns a <code>unittest.TestSuite</code> object for each module. Each <code>TestSuite</code> object actually contains a list of <code>TestSuite</code> objects, one for each <code>TestCase</code> class in your module, and each of those <code>TestSuite</code> objects contains a list of tests, one for each test method in your module.
+<li>Finally, you wrap the list of <code>TestSuite</code> objects into one big test suite. The <code>unittest</code> module has no problem traversing this tree of nested test suites within test suites; eventually it gets down to an individual
+            test method and executes it, verifies that it passes or fails, and moves on to the next one.
+<p>This introspection process is what the <code>unittest</code> module usually does for us. Remember that magic-looking <code>unittest.main()</code> function that our individual test modules called to kick the whole thing off?  <code>unittest.main()</code> actually creates an instance of <code>unittest.TestProgram</code>, which in turn creates an instance of a <code>unittest.defaultTestLoader</code> and loads it up with the module that called it. (How does it get a reference to the module that called it if you don't give
+it one?  By using the equally-magic <code>__import__('__main__')</code> command, which dynamically imports the currently-running module. I could write a book on all the tricks and techniques used
+in the <code>unittest</code> module, but then I'd never finish this one.)
+<div class=example><h3>Example 16.22. Step 6: Telling <code>unittest</code> to use your test suite</h3><pre><code>
+if __name__ == "__main__": 
+    unittest.main(defaultTest="regressionTest") <span>&#x2460;</span>
+</pre>
+<ol>
+<li>Instead of letting the <code>unittest</code> module do all its magic for us, you've done most of it yourself. You've created a function (<code>regressionTest</code>) that imports the modules yourself, calls <code>unittest.defaultTestLoader</code> yourself, and wraps it all up in a test suite. Now all you need to do is tell <code>unittest</code> that, instead of looking for tests and building a test suite in the usual way, it should just call the <code>regressionTest</code> function, which returns a ready-to-use <code>TestSuite</code>.
+<h2 id="regression.summary">16.8. Summary</h2>
+<p>The <code>regression.py</code> program and its output should now make perfect sense.
+<p>You should now feel comfortable doing all of these things:
+<div class=itemizedlist>
+<ul>
+<li>Manipulating <a href="#regression.path" title="16.2. Finding the path">path information</a> from the command line.
+
+<li>Filtering lists <a href="#regression.filter" title="16.3. Filtering lists revisited">using <code>filter</code></a> instead of list comprehensions.
+
+<li>Mapping lists <a href="#regression.map" title="16.4. Mapping lists revisited">using <code>map</code></a> instead of list comprehensions.
+
+<li>Dynamically <a href="#regression.import" title="16.6. Dynamically importing modules">importing modules</a>.
+
+</ul>
+<div class=footnotes><br><hr width="100" align="left">
+<div class=footnote>
+<p><sup>[<a name="ftn.d0e35697" href="#d0e35697">7</a>] </sup>Technically, the second argument to <code>filter</code> can be any sequence, including lists, tuples, and custom classes that act like lists by defining the <code>__getitem__</code> special method. If possible, <code>filter</code> will return the same datatype as you give it, so filtering a list returns a list, but filtering a tuple returns a tuple.
+<div class=footnote>
+<p><sup>[<a name="ftn.d0e36079" href="#d0e36079">8</a>] </sup>Again, I should point out that <code>map</code> can take a list, a tuple, or any object that acts like a sequence. See previous footnote about <code>filter</code>.

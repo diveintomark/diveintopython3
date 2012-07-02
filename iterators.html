@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Classes &amp; Iterators - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 7}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#iterators>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
+<h1>Classes <i class=baa>&amp;</i> Iterators</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> East is East, and West is West, and never the twain shall meet. <span class=u>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/Rudyard_Kipling>Rudyard Kipling</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Iterators are the &#8220;secret sauce&#8221; of Python 3. They&#8217;re everywhere, underlying everything, always just out of sight. <a href=comprehensions.html>Comprehensions</a> are just a simple form of <i>iterators</i>. Generators are just a simple form of <i>iterators</i>. A function that <code>yield</code>s values is a nice, compact way of building an iterator without building an iterator. Let me show you what I mean by that.
+
+<p>Remember <a href=generators.html#a-fibonacci-generator>the Fibonacci generator</a>? Here it is as a built-from-scratch iterator:
+
+<p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
+<pre class=pp><code>class Fib:
+    '''iterator that yields numbers in the Fibonacci sequence'''
+
+    def __init__(self, max):
+        self.max = max
+
+    def __iter__(self):
+        self.a = 0
+        self.b = 1
+        return self
+
+    def __next__(self):
+        fib = self.a
+        if fib > self.max:
+            raise StopIteration
+        self.a, self.b = self.b, self.a + self.b
+        return fib</code></pre>
+
+<p>Let&#8217;s take that one line at a time.
+
+<pre class='nd pp'><code>class Fib:</code></pre>
+
+<p><code>class</code>? What&#8217;s a class?
+
+<p class=a>&#x2042;
+
+<h2 id=defining-classes>Defining Classes</h2>
+
+<p>Python is fully object-oriented: you can define your own classes, inherit from your own or built-in classes, and instantiate the classes you&#8217;ve defined.
+
+<p>Defining a class in Python is simple. As with functions, there is no separate interface definition. Just define the class and start coding. A Python class starts with the reserved word <code>class</code>, followed by the class name. Technically, that&#8217;s all that&#8217;s required, since a class doesn&#8217;t need to inherit from any other class.
+
+<pre class=pp><code><a>class PapayaWhip:  <span class=u>&#x2460;</span></a>
+<a>    pass           <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>The name of this class is <code>PapayaWhip</code>, and it doesn&#8217;t inherit from any other class. Class names are usually capitalized, <code>EachWordLikeThis</code>, but this is only a convention, not a requirement.
+<li>You probably guessed this, but everything in a class is indented, just like the code within a function, <code>if</code> statement, <code>for</code> loop, or any other block of code. The first line not indented is outside the class.
+</ol>
+
+<p>This <code>PapayaWhip</code> class doesn&#8217;t define any methods or attributes, but syntactically, there needs to be something in the definition, thus the <code>pass</code> statement. This is a Python reserved word that just means &#8220;move along, nothing to see here&#8221;. It&#8217;s a statement that does nothing, and it&#8217;s a good placeholder when you&#8217;re stubbing out functions or classes.
+
+<blockquote class='note compare java'>
+<p><span class=u>&#x261E;</span>The <code>pass</code> statement in Python is like a empty set of curly braces (<code>{}</code>) in Java or C.
+</blockquote>
+
+<p>Many classes are inherited from other classes, but this one is not. Many classes define methods, but this one does not. There is nothing that a Python class absolutely must have, other than a name. In particular, C++ programmers may find it odd that Python classes don&#8217;t have explicit constructors and destructors. Although it&#8217;s not required, Python classes <em>can</em> have something similar to a constructor: the <code>__init__()</code> method.
+
+<h3 id=init-method>The <code>__init__()</code> Method</h3>
+
+<p>This example shows the initialization of the <code>Fib</code> class using the <code>__init__</code> method.
+
+<pre class=pp><code>class Fib:
+<a>    '''iterator that yields numbers in the Fibonacci sequence'''  <span class=u>&#x2460;</span></a>
+
+<a>    def __init__(self, max):                                      <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>Classes can (and should) have <code>docstring</code>s too, just like modules and functions.
+<li>The <code>__init__()</code> method is called immediately after an instance of the class is created. It would be tempting&nbsp;&mdash;&nbsp;but technically incorrect&nbsp;&mdash;&nbsp;to call this the &#8220;constructor&#8221; of the class. It&#8217;s tempting, because it looks like a C++ constructor (by convention, the <code>__init__()</code> method is the first method defined for the class), acts like one (it&#8217;s the first piece of code executed in a newly created instance of the class), and even sounds like one. Incorrect, because the object has already been constructed by the time the <code>__init__()</code> method is called, and you already have a valid reference to the new instance of the class.
+</ol>
+
+<p>The first argument of every class method, including the <code>__init__()</code> method, is always a reference to the current instance of the class. By convention, this argument is named <var>self</var>. This argument fills the role of the reserved word <code>this</code> in <abbr>C++</abbr> or Java, but <var>self</var> is not a reserved word in Python, merely a naming convention. Nonetheless, please don&#8217;t call it anything but <var>self</var>; this is a very strong convention.
+
+<p>In all class methods, <var>self</var> refers to the instance whose method was called. But in the specific case of the <code>__init__()</code> method, the instance whose method was called is also the newly created object. Although you need to specify <var>self</var> explicitly when defining the method, you do <em>not</em> specify it when calling the method; Python will add it for you automatically.
+
+<p class=a>&#x2042;
+
+<h2 id=instantiating-classes>Instantiating Classes</h2>
+
+<p>Instantiating classes in Python is straightforward. To instantiate a class, simply call the class as if it were a function, passing the arguments that the <code>__init__()</code> method requires. The return value will be the newly created object.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import fibonacci2</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>fib = fibonacci2.Fib(100)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>fib</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;fibonacci2.Fib object at 0x00DB8810></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fib.__class__</kbd>              <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'fibonacci2.Fib'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fib.__doc__</kbd>                <span class=u>&#x2463;</span></a>
+<samp class=pp>'iterator that yields numbers in the Fibonacci sequence'</samp></pre>
+<ol>
+<li>You are creating an instance of the <code>Fib</code> class (defined in the <code>fibonacci2</code> module) and assigning the newly created instance to the variable <var>fib</var>. You are passing one parameter, <code>100</code>, which will end up as the <var>max</var> argument in <code>Fib</code>&#8217;s <code>__init__()</code> method.
+<li><var>fib</var> is now an instance of the <code>Fib</code> class.
+<li>Every class instance has a built-in attribute, <code>__class__</code>, which is the object&#8217;s class. Java programmers may be familiar with the <code>Class</code> class, which contains methods like <code>getName()</code> and <code>getSuperclass()</code> to get metadata information about an object. In Python, this kind of metadata is available through attributes, but the idea is the same.
+<li>You can access the instance&#8217;s <code>docstring</code> just as with a function or a module. All instances of a class share the same <code>docstring</code>.
+</ol>
+
+<blockquote class='note compare java'>
+<p><span class=u>&#x261E;</span>In Python, simply call a class as if it were a function to create a new instance of the class. There is no explicit <code>new</code> operator like there is in <abbr>C++</abbr> or Java.
+</blockquote>
+
+<p class=a>&#x2042;
+
+<h2 id=instance-variables>Instance Variables</h2>
+
+<p>On to the next line:
+
+<pre class=pp><code>class Fib:
+    def __init__(self, max):
+<a>        self.max = max        <span class=u>&#x2460;</span></a></code></pre>
+<ol>
+<li>What is <var>self.max</var>? It&#8217;s an instance variable. It is completely separate from <var>max</var>, which was passed into the <code>__init__()</code> method as an argument. <var>self.max</var> is &#8220;global&#8221; to the instance. That means that you can access it from other methods.
+</ol>
+
+<pre class=pp><code>class Fib:
+    def __init__(self, max):
+<a>        self.max = max        <span class=u>&#x2460;</span></a>
+    .
+    .
+    .
+    def __next__(self):
+        fib = self.a
+<a>        if fib > self.max:    <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li><var>self.max</var> is defined in the <code>__init__()</code> method&hellip;
+<li>&hellip;and referenced in the <code>__next__()</code> method.
+</ol>
+
+<p>Instance variables are specific to one instance of a class. For example, if you create two <code>Fib</code> instances with different maximum values, they will each remember their own values.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>import fibonacci2</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib1 = fibonacci2.Fib(100)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib2 = fibonacci2.Fib(200)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>fib1.max</kbd>
+<samp class=pp>100</samp>
+<samp class=p>>>> </samp><kbd class=pp>fib2.max</kbd>
+<samp class=pp>200</samp></pre>
+
+<p class=a>&#x2042;
+
+<h2 id=a-fibonacci-iterator>A Fibonacci Iterator</h2>
+
+<p><em>Now</em> you&#8217;re ready to learn how to build an iterator. An iterator is just a class that defines an <code>__iter__()</code> method.
+
+<aside class=ots>
+All three of these class methods, <code>__init__</code>, <code>__iter__</code>, and <code>__next__</code>, begin and end with a pair of underscore (<code>_</code>) characters. Why is that? There&#8217;s nothing magical about it, but it usually indicates that these are &#8220;<dfn>special methods</dfn>.&#8221; The only thing &#8220;special&#8221; about special methods is that they aren&#8217;t called directly; Python calls them when you use some other syntax on the class or an instance of the class. <a href=special-method-names.html>More about special methods</a>.
+</aside>
+
+<p class=d>[<a href=examples/fibonacci2.py>download <code>fibonacci2.py</code></a>]
+<pre class=pp><code><a>class Fib:                                        <span class=u>&#x2460;</span></a>
+<a>    def __init__(self, max):                      <span class=u>&#x2461;</span></a>
+        self.max = max
+
+<a>    def __iter__(self):                           <span class=u>&#x2462;</span></a>
+        self.a = 0
+        self.b = 1
+        return self
+
+<a>    def __next__(self):                           <span class=u>&#x2463;</span></a>
+        fib = self.a
+        if fib > self.max:
+<a>            raise StopIteration                   <span class=u>&#x2464;</span></a>
+        self.a, self.b = self.b, self.a + self.b
+<a>        return fib                                <span class=u>&#x2465;</span></a></code></pre>
+<ol>
+<li>To build an iterator from scratch, <code>Fib</code> needs to be a class, not a function.
+<li>&#8220;Calling&#8221; <code>Fib(max)</code> is really creating an instance of this class and calling its <code>__init__()</code> method with <var>max</var>. The <code>__init__()</code> method saves the maximum value as an instance variable so other methods can refer to it later.
+<li>The <code>__iter__()</code> method is called whenever someone calls <code>iter(fib)</code>. (As you&#8217;ll see in a minute, a <code>for</code> loop will call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration initialization (in this case, resetting <code>self.a</code> and <code>self.b</code>, our two counters), the <code>__iter__()</code> method can return any object that implements a <code>__next__()</code> method. In this case (and in most cases), <code>__iter__()</code> simply returns <var>self</var>, since this class implements its own <code>__next__()</code> method.
+<li>The <code>__next__()</code> method is called whenever someone calls <code>next()</code> on an iterator of an instance of a class. That will make more sense in a minute.
+<li>When the <code>__next__()</code> method raises a <code>StopIteration</code> exception, this signals to the caller that the iteration is exhausted. Unlike most exceptions, this is not an error; it&#8217;s a normal condition that just means that the iterator has no more values to generate. If the caller is a <code>for</code> loop, it will notice this <code>StopIteration</code> exception and gracefully exit the loop. (In other words, it will swallow the exception.) This little bit of magic is actually the key to using iterators in <code>for</code> loops.
+<li>To spit out the next value, an iterator&#8217;s <code>__next__()</code> method simply <code>return</code>s the value. Do not use <code>yield</code> here; that&#8217;s a bit of syntactic sugar that only applies when you&#8217;re using generators. Here you&#8217;re creating your own iterator from scratch; use <code>return</code> instead.
+</ol>
+
+<p>Thoroughly confused yet? Excellent. Let&#8217;s see how to call this iterator:
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>from fibonacci2 import Fib</kbd>
+<samp class=p>>>> </samp><kbd class=pp>for n in Fib(1000):</kbd>
+<samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>
+<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp></pre>
+
+<p>Why, it&#8217;s exactly the same! Byte for byte identical to how you called <a href=generators.html#a-fibonacci-generator>Fibonacci-as-a-generator</a> (modulo one capital letter). But how?
+
+<p>There&#8217;s a bit of magic involved in <code>for</code> loops. Here&#8217;s what happens:
+
+<ul>
+<li>The <code>for</code> loop calls <code>Fib(1000)</code>, as shown. This returns an instance of the <code>Fib</code> class. Call this <var>fib_inst</var>.
+<li>Secretly, and quite cleverly, the <code>for</code> loop calls <code>iter(fib_inst)</code>, which returns an iterator object. Call this <var>fib_iter</var>. In this case, <var>fib_iter</var> == <var>fib_inst</var>, because the <code>__iter__()</code> method returns <var>self</var>, but the <code>for</code> loop doesn&#8217;t know (or care) about that.
+<li>To &#8220;loop through&#8221; the iterator, the <code>for</code> loop calls <code>next(fib_iter)</code>, which calls the <code>__next__()</code> method on the <code>fib_iter</code> object, which does the next-Fibonacci-number calculations and returns a value. The <code>for</code> loop takes this value and assigns it to <var>n</var>, then executes the body of the <code>for</code> loop for that value of <var>n</var>.
+<li>How does the <code>for</code> loop know when to stop? I&#8217;m glad you asked! When <code>next(fib_iter)</code> raises a <code>StopIteration</code> exception, the <code>for</code> loop will swallow the exception and gracefully exit. (Any other exception will pass through and be raised as usual.) And where have you seen a <code>StopIteration</code> exception? In the <code>__next__()</code> method, of course!
+</ul>
+
+<p class=a>&#x2042;
+
+<h2 id=a-plural-rule-iterator>A Plural Rule Iterator</h2>
+
+<aside>iter(f) calls f.__iter__<br>next(f) calls f.__next__</aside>
+<p>Now it&#8217;s time for the finale. Let&#8217;s rewrite the <a href=generators.html>plural rules generator</a> as an iterator.
+
+<p class=d>[<a href=examples/plural6.py>download <code>plural6.py</code></a>]
+<pre class=pp><code>class LazyRules:
+    rules_filename = 'plural6-rules.txt'
+
+    def __init__(self):
+        self.pattern_file = open(self.rules_filename, encoding='utf-8')
+        self.cache = []
+
+    def __iter__(self):
+        self.cache_index = 0
+        return self
+
+    def __next__(self):
+        self.cache_index += 1
+        if len(self.cache) >= self.cache_index:
+            return self.cache[self.cache_index - 1]
+
+        if self.pattern_file.closed:
+            raise StopIteration
+
+        line = self.pattern_file.readline()
+        if not line:
+            self.pattern_file.close()
+            raise StopIteration
+
+        pattern, search, replace = line.split(None, 3)
+        funcs = build_match_and_apply_functions(
+            pattern, search, replace)
+        self.cache.append(funcs)
+        return funcs
+
+rules = LazyRules()</code></pre>
+
+<p>So this is a class that implements <code>__iter__()</code> and <code>__next__()</code>, so it can be used as an iterator. Then, you instantiate the class and assign it to <var>rules</var>. This happens just once, on import.
+
+<p>Let&#8217;s take the class one bite at a time.
+
+<pre class=pp><code>class LazyRules:
+    rules_filename = 'plural6-rules.txt'
+
+    def __init__(self):
+<a>        self.pattern_file = open(self.rules_filename, encoding='utf-8')  <span class=u>&#x2460;</span></a>
+<a>        self.cache = []                                                  <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>When we instantiate the <code>LazyRules</code> class, open the pattern file but don&#8217;t read anything from it. (That comes later.)
+<li>After opening the patterns file, initialize the cache. You&#8217;ll use this cache later (in the <code>__next__()</code> method) as you read lines from the pattern file.
+</ol>
+
+<p>Before we continue, let&#8217;s take a closer look at <var>rules_filename</var>. It&#8217;s not defined within the <code>__iter__()</code> method. In fact, it&#8217;s not defined within <em>any</em> method. It&#8217;s defined at the class level. It&#8217;s a <i>class variable</i>, and although you can access it just like an instance variable (<var>self.rules_filename</var>), it is shared across all instances of the <code>LazyRules</code> class.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import plural6</kbd>
+<samp class=p>>>> </samp><kbd class=pp>r1 = plural6.LazyRules()</kbd>
+<samp class=p>>>> </samp><kbd class=pp>r2 = plural6.LazyRules()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>                               <span class=u>&#x2460;</span></a>
+<samp class=pp>'plural6-rules.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>
+<samp class=pp>'plural6-rules.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.rules_filename = 'r2-override.txt'</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>
+<samp class=pp>'r2-override.txt'</samp>
+<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>
+<samp class=pp>'plural6-rules.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.__class__.rules_filename</kbd>                     <span class=u>&#x2462;</span></a>
+<samp class=pp>'plural6-rules.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.__class__.rules_filename = 'papayawhip.txt'</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>r1.rules_filename</kbd>
+<samp class=pp>'papayawhip.txt'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>r2.rules_filename</kbd>                               <span class=u>&#x2464;</span></a>
+<samp class=pp>'r2-overridetxt'</samp></pre>
+<ol>
+<li>Each instance of the class inherits the <var>rules_filename</var> attribute with the value defined by the class.
+<li>Changing the attribute&#8217;s value in one instance does not affect other instances&hellip;
+<li>&hellip;nor does it change the class attribute. You can access the class attribute (as opposed to an individual instance&#8217;s attribute) by using the special <code>__class__</code> attribute to access the class itself.
+<li>If you change the class attribute, all instances that are still inheriting that value (like <var>r1</var> here) will be affected.
+<li>Instances that have overridden that attribute (like <var>r2</var> here) will not be affected.
+</ol>
+
+<p>And now back to our show.
+
+<pre class=pp><code><a>    def __iter__(self):       <span class=u>&#x2460;</span></a>
+        self.cache_index = 0
+<a>        return self           <span class=u>&#x2461;</span></a>
+</code></pre>
+<ol>
+<li>The <code>__iter__()</code> method will be called every time someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>iter(rules)</code>.
+<li>The one thing that every <code>__iter__()</code> method must do is return an iterator. In this case, it returns <var>self</var>, which signals that this class defines a <code>__next__()</code> method which will take care of returning values throughout the iteration.
+</ol>
+
+<pre class=pp><code><a>    def __next__(self):                                 <span class=u>&#x2460;</span></a>
+        .
+        .
+        .
+        pattern, search, replace = line.split(None, 3)
+<a>        funcs = build_match_and_apply_functions(        <span class=u>&#x2461;</span></a>
+            pattern, search, replace)
+<a>        self.cache.append(funcs)                        <span class=u>&#x2462;</span></a>
+        return funcs</code></pre>
+<ol>
+<li>The <code>__next__()</code> method gets called whenever someone&nbsp;&mdash;&nbsp;say, a <code>for</code> loop&nbsp;&mdash;&nbsp;calls <code>next(rules)</code>. This method will only make sense if we start at the end and work backwards. So let&#8217;s do that.
+<li>The last part of this function should look familiar, at least. The <code>build_match_and_apply_functions()</code> function hasn&#8217;t changed; it&#8217;s the same as it ever was.
+<li>The only difference is that, before returning the match and apply functions (which are stored in the tuple <var>funcs</var>), we&#8217;re going to save them in <code>self.cache</code>.
+</ol>
+
+<p>Moving backwards&hellip;
+
+<pre class=pp><code>    def __next__(self):
+        .
+        .
+        .
+<a>        line = self.pattern_file.readline()  <span class=u>&#x2460;</span></a>
+<a>        if not line:                         <span class=u>&#x2461;</span></a>
+            self.pattern_file.close()
+<a>            raise StopIteration              <span class=u>&#x2462;</span></a>
+        .
+        .
+        .</code></pre>
+<ol>
+<li>A bit of advanced file trickery here. The <code>readline()</code> method (note: singular, not the plural <code>readlines()</code>) reads exactly one line from an open file. Specifically, the next line. (<em>File objects are iterators too! It&#8217;s iterators all the way down&hellip;</em>)
+<li>If there was a line for <code>readline()</code> to read, <var>line</var> will not be an empty string. Even if the file contained a blank line, <var>line</var> would end up as the one-character string <code>'\n'</code> (a carriage return). If <var>line</var> is really an empty string, that means there are no more lines to read from the file.
+<li>When we reach the end of the file, we should close the file and raise the magic <code>StopIteration</code> exception. Remember, we got to this point because we needed a match and apply function for the next rule. The next rule comes from the next line of the file&hellip; but there is no next line! Therefore, we have no value to return. The iteration is over. (<span class=u>&#x266B;</span> The party&#8217;s over&hellip; <span class=u>&#x266B;</span>)
+</ol>
+
+<p>Moving backwards all the way to the start of the <code>__next__()</code> method&hellip;
+
+<pre class=pp><code>    def __next__(self):
+        self.cache_index += 1
+        if len(self.cache) >= self.cache_index:
+<a>            return self.cache[self.cache_index - 1]     <span class=u>&#x2460;</span></a>
+
+        if self.pattern_file.closed:
+<a>            raise StopIteration                         <span class=u>&#x2461;</span></a>
+        .
+        .
+        .</code></pre>
+<ol>
+<li><code>self.cache</code> will be a list of the functions we need to match and apply individual rules. (At least <em>that</em> should sound familiar!) <code>self.cache_index</code> keeps track of which cached item we should return next. If we haven&#8217;t exhausted the cache yet (<i>i.e.</i> if the length of <code>self.cache</code> is greater than <code>self.cache_index</code>), then we have a cache hit! Hooray! We can return the match and apply functions from the cache instead of building them from scratch.
+<li>On the other hand, if we don&#8217;t get a hit from the cache, <em>and</em> the file object has been closed (which could happen, further down the method, as you saw in the previous code snippet), then there&#8217;s nothing more we can do. If the file is closed, it means we&#8217;ve exhausted it&nbsp;&mdash;&nbsp;we&#8217;ve already read through every line from the pattern file, and we&#8217;ve already built and cached the match and apply functions for each pattern. The file is exhausted; the cache is exhausted; I&#8217;m exhausted. Wait, what? Hang in there, we&#8217;re almost done.
+</ol>
+
+<p>Putting it all together, here&#8217;s what happens when:
+
+<ul>
+<li>When the module is imported, it creates a single instance of the <code>LazyRules</code> class, called <var>rules</var>, which opens the pattern file but does not read from it.
+<li>When asked for the first match and apply function, it checks its cache but finds the cache is empty. So it reads a single line from the pattern file, builds the match and apply functions from those patterns, and caches them.
+<li>Let&#8217;s say, for the sake of argument, that the very first rule matched. If so, no further match and apply functions are built, and no further lines are read from the pattern file.
+<li>Furthermore, for the sake of argument, suppose that the caller calls the <code>plural()</code> function <em>again</em> to pluralize a different word. The <code>for</code> loop in the <code>plural()</code> function will call <code>iter(rules)</code>, which will reset the cache index but will not reset the open file object.
+<li>The first time through, the <code>for</code> loop will ask for a value from <var>rules</var>, which will invoke its <code>__next__()</code> method. This time, however, the cache is primed with a single pair of match and apply functions, corresponding to the patterns in the first line of the pattern file. Since they were built and cached in the course of pluralizing the previous word, they&#8217;re retrieved from the cache. The cache index increments, and the open file is never touched.
+<li>Let&#8217;s say, for the sake of argument, that the first rule does <em>not</em> match this time around. So the <code>for</code> loop comes around again and asks for another value from <var>rules</var>. This invokes the <code>__next__()</code> method a second time. This time, the cache is exhausted&nbsp;&mdash;&nbsp;it only contained one item, and we&#8217;re asking for a second&nbsp;&mdash;&nbsp;so the <code>__next__()</code> method continues. It reads another line from the open file, builds match and apply functions out of the patterns, and caches them.
+<li>This read-build-and-cache process will continue as long as the rules being read from the pattern file don&#8217;t match the word we&#8217;re trying to pluralize. If we do find a matching rule before the end of the file, we simply use it and stop, with the file still open. The file pointer will stay wherever we stopped reading, waiting for the next <code>readline()</code> command. In the meantime, the cache now has more items in it, and if we start all over again trying to pluralize a new word, each of those items in the cache will be tried before reading the next line from the pattern file.
+</ul>
+
+<p>We have achieved pluralization nirvana.
+
+<ol>
+<li><strong>Minimal startup cost.</strong> The only thing that happens on <code>import</code> is instantiating a single class and opening a file (but not reading from it).
+<li><strong>Maximum performance.</strong> The previous example would read through the file and build functions dynamically every time you wanted to pluralize a word. This version will cache functions as soon as they&#8217;re built, and in the worst case, it will only read through the pattern file once, no matter how many words you pluralize.
+<li><strong>Separation of code and data.</strong> All the patterns are stored in a separate file. Code is code, and data is data, and never the twain shall meet.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Is this really nirvana? Well, yes and no. Here&#8217;s something to consider with the <code>LazyRules</code> example: the pattern file is opened (during <code>__init__()</code>), and it remains open until the final rule is reached. Python will eventually close the file when it exits, or after the last instantiation of the <code>LazyRules</code> class is destroyed, but still, that could be a <em>long</em> time. If this class is part of a long-running Python process, the Python interpreter may never exit, and the <code>LazyRules</code> object may never get destroyed.
+<p>There are ways around this. Instead of opening the file during <code>__init__()</code> and leaving it open while you read rules one line at a time, you could open the file, read all the rules, and immediately close the file. Or you could open the file, read one rule, save the file position with the <a href=files.html#read><code>tell()</code> method</a>, close the file, and later re-open it and use the <a href=files.html#read><code>seek()</code> method</a> to continue reading where you left off. Or you could not worry about it and just leave the file open, like this example code does. Programming is design, and design is all about trade-offs and constraints. Leaving a file open too long might be a problem; making your code more complicated might be a problem. Which one is the bigger problem depends on your development team, your application, and your runtime environment.
+</blockquote>
+
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Further Reading</h2>
+<ul>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#iterator-types>Iterator types</a>
+<li><a href=http://www.python.org/dev/peps/pep-0234/>PEP 234: Iterators</a>
+<li><a href=http://www.python.org/dev/peps/pep-0255/>PEP 255: Simple Generators</a>
+<li><a href=http://www.dabeaz.com/generators/>Generator Tricks for Systems Programmers</a>
+</ul>
+
+<p class=v><a href=generators.html rel=prev title='back to &#8220;Closures &amp; Generators&#8221;'><span class=u>&#x261C;</span></a> <a href=advanced-iterators.html rel=next title='onward to &#8220;Advanced Iterators&#8221;'><span class=u>&#x261E;</span></a>
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

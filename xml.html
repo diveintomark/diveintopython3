@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>XML - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 12}
+mark{display:inline}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=root value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#xml>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=advanced>&#x2666;&#x2666;&#x2666;&#x2666;&#x2662;</span>
+<h1>XML</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> In the archonship of Aristaechmus, Draco enacted his ordinances. <span class=u>&#x275E;</span><br>&mdash; <a href='http://www.perseus.tufts.edu/cgi-bin/ptext?doc=Perseus:text:1999.01.0046;query=chapter%3D%235;layout=;loc=3.1'>Aristotle</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Nearly all the chapters in this book revolve around a piece of sample code. But <abbr>XML</abbr> isn&#8217;t about code; it&#8217;s about data. One common use of <abbr>XML</abbr> is &#8220;syndication feeds&#8221; that list the latest articles on a blog, forum, or other frequently-updated website. Most popular blogging software can produce a feed and update it whenever new articles, discussion threads, or blog posts are published. You can follow a blog by &#8220;subscribing&#8221; to its feed, and you can follow multiple blogs with a dedicated &#8220;<a href=http://en.wikipedia.org/wiki/List_of_feed_aggregators>feed aggregator</a>&#8221; like <a href=http://www.google.com/reader/>Google Reader</a>.
+
+<p>Here, then, is the <abbr>XML</abbr> data we&#8217;ll be working with in this chapter. It&#8217;s a feed&nbsp;&mdash;&nbsp;specifically, an <a href=http://atompub.org/rfc4287.html>Atom syndication feed</a>.
+
+<p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
+<pre class=pp><code>&lt;?xml version='1.0' encoding='utf-8'?>
+&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+  &lt;title>dive into mark&lt;/title>
+  &lt;subtitle>currently between addictions&lt;/subtitle>
+  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>
+  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
+  &lt;link rel='alternate' type='text/html' href='http://diveintomark.org/'/>
+  &lt;link rel='self' type='application/atom+xml' href='http://diveintomark.org/feed/'/>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+      &lt;uri>http://diveintomark.org/&lt;/uri>
+    &lt;/author>
+    &lt;title>Dive into history, 2009 edition&lt;/title>
+    &lt;link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'/>
+    &lt;id>tag:diveintomark.org,2009-03-27:/archives/20090327172042&lt;/id>
+    &lt;updated>2009-03-27T21:56:07Z&lt;/updated>
+    &lt;published>2009-03-27T17:20:42Z&lt;/published>
+    &lt;category scheme='http://diveintomark.org' term='diveintopython'/>
+    &lt;category scheme='http://diveintomark.org' term='docbook'/>
+    &lt;category scheme='http://diveintomark.org' term='html'/>
+  &lt;summary type='html'>Putting an entire chapter on one page sounds
+    bloated, but consider this &amp;amp;mdash; my longest chapter so far
+    would be 75 printed pages, and it loads in under 5 seconds&amp;amp;hellip;
+    On dialup.&lt;/summary>
+  &lt;/entry>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+      &lt;uri>http://diveintomark.org/&lt;/uri>
+    &lt;/author>
+    &lt;title>Accessibility is a harsh mistress&lt;/title>
+    &lt;link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress'/>
+    &lt;id>tag:diveintomark.org,2009-03-21:/archives/20090321200928&lt;/id>
+    &lt;updated>2009-03-22T01:05:37Z&lt;/updated>
+    &lt;published>2009-03-21T20:09:28Z&lt;/published>
+    &lt;category scheme='http://diveintomark.org' term='accessibility'/>
+    &lt;summary type='html'>The accessibility orthodoxy does not permit people to
+      question the value of features that are rarely useful and rarely used.&lt;/summary>
+  &lt;/entry>
+  &lt;entry>
+    &lt;author>
+      &lt;name>Mark&lt;/name>
+    &lt;/author>
+    &lt;title>A gentle introduction to video encoding, part 1: container formats&lt;/title>
+    &lt;link rel='alternate' type='text/html'
+      href='http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats'/>
+    &lt;id>tag:diveintomark.org,2008-12-18:/archives/20081218155422&lt;/id>
+    &lt;updated>2009-01-11T19:39:22Z&lt;/updated>
+    &lt;published>2008-12-18T15:54:22Z&lt;/published>
+    &lt;category scheme='http://diveintomark.org' term='asf'/>
+    &lt;category scheme='http://diveintomark.org' term='avi'/>
+    &lt;category scheme='http://diveintomark.org' term='encoding'/>
+    &lt;category scheme='http://diveintomark.org' term='flv'/>
+    &lt;category scheme='http://diveintomark.org' term='GIVE'/>
+    &lt;category scheme='http://diveintomark.org' term='mp4'/>
+    &lt;category scheme='http://diveintomark.org' term='ogg'/>
+    &lt;category scheme='http://diveintomark.org' term='video'/>
+    &lt;summary type='html'>These notes will eventually become part of a
+      tech talk on video encoding.&lt;/summary>
+  &lt;/entry>
+&lt;/feed></code></pre>
+ 
+<p class=a>&#x2042;
+
+<h2 id=xml-intro>A 5-Minute Crash Course in XML</h2>
+
+<p>If you already know about <abbr>XML</abbr>, you can skip this section.
+
+<p><abbr>XML</abbr> is a generalized way of describing hierarchical structured data. An <abbr>XML</abbr> <i>document</i> contains one or more <i>elements</i>, which are delimited by <i>start and end tags</i>. This is a complete (albeit boring) <abbr>XML</abbr> document:
+
+<pre class='nd pp'><code><a>&lt;foo>   <span class=u>&#x2460;</span></a>
+<a>&lt;/foo>  <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li>This is the <i>start tag</i> of the <code>foo</code> element.
+<li>This is the matching <i>end tag</i> of the <code>foo</code> element. Like balancing parentheses in writing or mathematics or code, every start tag must be <i>closed</i> (matched) by a corresponding end tag.
+</ol>
+
+<p>Elements can be <i>nested</i> to any depth. An element <code>bar</code> inside an element <code>foo</code> is said to be a <i>subelement</i> or <i>child</i> of <code>foo</code>.
+
+<pre class='nd pp'><code>&lt;foo>
+  <mark>&lt;bar>&lt;/bar></mark>
+&lt;/foo>
+</code></pre>
+
+<p>The first element in every <abbr>XML</abbr> document is called the <i>root element</i>. An <abbr>XML</abbr> document can only have one root element. The following is <strong>not an <abbr>XML</abbr> document</strong>, because it has two root elements:
+
+<pre class='nd pp'><code>&lt;foo>&lt;/foo>
+&lt;bar>&lt;/bar></code></pre>
+
+<p>Elements can have <i>attributes</i>, which are name-value pairs. Attributes are listed within the start tag of an element and separated by whitespace. <i>Attribute names</i> can not be repeated within an element. <i>Attribute values</i> must be quoted. You may use either single or double quotes.
+
+<pre class='nd pp'><code><a>&lt;foo <mark>lang='en'</mark>>                          <span class=u>&#x2460;</span></a>
+<a>  &lt;bar id='papayawhip' <mark>lang="fr"</mark>>&lt;/bar>  <span class=u>&#x2461;</span></a>
+&lt;/foo>
+</code></pre>
+<ol>
+<li>The <code>foo</code> element has one attribute, named <code>lang</code>. The value of its <code>lang</code> attribute is <code>en</code>.
+<li>The <code>bar</code> element has two attributes, named <code>id</code> and <code>lang</code>. The value of its <code>lang</code> attribute is <code>fr</code>. This doesn&#8217;t conflict with the <code>foo</code> element in any way. Each element has its own set of attributes.
+</ol>
+
+<p>If an element has more than one attribute, the ordering of the attributes is not significant. An element&#8217;s attributes form an unordered set of keys and values, like a Python dictionary. There is no limit to the number of attributes you can define on each element.
+
+<p>Elements can have <i>text content</i>.
+
+<pre class='nd pp'><code>&lt;foo lang='en'>
+  &lt;bar lang='fr'><mark>PapayaWhip</mark>&lt;/bar>
+&lt;/foo>
+</code></pre>
+
+<p>Elements that contain no text and no children are <i>empty</i>.
+
+<pre class='nd pp'><code>&lt;foo>&lt;/foo></code></pre>
+
+<p>There is a shorthand for writing empty elements. By putting a <code>/</code> character in the start tag, you can skip the end tag altogther. The <abbr>XML</abbr> document in the previous example could be written like this instead:
+
+<pre class='nd pp'><code>&lt;foo<mark>/</mark>></code></pre>
+
+<p>Like Python functions can be declared in different <i>modules</i>, <abbr>XML</abbr> elements can be declared in different <i>namespaces</i>. Namespaces usually look like URLs. You use an <code>xmlns</code> declaration to define a <i>default namespace</i>. A namespace declaration looks similar to an attribute, but it has a different purpose.
+
+<pre class='nd pp'><code><a>&lt;feed <mark>xmlns='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
+<a>  &lt;title>dive into mark&lt;/title>             <span class=u>&#x2461;</span></a>
+&lt;/feed>
+</code></pre>
+<ol>
+<li>The <code>feed</code> element is in the <code>http://www.w3.org/2005/Atom</code> namespace.
+<li>The <code>title</code> element is also in the <code>http://www.w3.org/2005/Atom</code> namespace. The namespace declaration affects the element where it&#8217;s declared, plus all child elements.
+</ol>
+
+<p>You can also use an <code>xmlns:<var>prefix</var></code> declaration to define a namespace and associate it with a <i>prefix</i>. Then each element in that namespace must be explicitly declared with the prefix.
+
+<pre class='nd pp'><code><a>&lt;atom:feed <mark>xmlns:atom='http://www.w3.org/2005/Atom'</mark>>  <span class=u>&#x2460;</span></a>
+<a>  &lt;atom:title>dive into mark&lt;/atom:title>             <span class=u>&#x2461;</span></a>
+&lt;/atom:feed></code></pre>
+<ol>
+<li>The <code>feed</code> element is in the <code>http://www.w3.org/2005/Atom</code> namespace.
+<li>The <code>title</code> element is also in the <code>http://www.w3.org/2005/Atom</code> namespace.
+</ol>
+
+<p>As far as an <abbr>XML</abbr> parser is concerned, the previous two <abbr>XML</abbr> documents are <em>identical</em>. Namespace + element name = <abbr>XML</abbr> identity. Prefixes only exist to refer to namespaces, so the actual prefix name (<code>atom:</code>) is irrelevant. The namespaces match, the element names match, the attributes (or lack of attributes) match, and each element&#8217;s text content matches, therefore the <abbr>XML</abbr> documents are the same.
+
+<p>Finally, <abbr>XML</abbr> documents can contain <a href=strings.html#one-ring-to-rule-them-all>character encoding information</a> on the first line, before the root element. (If you&#8217;re curious how a document can contain information which needs to be known before the document can be parsed, <a href=http://www.w3.org/TR/REC-xml/#sec-guessing-no-ext-info>Section F of the <abbr>XML</abbr> specification</a> details how to resolve this Catch-22.)
+
+<pre class='nd pp'><code>&lt;?xml version='1.0' <mark>encoding='utf-8'</mark>?></code></pre>
+
+<p>And now you know just enough <abbr>XML</abbr> to be dangerous!
+
+<p class=a>&#x2042;
+
+<h2 id=xml-structure>The Structure Of An Atom Feed</h2>
+
+<p>Think of a weblog, or in fact any website with frequently updated content, like <a href=http://www.cnn.com/>CNN.com</a>. The site itself has a title (&#8220;CNN.com&#8221;), a subtitle (&#8220;Breaking News, U.S., World, Weather, Entertainment <i class=baa>&amp;</i> Video News&#8221;), a last-updated date (&#8220;updated 12:43 p.m. EDT, Sat May 16, 2009&#8221;), and a list of articles posted at different times. Each article also has a title, a first-published date (and maybe also a last-updated date, if they published a correction or fixed a typo), and a unique URL.
+
+<p>The Atom syndication format is designed to capture all of this information in a standard format. My weblog and CNN.com are wildly different in design, scope, and audience, but they both have the same basic structure. CNN.com has a title; my blog has a title. CNN.com publishes articles; I publish articles.
+
+<p>At the top level is the <i>root element</i>, which every Atom feed shares: the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace.
+
+<pre class=pp><code><a>&lt;feed xmlns='http://www.w3.org/2005/Atom'  <span class=u>&#x2460;</span></a>
+<a>      xml:lang='en'>                       <span class=u>&#x2461;</span></a></code></pre>
+<ol>
+<li><code>http://www.w3.org/2005/Atom</code> is the Atom namespace.
+<li>Any element can contain an <code>xml:lang</code> attribute, which declares the language of the element and its children. In this case, the <code>xml:lang</code> attribute is declared once on the root element, which means the entire feed is in English.
+</ol>
+
+<p>An Atom feed contains several pieces of information about the feed itself. These are declared as children of the root-level <code>feed</code> element.
+
+<pre class=pp><code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+<a>  &lt;title>dive into mark&lt;/title>                                             <span class=u>&#x2460;</span></a>
+<a>  &lt;subtitle>currently between addictions&lt;/subtitle>                         <span class=u>&#x2461;</span></a>
+<a>  &lt;id>tag:diveintomark.org,2001-07-29:/&lt;/id>                                <span class=u>&#x2462;</span></a>
+<a>  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>                                   <span class=u>&#x2463;</span></a>
+<a>  &lt;link rel='alternate' type='text/html' href='http://diveintomark.org/'/>  <span class=u>&#x2464;</span></a></code></pre>
+<ol>
+<li>The title of this feed is <code>dive into mark</code>. 
+<li>The subtitle of this feed is <code>currently between addictions</code>.
+<li>Every feed needs a globally unique identifier. See <a href=http://www.ietf.org/rfc/rfc4151.txt>RFC 4151</a> for how to create one.
+<li>This feed was last updated on March 27, 2009, at 21:56 GMT. This is usually equivalent to the last-modified date of the most recent article.
+<li>Now things start to get interesting. This <code>link</code> element has no text content, but it has three attributes: <code>rel</code>, <code>type</code>, and <code>href</code>. The <code>rel</code> value tells you what kind of link this is; <code>rel='alternate'</code> means that this is a link to an alternate representation of this feed. The <code>type='text/html'</code> attribute means that this is a link to an <abbr>HTML</abbr> page. And the link target is given in the <code>href</code> attribute.
+</ol>
+
+<p>Now we know that this is a feed for a site named &#8220;dive into mark&#8220; which is available at <a href=http://diveintomark.org/><code>http://diveintomark.org/</code></a> and was last updated on March 27, 2009.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Although the order of elements can be relevant in some <abbr>XML</abbr> documents, it is not relevant in an Atom feed.
+</blockquote>
+
+<p>After the feed-level metadata is the list of the most recent articles. An article looks like this:
+
+<pre class=pp><code>&lt;entry>
+<a>  &lt;author>                                                                 <span class=u>&#x2460;</span></a>
+    &lt;name>Mark&lt;/name>
+    &lt;uri>http://diveintomark.org/&lt;/uri>
+  &lt;/author>
+<a>  &lt;title>Dive into history, 2009 edition&lt;/title>                           <span class=u>&#x2461;</span></a>
+<a>  &lt;link rel='alternate' type='text/html'                                   <span class=u>&#x2462;</span></a>
+    href='http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'/>
+<a>  &lt;id>tag:diveintomark.org,2009-03-27:/archives/20090327172042&lt;/id>        <span class=u>&#x2463;</span></a>
+<a>  &lt;updated>2009-03-27T21:56:07Z&lt;/updated>                                  <span class=u>&#x2464;</span></a>
+  &lt;published>2009-03-27T17:20:42Z&lt;/published>        
+<a>  &lt;category scheme='http://diveintomark.org' term='diveintopython'/>       <span class=u>&#x2465;</span></a>
+  &lt;category scheme='http://diveintomark.org' term='docbook'/>
+  &lt;category scheme='http://diveintomark.org' term='html'/>
+<a>  &lt;summary type='html'>Putting an entire chapter on one page sounds        <span class=u>&#x2466;</span></a>
+    bloated, but consider this &amp;amp;mdash; my longest chapter so far
+    would be 75 printed pages, and it loads in under 5 seconds&amp;amp;hellip;
+    On dialup.&lt;/summary>
+<a>&lt;/entry>                                                                   <span class=u>&#x2467;</span></a></code></pre>
+<ol>
+<li>The <code>author</code> element tells who wrote this article: some guy named Mark, whom you can find loafing at <code>http://diveintomark.org/</code>. (This is the same as the alternate link in the feed metadata, but it doesn&#8217;t have to be. Many weblogs have multiple authors, each with their own personal website.)
+<li>The <code>title</code> element gives the title of the article, &#8220;Dive into history, 2009 edition&#8221;.
+<li>As with the feed-level alternate link, this <code>link</code> element gives the address of the <abbr>HTML</abbr> version of this article.
+<li>Entries, like feeds, need a unique identifier.
+<li>Entries have two dates: a first-published date (<code>published</code>) and a last-modified date (<code>updated</code>).
+<li>Entries can have an arbitrary number of categories. This article is filed under <code>diveintopython</code>, <code>docbook</code>, and <code>html</code>.
+<li>The <code>summary</code> element gives a brief summary of the article. (There is also a <code>content</code> element, not shown here, if you want to include the complete article text in your feed.) This <code>summary</code> element has the Atom-specific <code>type='html'</code> attribute, which specifies that this summary is a snippet of <abbr>HTML</abbr>, not plain text. This is important, since it has <abbr>HTML</abbr>-specific entities in it (<code>&amp;mdash;</code> and <code>&amp;hellip;</code>) which should be rendered as &#8220;&mdash;&#8221; and &#8220;&hellip;&#8221; rather than displayed directly.
+<li>Finally, the end tag for the <code>entry</code> element, signaling the end of the metadata for this article.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=xml-parse>Parsing XML</h2>
+
+<p>Python can parse <abbr>XML</abbr> documents in several ways. It has traditional <a href=http://en.wikipedia.org/wiki/XML#DOM><abbr>DOM</abbr></a> and <a href=http://en.wikipedia.org/wiki/Simple_API_for_XML><abbr>SAX</abbr></a> parsers, but I will focus on a different library called ElementTree.
+
+<p class=d>[<a href=examples/feed.xml>download <code>feed.xml</code></a>]
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root</kbd>                                     <span class=u>&#x2463;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}feed at cd1eb0></samp></pre>
+<ol>
+<li>The ElementTree library is part of the Python standard library, in <code>xml.etree.ElementTree</code>.
+<li>The primary entry point for the ElementTree library is the <code>parse()</code> function, which can take a filename or a <a href=files.html#file-like-objects>file-like object</a>. This function parses the entire document at once. If memory is tight, there are ways to <a href=http://effbot.org/zone/element-iterparse.htm>parse an <abbr>XML</abbr> document incrementally instead</a>.
+<li>The <code>parse()</code> function returns an object which represents the entire document. This is <em>not</em> the root element. To get a reference to the root element, call the <code>getroot()</code> method.
+<li>As expected, the root element is the <code>feed</code> element in the <code>http://www.w3.org/2005/Atom</code> namespace. The string representation of this object reinforces an important point: an <abbr>XML</abbr> element is a combination of its namespace and its tag name (also called the <i>local name</i>). Every element in this document is in the Atom namespace, so the root element is represented as <code>{http://www.w3.org/2005/Atom}feed</code>.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>ElementTree represents <abbr>XML</abbr> elements as <code>{<var>namespace</var>}<var>localname</var></code>. You&#8217;ll see and use this format in multiple places in the ElementTree <abbr>API</abbr>.
+</blockquote>
+
+<h3 id=xml-elements>Elements Are Lists</h3>
+
+<p>In the ElementTree API, an element acts like a list. The items of the list are the element&#8217;s children.
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>root.tag</kbd>                        <span class=u>&#x2460;</span></a>
+<samp>'{http://www.w3.org/2005/Atom}feed'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(root)</kbd>                       <span class=u>&#x2461;</span></a>
+<samp class=pp>8</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>for child in root:</kbd>              <span class=u>&#x2462;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>  print(child)</kbd>                  <span class=u>&#x2463;</span></a>
+<samp class=p>... </samp>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}title at e2b5d0>
+&lt;Element {http://www.w3.org/2005/Atom}subtitle at e2b4e0>
+&lt;Element {http://www.w3.org/2005/Atom}id at e2b6c0>
+&lt;Element {http://www.w3.org/2005/Atom}updated at e2b6f0>
+&lt;Element {http://www.w3.org/2005/Atom}link at e2b4b0>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b720>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>
+&lt;Element {http://www.w3.org/2005/Atom}entry at e2b750></samp></pre>
+<ol>
+<li>Continuing from the previous example, the root element is <code>{http://www.w3.org/2005/Atom}feed</code>.
+<li>The &#8220;length&#8221; of the root element is the number of child elements.
+<li>You can use the element itself as an iterator to loop through all of its child elements.
+<li>As you can see from the output, there are indeed 8 child elements: all of the feed-level metadata (<code>title</code>, <code>subtitle</code>, <code>id</code>, <code>updated</code>, and <code>link</code>) followed by the three <code>entry</code> elements.
+</ol>
+
+<p>You may have guessed this already, but I want to point it out explicitly: the list of child elements only includes <em>direct</em> children. Each of the <code>entry</code> elements contain their own children, but those are not included in the list. They would be included in the list of each <code>entry</code>&#8217;s children, but they are not included in the list of the <code>feed</code>&#8217;s children. There are ways to find elements no matter how deeply nested they are; we&#8217;ll look at two such ways later in this chapter.
+
+<h3 id=xml-attributes>Attributes Are Dictonaries</h3>
+
+<p><abbr>XML</abbr> isn&#8217;t just a collection of elements; each element can also have its own set of attributes. Once you have a reference to a specific element, you can easily get its attributes as a Python dictionary.
+
+<pre class=screen>
+# continuing from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>root.attrib</kbd>                           <span class=u>&#x2460;</span></a>
+<samp class=pp>{'{http://www.w3.org/XML/1998/namespace}lang': 'en'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[4]</kbd>                               <span class=u>&#x2461;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at e181b0></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[4].attrib</kbd>                        <span class=u>&#x2462;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[3]</kbd>                               <span class=u>&#x2463;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}updated at e2b4e0></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root[3].attrib</kbd>                        <span class=u>&#x2464;</span></a>
+<samp class=pp>{}</samp></pre>
+<ol>
+<li>The <code>attrib</code> property is a dictionary of the element&#8217;s attributes. The original markup here was <code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'></code>. The <code>xml:</code> prefix refers to a built-in namespace that every <abbr>XML</abbr> document can use without declaring it.
+<li>The fifth child&nbsp;&mdash;&nbsp;<code>[4]</code> in a 0-based list&nbsp;&mdash;&nbsp;is the <code>link</code> element.
+<li>The <code>link</code> element has three attributes: <code>href</code>, <code>type</code>, and <code>rel</code>.
+<li>The fourth child&nbsp;&mdash;&nbsp;<code>[3]</code> in a 0-based list&nbsp;&mdash;&nbsp;is the <code>updated</code> element.
+<li>The <code>updated</code> element has no attributes, so its <code>.attrib</code> is just an empty dictionary.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=xml-find>Searching For Nodes Within An XML Document</h2>
+
+<p>So far, we&#8217;ve worked with this <abbr>XML</abbr> document &#8220;from the top down,&#8221; starting with the root element, getting its child elements, and so on throughout the document. But many uses of <abbr>XML</abbr> require you to find specific elements. Etree can do that, too.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>
+<samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>root.tag</kbd>
+<samp class=pp>'{http://www.w3.org/2005/Atom}feed'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}feed')</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>[]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2462;</span></a>
+<samp class=pp>[]</samp></pre>
+<ol>
+<li>The <code>findall()</code> method finds child elements that match a specific query. (More on the query format in a minute.)
+<li>Each element&nbsp;&mdash;&nbsp;including the root element, but also child elements&nbsp;&mdash;&nbsp;has a <code>findall()</code> method. It finds all matching elements among the element&#8217;s children. But why aren&#8217;t there any results? Although it may not be obvious, this particular query only searches the element&#8217;s children. Since the root <code>feed</code> element has no child named <code>feed</code>, this query returns an empty list.
+<li>This result may also surprise you. <a href=#divingin>There is an <code>author</code> element</a> in this document; in fact, there are three (one in each <code>entry</code>). But those <code>author</code> elements are not <em>direct children</em> of the root element; they are &#8220;grandchildren&#8221; (literally, a child element of a child element). If you want to look for <code>author</code> elements at any nesting level, you can do that, but the query format is slightly different.
+</ol>
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}entry')</kbd>    <span class=u>&#x2460;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}author')</kbd>   <span class=u>&#x2461;</span></a>
+<samp class=pp>[]</samp>
+</pre>
+<ol>
+<li>For convenience, the <code>tree</code> object (returned from the <code>etree.parse()</code> function) has several methods that mirror the methods on the root element. The results are the same as if you had called the <code>tree.getroot().findall()</code> method.
+<li>Perhaps surprisingly, this query does not find the <code>author</code> elements in this document. Why not? Because this is just a shortcut for <code>tree.getroot().findall('{http://www.w3.org/2005/Atom}author')</code>, which means &#8220;find all the <code>author</code> elements that are children of the root element.&#8221; The <code>author</code> elements are not children of the root element; they&#8217;re children of the <code>entry</code> elements. Thus the query doesn&#8217;t return any matches.
+</ol>
+
+<p>There is also a <code>find()</code> method which returns the first matching element. This is useful for situations where you are only expecting one match, or if there are multiple matches, you only care about the first one.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>entries = tree.findall('{http://www.w3.org/2005/Atom}entry')</kbd>           <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>len(entries)</kbd>
+<samp class=p>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>title_element = entries[0].find('{http://www.w3.org/2005/Atom}title')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>title_element.text</kbd>
+<samp class=pp>'Dive into history, 2009 edition'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>foo_element = entries[0].find('{http://www.w3.org/2005/Atom}foo')</kbd>      <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>foo_element</kbd>
+<samp class=p>>>> </samp><kbd class=pp>type(foo_element)</kbd>
+<samp class=pp>&lt;class 'NoneType'></samp>
+</pre>
+<ol>
+<li>You saw this in the previous example. It finds all the <code>atom:entry</code> elements.
+<li>The <code>find()</code> method takes an ElementTree query and returns the first matching element.
+<li>There are no elements in this entry named <code>foo</code>, so this returns <code>None</code>.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>There is a &#8220;gotcha&#8221; with the <code>find()</code> method that will eventually bite you. In a boolean context, ElementTree element objects will evaluate to <code>False</code> if they contain no children (<i>i.e.</i> if <code>len(element)</code> is 0). This means that <code>if element.find('...')</code> is not testing whether the <code>find()</code> method found a matching element; it&#8217;s testing whether that matching element has any child elements! To test whether the <code>find()</code> method returned an element, use <code>if element.find('...') is not None</code>.
+</blockquote>
+
+<p>There <em>is</em> a way to search for <em>descendant</em> elements, <i>i.e.</i> children, grandchildren, and any element at any nesting level.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>all_links = tree.findall('//{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>all_links</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at e181b0>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b570>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b480>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at e2b5a0>]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>all_links[0].attrib</kbd>                                              <span class=u>&#x2461;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>all_links[1].attrib</kbd>                                              <span class=u>&#x2462;</span></a>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<samp class=p>>>> </samp><kbd class=pp>all_links[2].attrib</kbd>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2009/03/21/accessibility-is-a-harsh-mistress',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp>
+<samp class=p>>>> </samp><kbd class=pp>all_links[3].attrib</kbd>
+<samp class=pp>{'href': 'http://diveintomark.org/archives/2008/12/18/give-part-1-container-formats',
+ 'type': 'text/html',
+ 'rel': 'alternate'}</samp></pre>
+<ol>
+<li>This query&nbsp;&mdash;&nbsp;<code>//{http://www.w3.org/2005/Atom}link</code>&nbsp;&mdash;&nbsp;is very similar to the previous examples, except for the two slashes at the beginning of the query. Those two slashes mean &#8220;don&#8217;t just look for direct children; I want <em>any</em> elements, regardless of nesting level.&#8221; So the result is a list of four <code>link</code> elements, not just one.
+<li>The first result <em>is</em> a direct child of the root element. As you can see from its attributes, this is the feed-level alternate link that points to the <abbr>HTML</abbr> version of the website that the feed describes.
+<li>The other three results are each entry-level alternate links. Each <code>entry</code> has a single <code>link</code> child element, and because of the double slash at the beginning of the query, this query finds all of them.
+</ol>
+
+<!--
+<p>What&#8217;s that? You say you want the power of the <code>findall()</code> method, but you want to work with an iterator instead of building a complete list? ElementTree can do that too.
+
+<pre class=screen>
+# continuing from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>it = tree.getiterator('{http://www.w3.org/2005/Atom}link')</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>                                                    <span class=u>&#x2461;</span></a>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0></samp>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at 122f1e0></samp>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at 122f210></samp>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
+<samp>&lt;Element {http://www.w3.org/2005/Atom}link at 122f1b0></samp>
+<samp class=p>>>> </samp><kbd class=pp>next(it)</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+StopIteration</samp></pre>
+<ol>
+<li>The <code>getiterator()</code> method can take zero or one arguments. If called with no arguments, it returns an iterator that spits out every element and child element in the entire document. Or, as shown here, you can call it with an element name in standard ElementTree format. This returns an iterator that spits out only elements of that name.
+<li>Repeatedly calling the <code>next()</code> function with this iterator will eventually return every element of the document that matches the query you passed to the <code>getiterator()</code> method.
+</ol>
+-->
+
+<p>Overall, ElementTree&#8217;s <code>findall()</code> method is a very powerful feature, but the query language can be a bit surprising. It is officially described as &#8220;<a href=http://effbot.org/zone/element-xpath.htm>limited support for XPath expressions</a>.&#8221; <a href=http://www.w3.org/TR/xpath>XPath</a> is a W3C standard for querying <abbr>XML</abbr> documents. ElementTree&#8217;s query language is similar enough to XPath to do basic searching, but dissimilar enough that it may annoy you if you already know XPath. Now let&#8217;s look at a third-party <abbr>XML</abbr> library that extends the ElementTree <abbr>API</abbr> with full XPath support.
+
+<p class=a>&#x2042;
+
+<h2 id=xml-lxml>Going Further With lxml</h2>
+
+<p><a href=http://codespeak.net/lxml/><code>lxml</code></a> is an open source third-party library that builds on the popular <a href=http://www.xmlsoft.org/>libxml2 parser</a>. It provides a 100% compatible ElementTree <abbr>API</abbr>, then extends it with full XPath 1.0 support and a few other niceties. There are <a href=http://pypi.python.org/pypi/lxml/>installers available for Windows</a>; Linux users should always try to use distribution-specific tools like <code>yum</code> or <code>apt-get</code> to install precompiled binaries from their repositories. Otherwise you&#8217;ll need to <a href=http://codespeak.net/lxml/installation.html>install <code>lxml</code> manually</a>.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>from lxml import etree</kbd>                   <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = etree.parse('examples/feed.xml')</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root = tree.getroot()</kbd>                    <span class=u>&#x2462;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>root.findall('{http://www.w3.org/2005/Atom}entry')</kbd>  <span class=u>&#x2463;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b4e0>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b510>,
+ &lt;Element {http://www.w3.org/2005/Atom}entry at e2b540>]</samp></pre>
+<ol>
+<li>Once imported, <code>lxml</code> provides the same <abbr>API</abbr> as the built-in ElementTree library.
+<li><code>parse()</code> function: same as ElementTree.
+<li><code>getroot()</code> method: also the same.
+<li><code>findall()</code> method: exactly the same.
+</ol>
+
+<p>For large <abbr>XML</abbr> documents, <code>lxml</code> is significantly faster than the built-in ElementTree library. If you&#8217;re only using the ElementTree <abbr>API</abbr> and want to use the fastest available implementation, you can try to import <code>lxml</code> and fall back to the built-in ElementTree.
+
+<pre class='nd pp'><code>try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree</code></pre>
+
+<p>But <code>lxml</code> is more than just a faster ElementTree. Its <code>findall()</code> method includes support for more complicated expressions.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>                                                                   <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed.xml')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('//{http://www.w3.org/2005/Atom}*[@href]')</kbd>                             <span class=u>&#x2461;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at eeb8a0>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at eeb990>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at eeb960>,
+ &lt;Element {http://www.w3.org/2005/Atom}link at eeb9c0>]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall("//{http://www.w3.org/2005/Atom}*[@href='http://diveintomark.org/']")</kbd>  <span class=u>&#x2462;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}link at eeb930>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>NS = '{http://www.w3.org/2005/Atom}'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>tree.findall('//{NS}author[{NS}uri]'.format(NS=NS))</kbd>                                 <span class=u>&#x2463;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}author at eeba80>,
+ &lt;Element {http://www.w3.org/2005/Atom}author at eebba0>]</samp></pre>
+<ol>
+<li>In this example, I&#8217;m going to <code>import lxml.etree</code> (instead of, say, <code>from lxml import etree</code>), to emphasize that these features are specific to <code>lxml</code>.
+<li>This query finds all elements in the Atom namespace, anywhere in the document, that have an <code>href</code> attribute. The <code>//</code> at the beginning of the query means &#8220;elements anywhere (not just as children of the root element).&#8221; <code>{http://www.w3.org/2005/Atom}</code> means &#8220;only elements in the Atom namespace.&#8221; <code>*</code> means &#8220;elements with any local name.&#8221; And <code>[@href]</code> means &#8220;has an <code>href</code> attribute.&#8221;
+<li>The query finds all Atom elements with an <code>href</code> whose value is <code>http://diveintomark.org/</code>.
+<li>After doing some quick <a href=strings.html#formatting-strings>string formatting</a> (because otherwise these compound queries get ridiculously long), this query searches for Atom <code>author</code> elements that have an Atom <code>uri</code> element as a child. This only returns two <code>author</code> elements, the ones in the first and second <code>entry</code>. The <code>author</code> in the last <code>entry</code> contains only a <code>name</code>, not a <code>uri</code>.
+</ol>
+
+<p>Not enough for you? <code>lxml</code> also integrates support for arbitrary XPath 1.0 expressions. I&#8217;m not going to go into depth about XPath syntax; that could be a whole book unto itself! But I will show you how it integrates into <code>lxml</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed.xml')</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>NSMAP = {'atom': 'http://www.w3.org/2005/Atom'}</kbd>                    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>entries = tree.xpath("//atom:category[@term='accessibility']/..",</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>... </samp><kbd class=pp>    namespaces=NSMAP)</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entries</kbd>                                                            <span class=u>&#x2462;</span></a>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}entry at e2b630>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>entry = entries[0]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>entry.xpath('./atom:title/text()', namespaces=NSMAP)</kbd>               <span class=u>&#x2463;</span></a>
+<samp class=pp>['Accessibility is a harsh mistress']</samp></pre>
+<ol>
+<li>To perform XPath queries on namespaced elements, you need to define a namespace prefix mapping. This is just a Python dictionary.
+<li>Here is an XPath query. The XPath expression searches for <code>category</code> elements (in the Atom namespace) that contain a <code>term</code> attribute with the value <code>accessibility</code>. But that&#8217;s not actually the query result. Look at the very end of the query string; did you notice the <code>/..</code> bit? That means &#8220;and then return the parent element of the <code>category</code> element you just found.&#8221; So this single XPath query will find all entries with a child element of <code>&lt;category term='accessibility'></code>.
+<li>The <code>xpath()</code> function returns a list of ElementTree objects. In this document, there is only one entry with a <code>category</code> whose <code>term</code> is <code>accessibility</code>.
+<li>XPath expressions don&#8217;t always return a list of elements. Technically, the <abbr>DOM</abbr> of a parsed <abbr>XML</abbr> document doesn&#8217;t contain elements; it contains <i>nodes</i>. Depending on their type, nodes can be elements, attributes, or even text content. The result of an XPath query is a list of nodes. This query returns a list of text nodes: the text content (<code>text()</code>) of the <code>title</code> element (<code>atom:title</code>) that is a child of the current element (<code>./</code>).
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=xml-generate>Generating XML</h2>
+
+<p>Python&#8217;s support for <abbr>XML</abbr> is not limited to parsing existing documents. You can also create <abbr>XML</abbr> documents from scratch.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import xml.etree.ElementTree as etree</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed = etree.Element('{http://www.w3.org/2005/Atom}feed',</kbd>     <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    attrib={'{http://www.w3.org/XML/1998/namespace}lang': 'en'})</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(etree.tostring(new_feed))</kbd>                                   <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
+<ol>
+<li>To create a new element, instantiate the <code>Element</code> class. You pass the element name (namespace + local name) as the first argument. This statement creates a <code>feed</code> element in the Atom namespace. This will be our new document&#8217;s root element.
+<li>To add attributes to the newly created element, pass a dictionary of attribute names and values in the <var>attrib</var> argument. Note that the attribute name should be in the standard ElementTree format, <code>{<var>namespace</var>}<var>localname</var></code>.
+<li>At any time, you can serialize any element (and its children) with the ElementTree <code>tostring()</code> function.
+</ol>
+
+<p>Was that serialization surprising to you? The way ElementTree serializes namespaced <abbr>XML</abbr> elements is technically accurate but not optimal. The sample <abbr>XML</abbr> document at the beginning of this chapter defined a <i>default namespace</i> (<code>xmlns='http://www.w3.org/2005/Atom'</code>). Defining a default namespace is useful for documents&nbsp;&mdash;&nbsp;like Atom feeds&nbsp;&mdash;&nbsp;where every element is in the same namespace, because you can declare the namespace once and declare each element with just its local name (<code>&lt;feed></code>, <code>&lt;link></code>, <code>&lt;entry></code>). There is no need to use any prefixes unless you want to declare elements from another namespace.
+
+<p>An <abbr>XML</abbr> parser won&#8217;t &#8220;see&#8221; any difference between an <abbr>XML</abbr> document with a default namespace and an <abbr>XML</abbr> document with a prefixed namespace. The resulting <abbr>DOM</abbr> of this serialization:
+
+<pre class='nd pp'><code>&lt;ns0:feed xmlns:ns0='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
+
+<p>is identical to the <abbr>DOM</abbr> of this serialization:
+
+<pre class='nd pp'><code>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></code></pre>
+
+<p>The only practical difference is that the second serialization is several characters shorter. If we were to recast our entire sample feed with a <code>ns0:</code> prefix in every start and end tag, it would add 4 characters per start tag &times; 79 tags + 4 characters for the namespace declaration itself, for a total of 320 characters. Assuming <a href=strings.html#byte-arrays>UTF-8 encoding</a>, that&#8217;s 320 extra bytes. (After gzipping, the difference drops to 21 bytes, but still, 21 bytes is 21 bytes.) Maybe that doesn&#8217;t matter to you, but for something like an Atom feed, which may be downloaded several thousand times whenever it changes, saving a few bytes per request can quickly add up.
+
+<p>The built-in ElementTree library does not offer this fine-grained control over serializing namespaced elements, but <code>lxml</code> does.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>NSMAP = {None: 'http://www.w3.org/2005/Atom'}</kbd>                     <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed = lxml.etree.Element('feed', nsmap=NSMAP)</kbd>                <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                             <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom'/></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>new_feed.set('{http://www.w3.org/XML/1998/namespace}lang', 'en')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'/></samp></pre>
+<ol>
+<li>To start, define a namespace mapping as a dictionary. Dictionary values are namespaces; dictionary keys are the desired prefix. Using <code>None</code> as a prefix effectively declares a default namespace.
+<li>Now you can pass the <code>lxml</code>-specific <var>nsmap</var> argument when you create an element, and <code>lxml</code> will respect the namespace prefixes you&#8217;ve defined.
+<li>As expected, this serialization defines the Atom namespace as the default namespace and declares the <code>feed</code> element without a namespace prefix.
+<li>Oops, we forgot to add the <code>xml:lang</code> attribute. You can always add attributes to any element with the <code>set()</code> method. It takes two arguments: the attribute name in standard ElementTree format, then the attribute value. (This method is not <code>lxml</code>-specific. The only <code>lxml</code>-specific part of this example was the <var>nsmap</var> argument to control the namespace prefixes in the serialized output.)
+</ol>
+
+<p>Are <abbr>XML</abbr> documents limited to one element per document? No, of course not. You can easily create child elements, too.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>title = lxml.etree.SubElement(new_feed, 'title',</kbd>          <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    attrib={'type':'html'})</kbd>                               <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'/>&lt;/feed></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>title.text = 'dive into &amp;hellip;'</kbd>                         <span class=u>&#x2463;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed))</kbd>                     <span class=u>&#x2464;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>&lt;title type='html'>dive into &amp;amp;hellip;&lt;/title>&lt;/feed></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(new_feed, pretty_print=True))</kbd>  <span class=u>&#x2465;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+&lt;title type='html'>dive into&amp;amp;hellip;&lt;/title>
+&lt;/feed></samp></pre>
+<ol>
+<li>To create a child element of an existing element, instantiate the <code>SubElement</code> class. The only required arguments are the parent element (<var>new_feed</var> in this case) and the new element&#8217;s name. Since this child element will inherit the namespace mapping of its parent, there is no need to redeclare the namespace or prefix here.
+<li>You can also pass in an attribute dictionary. Keys are attribute names; values are attribute values.
+<li>As expected, the new <code>title</code> element was created in the Atom namespace, and it was inserted as a child of the <code>feed</code> element. Since the <code>title</code> element has no text content and no children of its own, <code>lxml</code> serializes it as an empty element (with the <code>/></code> shortcut).
+<li>To set the text content of an element, simply set its <code>.text</code> property.
+<li>Now the <code>title</code> element is serialized with its text content. Any text content that contains less-than signs or ampersands needs to be escaped when serialized. <code>lxml</code> handles this escaping automatically.
+<li>You can also apply &#8220;pretty printing&#8221; to the serialization, which inserts line breaks after end tags, and after start tags of elements that contain child elements but no text content. In technical terms, <code>lxml</code> adds &#8220;insignificant whitespace&#8221; to make the output more readable.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>You might also want to check out <a href=http://github.com/galvez/xmlwitch/tree/master>xmlwitch</a>, another third-party library for generating <abbr>XML</abbr>. It makes extensive use of <a href=special-method-names.html#context-managers>the <code>with</code> statement</a> to make <abbr>XML</abbr> generation code more readable.
+</blockquote>
+
+<p class=a>&#x2042;
+
+<h2 id=xml-custom-parser>Parsing Broken XML</h2>
+
+<p>The <abbr>XML</abbr> specification mandates that all conforming <abbr>XML</abbr> parsers employ &#8220;draconian error handling.&#8221; That is, they must halt and catch fire as soon as they detect any sort of wellformedness error in the <abbr>XML</abbr> document. Wellformedness errors include mismatched start and end tags, undefined entities, illegal Unicode characters, and a number of other esoteric rules. This is in stark contrast to other common formats like <abbr>HTML</abbr>&nbsp;&mdash;&nbsp;your browser doesn&#8217;t stop rendering a web page if you forget to close an <abbr>HTML</abbr> tag or escape an ampersand in an attribute value. (It is a common misconception that <abbr>HTML</abbr> has no defined error handling. <a href=http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#parsing><abbr>HTML</abbr> error handling</a> is actually quite well-defined, but it&#8217;s significantly more complicated than &#8220;halt and catch fire on first error.&#8221;)
+
+<p>Some people (myself included) believe that it was a mistake for the inventors of <abbr>XML</abbr> to mandate draconian error handling. Don&#8217;t get me wrong; I can certainly see the allure of simplifying the error handling rules. But in practice, the concept of &#8220;wellformedness&#8221; is trickier than it sounds, especially for <abbr>XML</abbr> documents (like Atom feeds) that are published on the web and served over <abbr>HTTP</abbr>. Despite the maturity of <abbr>XML</abbr>, which standardized on draconian error handling in 1997, surveys continually show a significant fraction of Atom feeds on the web are plagued with wellformedness errors.
+
+<p>So, I have both theoretical and practical reasons to parse <abbr>XML</abbr> documents &#8220;at any cost,&#8221; that is, <em>not</em> to halt and catch fire at the first wellformedness error. If you find yourself wanting to do this too, <code>lxml</code> can help.
+
+<p>Here is a fragment of a broken <abbr>XML</abbr> document. I&#8217;ve highlighted the wellformedness error.
+
+<pre class='nd pp'><code>&lt;?xml version='1.0' encoding='utf-8'?>
+&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+  &lt;title>dive into <mark>&amp;hellip;</mark>&lt;/title>
+...
+&lt;/feed></code></pre>
+
+<p>That&#8217;s an error, because the <code>&amp;hellip;</code> entity is not defined in <abbr>XML</abbr>. (It is defined in <abbr>HTML</abbr>.) If you try to parse this broken feed with the default settings, <code>lxml</code> will choke on the undefined entity.
+
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>import lxml.etree</kbd>
+<samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed-broken.xml')</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "lxml.etree.pyx", line 2693, in lxml.etree.parse (src/lxml/lxml.etree.c:52591)
+  File "parser.pxi", line 1478, in lxml.etree._parseDocument (src/lxml/lxml.etree.c:75665)
+  File "parser.pxi", line 1507, in lxml.etree._parseDocumentFromURL (src/lxml/lxml.etree.c:75993)
+  File "parser.pxi", line 1407, in lxml.etree._parseDocFromFile (src/lxml/lxml.etree.c:75002)
+  File "parser.pxi", line 965, in lxml.etree._BaseParser._parseDocFromFile (src/lxml/lxml.etree.c:72023)
+  File "parser.pxi", line 539, in lxml.etree._ParserContext._handleParseResultDoc (src/lxml/lxml.etree.c:67830)
+  File "parser.pxi", line 625, in lxml.etree._handleParseResult (src/lxml/lxml.etree.c:68877)
+  File "parser.pxi", line 565, in lxml.etree._raiseParseError (src/lxml/lxml.etree.c:68125)
+lxml.etree.XMLSyntaxError: Entity 'hellip' not defined, line 3, column 28</samp></pre>
+
+<p>To parse this broken <abbr>XML</abbr> document, despite its wellformedness error, you need to create a custom <abbr>XML</abbr> parser.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>parser = lxml.etree.XMLParser(recover=True)</kbd>                  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>tree = lxml.etree.parse('examples/feed-broken.xml', parser)</kbd>  <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>parser.error_log</kbd>                                             <span class=u>&#x2462;</span></a>
+<samp>examples/feed-broken.xml:3:28:FATAL:PARSER:ERR_UNDECLARED_ENTITY: Entity 'hellip' not defined</samp>
+<samp class=p>>>> </samp><kbd class=pp>tree.findall('{http://www.w3.org/2005/Atom}title')</kbd>
+<samp>[&lt;Element {http://www.w3.org/2005/Atom}title at ead510>]</samp>
+<samp class=p>>>> </samp><kbd class=pp>title = tree.findall('{http://www.w3.org/2005/Atom}title')[0]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>title.text</kbd>                                                   <span class=u>&#x2463;</span></a>
+<samp class=pp>'dive into '</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>print(lxml.etree.tounicode(tree.getroot()))</kbd>                  <span class=u>&#x2464;</span></a>
+<samp class=pp>&lt;feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en'>
+  &lt;title>dive into &lt;/title>
+.
+. [rest of serialization snipped for brevity]
+.</samp></pre>
+<ol>
+<li>To create a custom parser, instantiate the <code>lxml.etree.XMLParser</code> class. It can take <a href=http://codespeak.net/lxml/parsing.html#parser-options>a number of different named arguments</a>. The one we&#8217;re interested in here is the <var>recover</var> argument. When set to <code>True</code>, the <abbr>XML</abbr> parser will try its best to &#8220;recover&#8221; from wellformedness errors.
+<li>To parse an <abbr>XML</abbr> document with your custom parser, pass the <var>parser</var> object as the second argument to the <code>parse()</code> function. Note that <code>lxml</code> does not raise an exception about the undefined <code>&amp;hellip;</code> entity.
+<li>The parser keeps a log of the wellformedness errors that it has encountered. (This is actually true regardless of whether it is set to recover from those errors or not.)
+<li>Since it didn&#8217;t know what to do with the undefined <code>&amp;hellip;</code> entity, the parser just silently dropped it. The text content of the <code>title</code> element becomes <code>'dive into '</code>.
+<li>As you can see from the serialization, the <code>&amp;hellip;</code> entity didn&#8217;t get moved; it was simply dropped.
+</ol>
+
+<p>It is important to reiterate that there is <strong>no guarantee of interoperability</strong> with &#8220;recovering&#8221; <abbr>XML</abbr> parsers. A different parser might decide that it recognized the <code>&amp;hellip;</code> entity from <abbr>HTML</abbr>, and replace it with <code>&amp;amp;hellip;</code> instead. Is that &#8220;better&#8221;? Maybe. Is it &#8220;more correct&#8221;? No, they are both equally incorrect. The correct behavior (according to the <abbr>XML</abbr> specification) is to halt and catch fire. If you&#8217;ve decided not to do that, you&#8217;re on your own.
+
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Further Reading</h2>
+
+<ul>
+<li><a href=http://en.wikipedia.org/wiki/XML><abbr>XML</abbr> on Wikipedia.org</a>
+<li><a href=http://docs.python.org/3.1/library/xml.etree.elementtree.html>The ElementTree <abbr>XML</abbr> API</a>
+<li><a href=http://effbot.org/zone/element.htm>Elements and Element Trees</a>
+<li><a href=http://effbot.org/zone/element-xpath.htm>XPath Support in ElementTree</a>
+<li><a href=http://effbot.org/zone/element-iterparse.htm>The ElementTree iterparse Function</a>
+<li><a href=http://codespeak.net/lxml/><code>lxml</code></a>
+<li><a href=http://codespeak.net/lxml/1.3/parsing.html>Parsing <abbr>XML</abbr> and <abbr>HTML</abbr> with <code>lxml</code></a>
+<li><a href=http://codespeak.net/lxml/1.3/xpathxslt.html>XPath and <abbr>XSLT</abbr> with <code>lxml</code></a>
+<li><a href=http://github.com/galvez/xmlwitch/tree/master>xmlwitch</a>
+</ul>
+
+<p class=v><a rel=prev href=files.html title='back to &#8220;Files&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=serializing.html title='onward to &#8220;Serializing Python Objects&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

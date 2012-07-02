@@ -1,0 +1,37 @@
+Python 3.1:
+  OrderedDict
+  "".format() auto-numbered format specifiers
+  unittest: assertRaises context block (?)
+  importlib
+  (possibly) yield from
+  (possibly) IP address library
+
+http://www.alanwood.net/unicode/general_punctuation.html
+http://www.alanwood.net/unicode/arrows.html
+http://www.alanwood.net/unicode/miscellaneous_technical.html
+http://www.alanwood.net/unicode/miscellaneous_symbols.html
+http://www.alanwood.net/unicode/mathematical_operators.html
+http://www.alanwood.net/unicode/dingbats.html
+
+&#x26A0; - white warning sign (triangle with exclamation point inside)
+&#x263A; - white smiling face
+&#x261C; - white left pointing index
+&#x261E; - white right pointing index
+&#x261A; - black left pointing index
+&#x261B; - black right pointing index
+&#x2620; - skull and crossbones
+&#x2611; - ballot box with checkmark
+&#x2690; - white flag
+&#x2691; - black flag
+&#x235F; - APL circle star
+&#x272A; - circled white star
+&#x2234; - therefore (three dots in a triangle)
+&#x203D; - interrobang
+&#x275D; - heavy double turned left comma quotation mark ornament
+&#x275E; - heavy double turned right comma quotation mark ornament
+&#x25C9; - fisheye
+&#x2365; - APL FUNCTIONAL SYMBOL CIRCLE DIAERESIS
+&#x203B; - reference mark
+
+http://docs.python.org/dev/library/turtle.html
+http://svn.python.org/projects/python/trunk/Demo/turtle/

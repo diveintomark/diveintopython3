@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Special Method Names - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<body id=appb>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#special-method-names>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=pro>&#x2666;&#x2666;&#x2666;&#x2666;&#x2666;</span>
+<h1>Special Method Names</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> My specialty is being right when other people are wrong. <span class=u>&#x275E;</span><br>&mdash; <a href=http://en.wikiquote.org/wiki/George_Bernard_Shaw>George Bernard Shaw</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Throughout this book, you&#8217;ve seen examples of &#8220;special methods&#8221;&nbsp;&mdash;&nbsp;certain &#8220;magic&#8221; methods that Python invokes when you use certain syntax. Using special methods, your classes can act like sets, like dictionaries, like functions, like iterators, or even like numbers. This appendix serves both as a reference for the special methods we&#8217;ve seen already and a brief introduction to some of the more esoteric ones.
+
+<h2 id=basics>Basics</h2>
+
+<p>If you&#8217;ve read the <a href=iterators.html#divingin>introduction to classes</a>, you&#8217;ve already seen the most common special method: the <code>__init__()</code> method. The majority of classes I write end up needing some initialization. There are also a few other basic special methods that are especially useful for debugging your custom classes.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>&#x2460;
+<td>to initialize an instance
+<td><code class=pp>x = MyClass()</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__init__><code>x.<dfn>__init__</dfn>()</code></a>
+<tr><th>&#x2461;
+<td>the &#8220;official&#8221; representation as a string
+<td><code class=pp><dfn>repr</dfn>(x)</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__repr__><code>x.<dfn>__repr__</dfn>()</code></a>
+<tr><th>&#x2462;
+<td>the &#8220;informal&#8221; value as a string
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__str__><code><dfn>str</dfn>(x)</code></a>
+<td><code class=pp>x.<dfn>__str__</dfn>()</code>
+<tr><th>&#x2463;
+<td>the &#8220;informal&#8221; value as a byte array
+<td><code class=pp><dfn>bytes</dfn>(x)</code>
+<td><code class=pp>x.<dfn>__bytes__</dfn>()</code>
+<tr><th>&#x2464;
+<td>the value as a formatted string
+<td><code class=pp>format(x, <var>format_spec</var>)</code>
+<td><a href=http://docs.python.org/3.1/reference/datamodel.html#object.__format__><code>x.<dfn>__format__</dfn>(<var>format_spec</var>)</code></a>
+</table>
+<ol>
+<li>The <code>__init__()</code> method is called <em>after</em> the instance is created. If you want to control the actual creation process, use <a href=#esoterica>the <code>__new__()</code> method</a>.
+<li>By convention, the <code>__repr__()</code> method should return a string that is a valid Python expression.
+<li>The <code>__str__()</code> method is also called when you <code>print(x)</code>.
+<li><em>New in Python 3</em>, since the <code>bytes</code> type was introduced.
+<li>By convention, <var>format_spec</var> should conform to the <a href=http://www.python.org/doc/3.1/library/string.html#formatspec>Format Specification Mini-Language</a>. <code>decimal.py</code> in the Python standard library provides its own <code>__format__()</code> method.
+</ol>
+
+<h2 id=acts-like-iterator>Classes That Act Like Iterators</h2>
+
+<p>In <a href=iterators.html>the Iterators chapter</a>, you saw how to build an iterator from the ground up using the <code>__iter__()</code> and <code>__next__()</code> methods.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>&#x2460;
+<td>to iterate through a sequence
+<td><code class=pp><dfn>iter</dfn>(seq)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__iter__><code>seq.<dfn>__iter__</dfn>()</code></a>
+<tr><th>&#x2461;
+<td>to get the next value from an iterator
+<td><code class=pp><dfn>next</dfn>(seq)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__next__><code>seq.<dfn>__next__</dfn>()</code></a>
+<tr><th>&#x2462;
+<td>to create an iterator in reverse order
+<td><code class=pp><dfn>reversed</dfn>(seq)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__reversed__><code>seq.<dfn>__reversed__</dfn>()</code></a>
+</table>
+<ol>
+<li>The <code>__iter__()</code> method is called whenever you create a new iterator. It&#8217;s a good place to initialize the iterator with initial values.
+<li>The <code>__next__()</code> method is called whenever you retrieve the next value from an iterator.
+<li>The <code>__reversed__()</code> method is uncommon. It takes an existing sequence and returns an iterator that yields the items in the sequence in reverse order, from last to first.
+</ol>
+
+<p>As you saw in <a href=iterators.html#a-fibonacci-iterator>the Iterators chapter</a>, a <code>for</code> loop can act on an iterator. In this loop:
+
+<pre class='nd pp'><code>for x in seq:
+    print(x)</code></pre>
+
+<p>Python 3 will call <code>seq.__iter__()</code> to create an iterator, then call the <code>__next__()</code> method on that iterator to get each value of <var>x</var>. When the <code>__next__()</code> method raises a <code>StopIteration</code> exception, the <code>for</code> loop ends gracefully.
+
+<h2 id=computed-attributes>Computed Attributes</h2>
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>&#x2460;
+<td>to get a computed attribute (unconditionally)
+<td><code class=pp>x.my_property</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__getattribute__><code>x.<dfn>__getattribute__</dfn>(<var>'my_property'</var>)</code></a>
+<tr><th>&#x2461;
+<td>to get a computed attribute (fallback)
+<td><code class=pp>x.my_property</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__getattr__><code>x.<dfn>__getattr__</dfn>(<var>'my_property'</var>)</code></a>
+<tr><th>&#x2462;
+<td>to set an attribute
+<td><code class=pp>x.my_property = value</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__setattr__><code>x.<dfn>__setattr__</dfn>(<var>'my_property'</var>, <var>value</var>)</code></a>
+<tr><th>&#x2463;
+<td>to delete an attribute
+<td><code class=pp>del x.my_property</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__delattr__><code>x.<dfn>__delattr__</dfn>(<var>'my_property'</var>)</code></a>
+<tr><th>&#x2464;
+<td>to list all attributes and methods
+<td><code class=pp>dir(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__dir__><code>x.<dfn>__dir__</dfn>()</code></a>
+</table>
+<ol>
+<li>If your class defines a <code>__getattribute__()</code> method, Python will call it on <em>every reference to any attribute or method name</em> (except special method names, since that would cause an unpleasant infinite loop).
+<li>If your class defines a <code>__getattr__()</code> method, Python will call it only after looking for the attribute in all the normal places. If an instance <var>x</var> defines an attribute <var>color</var>, <code>x.color</code> will <em>not</em> call <code>x.__getattr__('color')</code>; it will simply return the already-defined value of <var>x.color</var>.
+<li>The <code>__setattr__()</code> method is called whenever you assign a value to an attribute.
+<li>The <code>__delattr__()</code> method is called whenever you delete an attribute.
+<li>The <code>__dir__()</code> method is useful if you define a <code>__getattr__()</code> or <code>__getattribute__()</code> method. Normally, calling <code>dir(x)</code> would only list the regular attributes and methods. If your <code>__getattr__()</code> method handles a <var>color</var> attribute dynamically, <code>dir(x)</code> would not list <var>color</var> as one of the available attributes. Overriding the <code>__dir__()</code> method allows you to list <var>color</var> as an available attribute, which is helpful for other people who wish to use your class without digging into the internals of it.
+</ol>
+
+<p>The distinction between the <code>__getattr__()</code> and <code>__getattribute__()</code> methods is subtle but important. I can explain it with two examples:
+
+<pre class=screen>
+<code>class Dynamo:
+    def __getattr__(self, key):
+<a>        if key == 'color':         <span class=u>&#x2460;</span></a>
+            return 'PapayaWhip'
+        else:
+<a>            raise AttributeError   <span class=u>&#x2461;</span></a></code>
+
+<samp class=p>>>> </samp><kbd class=pp>dyn = Dynamo()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2462;</span></a>
+<samp class=pp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd class=pp>dyn.color = 'LemonChiffon'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2463;</span></a>
+<samp class=pp>'LemonChiffon'</samp></pre>
+<ol>
+<li>The attribute name is passed into the <code>__getattr__()</code> method as a string.  If the name is <code>'color'</code>, the method returns a value. (In this case, it&#8217;s just a hard-coded string, but you would normally do some sort of computation and return the result.)
+<li>If the attribute name is unknown, the <code>__getattr__()</code> method needs to raise an <code>AttributeError</code> exception, otherwise your code will silently fail when accessing undefined attributes. (Technically, if the method doesn&#8217;t raise an exception or explicitly return a value, it returns <code>None</code>, the Python null value. This means that <em>all</em> attributes not explicitly defined will be <code>None</code>, which is almost certainly not what you want.)
+<li>The <var>dyn</var> instance does not have an attribute named <var>color</var>, so the <code>__getattr__()</code> method is called to provide a computed value.
+<li>After explicitly setting <var>dyn.color</var>, the <code>__getattr__()</code> method will no longer be called to provide a value for <var>dyn.color</var>, because <var>dyn.color</var> is already defined on the instance.
+</ol>
+
+<p>On the other hand, the <code>__getattribute__()</code> method is absolute and unconditional.
+
+<pre class=screen>
+<code>class SuperDynamo:
+    def __getattribute__(self, key):
+        if key == 'color':
+            return 'PapayaWhip'
+        else:
+            raise AttributeError</code>
+
+<samp class=p>>>> </samp><kbd class=pp>dyn = SuperDynamo()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2460;</span></a>
+<samp class=pp>'PapayaWhip'</samp>
+<samp class=p>>>> </samp><kbd class=pp>dyn.color = 'LemonChiffon'</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dyn.color</kbd>                      <span class=u>&#x2461;</span></a>
+<samp class=pp>'PapayaWhip'</samp></pre>
+<ol>
+<li>The <code>__getattribute__()</code> method is called to provide a value for <var>dyn.color</var>.
+<li>Even after explicitly setting <var>dyn.color</var>, the <code>__getattribute__()</code> method <em>is still called</em> to provide a value for <var>dyn.color</var>. If present, the <code>__getattribute__()</code> method <em>is called unconditionally</em> for every attribute and method lookup, even for attributes that you explicitly set after creating an instance.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If your class defines a <code>__getattribute__()</code> method, you probably also want to define a <code>__setattr__()</code> method and coordinate between them to keep track of attribute values. Otherwise, any attributes you set after creating an instance will disappear into a black hole.
+</blockquote>
+
+<p>You need to be extra careful with the <code>__getattribute__()</code> method, because it is also called when Python looks up a method name on your class.
+
+<pre class=screen>
+<code>class Rastan:
+    def __getattribute__(self, key):
+<a>        raise AttributeError           <span class=u>&#x2460;</span></a>
+    def swim(self):
+        pass</code>
+
+<samp class=p>>>> </samp><kbd class=pp>hero = Rastan()</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>hero.swim()</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 3, in __getattribute__
+AttributeError</samp></pre>
+<ol>
+<li>This class defines a <code>__getattribute__()</code> method which always raises an <code>AttributeError</code> exception. No attribute or method lookups will succeed.
+<li>When you call <code>hero.swim()</code>, Python looks for a <code>swim()</code> method in the <code>Rastan</code> class. This lookup goes through the <code>__getattribute__()</code> method, <em>because all attribute and method lookups go through the <code>__getattribute__()</code> method</em>. In this case, the <code>__getattribute__()</code> method raises an <code>AttributeError</code> exception, so the method lookup fails, so the method call fails.
+</ol>
+
+<h2 id=acts-like-function>Classes That Act Like Functions</h2>
+
+<p>You can make an instance of a class callable&nbsp;&mdash;&nbsp;exactly like a function is callable&nbsp;&mdash;&nbsp;by defining the <code>__call__()</code> method.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>to &#8220;call&#8221; an instance like a function
+<td><code class=pp>my_instance()</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__call__><code>my_instance.<dfn>__call__</dfn>()</code></a>
+</table>
+
+<p>The <a href=http://docs.python.org/3.1/library/zipfile.html><code>zipfile</code> module</a> uses this to define a class that can <dfn>decrypt</dfn> an <dfn>encrypted</dfn> <dfn>zip</dfn> file with a given password. The zip <dfn>decryption</dfn> algorithm requires you to store state during decryption. Defining the decryptor as a class allows you to maintain this state within a single instance of the decryptor class.  The state is initialized in the <code>__init__()</code> method and updated as the file is <dfn>decrypted</dfn>. But since the class is also &#8220;callable&#8221; like a function, you can pass the instance as the first argument of the <code>map()</code> function, like so:
+
+<pre class=pp><code># excerpt from zipfile.py
+class _ZipDecrypter:
+.
+.
+.
+    def __init__(self, pwd):
+<a>        self.key0 = 305419896               <span class=u>&#x2460;</span></a>
+        self.key1 = 591751049
+        self.key2 = 878082192
+        for p in pwd:
+            self._UpdateKeys(p)
+
+<a>    def __call__(self, c):                  <span class=u>&#x2461;</span></a>
+        assert isinstance(c, int)
+        k = self.key2 | 2
+        c = c ^ (((k * (k^1)) >> 8) &amp; 255)
+        self._UpdateKeys(c)
+        return c
+.
+.
+.
+<a>zd = _ZipDecrypter(pwd)                    <span class=u>&#x2462;</span></a>
+bytes = zef_file.read(12)
+<a>h = list(map(zd, bytes[0:12]))             <span class=u>&#x2463;</span></a></code></pre>
+<ol>
+<li>The <code>_ZipDecryptor</code> class maintains state in the form of three rotating keys, which are later updated in the <code>_UpdateKeys()</code> method (not shown here).
+<li>The class defines a <code>__call__()</code> method, which makes class instances callable like functions. In this case, the <code>__call__()</code> method decrypts a single byte of the zip file, then updates the rotating keys based on the byte that was decrypted.
+<li><var>zd</var> is an instance of the <code>_ZipDecryptor</code> class. The <var>pwd</var> variable is passed to the <code>__init__()</code> method, where it is stored and used to update the rotating keys for the first time.
+<li>Given the first 12 bytes of a zip file, decrypt them by mapping the bytes to <var>zd</var>, in effect &#8220;calling&#8221; <var>zd</var> 12 times, which invokes the <code>__call__()</code> method 12 times, which updates its internal state and returns a resulting byte 12 times.
+</ol>
+
+<h2 id=acts-like-set>Classes That Act Like Sets</h2>
+
+<p>If your class acts as a container for a set of values&nbsp;&mdash;&nbsp;that is, if it makes sense to ask whether your class &#8220;contains&#8221; a value&nbsp;&mdash;&nbsp;then it should probably define the following special methods that make it act like a set.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>the number of items
+<td><code class=pp><dfn>len</dfn>(s)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__len__><code>s.<dfn>__len__</dfn>()</code></a>
+<tr><th>
+<td>to know whether it contains a specific value
+<td><code class=pp>x in s</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__contains__><code>s.<dfn>__contains__</dfn>(<var>x</var>)</code></a>
+</table>
+
+<p id=acts-like-set-example>The <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> uses these methods in its <code>FieldStorage</code> class, which represents all of the form fields or query parameters submitted to a dynamic web page.
+
+<pre class=pp><code># A script which responds to http://example.com/search?q=cgi
+import cgi
+fs = cgi.FieldStorage()
+<a>if 'q' in fs:                                               <span class=u>&#x2460;</span></a>
+  do_search()
+
+# An excerpt from cgi.py that explains how that works
+class FieldStorage:
+.
+.
+.
+<a>    def __contains__(self, key):                            <span class=u>&#x2461;</span></a>
+        if self.list is None:
+            raise TypeError('not indexable')
+<a>        return any(item.name == key for item in self.list)  <span class=u>&#x2462;</span></a>
+
+<a>    def __len__(self):                                      <span class=u>&#x2463;</span></a>
+<a>        return len(self.keys())                             <span class=u>&#x2464;</span></a></code></pre>
+<ol>
+<li>Once you create an instance of the <code>cgi.FieldStorage</code> class, you can use the &#8220;<code>in</code>&#8221; operator to check whether a particular parameter was included in the query string.
+<li>The <code>__contains__()</code> method is the magic that makes this work. When you say <code>if 'q' in fs</code>, Python looks for the <code>__contains__()</code> method on the <var>fs</var> object, which is defined in <code>cgi.py</code>. The value <code>'q'</code> is passed into the <code>__contains__()</code> method as the <var>key</var> argument.
+<li>The <code>any()</code> function takes a <a href=advanced-iterators.html#generator-expressions>generator expression</a> and returns <code>True</code> if the generator spits out any items. The <code>any()</code> function is smart enough to stop as soon as the first match is found.
+<li>The same <code>FieldStorage</code> class also supports returning its length, so you can say <code>len(<var>fs</var>)</code> and it will call the <code>__len__()</code> method on the <code>FieldStorage</code> class to return the number of query parameters that it identified.
+<li>The <code>self.keys()</code> method checks whether <code>self.list is None</code>, so the <code>__len__</code> method doesn&#8217;t need to duplicate this error checking.
+</ol>
+
+<h2 id=acts-like-dict>Classes That Act Like Dictionaries</h2>
+
+<p>Extending the previous section a bit, you can define classes that not only respond to the &#8220;<code>in</code>&#8221; operator and the <code>len()</code> function, but they act like full-blown dictionaries, returning values based on keys.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>to get a value by its key
+<td><code class=pp>x[key]</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__getitem__><code>x.<dfn>__getitem__</dfn>(<var>key</var>)</code></a>
+<tr><th>
+<td>to set a value by its key
+<td><code class=pp>x[key] = value</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__setitem__><code>x.<dfn>__setitem__</dfn>(<var>key</var>, <var>value</var>)</code></a>
+<tr><th>
+<td>to delete a key-value pair
+<td><code class=pp>del x[key]</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__delitem__><code>x.<dfn>__delitem__</dfn>(<var>key</var>)</code></a>
+<tr><th>
+<td>to provide a default value for missing keys
+<td><code class=pp>x[nonexistent_key]</code>
+<td><a href=http://docs.python.org/3.1/library/collections.html#collections.defaultdict.__missing__><code>x.<dfn>__missing__</dfn>(<var>nonexistent_key</var>)</code></a>
+</table>
+
+<p>The <a href=#acts-like-set-example><code>FieldStorage</code> class</a> from the <a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a> also defines these special methods, which means you can do things like this:
+
+<pre class=pp><code># A script which responds to http://example.com/search?q=cgi
+import cgi
+fs = cgi.FieldStorage()
+if 'q' in fs:
+<a>  do_search(fs['q'])                              <span class=u>&#x2460;</span></a>
+
+# An excerpt from cgi.py that shows how it works
+class FieldStorage:
+.
+.
+.
+<a>    def __getitem__(self, key):                   <span class=u>&#x2461;</span></a>
+        if self.list is None:
+            raise TypeError('not indexable')
+        found = []
+        for item in self.list:
+            if item.name == key: found.append(item)
+        if not found:
+            raise KeyError(key)
+        if len(found) == 1:
+            return found[0]
+        else:
+            return found</code></pre>
+<ol>
+<li>The <var>fs</var> object is an instance of <code>cgi.FieldStorage</code>, but you can still evaluate expressions like <code>fs['q']</code>.
+<li><code>fs['q']</code> invokes the <code>__getitem__()</code> method with the <var>key</var> parameter set to <code>'q'</code>. It then looks up in its internally maintained list of query parameters (<var>self.list</var>) for an item whose <code>.name</code> matches the given key.
+</ol>
+
+<h2 id=acts-like-number>Classes That Act Like Numbers</h2>
+
+<p>Using the appropriate special methods, you can define your own classes that act like numbers. That is, you can add them, subtract them, and perform other mathematical operations on them. This is how <dfn>fractions</dfn> are implemented&nbsp;&mdash;&nbsp;the <code><dfn>Fraction</dfn></code> class implements these special methods, then you can do things like this:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x / 3</kbd>
+<samp class=pp>Fraction(1, 9)</samp></pre>
+
+<p>Here is the comprehensive list of special methods you need to implement a number-like class.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>addition
+<td><code class=pp>x + y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__add__><code>x.<dfn>__add__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>subtraction
+<td><code class=pp>x - y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__sub__><code>x.<dfn>__sub__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>multiplication
+<td><code class=pp>x * y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__mul__><code>x.<dfn>__mul__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>division
+<td><code class=pp>x / y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__truediv__><code>x.<dfn>__truediv__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>floor division
+<td><code>x // y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__floordiv__><code>x.<dfn>__floordiv__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>modulo (remainder)
+<td><code class=pp>x % y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__mod__><code>x.<dfn>__mod__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>floor division <i class=baa>&amp;</i> modulo
+<td><code class=pp>divmod(x, y)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__divmod__><code>x.<dfn>__divmod__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>raise to power
+<td><code class=pp>x ** y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__pow__><code>x.<dfn>__pow__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>left bit-shift
+<td><code class=pp>x &lt;&lt; y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__lshift__><code>x.<dfn>__lshift__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>right bit-shift
+<td><code class=pp>x >> y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rshift__><code>x.<dfn>__rshift__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>bitwise <code>and</code>
+<td><code class=pp>x &amp; y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__and__><code>x.<dfn>__and__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>bitwise <code>xor</code>
+<td><code class=pp>x ^ y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__xor__><code>x.<dfn>__xor__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>bitwise <code>or</code>
+<td><code class=pp>x | y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__or__><code>x.<dfn>__or__</dfn>(<var>y</var>)</code></a>
+</table>
+
+<p>That&#8217;s all well and good if <var>x</var> is an instance of a class that implements those methods. But what if it doesn&#8217;t implement one of them? Or worse, what if it implements it, but it can&#8217;t handle certain kinds of arguments? For example:
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>from fractions import Fraction</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x = Fraction(1, 3)</kbd>
+<samp class=p>>>> </samp><kbd class=pp>1 / x</kbd>
+<samp class=pp>Fraction(3, 1)</samp></pre>
+
+<p>This is <em>not</em> a case of taking a <code>Fraction</code> and dividing it by an integer (as in the previous example). That case was straightforward: <code>x / 3</code> calls <code>x.__truediv__(3)</code>, and the <code>__truediv__()</code> method of the <code>Fraction</code> class handles all the math. But integers don&#8217;t &#8220;know&#8221; how to do arithmetic operations with fractions. So why does this example work?
+
+<p>There is a second set of arithmetic special methods with <i>reflected operands</i>. Given an arithmetic operation that takes two operands (<i>e.g.</i> <code>x / y</code>), there are two ways to go about it:
+
+<ol>
+<li>Tell <var>x</var> to divide itself by <var>y</var>, or
+<li>Tell <var>y</var> to divide itself into <var>x</var>
+</ol>
+
+<p>The set of special methods above take the first approach: given <code>x / y</code>, they provide a way for <var>x</var> to say &#8220;I know how to divide myself by <var>y</var>.&#8221; The following set of special methods tackle the second approach: they provide a way for <var>y</var> to say &#8220;I know how to be the denominator and divide myself into <var>x</var>.&#8221;
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>addition
+<td><code class=pp>x + y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__radd__><code>y.<dfn>__radd__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>subtraction
+<td><code class=pp>x - y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rsub__><code>y.<dfn>__rsub__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>multiplication
+<td><code class=pp>x * y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rmul__><code>y.<dfn>__rmul__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>division
+<td><code class=pp>x / y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rtruediv__><code>y.<dfn>__rtruediv__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>floor division
+<td><code>x // y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rfloordiv__><code>y.<dfn>__rfloordiv__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>modulo (remainder)
+<td><code class=pp>x % y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rmod__><code>y.<dfn>__rmod__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>floor division <i class=baa>&amp;</i> modulo
+<td><code class=pp>divmod(x, y)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rdivmod__><code>y.<dfn>__rdivmod__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>raise to power
+<td><code class=pp>x ** y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rpow__><code>y.<dfn>__rpow__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>left bit-shift
+<td><code class=pp>x &lt;&lt; y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rlshift__><code>y.<dfn>__rlshift__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>right bit-shift
+<td><code class=pp>x >> y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rrshift__><code>y.<dfn>__rrshift__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>bitwise <code>and</code>
+<td><code class=pp>x &amp; y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rand__><code>y.<dfn>__rand__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>bitwise <code>xor</code>
+<td><code class=pp>x ^ y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__rxor__><code>y.<dfn>__rxor__</dfn>(<var>x</var>)</code></a>
+<tr><th>
+<td>bitwise <code>or</code>
+<td><code class=pp>x | y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ror__><code>y.<dfn>__ror__</dfn>(<var>x</var>)</code></a>
+</table>
+
+<p>But wait! There&#8217;s more! If you&#8217;re doing &#8220;in-place&#8221; operations, like <code>x /= 3</code>, there are even more special methods you can define.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>in-place addition
+<td><code class=pp>x += y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__iadd__><code>x.<dfn>__iadd__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place subtraction
+<td><code class=pp>x -= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__isub__><code>x.<dfn>__isub__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place multiplication
+<td><code class=pp>x *= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__imul__><code>x.<dfn>__imul__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place division
+<td><code class=pp>x /= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__itruediv__><code>x.<dfn>__itruediv__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place floor division
+<td><code>x //= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ifloordiv__><code>x.<dfn>__ifloordiv__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place modulo
+<td><code class=pp>x %= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__imod__><code>x.<dfn>__imod__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place raise to power
+<td><code class=pp>x **= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ipow__><code>x.<dfn>__ipow__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place left bit-shift
+<td><code class=pp>x &lt;&lt;= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ilshift__><code>x.<dfn>__ilshift__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place right bit-shift
+<td><code class=pp>x >>= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__irshift__><code>x.<dfn>__irshift__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place bitwise <code>and</code>
+<td><code class=pp>x &amp;= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__iand__><code>x.<dfn>__iand__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place bitwise <code>xor</code>
+<td><code class=pp>x ^= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ixor__><code>x.<dfn>__ixor__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>in-place bitwise <code>or</code>
+<td><code class=pp>x |= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ior__><code>x.<dfn>__ior__</dfn>(<var>y</var>)</code></a>
+</table>
+
+<p>Note: for the most part, the in-place operation methods are not required. If you don&#8217;t define an in-place method for a particular operation, Python will try the methods. For example, to execute the expression <code>x /= y</code>, Python will:
+
+<ol>
+<li>Try calling <code>x.__itruediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, we&#8217;re done.
+<li>Try calling <code>x.__truediv__(<var>y</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value, just as if you had done <code> x = x / y</code> instead.
+<li>Try calling <code>y.__rtruediv__(<var>x</var>)</code>. If this method is defined and returns a value other than <code>NotImplemented</code>, the old value of <var>x</var> is discarded and replaced with the return value.
+</ol>
+
+<p>So you only need to define in-place methods like the <code>__itruediv__()</code> method if you want to do some special optimization for in-place operands. Otherwise Python will essentially reformulate the in-place operand to use a regular operand + a variable assignment.
+
+<p>There are also a few &#8220;unary&#8221; mathematical operations you can perform on number-like objects by themselves.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>negative number
+<td><code class=pp>-x</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__neg__><code>x.<dfn>__neg__</dfn>()</code></a>
+<tr><th>
+<td>positive number
+<td><code class=pp>+x</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__pos__><code>x.<dfn>__pos__</dfn>()</code></a>
+<tr><th>
+<td>absolute value
+<td><code class=pp>abs(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__abs__><code>x.<dfn>__abs__</dfn>()</code></a>
+<tr><th>
+<td>inverse
+<td><code class=pp>~x</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__invert__><code>x.<dfn>__invert__</dfn>()</code></a>
+<tr><th>
+<td>complex number
+<td><code class=pp>complex(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__complex__><code>x.<dfn>__complex__</dfn>()</code></a>
+<tr><th>
+<td>integer
+<td><code class=pp>int(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__int__><code>x.<dfn>__int__</dfn>()</code></a>
+<tr><th>
+<td>floating point number
+<td><code class=pp>float(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__float__><code>x.<dfn>__float__</dfn>()</code></a>
+<tr><th>
+<td>number rounded to nearest integer
+<td><code class=pp>round(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__round__><code>x.<dfn>__round__</dfn>()</code></a>
+<tr><th>
+<td>number rounded to nearest <var>n</var> digits
+<td><code class=pp>round(x, n)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__round__><code>x.<dfn>__round__</dfn>(n)</code></a>
+<tr><th>
+<td>smallest integer <code>>= x</code>
+<td><code class=pp>math.ceil(x)</code>
+<td><a href=http://docs.python.org/3.1/library/math.html#math.ceil><code>x.<dfn>__ceil__</dfn>()</code></a>
+<tr><th>
+<td>largest integer <code>&lt;= x</code>
+<td><code class=pp>math.floor(x)</code>
+<td><a href=http://docs.python.org/3.1/library/math.html#math.floor><code>x.<dfn>__floor__</dfn>()</code></a>
+<tr><th>
+<td>truncate <code>x</code> to nearest integer toward 0
+<td><code class=pp>math.trunc(x)</code>
+<td><a href=http://docs.python.org/3.1/library/math.html#math.trunc><code>x.<dfn>__trunc__</dfn>()</code></a>
+<tr><th><span class=inherit><a href=http://www.python.org/dev/peps/pep-0357/>PEP 357</a></span>
+<td>number as a list index
+<td><code class=pp>a_list[<var>x</var>]</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__index__><code>a_list[x.<dfn>__index__</dfn>()]</code></a>
+</table>
+
+<h2 id=rich-comparisons>Classes That Can Be Compared</h2>
+
+<p>I broke this section out from the previous one because comparisons are not strictly the purview of numbers. Many datatypes can be compared&nbsp;&mdash;&nbsp;strings, lists, even dictionaries. If you&#8217;re creating your own class and it makes sense to compare your objects to other objects, you can use the following special methods to implement comparisons.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>equality
+<td><code class=pp>x == y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__eq__><code>x.<dfn>__eq__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>inequality
+<td><code class=pp>x != y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ne__><code>x.<dfn>__ne__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>less than
+<td><code class=pp>x &lt; y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__lt__><code>x.<dfn>__lt__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>less than or equal to
+<td><code class=pp>x &lt;= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__le__><code>x.<dfn>__le__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>greater than
+<td><code class=pp>x >  y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__gt__><code>x.<dfn>__gt__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>greater than or equal to
+<td><code class=pp>x >= y</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__ge__><code>x.<dfn>__ge__</dfn>(<var>y</var>)</code></a>
+<tr><th>
+<td>truth value in a boolean context
+<td><code class=pp>if x:</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__bool__><code>x.<dfn>__bool__</dfn>()</code></a>
+</table>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you define a <code>__lt__()</code> method but no <code>__gt__()</code> method, Python will use the <code>__lt__()</code> method with operands swapped. However, Python will not combine methods. For example, if you define a <code>__lt__()</code> method and a <code>__eq__()</code> method and try to test whether <code>x &lt;= y</code>, Python will not call <code>__lt__()</code> and <code>__eq__()</code> in sequence. It will only call the <code>__le__()</code> method.
+</blockquote>
+
+<h2 id=pickle>Classes That Can Be Serialized</h2>
+<!--see http://docs.python.org/3.1/library/pickle.html:-->
+
+<p>Python supports <a href=serializing.html>serializing and unserializing arbitrary objects</a>. (Most Python references call this process &#8220;pickling&#8221; and &#8220;unpickling.&#8221;) This can be useful for saving state to a file and restoring it later. All of the <a href=native-datatypes.html>native datatypes</a> support pickling already. If you create a custom class that you want to be able to pickle, read up on <a href=http://docs.python.org/3.1/library/pickle.html>the pickle protocol</a> to see when and how the following special methods are called.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>a custom object copy
+<td><code class=pp>copy.copy(x)</code>
+<td><a href=http://docs.python.org/3.1/library/copy.html><code>x.<dfn>__copy__</dfn>()</code></a>
+<tr><th>
+<td>a custom object deepcopy
+<td><code class=pp>copy.deepcopy(x)</code>
+<td><a href=http://docs.python.org/3.1/library/copy.html><code>x.<dfn>__deepcopy__</dfn>()</code></a>
+<tr><th>*
+<td>to get an object&#8217;s state before pickling
+<td><code class=pp>pickle.dump(x, <var>file</var>)</code>
+<td><a href=http://docs.python.org/3.1/library/pickle.html#pickle-state><code>x.<dfn>__getstate__</dfn>()</code></a>
+<tr><th>*
+<td>to serialize an object
+<td><code class=pp>pickle.dump(x, <var>file</var>)</code>
+<td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__reduce__</dfn>()</code></a>
+<tr><th>*
+<td>to serialize an object (new pickling protocol)
+<td><code class=pp>pickle.dump(x, <var>file</var>, <var>protocol_version</var>)</code>
+<td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__reduce_ex__</dfn>(<var>protocol_version</var>)</code></a>
+<tr><th>*
+<td>control over how an object is created during unpickling
+<td><code class=pp>x = pickle.load(<var>file</var>)</code>
+<td><a href=http://docs.python.org/3.1/library/pickle.html#pickling-class-instances><code>x.<dfn>__getnewargs__</dfn>()</code></a>
+<tr><th>*
+<td>to restore an object&#8217;s state after unpickling
+<td><code class=pp>x = pickle.load(<var>file</var>)</code>
+<td><a href=http://docs.python.org/3.1/library/pickle.html#pickle-state><code>x.<dfn>__setstate__</dfn>()</code></a>
+</table>
+
+<p>* To recreate a serialized object, Python needs to create a new object that looks like the serialized object, then set the values of all the attributes on the new object. The <code>__getnewargs__()</code> method controls how the object is created, then the <code>__setstate__()</code> method controls how the attribute values are restored.
+
+<h2 id=context-managers>Classes That Can Be Used in a <code>with</code> Block</h2>
+
+<p>A <code>with</code> block defines a <a href=http://www.python.org/doc/3.1/library/stdtypes.html#typecontextmanager>runtime context</a>; you &#8220;enter&#8221; the context when you execute the <code>with</code> statement, and you &#8220;exit&#8221; the context after you execute the last statement in the block.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>do something special when entering a <code>with</code> block
+<td><code class=pp>with x:</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__enter__><code>x.<dfn>__enter__</dfn>()</code></a>
+<tr><th>
+<td>do something special when leaving a <code>with</code> block
+<td><code class=pp>with x:</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__exit__><code>x.<dfn>__exit__</dfn>(<var>exc_type</var>, <var>exc_value</var>, <var>traceback</var>)</code></a>
+</table>
+
+<p>This is how the <a href=files.html#with><code>with <var>file</var></code> idiom</a> works.
+
+<pre class=pp><code># excerpt from io.py:
+def _checkClosed(self, msg=None):
+    '''Internal: raise an ValueError if file is closed
+    '''
+    if self.closed:
+        raise ValueError('I/O operation on closed file.'
+                         if msg is None else msg)
+
+def __enter__(self):
+    '''Context management protocol.  Returns self.'''
+<a>    self._checkClosed()                                <span class=u>&#x2460;</span></a>
+<a>    return self                                        <span class=u>&#x2461;</span></a>
+
+def __exit__(self, *args):
+    '''Context management protocol.  Calls close()'''
+<a>    self.close()                                       <span class=u>&#x2462;</span></a></code></pre>
+<ol>
+<li>The file object defines both an <code>__enter__()</code> and an <code>__exit__()</code> method. The <code>__enter__()</code> method checks that the file is open; if it&#8217;s not, the <code>_checkClosed()</code> method raises an exception.
+<li>The <code>__enter__()</code> method should almost always return <var>self</var>&nbsp;&mdash;&nbsp;this is the object that the <code>with</code> block will use to dispatch properties and methods.
+<li>After the <code>with</code> block, the file object automatically closes. How? In the <code>__exit__()</code> method, it calls <code>self.close()</code>.
+</ol>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>The <code>__exit__()</code> method will always be called, even if an exception is raised inside the <code>with</code> block. In fact, if an exception is raised, the exception information will be passed to the <code>__exit__()</code> method. See <a href=http://www.python.org/doc/3.1/reference/datamodel.html#with-statement-context-managers>With Statement Context Managers</a> for more details.
+</blockquote>
+
+<p>For more on context managers, see <a href=files.html#with>Closing Files Automatically</a> and <a href=files.html#redirect>Redirecting Standard Output</a>.
+
+<h2 id=esoterica>Really Esoteric Stuff</h2>
+
+<p>If you know what you&#8217;re doing, you can gain almost complete control over how classes are compared, how attributes are defined, and what kinds of classes are considered subclasses of your class.
+
+<table>
+<tr><th>Notes
+<th>You Want&hellip;
+<th>So You Write&hellip;
+<th>And Python Calls&hellip;
+<tr><th>
+<td>a class constructor
+<td><code class=pp>x = MyClass()</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__new__><code>x.<dfn>__new__</dfn>()</code></a>
+<tr><th>*
+<td>a class destructor
+<td><code class=pp>del x</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__del__><code>x.<dfn>__del__</dfn>()</code></a>
+<tr><th>
+<td>only a specific set of attributes to be defined
+<td>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__slots__><code>x.<dfn>__slots__</dfn>()</code></a>
+<tr><th>
+<td>a custom hash value
+<td><code class=pp>hash(x)</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__hash__><code>x.<dfn>__hash__</dfn>()</code></a>
+<tr><th>
+<td>to get a property&#8217;s value
+<td><code class=pp>x.color</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__get__><code>type(x).<dfn>__dict__</dfn>['color'].__get__(x, type(x))</code></a>
+<tr><th>
+<td>to set a property&#8217;s value
+<td><code class=pp>x.color = 'PapayaWhip'</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__set__><code>type(x).<dfn>__dict__</dfn>['color'].__set__(x, 'PapayaWhip')</code></a>
+<tr><th>
+<td>to delete a property
+<td><code class=pp>del x.color</code>
+<td><a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__delete__><code>type(x).<dfn>__dict__</dfn>['color'].__del__(x)</code></a>
+<tr><th>
+<td>to control whether an object is an instance of your class
+<td><code class=pp>isinstance(x, MyClass)</code>
+<td><a href=http://www.python.org/dev/peps/pep-3119/#overloading-isinstance-and-issubclass><code>MyClass.<dfn>__instancecheck__</dfn>(x)</code></a>
+<tr><th>
+<td>to control whether a class is a subclass of your class
+<td><code class=pp>issubclass(C, MyClass)</code>
+<td><a href=http://www.python.org/dev/peps/pep-3119/#overloading-isinstance-and-issubclass><code>MyClass.<dfn>__subclasscheck__</dfn>(C)</code></a>
+<tr><th>
+<td>to control whether a class is a subclass of your abstract base class
+<td><code class=pp>issubclass(C, MyABC)</code>
+<td><a href=http://docs.python.org/3.1/library/abc.html#abc.ABCMeta.__subclasshook__><code>MyABC.<dfn>__subclasshook__</dfn>(C)</code></a>
+</table>
+
+<p><sup>*</sup> Exactly when Python calls the <code>__del__()</code> special method <a href=http://www.python.org/doc/3.1/reference/datamodel.html#object.__del__>is incredibly complicated</a>. To fully understand it, you need to know how <a href=http://www.python.org/doc/3.1/reference/datamodel.html#objects-values-and-types>Python keeps track of objects in memory</a>. Here&#8217;s a good article on <a href=http://www.electricmonk.nl/log/2008/07/07/python-destructor-and-garbage-collection-notes/>Python garbage collection and class destructors</a>. You should also read about <a href=http://mindtrove.info/articles/python-weak-references/>weak references</a>, the <a href=http://docs.python.org/3.1/library/weakref.html><code>weakref</code> module</a>, and probably the <a href=http://www.python.org/doc/3.1/library/gc.html><code>gc</code> module</a> for good measure.
+
+<h2 id=furtherreading>Further Reading</h2>
+
+<p>Modules mentioned in this appendix:
+
+<ul>
+<li><a href=http://docs.python.org/3.1/library/zipfile.html><code>zipfile</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/cgi.html><code>cgi</code> module</a>
+<li><a href=http://www.python.org/doc/3.1/library/collections.html><code>collections</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/math.html><code>math</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/pickle.html><code>pickle</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/copy.html><code>copy</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/abc.html><code>abc</code> (&#8220;Abstract Base Classes&#8221;) module</a>
+</ul>
+
+<p>Other light reading:
+
+<ul>
+<li><a href=http://www.python.org/doc/3.1/library/string.html#formatspec>Format Specification Mini-Language</a>
+<li><a href=http://www.python.org/doc/3.1/reference/datamodel.html>Python data model</a>
+<li><a href=http://www.python.org/doc/3.1/library/stdtypes.html>Built-in types</a>
+<li><a href=http://www.python.org/dev/peps/pep-0357/><abbr>PEP</abbr> 357: Allowing Any Object to be Used for Slicing</a>
+<li><a href=http://www.python.org/dev/peps/pep-3119/><abbr>PEP</abbr> 3119: Introducing Abstract Base Classes</a>
+</ul>
+
+<p class=v><a href=porting-code-to-python-3-with-2to3.html rel=prev title='back to &#8220;Porting code to Python 3 with 2to3&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=where-to-go-from-here.html title='onward to &#8220;Where To Go From Here&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

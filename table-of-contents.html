@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Table of contents - Dive Into Python 3</title>
+<link rel=stylesheet href=dip3.css>
+<style>
+h1:before{content:''}
+ol,ul{font-weight:bold}
+li ol{font-weight:normal}
+#porting-code-to-python-3-with-2to3,#special-method-names,#where-to-go-from-here{list-style:none;margin:0 0 0 -2em}
+#porting-code-to-python-3-with-2to3 > ol,#special-method-names > ol,#where-to-go-from-here > ol{margin:0;padding:0 0 0 4.5em}
+#porting-code-to-python-3-with-2to3:before{content:'A. \00a0 \00a0'}
+#special-method-names:before{content:'B. \00a0 \00a0'}
+#where-to-go-from-here:before{content:'C. \00a0 \00a0'}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8><input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> Dive Into Python 3 <span class=u>&#8227;</span>
+<h1>Table of Contents</h1>
+<!-- toc -->
+<ol start=-1>
+<li id=whats-new><a href=whats-new.html>What&#8217;s New in &#8220;Dive Into Python 3&#8221;</a>
+<ol>
+<li><a href=whats-new.html#divingin><i>a.k.a.</i> &#8220;the minus level&#8221;</a>
+</ol>
+<li id=installing-python><a href=installing-python.html>Installing Python</a>
+<ol>
+<li><a href=installing-python.html#divingin>Diving In</a>
+<li><a href=installing-python.html#which>Which Python Is Right For You?</a>
+<li><a href=installing-python.html#windows>Installing on Microsoft Windows</a>
+<li><a href=installing-python.html#macosx>Installing on Mac OS X</a>
+<li><a href=installing-python.html#ubuntu>Installing on Ubuntu Linux</a>
+<li><a href=installing-python.html#other>Installing on Other Platforms</a>
+<li><a href=installing-python.html#idle>Using The Python Shell</a>
+<li><a href=installing-python.html#editors>Python Editors and IDEs</a>
+</ol>
+<li id=your-first-python-program><a href=your-first-python-program.html>Your First Python Program</a>
+<ol>
+<li><a href=your-first-python-program.html#divingin>Diving In</a>
+<li><a href=your-first-python-program.html#declaringfunctions>Declaring Functions</a>
+<ol>
+<li><a href=your-first-python-program.html#optional-arguments>Optional and Named Arguments</a>
+</ol>
+<li><a href=your-first-python-program.html#readability>Writing Readable Code</a>
+<ol>
+<li><a href=your-first-python-program.html#docstrings>Documentation Strings</a>
+</ol>
+<li><a href=your-first-python-program.html#importsearchpath>The <code>import</code> Search Path</a>
+<li><a href=your-first-python-program.html#everythingisanobject>Everything Is An Object</a>
+<ol>
+<li><a href=your-first-python-program.html#whatsanobject>What&#8217;s An Object?</a>
+</ol>
+<li><a href=your-first-python-program.html#indentingcode>Indenting Code</a>
+<li><a href=your-first-python-program.html#exceptions>Exceptions</a>
+<ol>
+<li><a href=your-first-python-program.html#importerror>Catching Import Errors</a>
+</ol>
+<li><a href=your-first-python-program.html#nameerror>Unbound Variables</a>
+<li><a href=your-first-python-program.html#case>Everything is Case-Sensitive</a>
+<li><a href=your-first-python-program.html#runningscripts>Running Scripts</a>
+<li><a href=your-first-python-program.html#furtherreading>Further Reading</a>
+</ol>
+<li id=native-datatypes><a href=native-datatypes.html>Native Datatypes</a>
+<ol>
+<li><a href=native-datatypes.html#divingin>Diving In</a>
+<li><a href=native-datatypes.html#booleans>Booleans</a>
+<li><a href=native-datatypes.html#numbers>Numbers</a>
+<ol>
+<li><a href=native-datatypes.html#number-coercion>Coercing Integers To Floats And Vice-Versa</a>
+<li><a href=native-datatypes.html#common-numerical-operations>Common Numerical Operations</a>
+<li><a href=native-datatypes.html#fractions>Fractions</a>
+<li><a href=native-datatypes.html#trig>Trigonometry</a>
+<li><a href=native-datatypes.html#numbers-in-a-boolean-context>Numbers In A Boolean Context</a>
+</ol>
+<li><a href=native-datatypes.html#lists>Lists</a>
+<ol>
+<li><a href=native-datatypes.html#creatinglists>Creating A List</a>
+<li><a href=native-datatypes.html#slicinglists>Slicing A List</a>
+<li><a href=native-datatypes.html#extendinglists>Adding Items To A List</a>
+<li><a href=native-datatypes.html#searchinglists>Searching For Values In A List</a>
+<li><a href=native-datatypes.html#removingfromlists>Removing Items From A List</a>
+<li><a href=native-datatypes.html#popgoestheweasel>Removing Items From A List: Bonus Round</a>
+<li><a href=native-datatypes.html#lists-in-a-boolean-context>Lists In A Boolean Context</a>
+</ol>
+<li><a href=native-datatypes.html#tuples>Tuples</a>
+<ol>
+<li><a href=native-datatypes.html#tuples-in-a-boolean-context>Tuples In A Boolean Context</a>
+<li><a href=native-datatypes.html#multivar>Assigning Multiple Values At Once</a>
+</ol>
+<li><a href=native-datatypes.html#sets>Sets</a>
+<ol>
+<li><a href=native-datatypes.html#creating-a-set>Creating A Set</a>
+<li><a href=native-datatypes.html#modifying-sets>Modifying A Set</a>
+<li><a href=native-datatypes.html#removing-from-sets>Removing Items From A Set</a>
+<li><a href=native-datatypes.html#common-set-operations>Common Set Operations</a>
+<li><a href=native-datatypes.html#sets-in-a-boolean-context>Sets In A Boolean Context</a>
+</ol>
+<li><a href=native-datatypes.html#dictionaries>Dictionaries</a>
+<ol>
+<li><a href=native-datatypes.html#creating-dictionaries>Creating A Dictionary</a>
+<li><a href=native-datatypes.html#modifying-dictionaries>Modifying A Dictionary</a>
+<li><a href=native-datatypes.html#mixed-value-dictionaries>Mixed-Value Dictionaries</a>
+<li><a href=native-datatypes.html#dictionaries-in-a-boolean-context>Dictionaries In A Boolean Context</a>
+</ol>
+<li><a href=native-datatypes.html#none><code>None</code></a>
+<ol>
+<li><a href=native-datatypes.html#none-in-a-boolean-context><code>None</code> In A Boolean Context</a>
+</ol>
+<li><a href=native-datatypes.html#furtherreading>Further Reading</a>
+</ol>
+<li id=comprehensions><a href=comprehensions.html>Comprehensions</a>
+<ol>
+<li><a href=comprehensions.html#divingin>Diving In</a>
+<li><a href=comprehensions.html#os>Working With Files And Directories</a>
+<ol>
+<li><a href=comprehensions.html#getcwd>The Current Working Directory</a>
+<li><a href=comprehensions.html#ospath>Working With Filenames and Directory Names</a>
+<li><a href=comprehensions.html#glob>Listing Directories</a>
+<li><a href=comprehensions.html#osstat>Getting File Metadata</a>
+<li><a href=comprehensions.html#abspath>Constructing Absolute Pathnames</a>
+</ol>
+<li><a href=comprehensions.html#listcomprehension>List Comprehensions</a>
+<li><a href=comprehensions.html#dictionarycomprehension>Dictionary Comprehensions</a>
+<ol>
+<li><a href=comprehensions.html#stupiddicttricks>Other Fun Stuff To Do With Dictionary Comprehensions</a>
+</ol>
+<li><a href=comprehensions.html#setcomprehension>Set Comprehensions</a>
+<li><a href=comprehensions.html#furtherreading>Further Reading</a>
+</ol>
+<li id=strings><a href=strings.html>Strings</a>
+<ol>
+<li><a href=strings.html#boring-stuff>Some Boring Stuff You Need To Understand Before You Can Dive In</a>
+<li><a href=strings.html#one-ring-to-rule-them-all>Unicode</a>
+<li><a href=strings.html#divingin>Diving In</a>
+<li><a href=strings.html#formatting-strings>Formatting Strings</a>
+<ol>
+<li><a href=strings.html#compound-field-names>Compound Field Names</a>
+<li><a href=strings.html#format-specifiers>Format Specifiers</a>
+</ol>
+<li><a href=strings.html#common-string-methods>Other Common String Methods</a>
+<ol>
+<li><a href=strings.html#slicingstrings>Slicing A String</a>
+</ol>
+<li><a href=strings.html#byte-arrays>Strings vs. Bytes</a>
+<li><a href=strings.html#py-encoding>Postscript: Character Encoding Of Python Source Code</a>
+<li><a href=strings.html#furtherreading>Further Reading</a>
+</ol>
+<li id=regular-expressions><a href=regular-expressions.html>Regular Expressions</a>
+<ol>
+<li><a href=regular-expressions.html#divingin>Diving In</a>
+<li><a href=regular-expressions.html#streetaddresses>Case Study: Street Addresses</a>
+<li><a href=regular-expressions.html#romannumerals>Case Study: Roman Numerals</a>
+<ol>
+<li><a href=regular-expressions.html#thousands>Checking For Thousands</a>
+<li><a href=regular-expressions.html#hundreds>Checking For Hundreds</a>
+</ol>
+<li><a href=regular-expressions.html#nmsyntax>Using The <code>{n,m}</code> Syntax</a>
+<ol>
+<li><a href=regular-expressions.html#tensandones>Checking For Tens And Ones</a>
+</ol>
+<li><a href=regular-expressions.html#verbosere>Verbose Regular Expressions</a>
+<li><a href=regular-expressions.html#phonenumbers>Case study: Parsing Phone Numbers</a>
+<li><a href=regular-expressions.html#summary>Summary</a>
+</ol>
+<li id=generators><a href=generators.html>Closures <i class=baa>&amp;</i> Generators</a>
+<ol>
+<li><a href=generators.html#divingin>Diving In</a>
+<li><a href=generators.html#i-know>I Know, Let&#8217;s Use Regular Expressions!</a>
+<li><a href=generators.html#a-list-of-functions>A List Of Functions</a>
+<li><a href=generators.html#a-list-of-patterns>A List Of Patterns</a>
+<li><a href=generators.html#a-file-of-patterns>A File Of Patterns</a>
+<li><a href=generators.html#generators>Generators</a>
+<ol>
+<li><a href=generators.html#a-fibonacci-generator>A Fibonacci Generator</a>
+<li><a href=generators.html#a-plural-rule-generator>A Plural Rule Generator</a>
+</ol>
+<li><a href=generators.html#furtherreading>Further Reading</a>
+</ol>
+<li id=iterators><a href=iterators.html>Classes <i class=baa>&amp;</i> Iterators</a>
+<ol>
+<li><a href=iterators.html#divingin>Diving In</a>
+<li><a href=iterators.html#defining-classes>Defining Classes</a>
+<ol>
+<li><a href=iterators.html#init-method>The <code>__init__()</code> Method</a>
+</ol>
+<li><a href=iterators.html#instantiating-classes>Instantiating Classes</a>
+<li><a href=iterators.html#instance-variables>Instance Variables</a>
+<li><a href=iterators.html#a-fibonacci-iterator>A Fibonacci Iterator</a>
+<li><a href=iterators.html#a-plural-rule-iterator>A Plural Rule Iterator</a>
+<li><a href=iterators.html#furtherreading>Further Reading</a>
+</ol>
+<li id=advanced-iterators><a href=advanced-iterators.html>Advanced Iterators</a>
+<ol>
+<li><a href=advanced-iterators.html#divingin>Diving In</a>
+<li><a href=advanced-iterators.html#re-findall>Finding all occurrences of a pattern</a>
+<li><a href=advanced-iterators.html#unique-items>Finding the unique items in a sequence</a>
+<li><a href=advanced-iterators.html#assert>Making assertions</a>
+<li><a href=advanced-iterators.html#generator-expressions>Generator expressions</a>
+<li><a href=advanced-iterators.html#permutations>Calculating Permutations&hellip; The Lazy Way!</a>
+<li><a href=advanced-iterators.html#more-itertools>Other Fun Stuff in the <code>itertools</code> Module</a>
+<li><a href=advanced-iterators.html#string-translate>A New Kind Of String Manipulation</a>
+<li><a href=advanced-iterators.html#eval>Evaluating Arbitrary Strings As Python Expressions</a>
+<li><a href=advanced-iterators.html#alphametics-finale>Putting It All Together</a>
+<li><a href=advanced-iterators.html#furtherreading>Further Reading</a>
+</ol>
+<li id=unit-testing><a href=unit-testing.html>Unit Testing</a>
+<ol>
+<li><a href=unit-testing.html#divingin>(Not) Diving In</a>
+<li><a href=unit-testing.html#romantest1>A Single Question</a>
+<li><a href=unit-testing.html#romantest2>&#8220;Halt And Catch Fire&#8221;</a>
+<li><a href=unit-testing.html#romantest3>More Halting, More Fire</a>
+<li><a href=unit-testing.html#romantest4>And One More Thing&hellip;</a>
+<li><a href=unit-testing.html#romantest5>A Pleasing Symmetry</a>
+<li><a href=unit-testing.html#romantest6>More Bad Input</a>
+</ol>
+<li id=refactoring><a href=refactoring.html>Refactoring</a>
+<ol>
+<li><a href=refactoring.html#divingin>Diving In</a>
+<li><a href=refactoring.html#changing-requirements>Handling Changing Requirements</a>
+<li><a href=refactoring.html#refactoring>Refactoring</a>
+<li><a href=refactoring.html#summary>Summary</a>
+</ol>
+<li id=files><a href=files.html>Files</a>
+<ol>
+<li><a href=files.html#divingin>Diving In</a>
+<li><a href=files.html#reading>Reading From Text Files</a>
+<ol>
+<li><a href=files.html#encoding>Character Encoding Rears Its Ugly Head</a>
+<li><a href=files.html#file-objects>Stream Objects</a>
+<li><a href=files.html#read>Reading Data From A Text File</a>
+<li><a href=files.html#close>Closing Files</a>
+<li><a href=files.html#with>Closing Files Automatically</a>
+<li><a href=files.html#for>Reading Data One Line At A Time</a>
+</ol>
+<li><a href=files.html#writing>Writing to Text Files</a>
+<ol>
+<li><a href=files.html#encoding-again>Character Encoding Again</a>
+</ol>
+<li><a href=files.html#binary>Binary Files</a>
+<li><a href=files.html#file-like-objects>Stream Objects From Non-File Sources</a>
+<ol>
+<li><a href=files.html#gzip>Handling Compressed Files</a>
+</ol>
+<li><a href=files.html#stdio>Standard Input, Output, and Error</a>
+<ol>
+<li><a href=files.html#redirect>Redirecting Standard Output</a>
+</ol>
+<li><a href=files.html#furtherreading>Further Reading</a>
+</ol>
+<li id=xml><a href=xml.html>XML</a>
+<ol>
+<li><a href=xml.html#divingin>Diving In</a>
+<li><a href=xml.html#xml-intro>A 5-Minute Crash Course in XML</a>
+<li><a href=xml.html#xml-structure>The Structure Of An Atom Feed</a>
+<li><a href=xml.html#xml-parse>Parsing XML</a>
+<ol>
+<li><a href=xml.html#xml-elements>Elements Are Lists</a>
+<li><a href=xml.html#xml-attributes>Attributes Are Dictonaries</a>
+</ol>
+<li><a href=xml.html#xml-find>Searching For Nodes Within An XML Document</a>
+<li><a href=xml.html#xml-lxml>Going Further With lxml</a>
+<li><a href=xml.html#xml-generate>Generating XML</a>
+<li><a href=xml.html#xml-custom-parser>Parsing Broken XML</a>
+<li><a href=xml.html#furtherreading>Further Reading</a>
+</ol>
+<li id=serializing><a href=serializing.html>Serializing Python Objects</a>
+<ol>
+<li><a href=serializing.html#divingin>Diving In</a>
+<ol>
+<li><a href=serializing.html#administrivia>A Quick Note About The Examples in This Chapter</a>
+</ol>
+<li><a href=serializing.html#dump>Saving Data to a Pickle File</a>
+<li><a href=serializing.html#load>Loading Data from a Pickle File</a>
+<li><a href=serializing.html#dumps>Pickling Without a File</a>
+<li><a href=serializing.html#protocol-versions>Bytes and Strings Rear Their Ugly Heads Again</a>
+<li><a href=serializing.html#debugging>Debugging Pickle Files</a>
+<li><a href=serializing.html#json>Serializing Python Objects to be Read by Other Languages</a>
+<li><a href=serializing.html#json-dump>Saving Data to a <abbr>JSON</abbr> File</a>
+<li><a href=serializing.html#json-types>Mapping of Python Datatypes to <abbr>JSON</abbr></a>
+<li><a href=serializing.html#json-unknown-types>Serializing Datatypes Unsupported by <abbr>JSON</abbr></a>
+<li><a href=serializing.html#json-load>Loading Data from a <abbr>JSON</abbr> File</a>
+<li><a href=serializing.html#furtherreading>Further Reading</a>
+</ol>
+<li id=http-web-services><a href=http-web-services.html>HTTP Web Services</a>
+<ol>
+<li><a href=http-web-services.html#divingin>Diving In</a>
+<li><a href=http-web-services.html#http-features>Features of HTTP</a>
+<ol>
+<li><a href=http-web-services.html#caching>Caching</a>
+<li><a href=http-web-services.html#last-modified>Last-Modified Checking</a>
+<li><a href=http-web-services.html#etags>ETag Checking</a>
+<li><a href=http-web-services.html#compression>Compression</a>
+<li><a href=http-web-services.html#redirects>Redirects</a>
+</ol>
+<li><a href=http-web-services.html#dont-try-this-at-home>How Not To Fetch Data Over HTTP</a>
+<li><a href=http-web-services.html#whats-on-the-wire>What&#8217;s On The Wire?</a>
+<li><a href=http-web-services.html#introducing-httplib2>Introducing <code>httplib2</code></a>
+<ol>
+<li><a href=http-web-services.html#why-bytes>A Short Digression To Explain Why <code>httplib2</code> Returns Bytes Instead of Strings</a>
+<li><a href=http-web-services.html#httplib2-caching>How <code>httplib2</code> Handles Caching</a>
+<li><a href=http-web-services.html#httplib2-etags>How <code>httplib2</code> Handles <code>Last-Modified</code> and <code>ETag</code> Headers</a>
+<li><a href=http-web-services.html#httplib2-compression>How <code>http2lib</code> Handles Compression</a>
+<li><a href=http-web-services.html#httplib2-redirects>How <code>httplib2</code> Handles Redirects</a>
+</ol>
+<li><a href=http-web-services.html#beyond-get>Beyond HTTP GET</a>
+<li><a href=http-web-services.html#beyond-post>Beyond HTTP POST</a>
+<li><a href=http-web-services.html#furtherreading>Further Reading</a>
+</ol>
+<li id=case-study-porting-chardet-to-python-3><a href=case-study-porting-chardet-to-python-3.html>Case Study: Porting <code>chardet</code> to Python 3</a>
+<ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#divingin>Diving In</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#faq.what>What is Character Encoding Auto-Detection?</a>
+<ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#faq.impossible>Isn&#8217;t That Impossible?</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#faq.who>Does Such An Algorithm Exist?</a>
+</ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#divingin2>Introducing The <code>chardet</code> Module</a>
+<ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#how.bom><abbr>UTF-n</abbr> With A <abbr>BOM</abbr></a>
+<li><a href=case-study-porting-chardet-to-python-3.html#how.esc>Escaped Encodings</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#how.mb>Multi-Byte Encodings</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#how.sb>Single-Byte Encodings</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#how.windows1252><code>windows-1252</code></a>
+</ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#running2to3>Running <code>2to3</code></a>
+<li><a href=case-study-porting-chardet-to-python-3.html#multifile-modules>A Short Digression Into Multi-File Modules</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#manual>Fixing What <code>2to3</code> Can&#8217;t</a>
+<ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#falseisinvalidsyntax><code>False</code> is invalid syntax</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#nomodulenamedconstants>No module named <code>constants</code></a>
+<li><a href=case-study-porting-chardet-to-python-3.html#namefileisnotdefined>Name <var>'file'</var> is not defined</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#cantconvertbytesobject>Can't convert <code>'bytes'</code> object to <code>str</code> implicitly</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></a>
+<li><a href=case-study-porting-chardet-to-python-3.html#ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</a>
+<li><a href=case-study-porting-chardet-to-python-3.html#unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></a>
+<li><a href=case-study-porting-chardet-to-python-3.html#reduceisnotdefined>Global name <code>'reduce'</code> is not defined</a>
+</ol>
+<li><a href=case-study-porting-chardet-to-python-3.html#summary>Summary</a>
+</ol>
+<li id=packaging><a href=packaging.html>Packaging Python Libraries</a>
+<ol>
+<li><a href=packaging.html#divingin>Diving In</a>
+<li><a href=packaging.html#cantdo>Things Distutils Can&#8217;t Do For You</a>
+<li><a href=packaging.html#structure>Directory Structure</a>
+<li><a href=packaging.html#setuppy>Writing Your Setup Script</a>
+<li><a href=packaging.html#trove>Classifying Your Package</a>
+<ol>
+<li><a href=packaging.html#trove-examples>Examples of Good Package Classifiers</a>
+</ol>
+<li><a href=packaging.html#manifest>Specifying Additional Files With A Manifest</a>
+<li><a href=packaging.html#check>Checking Your Setup Script for Errors</a>
+<li><a href=packaging.html#sdist>Creating a Source Distribution</a>
+<li><a href=packaging.html#bdist>Creating a Graphical Installer</a>
+<ol>
+<li><a href=packaging.html#linux>Building Installable Packages for Other Operating Systems</a>
+</ol>
+<li><a href=packaging.html#pypi>Adding Your Software to The Python Package Index</a>
+<li><a href=packaging.html#future>The Many Possible Futures of Python Packaging</a>
+<li><a href=packaging.html#furtherreading>Further Reading</a>
+</ol>
+<li id=porting-code-to-python-3-with-2to3><a href=porting-code-to-python-3-with-2to3.html>Porting Code to Python 3 with <code>2to3</code></a>
+<ol>
+<li><a href=porting-code-to-python-3-with-2to3.html#divingin>Diving In</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#print><code>print</code> statement</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#unicodeliteral>Unicode string literals</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#unicode><code>unicode()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#long><code>long</code> data type</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#ne>&lt;> comparison</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#has_key><code>has_key()</code> dictionary method</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#dict>Dictionary methods that return lists</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#imports>Modules that have been renamed or reorganized</a>
+<ol>
+<li><a href=porting-code-to-python-3-with-2to3.html#http><code>http</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#urllib><code>urllib</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#dbm><code>dbm</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#xmlrpc><code>xmlrpc</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#othermodules>Other modules</a>
+</ol>
+<li><a href=porting-code-to-python-3-with-2to3.html#import>Relative imports within a package</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#next><code>next()</code> iterator method</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#filter><code>filter()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#map><code>map()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#reduce><code>reduce()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#apply><code>apply()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#intern><code>intern()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#exec><code>exec</code> statement</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#execfile><code>execfile</code> statement</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#repr><code>repr</code> literals (backticks)</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#except><code>try...except</code> statement</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#raise><code>raise</code> statement</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#throw><code>throw</code> method on generators</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#xrange><code>xrange()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#raw_input><code>raw_input()</code> and <code>input()</code> global functions</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#funcattrs><code>func_*</code> function attributes</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#xreadlines><code>xreadlines()</code> I/O method</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#tuple_params><code>lambda</code> functions that take a tuple instead of multiple parameters</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#methodattrs>Special method attributes</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#nonzero><code>__nonzero__</code> special method</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#numliterals>Octal literals</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#renames><code>sys.maxint</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#callable><code>callable()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#zip><code>zip()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#standarderror><code>StandardError</code> exception</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#types><code>types</code> module constants</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#isinstance><code>isinstance()</code> global function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#basestring><code>basestring</code> datatype</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#itertools><code>itertools</code> module</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#sys_exc><code>sys.exc_type</code>, <code>sys.exc_value</code>, <code>sys.exc_traceback</code></a>
+<li><a href=porting-code-to-python-3-with-2to3.html#paren>List comprehensions over tuples</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#getcwdu><code>os.getcwdu()</code> function</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#metaclass>Metaclasses</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#nitpick>Matters of style</a>
+<ol>
+<li><a href=porting-code-to-python-3-with-2to3.html#set_literal><code>set()</code> literals (explicit)</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#buffer><code>buffer()</code> global function (explicit)</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#wscomma>Whitespace around commas (explicit)</a>
+<li><a href=porting-code-to-python-3-with-2to3.html#idioms>Common idioms (explicit)</a>
+</ol>
+</ol>
+<li id=special-method-names><a href=special-method-names.html>Special Method Names</a>
+<ol>
+<li><a href=special-method-names.html#divingin>Diving In</a>
+<li><a href=special-method-names.html#basics>Basics</a>
+<li><a href=special-method-names.html#acts-like-iterator>Classes That Act Like Iterators</a>
+<li><a href=special-method-names.html#computed-attributes>Computed Attributes</a>
+<li><a href=special-method-names.html#acts-like-function>Classes That Act Like Functions</a>
+<li><a href=special-method-names.html#acts-like-set>Classes That Act Like Sets</a>
+<li><a href=special-method-names.html#acts-like-dict>Classes That Act Like Dictionaries</a>
+<li><a href=special-method-names.html#acts-like-number>Classes That Act Like Numbers</a>
+<li><a href=special-method-names.html#rich-comparisons>Classes That Can Be Compared</a>
+<li><a href=special-method-names.html#pickle>Classes That Can Be Serialized</a>
+<li><a href=special-method-names.html#context-managers>Classes That Can Be Used in a <code>with</code> Block</a>
+<li><a href=special-method-names.html#esoterica>Really Esoteric Stuff</a>
+<li><a href=special-method-names.html#furtherreading>Further Reading</a>
+</ol>
+<li id=where-to-go-from-here><a href=where-to-go-from-here.html>Where to Go From Here</a>
+<ol>
+<li><a href=where-to-go-from-here.html#things-to-read>Things to Read</a>
+<li><a href=where-to-go-from-here.html#code>Where To Look For Python 3-Compatible Code</a>
+</ol>
+<li id=troubleshooting><a href=troubleshooting.html>Troubleshooting</a>
+<ol>
+<li><a href=troubleshooting.html#divingin>Diving In</a>
+<li><a href=troubleshooting.html#getting-to-the-command-line>Getting to the Command Line</a>
+<li><a href=troubleshooting.html#running-python-on-the-command-line>Running Python on the command line</a>
+</ol>
+</ol>
+<!-- /toc -->
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->

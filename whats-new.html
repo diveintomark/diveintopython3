@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>What's New In Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 -1}
+h3:before{content:''}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#whats-new>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<h1>What&#8217;s New In &#8220;Dive Into Python 3&#8221;</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> Isn&#8217;t this where we came in? <span class=u>&#x275E;</span><br>&mdash; Pink Floyd, The Wall
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin><i>a.k.a.</i> &#8220;the minus level&#8221;</h2>
+
+<p class=f>Are you already a Python programmer? Did you read the original &#8220;<a href=http://diveintopython.org/>Dive Into Python</a>&#8221;? Did you buy it on paper? (If so, thanks!) Are you ready to take the plunge into Python 3? &hellip; If so, read on. (If none of that is true, you&#8217;d be better off <a href=installing-python.html>starting at the beginning</a>.)
+
+<p>Python 3 comes with a script called <code>2to3</code>. Learn it. Love it. Use it. <a href=porting-code-to-python-3-with-2to3.html>Porting Code to Python 3 with <code>2to3</code></a> is a reference of all the things that the <code>2to3</code> tool can fix automatically. Since a lot of those things are syntax changes, it&#8217;s a good starting point to learn about a lot of the syntax changes in Python 3. (<code>print</code> is now a function, <code>`x`</code> doesn&#8217;t work, <i class=baa>&amp;</i>c.)
+
+<p><a href=case-study-porting-chardet-to-python-3.html>Case Study: Porting <code>chardet</code> to Python 3</a> documents my (ultimately successful) effort to port a non-trivial library from Python 2 to Python 3. It may help you; it may not. There&#8217;s a fairly steep learning curve, since you need to kind of understand the library first, so you can understand why it broke and how I fixed it. A lot of the breakage centers around strings. Speaking of which&hellip;
+
+<p>Strings. Whew. Where to start. Python 2 had &#8220;strings&#8221; and &#8220;Unicode strings.&#8221; Python 3 has &#8220;bytes&#8221; and &#8220;strings.&#8221; That is, all strings are now Unicode strings, and if you want to deal with a bag of bytes, you use the new <code>bytes</code> type. Python 3 will <em>never</em> implicitly convert between strings and bytes, so if you&#8217;re not sure which one you have at any given moment, your code will almost certainly break. Read <a href=strings.html>the Strings chapter</a> for more details. 
+
+<p>Bytes vs. strings comes up again and again throughout the book.
+
+<ul>
+<li>In <a href=files.html>Files</a>, you&#8217;ll learn the difference between reading files in &#8220;binary&#8221; and &#8220;text&#8221; mode. Reading (and writing!) files in text mode requires an <code>encoding</code> parameter. Some text file methods count characters, but other methods count bytes. If your code assumes that one character == one byte, it <em>will</em> break on multi-byte characters.
+<li>In <a href=http-web-services.html><abbr>HTTP</abbr> Web Services</a>, the <code>httplib2</code> module fetches headers and data over <abbr>HTTP</abbr>. <abbr>HTTP</abbr> headers are returned as strings, but the <abbr>HTTP</abbr> body is returned as bytes.
+<li>In <a href=serializing.html>Serializing Python Objects</a>, you&#8217;ll learn why the <code>pickle</code> module in Python 3 defines a new data format that is backwardly incompatible with Python 2. (Hint: it&#8217;s because of bytes and strings.) Also, Python 3 supports serializing objects to and from <abbr>JSON</abbr>, which doesn&#8217;t even have a <code>bytes</code> type. I&#8217;ll show you how to hack around that.
+<li>In <a href=case-study-porting-chardet-to-python-3.html>Case study: porting <code>chardet</code> to Python 3</a>, it&#8217;s just a bloody mess of bytes and strings everywhere.
+</ul>
+
+<p>Even if you don&#8217;t care about Unicode (oh but you will), you&#8217;ll want to read about <a href=strings.html#formatting-strings>string formatting in Python 3</a>, which is completely different from Python 2.
+
+<p>Iterators are everywhere in Python 3, and I understand them a lot better than I did five years ago when I wrote &#8220;Dive Into Python&#8221;. You need to understand them too, because lots of functions that used to return lists in Python 2 will now return iterators in Python 3. At a minimum, you should read <a href=iterators.html#a-fibonacci-iterator>the second half of the Iterators chapter</a> and <a href=advanced-iterators.html#generator-expressions>the second half of the Advanced Iterators chapter</a>.
+
+<p>By popular request, I&#8217;ve added an appendix on <a href=special-method-names.html>Special Method Names</a>, which is kind of like <a href=http://www.python.org/doc/3.1/reference/datamodel.html#special-method-names>the Python docs &#8220;Data Model&#8221; chapter</a> but with more snark.
+
+<p>When I was writing &#8220;Dive Into Python&#8221;, all of the available XML libraries sucked. Then Fredrik Lundh wrote <a href=http://effbot.org/zone/element-index.htm>ElementTree</a>, which doesn&#8217;t suck at all. The Python gods wisely <a href=http://docs.python.org/3.1/library/xml.etree.elementtree.html>incorporated ElementTree into the standard library</a>, and now it forms the basis for <a href=xml.html>my new XML chapter</a>. The old ways of parsing XML are still around, but you should avoid them, because they suck!
+
+<p>Also new in Python&nbsp;&mdash;&nbsp;not in the language but in the community&nbsp;&mdash;&nbsp;is the emergence of code repositories like <a href=http://pypi.python.org/>The Python Package Index</a> (PyPI). Python comes with utilities to package your code in standard formats and distribute those packages on PyPI. Read <a href=packaging.html>Packaging Python Libraries</a> for details.
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Closures &amp; Generators - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 6}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#generators>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
+<h1>Closures <i class=baa>&amp;</i> Generators</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> My spelling is Wobbly. It&#8217;s good spelling but it Wobbles, and the letters get in the wrong places. <span class=u>&#x275E;</span><br>&mdash; Winnie-the-Pooh
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Having grown up the son of a librarian and an English major, I have always been fascinated by languages. Not programming languages. Well yes, programming languages, but also natural languages. Take English. English is a schizophrenic language that borrows words from German, French, Spanish, and Latin (to name a few). Actually, &#8220;borrows&#8221; is the wrong word; &#8220;pillages&#8221; is more like it. Or perhaps &#8220;assimilates&#8221;&nbsp;&mdash;&nbsp;like the Borg. Yes, I like that.
+<p class=c><code>We are the Borg. Your linguistic and etymological distinctiveness will be added to our own. Resistance is futile.</code>
+<p>In this chapter, you&#8217;re going to learn about plural nouns. Also, functions that return other functions, advanced regular expressions, and generators. But first, let&#8217;s talk about how to make plural nouns. (If you haven&#8217;t read <a href=regular-expressions.html>the chapter on regular expressions</a>, now would be a good time. This chapter assumes you understand the basics of regular expressions, and it quickly descends into more advanced uses.)
+<p>If you grew up in an English-speaking country or learned English in a formal school setting, you&#8217;re probably familiar with the basic rules:
+<ul>
+<li>If a word ends in S, X, or Z, add ES. <i>Bass</i> becomes <i>basses</i>, <i>fax</i> becomes <i>faxes</i>, and <i>waltz</i> becomes <i>waltzes</i>.
+<li>If a word ends in a noisy H, add ES; if it ends in a silent H, just add S. What&#8217;s a noisy H? One that gets combined with other letters to make a sound that you can hear. So <i>coach</i> becomes <i>coaches</i> and <i>rash</i> becomes <i>rashes</i>, because you can hear the CH and SH sounds when you say them. But <i>cheetah</i> becomes <i>cheetahs</i>, because the H is silent.
+<li>If a word ends in Y that sounds like I, change the Y to IES; if the Y is combined with a vowel to sound like something else, just add S. So <i>vacancy</i> becomes <i>vacancies</i>, but <i>day</i> becomes <i>days</i>.
+<li>If all else fails, just add S and hope for the best.
+</ul>
+<p>(I know, there are a lot of exceptions. <i>Man</i> becomes <i>men</i> and <i>woman</i> becomes <i>women</i>, but <i>human</i> becomes <i>humans</i>. <i>Mouse</i> becomes <i>mice</i> and <i>louse</i> becomes <i>lice</i>, but <i>house</i> becomes <i>houses</i>. <i>Knife</i> becomes <i>knives</i> and <i>wife</i> becomes <i>wives</i>, but <i>lowlife</i> becomes <i>lowlifes</i>. And don&#8217;t even get me started on words that are their own plural, like <i>sheep</i>, <i>deer</i>, and <i>haiku</i>.)
+<p>Other languages, of course, are completely different.
+<p>Let&#8217;s design a Python library that automatically pluralizes English nouns. We&#8217;ll start with just these four rules, but keep in mind that you&#8217;ll inevitably need to add more.
+<p class=a>&#x2042;
+
+<h2 id=i-know>I Know, Let&#8217;s Use Regular Expressions!</h2>
+<p>So you&#8217;re looking at words, which, at least in English, means you&#8217;re looking at strings of characters. You have rules that say you need to find different combinations of characters, then do different things to them. This sounds like a job for regular expressions!
+<p class=d>[<a href=examples/plural1.py>download <code>plural1.py</code></a>]
+<pre class=pp><code>import re
+
+def plural(noun):          
+<a>    if re.search('[sxz]$', noun):             <span class=u>&#x2460;</span></a>
+<a>        return re.sub('$', 'es', noun)        <span class=u>&#x2461;</span></a>
+    elif re.search('[^aeioudgkprt]h$', noun):
+        return re.sub('$', 'es', noun)       
+    elif re.search('[^aeiou]y$', noun):      
+        return re.sub('y$', 'ies', noun)     
+    else:
+        return noun + 's'</code></pre>
+<ol>
+<li>This is a regular expression, but it uses a syntax you didn&#8217;t see in <a href=regular-expressions.html><i>Regular Expressions</i></a>. The square brackets mean &#8220;match exactly one of these characters.&#8221; So <code>[sxz]</code> means &#8220;<code>s</code>, or <code>x</code>, or <code>z</code>&#8221;, but only one of them. The <code>$</code> should be familiar; it matches the end of string. Combined, this regular expression tests whether <var>noun</var> ends with <code>s</code>, <code>x</code>, or <code>z</code>.
+<li>This <code>re.sub()</code> function performs regular expression-based string substitutions.
+</ol>
+
+<p>Let&#8217;s look at regular expression substitutions in more detail.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import re</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[abc]', 'Mark')</kbd>    <span class=u>&#x2460;</span></a>
+&lt;_sre.SRE_Match object at 0x001C1FA8>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'Mark')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'Mork'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'rock')</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>'rook'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('[abc]', 'o', 'caps')</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=pp>'oops'</samp></pre>
+<ol>
+<li>Does the string <code>Mark</code> contain <code>a</code>, <code>b</code>, or <code>c</code>? Yes, it contains <code>a</code>.
+<li>OK, now find <code>a</code>, <code>b</code>, or <code>c</code>, and replace it with <code>o</code>. <code>Mark</code> becomes <code>Mork</code>.
+<li>The same function turns <code>rock</code> into <code>rook</code>.
+<li>You might think this would turn <code>caps</code> into <code>oaps</code>, but it doesn&#8217;t. <code>re.sub</code> replaces <em>all</em> of the matches, not just the first one. So this regular expression turns <code>caps</code> into <code>oops</code>, because both the <code>c</code> and the <code>a</code> get turned into <code>o</code>.
+</ol>
+
+<p>And now, back to the <code>plural()</code> function&hellip;
+
+<pre class=pp><code>def plural(noun):          
+    if re.search('[sxz]$', noun):            
+<a>        return re.sub('$', 'es', noun)         <span class=u>&#x2460;</span></a>
+<a>    elif re.search('[^aeioudgkprt]h$', noun):  <span class=u>&#x2461;</span></a>
+        return re.sub('$', 'es', noun)
+<a>    elif re.search('[^aeiou]y$', noun):        <span class=u>&#x2462;</span></a>
+        return re.sub('y$', 'ies', noun)     
+    else:
+        return noun + 's'</code></pre>
+<ol>
+<li>Here, you&#8217;re replacing the end of the string (matched by <code>$</code>) with the string <code>es</code>. In other words, adding <code>es</code> to the string. You could accomplish the same thing with string concatenation, for example <code>noun + 'es'</code>, but I chose to use regular expressions for each rule, for reasons that will become clear later in the chapter.
+<li>Look closely, this is another new variation. The <code>^</code> as the first character inside the square brackets means something special: negation. <code>[^abc]</code> means &#8220;any single character <em>except</em> <code>a</code>, <code>b</code>, or <code>c</code>&#8221;. So <code>[^aeioudgkprt]</code> means any character except <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, <code>u</code>, <code>d</code>, <code>g</code>, <code>k</code>, <code>p</code>, <code>r</code>, or <code>t</code>. Then that character needs to be followed by <code>h</code>, followed by end of string. You&#8217;re looking for words that end in H where the H can be heard.
+<li>Same pattern here: match words that end in Y, where the character before the Y is <em>not</em> <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, or <code>u</code>. You&#8217;re looking for words that end in Y that sounds like I.
+</ol>
+
+<p>Let&#8217;s look at negation regular expressions in more detail.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import re</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'vacancy')</kbd>  <span class=u>&#x2460;</span></a>
+&lt;_sre.SRE_Match object at 0x001C1FA8>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'boy')</kbd>      <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp>
+<samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'day')</kbd>
+<samp class=p>>>> </samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.search('[^aeiou]y$', 'pita')</kbd>     <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp></pre>
+<ol>
+<li><code>vacancy</code> matches this regular expression, because it ends in <code>cy</code>, and <code>c</code> is not <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, or <code>u</code>.
+<li><code>boy</code> does not match, because it ends in <code>oy</code>, and you specifically said that the character before the <code>y</code> could not be <code>o</code>. <code>day</code> does not match, because it ends in <code>ay</code>.
+<li><code>pita</code> does not match, because it does not end in <code>y</code>.
+</ol>
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('y$', 'ies', 'vacancy')</kbd>               <span class=u>&#x2460;</span></a>
+<samp class=pp>'vacancies'</samp>
+<samp class=p>>>> </samp><kbd class=pp>re.sub('y$', 'ies', 'agency')</kbd>
+<samp class=pp>'agencies'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>re.sub('([^aeiou])y$', r'\1ies', 'vacancy')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'vacancies'</samp></pre>
+<ol>
+<li>This regular expression turns <code>vacancy</code> into <code>vacancies</code> and <code>agency</code> into <code>agencies</code>, which is what you wanted. Note that it would also turn <code>boy</code> into <code>boies</code>, but that will never happen in the function because you did that <code>re.search</code> first to find out whether you should do this <code>re.sub</code>.
+<li>Just in passing, I want to point out that it is possible to combine these two regular expressions (one to find out if the rule applies, and another to actually apply it) into a single regular expression. Here&#8217;s what that would look like. Most of it should look familiar: you&#8217;re using a remembered group, which you learned in <a href=regular-expressions.html#phonenumbers>Case study: Parsing Phone Numbers</a>. The group is used to remember the character before the letter <code>y</code>. Then in the substitution string, you use a new syntax, <code>\1</code>, which means &#8220;hey, that first group you remembered? put it right here.&#8221; In this case, you remember the <code>c</code> before the <code>y</code>; when you do the substitution, you substitute <code>c</code> in place of <code>c</code>, and <code>ies</code> in place of <code>y</code>. (If you have more than one remembered group, you can use <code>\2</code> and <code>\3</code> and so on.)
+</ol>
+<p>Regular expression substitutions are extremely powerful, and the <code>\1</code> syntax makes them even more powerful. But combining the entire operation into one regular expression is also much harder to read, and it doesn&#8217;t directly map to the way you first described the pluralizing rules. You originally laid out rules like &#8220;if the word ends in S, X, or Z, then add ES&#8221;. If you look at this function, you have two lines of code that say &#8220;if the word ends in S, X, or Z, then add ES&#8221;. It doesn&#8217;t get much more direct than that.
+
+<p class=a>&#x2042;
+
+<h2 id=a-list-of-functions>A List Of Functions</h2>
+
+<p>Now you&#8217;re going to add a level of abstraction. You started by defining a list of rules: if this, do that, otherwise go to the next rule. Let&#8217;s temporarily complicate part of the program so you can simplify another part.
+
+<p class=d>[<a href=examples/plural2.py>download <code>plural2.py</code></a>]
+<pre class=pp><code>import re
+
+def match_sxz(noun):
+    return re.search('[sxz]$', noun)
+
+def apply_sxz(noun):
+    return re.sub('$', 'es', noun)
+
+def match_h(noun):
+    return re.search('[^aeioudgkprt]h$', noun)
+
+def apply_h(noun):
+    return re.sub('$', 'es', noun)
+
+<a>def match_y(noun):                             <span class=u>&#x2460;</span></a>
+    return re.search('[^aeiou]y$', noun)
+        
+<a>def apply_y(noun):                             <span class=u>&#x2461;</span></a>
+    return re.sub('y$', 'ies', noun)
+
+def match_default(noun):
+    return True
+
+def apply_default(noun):
+    return noun + 's'
+
+<a>rules = ((match_sxz, apply_sxz),               <span class=u>&#x2462;</span></a>
+         (match_h, apply_h),
+         (match_y, apply_y),
+         (match_default, apply_default)
+         )
+
+def plural(noun):           
+<a>    for matches_rule, apply_rule in rules:       <span class=u>&#x2463;</span></a>
+        if matches_rule(noun):
+            return apply_rule(noun)</code></pre>
+<ol>
+<li>Now, each match rule is its own function which returns the results of calling the <code>re.search()</code> function.
+<li>Each apply rule is also its own function which calls the <code>re.sub()</code> function to apply the appropriate pluralization rule.
+<li>Instead of having one function (<code>plural()</code>) with multiple rules, you have the <code>rules</code> data structure, which is a sequence of pairs of functions.
+<li>Since the rules have been broken out into a separate data structure, the new <code>plural()</code> function can be reduced to a few lines of code. Using a <code>for</code> loop, you can pull out the match and apply rules two at a time (one match, one apply) from the <var>rules</var> structure. On the first iteration of the <code>for</code> loop, <var>matches_rule</var> will get <code>match_sxz</code>, and <var>apply_rule</var> will get <code>apply_sxz</code>. On the second iteration (assuming you get that far), <var>matches_rule</var> will be assigned <code>match_h</code>, and <var>apply_rule</var> will be assigned <code>apply_h</code>. The function is guaranteed to return something eventually, because the final match rule (<code>match_default</code>) simply returns <code>True</code>, meaning the corresponding apply rule (<code>apply_default</code>) will always be applied.
+</ol>
+
+<aside>The &#8220;rules&#8221; variable is a sequence of pairs of functions.</aside>
+<p>The reason this technique works is that <a href=your-first-python-program.html#everythingisanobject>everything in Python is an object</a>, including functions. The <var>rules</var> data structure contains functions&nbsp;&mdash;&nbsp;not names of functions, but actual function objects. When they get assigned in the <code>for</code> loop, then <var>matches_rule</var> and <var>apply_rule</var> are actual functions that you can call. On the first iteration of the <code>for</code> loop, this is equivalent to calling <code>matches_sxz(noun)</code>, and if it returns a match, calling <code>apply_sxz(noun)</code>.
+
+<p>If this additional level of abstraction is confusing, try unrolling the function to see the equivalence. The entire <code>for</code> loop is equivalent to the following:
+
+<pre class='nd pp'><code>
+def plural(noun):
+    if match_sxz(noun):
+        return apply_sxz(noun)
+    if match_h(noun):
+        return apply_h(noun)
+    if match_y(noun):
+        return apply_y(noun)
+    if match_default(noun):
+        return apply_default(noun)</code></pre>
+
+<p>The benefit here is that the <code>plural()</code> function is now simplified. It takes a sequence of rules, defined elsewhere, and iterates through them in a generic fashion.
+
+<ol>
+<li>Get a match rule
+<li>Does it match? Then call the apply rule and return the result.
+<li>No match? Go to step 1.
+</ol>
+
+<p>The rules could be defined anywhere, in any way. The <code>plural()</code> function doesn&#8217;t care.
+
+<p>Now, was adding this level of abstraction worth it? Well, not yet. Let&#8217;s consider what it would take to add a new rule to the function. In the first example, it would require adding an <code>if</code> statement to the <code>plural()</code> function. In this second example, it would require adding two functions, <code>match_foo()</code> and <code>apply_foo()</code>, and then updating the <var>rules</var> sequence to specify where in the order the new match and apply functions should be called relative to the other rules.
+
+<p>But this is really just a stepping stone to the next section. Let&#8217;s move on&hellip;
+
+<p class=a>&#x2042;
+
+<h2 id=a-list-of-patterns>A List Of Patterns</h2>
+
+<p>Defining separate named functions for each match and apply rule isn&#8217;t really necessary. You never call them directly; you add them to the <var>rules</var> sequence and call them through there. Furthermore, each function follows one of two patterns. All the match functions call <code>re.search()</code>, and all the apply functions call <code>re.sub()</code>. Let&#8217;s factor out the patterns so that defining new rules can be easier.
+
+<p class=d>[<a href=examples/plural3.py>download <code>plural3.py</code></a>]
+<pre class=pp><code>import re
+
+def build_match_and_apply_functions(pattern, search, replace):
+<a>    def matches_rule(word):                                     <span class=u>&#x2460;</span></a>
+        return re.search(pattern, word)
+<a>    def apply_rule(word):                                       <span class=u>&#x2461;</span></a>
+        return re.sub(search, replace, word)
+<a>    return (matches_rule, apply_rule)                           <span class=u>&#x2462;</span></a></code></pre>
+<ol>
+<li><code>build_match_and_apply_functions()</code> is a function that builds other functions dynamically. It takes <var>pattern</var>, <var>search</var> and <var>replace</var>, then defines a <code>matches_rule()</code> function which calls <code>re.search()</code> with the <var>pattern</var> that was passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>matches_rule()</code> function you&#8217;re building. Whoa.
+<li>Building the apply function works the same way. The apply function is a function that takes one parameter, and calls <code>re.sub()</code> with the <var>search</var> and <var>replace</var> parameters that were passed to the <code>build_match_and_apply_functions()</code> function, and the <var>word</var> that was passed to the <code>apply_rule()</code> function you&#8217;re building. This technique of using the values of outside parameters within a dynamic function is called <em>closures</em>. You&#8217;re essentially defining constants within the apply function you&#8217;re building: it takes one parameter (<var>word</var>), but it then acts on that plus two other values (<var>search</var> and <var>replace</var>) which were set when you defined the apply function.
+<li>Finally, the <code>build_match_and_apply_functions()</code> function returns a tuple of two values: the two functions you just created. The constants you defined within those functions (<var>pattern</var> within the <code>matches_rule()</code> function, and <var>search</var> and <var>replace</var> within the <code>apply_rule()</code> function) stay with those functions, even after you return from <code>build_match_and_apply_functions()</code>. That&#8217;s insanely cool.
+</ol>
+
+<p>If this is incredibly confusing (and it should be, this is weird stuff), it may become clearer when you see how to use it.
+
+<pre class=pp><code><a>patterns = \                                                        <span class=u>&#x2460;</span></a>
+  (
+    ('[sxz]$',           '$',  'es'),
+    ('[^aeioudgkprt]h$', '$',  'es'),
+    ('(qu|[^aeiou])y$',  'y$', 'ies'),
+<a>    ('$',                '$',  's')                                 <span class=u>&#x2461;</span></a>
+  )
+<a>rules = [build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2462;</span></a>
+         for (pattern, search, replace) in patterns]</code></pre>
+<ol>
+<li>Our pluralization &#8220;rules&#8221; are now defined as a tuple of tuples of <em>strings</em> (not functions). The first string in each group is the regular expression pattern that you would use in <code>re.search()</code> to see if this rule matches. The second and third strings in each group are the search and replace expressions you would use in <code>re.sub()</code> to actually apply the rule to turn a noun into its plural.
+<li>There&#8217;s a slight change here, in the fallback rule. In the previous example, the <code>match_default()</code> function simply returned <code>True</code>, meaning that if none of the more specific rules matched, the code would simply add an <code>s</code> to the end of the given word. This example does something functionally equivalent. The final regular expression asks whether the word has an end (<code>$</code> matches the end of a string). Of course, every string has an end, even an empty string, so this expression always matches. Thus, it serves the same purpose as the <code>match_default()</code> function that always returned <code>True</code>: it ensures that if no more specific rule matches, the code adds an <code>s</code> to the end of the given word.
+<li>This line is magic. It takes the sequence of strings in <var>patterns</var> and turns them into a sequence of functions. How? By &#8220;mapping&#8221; the strings to the <code>build_match_and_apply_functions()</code> function. That is, it takes each triplet of strings and calls the <code>build_match_and_apply_functions()</code> function with those three strings as arguments. The <code>build_match_and_apply_functions()</code> function returns a tuple of two functions. This means that <var>rules</var> ends up being functionally equivalent to the previous example: a list of tuples, where each tuple is a pair of functions. The first function is the match function that calls <code>re.search()</code>, and the second function is the apply function that calls <code>re.sub()</code>.
+</ol>
+
+<p>Rounding out this version of the script is the main entry point, the <code>plural()</code> function.
+
+<pre class=pp><code>def plural(noun):
+<a>    for matches_rule, apply_rule in rules:  <span class=u>&#x2460;</span></a>
+        if matches_rule(noun):
+            return apply_rule(noun)</code></pre>
+<ol>
+<li>Since the <var>rules</var> list is the same as the previous example (really, it is), it should come as no surprise that the <code>plural()</code> function hasn&#8217;t changed at all. It&#8217;s completely generic; it takes a list of rule functions and calls them in order. It doesn&#8217;t care how the rules are defined. In the previous example, they were defined as separate named functions. Now they are built dynamically by mapping the output of the <code>build_match_and_apply_functions()</code> function onto a list of raw strings. It doesn&#8217;t matter; the <code>plural()</code> function still works the same way.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=a-file-of-patterns>A File Of Patterns</h2>
+
+<p>You&#8217;ve factored out all the duplicate code and added enough abstractions so that the pluralization rules are defined in a list of strings. The next logical step is to take these strings and put them in a separate file, where they can be maintained separately from the code that uses them.
+
+<p>First, let&#8217;s create a text file that contains the rules you want. No fancy data structures, just whitespace-delimited strings in three columns. Let&#8217;s call it <code>plural4-rules.txt</code>.
+
+<p class=d>[<a href=examples/plural4-rules.txt>download <code>plural4-rules.txt</code></a>]
+<pre class='nd pp'><code>[sxz]$               $    es
+[^aeioudgkprt]h$     $    es
+[^aeiou]y$          y$    ies
+$                    $    s</code></pre>
+
+<p>Now let&#8217;s see how you can use this rules file.
+
+<p class=d>[<a href=examples/plural4.py>download <code>plural4.py</code></a>]
+<pre class=pp><code>import re
+
+<a>def build_match_and_apply_functions(pattern, search, replace):  <span class=u>&#x2460;</span></a>
+    def matches_rule(word):
+        return re.search(pattern, word)
+    def apply_rule(word):
+        return re.sub(search, replace, word)
+    return (matches_rule, apply_rule)
+
+rules = []
+<a>with open('plural4-rules.txt', encoding='utf-8') as pattern_file:  <span class=u>&#x2461;</span></a>
+<a>    for line in pattern_file:                                      <span class=u>&#x2462;</span></a>
+<a>        pattern, search, replace = line.split(None, 3)             <span class=u>&#x2463;</span></a>
+<a>        rules.append(build_match_and_apply_functions(              <span class=u>&#x2464;</span></a>
+                pattern, search, replace))</code></pre>
+<ol>
+<li>The <code>build_match_and_apply_functions()</code> function has not changed. You&#8217;re still using closures to build two functions dynamically that use variables defined in the outer function.
+<li>The global <code>open()</code> function opens a file and returns a file object. In this case, the file we&#8217;re opening contains the pattern strings for pluralizing nouns. The <code>with</code> statement creates what&#8217;s called a <i>context</i>: when the <code>with</code> block ends, Python will automatically close the file, even if an exception is raised inside the <code>with</code> block. You&#8217;ll learn more about <code>with</code> blocks and file objects in the <a href=files.html>Files</a> chapter.
+<li>The <code>for line in &lt;fileobject></code> idiom reads data from the open file, one line at a time, and assigns the text to the <var>line</var> variable. You&#8217;ll learn more about reading from files in the <a href=files.html>Files</a> chapter.
+<li>Each line in the file really has three values, but they&#8217;re separated by whitespace (tabs or spaces, it makes no difference). To split it out, use the <code>split()</code> string method. The first argument to the <code>split()</code> method is <code>None</code>, which means &#8220;split on any whitespace (tabs or spaces, it makes no difference).&#8221; The second argument is <code>3</code>, which means &#8220;split on whitespace 3 times, then leave the rest of the line alone.&#8221; A line like <code>[sxz]$ $ es</code> will be broken up into the list <code>['[sxz]$', '$', 'es']</code>, which means that <var>pattern</var> will get <code>'[sxz]$'</code>, <var>search</var> will get <code>'$'</code>, and <var>replace</var> will get <code>'es'</code>. That&#8217;s a lot of power in one little line of code.
+<li>Finally, you pass <code>pattern</code>, <code>search</code>, and <code>replace</code> to the <code>build_match_and_apply_functions()</code> function, which returns a tuple of functions. You append this tuple to the <var>rules</var> list, and <var>rules</var> ends up storing the list of match and apply functions that the <code>plural()</code> function expects.
+</ol>
+
+<p>The improvement here is that you&#8217;ve completely separated the pluralization rules into an external file, so it can be maintained separately from the code that uses it. Code is code, data is data, and life is good.
+
+<p class=a>&#x2042;
+
+<h2 id=generators>Generators</h2>
+
+<p>Wouldn&#8217;t it be grand to have a generic <code>plural()</code> function that parses the rules file? Get rules, check for a match, apply appropriate transformation, go to next rule. That&#8217;s all the <code>plural()</code> function has to do, and that&#8217;s all the <code>plural()</code> function should do.
+
+<p class=d>[<a href=examples/plural5.py>download <code>plural5.py</code></a>]
+<pre class='nd pp'><code>def rules(rules_filename):
+    with open(rules_filename, encoding='utf-8') as pattern_file:
+        for line in pattern_file:
+            pattern, search, replace = line.split(None, 3)
+            yield build_match_and_apply_functions(pattern, search, replace)
+
+def plural(noun, rules_filename='plural5-rules.txt'):
+    for matches_rule, apply_rule in rules(rules_filename):
+        if matches_rule(noun):
+            return apply_rule(noun)
+    raise ValueError('no matching rule for {0}'.format(noun))</code></pre>
+
+<p>How the heck does <em>that</em> work? Let&#8217;s look at an interactive example first.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def make_counter(x):</kbd>
+<samp class=p>... </samp><kbd class=pp>    print('entering make_counter')</kbd>
+<samp class=p>... </samp><kbd class=pp>    while True:</kbd>
+<a><samp class=p>... </samp><kbd class=pp>        yield x</kbd>                    <span class=u>&#x2460;</span></a>
+<samp class=p>... </samp><kbd class=pp>        print('incrementing x')</kbd>
+<samp class=p>... </samp><kbd class=pp>        x = x + 1</kbd>
+<samp class=p>... </samp>
+<a><samp class=p>>>> </samp><kbd class=pp>counter = make_counter(2)</kbd>          <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>counter</kbd>                            <span class=u>&#x2462;</span></a>
+&lt;generator object at 0x001C9C10>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2463;</span></a>
+<samp>entering make_counter
+2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2464;</span></a>
+<samp>incrementing x
+3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>next(counter)</kbd>                      <span class=u>&#x2465;</span></a>
+<samp>incrementing x
+4</samp></pre>
+<ol>
+<li>The presence of the <code>yield</code> keyword in <code>make_counter</code> means that this is not a normal function. It is a special kind of function which generates values one at a time. You can think of it as a resumable function. Calling it will return a <i>generator</i> that can be used to generate successive values of <var>x</var>.
+<li>To create an instance of the <code>make_counter</code> generator, just call it like any other function. Note that this does not actually execute the function code. You can tell this because the first line of the <code>make_counter()</code> function calls <code>print()</code>, but nothing has been printed yet.
+<li>The <code>make_counter()</code> function returns a generator object.
+<li>The <code>next()</code> function takes a generator object and returns its next value. The first time you call <code>next()</code> with the <var>counter</var> generator, it executes the code in <code>make_counter()</code> up to the first <code>yield</code> statement, then returns the value that was yielded. In this case, that will be <code>2</code>, because you originally created the generator by calling <code>make_counter(2)</code>.
+<li>Repeatedly calling <code>next()</code> with the same generator object resumes exactly where it left off and continues until it hits the next <code>yield</code> statement. All variables, local state, <i class=baa>&amp;</i>c. are saved on <code>yield</code> and restored on <code>next()</code>. The next line of code waiting to be executed calls <code>print()</code>, which prints <samp>incrementing x</samp>. After that, the statement <code>x = x + 1</code>. Then it loops through the <code>while</code> loop again, and the first thing it hits is the statement <code>yield x</code>, which saves the state of everything and returns the current value of <var>x</var> (now <code>3</code>).
+<li>The second time you call <code>next(counter)</code>, you do all the same things again, but this time <var>x</var> is now <code>4</code>.
+</ol>
+
+<p>Since <code>make_counter</code> sets up an infinite loop, you could theoretically do this forever, and it would just keep incrementing <var>x</var> and spitting out values. But let&#8217;s look at more productive uses of generators instead.
+
+<h3 id=a-fibonacci-generator>A Fibonacci Generator</h3>
+
+<aside>&#8220;yield&#8221; pauses a function. &#8220;next()&#8221; resumes where it left off.</aside>
+
+<p class=d>[<a href=examples/fibonacci.py>download <code>fibonacci.py</code></a>]
+<pre class=pp><code>def fib(max):
+<a>    a, b = 0, 1          <span class=u>&#x2460;</span></a>
+    while a &lt; max:
+<a>        yield a          <span class=u>&#x2461;</span></a>
+<a>        a, b = b, a + b  <span class=u>&#x2462;</span></a></code></pre>
+<ol>
+<li>The Fibonacci sequence is a sequence of numbers where each number is the sum of the two numbers before it. It starts with 0 and <code>1</code>, goes up slowly at first, then more and more rapidly. To start the sequence, you need two variables: <var>a</var> starts at 0, and <var>b</var> starts at <code>1</code>.
+<li><var>a</var> is the current number in the sequence, so yield it.
+<li><var>b</var> is the next number in the sequence, so assign that to <var>a</var>, but also calculate the next value (<code>a + b</code>) and assign that to <var>b</var> for later use. Note that this happens in parallel; if <var>a</var> is <code>3</code> and <var>b</var> is <code>5</code>, then <code>a, b = b, a + b</code> will set <var>a</var> to <code>5</code> (the previous value of <var>b</var>) and <var>b</var> to <code>8</code> (the sum of the previous values of <var>a</var> and <var>b</var>).
+</ol>
+
+<p>So you have a function that spits out successive Fibonacci numbers. Sure, you could do that with recursion, but this way is easier to read. Also, it works well with <code>for</code> loops.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>from fibonacci import fib</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>for n in fib(1000):</kbd>      <span class=u>&#x2460;</span></a>
+<a><samp class=p>... </samp><kbd class=pp>    print(n, end=' ')</kbd>    <span class=u>&#x2461;</span></a>
+<samp class=pp>0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>list(fib(1000))</kbd>          <span class=u>&#x2462;</span></a>
+<samp class=pp>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987]</samp></pre>
+<ol>
+<li>You can use a generator like <code>fib()</code> in a <code>for</code> loop directly. The <code>for</code> loop will automatically call the <code>next()</code> function to get values from the <code>fib()</code> generator and assign them to the <code>for</code> loop index variable (<var>n</var>).
+<li>Each time through the <code>for</code> loop, <var>n</var> gets a new value from the <code>yield</code> statement in <code>fib()</code>, and all you have to do is print it out. Once <code>fib()</code> runs out of numbers (<var>a</var> becomes bigger than <var>max</var>, which in this case is <code>1000</code>), then the <code>for</code> loop exits gracefully.
+<li>This is a useful idiom: pass a generator to the <code>list()</code> function, and it will iterate through the entire generator (just like the <code>for</code> loop in the previous example) and return a list of all the values.
+</ol>
+
+<h3 id=a-plural-rule-generator>A Plural Rule Generator</h3>
+
+<p>Let&#8217;s go back to <code>plural5.py</code> and see how this version of the <code>plural()</code> function works.
+
+<pre class=pp><code>def rules(rules_filename):
+    with open(rules_filename, encoding='utf-8') as pattern_file:
+        for line in pattern_file:
+<a>            pattern, search, replace = line.split(None, 3)                   <span class=u>&#x2460;</span></a>
+<a>            yield build_match_and_apply_functions(pattern, search, replace)  <span class=u>&#x2461;</span></a>
+
+def plural(noun, rules_filename='plural5-rules.txt'):
+<a>    for matches_rule, apply_rule in rules(rules_filename):                   <span class=u>&#x2462;</span></a>
+        if matches_rule(noun):
+            return apply_rule(noun)
+    raise ValueError('no matching rule for {0}'.format(noun))</code></pre>
+<ol>
+<li>No magic here. Remember that the lines of the rules file have three values separated by whitespace, so you use <code>line.split(None, 3)</code> to get the three &#8220;columns&#8221; and assign them to three local variables.
+<li><em>And then you yield.</em> What do you yield? Two functions, built dynamically with your old friend, <code>build_match_and_apply_functions()</code>, which is identical to the previous examples. In other words, <code>rules()</code> is a generator that spits out match and apply functions <em>on demand</em>.
+<li>Since <code>rules()</code> is a generator, you can use it directly in a <code>for</code> loop. The first time through the <code>for</code> loop, you will call the <code>rules()</code> function, which will open the pattern file, read the first line, dynamically build a match function and an apply function from the patterns on that line, and yield the dynamically built functions. The second time through the <code>for</code> loop, you will pick up exactly where you left off in <code>rules()</code> (which was in the middle of the <code>for line in pattern_file</code> loop). The first thing it will do is read the next line of the file (which is still open), dynamically build another match and apply function based on the patterns on that line in the file, and yield the two functions.
+</ol>
+
+<p>What have you gained over stage 4? Startup time. In stage 4, when you imported the <code>plural4</code> module, it read the entire patterns file and built a list of all the possible rules, before you could even think about calling the <code>plural()</code> function. With generators, you can do everything lazily: you read the first rule and create functions and try them, and if that works you don&#8217;t ever read the rest of the file or create any other functions.
+
+<p>What have you lost? Performance! Every time you call the <code>plural()</code> function, the <code>rules()</code> generator starts over from the beginning&nbsp;&mdash;&nbsp;which means re-opening the patterns file and reading from the beginning, one line at a time.
+
+<p>What if you could have the best of both worlds: minimal startup cost (don&#8217;t execute any code on <code>import</code>), <em>and</em> maximum performance (don&#8217;t build the same functions over and over again). Oh, and you still want to keep the rules in a separate file (because code is code and data is data), just as long as you never have to read the same line twice.
+
+<p>To do that, you&#8217;ll need to build your own iterator. But before you do <em>that</em>, you need to learn about Python classes.
+
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Further Reading</h2>
+<ul>
+<li><a href=http://www.python.org/dev/peps/pep-0255/>PEP 255: Simple Generators</a>
+<li><a href=http://effbot.org/zone/python-with-statement.htm>Understanding Python&#8217;s &#8220;with&#8221; statement</a>
+<li><a href=http://ynniv.com/blog/2007/08/closures-in-python.html>Closures in Python</a>
+<li><a href=http://en.wikipedia.org/wiki/Fibonacci_number>Fibonacci numbers</a>
+<li><a href=http://www2.gsu.edu/~wwwesl/egw/crump.htm>English Irregular Plural Nouns</a>
+</ul>
+
+<p class=v><a href=regular-expressions.html rel=prev title='back to &#8220;Regular Expressions&#8221;'><span class=u>&#x261C;</span></a> <a href=iterators.html rel=next title='onward to &#8220;Classes &amp; Iterators&#8221;'><span class=u>&#x261E;</span></a>
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

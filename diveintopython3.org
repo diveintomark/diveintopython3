@@ -1,0 +1,59 @@
+* Installing Python
+* Your First Python Program
+** TODO mention why from module import * is only allowed at module level
+* Native Datatypes
+* DONE Comprehensions
+** List comprehensions
+** Set comprehensions
+** Dictionary comprehensions
+* Strings
+* Regular Expressions
+* Closures & Generators
+* Classes & Iterators
+* DONE 2nd draft Advanced Iterators
+  SCHEDULED: <2009-07-15 Wed> CLOSED: [2009-07-15 Wed 20:57]
+* DONE 2nd draft Unit Testing
+* DONE 2nd draft Refactoring
+* DONE 1st draft Files
+  SCHEDULED: <2009-07-16 Thu> CLOSED: [2009-07-19 Sun 15:26]
+** Reading from text files
+*** Opening a file (to read)
+*** Character encoding
+*** File objects
+*** Closing a file
+**** Checking if a file is closed
+**** "with open(...) as file" pattern
+*** Reading data from a file one line at a time
+**** Line-endings
+** Writing to text files
+*** Opening a file (to write)
+*** Character encoding again
+*** write(), writelines(), .writeable
+** Handling I/O errors
+** Binary files
+** File-like objects
+** Standard Input, Output, and Error
+** Further reading
+* DONE 2nd draft XML
+* TODO 1st draft Serializing Python Objects
+* DONE 2nd draft HTTP Web Services
+  CLOSED: [2009-07-15 Wed 20:57]
+* TODO 1st draft Threading & Multiprocessing
+* TODO 1st draft Packaging Python libraries
+* DONE 2nd draft Case Study: Porting chardet to Python 3
+* Where to go from here
+* DONE 2nd draft Porting Code to Python 3 with 2to3
+* DONE 2nd draft Special Method Names
+* Bits to add somewhere
+** DONE section on tuples
+** TODO section on dictionary views
+several dictionary methods return them
+they're dynamic
+they update when the dictionary changes
+** TODO Decorators
+[[http://docs.python.org/3.1/whatsnew/3.1.html][@unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")]]
+* Meta
+** TODO generate HTML
+** TODO generate PDF
+** DONE all <pre> blocks without numbers should be marked class=nd
+   CLOSED: [2009-07-14 Tue 20:55]

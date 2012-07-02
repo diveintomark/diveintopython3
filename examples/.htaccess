@@ -1,0 +1,17 @@
+AddType application/xml .xml
+AddType text/plain .py
+
+AddDefaultCharset utf-8
+
+ExpiresActive On
+ExpiresDefault "access plus 1 day"
+
+FileETag MTime Size
+
+SetOutputFilter DEFLATE
+
+Header unset Vary
+Header add Vary Accept-Encoding
+
+Redirect /examples/feed-302.xml http://diveintopython3.org/examples/feed.xml
+Redirect permanent /examples/feed-301.xml http://diveintopython3.org/examples/feed.xml

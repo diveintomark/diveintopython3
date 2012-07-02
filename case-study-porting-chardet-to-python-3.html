@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Case study: porting chardet to Python 3 - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 15}
+ins,del{line-height:2.154;text-decoration:none;font-style:normal;display:inline-block;width:100%}
+ins{background:#9f9}
+del{background:#f87}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#case-study-porting-chardet-to-python-3>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=pro>&#x2666;&#x2666;&#x2666;&#x2666;&#x2666;</span>
+<h1>Case Study: Porting <code>chardet</code> to Python 3</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> Words, words. They&#8217;re all we have to go on. <span class=u>&#x275E;</span><br>&mdash; <a href=http://www.imdb.com/title/tt0100519/quotes>Rosencrantz and Guildenstern are Dead</a>
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Diving In</h2>
+<p class=f>Question: what&#8217;s the #1 cause of gibberish text on the web, in your inbox, and across every computer system ever written? It&#8217;s character encoding. In the <a href=strings.html>Strings</a> chapter, I talked about the history of character encoding and the creation of Unicode, the &#8220;one encoding to rule them all.&#8221; I&#8217;d love it if I never had to see a gibberish character on a web page again, because all authoring systems stored accurate encoding information, all transfer protocols were Unicode-aware, and every system that handled text maintained perfect fidelity when converting between encodings.
+<p>I&#8217;d also like a pony.
+<p>A Unicode pony.
+<p>A Unipony, as it were.
+<p>I&#8217;ll settle for character encoding auto-detection.
+
+<p class=a>&#x2042;
+
+<h2 id=faq.what>What is Character Encoding Auto-Detection?</h2>
+<p>It means taking a sequence of bytes in an unknown character encoding, and attempting to determine the encoding so you can read the text. It&#8217;s like cracking a code when you don&#8217;t have the decryption key.
+
+<h3 id=faq.impossible>Isn&#8217;t That Impossible?</h3>
+<p>In general, yes. However, some encodings are optimized for specific languages, and languages are not random. Some character sequences pop up all the time, while other sequences make no sense. A person fluent in English who opens a newspaper and finds &#8220;txzqJv 2!dasd0a QqdKjvz&#8221; will instantly recognize that that isn&#8217;t English (even though it is composed entirely of English letters). By studying lots of &#8220;typical&#8221; text, a computer algorithm can simulate this kind of fluency and make an educated guess about a text&#8217;s language.
+<p>In other words, encoding detection is really language detection, combined with knowledge of which languages tend to use which character encodings.
+
+<h3 id=faq.who>Does Such An Algorithm Exist?</h3>
+<p>As it turns out, yes. All major browsers have character encoding auto-detection, because the web is full of pages that have no encoding information whatsoever. <a href=http://lxr.mozilla.org/seamonkey/source/extensions/universalchardet/src/base/>Mozilla Firefox contains an encoding auto-detection library</a> which is open source. <a href=http://chardet.feedparser.org/>I ported the library to Python 2</a> and dubbed it the <code>chardet</code> module. This chapter will take you step-by-step through the process of porting the <code>chardet</code> module from Python 2 to Python 3.
+
+<p class=a>&#x2042;
+
+<h2 id=divingin2>Introducing The <code>chardet</code> Module</h2>
+<p>Before we set off porting the code, it would help if you understood how the code worked! This is a brief guide to navigating the code itself. The <code>chardet</code> library is too large to include inline here, but you can <a href=http://chardet.feedparser.org/download/>download it from <code>chardet.feedparser.org</code></a>.
+<aside>Encoding detection is really language detection in drag.</aside>
+<p>The main entry point for the detection algorithm is <code>universaldetector.py</code>, which has one class, <code>UniversalDetector</code>. (You might think the main entry point is the <code>detect</code> function in <code>chardet/__init__.py</code>, but that&#8217;s really just a convenience function that creates a <code>UniversalDetector</code> object, calls it, and returns its result.)
+<p>There are 5 categories of encodings that <code>UniversalDetector</code> handles:
+<ol>
+<li><abbr>UTF-n</abbr> with a Byte Order Mark (<abbr>BOM</abbr>). This includes <abbr>UTF-8</abbr>, both Big-Endian and Little-Endian variants of <abbr>UTF-16</abbr>, and all 4 byte-order variants of <abbr>UTF-32</abbr>.
+<li>Escaped encodings, which are entirely 7-bit <abbr>ASCII</abbr> compatible, where non-<abbr>ASCII</abbr> characters start with an escape sequence. Examples: <abbr>ISO-2022-JP</abbr> (Japanese) and <abbr>HZ-GB-2312</abbr> (Chinese).
+<li>Multi-byte encodings, where each character is represented by a variable number of bytes. Examples: <abbr>Big5</abbr> (Chinese), <abbr>SHIFT_JIS</abbr> (Japanese), <abbr>EUC-KR</abbr> (Korean), and <abbr>UTF-8</abbr> without a <abbr>BOM</abbr>.
+<li>Single-byte encodings, where each character is represented by one byte. Examples: <abbr>KOI8-R</abbr> (Russian), <abbr>windows-1255</abbr> (Hebrew), and <abbr>TIS-620</abbr> (Thai).
+<li><abbr>windows-1252</abbr>, which is used primarily on Microsoft Windows by middle managers who wouldn&#8217;t know a character encoding from a hole in the ground.
+</ol>
+<h3 id=how.bom><abbr>UTF-n</abbr> With A <abbr>BOM</abbr></h3>
+<p>If the text starts with a <abbr>BOM</abbr>, we can reasonably assume that the text is encoded in <abbr>UTF-8</abbr>, <abbr>UTF-16</abbr>, or <abbr>UTF-32</abbr>. (The <abbr>BOM</abbr> will tell us exactly which one; that&#8217;s what it&#8217;s for.)  This is handled inline in <code>UniversalDetector</code>, which returns the result immediately without any further processing.
+<h3 id=how.esc>Escaped Encodings</h3>
+<p>If the text contains a recognizable escape sequence that might indicate an escaped encoding, <code>UniversalDetector</code> creates an <code>EscCharSetProber</code> (defined in <code>escprober.py</code>) and feeds it the text.
+<p><code>EscCharSetProber</code> creates a series of state machines, based on models of <abbr>HZ-GB-2312</abbr>, <abbr>ISO-2022-CN</abbr>, <abbr>ISO-2022-JP</abbr>, and <abbr>ISO-2022-KR</abbr> (defined in <code>escsm.py</code>). <code>EscCharSetProber</code> feeds the text to each of these state machines, one byte at a time. If any state machine ends up uniquely identifying the encoding, <code>EscCharSetProber</code> immediately returns the positive result to <code>UniversalDetector</code>, which returns it to the caller. If any state machine hits an illegal sequence, it is dropped and processing continues with the other state machines.
+<h3 id=how.mb>Multi-Byte Encodings</h3>
+<p>Assuming no <abbr>BOM</abbr>, <code>UniversalDetector</code> checks whether the text contains any high-bit characters. If so, it creates a series of &#8220;probers&#8221; for detecting multi-byte encodings, single-byte encodings, and as a last resort, <code>windows-1252</code>.
+<p>The multi-byte encoding prober, <code>MBCSGroupProber</code> (defined in <code>mbcsgroupprober.py</code>), is really just a shell that manages a group of other probers, one for each multi-byte encoding: <abbr>Big5</abbr>, <abbr>GB2312</abbr>, <abbr>EUC-TW</abbr>, <abbr>EUC-KR</abbr>, <abbr>EUC-JP</abbr>, <abbr>SHIFT_JIS</abbr>, and <abbr>UTF-8</abbr>. <code>MBCSGroupProber</code> feeds the text to each of these encoding-specific probers and checks the results. If a prober reports that it has found an illegal byte sequence, it is dropped from further processing (so that, for instance, any subsequent calls to <code>UniversalDetector</code>.<code>feed()</code> will skip that prober). If a prober reports that it is reasonably confident that it has detected the encoding, <code>MBCSGroupProber</code> reports this positive result to <code>UniversalDetector</code>, which reports the result to the caller.
+<p>Most of the multi-byte encoding probers are inherited from <code>MultiByteCharSetProber</code> (defined in <code>mbcharsetprober.py</code>), and simply hook up the appropriate state machine and distribution analyzer and let <code>MultiByteCharSetProber</code> do the rest of the work. <code>MultiByteCharSetProber</code> runs the text through the encoding-specific state machine, one byte at a time, to look for byte sequences that would indicate a conclusive positive or negative result. At the same time, <code>MultiByteCharSetProber</code> feeds the text to an encoding-specific distribution analyzer.
+<p>The distribution analyzers (each defined in <code>chardistribution.py</code>) use language-specific models of which characters are used most frequently. Once <code>MultiByteCharSetProber</code> has fed enough text to the distribution analyzer, it calculates a confidence rating based on the number of frequently-used characters, the total number of characters, and a language-specific distribution ratio. If the confidence is high enough, <code>MultiByteCharSetProber</code> returns the result to <code>MBCSGroupProber</code>, which returns it to <code>UniversalDetector</code>, which returns it to the caller.
+<p>The case of Japanese is more difficult. Single-character distribution analysis is not always sufficient to distinguish between <code>EUC-JP</code> and <code>SHIFT_JIS</code>, so the <code>SJISProber</code> (defined in <code>sjisprober.py</code>) also uses 2-character distribution analysis. <code>SJISContextAnalysis</code> and <code>EUCJPContextAnalysis</code> (both defined in <code>jpcntx.py</code> and both inheriting from a common <code>JapaneseContextAnalysis</code> class) check the frequency of Hiragana syllabary characters within the text. Once enough text has been processed, they return a confidence level to <code>SJISProber</code>, which checks both analyzers and returns the higher confidence level to <code>MBCSGroupProber</code>.
+<h3 id=how.sb>Single-Byte Encodings</h3>
+<aside>Seriously, where&#8217;s my Unicode pony?</aside>
+<p>The single-byte encoding prober, <code>SBCSGroupProber</code> (defined in <code>sbcsgroupprober.py</code>), is also just a shell that manages a group of other probers, one for each combination of single-byte encoding and language: <code>windows-1251</code>, <code>KOI8-R</code>, <code>ISO-8859-5</code>, <code>MacCyrillic</code>, <code>IBM855</code>, and <code>IBM866</code> (Russian); <code>ISO-8859-7</code> and <code>windows-1253</code> (Greek); <code>ISO-8859-5</code> and <code>windows-1251</code> (Bulgarian); <code>ISO-8859-2</code> and <code>windows-1250</code> (Hungarian); <code>TIS-620</code> (Thai); <code>windows-1255</code> and <code>ISO-8859-8</code> (Hebrew).
+<p><code>SBCSGroupProber</code> feeds the text to each of these encoding+language-specific probers and checks the results. These probers are all implemented as a single class, <code>SingleByteCharSetProber</code> (defined in <code>sbcharsetprober.py</code>), which takes a language model as an argument. The language model defines how frequently different 2-character sequences appear in typical text. <code>SingleByteCharSetProber</code> processes the text and tallies the most frequently used 2-character sequences. Once enough text has been processed, it calculates a confidence level based on the number of frequently-used sequences, the total number of characters, and a language-specific distribution ratio.
+<p>Hebrew is handled as a special case. If the text appears to be Hebrew based on 2-character distribution analysis, <code>HebrewProber</code> (defined in <code>hebrewprober.py</code>) tries to distinguish between Visual Hebrew (where the source text actually stored &#8220;backwards&#8221; line-by-line, and then displayed verbatim so it can be read from right to left) and Logical Hebrew (where the source text is stored in reading order and then rendered right-to-left by the client). Because certain characters are encoded differently based on whether they appear in the middle of or at the end of a word, we can make a reasonable guess about direction of the source text, and return the appropriate encoding (<code>windows-1255</code> for Logical Hebrew, or <code>ISO-8859-8</code> for Visual Hebrew).
+<h3 id=how.windows1252><code>windows-1252</code></h3>
+<p>If <code>UniversalDetector</code> detects a high-bit character in the text, but none of the other multi-byte or single-byte encoding probers return a confident result, it creates a <code>Latin1Prober</code> (defined in <code>latin1prober.py</code>) to try to detect English text in a <code>windows-1252</code> encoding. This detection is inherently unreliable, because English letters are encoded in the same way in many different encodings. The only way to distinguish <code>windows-1252</code> is through commonly used symbols like smart quotes, curly apostrophes, copyright symbols, and the like. <code>Latin1Prober</code> automatically reduces its confidence rating to allow more accurate probers to win if at all possible.
+<p class=a>&#x2042;
+
+<h2 id=running2to3>Running <code>2to3</code></h2>
+<p>We&#8217;re going to migrate the <code>chardet</code> module from Python 2 to Python 3. Python 3 comes with a utility script called <code>2to3</code>, which takes your actual Python 2 source code as input and auto-converts as much as it can to Python 3. In some cases this is easy&nbsp;&mdash;&nbsp;a function was renamed or moved to a different module&nbsp;&mdash;&nbsp;but in other cases it can get pretty complex. To get a sense of all that it <em>can</em> do, refer to the appendix, <a href=porting-code-to-python-3-with-2to3.html>Porting code to Python 3 with <code>2to3</code></a>. In this chapter, we&#8217;ll start by running <code>2to3</code> on the <code>chardet</code> package, but as you&#8217;ll see, there will still be a lot of work to do after the automated tools have performed their magic.
+<p>The main <code>chardet</code> package is split across several different files, all in the same directory. The <code>2to3</code> script makes it easy to convert multiple files at once: just pass a directory as a command line argument, and <code>2to3</code> will convert each of the files in turn.
+<pre class=screen><samp class=p>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w chardet\</kbd>
+<samp>RefactoringTool: Skipping implicit fixer: buffer
+RefactoringTool: Skipping implicit fixer: idioms
+RefactoringTool: Skipping implicit fixer: set_literal
+RefactoringTool: Skipping implicit fixer: ws_comma
+--- chardet\__init__.py (original)
++++ chardet\__init__.py (refactored)
+@@ -18,7 +18,7 @@
+ __version__ = "1.0.1"
+
+ def detect(aBuf):
+<del>-    import universaldetector</del>
+<ins>+    from . import universaldetector</ins>
+     u = universaldetector.UniversalDetector()
+     u.reset()
+     u.feed(aBuf)
+--- chardet\big5prober.py (original)
++++ chardet\big5prober.py (refactored)
+@@ -25,10 +25,10 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+<del>-from mbcharsetprober import MultiByteCharSetProber</del>
+<del>-from codingstatemachine import CodingStateMachine</del>
+<del>-from chardistribution import Big5DistributionAnalysis</del>
+<del>-from mbcssm import Big5SMModel</del>
+<ins>+from .mbcharsetprober import MultiByteCharSetProber</ins>
+<ins>+from .codingstatemachine import CodingStateMachine</ins>
+<ins>+from .chardistribution import Big5DistributionAnalysis</ins>
+<ins>+from .mbcssm import Big5SMModel</ins>
+
+ class Big5Prober(MultiByteCharSetProber):
+     def __init__(self):
+--- chardet\chardistribution.py (original)
++++ chardet\chardistribution.py (refactored)
+@@ -25,12 +25,12 @@
+ # 02110-1301  USA
+ ######################### END LICENSE BLOCK #########################
+
+<del>-import constants</del>
+<del>-from euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO</del>
+<del>-from jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO</del>
+<ins>+from . import constants</ins>
+<ins>+from .euctwfreq import EUCTWCharToFreqOrder, EUCTW_TABLE_SIZE, EUCTW_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .euckrfreq import EUCKRCharToFreqOrder, EUCKR_TABLE_SIZE, EUCKR_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .gb2312freq import GB2312CharToFreqOrder, GB2312_TABLE_SIZE, GB2312_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .big5freq import Big5CharToFreqOrder, BIG5_TABLE_SIZE, BIG5_TYPICAL_DISTRIBUTION_RATIO</ins>
+<ins>+from .jisfreq import JISCharToFreqOrder, JIS_TABLE_SIZE, JIS_TYPICAL_DISTRIBUTION_RATIO</ins>
+
+ ENOUGH_DATA_THRESHOLD = 1024
+ SURE_YES = 0.99
+.
+.
+<mark>. (it goes on like this for a while)</mark>
+.
+.
+RefactoringTool: Files that were modified:
+RefactoringTool: chardet\__init__.py
+RefactoringTool: chardet\big5prober.py
+RefactoringTool: chardet\chardistribution.py
+RefactoringTool: chardet\charsetgroupprober.py
+RefactoringTool: chardet\codingstatemachine.py
+RefactoringTool: chardet\constants.py
+RefactoringTool: chardet\escprober.py
+RefactoringTool: chardet\escsm.py
+RefactoringTool: chardet\eucjpprober.py
+RefactoringTool: chardet\euckrprober.py
+RefactoringTool: chardet\euctwprober.py
+RefactoringTool: chardet\gb2312prober.py
+RefactoringTool: chardet\hebrewprober.py
+RefactoringTool: chardet\jpcntx.py
+RefactoringTool: chardet\langbulgarianmodel.py
+RefactoringTool: chardet\langcyrillicmodel.py
+RefactoringTool: chardet\langgreekmodel.py
+RefactoringTool: chardet\langhebrewmodel.py
+RefactoringTool: chardet\langhungarianmodel.py
+RefactoringTool: chardet\langthaimodel.py
+RefactoringTool: chardet\latin1prober.py
+RefactoringTool: chardet\mbcharsetprober.py
+RefactoringTool: chardet\mbcsgroupprober.py
+RefactoringTool: chardet\mbcssm.py
+RefactoringTool: chardet\sbcharsetprober.py
+RefactoringTool: chardet\sbcsgroupprober.py
+RefactoringTool: chardet\sjisprober.py
+RefactoringTool: chardet\universaldetector.py
+RefactoringTool: chardet\utf8prober.py</samp></pre>
+<p>Now run the <code>2to3</code> script on the testing harness, <code>test.py</code>.
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python c:\Python30\Tools\Scripts\2to3.py -w test.py</kbd>
+<samp>RefactoringTool: Skipping implicit fixer: buffer
+RefactoringTool: Skipping implicit fixer: idioms
+RefactoringTool: Skipping implicit fixer: set_literal
+RefactoringTool: Skipping implicit fixer: ws_comma
+--- test.py (original)
++++ test.py (refactored)
+@@ -4,7 +4,7 @@
+ count = 0
+ u = UniversalDetector()
+ for f in glob.glob(sys.argv[1]):
+<del>-    print f.ljust(60),</del>
+<ins>+    print(f.ljust(60), end=' ')</ins>
+     u.reset()
+     for line in file(f, 'rb'):
+         u.feed(line)
+@@ -12,8 +12,8 @@
+     u.close()
+     result = u.result
+     if result['encoding']:
+<del>-        print result['encoding'], 'with confidence', result['confidence']</del>
+<ins>+        print(result['encoding'], 'with confidence', result['confidence'])</ins>
+     else:
+<del>-        print '******** no result'</del>
+<ins>+        print('******** no result')</ins>
+     count += 1
+<del>-print count, 'tests'</del>
+<ins>+print(count, 'tests')</ins>
+RefactoringTool: Files that were modified:
+RefactoringTool: test.py</samp></pre>
+<p>Well, that wasn&#8217;t so hard. Just a few imports and print statements to convert. Speaking of which, what <em>was</em> the problem with all those import statements? To answer that, you need to understand how the <code>chardet</code> module is split into multiple files.
+
+<p class=a>&#x2042;
+
+<h2 id=multifile-modules>A Short Digression Into Multi-File Modules</h2>
+
+<p><code>chardet</code> is a <i>multi-file module</i>. I could have chosen to put all the code in one file (named <code>chardet.py</code>), but I didn&#8217;t. Instead, I made a directory (named <code>chardet</code>), then I made an <code>__init__.py</code> file in that directory. <em>If Python sees an <code>__init__.py</code> file in a directory, it assumes that all of the files in that directory are part of the same module.</em> The module&#8217;s name is the name of the directory. Files within the directory can reference other files within the same directory, or even within subdirectories. (More on that in a minute.) But the entire collection of files is presented to other Python code as a single module&nbsp;&mdash;&nbsp;as if all the functions and classes were in a single <code>.py</code> file.
+
+<p>What goes in the <code>__init__.py</code> file? Nothing. Everything. Something in between. The <code>__init__.py</code> file doesn&#8217;t need to define anything; it can literally be an empty file. Or you can use it to define your main entry point functions. Or you put all your functions in it. Or all but one.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>A directory with an <code>__init__.py</code> file is always treated as a multi-file module. Without an <code>__init__.py</code> file, a directory is just a directory of unrelated <code>.py</code> files.
+</blockquote>
+
+<p>Let&#8217;s see how that works in practice.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import chardet</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>dir(chardet)</kbd>             <span class=u>&#x2460;</span></a>
+<samp class=pp>['__builtins__', '__doc__', '__file__', '__name__',
+ '__package__', '__path__', '__version__', 'detect']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>chardet</kbd>                  <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;module 'chardet' from 'C:\Python31\lib\site-packages\chardet\__init__.py'></samp></pre>
+<ol>
+<li>Other than the usual class attributes, the only thing in the <code>chardet</code> module is a <code>detect()</code> function.
+<li>Here&#8217;s your first clue that the <code>chardet</code> module is more than just a file: the &#8220;module&#8221; is listed as the <code>__init__.py</code> file within the <code>chardet/</code> directory.
+</ol>
+
+<p>Let&#8217;s take a peek in that <code>__init__.py</code> file.
+
+<pre class=pp><code><a>def detect(aBuf):                              <span class=u>&#x2460;</span></a>
+<a>    from . import universaldetector            <span class=u>&#x2461;</span></a>
+    u = universaldetector.UniversalDetector()
+    u.reset()
+    u.feed(aBuf)
+    u.close()
+    return u.result</code></pre>
+<ol>
+<li>The <code>__init__.py</code> file defines the <code>detect()</code> function, which is the main entry point into the <code>chardet</code> library.
+<li>But the <code>detect()</code> function hardly has any code! In fact, all it really does is import the <code>universaldetector</code> module and start using it. But where is <code>universaldetector</code> defined?
+</ol>
+
+<p>The answer lies in that odd-looking <code>import</code> statement:
+
+<pre class='nd pp'><code>from . import universaldetector</code></pre>
+
+<p>Translated into English, that means &#8220;import the <code>universaldetector</code> module; that&#8217;s in the same directory I am,&#8221; where &#8220;I&#8221; is the <code>chardet/__init__.py</code> file. This is called a <i>relative import</i>. It&#8217;s a way for the files within a multi-file module to reference each other, without worrying about naming conflicts with other modules you may have installed in <a href=your-first-python-program.html#importsearchpath>your import search path</a>. This <code>import</code> statement will <em>only</em> look for the <code>universaldetector</code> module within the <code>chardet/</code> directory itself.
+
+<p>These two concepts&nbsp;&mdash;&nbsp;<code>__init__.py</code> and relative imports&nbsp;&mdash;&nbsp;mean that you can break up your module into as many pieces as you like. The <code>chardet</code> module comprises 36 <code>.py</code> files&nbsp;&mdash;&nbsp;36! Yet all you need to do to start using it is <code>import chardet</code>, then you can call the main <code>chardet.detect()</code> function. Unbeknownst to your code, the <code>detect()</code> function is actually defined in the <code>chardet/__init__.py</code> file. Also unbeknownst to you, the <code>detect()</code> function uses a relative import to reference a class defined in <code>chardet/universaldetector.py</code>, which in turn uses relative imports on five other files, all contained in the <code>chardet/</code> directory.
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>If you ever find yourself writing a large library in Python (or more likely, when you realize that your small library has grown into a large one), take the time to refactor it into a multi-file module. It&#8217;s one of the many things Python is good at, so take advantage of it.
+</blockquote>
+
+<p class=a>&#x2042;
+
+<h2 id=manual>Fixing What <code>2to3</code> Can&#8217;t</h2>
+<h3 id=falseisinvalidsyntax><code>False</code> is invalid syntax</h3>
+<aside>You do have tests, right?</aside>
+<p>Now for the real test: running the test harness against the test suite. Since the test suite is designed to cover all the possible code paths, it&#8217;s a good way to test our ported code to make sure there aren&#8217;t any bugs lurking anywhere.
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 1, in &lt;module>
+    from chardet.universaldetector import UniversalDetector
+  File "C:\home\chardet\chardet\universaldetector.py", line 51
+    self.done = constants.False
+                              ^
+SyntaxError: invalid syntax</samp></pre>
+<p>Hmm, a small snag. In Python 3, <code>False</code> is a reserved word, so you can&#8217;t use it as a variable name. Let&#8217;s look at <code>constants.py</code> to see where it&#8217;s defined. Here&#8217;s the original version from <code>constants.py</code>, before the <code>2to3</code> script changed it:
+<pre class='nd pp'><code>import __builtin__
+if not hasattr(__builtin__, 'False'):
+    False = 0
+    True = 1
+else:
+    False = __builtin__.False
+    True = __builtin__.True</code></pre>
+<p>This piece of code is designed to allow this library to run under older versions of Python 2. Prior to Python 2.3, Python had no built-in <code>bool</code> type. This code detects the absence of the built-in constants <code>True</code> and <code>False</code>, and defines them if necessary.
+<p>However, Python 3 will always have a <code>bool</code> type, so this entire code snippet is unnecessary. The simplest solution is to replace all instances of <code>constants.True</code> and <code>constants.False</code> with <code>True</code> and <code>False</code>, respectively, then delete this dead code from <code>constants.py</code>.
+<p>So this line in <code>universaldetector.py</code>:
+<pre class='nd pp'><code>self.done = constants.False</code></pre>
+<p>Becomes
+<pre class='nd pp'><code>self.done = False</code></pre>
+<p>Ah, wasn&#8217;t that satisfying? The code is shorter and more readable already.
+<h3 id=nomodulenamedconstants>No module named <code>constants</code></h3>
+<p>Time to run <code>test.py</code> again and see how far it gets.
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 1, in &lt;module>
+    from chardet.universaldetector import UniversalDetector
+  File "C:\home\chardet\chardet\universaldetector.py", line 29, in &lt;module>
+    import constants, sys
+ImportError: No module named constants</samp></pre>
+<p>What&#8217;s that you say? No module named <code>constants</code>? Of course there&#8217;s a module named <code>constants</code>. It&#8217;s right there, in <code>chardet/constants.py</code>.
+
+<p>Remember when the <code>2to3</code> script fixed up all those import statements? This library has a lot of relative imports&nbsp;&mdash;&nbsp;that is, <a href=#multifile-modules>modules that import other modules within the same library</a>&nbsp;&mdash;&nbsp;but <em>the logic behind relative imports has changed in Python 3</em>. In Python 2, you could just <code>import constants</code> and it would look in the <code>chardet/</code> directory first. In Python 3, <a href=http://www.python.org/dev/peps/pep-0328/>all import statements are absolute by default</a>. If you want to do a relative import in Python 3, you need to be explicit about it:
+<pre class='nd pp'><code>from . import constants</code></pre>
+<p>But wait. Wasn&#8217;t the <code>2to3</code> script supposed to take care of these for you? Well, it did, but this particular import statement combines two different types of imports into one line: a relative import of the <code>constants</code> module within the library, and an absolute import of the <code>sys</code> module that is pre-installed in the Python standard library. In Python 2, you could combine these into one import statement. In Python 3, you can&#8217;t, and the <code>2to3</code> script is not smart enough to split the import statement into two.
+<p>The solution is to split the import statement manually. So this two-in-one import:
+<pre class='nd pp'><code>import constants, sys</code></pre>
+<p>Needs to become two separate imports:
+<pre class='nd pp'><code>from . import constants
+import sys</code></pre>
+<p>There are variations of this problem scattered throughout the <code>chardet</code> library. In some places it&#8217;s &#8220;<code>import constants, sys</code>&#8221;; in other places, it&#8217;s &#8220;<code>import constants, re</code>&#8221;. The fix is the same: manually split the import statement into two lines, one for the relative import, the other for the absolute import.
+<p>Onward!
+<h3 id=namefileisnotdefined>Name <var>'file'</var> is not defined</h3>
+<aside>open() is the new file(). PapayaWhip is the new black.</aside>
+<p>And here we go again, running <code>test.py</code> to try to execute our test cases&hellip;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 9, in &lt;module>
+    for line in file(f, 'rb'):
+NameError: name 'file' is not defined</samp></pre>
+<p>This one surprised me, because I&#8217;ve been using this idiom as long as I can remember. In Python 2, the global <code>file()</code> function was an alias for the <code>open()</code> function, which was the standard way of <a href=files.html#reading>opening text files for reading</a>. In Python 3, the global <code>file()</code> function no longer exists, but the <code>open()</code> function still exists.
+<p>Thus, the simplest solution to the problem of the missing <code>file()</code> is to call the <code>open()</code> function instead:
+<pre class='nd pp'><code>for line in open(f, 'rb'):</code></pre>
+<p>And that&#8217;s all I have to say about that.
+<h3 id=cantuseastringpattern>Can&#8217;t use a string pattern on a bytes-like object</h3>
+<p>Now things are starting to get interesting. And by &#8220;interesting,&#8221; I mean &#8220;confusing as all hell.&#8221;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 98, in feed
+    if self._highBitDetector.search(aBuf):
+TypeError: can't use a string pattern on a bytes-like object</samp></pre>
+<p>To debug this, let&#8217;s see what <var>self._highBitDetector</var> is. It&#8217;s defined in the <var>__init__</var> method of the <var>UniversalDetector</var> class:
+<pre class='nd pp'><code>class UniversalDetector:
+    def __init__(self):
+        self._highBitDetector = re.compile(r'[\x80-\xFF]')</code></pre>
+<p>This pre-compiles a regular expression designed to find non-<abbr>ASCII</abbr> characters in the range 128&ndash;255 (0x80&ndash;0xFF). Wait, that&#8217;s not quite right; I need to be more precise with my terminology. This pattern is designed to find non-<abbr>ASCII</abbr> <em>bytes</em> in the range 128-255.
+<p>And therein lies the problem.
+<p>In Python 2, a string was an array of bytes whose character encoding was tracked separately. If you wanted Python 2 to keep track of the character encoding, you had to use a Unicode string (<code>u''</code>) instead. But in Python 3, a string is always what Python 2 called a Unicode string&nbsp;&mdash;&nbsp;that is, an array of Unicode characters (of possibly varying byte lengths). Since this regular expression is defined by a string pattern, it can only be used to search a string&nbsp;&mdash;&nbsp;again, an array of characters. But what we&#8217;re searching is not a string, it&#8217;s a byte array. Looking at the traceback, this error occurred in <code>universaldetector.py</code>:
+<pre class='nd pp'><code>def feed(self, aBuf):
+    .
+    .
+    .
+    if self._mInputState == ePureAscii:
+        if self._highBitDetector.search(aBuf):</code></pre>
+<p>And what is <var>aBuf</var>? Let&#8217;s backtrack further to a place that calls <code>UniversalDetector.feed()</code>. One place that calls it is the test harness, <code>test.py</code>.
+<pre class='nd pp'><code>u = UniversalDetector()
+.
+.
+.
+for line in open(f, 'rb'):
+    u.feed(line)</code></pre>
+<aside>Not an array of characters, but an array of bytes.</aside>
+<p>And here we find our answer: in the <code>UniversalDetector.feed()</code> method, <var>aBuf</var> is a line read from a file on disk. Look carefully at the parameters used to open the file: <code>'rb'</code>. <code>'r'</code> is for &#8220;read&#8221;; OK, big deal, we&#8217;re reading the file. Ah, but <a href=files.html#binary><code>'b'</code> is for &#8220;binary.&#8221;</a> Without the <code>'b'</code> flag, this <code>for</code> loop would read the file, line by line, and convert each line into a string&nbsp;&mdash;&nbsp;an array of Unicode characters&nbsp;&mdash;&nbsp;according to the system default character encoding. But with the <code>'b'</code> flag, this <code>for</code> loop reads the file, line by line, and stores each line exactly as it appears in the file, as an array of bytes. That byte array gets passed to <code>UniversalDetector.feed()</code>, and eventually gets passed to the pre-compiled regular expression, <var>self._highBitDetector</var>, to search for high-bit&hellip; characters. But we don&#8217;t have characters; we have bytes. Oops.
+<p>What we need this regular expression to search is not an array of characters, but an array of bytes.
+<p>Once you realize that, the solution is not difficult. Regular expressions defined with strings can search strings. Regular expressions defined with byte arrays can search byte arrays. To define a byte array pattern, we simply change the type of the argument we use to define the regular expression to a byte array. (There is one other case of this same problem, on the very next line.)
+<pre class='nd pp'><code>  class UniversalDetector:
+      def __init__(self):
+<del>-         self._highBitDetector = re.compile(r'[\x80-\xFF]')</del>
+<del>-         self._escDetector = re.compile(r'(\033|~{)')</del>
+<ins>+         self._highBitDetector = re.compile(b'[\x80-\xFF]')</ins>
+<ins>+         self._escDetector = re.compile(b'(\033|~{)')</ins>
+          self._mEscCharSetProber = None
+          self._mCharSetProbers = []
+          self.reset()</code></pre>
+<p>Searching the entire codebase for other uses of the <code>re</code> module turns up two more instances, in <code>charsetprober.py</code>. Again, the code is defining regular expressions as strings but executing them on <var>aBuf</var>, which is a byte array. The solution is the same: define the regular expression patterns as byte arrays.
+<pre class='nd pp'><code>  class CharSetProber:
+      .
+      .
+      .
+      def filter_high_bit_only(self, aBuf):
+<del>-         aBuf = re.sub(r'([\x00-\x7F])+', ' ', aBuf)</del>
+<ins>+         aBuf = re.sub(b'([\x00-\x7F])+', b' ', aBuf)</ins>
+          return aBuf
+    
+      def filter_without_english_letters(self, aBuf):
+<del>-         aBuf = re.sub(r'([A-Za-z])+', ' ', aBuf)</del>
+<ins>+         aBuf = re.sub(b'([A-Za-z])+', b' ', aBuf)</ins>
+          return aBuf</code></pre>
+        
+<h3 id=cantconvertbytesobject>Can't convert <code>'bytes'</code> object to <code>str</code> implicitly</h3>
+<p>Curiouser and curiouser&hellip;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 100, in feed
+    elif (self._mInputState == ePureAscii) and self._escDetector.search(self._mLastChar + aBuf):
+TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
+<p>There&#8217;s an unfortunate clash of coding style and Python interpreter here. The <code>TypeError</code> could be anywhere on that line, but the traceback doesn&#8217;t tell you exactly where it is. It could be in the first conditional or the second, and the traceback would look the same. To narrow it down, you should split the line in half, like this:
+<pre class='nd pp'><code>elif (self._mInputState == ePureAscii) and \
+    self._escDetector.search(self._mLastChar + aBuf):</code></pre>
+<p>And re-run the test:
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
+    self._escDetector.search(self._mLastChar + aBuf):
+TypeError: Can't convert 'bytes' object to str implicitly</samp></pre>
+<p>Aha! The problem was not in the first conditional (<code>self._mInputState == ePureAscii</code>) but in the second one. So what could cause a <code>TypeError</code> there? Perhaps you&#8217;re thinking that the <code>search()</code> method is expecting a value of a different type, but that wouldn&#8217;t generate this traceback. Python functions can take any value; if you pass the right number of arguments, the function will execute. It may <em>crash</em> if you pass it a value of a different type than it&#8217;s expecting, but if that happened, the traceback would point to somewhere inside the function. But this traceback says it never got as far as calling the <code>search()</code> method. So the problem must be in that <code>+</code> operation, as it&#8217;s trying to construct the value that it will eventually pass to the <code>search()</code> method.
+<p>We know from <a href=#cantuseastringpattern>previous debugging</a> that <var>aBuf</var> is a byte array. So what is <code>self._mLastChar</code>? It&#8217;s an instance variable, defined in the <code>reset()</code> method, which is actually called from the <code>__init__()</code> method.
+<pre class='nd pp'><code>class UniversalDetector:
+    def __init__(self):
+        self._highBitDetector = re.compile(b'[\x80-\xFF]')
+        self._escDetector = re.compile(b'(\033|~{)')
+        self._mEscCharSetProber = None
+        self._mCharSetProbers = []
+<mark>        self.reset()</mark>
+
+    def reset(self):
+        self.result = {'encoding': None, 'confidence': 0.0}
+        self.done = False
+        self._mStart = True
+        self._mGotData = False
+        self._mInputState = ePureAscii
+<mark>        self._mLastChar = ''</mark></code></pre>
+<p>And now we have our answer. Do you see it? <var>self._mLastChar</var> is a string, but <var>aBuf</var> is a byte array. And you can&#8217;t concatenate a string to a byte array&nbsp;&mdash;&nbsp;not even a zero-length string.
+<p>So what is <var>self._mLastChar</var> anyway? In the <code>feed()</code> method, just a few lines down from where the trackback occurred.
+<pre class='nd pp'><code>if self._mInputState == ePureAscii:
+    if self._highBitDetector.search(aBuf):
+        self._mInputState = eHighbyte
+    elif (self._mInputState == ePureAscii) and \
+            self._escDetector.search(self._mLastChar + aBuf):
+        self._mInputState = eEscAscii
+
+<mark>self._mLastChar = aBuf[-1]</mark></code></pre>
+<p>The calling function calls this <code>feed()</code> method over and over again with a few bytes at a time. The method processes the bytes it was given (passed in as <var>aBuf</var>), then stores the last byte in <var>self._mLastChar</var> in case it&#8217;s needed during the next call. (In a multi-byte encoding, the <code>feed()</code> method might get called with half of a character, then called again with the other half.)  But because <var>aBuf</var> is now a byte array instead of a string, <var>self._mLastChar</var> needs to be a byte array as well. Thus:
+<pre class='nd pp'><code>  def reset(self):
+      .
+      .
+      .
+<del>-     self._mLastChar = ''</del>
+<ins>+     self._mLastChar = b''</ins></code></pre>
+<p>Searching the entire codebase for &#8220;<code>mLastChar</code>&#8221; turns up a similar problem in <code>mbcharsetprober.py</code>, but instead of tracking the last character, it tracks the last <em>two</em> characters. The <code>MultiByteCharSetProber</code> class uses a list of 1-character strings to track the last two characters. In Python 3, it needs to use a list of integers, because it&#8217;s not really tracking characters, it&#8217;s tracking bytes. (Bytes are just integers from <code>0-255</code>.)
+<pre class='nd pp'><code>  class MultiByteCharSetProber(CharSetProber):
+      def __init__(self):
+          CharSetProber.__init__(self)
+          self._mDistributionAnalyzer = None
+          self._mCodingSM = None
+<del>-         self._mLastChar = ['\x00', '\x00']</del>
+<ins>+         self._mLastChar = [0, 0]</ins>
+
+      def reset(self):
+          CharSetProber.reset(self)
+          if self._mCodingSM:
+              self._mCodingSM.reset()
+          if self._mDistributionAnalyzer:
+              self._mDistributionAnalyzer.reset()
+<del>-         self._mLastChar = ['\x00', '\x00']</del>
+<ins>+         self._mLastChar = [0, 0]</ins></code></pre>
+<h3 id=unsupportedoperandtypeforplus>Unsupported operand type(s) for +: <code>'int'</code> and <code>'bytes'</code></h3>
+<p>I have good news, and I have bad news. The good news is we&#8217;re making progress&hellip;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 101, in feed
+    self._escDetector.search(self._mLastChar + aBuf):
+TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp></pre>
+<p>&hellip;The bad news is it doesn&#8217;t always feel like progress.
+<p>But this is progress! Really! Even though the traceback calls out the same line of code, it&#8217;s a different error than it used to be. Progress! So what&#8217;s the problem now? The last time I checked, this line of code didn&#8217;t try to concatenate an <code>int</code> with a byte array (<code>bytes</code>). In fact, you just spent a lot of time <a href=#cantconvertbytesobject>ensuring that <var>self._mLastChar</var> was a byte array</a>. How did it turn into an <code>int</code>?
+<p>The answer lies not in the previous lines of code, but in the following lines.
+<pre class='nd pp'><code>if self._mInputState == ePureAscii:
+    if self._highBitDetector.search(aBuf):
+        self._mInputState = eHighbyte
+    elif (self._mInputState == ePureAscii) and \
+            self._escDetector.search(self._mLastChar + aBuf):
+        self._mInputState = eEscAscii
+
+<mark>self._mLastChar = aBuf[-1]</mark></code></pre>
+<aside>Each item in a string is a string. Each item in a byte array is an integer.</aside>
+<p>This error doesn&#8217;t occur the first time the <code>feed()</code> method gets called; it occurs the <em>second time</em>, after <var>self._mLastChar</var> has been set to the last byte of <var>aBuf</var>. Well, what&#8217;s the problem with that? Getting a single element from a byte array yields an integer, not a byte array. To see the difference, follow me to the interactive shell:
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>aBuf = b'\xEF\xBB\xBF'</kbd>         <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>len(aBuf)</kbd>
+<samp class=pp>3</samp>
+<samp class=p>>>> </samp><kbd class=pp>mLastChar = aBuf[-1]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar</kbd>                      <span class=u>&#x2461;</span></a>
+<samp class=pp>191</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(mLastChar)</kbd>                <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'int'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar + aBuf</kbd>               <span class=u>&#x2463;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: unsupported operand type(s) for +: 'int' and 'bytes'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar = aBuf[-1:]</kbd>          <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>mLastChar</kbd>
+<samp class=pp>b'\xbf'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>mLastChar + aBuf</kbd>               <span class=u>&#x2465;</span></a>
+<samp class=pp>b'\xbf\xef\xbb\xbf'</samp></pre>
+<ol>
+<li>Define a byte array of length 3.
+<li>The last element of the byte array is 191.
+<li>That&#8217;s an integer.
+<li>Concatenating an integer with a byte array doesn&#8217;t work. You&#8217;ve now replicated the error you just found in <code>universaldetector.py</code>.
+<li>Ah, here&#8217;s the fix. Instead of taking the last element of the byte array, use <a href=native-datatypes.html#slicinglists>list slicing</a> to create a new byte array containing just the last element. That is, start with the last element and continue the slice until the end of the byte array. Now <var>mLastChar</var> is a byte array of length 1.
+<li>Concatenating a byte array of length 1 with a byte array of length 3 returns a new byte array of length 4.
+</ol>
+<p>So, to ensure that the <code>feed()</code> method in <code>universaldetector.py</code> continues to work no matter how often it&#8217;s called, you need to <a href=#cantconvertbytesobject>initialize <var>self._mLastChar</var> as a 0-length byte array</a>, then <em>make sure it stays a byte array</em>.
+<pre class='nd pp'><code>              self._escDetector.search(self._mLastChar + aBuf):
+          self._mInputState = eEscAscii
+
+<del>- self._mLastChar = aBuf[-1]</del>
+<ins>+ self._mLastChar = aBuf[-1:]</ins></code></pre>
+<h3 id=ordexpectedstring><code>ord()</code> expected string of length 1, but <code>int</code> found</h3>
+<p>Tired yet? You&#8217;re almost there&hellip;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 116, in feed
+    if prober.feed(aBuf) == constants.eFoundIt:
+  File "C:\home\chardet\chardet\charsetgroupprober.py", line 60, in feed
+    st = prober.feed(aBuf)
+  File "C:\home\chardet\chardet\utf8prober.py", line 53, in feed
+    codingState = self._mCodingSM.next_state(c)
+  File "C:\home\chardet\chardet\codingstatemachine.py", line 43, in next_state
+    byteCls = self._mModel['classTable'][ord(c)]
+TypeError: ord() expected string of length 1, but int found</samp></pre>
+<p>OK, so <var>c</var> is an <code>int</code>, but the <code>ord()</code> function was expecting a 1-character string. Fair enough. Where is <var>c</var> defined?
+<pre class='nd pp'><code># codingstatemachine.py
+def next_state(self, c):
+    # for each byte we get its class
+    # if it is first byte, we also get byte length
+    byteCls = self._mModel['classTable'][ord(c)]</code></pre>
+<p>That&#8217;s no help; it&#8217;s just passed into the function. Let&#8217;s pop the stack.
+<pre class='nd pp'><code># utf8prober.py
+def feed(self, aBuf):
+    for c in aBuf:
+        codingState = self._mCodingSM.next_state(c)</code></pre>
+<p>Do you see it? In Python 2, <var>aBuf</var> was a string, so <var>c</var> was a 1-character string. (That&#8217;s what you get when you iterate over a string&nbsp;&mdash;&nbsp;all the characters, one by one.) But now, <var>aBuf</var> is a byte array, so <var>c</var> is an <code>int</code>, not a 1-character string. In other words, there&#8217;s no need to call the <code>ord()</code> function because <var>c</var> is already an <code>int</code>!
+<p>Thus:
+<pre class='nd pp'><code>  def next_state(self, c):
+      # for each byte we get its class
+      # if it is first byte, we also get byte length
+<del>-     byteCls = self._mModel['classTable'][ord(c)]</del>
+<ins>+     byteCls = self._mModel['classTable'][c]</ins></code></pre>
+<p>Searching the entire codebase for instances of &#8220;<code>ord(c)</code>&#8221; uncovers similar problems in <code>sbcharsetprober.py</code>&hellip;
+<pre class='nd pp'><code># sbcharsetprober.py
+def feed(self, aBuf):
+    if not self._mModel['keepEnglishLetter']:
+        aBuf = self.filter_without_english_letters(aBuf)
+    aLen = len(aBuf)
+    if not aLen:
+        return self.get_state()
+    for c in aBuf:
+<mark>        order = self._mModel['charToOrderMap'][ord(c)]</mark></code></pre>
+<p>&hellip;and <code>latin1prober.py</code>&hellip;
+<pre class='nd pp'><code># latin1prober.py
+def feed(self, aBuf):
+    aBuf = self.filter_with_english_letters(aBuf)
+    for c in aBuf:
+<mark>        charClass = Latin1_CharToClass[ord(c)]</mark></code></pre>
+<p><var>c</var> is iterating over <var>aBuf</var>, which means it is an integer, not a 1-character string.  The solution is the same: change <code>ord(c)</code> to just plain <code>c</code>.
+<pre class='nd pp'><code>  # sbcharsetprober.py
+  def feed(self, aBuf):
+      if not self._mModel['keepEnglishLetter']:
+          aBuf = self.filter_without_english_letters(aBuf)
+      aLen = len(aBuf)
+      if not aLen:
+          return self.get_state()
+      for c in aBuf:
+<del>-         order = self._mModel['charToOrderMap'][ord(c)]</del>
+<ins>+         order = self._mModel['charToOrderMap'][c]</ins>
+
+  # latin1prober.py
+  def feed(self, aBuf):
+      aBuf = self.filter_with_english_letters(aBuf)
+      for c in aBuf:
+<del>-         charClass = Latin1_CharToClass[ord(c)]</del>
+<ins>+         charClass = Latin1_CharToClass[c]</ins>
+</code></pre>
+<h3 id=unorderabletypes>Unorderable types: <code>int()</code> >= <code>str()</code></h3>
+<p>Let&#8217;s go again.
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 10, in &lt;module>
+    u.feed(line)
+  File "C:\home\chardet\chardet\universaldetector.py", line 116, in feed
+    if prober.feed(aBuf) == constants.eFoundIt:
+  File "C:\home\chardet\chardet\charsetgroupprober.py", line 60, in feed
+    st = prober.feed(aBuf)
+  File "C:\home\chardet\chardet\sjisprober.py", line 68, in feed
+    self._mContextAnalyzer.feed(self._mLastChar[2 - charLen :], charLen)
+  File "C:\home\chardet\chardet\jpcntx.py", line 145, in feed
+    order, charLen = self.get_order(aBuf[i:i+2])
+  File "C:\home\chardet\chardet\jpcntx.py", line 176, in get_order
+    if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \
+TypeError: unorderable types: int() >= str()</samp></pre>
+<p>So what&#8217;s this all about? &#8220;Unorderable types&#8221;? Once again, the difference between byte arrays and strings is rearing its ugly head. Take a look at the code:
+<pre class='nd pp'><code>class SJISContextAnalysis(JapaneseContextAnalysis):
+    def get_order(self, aStr):
+        if not aStr: return -1, 1
+        # find out current char's byte length
+<mark>        if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \</mark>
+           ((aStr[0] >= '\xE0') and (aStr[0] &lt;= '\xFC')):
+            charLen = 2
+        else:
+            charLen = 1</code></pre>
+<p>And where does <var>aStr</var> come from? Let&#8217;s pop the stack:
+<pre class='nd pp'><code>def feed(self, aBuf, aLen):
+    .
+    .
+    .
+    i = self._mNeedToSkipCharNum
+    while i &lt; aLen:
+<mark>        order, charLen = self.get_order(aBuf[i:i+2])</mark></code></pre>
+<p>Oh look, it&#8217;s our old friend, <var>aBuf</var>. As you might have guessed from every other issue we&#8217;ve encountered in this chapter, <var>aBuf</var> is a byte array. Here, the <code>feed()</code> method isn&#8217;t just passing it on wholesale; it&#8217;s slicing it. But as you saw <a href=#unsupportedoperandtypeforplus>earlier in this chapter</a>, slicing a byte array returns a byte array, so the <var>aStr</var> parameter that gets passed to the <code>get_order()</code> method is still a byte array.
+<p>And what is this code trying to do with <var>aStr</var>? It&#8217;s taking the first element of the byte array and comparing it to a string of length 1. In Python 2, that worked, because <var>aStr</var> and <var>aBuf</var> were strings, and <var>aStr[0]</var> would be a string, and you can compare strings for inequality. But in Python 3, <var>aStr</var> and <var>aBuf</var> are byte arrays, <var>aStr[0]</var> is an integer, and you can&#8217;t compare integers and strings for inequality without explicitly coercing one of them.
+<p>In this case, there&#8217;s no need to make the code more complicated by adding an explicit coercion. <var>aStr[0]</var> yields an integer; the things you&#8217;re comparing to are all constants. Let&#8217;s change them from 1-character strings to integers. And while we&#8217;re at it, let&#8217;s change <var>aStr</var> to <var>aBuf</var>, since it&#8217;s not actually a string.
+<pre class='nd pp'><code>  class SJISContextAnalysis(JapaneseContextAnalysis):
+<del>-     def get_order(self, aStr):</del>
+<del>-      if not aStr: return -1, 1</del>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+      if not aBuf: return -1, 1</ins>
+          # find out current char's byte length
+<del>-         if ((aStr[0] >= '\x81') and (aStr[0] &lt;= '\x9F')) or \</del>
+<del>-            ((aBuf[0] >= '\xE0') and (aBuf[0] &lt;= '\xFC')):</del>
+<ins>+         if ((aBuf[0] >= 0x81) and (aBuf[0] &lt;= 0x9F)) or \</ins>
+<ins>+            ((aBuf[0] >= 0xE0) and (aBuf[0] &lt;= 0xFC)):</ins>
+              charLen = 2
+          else:
+              charLen = 1
+
+          # return its order if it is hiragana
+<del>-      if len(aStr) > 1:</del>
+<del>-             if (aStr[0] == '\202') and \</del>
+<del>-                (aStr[1] >= '\x9F') and \</del>
+<del>-                (aStr[1] &lt;= '\xF1'):</del>
+<del>-                return ord(aStr[1]) - 0x9F, charLen</del>
+<ins>+      if len(aBuf) > 1:</ins>
+<ins>+             if (aBuf[0] == 202) and \</ins>
+<ins>+                (aBuf[1] >= 0x9F) and \</ins>
+<ins>+                (aBuf[1] &lt;= 0xF1):</ins>
+<ins>+                return aBuf[1] - 0x9F, charLen</ins>
+
+          return -1, charLen
+
+  class EUCJPContextAnalysis(JapaneseContextAnalysis):
+<del>-     def get_order(self, aStr):</del>
+<del>-      if not aStr: return -1, 1</del>
+<ins>+     def get_order(self, aBuf):</ins>
+<ins>+      if not aBuf: return -1, 1</ins>
+          # find out current char's byte length
+<del>-         if (aStr[0] == '\x8E') or \</del>
+<del>-           ((aStr[0] >= '\xA1') and (aStr[0] &lt;= '\xFE')):</del>
+<ins>+         if (aBuf[0] == 0x8E) or \</ins>
+<ins>+           ((aBuf[0] >= 0xA1) and (aBuf[0] &lt;= 0xFE)):</ins>
+              charLen = 2
+<del>-         elif aStr[0] == '\x8F':</del>
+<ins>+         elif aBuf[0] == 0x8F:</ins>
+              charLen = 3
+          else:
+              charLen = 1
+
+        # return its order if it is hiragana
+<del>-    if len(aStr) > 1:</del>
+<del>-           if (aStr[0] == '\xA4') and \</del>
+<del>-              (aStr[1] >= '\xA1') and \</del>
+<del>-              (aStr[1] &lt;= '\xF3'):</del>
+<del>-                 return ord(aStr[1]) - 0xA1, charLen</del>
+<ins>+    if len(aBuf) > 1:</ins>
+<ins>+           if (aBuf[0] == 0xA4) and \</ins>
+<ins>+              (aBuf[1] >= 0xA1) and \</ins>
+<ins>+              (aBuf[1] &lt;= 0xF3):</ins>
+<ins>+               return aBuf[1] - 0xA1, charLen</ins>
+
+        return -1, charLen</code></pre>
+<p>Searching the entire codebase for occurrences of the <code>ord()</code> function uncovers the same problem in <code>chardistribution.py</code> (specifically, in the <code>EUCTWDistributionAnalysis</code>, <code>EUCKRDistributionAnalysis</code>, <code>GB2312DistributionAnalysis</code>, <code>Big5DistributionAnalysis</code>, <code>SJISDistributionAnalysis</code>, and <code>EUCJPDistributionAnalysis</code> classes. In each case, the fix is similar to the change we made to the <code>EUCJPContextAnalysis</code> and <code>SJISContextAnalysis</code> classes in <code>jpcntx.py</code>.
+
+<h3 id=reduceisnotdefined>Global name <code>'reduce'</code> is not defined</h3>
+<p>Once more into the breach&hellip;
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml</samp>
+<samp class=traceback>Traceback (most recent call last):
+  File "test.py", line 12, in &lt;module>
+    u.close()
+  File "C:\home\chardet\chardet\universaldetector.py", line 141, in close
+    proberConfidence = prober.get_confidence()
+  File "C:\home\chardet\chardet\latin1prober.py", line 126, in get_confidence
+    total = reduce(operator.add, self._mFreqCounter)
+NameError: global name 'reduce' is not defined</samp></pre>
+<p>According to the official <a href=http://docs.python.org/3.0/whatsnew/3.0.html#builtins>What&#8217;s New In Python 3.0</a> guide, the <code>reduce()</code> function has been moved out of the global namespace and into the <code>functools</code> module. Quoting the guide: &#8220;Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit <code>for</code> loop is more readable.&#8221; You can read more about the decision from Guido van Rossum&#8217;s weblog: <a href='http://www.artima.com/weblogs/viewpost.jsp?thread=98196'>The fate of reduce() in Python 3000</a>.
+<pre class='nd pp'><code>def get_confidence(self):
+    if self.get_state() == constants.eNotMe:
+        return 0.01
+  
+<mark>    total = reduce(operator.add, self._mFreqCounter)</mark></code></pre>
+<p>The <code>reduce()</code> function takes two arguments&nbsp;&mdash;&nbsp;a function and a list (strictly speaking, any iterable object will do)&nbsp;&mdash;&nbsp;and applies the function cumulatively to each item of the list. In other words, this is a fancy and roundabout way of adding up all the items in a list and returning the result.
+<p>This monstrosity was so common that Python added a global <code>sum()</code> function.
+<pre class='nd pp'><code>  def get_confidence(self):
+      if self.get_state() == constants.eNotMe:
+          return 0.01
+  
+<del>-     total = reduce(operator.add, self._mFreqCounter)</del>
+<ins>+     total = sum(self._mFreqCounter)</ins></code></pre>
+<p>Since you&#8217;re no longer using the <code>operator</code> module, you can remove that <code>import</code> from the top of the file as well.
+<pre class='nd pp'><code>  from .charsetprober import CharSetProber
+  from . import constants
+<del>- import operator</del></code></pre>
+<p>I CAN HAZ TESTZ?
+<pre class='nd screen'><samp class=p>C:\home\chardet> </samp><kbd>python test.py tests\*\*</kbd>
+<samp>tests\ascii\howto.diveintomark.org.xml                       ascii with confidence 1.0
+tests\Big5\0804.blogspot.com.xml                             Big5 with confidence 0.99
+tests\Big5\blog.worren.net.xml                               Big5 with confidence 0.99
+tests\Big5\carbonxiv.blogspot.com.xml                        Big5 with confidence 0.99
+tests\Big5\catshadow.blogspot.com.xml                        Big5 with confidence 0.99
+tests\Big5\coolloud.org.tw.xml                               Big5 with confidence 0.99
+tests\Big5\digitalwall.com.xml                               Big5 with confidence 0.99
+tests\Big5\ebao.us.xml                                       Big5 with confidence 0.99
+tests\Big5\fudesign.blogspot.com.xml                         Big5 with confidence 0.99
+tests\Big5\kafkatseng.blogspot.com.xml                       Big5 with confidence 0.99
+tests\Big5\ke207.blogspot.com.xml                            Big5 with confidence 0.99
+tests\Big5\leavesth.blogspot.com.xml                         Big5 with confidence 0.99
+tests\Big5\letterlego.blogspot.com.xml                       Big5 with confidence 0.99
+tests\Big5\linyijen.blogspot.com.xml                         Big5 with confidence 0.99
+tests\Big5\marilynwu.blogspot.com.xml                        Big5 with confidence 0.99
+tests\Big5\myblog.pchome.com.tw.xml                          Big5 with confidence 0.99
+tests\Big5\oui-design.com.xml                                Big5 with confidence 0.99
+tests\Big5\sanwenji.blogspot.com.xml                         Big5 with confidence 0.99
+tests\Big5\sinica.edu.tw.xml                                 Big5 with confidence 0.99
+tests\Big5\sylvia1976.blogspot.com.xml                       Big5 with confidence 0.99
+tests\Big5\tlkkuo.blogspot.com.xml                           Big5 with confidence 0.99
+tests\Big5\tw.blog.xubg.com.xml                              Big5 with confidence 0.99
+tests\Big5\unoriginalblog.com.xml                            Big5 with confidence 0.99
+tests\Big5\upsaid.com.xml                                    Big5 with confidence 0.99
+tests\Big5\willythecop.blogspot.com.xml                      Big5 with confidence 0.99
+tests\Big5\ytc.blogspot.com.xml                              Big5 with confidence 0.99
+tests\EUC-JP\aivy.co.jp.xml                                  EUC-JP with confidence 0.99
+tests\EUC-JP\akaname.main.jp.xml                             EUC-JP with confidence 0.99
+tests\EUC-JP\arclamp.jp.xml                                  EUC-JP with confidence 0.99
+.
+.
+.
+316 tests</samp></pre>
+<p>Holy crap, it actually works! <em><a href=http://www.hampsterdance.com/>/me does a little dance</a></em>
+<p class=a>&#x2042;
+
+<h2 id=summary>Summary</h2>
+<p>What have we learned?
+<ol>
+<li>Porting any non-trivial amount of code from Python 2 to Python 3 is going to be a pain. There&#8217;s no way around it. It&#8217;s hard.
+<li>The <a href=porting-code-to-python-3-with-2to3.html>automated <code>2to3</code> tool</a> is helpful as far as it goes, but it will only do the easy parts&nbsp;&mdash;&nbsp;function renames, module renames, syntax changes. It&#8217;s an impressive piece of engineering, but in the end it&#8217;s just an intelligent search-and-replace bot.
+<li>The #1 porting problem in this library was the difference between strings and bytes. In this case that seems obvious, since the whole point of the <code>chardet</code> library is to convert a stream of bytes into a string. But &#8220;a stream of bytes&#8221; comes up more often than you might think. Reading a file in &#8220;binary&#8221; mode? You&#8217;ll get a stream of bytes. Fetching a web page? Calling a web <abbr>API</abbr>? They return a stream of bytes, too.
+<li><em>You</em> need to understand your program. Thoroughly. Preferably because you wrote it, but at the very least, you need to be comfortable with all its quirks and musty corners. The bugs are everywhere.
+<li>Test cases are essential. Don&#8217;t port anything without them. The <em>only</em> reason I have any confidence that <code>chardet</code> works in Python 3 is that I started with a test suite that exercised all major code paths. If you don&#8217;t have any tests, write some tests before you start porting to Python 3. If you have a few tests, write more. If you have a lot of tests, then the real fun can begin.
+</ol>
+
+<p class=v><a rel=prev href=http-web-services.html title='back to &#8220;HTTP Web Services&#8221;'><span class=u>&#x261C;</span></a> <a rel=next href=packaging.html title='onward to &#8220;Packaging Python Libraries&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>

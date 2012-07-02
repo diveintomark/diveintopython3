@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Troubleshooting - Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<body id=appd>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#troubleshooting>Dive Into Python 3</a> <span class=u>&#8227;</span>
+<h1>Troubleshooting</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> Where&#8217;s the <kbd>ANY</kbd> key? <span class=u>&#x275E;</span><br>&mdash; <a href=http://www.wherestheanykey.co.uk>variously attributed</a>
+</blockquote>
+<p id=toc>&nbsp;
+
+<h2 id=divingin>Diving In</h2>
+<p class=f>FIXME
+
+<h2 id=getting-to-the-command-line>Getting to the Command Line</h2>
+<p>Throughout this book, there are examples of executing Python programs from the command line. Where is the command line?
+
+<p>On Linux, look in your <b><code>Applications</code></b> menu for a program called <b><code>Terminal</code></b>. (It may be in a submenu like <b><code>Accessories</code></b> or <b><code>System</code></b>.)
+
+<p>On Mac OS X, there is an application called <b><code>Terminal</code></b> in your <code>/Applications/Utilities/</code> folder. To get there, click on your desktop, open the <b><code>Go</code></b> menu, select <b><code>Go to folder...</code></b>, and type <kbd>/Applications/Utilities/</kbd>. Then double-click the <b><code>Terminal</code></b> program.
+
+<p>On Windows, click <b><code>Start</code></b>, select <b><code>Run...</code></b>, type <kbd>cmd</kbd>, and press <kbd>ENTER</kbd>.
+
+<h2 id=running-python-on-the-command-line>Running Python on the command line</h2>
+
+<p>Once you <a href=#getting-to-the-command-line>get to the command line</a>, you should be able to run the Python interactive shell. On the Linux or Mac OS X command line, type <kbd>python3</kbd> and press <kbd>ENTER</kbd>. On the Windows command line, type <kbd>c:\python31\python</kbd> and press <kbd>ENTER</kbd>. If all goes well, you should see something like this:
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~$ </samp><kbd>python3</kbd>
+<samp>Python 3.1 (r31:73572, Jul 28 2009, 06:52:23) 
+[GCC 4.2.4 (Ubuntu 4.2.4-1ubuntu4)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>></samp></pre>
+
+<p>(Type <kbd>exit()</kbd> and press <kbd>ENTER</kbd> to exit the Python interactive shell and go back to the command line. This works on all platforms.)
+
+<p>If you get a &#8220;command not found&#8221; error, it probably means you <a href=installing-python.html>don&#8217;t have Python 3 installed</a>.
+
+<pre class='nd screen'>
+<samp class=p>you@localhost:~$ </samp><kbd>python3</kbd>
+<samp>bash: python3: command not found</samp></pre>
+
+<p>On the other hand, if you get into a Python interactive shell but the version number is not what you expected, you may have more than one version of Python installed. This happens most often on Linux and Mac OS X systems, where an older version of Python is pre-installed. You can install the latest version without deleting the older version (they will live side-by-side in peace), but you will need to be more specific when you run Python from the command line.
+
+<p>For example, on my home Linux box, I have several versions of Python installed so I can test the Python software that I write. To run a specific version, I can type <code>python3.0</code>, <code>python3.1</code>, or <code>python2.6</code>.
+
+<pre class='nd screen'>
+<samp class=p>mark@atlantis:~$ </samp><kbd>python3.0</kbd>
+<samp>Python 3.0.1+ (r301:69556, Apr 15 2009, 17:25:52)
+[GCC 4.3.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> </samp><kbd class=pp>exit()</kbd>
+<samp class=p>mark@atlantis:~$ </samp><kbd>python3.1</kbd>
+<samp>Python 3.1 (r31:73572, Jul 28 2009, 06:52:23) 
+[GCC 4.2.4 (Ubuntu 4.2.4-1ubuntu4)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> </samp><kbd class=pp>exit()</kbd>
+<samp class=p>mark@atlantis:~$ </samp><kbd>python2.6</kbd>
+<samp>Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41) 
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> </samp><kbd class=pp>exit()</kbd></pre>
+
+<p class=v><a rel=prev href=where-to-go-from-here.html title='back to &#8220;Where To Go From Here&#8221;'><span class=u>&#x261C;</span></a> <a href=blank.html rel=next><span class=u>&#x261E;</span></a>
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/dip3.js></script>
