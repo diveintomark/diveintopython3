@@ -121,6 +121,24 @@ p, ul, ol {
   font-size: medium;
 }
 
+ul.prettify {
+  background-color:#333;
+  color:#fff;
+  margin: 0 0 1px 0px;
+  list-style: decimal outside none;
+  font-size: 13px;
+}
+
+ul.prettify li {
+  background-color: #ffffff;
+  padding-left:10px;
+  color:#fff;
+}
+
+ul.prettify li:nth-child(2n+1) {
+  background-color: #efefef;
+}
+
 /* basics */
 
 html {
@@ -179,6 +197,7 @@ a:hover {
 }
 a:link, .w a {
   color: steelblue;
+  font-weight:bold;
 }
 a:visited {
   color: #b44582;
@@ -200,9 +219,21 @@ a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
 /* code blocks */
 
 pre {
-  padding-left: 2.154em;
+  padding-left: 10px;
   border-left: 1px solid #ddd;
 }
+pre.code {
+  background-color:#333;
+}
+
+pre.code.screen {
+  background-color:#fff;
+}
+
+pre.code a {
+  color:#fff;
+}
+
 .w {
   float: left;
 }

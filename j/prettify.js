@@ -1029,7 +1029,7 @@ window['_pr_isIE6'] = function () {
 
     // A helper function that is responsible for opening sections of decoration
     // and outputing properly escaped chunks of source
-    function emitTextUpTo(sourceIdx) {
+    function emitTextUpTo(sourceIdx, tagListHtml) {
       if (sourceIdx > outputIdx) {
         if (openDecoration && openDecoration !== currentDecoration) {
           // Close the current decoration
@@ -1057,16 +1057,22 @@ window['_pr_isIE6'] = function () {
         lastWasSpace = trailingSpaceRe.test(htmlChunk);
         // IE collapses multiple adjacient <br>s into 1 line break.
         // Prefix every <br> with '&nbsp;' can prevent such IE's behavior.
-        var lineBreakHtml = window['_pr_isIE6']() ? '&nbsp;<br />' : '<br />';
+        var lineBreakHtml = window['_pr_isIE6']() ? '&nbsp;</span></li><li class="1"><span>' :(tagListHtml)? '</span></li><li class="2"><span>':'<br />';
+        
         html.push(htmlChunk.replace(newlineRe, lineBreakHtml));
         outputIdx = sourceIdx;
+        if (decPos == (decorations.length)) {
+            html.push('</span></ul>');
+        }
       }
     }
 
     while (true) {
+
       // Determine if we're going to consume a tag this time around.  Otherwise
       // we consume a decoration or exit.
       var outputTag;
+      var tagListHtml;
       if (tagPos < extractedTags.length) {
         if (decPos < decorations.length) {
           // Pick one giving preference to extractedTags since we shouldn't open
@@ -1079,25 +1085,35 @@ window['_pr_isIE6'] = function () {
       } else {
         outputTag = false;
       }
+        
       // Consume either a decoration or a tag or exit.
       if (outputTag) {
-        emitTextUpTo(extractedTags[tagPos]);
+        emitTextUpTo(extractedTags[tagPos], tagListHtml);
+        
         if (openDecoration) {
           // Close the current decoration
           html.push('</span>');
           openDecoration = null;
         }
+        
         html.push(extractedTags[tagPos + 1]);
+       
+        //open list 
+        if( tagPos == 0 ) {
+            tagListHtml = true;
+            html.push('<ul class="prettify"><li><span>');
+        }
         tagPos += 2;
       } else if (decPos < decorations.length) {
-        emitTextUpTo(decorations[decPos]);
+        emitTextUpTo(decorations[decPos], tagListHtml);
         currentDecoration = decorations[decPos + 1];
         decPos += 2;
       } else {
         break;
       }
     }
-    emitTextUpTo(sourceText.length);
+
+    emitTextUpTo(sourceText.length, tagListHtml);
     if (openDecoration) {
       html.push('</span>');
     }
@@ -1107,7 +1123,7 @@ window['_pr_isIE6'] = function () {
   /** Maps language-specific file extensions to handlers. */
   var langHandlerRegistry = {};
   /** Register a language handler for the given file extensions.
-    * @param {function (Object)} handler a function from source code to a list
+    * @param {function (Object)} handler a function from source coda to a list
     *      of decorations.  Takes a single argument job which describes the
     *      state of the computation.   The single parameter has the form
     *      {@code {
