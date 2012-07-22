@@ -122,7 +122,7 @@ p, ul, ol {
 }
 
 ul.prettify {
-  background-color:#333;
+  background-color:#eee;
   color:#fff;
   margin: 0 0 1px 0px;
   list-style: decimal outside none;
@@ -132,11 +132,12 @@ ul.prettify {
 ul.prettify li {
   background-color: #ffffff;
   padding-left:10px;
-  color:#fff;
+  color:#666666;
 }
 
 ul.prettify li:nth-child(2n+1) {
-  background-color: #efefef;
+  border-bottom: 1px solid #EFEFEF;
+  border-top: 1px solid #EFEFEF;
 }
 
 /* basics */
@@ -219,11 +220,12 @@ a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
 /* code blocks */
 
 pre {
-  padding-left: 10px;
   border-left: 1px solid #ddd;
 }
 pre.code {
-  background-color:#333;
+    border-color: #AACC99 -moz-use-text-color;
+    border-style: solid none;
+    border-width: 1px medium;
 }
 
 pre.code.screen {
@@ -231,7 +233,7 @@ pre.code.screen {
 }
 
 pre.code a {
-  color:#fff;
+  color:#666666;
 }
 
 .w {
