@@ -221,11 +221,13 @@ a.hl:hover, h2[id]:hover a.hl, h3[id]:hover a.hl {
 
 pre {
   border-left: 1px solid #ddd;
+  padding-left:10px;
 }
-pre.code {
+pre.code.pp {
     border-color: #AACC99 -moz-use-text-color;
     border-style: solid none;
-    border-width: 1px medium;
+    border-width: 1px 0 0 0;
+    padding:0;
 }
 
 pre.code.screen {
