@@ -17,7 +17,7 @@ def build_match_and_apply_functions(pattern, search, replace):
 def rules(rules_filename):
     with open(rules_filename, encoding='utf-8') as pattern_file:
         for line in pattern_file:
-            pattern, search, replace = line.split(None, 3)
+            pattern, search, replace = line.split(None, 2)
             yield build_match_and_apply_functions(pattern, search, replace)
 
 def plural(noun, rules_filename='plural5-rules.txt'):

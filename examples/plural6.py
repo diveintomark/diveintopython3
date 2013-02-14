@@ -38,7 +38,7 @@ class LazyRules:
             self.pattern_file.close()
             raise StopIteration
 
-        pattern, search, replace = line.split(None, 3)
+        pattern, search, replace = line.split(None, 2)
         funcs = build_match_and_apply_functions(
             pattern, search, replace)
         self.cache.append(funcs)
