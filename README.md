@@ -109,6 +109,47 @@ To https://github.com/framasoft/plongez-dans-python3.git
    67ef8e6..2c53431  master -> master
 ```
 
+#### C'est bien joli, mais je ne suis pas tout seul
+
+Effectivement, d'autres que vous travaillent sur cette traduction. Il faut donc que vous puissiez récupérer leurs modifications. Encore une fois, c'est un jeu d'enfant. Placez vous simplement dans votre dépôt et magie :
+
+```bash
+Blake:plongez-dans-python3 gcoulais$ git pull origin master
+From https://github.com/framasoft/plongez-dans-python3
+ * branch            master     -> FETCH_HEAD
+Already up-to-date.
+```
+
+Ici ce n'est pas très parlant : le dépôt local était déjà à jour. Mais c'est bien là que vous verrez apparaître toutes les modifications de vos petits camarades. Attention, si vous avez des modifications en cours, Git refusera de faire l'opération de pull. Il suffit de mettre de côté vos modifications, de récupérer la dernière version du dépôt distant puis d'y appliquer vos modifications en cours. En langage git, ça donne ça :
+
+```bash
+Blake:plongez-dans-python3 gcoulais$ git stash
+Saved working directory and index state WIP on master: 7583460 README : coloration syntaxique pour les blocs de code
+HEAD is now at 7583460 README : coloration syntaxique pour les blocs de code
+```
+
+puis 
+
+```bash
+Blake:plongez-dans-python3 gcoulais$ git pull origin master
+```
+
+et enfin 
+
+```bash
+Blake:plongez-dans-python3 gcoulais$ git stash apply
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   README.md
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+#### Origin master : c'est quoi cette bouteille de lait ?
+
 #### À propos des branches
 
 TODO: expliquer brièvement les branches.
