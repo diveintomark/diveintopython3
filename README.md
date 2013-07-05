@@ -4,6 +4,8 @@ Dive Into Python 3
 Projet de traduction fr
 -----------------------
 
+TODO: expliquer le projet, comment participer, qui contacter, à quelle on mange, pourquoi les escargots n'ont pas de dents...
+
 GIT : petit guide à l'usage du débutant
 ---------------------------------------
 
@@ -43,15 +45,13 @@ En résumé, vous créez un dépôt local, vous travaillez, vous committez et vo
 
 #### Du rêve à la réalité
 
-Concrètement, voici ce que ça donne pour ce projet :
-
-  * Clonons joyeusement le projet : dans votre dossier personnel, placez vous à l'endroit où vous souhaitez créer votre dépôt local puis exécutez la commande de clonage
+Concrètement, voici ce que ça donne pour ce projet. Commençons pas cloner joyeusement le projet. Dans votre dossier personnel, placez vous à l'endroit où vous souhaitez créer votre dépôt local puis exécutez la commande de clonage
 
 ```
 git clone https://github.com/framasoft/plongez-dans-python3.git
 ```
 
-    Vous devriez obtenir le résultat suivant. Vous remarquerez que cette opération crée automatiquement un dossier dans lequel figurera votre dépôt :
+Vous devriez obtenir le résultat suivant. Vous remarquerez que cette opération crée automatiquement un dossier dans lequel figurera votre dépôt :
     
 ```
 Cloning into 'plongez-dans-python3'...
@@ -62,7 +62,7 @@ Receiving objects: 100% (5482/5482), 25.51 MiB | 1.92 MiB/s, done.
 Resolving deltas: 100% (1587/1587), done.
 ```
 
-  * Faites une modification. Vous pouvez obtenir à tout moment le statut de votre dépôt :
+Faites une modification. Vous pouvez obtenir à tout moment le statut de votre dépôt :
 
 ```
 Blake:plongez-dans-python3 gcoulais$ git status
@@ -72,9 +72,46 @@ Blake:plongez-dans-python3 gcoulais$ git status
 #
 #	README.md
 nothing added to commit but untracked files present (use "git add" to track)
-Blake:plongez-dans-python3 gcoulais$ 
 ```
 
-    Ici un fichier README.md a été ajouté mais n'a pas encore été committé. Git le voit et vous informe qu'il existe mais ne le suit.
-  
+Ici un fichier README.md a été ajouté mais n'a pas encore été committé. Git le voit et vous informe qu'il existe mais ne le suit. Vous pouvez obtenir d'autres types de réponses de statut pour les fichiers déjà suivis et ayant fait l'objet d'une modification
+
+```
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   README.md
+#
+```
+    
+Ajoutons maintenant le fichier au suivi de version et committons. L'opération se déroule donc en deux fois : add puis commit. Un commit est toujours accompagné d'un message expliquant ce que vous avez fait.
+
+```
+Blake:plongez-dans-python3 gcoulais$ git add README.md 
+Blake:plongez-dans-python3 gcoulais$ git commit -m "Ajout du README.md" 
+[master 2c53431] Ajout du README.md
+ 1 file changed, 80 insertions(+)
+ create mode 100644 README.md
+```
+
+Il ne reste plus qu'à publier la modification sur le dépôt distant :
+
+```
+Blake:plongez-dans-python3 gcoulais$ git push origin master
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 2.14 KiB, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To https://github.com/framasoft/plongez-dans-python3.git
+   67ef8e6..2c53431  master -> master
+```
+
+#### À propos des branches
+
+TODO: expliquer brièvement les branches.
+TODO: expliquer brièvement les remote. Pourquoi origin master
+
 
