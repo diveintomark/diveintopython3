@@ -47,13 +47,13 @@ En résumé, vous créez un dépôt local, vous travaillez, vous committez et vo
 
 Concrètement, voici ce que ça donne pour ce projet. Commençons pas cloner joyeusement le projet. Dans votre dossier personnel, placez vous à l'endroit où vous souhaitez créer votre dépôt local puis exécutez la commande de clonage
 
-```
+```bash
 git clone https://github.com/framasoft/plongez-dans-python3.git
 ```
 
 Vous devriez obtenir le résultat suivant. Vous remarquerez que cette opération crée automatiquement un dossier dans lequel figurera votre dépôt :
     
-```
+```bash
 Cloning into 'plongez-dans-python3'...
 remote: Counting objects: 5482, done.
 remote: Compressing objects: 100% (3893/3893), done.
@@ -64,7 +64,7 @@ Resolving deltas: 100% (1587/1587), done.
 
 Faites une modification. Vous pouvez obtenir à tout moment le statut de votre dépôt :
 
-```
+```bash
 Blake:plongez-dans-python3 gcoulais$ git status
 # On branch master
 # Untracked files:
@@ -76,7 +76,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 Ici un fichier README.md a été ajouté mais n'a pas encore été committé. Git le voit et vous informe qu'il existe mais ne le suit. Vous pouvez obtenir d'autres types de réponses de statut pour les fichiers déjà suivis et ayant fait l'objet d'une modification
 
-```
+```bash
 # On branch master
 # Changes not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
@@ -88,7 +88,7 @@ Ici un fichier README.md a été ajouté mais n'a pas encore été committé. Gi
     
 Ajoutons maintenant le fichier au suivi de version et committons. L'opération se déroule donc en deux fois : add puis commit. Un commit est toujours accompagné d'un message expliquant ce que vous avez fait.
 
-```
+```bash
 Blake:plongez-dans-python3 gcoulais$ git add README.md 
 Blake:plongez-dans-python3 gcoulais$ git commit -m "Ajout du README.md" 
 [master 2c53431] Ajout du README.md
@@ -98,7 +98,7 @@ Blake:plongez-dans-python3 gcoulais$ git commit -m "Ajout du README.md"
 
 Il ne reste plus qu'à publier la modification sur le dépôt distant :
 
-```
+```bash
 Blake:plongez-dans-python3 gcoulais$ git push origin master
 Counting objects: 4, done.
 Delta compression using up to 4 threads.
