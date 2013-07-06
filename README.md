@@ -33,13 +33,14 @@ Les principes sont assez simples :
     Dans les deux cas, cela revient au même : vous disposez localement d'un dépôt sur lequel vous allez pouvoir travailler.
     
   * Travailler sur votre dépôt.
-  * Versionner vos modifications -> Créer un commit. 
   
     Une fois satisfait de votre modification ou de votre ajout, vous pouvez versionner vos modifications. En langage Git, on parle de commit. Ce commit crée une nouvelle version du fichier. S'il s'agit d'un nouveau fichier, ce sera la première version.
 
-  * Publier vos modifications.
-  
+  * Versionner vos modifications → Créer un commit. 
+
     Vos commits sont dans votre dépôt local. Vous avez alors la possibilité de les publier vers le dépôt initial ou même vers un autre dépôt. En langage Git, on parle de push. Si vous ne disposez pas des droit de publication sur dépôt distant, vous pouvez aussi proposer vos modifications au responsable du dépôt. En langage Git on parle de pull request.
+
+  * Publier vos modifications.
     
 En résumé, vous créez un dépôt local, vous travaillez, vous committez et vous publiez. Facile, non ?
 
@@ -48,7 +49,7 @@ En résumé, vous créez un dépôt local, vous travaillez, vous committez et vo
 Concrètement, voici ce que ça donne pour ce projet. Commençons pas cloner joyeusement le projet. Dans votre dossier personnel, placez vous à l'endroit où vous souhaitez créer votre dépôt local puis exécutez la commande de clonage
 
 ```bash
-git clone https://github.com/framasoft/plongez-dans-python3.git
+$git clone https://github.com/framasoft/plongez-dans-python3.git
 ```
 
 Vous devriez obtenir le résultat suivant. Vous remarquerez que cette opération crée automatiquement un dossier dans lequel figurera votre dépôt :
@@ -65,7 +66,7 @@ Resolving deltas: 100% (1587/1587), done.
 Faites une modification. Vous pouvez obtenir à tout moment le statut de votre dépôt :
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git status
+$ git status
 # On branch master
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
@@ -89,8 +90,8 @@ Ici un fichier README.md a été ajouté mais n'a pas encore été committé. Gi
 Ajoutons maintenant le fichier au suivi de version et committons. L'opération se déroule donc en deux fois : add puis commit. Un commit est toujours accompagné d'un message expliquant ce que vous avez fait.
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git add README.md 
-Blake:plongez-dans-python3 gcoulais$ git commit -m "Ajout du README.md" 
+$ git add README.md 
+$ git commit -m "Ajout du README.md" 
 [master 2c53431] Ajout du README.md
  1 file changed, 80 insertions(+)
  create mode 100644 README.md
@@ -99,7 +100,7 @@ Blake:plongez-dans-python3 gcoulais$ git commit -m "Ajout du README.md"
 Il ne reste plus qu'à publier la modification sur le dépôt distant :
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git push origin master
+$ git push origin master
 Counting objects: 4, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (3/3), done.
@@ -114,7 +115,7 @@ To https://github.com/framasoft/plongez-dans-python3.git
 Effectivement, d'autres que vous travaillent sur cette traduction. Il faut donc que vous puissiez récupérer leurs modifications. Encore une fois, c'est un jeu d'enfant. Placez vous simplement dans votre dépôt et magie :
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git pull origin master
+$ git pull origin master
 From https://github.com/framasoft/plongez-dans-python3
  * branch            master     -> FETCH_HEAD
 Already up-to-date.
@@ -123,7 +124,7 @@ Already up-to-date.
 Ici ce n'est pas très parlant : le dépôt local était déjà à jour. Mais c'est bien là que vous verrez apparaître toutes les modifications de vos petits camarades. Attention, si vous avez des modifications en cours, Git refusera de faire l'opération de pull. Il suffit de mettre de côté vos modifications, de récupérer la dernière version du dépôt distant puis d'y appliquer vos modifications en cours. En langage git, ça donne ça :
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git stash
+$ git stash
 Saved working directory and index state WIP on master: 7583460 README : coloration syntaxique pour les blocs de code
 HEAD is now at 7583460 README : coloration syntaxique pour les blocs de code
 ```
@@ -131,13 +132,13 @@ HEAD is now at 7583460 README : coloration syntaxique pour les blocs de code
 puis 
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git pull origin master
+$ git pull origin master
 ```
 
 et enfin 
 
 ```bash
-Blake:plongez-dans-python3 gcoulais$ git stash apply
+$ git stash apply
 # On branch master
 # Changes not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
@@ -154,5 +155,3 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 TODO: expliquer brièvement les branches.
 TODO: expliquer brièvement les remote. Pourquoi origin master
-
-
