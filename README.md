@@ -51,7 +51,7 @@ En résumé, vous créez un dépôt local, vous travaillez, vous committez et vo
 Concrètement, voici ce que ça donne pour ce projet. Commençons pas cloner joyeusement le projet. Dans votre dossier personnel, placez vous à l'endroit où vous souhaitez créer votre dépôt local puis exécutez la commande de clonage
 
 ```bash
-$git clone https://github.com/framasoft/plongez-dans-python3.git
+$ git clone https://github.com/framasoft/plongez-dans-python3.git
 ```
 
 Vous devriez obtenir le résultat suivant. Vous remarquerez que cette opération crée automatiquement un dossier dans lequel figurera votre dépôt :
