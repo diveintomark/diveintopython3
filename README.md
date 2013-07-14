@@ -21,8 +21,8 @@ La façon de travailler est assez simple, mais il est primordial de s'y tenir, s
 4. Traduire.
 5. Passer le statut du fichier à "Relecture" dans la branche du fichier, la branche master et la branche gh-pages
 6. Faire une pull-request pour pousser la branche du fichier dans la branche master
-7. Relecture par les autres membres de l'équipe, quand ils sont ok pour pousser, ils mettent un :1 (émoticône pouce vers le haut de github) dans les commentaires de la pull-request
-8. Quand on a 4 ou 5 :1 dans les commentaires, le coordinateur (ldidry) pousse dans master, update le statut à "Publié" dans les branches master et gh-pages.
+7. Relecture par les autres membres de l'équipe, quand ils sont ok pour pousser, ils mettent un :+1: (émoticône pouce vers le haut de github) dans les commentaires de la pull-request
+8. Quand on a 4 ou 5 :+1: dans les commentaires, le coordinateur (ldidry) pousse dans master, update le statut à "Publié" dans les branches master et gh-pages.
 9. goto 1
 
 GIT : petit guide à l'usage du débutant
