@@ -4,7 +4,25 @@ Dive Into Python 3
 Projet de traduction fr
 -----------------------
 
-TODO: expliquer le projet, comment participer, qui contacter, à quelle on mange, pourquoi les escargots n'ont pas de dents...
+TODO: expliquer le projet, à quelle heure on mange, pourquoi les escargots n'ont pas de dents…
+
+Comment participer ?
+--------------------
+
+Pour discuter, on a une mailing-list : plongez-dans-python-3@framalistes.org. Inscrivez-vous sur [http://www.framalistes.org/sympa/subscribe/plongez-dans-python-3](http://www.framalistes.org/sympa/subscribe/plongez-dans-python-3).
+
+Ensuite, il faut nous envoyer un petit mail sur cette liste en nous donnant votre pseudo github, qu'on vous ajoute au groupe qui a les droits sur ce dépôt, histoire de pouvoir bosser.
+
+La façon de travailler est assez simple, mais il est primordial de s'y tenir, sinon ça va être le gros bazar.
+1. Passer le statut à "En cours" dans l'en-tête du fichier que vous allez traduire, dans la branche master.
+2. Pousser cette modification (ou la refaire) dans la branche gh-pages.
+3. Créer, à partir de la branche master, une nouvelle branche portant le nom du fichier à traduire.
+4. Traduire.
+5. Passer le statut du fichier à "Relecture" dans la branche du fichier, la branche master et la branche gh-pages
+6. Faire une pull-request pour pousser la branche du fichier dans la branche master
+7. Relecture par les autres membres de l'équipe, quand ils sont ok pour pousser, ils mettent un :1 dans les commentaires de la pull-request
+8. Quand on a 4 ou 5 :1 dans les commentaires, le coordinateur (ldidry) pousse dans master, update le statut à "Publié" dans les branches master et gh-pages.
+9. goto 1
 
 GIT : petit guide à l'usage du débutant
 ---------------------------------------
