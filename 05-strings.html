@@ -5,7 +5,7 @@ permalink: string.html
 ---
 <!DOCTYPE html>
 <meta charset=utf-8>
-<title>Strings - Dive Into Python 3</title>
+<title>Chaînes de caractères - Plongez dans Python 3</title>
 <!--[if IE]><script src=j/html5.js></script><![endif]-->
 <link rel=stylesheet href=dip3.css>
 <style>
@@ -15,15 +15,15 @@ body{counter-reset:h1 4}
 <link rel=stylesheet media=print href=print.css>
 <meta name=viewport content='initial-scale=1.0'>
 <form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
-<p>You are here: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#strings>Dive Into Python 3</a> <span class=u>&#8227;</span>
-<p id=level>Difficulty level: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
-<h1>Strings</h1>
+<p>Vous êtes ici: <a href=index.html>Home</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#strings>Plongez dans Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Niveau de difficulté: <span class=u title=intermediate>&#x2666;&#x2666;&#x2666;&#x2662;&#x2662;</span>
+<h1>Chaînes de caractères</h1>
 <blockquote class=q>
-<p><span class=u>&#x275D;</span> I&#8217;m telling you this &#8217;cause you&#8217;re one of my friends.<br>
-My alphabet starts where your alphabet ends! <span class=u>&#x275E;</span><br>&mdash; Dr. Seuss, On Beyond Zebra!
+<p><span class=u>&#x275D;</span> Je vous dis ceci car vous êtes mon ami.<br>
+Mon alphabet commence là où s&#8217;arrête le tien! <span class=u>&#x275E;</span><br>&mdash; Dr. Seuss, On Beyond Zebra!
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=boring-stuff>Some Boring Stuff You Need To Understand Before You Can Dive In</h2>
+<h2 id=boring-stuff>Certaines choses ennuyeuses que vous devez assimiler avant de poursuivre</h2>
 <p class=f>Few people think about it, but text is incredibly complicated. Start with the alphabet. The people of <a href=http://en.wikipedia.org/wiki/Bougainville_Province>Bougainville</a> have the smallest alphabet in the world; their <a href=http://en.wikipedia.org/wiki/Rotokas_alphabet>Rotokas alphabet</a> is composed of only 12 letters: A, E, G, I, K, O, P, R, S, T, U, and V. On the other end of the spectrum, languages like Chinese, Japanese, and Korean have thousands of characters. English, of course, has 26 letters&nbsp;&mdash;&nbsp;52 if you count uppercase and lowercase separately&nbsp;&mdash;&nbsp;plus a handful of <i class=baa>!@#$%&amp;</i> punctuation marks.
 
 <p>When you talk about &#8220;text,&#8221; you&#8217;re probably thinking of &#8220;characters and symbols on my computer screen.&#8221; But computers don&#8217;t deal in characters and symbols; they deal in bits and bytes. Every piece of text you&#8217;ve ever seen on a computer screen is actually stored in a particular <i>character encoding</i>. Very roughly speaking, the character encoding provides a mapping between the stuff you see on your screen and the stuff your computer actually stores in memory and on disk. There are many different character encodings, some optimized for particular languages like Russian or Chinese or English, and others that can be used for multiple languages.
