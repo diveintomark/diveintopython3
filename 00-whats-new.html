@@ -1,0 +1,54 @@
+---
+title: Quoi de neuf dans &#8220;Plongez dans Python 3&#8221;
+status: Relecture
+permalink: whats-new.html
+---
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>What's New In Dive Into Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 -1}
+h3:before{content:''}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=sa value=Search></div></form>
+<p>Vous êtes ici : <a href=index.html>Accueil</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#whats-new>Plongez dans Python 3</a> <span class=u>&#8227;</span>
+<h1>Quoi de neuf dans “Plongez dans Python 3”</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> Isn&#8217;t this where we came in? <span class=u>&#x275E;</span><br>&mdash; Pink Floyd, The Wall
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin><i>a.k.a.</i> « le niveau -1 »</h2>
+
+<p class=f>Êtes-vous déjà un programmeur Python ? Avez-vous lu le livre original « Plongez dans Python ? » (NdT : “Dive into Python”, qui n’existe qu’en version anglaise). L’avez-vous acheté au format papier ? (Si oui, merci !) Êtes-vous prêt à plonger dans Python 3 ? &hellip; Si oui, continuez à lire. (Si rien de cela n’est vrai, vous feriez mieux de <a href=installing-python.html>commencer par le début</a>.)
+
+<p>Python 3 est livré avec un script nommé <code>2to3</code>. Apprend-le. Aime-le. Utilise-le. <a href=porting-code-to-python-3-with-2to3.html>Porter du code vers Python 3 avec <code>2to3</code></a> est une référence de toutes les choses que l’outil <code>2to3</code> peut corriger automatiquement. Comme la plupart sont des changements de syntaxe, c’est un bon point de départ pour apprendre pleins de choses sur les changements de syntaxe dans Python 3. (<code>print</code> est désormais une fonction, <code>`x`</code> ne marche pas, etc.)
+
+<p><a href=case-study-porting-chardet-to-python-3.html>Étude de cas : porter <code>chardet</code> à Python 3</a> documente mon (ultimately successful) travail pour porter une bibliothèque non-triviale de Python 2 à Python 3. Ça peut vous aider ; ou peut-être pas. Il y a une courbe d’apprentissage assez raide, car vous devez tout d’abord comprendre à peu près la bibliothèque, pour comprendre pourquoi le code ne fonctionne plus et comment la corriger. Beaucoup de problèmes tournent autour des chaines de caractères. À ce propos&hellip;
+
+<p>Chaines de caractères. Waouh. Par où commencer. Python 2 a des « chaines de caractères » et des « chaines de caractères Unicode ». … Python 3 a des « octets » et des «chaines de caractères». Ce qui signifie que toutes les chaines de caractères sont maintenant Unicode, et que si vous voulez avoir affaire à des sacs d’octets, utilisez le nouveau type <code>bytes</code>. Python 3 ne fera <em>jamais</em> de conversion implicite entre les chaines de caractères et les octets, donc si vous n’êtes pas sûr lequel des deux vous avez à un moment donné, votre code va presque certainement mal fonctionner. Lisez <a href=strings.html>le chapitre sur les chaines de caractères</a> pour plus de détails.
+
+<p>L’opposition octets contre chaines de caractères revient de façon récurrente tout au long du livre.
+
+<ul>
+<li>Dans <a href=files.html>Fichiers</a>, vous apprendrez la différence entre lire des fichiers en mode « binaire » et en mode « texte ». Lire (et écrire !) les fichiers en mode texte nécessite un paramètre d’<code>encoding</code> (NdT : « codage »). Certaines méthodes concernant les fichiers texte comptent les caractères, d’autres les octets. Si votre code suppose qu’un caractère == un octet, il <em>va</em> mal fonctionner sur les caractères de plusieurs octets.
+<li>Dans <a href=http-web-services.html>Services Web <abbr>HTTP</abbr></a>, le module <code>httplib2</code> récupère les en-têtes et les données qui transitent par <abbr>HTTP</abbr>. Les en-têtes <abbr>HTTP</abbr> sont renvoyés sous forme de chaines de caractères, mais le corps <abbr>HTTP</abbr> est renvoyé sous forme d’octets.
+<li>Dans <a href=serializing.html>Sérialisation d’objets Python</a>, vous apprendrez pourquoi le module <code>pickle</code> dans Python 3 défini un nouveau format de données qui est rétrocompatible avec Python 2. (Indice : c’est à cause des octets et des chaines de caractères) De plus, Python 3 supporte la sérialisation d’objets vers et depuis <abbr>JSON</abbr>, qui n’a même pas de type <code>bytes</code>. Je vais vous montrer comment bidouiller pour contourner ça.
+<li>Dans <a href=case-study-porting-chardet-to-python-3.html>Étude de cas : porter <code>chardet</code> à Python 3</a>, c’est simplement un satané bazar d’octets et de chaines de caractères, partout.
+</ul>
+
+<p>Même si vous vous fichez d’Unicode (oh mais vous devriez), vous voudrez en savoir plus sur <a href=strings.html#formatting-strings>le formatage des chaines de caractères dans Python 3</a>, qui est complètement différent de Python 2.
+
+<p>Les itérateurs sont partout dans Python 3, et je les comprends beaucoup mieux que cinq ans plus tôt, quand j’ai écris « Plongez dans Python ». Vous devez les comprendre vous aussi, car beaucoup de fonctions qui renvoyaient des listes dans Python 2 renvoient désormais des itérateurs dans Python 3. Au minimum, vous devez lire <a href=iterators.html#a-fibonacci-iterator>la seconde moitié du chapitre sur les itérateurs</a> et <a href=advanced-iterators.html#generator-expressions>la seconde moitié du chapitre sur les itérateurs avancés</a>.
+
+<p>En réponse à une forte demande, j’ai ajouté une annexe sur le <a href=special-method-names.html>Nom des méthodes spéciales</a>, qui est un peu comme le <a href=http://www.python.org/doc/3.1/reference/datamodel.html#special-method-names>chapitre sur les modèles de données de la documentation Python</a> mais avec plus de piquant.
+
+<p>Quand j’ai écris « Plongez dans Python », toutes les bibliothèques XML disponibles étaient mauvaises. Puis Fredrik Lundh écrivit <a href=http://effbot.org/zone/element-index.htm>ElementTree</a>, qui n’était pas du tout mauvais. Le dieu Python <a href=http://docs.python.org/3.1/library/xml.etree.elementtree.html>incorpora sagement ElementTree dans la bibliothèque standard</a>, et maintenant c’est la base de mon <a href=xml.html>nouveau chapitre sur XML</a>. L’ancienne façon d’analyser (NdT : on utilise aussi l’anglicisme « parser ») du XML est toujours présente, mais vous devez l’éviter, car elle est mauvaise !
+
+<p>Ce qui est aussi nouveau dans Python — pas dans le langage mais dans la communauté — est l’émergence de dépôts de code comme <a href=http://pypi.python.org/>The Python Package Index</a> (PyPI). Python est livré avec des utilitaires qui servent à empaqueter votre code dans des formats standards et distribuer ces paquets sur PyPI. Lisez <a href=packaging.html>Packaging de librairies Python</a> pour plus de détails.
+
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
