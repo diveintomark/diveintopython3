@@ -78,7 +78,7 @@ Mon alphabet commence là où s’arrête le vôtre! <span class=u>&#x275E;</spa
 
 <p>Désavantages&nbsp;: comme chaque caractère peut prendre un nombre différent d’octets, trouver le <var>Nième</var> caractère est une opération O(N)&nbsp;&mdash;&nbsp;plus longue est la chaîne de caractères, plus long est le temps pour trouver un caractère spécifique. De plus, il y a une manipulation de bit nécessaire pour encoder les caractères en octets et décoder les octets en caractères.
 
-<p>Advantages: super-efficient encoding of common <abbr>ASCII</abbr> characters. No worse than UTF-16 for extended Latin characters. Better than UTF-32 for Chinese characters. Also (and you&#8217;ll have to trust me on this, because I&#8217;m not going to show you the math), due to the exact nature of the bit twiddling, there are no byte-ordering issues. A document encoded in <abbr>UTF-8</abbr> uses the exact same stream of bytes on any computer.
+<p>Avantages&nbsp;: un encodage super efficace des caractères <abbr>ASCII</abbr> courants. Ce n’est pas pire que l’UTF-16 pour les caractères du Latin étendus. Meilleur que l’UTF-32 pour les caractères chinois. Aussi (et vous devrez me croire sur parole, car je ne développerai pas le calcul), grâce à la nature exacte des manipulations de bits, il n’y a pas de problème dans l’ordre des octets. Un document encodé en <abbr>UTF-8</abbr> utilise le même flux d’octets sur chaque ordinateur.
 
 <p class=a>&#x2042;
 
