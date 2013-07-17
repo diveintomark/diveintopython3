@@ -105,22 +105,22 @@ Mon alphabet commence là où s’arrête le vôtre! <span class=u>&#x275E;</spa
 
 <h2 id=formatting-strings>Formatage de chaînes</h2>
 
-<aside>Strings can be defined with either single or double quotes.</aside>
-<p>Let&#8217;s take another look at <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<aside>Les chaînes peuvent être définies par des guillemets droits simples ou doubles.</aside>
+<p>Reprenons notre exemple <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>&nbsp;:
 
 <p class=d>[<a href=examples/humansize.py>download <code>humansize.py</code></a>]
 <pre class=pp><code><a>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],         <span class=u>&#x2460;</span></a>
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
 def approximate_size(size, a_kilobyte_is_1024_bytes=True):
-<a>    '''Convert a file size to human-readable form.                          <span class=u>&#x2461;</span></a>
+<a>    '''Convertit une taille de fichier en un format lisible par un humain.  <span class=u>&#x2461;</span></a>
 
-    Keyword arguments:
-    size -- file size in bytes
-    a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
-                                if False, use multiples of 1000
+    Paramètres par mot-clef :
+    size -- taille de fichiers en octets
+    a_kilobyte_is_1024_bytes -- si True (par défaut), utilise des multiples de 1024
+                                si False, utilise des multiples de 1000
 
-    Returns: string
+    Retourne : une chaîne de caractères
 
 <a>    '''                                                                     <span class=u>&#x2462;</span></a>
     if size &lt; 0:
@@ -134,14 +134,14 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 
     raise ValueError('number too large')</code></pre>
 <ol>
-<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; those are each strings.
-<li>Function docstrings are strings. This docstring spans multiple lines, so it uses three-in-a-row quotes to start and end the string.
-<li>These three-in-a-row quotes end the docstring.
-<li>There&#8217;s another string, being passed to the exception as a human-readable error message.
-<li>There&#8217;s a&hellip; whoa, what the heck is that?
+<li><code>'KB'</code>, <code>'MB'</code>, <code>'GB'</code>&hellip; ce sont des chaînes.
+<li>Les docstrings des fonctions sont des chaînes. Cette docstring s’étale sur plusieurs lignes, il faut donc utiliser trois guillemets droits simples pour commencer et terminer la chaîne.
+<li>Ces trois guillemets droits simples terminent la docstring.
+<li>Il y a une autre chaîne, passée comme argument à l’exception comme un message lisible par un être humain.
+<li>Il y a un&hellip; wow, c’est quoi ce truc&nbsp;?
 </ol>
 
-<p>Python 3 supports <dfn>formatting</dfn> values into strings. Although this can include very complicated expressions, the most basic usage is to insert a value into a string with a single placeholder.
+<p>Python 3 supporte le <dfn>formattage</dfn> de valeurs en chaînes. Bien que cela puisse inclure des expressions très compliquée, l’usage le plus basique est d’insérer une valeur dans un string à l’aide d’un élément de substitution.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>username = 'mark'</kbd>
