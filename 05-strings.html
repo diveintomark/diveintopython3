@@ -166,9 +166,9 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp class=pp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
-<li>Rather than calling any function in the <code>humansize</code> module, you&#8217;re just grabbing one of the data structures it defines: the list of “SI” (powers-of-1000) suffixes.
-<li>This looks complicated, but it&#8217;s not. <code>{0}</code> would refer to the first argument passed to the <code>format()</code> method, <var>si_suffixes</var>. But <var>si_suffixes</var> is a list. So <code>{0[0]}</code> refers to the first item of the list which is the first argument passed to the <code>format()</code> method: <code>'KB'</code>. Meanwhile, <code>{0[1]}</code> refers to the second item of the same list: <code>'MB'</code>. Everything outside the curly braces&nbsp;&mdash;&nbsp;including <code>1000</code>, the equals sign, and the spaces&nbsp;&mdash;&nbsp;is untouched. The final result is the string <code>'1000KB = 1MB'</code>.
-</ol>
+<li>Plutôt que d’appeler une fonction du module <code>humansize</code>, vous ne faites que saisir l'une des structures de données qu'il définit&nbsp;: la liste des suffixes "SI" (puissances-de-1000).
+<li>Ça semble compliqué mais ça ne l’est pas. <code>{0}</code> se réfère au premier argument passé à la méthode <code>format()</ code>, <var>si_suffixes</var>. Mais <var>si_suffixes</var> est une liste. Alors <code>{0[0]}</code> fait référence au premier élément de la liste qui est le premier argument passé à la méthode <code>format()</code>&nbsp;: <code>'KB'</code>. Pendant ce temps, <code>{0[1]}</code> renvoie au deuxième point de la même liste&nbsp;: <code>'Mo'</code>. Tout en dehors des accolades&nbsp;&mdash;&nbsp;y compris <code>1000</code>, le signe égal, et les espaces&nbsp;&mdash;&nbsp;est intouché. Le résultat final est la chaîne <code>'1000KB = 1 MB'</code>.
+</ ol>
 
 <aside>{0} is replaced by the 1<sup>st</sup> format() argument. {1} is replaced by the 2<sup>nd</sup>.</aside>
 <p>What this example shows is that <em>format specifiers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names “just work”:
