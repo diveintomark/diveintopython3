@@ -141,7 +141,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li>Il y a un&hellip; wow, c’est quoi ce truc&nbsp;?
 </ol>
 
-<p>Python 3 supporte le <dfn>formattage</dfn> de valeurs en chaînes. Bien que cela puisse inclure des expressions très compliquée, l’usage le plus basique est d’insérer une valeur dans un string à l’aide d’un élément de substitution.
+<p>Python 3 supporte le <dfn>formattage</dfn> de valeurs en chaînes. Bien que cela puisse inclure des expressions très compliquée, l’usage le plus basique est d’insérer une valeur dans un string à l’aide d’un champs de remplacement.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>username = 'mark'</kbd>
@@ -149,8 +149,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <a><samp class=p>>>> </samp><kbd class=pp>"{0}'s password is {1}".format(username, password)</kbd>  <span class=u>&#x2461;</span></a>
 <samp class=pp>"mark's password is PapayaWhip"</samp></pre>
 <ol>
-<li>No, my password is not really <kbd>PapayaWhip</kbd>.
-<li>There&#8217;s a lot going on here. First, that&#8217;s a method call on a string literal. <em>Strings are objects</em>, and objects have methods. Second, the whole expression evaluates to a string. Third, <code>{0}</code> and <code>{1}</code> are <i>replacement fields</i>, which are replaced by the arguments passed to the <code><dfn>format</dfn>()</code> method.
+<li>Non, mon mot de passe n’est pas vraiment <kbd>PapayaWhip</kbd>.
+<li>Il y a beaucoup de choses ici. Tout d’abord, c’est un appel de méthode sur une chaîne littérale. <em>Les chaînes sont des objets</em>, et les objets ont des méthodes. Deuxièmement, l’expression entière est évaluée à une chaîne. Troisièmement, <code>{0}</code> et <code>{1}</code> sont des <i>champs de remplacement</i>, qui sont remplacés par les arguments passés à la méthode <code><dfn>format</dfn>()</code>.
 </ol>
 
 <h3 id=compound-field-names>Compound Field Names</h3>
