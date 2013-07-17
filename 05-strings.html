@@ -153,9 +153,9 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li>Il y a beaucoup de choses ici. Tout d’abord, c’est un appel de méthode sur une chaîne littérale. <em>Les chaînes sont des objets</em>, et les objets ont des méthodes. Deuxièmement, l’expression entière est évaluée à une chaîne. Troisièmement, <code>{0}</code> et <code>{1}</code> sont des <i>champs de remplacement</i>, qui sont remplacés par les arguments passés à la méthode <code><dfn>format</dfn>()</code>.
 </ol>
 
-<h3 id=compound-field-names>Compound Field Names</h3>
+<h3 id=compound-field-names>Noms de champs composés</h3>
 
-<p>The previous example shows the simplest case, where the replacement fields are simply integers. Integer replacement fields are treated as positional indices into the argument list of the <code>format()</code> method. That means that <code>{0}</code> is replaced by the first argument (<var>username</var> in this case), <code>{1}</code> is replaced by the second argument (<var>password</var>), etc. You can have as many positional indices as you have arguments, and you can have as many arguments as you want. But replacement fields are much more powerful than that.
+<p>L’exemple précédent montre un cas simple, où les champs de remplacement sont simplement des entiers. Les entiers dans les champs de remplacement sont traités comme des indices de position dans la liste d’arguments de la méthode <code>format()</code>. Ça signifie que <code>{0}</code> est remplacé par le premier argument (<var>username</var> dans ce cas), <code>{1}</code> est remplacé par le second argument (<var>password</var>), etc. Vous pouvez avoir autant d’indices de position que d’arguments, et vous pouvez avoir autant d’arguments que vous le souhaitez. Mais les champs de remplacement sont bien plus puissants que ça.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
