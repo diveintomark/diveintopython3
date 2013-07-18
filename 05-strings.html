@@ -213,19 +213,19 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p><span class=u>&#x261E;</span>Les spécificateurs de format vous permettent de bidouiller le texte de remplacement en une variété de manières pratiques, comme la fonction <code><dfn>printf</dfn>()</code> en C. Vous pouvez ajouter un remplissage nul ou espace-padding, aligner les chaînes, contrôler la précision décimale, et même convertir des nombres en hexadécimal.
 </blockquote>
 
-<p>À l’intérieur d’ur champ de remplacement, un deux-points (<code>:</code>) marque le début du spécificateur de format. Le spécificateur de format «&nbsp;<code>.1</code>&nbsp;» signifie «&nbsp;arrondi au dixième près&nbsp;» (<i>i.e.</i> afficher un seul chiffre après la virgule). Le spécificateur de format «&nbsp;<code>f</code>&nbsp;» signifie «&nbsp;nombre à virgule fixe&nbsp;» (par opposition à la notation exponentielle ou une autre représentation décimale). Donc, étant donné <var>size</var> valant <code>698.24</code> et <var>suffix</var> valant <code>'GB'</code>, la chaîne formatée sera <code>'698.2 GB'</code>, car <code>698.24</code> est arrondi à une décimale, et le suffixe est ensuite ajouté après le nombre.
+<p>À l’intérieur d’un champ de remplacement, un deux-points (<code>:</code>) marque le début du spécificateur de format. Le spécificateur de format «&nbsp;<code>.1</code>&nbsp;» signifie «&nbsp;arrondi au dixième près&nbsp;» (<i>i.e.</i> afficher un seul chiffre après la virgule). Le spécificateur de format «&nbsp;<code>f</code>&nbsp;» signifie «&nbsp;nombre à virgule fixe&nbsp;» (par opposition à la notation exponentielle ou une autre représentation décimale). Donc, étant donné <var>size</var> valant <code>698.24</code> et <var>suffix</var> valant <code>'GB'</code>, la chaîne formatée sera <code>'698.2 GB'</code>, car <code>698.24</code> est arrondi à une décimale, et le suffixe est ensuite ajouté après le nombre.
 
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>'{0:.1f} {1}'.format(698.24, 'GB')</kbd>
 <samp class=pp>'698.2 GB'</samp></pre>
 
-<p>For all the gory details on format specifiers, consult the <a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> in the official Python documentation.
+<p>Pour tous les détails sanglants sur les spécificateurs de format, consultez le <a href=http://docs.python.org/3.1/library/string.html#format-specification-mini-language>Format Specification Mini-Language</a> dans la documentation officielle Python.
 
 <p class=a>&#x2042;
 
-<h2 id=common-string-methods>Other Common String Methods</h2>
+<h2 id=common-string-methods>D’autres méthodes communes sur les chaînes</ h2>
 
-<p>Besides formatting, strings can do a number of other useful tricks.
+<p>Outre la mise en forme, les chaînes peuvent faire un certain nombre d’autres choses utiles.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd>s = '''Finished files are the re-</kbd>  <span class=u>&#x2460;</span></a>
@@ -245,10 +245,10 @@ experience of years.</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>s.lower().count('f')</kbd>               <span class=u>&#x2463;</span></a>
 <samp class=pp>6</samp></pre>
 <ol>
-<li>You can input <dfn>multiline</dfn> strings in the Python interactive shell. Once you start a multiline string with triple quotation marks, just hit <kbd>ENTER</kbd> and the interactive shell will prompt you to continue the string. Typing the closing triple quotation marks ends the string, and the next <kbd>ENTER</kbd> will execute the command (in this case, assigning the string to <var>s</var>).
-<li>The <code><dfn>splitlines</dfn>()</code> method takes one multiline string and returns a list of strings, one for each line of the original. Note that the carriage returns at the end of each line are not included.
-<li>The <code>lower()</code> method converts the entire string to lowercase. (Similarly, the <code>upper()</code> method converts a string to uppercase.)
-<li>The <code>count()</code> method counts the number of occurrences of a substring. Yes, there really are six “f”s in that sentence!
+<li>Vous pouvez entrer des chaînes <dfn>multilignes</dfn> dans le shell interactif Python. Une fois que vous commencez une chaîne multiligne avec des guillemets triples, appuyez simplement sur <kbd>ENTRER</kbd> et le shell interactif vous invitera à continuer la chaîne. Taper les guillemets triples fermants termine la chaîne, et le prochain <kbd>ENTRER</kbd> exécutera la commande (dans ce cas, l'attribution de la chaîne à <var>s</var>).
+<li>La méthode <code><dfn>splitlines</dfn>()</code> prend une chaîne multiligne en paramètre et renvoie une liste de chaînes, une pour chaque ligne de l’original. Notez que les retours chariot à la fin de chaque ligne ne sont pas inclus.
+<li>La méthode <code>lower()</code> convertit la totalité de la chaîne en minuscules. (De même, <code>upper()</code> convertit une chaîne en majuscules.)
+<li>La méthode <code>count()</code> compte le nombre d’occurrences d’une chaîne. Oui, il y a vraiment six «&nbsp;f&nbsp;» dans cette phrase&nbsp;!
 </ol>
 
 <p>Here&#8217;s another common case. Let&#8217;s say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
