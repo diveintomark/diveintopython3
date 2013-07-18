@@ -268,7 +268,7 @@ experience of years.</samp>
 <ol>
 <li>La méthode de <code><dfn>split</dfn>()</code> sur les chaînes a un argument, un séparateur. La méthode divise une chaîne de caractères en une liste de chaînes de caractères à partir du délimiteur. Ici, le séparateur est une esperluette, mais cela pourrait être n’importe quoi.
 <li>Maintenant, nous avons une liste de chaînes, chacune avec une clé, suivie d’un signe égal, suivi d’une valeur. Nous pouvons utiliser une <a href=comprehensions.html#listcomprehension>liste en compréhension</a> pour parcourir la liste entière et diviser chaque chaîne en deux chaînes basées sur le premier signe égal. Le second argument optionnel à la méthode <code>split()</code> est le nombre de fois que vous souhaitez scinder. <code>1</code> signifie «&nbsp;diviser une fois seulement&nbsp;», donc la méthode <code>split()</code> retournera une liste à deux éléments. (En théorie, une valeur peut contenir un signe égal de trop. Si vous aviez utilisé <code>'key=value=foo'.split('=')</code>, vous auriez fini avec une liste de trois objets <code>['key', 'value', 'foo']</code>.)
-<li> Enfin, Python peuvent transformer ces listes-de-lists dans un dictionnaire simplement en le passant à la fonction <code>dict()</code>.
+<li> Enfin, Python peut transformer ces listes-de-listes en un dictionnaire simplement en le passant à la fonction <code>dict()</code>.
 </ol>
 
 <blockquote class=note>
