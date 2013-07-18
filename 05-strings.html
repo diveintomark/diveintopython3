@@ -197,17 +197,17 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li><code>sys.modules['humansize']</code> est le module <code>humansize</code> que vous venez d’importer. Le champ de remplacement <code>{0.modules[humansize]}</code> réfère au module <code>humansize</code>. Notez la subtile différence de syntaxe ici. Dans un code Python réel, les clefs du dictionnaire <code>sys.modules</code> sont des chaînes&nbsp;: pour se référer à elles, vous devez placer des guillemets droits simples aitour du nom du module (<i>e.g.</i> <code>'humansize'</code>). Mais à l’intérieur d’un champ de remplacement, vous ignorez les guillemets autour du nom de la clé de dictionnaire (<i>e.g.</i> <code>humansize</code>). Pour citer <a href=http://www.python.org/dev/peps/pep-3101/>PEP 3101: Advanced String Formatting</a>, « Les règles relatives à l'analyse d'une clé objet sont très simples. Si elle commence par un chiffre, alors elle est traitée comme un nombre, sinon elle est utilisée en tant que chaîne. »
 <li><code>sys.modules['humansize'].SUFFIXES</code> est le dictionnaire défini au début du module <code>humansize</code>. Le champ de remplacement <code>{0.modules[humansize].SUFFIXES}</code> réfère à ce dictionnaire.
 <li><code>sys.modules['humansize'].SUFFIXES[1000]</code> est une liste des suffixes <abbr>SI</abbr>&nbsp;: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. Le champ de remplacement <code>{0.modules[humansize].SUFFIXES[1000]}</code> réfère à cette liste.
-<li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> est le premier élément de la liste des suffixes <abbr>SI</abbr>&nbsp;: <code>'KB'</code>. Par conséquent, le champ de remplacement complet <code>{0.modules [humansize].SUFFIXES[1000][0]}</code> est remplacé par la chaîne de deux caractères <code>KB</code>.
+<li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> est le premier élément de la liste des suffixes <abbr>SI</abbr>&nbsp;: <code>'KB'</code>. Par conséquent, le champ de remplacement complet <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> est remplacé par la chaîne de deux caractères <code>KB</code>.
 </ul>
 
 <h3 id=format-specifiers>Format Specifiers</h3>
 
-<p>But wait! There&#8217;s more! Let&#8217;s take another look at that strange line of code from <code>humansize.py</code>:
+<p>Mais attendez&nbsp;! Il y a plus&nbsp;! Reprenons cette ligne de code bizarre de <code>humansize.py</code>:
 
 <pre class='nd pp'><code>if size &lt; multiple:
     return '{0:.1f} {1}'.format(size, suffix)</code></pre>
 
-<p><code>{1}</code> is replaced with the second argument passed to the <code>format()</code> method, which is <var>suffix</var>. But what is <code>{0:.1f}</code>? It&#8217;s two things: <code>{0}</code>, which you recognize, and <code>:.1f</code>, which you don&#8217;t. The second half (including and after the colon) defines the <i>format specifier</i>, which further refines how the replaced variable should be formatted.
+<p><code>{1}</code> est remplacé par le second argument parré à la méthode <code>format()</code>, qui est <var>suffix</var>. Mais qu’est-ce que ce <code>{0:.1f}</code>&nbsp;? C’est deux choses&nbsp;: <code>{0}</code>, que vous reconnaissez, et <code>:.1f</code>, que vous ne connaissez pas. Le deuxième partie (y compris et après la virgule) définit le <i>spécificateur de format</i>, ce qui affine encore comment la variable remplacée doit être formatée.
 
 <blockquote class='note compare clang'>
 <p><span class=u>&#x261E;</span>Format specifiers allow you to munge the replacement text in a variety of useful ways, like the <code><dfn>printf</dfn>()</code> function in C. You can add zero- or space-padding, align strings, control decimal precision, and even convert numbers to hexadecimal.
