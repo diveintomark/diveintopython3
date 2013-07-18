@@ -166,7 +166,7 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp class=pp>'1000KB = 1MB'</samp>
 </pre>
 <ol>
-<li>Plutôt que d’appeler une fonction du module <code>humansize</code>, vous ne faites que saisir l'une des structures de données qu'il définit&nbsp;: la liste des suffixes "SI" (puissances-de-1000).
+<li>Plutôt que d’appeler une fonction du module <code>humansize</code>, vous ne faites que saisir l’une des structures de données qu'il définit&nbsp;: la liste des suffixes "SI" (puissances-de-1000).
 <li>Ça semble compliqué mais ça ne l’est pas. <code>{0}</code> se réfère au premier argument passé à la méthode <code>format()</ code>, <var>si_suffixes</var>. Mais <var>si_suffixes</var> est une liste. Alors <code>{0[0]}</code> fait référence au premier élément de la liste qui est le premier argument passé à la méthode <code>format()</code>&nbsp;: <code>'KB'</code>. Pendant ce temps, <code>{0[1]}</code> renvoie au deuxième point de la même liste&nbsp;: <code>'Mo'</code>. Tout en dehors des accolades&nbsp;&mdash;&nbsp;y compris <code>1000</code>, le signe égal, et les espaces&nbsp;&mdash;&nbsp;est intouché. Le résultat final est la chaîne <code>'1000KB = 1 MB'</code>.
 </ ol>
 
@@ -245,13 +245,13 @@ experience of years.</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>s.lower().count('f')</kbd>               <span class=u>&#x2463;</span></a>
 <samp class=pp>6</samp></pre>
 <ol>
-<li>Vous pouvez entrer des chaînes <dfn>multilignes</dfn> dans le shell interactif Python. Une fois que vous commencez une chaîne multiligne avec des guillemets triples, appuyez simplement sur <kbd>ENTRER</kbd> et le shell interactif vous invitera à continuer la chaîne. Taper les guillemets triples fermants termine la chaîne, et le prochain <kbd>ENTRER</kbd> exécutera la commande (dans ce cas, l'attribution de la chaîne à <var>s</var>).
+<li>Vous pouvez entrer des chaînes <dfn>multilignes</dfn> dans le shell interactif Python. Une fois que vous commencez une chaîne multiligne avec des guillemets triples, appuyez simplement sur <kbd>ENTRER</kbd> et le shell interactif vous invitera à continuer la chaîne. Taper les guillemets triples fermants termine la chaîne, et le prochain <kbd>ENTRER</kbd> exécutera la commande (dans ce cas, l’attribution de la chaîne à <var>s</var>).
 <li>La méthode <code><dfn>splitlines</dfn>()</code> prend une chaîne multiligne en paramètre et renvoie une liste de chaînes, une pour chaque ligne de l’original. Notez que les retours chariot à la fin de chaque ligne ne sont pas inclus.
 <li>La méthode <code>lower()</code> convertit la totalité de la chaîne en minuscules. (De même, <code>upper()</code> convertit une chaîne en majuscules.)
 <li>La méthode <code>count()</code> compte le nombre d’occurrences d’une chaîne. Oui, il y a vraiment six «&nbsp;f&nbsp;» dans cette phrase&nbsp;!
 </ol>
 
-<p>Here&#8217;s another common case. Let&#8217;s say you have a list of key-value pairs in the form <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, and you want to split them up and make a dictionary of the form <code>{key1: value1, key2: value2}</code>.
+<p>Voici un autre cas courant. Disons que vous avez une liste de paires clé-valeur sous la forme <code><var>key1</var>=<var>value1</var>&amp;<var>key2</var>=<var>value2</var></code>, et vous voulez les séparer et faire un dictionnaire de la forme <code>{key1: value1, key2: value2}</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>query = 'user=pilgrim&amp;database=master&amp;password=PapayaWhip'</kbd>
@@ -266,9 +266,9 @@ experience of years.</samp>
 <samp class=pp>{'password': 'PapayaWhip', 'user': 'pilgrim', 'database': 'master'}</samp></pre>
 
 <ol>
-<li>The <code><dfn>split</dfn>()</code> string method has one required argument, a delimiter. The method splits a string into a list of strings based on the delimiter. Here, the delimiter is an ampersand character, but it could be anything.
-<li>Now we have a list of strings, each with a key, followed by an equals sign, followed by a value. We can use a <a href=comprehensions.html#listcomprehension>list comprehension</a> to iterate over the entire list and split each string into two strings based on the first equals sign. The optional second argument to the <code>split()</code> method is the number of times you want to split. <code>1</code> means “only split once,” so the <code>split()</code> method will return a two-item list. (In theory, a value could contain an equals sign too. If you just used <code>'key=value=foo'.split('=')</code>, you would end up with a three-item list <code>['key', 'value', 'foo']</code>.)
-<li>Finally, Python can turn that list-of-lists into a dictionary simply by passing it to the <code>dict()</code> function.
+<li>La méthode de <code><dfn>split</dfn>()</code> sur les chaînes a un argument, un séparateur. La méthode divise une chaîne de caractères en une liste de chaînes de caractères à partir du délimiteur. Ici, le séparateur est une esperluette, mais cela pourrait être n’importe quoi.
+<li>Maintenant, nous avons une liste de chaînes, chacune avec une clé, suivie d’un signe égal, suivi d’une valeur. Nous pouvons utiliser une <a href=comprehensions.html#listcomprehension>liste en compréhension</a> pour parcourir la liste entière et diviser chaque chaîne en deux chaînes basées sur le premier signe égal. Le second argument optionnel à la méthode <code>split()</code> est le nombre de fois que vous souhaitez scinder. <code>1</code> signifie «&nbsp;diviser une fois seulement&nbsp;», donc la méthode <code>split()</code> retournera une liste à deux éléments. (En théorie, une valeur peut contenir un signe égal de trop. Si vous aviez utilisé <code>'key=value=foo'.split('=')</code>, vous auriez fini avec une liste de trois objets <code>['key', 'value', 'foo']</code>.)
+<li> Enfin, Python peuvent transformer ces listes-de-lists dans un dictionnaire simplement en le passant à la fonction <code>dict()</code>.
 </ol>
 
 <blockquote class=note>
