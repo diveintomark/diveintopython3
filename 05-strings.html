@@ -170,8 +170,8 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <li>Ça semble compliqué mais ça ne l’est pas. <code>{0}</code> se réfère au premier argument passé à la méthode <code>format()</ code>, <var>si_suffixes</var>. Mais <var>si_suffixes</var> est une liste. Alors <code>{0[0]}</code> fait référence au premier élément de la liste qui est le premier argument passé à la méthode <code>format()</code>&nbsp;: <code>'KB'</code>. Pendant ce temps, <code>{0[1]}</code> renvoie au deuxième point de la même liste&nbsp;: <code>'Mo'</code>. Tout en dehors des accolades&nbsp;&mdash;&nbsp;y compris <code>1000</code>, le signe égal, et les espaces&nbsp;&mdash;&nbsp;est intouché. Le résultat final est la chaîne <code>'1000KB = 1 MB'</code>.
 </ ol>
 
-<aside>{0} is replaced by the 1<sup>st</sup> format() argument. {1} is replaced by the 2<sup>nd</sup>.</aside>
-<p>What this example shows is that <em>format specifiers can access items and properties of data structures using (almost) Python syntax</em>. This is called <i>compound field names</i>. The following compound field names “just work”:
+<aside>{0} est remplacé par le 1<sup>er</sup> argument de format(). {1} est remplacé par le 2<sup>e</sup>.</aside>
+<p>Ce que montre cet exemple, c’est que les <em>spécificateurs de format peuvent accéder aux éléments et aux propriétés des structures de données en utilisant (ou presque) la syntaxe de Python</em>. C’est ce qu’on appelle les <i>noms de champs composés</i>. Les noms des champs composés suivants «&nbsp;fonctionnent simplement&nbsp;»&nbsp;:
 
 <ul>
 <li>Passing a list, and accessing an item of the list by index (as in the previous example)
