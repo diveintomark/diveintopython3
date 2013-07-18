@@ -290,11 +290,11 @@ experience of years.</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_string[18:]</kbd>            <span class=u>&#x2464;</span></a>
 <samp class=pp>' where your alphabet ends.'</samp></pre>
 <ol>
-<li>You can get a part of a string, called a “slice”, by specifying two indices. The return value is a new string containing all the characters of the string, in order, starting with the first slice index.
-<li>Like slicing lists, you can use negative indices to slice strings.
-<li>Strings are zero-based, so <code>a_string[0:2]</code> returns the first two items of the string, starting at <code>a_string[0]</code>, up to but not including <code>a_string[2]</code>.
-<li>If the left slice index is 0, you can leave it out, and 0 is implied. So <code>a_string[:18]</code> is the same as <code>a_string[0:18]</code>, because the starting 0 is implied.
-<li>Similarly, if the right slice index is the length of the string, you can leave it out. So <code>a_string[18:]</code> is the same as <code>a_string[18:44]</code>, because this string has 44 characters.  There is a pleasing symmetry here. In this 44-character string, <code>a_string[:18]</code> returns the first 18 characters, and <code>a_string[18:]</code> returns everything but the first 18 characters. In fact, <code>a_string[:<var>n</var>]</code> will always return the first <var>n</var> characters, and <code>a_string[<var>n</var>:]</code> will return the rest, regardless of the length of the string.
+<li>Vous pouvez obtenir une partie d’une chaîne, appelée «&nbsp;tranche&nbsp;», en spécifiant deux indices. La valeur de retour est une nouvelle chaîne de caractères contenant tous les caractères de la chaîne, dans l’ordre, en commençant par le premier indice de la tranche.
+<li>Comme lors d’un découpage de liste, vous pouvez utiliser des indices négatifs pour découper les chaînes.
+<li>Les chaînes commencent à 0&nbsp;: ainsi <code>a_string[0:2]</code> retourne les deux premiers éléments de la chaîne, commençant à <code>a_string[0]</code>, jusqu’à <code>a_string[2]</code> non compris.
+<li>Si l’indice de la tranche de gauche est 0, vous pouvez le laisser vide, et 0 est implicite. Ainsi <code>a_string[18]</code> est identique à <code>a_string[00:18]</code>, car le 0 du début est implicite.
+<li>De même, si l’indice de tranche de droite est la longueur de la chaîne, vous pouvez le laisser vide. Ainsi <code>a_string[18:]</code> est identique à <code>a_string[18:44]</code>, parce que cette chaîne dispose de 44 caractères. Il y a une symétrie agréable ici. Dans cette chaîne de 44 caractères, <code>a_string[18]</code> renvoie les 18 premiers caractères, et <code>a_string[18:]</code> renvoie tout sauf les 18 premiers caractères. En fait, <code>a_string[:<var>n</var>]</code> renverra toujours les premiers <var>n</var> caractères, et <code>a_string[<var>n</var>:]</code> retournera le reste, quelle que soit la longueur de la chaîne.
 </ol>
 
 <p class=a>&#x2042;
