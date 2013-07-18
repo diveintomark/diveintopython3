@@ -174,14 +174,14 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <p>Ce que montre cet exemple, c’est que les <em>spécificateurs de format peuvent accéder aux éléments et aux propriétés des structures de données en utilisant (ou presque) la syntaxe de Python</em>. C’est ce qu’on appelle les <i>noms de champs composés</i>. Les noms des champs composés suivants «&nbsp;fonctionnent simplement&nbsp;»&nbsp;:
 
 <ul>
-<li>Passing a list, and accessing an item of the list by index (as in the previous example)
-<li>Passing a dictionary, and accessing a value of the dictionary by key
-<li>Passing a module, and accessing its variables and functions by name
-<li>Passing a class instance, and accessing its properties and methods by name
-<li><em>Any combination of the above</em>
+<li>Passage d’une liste, et accès à un élément de la liste par l’indice (comme dans l’exemple précédent)
+<li>Passage d’un dictionnaire et accès à une valeur du dictionnaire par sa clef
+<li>Passage d’un module, et accès à ses variables et fonctions par nom
+<li>Passage une instance de classe, et accès à ses propriétés et méthodes par nom
+<li><em>Toute combinaison de ce qui précède</em>
 </ul>
 
-<p>Just to blow your mind, here&#8217;s an example that combines all of the above:
+<p>Juste pour vous épater, voici un exemple qui combine tout ça&nbsp;:
 
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>import humansize</kbd>
@@ -189,15 +189,15 @@ def approximate_size(size, a_kilobyte_is_1024_bytes=True):
 <samp class=p>>>> </samp><kbd class=pp>'1MB = 1000{0.modules[humansize].SUFFIXES[1000][0]}'.format(sys)</kbd>
 <samp class=pp>'1MB = 1000KB'</samp></pre>
 
-<p>Here&#8217;s how it works:
+<p>Explications&nbsp;:
 
 <ul>
-<li>The <code>sys</code> module holds information about the currently running Python instance. Since you just imported it, you can pass the <code>sys</code> module itself as an argument to the <code>format()</code> method. So the replacement field <code>{0}</code> refers to the <code>sys</code> module.
-<li><code>sys.modules</code> is a dictionary of all the modules that have been imported in this Python instance. The keys are the module names as strings; the values are the module objects themselves. So the replacement field <code>{0.modules}</code> refers to the dictionary of imported modules.
-<li><code>sys.modules['humansize']</code> is the <code>humansize</code> module which you just imported. The replacement field <code>{0.modules[humansize]}</code> refers to the <code>humansize</code> module. Note the slight difference in syntax here. In real Python code, the keys of the <code>sys.modules</code> dictionary are strings; to refer to them, you need to put quotes around the module name (<i>e.g.</i> <code>'humansize'</code>). But within a replacement field, you skip the quotes around the dictionary key name (<i>e.g.</i> <code>humansize</code>). To quote <a href=http://www.python.org/dev/peps/pep-3101/>PEP 3101: Advanced String Formatting</a>, “The rules for parsing an item key are very simple. If it starts with a digit, then it is treated as a number, otherwise it is used as a string.”
-<li><code>sys.modules['humansize'].SUFFIXES</code> is the dictionary defined at the top of the <code>humansize</code> module. The replacement field <code>{0.modules[humansize].SUFFIXES}</code> refers to that dictionary.
-<li><code>sys.modules['humansize'].SUFFIXES[1000]</code> is a list of <abbr>SI</abbr> suffixes: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. So the replacement field <code>{0.modules[humansize].SUFFIXES[1000]}</code> refers to that list.
-<li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> is the first item of the list of <abbr>SI</abbr> suffixes: <code>'KB'</code>. Therefore, the complete replacement field <code>{0.modules[humansize].SUFFIXES[1000][0]}</code> is replaced by the two-character string <code>KB</code>.
+<li>Le module <code>sys</code> garde des informations à propos de l’instance Python qui tourne. Puisque vous venez de l’importer, vous pouvez passer le module <code>sys</code> comme un argument de la méthode <code>format()</code>. Ainsi le champ de remplacement <code>{0}</code> se réfère au module <code>sys</code>.
+<li><code>sys.modules</code> est un dictionnaire de tous les modules importés dans l’instance Python. Les clefs sont les noms des modules sous forme de chaînes&nbsp;: les valeurs sont les objets des modules eux-mêmes. Le champ de remplacement <code>{0.modules}</code> réfère au dictionnaire des modules importés.
+<li><code>sys.modules['humansize']</code> est le module <code>humansize</code> que vous venez d’importer. Le champ de remplacement <code>{0.modules[humansize]}</code> réfère au module <code>humansize</code>. Notez la subtile différence de syntaxe ici. Dans un code Python réel, les clefs du dictionnaire <code>sys.modules</code> sont des chaînes&nbsp;: pour se référer à elles, vous devez placer des guillemets droits simples aitour du nom du module (<i>e.g.</i> <code>'humansize'</code>). Mais à l’intérieur d’un champ de remplacement, vous ignorez les guillemets autour du nom de la clé de dictionnaire (<i>e.g.</i> <code>humansize</code>). Pour citer <a href=http://www.python.org/dev/peps/pep-3101/>PEP 3101: Advanced String Formatting</a>, « Les règles relatives à l'analyse d'une clé objet sont très simples. Si elle commence par un chiffre, alors elle est traitée comme un nombre, sinon elle est utilisée en tant que chaîne. »
+<li><code>sys.modules['humansize'].SUFFIXES</code> est le dictionnaire défini au début du module <code>humansize</code>. Le champ de remplacement <code>{0.modules[humansize].SUFFIXES}</code> réfère à ce dictionnaire.
+<li><code>sys.modules['humansize'].SUFFIXES[1000]</code> est une liste des suffixes <abbr>SI</abbr>&nbsp;: <code>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</code>. Le champ de remplacement <code>{0.modules[humansize].SUFFIXES[1000]}</code> réfère à cette liste.
+<li><code>sys.modules['humansize'].SUFFIXES[1000][0]</code> est le premier élément de la liste des suffixes <abbr>SI</abbr>&nbsp;: <code>'KB'</code>. Par conséquent, le champ de remplacement complet <code>{0.modules [humansize].SUFFIXES[1000][0]}</code> est remplacé par la chaîne de deux caractères <code>KB</code>.
 </ul>
 
 <h3 id=format-specifiers>Format Specifiers</h3>
