@@ -299,9 +299,9 @@ experience of years.</samp>
 
 <p class=a>&#x2042;
 
-<h2 id=byte-arrays>Strings vs. Bytes</h2>
+<h2 id=byte-arrays>Chaînes vs. Octets</h2>
 
-<p><dfn>Bytes</dfn> are bytes; characters are an abstraction. An immutable sequence of Unicode characters is called a <i>string</i>. An immutable sequence of numbers-between-0-and-255 is called a <i>bytes</i> object.
+<p>Des <dfn>octets</dfn> sont des octets&nbsp;: les caractères sont une abstraction. Une séquence immuable de caractères Unicode est appelé une <i>chaîne</i>. Une séquence immuable de nombres entre 0 et 255 est appelée un objet <i>binaire</i>.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>by = b'abcd\x65'</kbd>  <span class=u>&#x2460;</span></a>
@@ -323,13 +323,13 @@ experience of years.</samp>
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'bytes' object does not support item assignment</samp></pre>
 <ol>
-<li>To define a <code>bytes</code> object, use the <code>b''</code> “<dfn>byte</dfn> literal” syntax. Each byte within the byte literal can be an <abbr>ASCII</abbr> character or an encoded hexadecimal number from <code>\x00</code> to <code>\xff</code> (0&ndash;255).
-<li>The type of a <code>bytes</code> object is <code>bytes</code>.
-<li>Just like lists and strings, you can get the length of a <code>bytes</code> object with the built-in <code>len()</code> function.
-<li>Just like lists and strings, you can use the <code>+</code> operator to concatenate <code>bytes</code> objects. The result is a new <code>bytes</code> object.
-<li>Concatenating a 5-byte <code>bytes</code> object and a 1-byte <code>bytes</code> object gives you a 6-byte <code>bytes</code> object.
-<li>Just like lists and strings, you can use index notation to get individual bytes in a <code>bytes</code> object. The items of a string are strings; the items of a <code>bytes</code> object are integers. Specifically, integers between 0&ndash;255.
-<li>A <code>bytes</code> object is immutable; you can not assign individual bytes. If you need to change individual bytes, you can either use <a href=#slicingstrings>string slicing</a> and concatenation operators (which work the same as strings), or you can convert the <code>bytes</code> object into a <code>bytearray</code> object.
+<li>Pour définir un objet <code>bytes</code>, utilisez la syntaxe «&nbsp;octet littéral&nbsp;» <code>b''</code>. Chaque octet dans un octet littéral peut être un caractère <abbr>ASCII</abbr> ou un nombre hexadécimal encodé de <code>\x00</code> à <code>\xff</code> (0&ndash;255).
+<li>Le type d’un objet <code>bytes</code> est <code>bytes</code>.
+<li>Comme pour les listes et les chaînes, vous pouvez récupérer la longueur d’un objet <code>bytes</code> avec la fonction intégrée <code>len()</code>.
+<li>Comme pour les listes et les chaînes, vous pouvez utiliser l’opérateur <code>+</code> pour concaténer des objets <code>bytes</code>. Le résultat est un nouvel objet <code>bytes</code>.
+<li>Concaténer un objet <code>bytes</code> de 5 octets et un objet <code>bytes</code> de 1 octet donnera un objet <code>bytes</code> de 6 octets.
+<li>Comme pour les listes et les chaînes, vous pouvez utiliser la notation d’index pour obtenir des octets individuels dans un objet <code>bytes</code>. Les éléments d’une chaîne sont des chaînes, les éléments d’un objet <code>bytes</code> sont des nombres entiers. Plus précisément, les nombres entiers compris entre 0 et 255.
+<li>Un objet <code>bytes</code> est immuable&nbsp;: vous ne pouvez pas affecter des octets individuels. Si vous devez changer des octets individuels, vous pouvez soit utiliser le <a href=#slicingstrings>découpage de chaînes</a> et les opérateurs de concaténation (qui fonctionnent comme des chaînes), soit convertir les objets <code>bytes</code> dans un objet <code>bytearray</code>.
 </ol>
 
 <pre class=screen>
