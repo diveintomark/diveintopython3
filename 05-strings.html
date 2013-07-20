@@ -364,12 +364,13 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>s.count(by.decode('ascii'))</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=pp>1</samp></pre>
 <ol>
-<li>You can&#8217;t concatenate bytes and strings. They are two different data types.
-<li>You can&#8217;t count the occurrences of bytes in a string, because there are no bytes in a string. A string is a sequence of characters. Perhaps you meant «&nbsp;count the occurrences of the string that you would get after decoding this sequence of bytes in a particular character encoding&nbsp;»? Well then, you&#8217;ll need to say that explicitly. Python 3 won&#8217;t <dfn>implicitly</dfn> convert bytes to strings or strings to bytes.
-<li>By an amazing coincidence, this line of code says «&nbsp;count the occurrences of the string that you would get after decoding this sequence of bytes in this particular character encoding.&nbsp;»
+<li>Vous ne pouvez pas concaténer des octets et des chaînes. Ce sont deux types de données différents.
+<li>Vous ne pouvez pas compter les occurrences d’octets dans une chaîne, car il n’y a pas d’octets dans une chaîne. Une chaîne est une séquence de caractères. Peut-être que vous vouliez dire «&nbsp;compter les occurrences de la chaîne que vous obtiendrez après le décodage de cette séquence d’octets dans un codage de caractères particulier&nbsp;»&nbsp;? Eh bien, vous aurez besoin de le dire explicitement. Python 3 ne saura pas <dfn>implicitement</dfn> convertir des octets en cĥaînes ou des chaînes en octets.
+<li>Par une étonnante coïncidence, cette ligne de code dit «&nbsp;compter les occurrences de la chaîne que vous obtiendrez après le décodage de cette séquence d’octets dans ce codage de caractères particulier.&nbsp;»
 </ol>
 
-<p>And here is the link between strings and bytes: <code>bytes</code> objects have a <code><dfn>decode</dfn>()</code> method that takes a character encoding and returns a string, and strings have an <code><dfn>encode</dfn>()</code> method that takes a character encoding and returns a <code>bytes</code> object. In the previous example, the decoding was relatively straightforward&nbsp;&mdash;&nbsp;converting a sequence of bytes in the <abbr>ASCII</abbr> encoding into a string of characters. But the same process works with any encoding that supports the characters of the string&nbsp;&mdash;&nbsp;even legacy (non-Unicode) encodings.
+<p>Et voici le lien entre les chaînes et les octets&nbsp;: les objets <code>bytes</code> ont une méthode <code><dfn>decode</dfn>()</code> qui prend un encodage en paramètre et retourne une chaîne, et les chaînes ont une méthode <code><dfn>encode</dfn>()</code> qui prend un encodage de caractère en paramètre et retourne un objet <code>bytes</code>. Dans l’exemple précédent, le décodage était assez évident&nbsp;&mdash;&nbsp;convertir une séquence d’octets en encodage <abbr>ASCII</abbr> vers une chaîne de caractères. 
+Mais le même processus fonctionne avec n’importe quel codage qui prend en charge les caractères de la chaîne&nbsp;&mdash;&nbsp;même d’anciens encodages non Unicode.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_string = '深入 Python'</kbd>         <span class=u>&#x2460;</span></a>
