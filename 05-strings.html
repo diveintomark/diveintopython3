@@ -406,30 +406,30 @@ Mais le même processus fonctionne avec n’importe quel codage qui prend en cha
 
 <p class=a>&#x2042;
 
-<h2 id=py-encoding>Postscript: Character Encoding Of Python Source Code</h2>
+<h2 id=py-encoding>Post-scriptum&nbsp;: encodage des caractères du code source Python</h2>
 
-<p>Python 3 assumes that your source code&nbsp;&mdash;&nbsp;<i>i.e.</i> each <code>.py</code> file&nbsp;&mdash;&nbsp;is encoded in <abbr>UTF-8</abbr>.
+<p>Python 3 suppose que votre code source&nbsp;&mdash;&nbsp;<i>i.e.</i> chaque fichier <code>.py</code>&nbsp;&mdash;&nbsp;est encodé en <abbr>UTF-8</abbr>.
 
 <blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>In Python 2, the <dfn>default</dfn> encoding for <code>.py</code> files was <abbr>ASCII</abbr>. In Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>the default encoding is <abbr>UTF-8</abbr></a>.
+<p><span class=u>&#x261E;</span>En Python 2, l’encodage <dfn>par défaut</dfn> pour les fichiers <code>.py</code> était l’<abbr>ASCII</abbr>. En Python 3, <a href=http://www.python.org/dev/peps/pep-3120/>l’encodage par défaut est l’<abbr>UTF-8</abbr></a>.
 </blockquote>
 
-<p>If you would like to use a different encoding within your Python code, you can put an encoding declaration on the first line of each file. This declaration defines a <code>.py</code> file to be windows-1252:
+<p>Si vous souhaitez utiliser un encodage différent dans votre code Python, vous pouvez mettre une déclaration d’encodage sur la première ligne de chaque fichier. Cette déclaration définit un fichier <code>.py</code> pour utiliser l’encodage windows-1252&nbsp;:
 
 <pre class='nd pp'><code># -*- coding: windows-1252 -*-</code></pre>
 
-<p>Technically, the character encoding override can also be on the second line, if the first line is a <abbr>UNIX</abbr>-like hash-bang command.
+<p>Techniquement, la ligne pour outrepasser l’encodage des caractères peut aussi être sur la deuxième ligne, si la première ligne est un commande hash-bang pour les systèmes basés sur Unix.
 
 <pre class='nd pp'><code>#!/usr/bin/python3
 # -*- coding: windows-1252 -*-</code></pre>
 
-<p>For more information, consult <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
+<p>Pour plus d’informations, consultez <a href=http://www.python.org/dev/peps/pep-0263/><abbr>PEP</abbr> 263: Defining Python Source Code Encodings</a>.
 
 <p class=a>&#x2042;
 
-<h2 id=furtherreading>Further Reading</h2>
+<h2 id=furtherreading>Lectures complémentaires</h2>
 
-<p>On Unicode in Python:
+<p>Sur l’Unicode dans Python&nbsp;:
 
 <ul>
 <li><a href=http://docs.python.org/3.1/howto/unicode.html>Python Unicode HOWTO</a>
@@ -437,7 +437,7 @@ Mais le même processus fonctionne avec n’importe quel codage qui prend en cha
 <li><a href=http://www.python.org/dev/peps/pep-0261/><abbr>PEP 261</abbr></a> explains how Python handles astral characters outside of the Basic Multilingual Plane (<i>i.e.</i> characters whose ordinal value is greater than 65535)
 </ul>
 
-<p>On Unicode in general:
+<p>Sur l’Unicode en général&nbsp;:
 
 <ul>
 <li><a href=http://www.joelonsoftware.com/articles/Unicode.html>The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)</a>
@@ -446,14 +446,14 @@ Mais le même processus fonctionne avec n’importe quel codage qui prend en cha
 <li><a href=http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF>Characters vs. Bytes</a>
 </ul>
 
-<p>On character encoding in other formats:
+<p>Sur l’encodage des caractères dans d’autres formats&nbsp;:
 
 <ul>
 <li><a href=http://feedparser.org/docs/character-encoding.html>Character encoding in XML</a>
 <li><a href=http://blog.whatwg.org/the-road-to-html-5-character-encoding>Character encoding in HTML</a>
 </ul>
 
-<p>On strings and string formatting:
+<p>Sur les chaînes et le formattage des chaînes&nbsp;
 
 <ul>
 <li><a href=http://docs.python.org/3.1/library/string.html><code>string</code>&nbsp;&mdash;&nbsp;Common string operations</a>
@@ -462,7 +462,7 @@ Mais le même processus fonctionne avec n’importe quel codage qui prend en cha
 <li><a href=http://www.python.org/dev/peps/pep-3101/><abbr>PEP</abbr> 3101: Advanced String Formatting</a>
 </ul>
 
-<p class=v><a href=comprehensions.html rel=prev title='back to «&nbsp;Comprehensions&nbsp;»'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='onward to «&nbsp;Regular Expressions&nbsp;»'><span class=u>&#x261E;</span></a>
+<p class=v><a href=comprehensions.html rel=prev title='retourner à «&nbsp;En compréhension&nbsp;»'><span class=u>&#x261C;</span></a> <a href=regular-expressions.html rel=next title='aller à «&nbsp;Expressions régulières&nbsp;»'><span class=u>&#x261E;</span></a>
 
 <p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
 <script src=j/jquery.js></script>
