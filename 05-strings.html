@@ -343,12 +343,12 @@ TypeError: 'bytes' object does not support item assignment</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>barr</kbd>
 <samp class=pp>bytearray(b'fbcde')</samp></pre>
 <ol>
-<li>To convert a <code>bytes</code> object into a mutable <code>bytearray</code> object, use the built-in <code>bytearray()</code> function.
-<li>All the methods and operations you can do on a <code>bytes</code> object, you can do on a <code>bytearray</code> object too.
-<li>The one difference is that, with the <code>bytearray</code> object, you can assign individual bytes using index notation. The assigned value must be an integer between 0&ndash;255.
+<li>Pour convertir un objet <code>bytes</code> dans un <code>bytearray</code> mutable, utilisez la fonction intégrée <code>bytearray()</code>.
+<li>Toutes les méthodes et les activités que vous pouvez faire sur un objet <code>bytes</code>, vous pouvez aussi les faire sur un objet <code>bytearray</code>.
+<li> La seule différence est que, avec l’objet <code>bytearray</code>, vous pouvez attribuer différents octets en utilisant la notation d’index. La valeur attribuée doit être un nombre entier compris entre 0 et 255.
 </ol>
 
-<p>The one thing you <em>can never do</em> is mix bytes and strings.
+<p>La seule chose que vous <em>ne pouvez jamais faire</em> est de mélanger les octets et les chaînes.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>by = b'd'</kbd>
