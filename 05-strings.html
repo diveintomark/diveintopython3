@@ -373,7 +373,7 @@ TypeError: Can't convert 'bytes' object to str implicitly</samp>
 Mais le même processus fonctionne avec n’importe quel codage qui prend en charge les caractères de la chaîne&nbsp;&mdash;&nbsp;même d’anciens encodages non Unicode.
 
 <pre class=screen>
-<a><samp class=p>>>> </samp><kbd class=pp>a_string = '深入 Python'</kbd>         <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_string = '深入 Python'</kbd>          <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>len(a_string)</kbd>
 <samp class=pp>9</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>by = a_string.encode('utf-8')</kbd>    <span class=u>&#x2461;</span></a>
@@ -397,11 +397,11 @@ Mais le même processus fonctionne avec n’importe quel codage qui prend en cha
 <samp class=p>>>> </samp><kbd class=pp>a_string == roundtrip</kbd>
 <samp class=pp>True</samp></pre>
 <ol>
-<li>This is a string. It has nine characters.
-<li>This is a <code>bytes</code> object. It has 13 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <abbr>UTF-8</abbr>.
-<li>This is a <code>bytes</code> object. It has 11 bytes. It is the sequence of bytes you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/GB_18030>GB18030</a>.
-<li>This is a <code>bytes</code> object. It has 11 bytes. It is an <em>entirely different sequence of bytes</em> that you get when you take <var>a_string</var> and encode it in <a href=http://en.wikipedia.org/wiki/Big5>Big5</a>.
-<li>This is a string. It has nine characters. It is the sequence of characters you get when you take <var>by</var> and decode it using the Big5 encoding algorithm. It is identical to the original string.
+<li>Ceci est une chaîne. Elle est composée de neuf caractères.
+<li>Ceci est un objet <code>bytes</code>. Il dispose de 13 octets. Il s’agit de la séquence d’octets que vous obtenez lorsque vous prenez <var>a_string </var> et l’encodez en <abbr>UTF-8</abbr>.
+<li>Il s’agit d’un objet <code>bytes</code>. Il dispose de 11 octets. Il s’agit de la séquence d’octets que vous obtenez lorsque vous prenez <var>a_string</var> et l’encodez en <a href=http://en.wikipedia.org/wiki/GB_18030>GB18030</a>.
+<li>Il s'agit d’un objet <code>bytes</code>. Il dispose de 11 octets. Il s’agit d’une <em>séquence entièrement différente d’octets</em> que vous obtenez lorsque vous prenez <var>a_string</var> et l’encodez en <a href=http://en.wikipedia.org/wiki/Big5>Big5</a>.
+<li>Ceci est une chaîne. Elle est composée de neuf caractères. Il s’agit de la séquence de caractères que vous obtenez lorsque vous prenez <var>by</var> et le décodez en utilisant l’algorithme d’encodage Big5. Elle est identique à la chaîne originale.
 </ol>
 
 <p class=a>&#x2042;
