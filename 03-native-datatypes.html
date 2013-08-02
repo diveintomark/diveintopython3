@@ -22,21 +22,20 @@ body{counter-reset:h1 2}
 <p><span class=u>&#x275D;</span> L'admiration est fondement de toute philosophie, l'inquisition le progrès, l'ignorance le bout. <span class=u>&#x275E;</span><br>&mdash; Michel de Montaigne
 </blockquote>
 <p id=toc>&nbsp;
-<h2 id=divingin>Diving In</h2>
-<p class=f>Datatypes. Set aside <a href=your-first-python-program.html>your first Python program</a> for just a minute, and let&#8217;s talk about datatypes. In Python, <a href=your-first-python-program.html#declaringfunctions>every value has a datatype</a>, but you don&#8217;t need to declare the datatype of variables. How does that work? Based on each variable&#8217;s original assignment, Python figures out what type it is and keeps tracks of that internally.
-<p>Python has many native datatypes. Here are the important ones:
+<h2 id=divingin>Plongez</h2>
+<p class=f>Types de données. Mettez de côté <a href=your-first-python-program.html>votre premier programme en Python</a> pendant une minute, et parlons des types de données. En Python, <a href=your-first-python-program.html#declaringfunctions>chaque valeur a un type de données</a>, mais vous n'avez pas besoin de déclarer le type de données des variables. Comment cela fonctionne t'il&nbsp;? En fonction de l'assignation initiale de chaque variable, Python détermine quel est son type de données et conserve cette information en interne.
+<p>Python dispose de nombreux types de données prédéfinis. Voici les plus importants&nbsp;:
 <ol>
-<li><b>Booleans</b> are either <code>True</code> or <code>False</code>.
-<li><b>Numbers</b> can be integers (<code>1</code> and <code>2</code>), floats (<code>1.1</code> and <code>1.2</code>), fractions (<code>1/2</code> and <code>2/3</code>), or even <a href=http://en.wikipedia.org/wiki/Complex_number>complex numbers</a>.
-<li><b>Strings</b> are sequences of Unicode characters, <i>e.g.</i> an <abbr>HTML</abbr> document.
-<li><b>Bytes</b> and <b>byte arrays</b>, <i>e.g.</i> a <abbr>JPEG</abbr> image file.
-<li><b>Lists</b> are ordered sequences of values.
-<li><b>Tuples</b> are ordered, immutable sequences of values.
-<li><b>Sets</b> are unordered bags of values.
-<li><b>Dictionaries</b> are unordered bags of key-value pairs.
+<li><b>Les booléens</b> peuvent prendre les valeurs <code>True</code> (Vrai) ou <code>False</code> (Faux).
+<li><b>Les nombres</b> peuvent être des entiers (<code>1</code> et <code>2</code>), des décimaux (<code>1.1</code> et <code>1.2</code>), des fractions (<code>1/2</code> et <code>2/3</code>), ou même <a href=http://en.wikipedia.org/wiki/Complex_number>des nombres complexes</a>.
+<li><b>Les chaînes de caractères</b> sont des séquences de caractères Unicode, un document  <abbr>HTML</abbr> par exemple.
+<li><b>Les octets</b> et <b>les tableaux d'octets</b>, un fichier graphique  <abbr>JPEG</abbr> par exemple.
+<li><b>Les listes</b> sont des séquences ordonnées de valeurs.
+<li><b>Les tuples</b> sont des séquences ordonnées et immuables de valeurs.
+<li><b>Les ensembles</b> sont des collections non ordonnées de valeurs.
+<li><b>Les dictionnaires</b> sont des collections non ordonnées de paires clé-valeur.
 </ol>
-<p>Of course, there are more types than these. <a href=your-first-python-program.html#everythingisanobject>Everything is an object</a> in Python, so there are types like <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, and even <i>compiled code</i>. You&#8217;ve already seen some of these: <a href=your-first-python-program.html#runningscripts>modules have names</a>, <a href=your-first-python-program.html#docstrings>functions have <code>docstrings</code></a>, <i class=baa>&amp;</i>c. You&#8217;ll learn about classes in <a href=iterators.html>Classes <i class=baa>&amp;</i> Iterators</a>, and about files in <a href=files.html>Files</a>.
-<p>Strings and bytes are important enough&nbsp;&mdash;&nbsp;and complicated enough&nbsp;&mdash;&nbsp;that they get their own chapter. Let&#8217;s look at the others first.
+<p>Évidemment, il existe d'autres types en plus de ceux là. <a href=your-first-python-program.html#everythingisanobject>Tout est objet</a> en Python, il existe donc des types tels que <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, et même <i>compiled code</i>. Vous en avez déjà rencontré certains&nbsp;: <a href=your-first-python-program.html#runningscripts>les modules ont des noms</a>, <a href=your-first-python-program.html#docstrings>les fonctions ont des  <code>docstrings</code></a>, <i class=baa>&amp;</i>c. Vous en apprendrez plus au sujet des classes dans <a href=iterators.html>Classes <i class=baa>&amp;</i> Iterateurs</a>, et à propos des fichiers dans <a href=files.html>Fichiers</a>.<p>Les chaînes de caractères et les octets sont suffisament importants et compliqués pour bénéficier de leur propre chapitre. Intéressons nous d'abord aux autres.
 <p class=a>&#x2042;
 
 <h2 id=booleans>Booleans</h2>
