@@ -38,13 +38,13 @@ body{counter-reset:h1 2}
 <p>Évidemment, il existe d'autres types en plus de ceux là. <a href=your-first-python-program.html#everythingisanobject>Tout est objet</a> en Python, il existe donc des types tels que <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, et même <i>compiled code</i>. Vous en avez déjà rencontré certains&nbsp;: <a href=your-first-python-program.html#runningscripts>les modules ont des noms</a>, <a href=your-first-python-program.html#docstrings>les fonctions ont des  <code>docstrings</code></a>, <i class=baa>&amp;</i>c. Vous en apprendrez plus au sujet des classes dans <a href=iterators.html>Classes <i class=baa>&amp;</i> Iterateurs</a>, et à propos des fichiers dans <a href=files.html>Fichiers</a>.<p>Les chaînes de caractères et les octets sont suffisament importants et compliqués pour bénéficier de leur propre chapitre. Intéressons nous d'abord aux autres.
 <p class=a>&#x2042;
 
-<h2 id=booleans>Booleans</h2>
-<aside>You can use virtually any expression in a boolean context.</aside>
-<p>Booleans are either true or false. Python has two constants, cleverly named <code><dfn>True</dfn></code> and <code><dfn>False</dfn></code>, which can be used to assign <dfn>boolean</dfn> values directly. Expressions can also evaluate to a boolean value. In certain places (like <code>if</code> statements), Python expects an expression to evaluate to a boolean value. These places are called <i>boolean contexts</i>. You can use virtually any expression in a boolean context, and Python will try to determine its truth value. Different datatypes have different rules about which values are true or false in a boolean context. (This will make more sense once you see some concrete examples later in this chapter.)
-<p>For example, take this snippet from <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<h2 id=booleans>Les booléens</h2>
+<aside>Vous pouvez utiliser à peu près n'importe quelle expression dans un contexte booléen.</aside>
+<p>Les booléens peuvent prendre les valeurs Vrai ou Faux. Python définit deux constantes, intelligement nommées <code><dfn>True</dfn></code> et <code><dfn>False</dfn></code>, qui peuvent être utilisées pour assigner directement des valeurs <dfn>booléennes</dfn>. Des expressions peuvent également être évaluées commes valeurs booléennes. Dans certain cas  (comme les expressions <code>if</code>), Python s'attend à ce qu'une expression soit évaluée comme valeur booléenne. Ces cas sont appellés <i>contextes booléens</i>. Vous pouvez utiliser à peu près n'importe quelle expression dans un contexte booléen, et Python tentera de déterminer si elle vaut Vrai ou Faux. Les différents types de données obéissent à des règles différentes lorsqu'il s'agit de les évaluer dans un contexte booléen (cela sera plus clair lorsque vous aurez vu les exemples concrets dans la suite de ce chapitre).
+<p>Par exemple, prenez cet extrait de code issu de <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
 <pre class='nd pp'><code>if size &lt; 0:
     raise ValueError('number must be non-negative')</code></pre>
-<p><var>size</var> is an integer, 0 is an integer, and <code>&lt;</code> is a numerical operator. The result of the expression <code>size &lt; 0</code> is always a boolean. You can test this yourself in the Python interactive shell:
+<p><var>size</var> est un entier, 0 est un entier, et <code>&lt;</code> est un opérateur numérique. Le résultat de l'expressionn <code>size &lt; 0</code> est toujours un booléen. Vous pouvez faire le test vous même dans le terminal interactif&nbsp;:
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>size = 1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
@@ -55,7 +55,7 @@ body{counter-reset:h1 2}
 <samp class=p>>>> </samp><kbd class=pp>size = -1</kbd>
 <samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
 <samp class=pp>True</samp></pre>
-<p>Due to some legacy issues left over from Python 2, booleans can be treated as numbers. <code>True</code> is <code>1</code>; <code>False</code> is 0.
+<p>Pour des raisons héritées de Python 2, les booléens peuvent être considérés comme des nombres. <code>True</code> vaut <code>1</code>, <code>False</code> vaut 0.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>True + True</kbd>
 <samp class=pp>2</samp>
@@ -67,7 +67,7 @@ body{counter-reset:h1 2}
 <samp class=traceback>Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 ZeroDivisionError: int division or modulo by zero</samp></pre>
-<p>Ew, ew, ew! Don&#8217;t do that. Forget I even mentioned it.
+<p>Hé hé ! Ne faites jamais ça. Oubliez même que je l'ai mentionné.
 
 <p class=a>&#x2042;
 
