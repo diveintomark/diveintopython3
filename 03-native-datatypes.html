@@ -71,8 +71,8 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=numbers>Numbers</h2>
-<p>Numbers are awesome. There are so many to choose from. Python supports both <dfn>integer</dfn>s and <dfn>floating point</dfn> numbers. There&#8217;s no type declaration to distinguish them; Python tells them apart by the presence or absence of a <dfn>decimal</dfn> point.
+<h2 id=numbers>Les nombres</h2>
+<p>Les nombres sont incroyables. Il y en a tellement de différents. Python gère les nombres <dfn>entiers</dfn> et <dfn>décimaux</dfn>. Il n'y a pas de déclaration de type pour les distinguer, Python les reconnaît grâce à la présence ou l'absence de séparateur <dfn>décimal</dfn>. (Ndt&nbsp;: attention, le séparateur décimal en Python est le point (.), pas la virgule (,)).
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>type(1)</kbd>                 <span class=u>&#x2460;</span></a>
 <samp class=pp>&lt;class 'int'></samp>
@@ -85,13 +85,13 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>type(2.0)</kbd>
 <samp class=pp>&lt;class 'float'></samp></pre>
 <ol>
-<li>You can use the <code>type()</code> function to check the type of any value or variable. As you might expect, <code>1</code> is an <code>int</code>.
-<li>Similarly, you can use the <code>isinstance()</code> function to check whether a value or variable is of a given type.
-<li>Adding an <code>int</code> to an <code>int</code> yields an <code>int</code>.
-<li>Adding an <code>int</code> to a <code>float</code> yields a <code>float</code>. Python coerces the <code>int</code> into a <code>float</code> to perform the addition, then returns a <code>float</code> as the result.
+<li>Vous pouvez utiliser la fonction <code>type()</code> pour vérifier le type de n'importe quelle valeur ou variable. Comme vous pouviez vous y attendre, <code>1</code> est un <code>int</code>.
+<li>De manière similaire, vous pouvez utiliser la fonction <code>isinstance()</code> pour déterminer si une valeur ou une variable est d'un type donné.
+<li>L'addition d'un <code>int</code> et d'un <code>int</code> produit un <code>int</code>.
+<li>L'addition d'un <code>int</code> et d'un <code>float</code> produit un <code>float</code>. Python convertit l'<code>int</code> en <code>float</code> et retourne un <code>float</code> comme résultat.
 </ol>
-<h3 id=number-coercion>Coercing Integers To Floats And Vice-Versa</h3>
-<p>As you just saw, some operators (like addition) will coerce integers to floating point numbers as needed. You can also coerce them by yourself.
+<h3 id=number-coercion>Conversion d'Entiers en Décimaux et Vice-Versa</h3>
+<p>Comme vous venez de le voir, certains opérateurs (comme l'addition) convertissent des entiers en décimaux lorsque cela est nécessaire. Vous pouvez également effectuer vous même des conversions.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>float(2)</kbd>                <span class=u>&#x2460;</span></a>
 <samp class=pp>2.0</samp>
@@ -106,18 +106,18 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>type(1000000000000000)</kbd>  <span class=u>&#x2465;</span></a>
 <samp class=pp>&lt;class 'int'></samp></pre>
 <ol>
-<li>You can explicitly coerce an <code>int</code> to a <code>float</code> by calling the <code>float()</code> function.
-<li>Unsurprisingly, you can also coerce a <code>float</code> to an <code>int</code> by calling <code>int()</code>.
-<li>The <code>int()</code> function will truncate, not round.
-<li>The <code>int()</code> function truncates negative numbers towards 0. It&#8217;s a true truncate function, not a floor function.
-<li>Floating point numbers are accurate to 15 decimal places.
-<li>Integers can be arbitrarily large.
+<li>Vous pouvez convertir explicitement un <code>int</code> en <code>float</code> en appellant la fonction <code>float()</code>.
+<li>Pas de surprise, vous pouvez également convertir un <code>float</code> en <code>int</code> en appellant <code>int()</code>.
+<li>La fonction <code>int()</code> effectue une troncature, pas un arrondi.
+<li>La fonction <code>int()</code> tronque les nombres négatifs vers 0. Il s'agit d'une véritable troncature, elle ne retourne pas la partie entière.
+<li>Les nombres décimaux ont une précision de 15 décimales.
+<li>Les nombres entiers peuvent être arbitrairement grands.
 </ol>
 <blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>Python 2 had separate types for <code>int</code> and <code>long</code>. The <code>int</code> datatype was limited by <code>sys.maxint</code>, which varied by platform but was usually <code>2<sup>32</sup>-1</code>. Python 3 has just one integer type, which behaves mostly like the old <code>long</code> type from Python 2. See <a href=http://www.python.org/dev/peps/pep-0237><abbr>PEP</abbr> 237</a> for details.
+<p><span class=u>&#x261E;</span>Python 2 avait des types distincts pour les <code>int</code> les <code>long</code>. Le type de données <code>int</code> avait pour limite <code>sys.maxint</code>, qui dépendait de la plateforme mais valait en général <code>2<sup>32</sup>-1</code>. Python 3 n'a qu'un type pour les entiers, qui se comporte en général comme l'ancien type <code>long</code> de Python 2. Voir <a href=http://www.python.org/dev/peps/pep-0237><abbr>PEP</abbr> 237</a> pour plus de details.
 </blockquote>
-<h3 id=common-numerical-operations>Common Numerical Operations</h3>
-<p>You can do all kinds of things with numbers.
+<h3 id=common-numerical-operations>Opérations Numériques Usuelles</h3>
+<p>Vous pouvez faire toutes sortes de choses avec les nombres.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>11 / 2</kbd>      <span class=u>&#x2460;</span></a>
 <samp class=pp>5.5</samp>
@@ -133,18 +133,18 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
 <samp class=pp>1</samp>
 </pre>
 <ol>
-<li>The <code>/</code> operator performs floating point division. It returns a <code>float</code> even if both the numerator and denominator are <code>int</code>s.
-<li>The <code>//</code> operator performs a quirky kind of integer division. When the result is positive, you can think of it as truncating (not rounding) to 0 decimal places, but be careful with that.
-<li>When integer-dividing negative numbers, the <code>//</code> operator rounds &#8220;up&#8221; to the nearest integer. Mathematically speaking, it&#8217;s rounding &#8220;down&#8221; since <code>&minus;6</code> is less than <code>&minus;5</code>, but it could trip you up if you were expecting it to truncate to <code>&minus;5</code>.
-<li>The <code>//</code> operator doesn&#8217;t always return an integer. If either the numerator or denominator is a <code>float</code>, it will still round to the nearest integer, but the actual return value will be a <code>float</code>.
-<li>The <code>**</code> operator means &#8220;raised to the power of.&#8221;  <code>11<sup>2</sup></code> is <code>121</code>.
-<li>The <code>%</code> operator gives the remainder after performing integer division. <code>11</code> divided by <code>2</code> is <code>5</code> with a remainder of <code>1</code>, so the result here is <code>1</code>.
+<li>L'opérateur <code>/</code> effectue une division décimale. Il retourne un nombre décimal même si le numérateur et le dénominateur sont deux <code>int</code>s.
+<li>L'opérateur <code>//</code> effectue une sorte de division entière biscornue. Lorsque le résulat est positif, vous pouvez vous le représenter comme une troncature (et pas un arrondi) à 0 décimales, mais soyez prudent.
+<li>Lorsque vous effectuez une division entière dont le résultat est négatif, l'opérateur <code>//</code> arrondit à l'entier négatif inférieur. Vous pourriez être surpris si vous attendiez une troncature à <code>&minus;5</code>.
+<li>L'opérateur <code>//</code> ne retourne pas toujours un entier. Si le numérateur ou le dénominateur sont des <code>float</code>s, l'opérateur retournera bien un arrondi mais exprimé dans le type <code>float</code>.
+<li>L'opérateur <code>**</code> signifie &#8220;porté à la puissance.&#8221;  <code>11<sup>2</sup></code> vaut <code>121</code>.
+<li>L'opérateur <code>%</code> retourne le reste de la division entière. <code>11</code> divisé par <code>2</code> vaut <code>5</code> avec un reste qui vaut <code>1</code>, le résultat dans ce cas vaut donc <code>1</code>.
 </ol>
 <blockquote class='note compare python2'>
-<p><span class=u>&#x261E;</span>In Python 2, the <code>/</code> operator usually meant integer division, but you could make it behave like floating point division by including a special directive in your code. In Python 3, the <code>/</code> operator always means floating point division. See <a href=http://www.python.org/dev/peps/pep-0238/><abbr>PEP</abbr> 238</a> for details.
+<p><span class=u>&#x261E;</span>Dans Python 2, l'opérateur <code>/</code> indiquait habituellement la division entière, mais il était possible de lui imposer le comportement de la division décimale en ajoutant une directive particulière dans votre code. Dans Python 3, l'opérateur <code>/</code> représente toujours la division décimale. Voir <a href=http://www.python.org/dev/peps/pep-0238/><abbr>PEP</abbr> 238</a> pour plus de details.
 </blockquote>
-<h3 id=fractions>Fractions</h3>
-<p>Python isn&#8217;t limited to integers and floating point numbers. It can also do all the fancy math you learned in high school and promptly forgot about.
+<h3 id=fractions>Les Fractions</h3>
+<p>Python n'est pas restreint aux entiers et aux nombres décimaux. Il est aussi capable d'effectuer les calculs mathématiques sympas que vous avez appris au collège et immédiatement oubliés.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>import fractions</kbd>              <span class=u>&#x2460;</span></a>
 <a><samp class=p>>>> </samp><kbd class=pp>x = fractions.Fraction(1, 3)</kbd>  <span class=u>&#x2461;</span></a>
@@ -161,14 +161,14 @@ ZeroDivisionError: int division or modulo by zero</samp></pre>
     raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
 ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <ol>
-<li>To start using fractions, import the <code>fractions</code> module.
-<li>To define a fraction, create a <code>Fraction</code> object and pass in the numerator and denominator.
-<li>You can perform all the usual mathematical operations with fractions. Operations return a new <code>Fraction</code> object. <code>2 * (1/3) = (2/3)</code>
-<li>The <code>Fraction</code> object will automatically reduce fractions. <code>(6/4) = (3/2)</code>
-<li>Python has the good sense not to create a fraction with a zero denominator.
+<li>Pour utiliser des fractions, importez le module <code>fractions</code>.
+<li>Pour définir une fraction, créez un objet <code>Fraction</code> et passez lui le numérateur et le dénominateur en arguments.
+<li>Vous pouvez effectuer toutes les opérations mathématiques usuelles sur des fractions. Les opérations retournent un nouvel objet <code>Fraction</code>. <code>2 * (1/3) = (2/3)</code>
+<li>Un objet <code>Fraction</code> réalise automatiquement la simplification des fractions. <code>(6/4) = (3/2)</code>
+<li>Python est assez censé pour refuser la création d'une fraction dont le dénominateur vaut zéro.
 </ol>
-<h3 id=trig>Trigonometry</h3>
-<p>You can also do basic trigonometry in Python.
+<h3 id=trig>Trigonométrie</h3>
+<p>Vous pouvez également faire de la trigonométrie simple en Python.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>import math</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>math.pi</kbd>                <span class=u>&#x2460;</span></a>
@@ -178,13 +178,13 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>math.tan(math.pi / 4)</kbd>  <span class=u>&#x2462;</span></a>
 <samp class=pp>0.99999999999999989</samp></pre>
 <ol>
-<li>The <code>math</code> module has a constant for &pi;, the ratio of a circle&#8217;s circumference to its diameter.
-<li>The <code>math</code> module has all the basic trigonometric functions, including <code>sin()</code>, <code>cos()</code>, <code>tan()</code>, and variants like <code>asin()</code>.
-<li>Note, however, that Python does not have infinite precision. <code>tan(&pi; / 4)</code> should return <code>1.0</code>, not <code>0.99999999999999989</code>.
+<li>Le module <code>math</code> définit une constante pour &pi;, le rapport de la circonférence d'un cercle sur son diamètre.
+<li>Le module <code>math</code> contient les fonctions trigonométriques de base, notamment <code>sin()</code>, <code>cos()</code>, <code>tan()</code>, et des variantes telles que <code>asin()</code>.
+<li>Notez bien, cependant, que Python n'a pas une précision infinie. <code>tan(&pi; / 4)</code> devrait retourner <code>1.0</code>, pas <code>0.99999999999999989</code>.
 </ol>
-<h3 id=numbers-in-a-boolean-context>Numbers In A Boolean Context</h3>
-<aside>Zero values are false, and non-zero values are true.</aside>
-<p>You can use numbers <a href=#booleans>in a boolean context</a>, such as an <code>if</code> statement. Zero values are false, and non-zero values are true.
+<h3 id=numbers-in-a-boolean-context>Les Nombres Dans Un Contexte Booléen</h3>
+<aside>Les valeurs nulles valent Faux et les valeurs non nulles valent Vrai.</aside>
+<p>Vous pouvez utiliser les nombres <a href=#booleans>dans un contexte booléen</a>, tel qu'une expression <code>if</code>. Les valeurs nulles valent Faux et les valeurs non nulles valent Vrai.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>             <span class=u>&#x2460;</span></a>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
@@ -208,10 +208,10 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>is_it_true(fractions.Fraction(0, 1))</kbd>
 <samp>no, it's false</samp></pre>
 <ol>
-<li>Did you know you can define your own functions in the Python interactive shell? Just press <kbd>ENTER</kbd> at the end of each line, and <kbd>ENTER</kbd> on a blank line to finish.
-<li>In a boolean context, non-zero integers are true; 0 is false.
-<li>Non-zero floating point numbers are true; <code>0.0</code> is false. Be careful with this one! If there&#8217;s the slightest rounding error (not impossible, as you saw in the previous section) then Python will be testing <code>0.0000000000001</code> instead of 0 and will return <code>True</code>.
-<li>Fractions can also be used in a boolean context. <code>Fraction(0, n)</code> is false for all values of <var>n</var>. All other fractions are true.
+<li>Saviez vous que vous pouvez définir vos prores fonctions dans le terminal interactif Python&nbsp;? Pressez la touche <kbd>ENTER</kbd> après chaque ligne, et <kbd>ENTER</kbd> après une ligne vide pour terminer.
+<li>Dans un contexte booléen, les entiers non nuls valent Vrai, 0 vaut Faux.
+<li>Les nombres décimaux non nuls valent Vrai, <code>0.0</code> vaut Faux. Soyez prudents avec celui là&nbsp;! S'il y a la moindre erreur d'arrondi (ce qui n'est pas impossible comme vous l'avez vu dans la section précédente) alors Python évaluera la valeur booléenne de <code>0.0000000000001</code> au lieu de  <code>0</code> et retournera <code>True</code>.
+<li>Les fractions aussi peuvent être évaluées dans un contexte booléen. <code>Fraction(0, n)</code> vaut Faux quelle que soit la valeur de <var>n</var>. Toutes les autres fractions valent Vrai.
 </ol>
 <p class=a>&#x2042;
 
