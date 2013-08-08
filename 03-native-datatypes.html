@@ -215,16 +215,16 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 </ol>
 <p class=a>&#x2042;
 
-<h2 id=lists>Lists</h2>
-<p>Lists are Python&#8217;s workhorse datatype. When I say &#8220;<dfn>list</dfn>,&#8221; you might be thinking &#8220;array whose size I have to declare in advance, that can only contain items of the same type, <i class=baa>&amp;</i>c.&#8221; Don&#8217;t think that. Lists are much cooler than that.
+<h2 id=lists>Les Listes</h2>
+<p>Les listes sont un type de données essentiel en Python. Quand je dis &#8220;<dfn>liste</dfn>,&#8221; vous imaginez peut-être &#8220;un tableau dont je dois déclarer la taille à l'avance et qui ne peut contenir que des éléments de même type, <i class=baa>&amp;</i>c.&#8221; Ne croyez pas cela. Les listes sont bien plus sympas que ça.
 <blockquote class='note compare perl5'>
-<p><span class=u>&#x261E;</span>A list in Python is like an array in Perl 5. In Perl 5, variables that store arrays always start with the <code>@</code> character; in Python, variables can be named anything, and Python keeps track of the datatype internally.
+<p><span class=u>&#x261E;</span>Une liste en Python est similaire à un tableau en Perl 5. En Perl 5, les noms des variables auxquelles on assigne un tableau commencent toujours par le caractère <code>@</code>. En Python, on peut utiliser le nom que l'on souhaite et Python conserve le type de données en interne.
 </blockquote>
 <blockquote class='note compare java'>
-<p><span class=u>&#x261E;</span>A list in Python is much more than an array in Java (although it can be used as one if that&#8217;s really all you want out of life). A better analogy would be to the <code>ArrayList</code> class, which can hold arbitrary objects and can expand dynamically as new items are added.
+<p><span class=u>&#x261E;</span>Une liste en Python est bien plus qu'un tableau en Java (bien que vous puissiez l'utiliser de la même manière si c'est votre choix). Une meilleure analogie serait la classe <code>ArrayList</code>, qui peut contenir n'importe quelle sorte d'objets et grandir dynamiquement au fur et à mesure qu'on lui ajoute des objets.
 </blockquote>
-<h3 id=creatinglists>Creating A List</h3>
-<p>Creating a list is easy: use square brackets to wrap a comma-separated list of values.
+<h3 id=creatinglists>Créer Une Liste</h3>
+<p>La création d'une liste est facile&nbsp;: utilisez des crochets pour encadrer une liste de valeurs séparées par des virgules.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', 'z', 'example']</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
@@ -238,15 +238,15 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[-3]</kbd>                                       <span class=u>&#x2464;</span></a>
 <samp class=pp>'mpilgrim'</samp></pre>
 <ol>
-<li>First, you define a list of five items. Note that they retain their original order. This is not an accident. A list is an ordered set of items.
-<li>A list can be used like a zero-based array. The first item of any non-empty list is always <code>a_list[0]</code>.
-<li>The last item of this five-item list is <code>a_list[4]</code>, because lists are always zero-based.
-<li>A negative index accesses items from the end of the list counting backwards. The last item of any non-empty list is always <code>a_list[-1]</code>.
-<li>If the negative index is confusing to you, think of it this way: <code>a_list[-<var>n</var>] == a_list[len(a_list) - <var>n</var>]</code>. So in this list, <code>a_list[-3] == a_list[5 - 3] == a_list[2]</code>.
+<li>Tout d'abord, vous définissez une liste de cinq éléments. Notez bien qu'ils conservent leur ordre original. Ce n'est pas un hasard. Une liste est un ensemble ordonné d'éléments.
+<li>Une liste peut être utilisée comme un tableau dont l'index commence à zéro. Le premier élément d'une liste non vide est toujours <code>a_list[0]</code>.
+<li>Le dernier élément de cette liste contenant cinq éléments est <code>a_list[4]</code>, car l'index des listes commence toujours à zéro.
+<li>Un index négatif permet d'accéder aux éléments de la liste en comptant depuis la fin. Le dernier élément d'une liste non vide est toujours <code>a_list[-1]</code>.
+<li>Si l'index négatif vous perturbe, vous pouvez le voir de cette manière&nbsp;: <code>a_list[-<var>n</var>] == a_list[len(a_list) - <var>n</var>]</code>. Ainsi, pour cette liste, <code>a_list[-3] == a_list[5 - 3] == a_list[2]</code>.
 </ol>
-<h3 id=slicinglists>Slicing A List</h3>
-<aside>a_list[0] is the first item of a_list.</aside>
-<p>Once you&#8217;ve defined a list, you can get any part of it as a new list. This is called <i>slicing</i> the list.
+<h3 id=slicinglists>Découper Une Liste</h3>
+<aside>a_list[0] est le premier élément de a_list.</aside>
+<p>Une fois une liste définie, vous pouvez en obtenir n'importe quelle partie sous forme d'une nouvelle liste. On appelle cela <i>découper</i> la liste.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp>
@@ -263,15 +263,15 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[:]</kbd>              <span class=u>&#x2465;</span></a>
 <samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp></pre>
 <ol>
-<li>You can get a part of a list, called a &#8220;slice&#8221;, by specifying two indices. The return value is a new list containing all the items of the list, in order, starting with the first slice index (in this case <code>a_list[1]</code>), up to but not including the second slice index (in this case <code>a_list[3]</code>).
-<li>Slicing works if one or both of the slice indices is negative. If it helps, you can think of it this way: reading the list from left to right, the first slice index specifies the first item you want, and the second slice index specifies the first item you don&#8217;t want. The return value is everything in between.
-<li>Lists are zero-based, so <code>a_list[0:3]</code> returns the first three items of the list, starting at <code>a_list[0]</code>, up to but not including <code>a_list[3]</code>.
-<li>If the left slice index is 0, you can leave it out, and 0 is implied. So <code>a_list[:3]</code> is the same as <code>a_list[0:3]</code>, because the starting 0 is implied.
-<li>Similarly, if the right slice index is the length of the list, you can leave it out. So <code>a_list[3:]</code> is the same as <code>a_list[3:5]</code>, because this list has five items.  There is a pleasing symmetry here. In this five-item list, <code>a_list[:3]</code> returns the first 3 items, and <code>a_list[3:]</code> returns the last two items. In fact, <code>a_list[:<var>n</var>]</code> will always return the first <var>n</var> items, and <code>a_list[<var>n</var>:]</code> will return the rest, regardless of the length of the list.
-<li>If both slice indices are left out, all items of the list are included. But this is not the same as the original <var>a_list</var> variable. It is a new list that happens to have all the same items. <code>a_list[:]</code> is shorthand for making a complete copy of a list.
+<li>Vous pouvez obtenir une partie d'une liste, appellée une &#8220;portion&#8221;, en indiquant deux indices. La valeur de retour est une nouvelle liste contenant les éléments de la liste, ordonnés, depuis le premier index de la portion (dans notre cas <code>a_list[1]</code>), jusqu'au deuxième index de la portion (non inclus) (dans notre cas <code>a_list[3]</code>).
+<li>Le découpage fonctionne si l'un ou les deux indices de la portion sont négatifs. Si cela vous aide, vous pouvez vous représenter les choses ainsi&nbsp;: lorsqu'on lit la liste de gauche à droite, le premier index de portion représente le premier élément que vous voulez obtenir, et le deuxième index de portion représente le premier élément que vous ne souhaitez pas obtenir. La valeur de retour est ce qu'il y a entre les deux.
+<li>Les index de listes commencent à 0, ainsi <code>a_list[0:3]</code> retourne les trois premiers éléments de la liste, depuis <code>a_list[0]</code>, jusqu'à <code>a_list[3]</code> non inclus.
+<li>Si l'index gauche d'une portion vaut 0, vous pouvez l'omettre, et la valeur 0 est implicite. Ainsi, <code>a_list[:3]</code> représente la même portion que <code>a_list[0:3]</code>, car le 0 initial est implicite.
+<li>De la même manière, si l'index droit d'une portion vaut la longueur de la liste, vous pouvez également l'omettre. Ainsi, <code>a_list[3:]</code> représente la même portion que <code>a_list[3:5]</code>, car cette liste contient cinq éléments.  Il y a là une agréable symétrie. Pour cette liste de cinq éléments, <code>a_list[:3]</code> retourne les trois premiers éléments, et <code>a_list[3:]</code> retourne les deux derniers éléments. En fait, <code>a_list[:<var>n</var>]</code> retournera toujours les <var>n</var> premiers éléments, et <code>a_list[<var>n</var>:]</code> retournera les autres, quelle que soit la longueur de la liste.
+<li>Si les deux index de portion sont omis, tous les éléments de la liste sont inclus. Mais il ne s'agit plus de la variable <var>a_list</var> originale. Il s'agit d'une nouvelle liste qui contient les mêmes éléments. <code>a_list[:]</code> est un raccourci pour effectuer une copie d'une liste.
 </ol>
-<h3 id=extendinglists>Adding Items To A List</h3>
-<p>There are four ways to add items to a list.
+<h3 id=extendinglists>Ajouter Des Éléments À Une Liste</h3>
+<p>Il existe quatre manières d'ajouter des éléments à une liste.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a']</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list = a_list + [2.0, 3]</kbd>    <span class=u>&#x2460;</span></a>
@@ -287,18 +287,18 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
 <samp class=pp>['&Omega;', 'a', 2.0, 3, True, 'four', '&Omega;']</samp></pre>
 <ol>
-<li>The <code>+</code> operator concatenates lists to create a new list. A list can contain any number of items; there is no size limit (other than available memory). However, if memory is a concern, you should be aware that list concatenation creates a second list in memory. In this case, that new list is immediately assigned to the existing variable <var>a_list</var>. So this line of code is really a two-step process&nbsp;&mdash;&nbsp;concatenation then assignment&nbsp;&mdash;&nbsp;which can (temporarily) consume a lot of memory when you&#8217;re dealing with large lists.
-<li>A list can contain items of any datatype, and the items in a single list don&#8217;t all need to be the same type. Here we have a list containing a string, a floating point number, and an integer.
-<li>The <code>append()</code> method adds a single item to the end of the list. (Now we have <em>four</em> different datatypes in the list!)
-<li>Lists are implemented as classes.  &#8220;Creating&#8221; a list is really instantiating a class.  As such, a list has methods that operate on it. The <code>extend()</code> method takes one argument, a list, and appends each of the items of the argument to the original list.
-<li>The <code>insert()</code> method inserts a single item into a list. The first argument is the index of the first item in the list that will get bumped out of position. List items do not need to be unique; for example, there are now two separate items with the value <code>'&Omega;'</code>: the first item, <code>a_list[0]</code>, and the last item, <code>a_list[6]</code>.
+<li>L'opérateur <code>+</code> concatène deux listes pour en créer une nouvelle. Une liste peut contenir n'importe quel nombre d'éléments; il n'y a pas de limite de taille (à part la mémoire disponible). Néanmoins, si l'occupation mémoire vous préoccupe, vous devez être averti que la concaténation de listes crée une nouvelle liste en mémoire. Dans cet exemple, cette nouvelle liste est immédiatement assignée à la variable <var>a_list</var> qui existe déjà. Cette ligne de code est donc un processus à deux étapes&nbsp;&mdash;&nbsp;concaténation puis assignation&nbsp;&mdash;&nbsp;qui peut (temporairement) consommer beaucoup de mémoire si vous manipulez des listes de grande taille.
+<li>Une liste peut contenir des éléments de n'importe quel type, et les éléments d'une liste donnée n'ont pas à être tous du même type. Ici, nous avons une liste qui contient une chaîne de caractères, un nombre deécimal et un entier.
+<li>La méthode <code>append()</code> ajoute un unique élément à la fin d'une liste. (Nous avons maintenant <em>quatre</em> types de données différents dans la liste&nbsp;!)
+<li>Les listes sont implémentées sous forme de classes.  La &#8220;création&#8221; d'une liste est en réalité l'instantiation d'une classe.  À ce titre, une liste possède des méthodes qu'on peut lui appliquer. La méthode <code>extend()</code> prend un argument, une liste, et ajoute chaque élément de l'argument à la liste originale.
+<li>La méthode <code>insert()</code> insère un unique élément dans une liste. Le premier argument est l'index du premier élément de la liste qui sera décalé. Les éléments d'une liste n'ont pas à être uniques; par exemple, il y a désormais deux éléments différents qui valent <code>'&Omega;'</code>&nbsp;: le premier élément, <code>a_list[0]</code>, et le dernier élément, <code>a_list[6]</code>.
 </ol>
 
 <blockquote class='note compare perl'>
-<p><span class=u>&#x261E;</span><code><var>a_list</var>.insert(0, <var>value</var>)</code> is like the <code>unshift()</code> function in Perl. It adds an item to the beginning of the list, and all the other items have their positional index bumped up to make room.
+<p><span class=u>&#x261E;</span><code><var>a_list</var>.insert(0, <var>value</var>)</code> est similaire à la fonction <code>unshift()</code> en Perl. Cela ajoute un élément au début de la liste, et tous les autres éléments sont décalés pour faire de la place.
 </blockquote>
 
-<p>Let&#8217;s look closer at the difference between <code>append()</code> and <code>extend()</code>.
+<p>Regardons de plus près la différence entre la méthode <code>append()</code> et la méthode <code>extend()</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'c']</kbd>
@@ -317,12 +317,12 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_list[-1]</kbd>
 <samp class=pp>['g', 'h', 'i']</samp></pre>
 <ol>
-<li>The <code>extend()</code> method takes a single argument, which is always a list, and adds each of the items of that list to <var>a_list</var>.
-<li>If you start with a list of three items and extend it with a list of another three items, you end up with a list of six items.
-<li>On the other hand, the <code>append()</code> method takes a single argument, which can be any datatype. Here, you&#8217;re calling the <code>append()</code> method with a list of three items.
-<li>If you start with a list of six items and append a list onto it, you end up with... a list of seven items. Why seven? Because the last item (which you just appended) <em>is itself a list</em>. Lists can contain any type of data, including other lists. That may be what you want, or it may not. But it&#8217;s what you asked for, and it&#8217;s what you got.
+<li>La méthode <code>extend()</code> prend un unique argument, qui est toujours une liste, et ajoute chaque élément de cette liste à <var>a_list</var>.
+<li>Si vous prenez une liste contenant trois éléments et que vous l'étendez avec une liste contenant trois éléments, vous obtenez une liste contenant six éléments.
+<li>En comparaison, la méthode <code>append()</code> prend un unique argument, qui peut être de n'importe quel type de données. Ici, vous appellez la méthode <code>append()</code> avec une liste de trois éléments comme argument.
+<li>Si vous prenez une liste de six éléments et lui ajoutez une liste, vous obtenez ...  une liste contenant sept éléments. Pourquoi sept&nbsp;? Parce que le dernier élément (que vous venez d'ajouter) <em>est lui même une liste</em>. Les listes peuvent contenir n'importe quel type de données, y compris d'autres listes. C'est peut-être ce que vous voulez, ou peut-être pas. Mais c'est ce que vous avez demandé, et c'est ce que vous obtenez.
 </ol>
-<h3 id=searchinglists>Searching For Values In A List</h3>
+<h3 id=searchinglists>Rechercher Des Valeurs Dans Une Liste</h3>
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list.count('new')</kbd>       <span class=u>&#x2460;</span></a>
@@ -340,20 +340,20 @@ ZeroDivisionError: Fraction(0, 0)</samp></pre>
   File "&lt;interactive input>", line 1, in ?
 ValueError: list.index(x): x not in list</samp></pre>
 <ol>
-<li>As you might expect, the <code>count()</code> method returns the number of occurrences of a specific value in a list.
-<li>If all you want to know is whether a value is in the list or not, the <code>in</code> operator is slightly faster than using the <code>count()</code> method. The <code>in</code> operator always returns <code>True</code> or <code>False</code>; it will not tell you how many times the value appears in the list.
-<li>Neither the <code>in</code> operator nor the <code>count()</code> method will tell you <em>where</em> in the list a value appears. If you need to know where in the list a value is, call the <code>index()</code> method. By default it will search the entire list, although you can specify an optional second argument of the (0-based) index to start from, and even an optional third argument of the (0-based) index to stop searching.
-<li>The <code>index()</code> method finds the <em>first</em> occurrence of a value in the list. In this case, <code>'new'</code> occurs twice in the list, in <code>a_list[2]</code> and <code>a_list[4]</code>, but the <code>index()</code> method will return only the index of the first occurrence.
-<li>As you might <em>not</em> expect, if the value is not found in the list, the <code>index()</code> method will raise an exception.
+<li>Comme vous pouvez vous y attendre, la méthode <code>count()</code> retourne le nombre d'occurence d'une valeur donnée dans une liste.
+<li>Si vous souhaitez juste savoir si une valeur est présente ou non dans une liste, l'opérateur <code>in</code> est légèrement plus rapide que la méthode <code>count()</code>. L'opérateur <code>in</code> retourne toujours <code>True</code> ou <code>False</code>; il ne vous dira pas combien de fois la valeur apparaît dans la liste.
+<li>Ni l'opérateur <code>in</code> ni la méthode <code>count()</code> ne vous diront <em>où</em> une valeur apparaît dans la liste. Si vous devez savoir où une valeur apparaît dans une liste, appellez la méthode <code>index()</code>. Par défaut, la recherche sera effectuée sur la liste entière, mais vous pouvez utiliser un second argument optionnel pour préciser à partir de quel index (commencant à 0) commencer la recherche, et même un troisième argument optionnel pour préciser à quel index arrêter la recherche.
+<li>La méthode <code>index()</code> trouve la <em>première</em> occurrence d'une valeur dans la liste. Dans notre cas, <code>'new'</code> apparaît deux fois dans la liste, dans <code>a_list[2]</code> et <code>a_list[4]</code>, mais la méthode <code>index()</code> ne retourne que l'index de la première occurence.
+<li>Comme vous pouvez ne <em>pas</em> vous y attendre, si la valeur n'est pas trouvée dans la liste, la métode <code>index()</code> lèvera une exception.
 </ol>
 
-<p>Wait, what? That&#8217;s right: the <code>index()</code> method raises an exception if it doesn&#8217;t find the value in the list. This is notably different from most languages, which will return some invalid index (like <code>-1</code>). While this may seem annoying at first, I think you will come to appreciate it. It means your program will crash at the source of the problem instead of failing strangely and silently later. Remember, <a href=#creatinglists><code>-1</code> is a valid list index</a>. If the <code>index()</code> method returned <code>-1</code>, that could lead to some not-so-fun debugging sessions!
+<p>Hein, quoi&nbsp;? C'est bien ça&nbsp;: la méthode <code>index()</code> lève une exception si elle ne trouve pas la valeur dans la liste. Cela est notablement différent de la plupart des langages, qui retournent un index non valide (comme <code>-1</code>). Bien que cela puisse paraître embêtant au premier abord, je pense que vous finirez par apprécier cette particularité. Cela permet à votre programme de planter à la source du problème plutôt que d'avoir des problèmes étranges et muets plus loin. Souvenez-vous, <a href=#creatinglists><code>-1</code> est un index valide dans une liste</a>. Si la méthode <code>index()</code> retournait <code>-1</code>, cela pourrait conduire à des sessions de débogage pas si drôles&nbsp;!
 
-<h3 id=removingfromlists>Removing Items From A List</h3>
+<h3 id=removingfromlists>Supprimer Des Éléments D'une Liste</h3>
 
-<aside>Lists never have gaps.</aside>
+<aside>Il n'y a jamais de trous dans une liste.</aside>
 
-<p>Lists can expand and contract automatically. You&#8217;ve seen the expansion part. There are several different ways to remove items from a list as well.
+<p>Les listes peuvent grandir et rétrécir automatiquement. Vous avez vu la partie aggrandissement. Il y a également plusieurs manières différentes de supprimer des éléments d'une liste.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
@@ -365,11 +365,11 @@ ValueError: list.index(x): x not in list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>             <span class=u>&#x2461;</span></a>
 <samp class=pp>'new'</samp></pre>
 <ol>
-<li>You can use the <code><dfn>del</dfn></code> statement to delete a specific item from a list.
-<li>Accessing index <code>1</code> after deleting index <code>1</code> does <em>not</em> result in an error. All items after the deleted item shift their positional index to &#8220;fill the gap&#8221; created by deleting the item.
+<li>Vous pouvez utiliser l'expression <code><dfn>del</dfn></code> pour supprimer un élément précis d'une liste.
+<li>L'accès à l'index <code>1</code> après avoir supprimé l'index <code>1</code> ne produit <em>pas</em> d'erreur. Tous les éléments situés après l'élément supprimé verront leur index décalé pour &#8220;remplir le trou&#8221; créé lors de la suppression de l'élément.
 </ol>
 
-<p>Don&#8217;t know the positional index? Not a problem; you can remove items by value instead.
+<p>Vous ne connaissez pas l'index de position d'un élément&nbsp;? Pas de problème&nbsp;: vous pouvez aussi supprimer des éléments par leur valeur.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>  <span class=u>&#x2460;</span></a>
@@ -383,13 +383,13 @@ ValueError: list.index(x): x not in list</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 ValueError: list.remove(x): x not in list</samp></pre>
 <ol>
-<li>You can also remove an item from a list with the <code>remove()</code> method. The <code>remove()</code> method takes a <em>value</em> and removes the first occurrence of that value from the list. Again, all items after the deleted item will have their positional indices bumped down to &#8220;fill the gap.&#8221; Lists never have gaps.
-<li>You can call the <code>remove()</code> method as often as you like, but it will raise an exception if you try to remove a value that isn&#8217;t in the list.
+<li>Vous pouvez aussi supprimer un élément d'une liste avec la méthode <code>remove()</code> . La méthode <code>remove()</code> prend une <em>valeur</em> en argument et supprime la première occurence de cette valeur de la liste. Là encore, tous les éléments situés après l'élément supprimé verront leurs index décrémentés pour &#8220;remplir le trou.&#8221; Il n'y a jamais de trous dans une liste.
+<li>Vous pouvez appeler la méthode <code>remove()</code> autant de fois que vous voulez, mais elle lèvera une exception si vous essayez de supprimer une valeur qui n'est pas dans la liste.
 </ol>
 
-<h3 id=popgoestheweasel>Removing Items From A List: Bonus Round</h3>
+<h3 id=popgoestheweasel>Supprimer Des Éléments D'une Liste&nbsp;: Tour Gratuit</h3>
 
-<p>Another interesting list method is <code>pop()</code>. The <code>pop()</code> method is yet another way to <a href=#removingfromlists>remove items from a list</a>, but with a twist.
+<p>Une autre méthode de liste intéressante est la méthode <code>pop()</code>. La méthode <code>pop()</code> est une autre manière de <a href=#removingfromlists>supprimer des éléments d'une liste</a>, mais avec un truc.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim']</kbd>
@@ -410,18 +410,18 @@ ValueError: list.remove(x): x not in list</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 IndexError: pop from empty list</samp></pre>
 <ol>
-<li>When called without arguments, the <code>pop()</code> list method removes the last item in the list <em>and returns the value it removed</em>.
-<li>You can pop arbitrary items from a list. Just pass a positional index to the <code>pop()</code> method. It will remove that item, shift all the items after it to &#8220;fill the gap,&#8221; and return the value it removed.
-<li>Calling <code>pop()</code> on an empty list raises an exception.
+<li>Lorsqu'elle est appellée sans argument, la méthode de liste <code>pop()</code> supprime le dernier élément de la liste <em>et retourne la valeur qu'elle a supprimée</em>.
+<li>Vous pouvez supprimer un élément quelconque d'une liste avec <code>pop()</code>. Il suffit de passer en argument un index de position à la méthode <code>pop()</code>. Cela supprimera l'élément en question, décalera tous les éléments qui le suivent pour &#8220;remplir le trou,&#8221; et retournera la valeur qui a été supprimée.
+<li>L'appel de <code>pop()</code> sur une liste vide lève une exception.
 </ol>
 
 <blockquote class='note compare perl'>
-<p><span class=u>&#x261E;</span>Calling the <code>pop()</code> list method without an argument is like the <code>pop()</code> function in Perl. It removes the last item from the list and returns the value of the removed item. Perl has another function, <code>shift()</code>, which removes the first item and returns its value; in Python, this is equivalent to <code><var>a_list</var>.pop(0)</code>.
+<p><span class=u>&#x261E;</span>L'appel de la méthode de liste <code>pop()</code> sans argument est similaire à la fonction <code>pop()</code> en Perl. Cela supprime le dernier élément de la liste et retourne la valeur de l'élément supprimé. Perl dispose d'une autre fonction, <code>shift()</code>, qui supprime le premier élément et retourne sa valeur; en Python, c'est équivalent à appeller <code><var>a_list</var>.pop(0)</code>.
 </blockquote>
 
-<h3 id=lists-in-a-boolean-context>Lists In A Boolean Context</h3>
-<aside>Empty lists are false; all other lists are true.</aside>
-<p>You can also use a list in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+<h3 id=lists-in-a-boolean-context>Les Listes Dans Un Contexte Booléen</h3>
+<aside>Les listes vides valent Faux. Toutes les autres listes valent Vrai.</aside>
+<p>Vous pouvez également utiliser les listes dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
@@ -436,9 +436,9 @@ IndexError: pop from empty list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true([False])</kbd>        <span class=u>&#x2462;</span></a>
 <samp>yes, it's true</samp></pre>
 <ol>
-<li>In a boolean context, an empty list is false.
-<li>Any list with at least one item is true.
-<li>Any list with at least one item is true. The value of the items is irrelevant.
+<li>Dans un contexte booléen, une liste vide vaut Faux.
+<li>Une liste contenant au moins un élément vaut Vrai.
+<li>Une liste contenant au moins un élément vaut Vrai. La valeur de l'élément n'est pas significative.
 </ol>
 
 <p class=a>&#x2042;
