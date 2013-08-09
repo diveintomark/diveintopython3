@@ -443,9 +443,9 @@ IndexError: pop from empty list</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=tuples>Tuples</h2>
+<h2 id=tuples>Les Tuples</h2>
 
-<p>A <dfn>tuple</dfn> is an immutable list.  A tuple can not be changed in any way once it is created.
+<p>Un <dfn>tuple</dfn> est une liste immuable.  Un tuple ne peut plus être modifié d'aucune manière une fois qu'il est créé.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_tuple = ("a", "b", "mpilgrim", "z", "example")</kbd>  <span class=u>&#x2460;</span></a>
@@ -458,13 +458,13 @@ IndexError: pop from empty list</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_tuple[1:3]</kbd>                                      <span class=u>&#x2463;</span></a>
 <samp class=pp>('b', 'mpilgrim')</samp></pre>
 <ol>
-<li>A tuple is defined in the same way as a list, except that the whole set of elements is enclosed in parentheses instead of square brackets.
-<li>The elements of a tuple have a defined order, just like a list. Tuple indices are zero-based, just like a list, so the first element of a non-empty tuple is always <code>a_tuple[0]</code>.
-<li>Negative indices count from the end of the tuple, just like a list.
-<li>Slicing works too, just like a list. When you slice a list, you get a new list; when you slice a tuple, you get a new tuple.
+<li>Un tuple est défini de la même manière qu'une liste à la différence près que l'ensembles des éléments est entouré de parenthèses au lieu de crochets.
+<li>Les éléments d'un tuple possèdent un ordre bien défini, comme ceux d'une liste. Les indices d'un tuple commencent à zéro, comme ceux d'une liste, le premier élément d'un tuple non vide est donc toujours <code>a_tuple[0]</code>.
+<li>Les indices négatifs permettent de compter depuis la fin du tuple, comme pour une liste.
+<li>Le découpage fonctionne aussi, comme pour une liste. Lorsque vous découpez une liste, vous obtenez une nouvelle liste. Lorsque vous découpez un tuple, vous obtenez un nouveau tuple.
 </ol>
 
-<p>The major difference between tuples and lists is that tuples can not be changed. In technical terms, tuples are <dfn>immutable</dfn>. In practical terms, they have no methods that would allow you to change them. Lists have methods like <code>append()</code>, <code>extend()</code>, <code>insert()</code>, <code>remove()</code>, and <code>pop()</code>. Tuples have none of these methods. You can slice a tuple (because that creates a new tuple), and you can check whether a tuple contains a particular value (because that doesn&#8217;t change the tuple), and&hellip; that&#8217;s about it.
+<p>La différence fondamentale entre les tuples et les listes est que les tuples ne peuvent être modifiés. En termes techniques, les tuples sont <dfn>immuables</dfn>. En pratique, ils ne disposent pas de méthodes permettant des les modifier. Les listes disposent de méthodes comme <code>append()</code>, <code>extend()</code>, <code>insert()</code>, <code>remove()</code>, and <code>pop()</code>. Les tuples n'ont aucune de ces méthodes. Vous pouvez découper un tuple (puisque cela crée un nouveau tuple), et vous pouvez vérifier si un tuple contient une valeur donnée (puisque cela ne modifie pas le tuple), et &hellip; c'est à peu près tout.
 
 <pre class=screen>
 # continued from the previous example
@@ -483,27 +483,27 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>"z" in a_tuple</kbd>                      <span class=u>&#x2463;</span></a>
 <samp class=pp>True</samp></pre>
 <ol>
-<li>You can&#8217;t add elements to a tuple. Tuples have no <code>append()</code> or <code>extend()</code> method.
-<li>You can&#8217;t remove elements from a tuple. Tuples have no <code>remove()</code> or <code>pop()</code> method.
-<li>You <em>can</em> find elements in a tuple, since this doesn&#8217;t change the tuple.
-<li>You can also use the <code>in</code> operator to check if an element exists in the tuple.
+<li>Vous ne pouvez ajouter d'éléments à un tuple. Les tuples n'ont pas de méthodes <code>append()</code> ou <code>extend()</code>.
+<li>Vous ne pouvez supprimer d'éléments d'un tuple. Les tuples n'ont pas de méthodes  <code>remove()</code> ou <code>pop()</code>.
+<li>Vous <em>pouvez</em> trouver des éléments dans un tuple, puisque cela ne modifie pas le tuple.
+<li>Vous pouvez aussi utiliser l'opérateur <code>in</code> pour vérifier si un élément est contenu dans un tuple.
 </ol>
 
-<p>So what are tuples good for?</p> 
+<p>Mais alors, à quoi servent les tuples&nbsp;?</p> 
 
 <ul> 
-<li>Tuples are faster than lists.  If you&#8217;re defining a constant set of values and all you&#8217;re ever going to do with it is iterate through it, use a tuple instead of a list.
-<li>It makes your code safer if you &#8220;write-protect&#8221; data that doesn&#8217;t need to be changed. Using a tuple instead of a list is like having an implied <code>assert</code> statement that shows this data is constant, and that special thought (and a specific function) is required to override that.
-<li>Some tuples can be used as dictionary keys (specifically, tuples that contain <i>immutable</i> values like strings, numbers, and other tuples). Lists can never be used as dictionary keys, because lists are not immutable.
+<li>Les tuples sont plus rapides que les listes. Si vous devez définir un ensemble de valeurs constantes que vous ne ferez que lire, utilisez un tuple pltôt qu'une liste.
+<li>Votre code est plus robuste si vous &#8220;protégez en écriture&#8221; les données qui n'ont pas besoin d'être modifiées. En utilisant un tuple plutôt qu'une liste, vous bénéficiez d'une <code>assertion</code> implicite qui indique que ces données sont constantes et que vous devez y réfléchir à deux fois (et utiliser une fonction spécifique) pour outrepasser cette contrainte.
+<li>Certains tuples peuvent être utilisés comme clés de dictionnaires (en particulier les tuples qui contiennent des valeurs <i>immuables</i> comme des chaînes de caractères, des nombres et d'autres tuples). Les listes ne peuvent en aucun cas être utilisées comme clés de dictionnaires, car les listes ne sont pas immuables.
 </ul>
 
 <blockquote class=note>
-<p><span class=u>&#x261E;</span>Tuples can be converted into lists, and vice-versa. The built-in <code>tuple()</code> function takes a list and returns a tuple with the same elements, and the <code>list()</code> function takes a tuple and returns a list. In effect, <code>tuple()</code> freezes a list, and <code>list()</code> thaws a tuple.
+<p><span class=u>&#x261E;</span>Les tuples peuvent être convertis en listes, et réciproquement. La fonction native <code>tuple()</code> prend une liste en argument et retourne un tuple contenant les mêmes éléments, et la fonction <code>list()</code> prend un tuple en argument et retourne une liste. En pratique, <code>tuple()</code> fige une liste, et <code>list()</code> dégêle un tuple.
 </blockquote>
 
-<h3 id=tuples-in-a-boolean-context>Tuples In A Boolean Context</h3>
+<h3 id=tuples-in-a-boolean-context>Les Tuples Dans Un Contexte Booléen</h3>
 
-<p>You can use tuples in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+<p>Vous pouvez utiliser les tuples dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
@@ -523,15 +523,15 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>type((False,))</kbd>
 <samp class=pp>&lt;class 'tuple'></samp></pre>
 <ol>
-<li>In a boolean context, an empty tuple is false.
-<li>Any tuple with at least one item is true.
-<li>Any tuple with at least one item is true. The value of the items is irrelevant. But what&#8217;s that comma doing there?
-<li>To create a tuple of one item, you need a comma after the value. Without the comma, Python just assumes you have an extra pair of parentheses, which is harmless, but it doesn&#8217;t create a tuple.
+<li>Dans un contexte booléen, un tuple vide vaut Faux.
+<li>Un tuple qui contient au moins un élément vaut Vrai.
+<li>Un tuple qui contient au moins un élément vaut Vrai. La valeur des éléments n'est pas significative. Mais qu'est-ce que cette virgule vient faire ici&nbsp;?
+<li>Pour créer un tuple contenant un seul élément, vous avez besoin d'une virgule après l'élément. Sans la virgule, Python considère que vous avez juste rajouté des parenthèses supplémentaires, ce qui est innoffensif mais ne crée pas un tuple.
 </ol>
 
-<h3 id=multivar>Assigning Multiple Values At Once</h3>
+<h3 id=multivar>Assigner Plusieurs Valeurs D'un Seul Coup</h3>
 
-<p>Here&#8217;s a cool programming shortcut: in Python, you can use a tuple to assign multiple values at once.
+<p>Voici un raccourci de programmation bien sympa&nbsp;: en Python, vous pouvez utiliser un tuple pour assigner plusieurs valeurs d'un seul coup.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>v = ('a', 2, True)</kbd>
@@ -543,10 +543,10 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>z</kbd>
 <samp class=pp>True</samp></pre>
 <ol>
-<li><var>v</var> is a tuple of three elements, and <code>(x, y, z)</code> is a tuple of three variables. Assigning one to the other assigns each of the values of <var>v</var> to each of the variables, in order.
+<li><var>v</var> est un tuple contenant trois éléments, et <code>(x, y, z)</code> est un tuple contenant trois variables. L'assignation de l'un à l'autre provoque l'assignation de chaque valeur de <var>v</var> à chaque variable, en respectant l'ordre.
 </ol>
 
-<p>This has all kinds of uses. Suppose you want to assign names to a range of values. You can use the built-in <code>range()</code> function with multi-variable assignment to quickly assign consecutive values.
+<p>Cela permet toutes sortes d'usages. Supposons que vous souhaitez assigner des noms à une plage de valeurs. Vous pouvez utiliser la fonction native <code>range()</code> avec assignation multi-variables pour assigner rapidement des valeurs consécutives.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)</kbd>  <span class=u>&#x2460;</span></a>
@@ -557,11 +557,11 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>SUNDAY</kbd>
 <samp class=pp>6</samp></pre>
 <ol>
-<li>The built-in <code>range()</code> function constructs a sequence of integers. (Technically, the <code>range()</code> function returns an <a href=iterators.html>iterator</a>, not a list or a tuple, but you&#8217;ll learn about that distinction later.) <var>MONDAY</var>, <var>TUESDAY</var>, <var>WEDNESDAY</var>, <var>THURSDAY</var>, <var>FRIDAY</var>, <var>SATURDAY</var>, and <var>SUNDAY</var> are the variables you&#8217;re defining. (This example came from the <code>calendar</code> module, a fun little module that prints calendars, like the <abbr>UNIX</abbr> program <code>cal</code>. The <code>calendar</code> module defines integer constants for days of the week.)
-<li>Now each variable has its value: <var>MONDAY</var> is 0, <var>TUESDAY</var> is <code>1</code>, and so forth.
+<li>La fonction native <code>range()</code> produit une séquence d'entiers. (Au sens strict, la fonction <code>range()</code> retourne un <a href=iterators.html>itérateur</a>, et non une liste ou un tuple, mais vous apprendrez la différence plus tard.) <var>MONDAY</var>, <var>TUESDAY</var>, <var>WEDNESDAY</var>, <var>THURSDAY</var>, <var>FRIDAY</var>, <var>SATURDAY</var>, et <var>SUNDAY</var> sont les variables que vous définissez. (Cet exemple provient du module <code>calendar</code>, un amusant petit module qui affiche des calendriers, comme le programme <abbr>UNIX</abbr> <code>cal</code>. Le module <code>calendar</code> définit des constantes entières pour les jours de la semaine.)
+<li>Dorénavant, chaque variable a une valeur assignée&nbsp;: <var>MONDAY</var> vaut 0, <var>TUESDAY</var> vaut <code>1</code>, et ainsi de suite.
 </ol>
 
-<p>You can also use multi-variable assignment to build functions that return multiple values, simply by returning a tuple of all the values. The caller can treat it as a single tuple, or it can assign the values to individual variables. Many standard Python libraries do this, including the <code>os</code> module, which you'll learn about in <a href=comprehensions.html#os>the next chapter</a>.
+<p>Vous pouvez également utiliser l'assignation multi-variables pour bâtir des fonctions qui retournent plusieurs valeurs, tout simplement en utilisant un tuple comme valeur de retour. L'appelant peut traiter le résultat comme un unique tuple, ou bien il peut assigner les valeurs à des variables individuelles. De nombreuses bibliothèques standard Python procèdent ainsi, notamment le module <code>os</code>, à propos duquel vous en apprendrez plus dans <a href=comprehensions.html#os>le prochain chapitre</a>.
 
 <p class=a>&#x2042;
 
