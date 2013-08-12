@@ -565,13 +565,13 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 
 <p class=a>&#x2042;
 
-<h2 id=sets>Sets</h2>
+<h2 id=sets>Les Ensembles</h2>
 
-<p>A <dfn>set</dfn> is an unordered &#8220;bag&#8221; of unique values. A single set can contain values of any immutable datatype. Once you have two sets, you can do standard set operations like union, intersection, and set difference.
+<p>Un <dfn>ensemble</dfn> est un &#8220;sac&#8221; de valeurs uniques non ordonnées. Un ensemble peut contenir des valeurs de n'importe quel type de données immuables. Une fois que vous avez deux ensembles, vous pouvez effectuer des opérations standards sur les ensembles comme l'union, l'intersection et la différence.
 
-<h3 id=creating-a-set>Creating A Set</h3>
+<h3 id=creating-a-set>Créer Un Ensemble</h3>
 
-<p>First things first. Creating a set is easy.
+<p>Commençons par le début. Il est facile de créer un ensemble.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set = {1}</kbd>     <span class=u>&#x2460;</span></a>
@@ -583,12 +583,12 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2}</samp></pre>
 <ol>
-<li>To create a set with one value, put the value in curly brackets (<code>{}</code>).
-<li>Sets are actually implemented as <a href=iterators.html#defining-classes>classes</a>, but don&#8217;t worry about that for now.
-<li>To create a set with multiple values, separate the values with commas and wrap it all up with curly brackets.
+<li>Pour créer un ensemble contenant un élément, encadrez la valeur par deux accolades (<code>{}</code>).
+<li>En réalité, les ensembles sont implémentés sous forme de <a href=iterators.html#defining-classes>classes</a>, mais ne vous préoccupez pas de cela pour le moment.
+<li>Pour créer un ensemble contenant plusieurs éléments, séparez les valeurs par des virgules et encadrez le tout d'accolades.
 </ol>
 
-<p>You can also create a set out of a <a href=#lists>list</a>.
+<p>Vous pouvez également créer un ensemble à partir d'une <a href=#lists>liste</a>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', True, False, 42]</kbd>
@@ -598,12 +598,12 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                                        <span class=u>&#x2462;</span></a>
 <samp class=pp>['a', 'b', 'mpilgrim', True, False, 42]</samp></pre>
 <ol>
-<li>To create a set from a list, use the <code>set()</code> function. (Pedants who know about how sets are implemented will point out that this is not really calling a function, but instantiating a class. I <em>promise</em> you will learn the difference later in this book. For now, just know that <code>set()</code> acts like a function, and it returns a set.)
-<li>As I mentioned earlier, a single set can contain values of any datatype. And, as I mentioned earlier, sets are <em>unordered</em>. This set does not remember the original order of the list that was used to create it. If you were to add items to this set, it would not remember the order in which you added them.
-<li>The original list is unchanged.
+<li>Pour créer un ensemble à partir d'une liste, utilisez la fonction <code>set()</code>. (Les pédants qui savent comment les ensembles sont implémentés souligneront qu'il ne s'agit pas d'un appel de fonction mais de l'instanciation d'une classe. Je vous <em>promets</em> que vous apprendrez la différence plus tard dans ce livre. Pour le moment, retenez que <code>set()</code> agit comme une fonction et retourne un ensemble.)
+<li>Comme mentionné plus tôt, un ensemble donné peut contenir des éléments de n'importe quel type de données. Et, comme mentionné plus tôt, les ensembles sont <em>non ordonnés</em>. Cet ensemble ne conserve pas l'ordre original de la liste dont il est issu. Si vous ajoutiez des éléments à cet ensemble, il ne conserverait pas l'ordre dans lequel vous les avez ajoutés.
+<li>La liste originale n'est pas modifiée.
 </ol>
 
-<p id=emptyset>Don&#8217;t have any values yet? Not a problem. You can create an empty set.
+<p id=emptyset>Vous n'avez pas encore de valeurs&nbsp;? Pas de problème. Vous pouvez créer un ensemble vide.
 
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set = set()</kbd>    <span class=u>&#x2460;</span></a>
@@ -617,16 +617,16 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>type(not_sure)</kbd>
 <samp class=pp>&lt;class 'dict'></samp></pre>
 <ol>
-<li>To create an empty set, call <code>set()</code> with no arguments.
-<li>The printed representation of an empty set looks a bit strange. Were you expecting <code>{}</code>, perhaps? That would denote an empty dictionary, not an empty set. You&#8217;ll learn about dictionaries later in this chapter.
-<li>Despite the strange printed representation, this <em>is</em> a set&hellip;
-<li>&hellip;and this set has no members.
-<li>Due to historical quirks carried over from Python 2, you can not create an empty set with two curly brackets. This actually creates an empty dictionary, not an empty set.
+<li>Pour créer un ensemble vide, appellez <code>set()</code> sans argument.
+<li>L'affichage d'un ensemble vide paraît un peu étrange. Vous vous attendiez à  <code>{}</code> peut-être&nbsp;? Cela représenterait un dictionnaire vide, pas un ensemble vide. Vous en apprendrez plus sur les dictionnaires plus loin dans ce chapitre.
+<li>Malgré l'étrange représentation, c'<em>est</em> bien un ensemble&nbsp;&hellip;
+<li>&hellip;&nbsp;et cet ensemble est vide.
+<li>En raison de bricolages issus de Python 2, vous ne pouvez pas créer un ensemble vide avec deux accolades. Cela crée un dictionnaire vide, pas un ensemble vide.
 </ol>
 
-<h3 id=modifying-sets>Modifying A Set</h3>
+<h3 id=modifying-sets>Modifier Un Ensemble</h3>
 
-<p>There are two different ways to add values to an existing set: the <code>add()</code> method, and the <code>update()</code> method.
+<p>Il existe deux manières d'ajouter des valeurs à un ensemble&nbsp;: la méthode <code>add()</code> et la méthode <code>update()</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>
@@ -641,10 +641,10 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2463;</span></a>
 <samp class=pp>3</samp></pre>
 <ol>
-<li>The <code>add()</code> method takes a single argument, which can be any datatype, and adds the given value to the set.
-<li>This set now has 3 members.
-<li>Sets are bags of <em>unique values</em>. If you try to add a value that already exists in the set, it will do nothing. It won&#8217;t raise an error; it&#8217;s just a no-op.
-<li>This set <em>still</em> has 3 members.
+<li>La méthode <code>add()</code> prend un unique argument, qui peut être de n'importe quel type de données, et ajoute cette valeur à l'ensemble.
+<li>Cet ensemble contient maintenant trois éléments.
+<li>Les ensembles sont des sacs de <em>valeurs uniques</em>. Si vous essyez d'ajouter une valeur déjà présente dans l'ensemble, il ne se passera rien. Cela ne lèvera pas d'erreur; c'est juste une opération blanche.
+<li>Cet ensemble contient <em>encore</em> 3 éléments.
 </ol>
 
 <pre class=screen>
@@ -661,15 +661,15 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
 <samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
 <samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 20, 30}</samp></pre>
 <ol>
-<li>The <code>update()</code> method takes one argument, a set, and adds all its members to the original set. It&#8217;s as if you called the <code>add()</code> method with each member of the set.
-<li>Duplicate values are ignored, since sets can not contain duplicates.
-<li>You can actually call the <code>update()</code> method with any number of arguments. When called with two sets, the <code>update()</code> method adds all the members of each set to the original set (dropping duplicates).
-<li>The <code>update()</code> method can take objects of a number of different datatypes, including lists. When called with a list, the <code>update()</code> method adds all the items of the list to the original set.
+<li>La méthode <code>update()</code> prend un argument, un ensemble, et ajoute tous ses éléments à l'ensemble de départ. Cela revient à appeller la méthode <code>add()</code> successivement avec chaque élément de l'ensemble en argument.
+<li>Les doublons sont ignorés puisqu'un ensemble ne peut contenir deux fois la même valeur.
+<li>En réalité, vous pouvez appeler la méthode <code>update()</code> avec n'importe quel nombre d'arguments. Lorsqu'on l'appelle avec deux arguments, la méthode <code>update()</code> ajoute tous les éléments de chacun des ensembles à l'ensemble de départ (en ignorant les doublons).
+<li>La méthode <code>update()</code> peut prendre en argument des objets de différents types de données, notamment des listes. Lorsqu'elle est appellée avec une liste, la méthode <code>update()</code> ajoute chaque élément de la liste à l'ensemble original.
 </ol>
 
-<h3 id=removing-from-sets>Removing Items From A Set</h3>
+<h3 id=removing-from-sets>Supprimer Des Éléments D'un Ensemble</h3>
 
-<p>There are three ways to remove individual values from a set. The first two, <code>discard()</code> and <code>remove()</code>, have one subtle difference.
+<p>Il y a trois manières de supprimer des éléments individuels d'un ensemble. Les deux premières, <code>discard()</code> and <code>remove()</code>, présentent une subtile différence.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
@@ -689,13 +689,13 @@ AttributeError: 'tuple' object has no attribute 'remove'</samp>
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 21</samp></pre>
 <ol>
-<li>The <code>discard()</code> method takes a single value as an argument and removes that value from the set.
-<li>If you call the <code>discard()</code> method with a value that doesn&#8217;t exist in the set, it does nothing. No error; it&#8217;s just a no-op.
-<li>The <code>remove()</code> method also takes a single value as an argument, and it also removes that value from the set.
-<li>Here&#8217;s the difference: if the value doesn&#8217;t exist in the set, the <code>remove()</code> method raises a <code>KeyError</code> exception.
+<li>La méthode <code>discard()</code> prend une valeur unique en argument et supprime cette valeur de l'ensemble.
+<li>Si vous appelez la méthode <code>discard()</code> avec une valeur qui n'est pas présente dans l'ensemble, il ne se passe rien. Pas d'erreur; c'est juste une opération blanche.
+<li>La méthode <code>remove()</code> prend aussi une valeur unique en argument, et supprime aussi cette valeur de l'ensemble.
+<li>Voilà la différence&nbsp;: si la valeur n'est pas présente dans l'ensemble, la méthode <code>remove()</code> lève une exception <code>KeyError</code>.
 </ol>
 
-<p>Like lists, sets have a <code>pop()</code> method.
+<p>Comme les listes, les ensembles disposent d'une méthode <code>pop()</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
@@ -715,14 +715,14 @@ KeyError: 21</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'pop from an empty set'</samp></pre>
 <ol>
-<li>The <code>pop()</code> method removes a single value from a set and returns the value. However, since sets are unordered, there is no &#8220;last&#8221; value in a set, so there is no way to control which value gets removed. It is completely arbitrary.
-<li>The <code>clear()</code> method removes <em>all</em> values from a set, leaving you with an empty set. This is equivalent to <code>a_set = set()</code>, which would create a new empty set and overwrite the previous value of the <var>a_set</var> variable.
-<li>Attempting to pop a value from an empty set will raise a <code>KeyError</code> exception.
+<li>La méthode <code>pop()</code> supprime une valeur unique d'un ensemble et retourne cette valeur. Néanmoins, puisque les ensembles ne sont pas ordonnés, il n'existe pas de &#8220;dernière&#8221; valeur dans un ensemble, il n'est donc pas possible de contrôler quelle valeur est supprimée. C'est totalement arbitraire.
+<li>La méthode <code>clear()</code> supprime <em>toutes</em> les valeurs d'un ensemble, vous vous retrouvez avec un ensemble vide. Cela est équivalent à <code>a_set = set()</code>, qui crée un nouvel ensemble et remplace la valeur précédente de la variable <var>a_set</var>.
+<li>Si vous tentez d'utiliser la méthode <code>pop()</code> sur un ensemble vide, cela lèvera une exception <code>KeyError</code>.
 </ol>
 
-<h3 id=common-set-operations>Common Set Operations</h3>
+<h3 id=common-set-operations>Opérations Ususelles Sur Les Ensembles</h3>
 
-<p>Python&#8217;s <code>set</code> type supports several common set operations.
+<p>Le type de données <code>set</code> (ensemble) accepte plusieurs opérations usuelles sur les ensembles.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {2, 4, 5, 9, 12, 21, 30, 51, 76, 127, 195}</kbd>
@@ -740,14 +740,14 @@ KeyError: 'pop from an empty set'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2464;</span></a>
 <samp class=pp>{1, 3, 4, 6, 8, 76, 15, 17, 18, 195, 127, 30, 51}</samp></pre>
 <ol>
-<li>To test whether a value is a member of a set, use the <code>in</code> operator. This works the same as lists.
-<li>The <code>union()</code> method returns a new set containing all the elements that are in <em>either</em> set.
-<li>The <code>intersection()</code> method returns a new set containing all the elements that are in <em>both</em> sets.
-<li>The <code>difference()</code> method returns a new set containing all the elements that are in <var>a_set</var> but not <var>b_set</var>.
-<li>The <code>symmetric_difference()</code> method returns a new set containing all the elements that are in <em>exactly one</em> of the sets.
+<li>Pour tester si une valeur donnée appartient à un ensemble, utilisez l'opérateur  <code>in</code>. Cela fonctionne de la même manière qu'avec les listes.
+<li>La méthode <code>union()</code> retourne un nouvel ensemble qui contient tous les éléments appartenant à <em>l'un ou l'autre</em> des ensembles.
+<li>La méthode <code>intersection()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent aux <em>deux</em> ensembles.
+<li>La méthode <code>difference()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent à <var>a_set</var> mais pas à <var>b_set</var>.
+<li>La méthode <code>symmetric_difference()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent à <em>exactement un</em> des deux ensembles.
 </ol>
 
-<p>Three of these methods are symmetric.
+<p>Trois de ces méthodes sont symétriques.
 
 <pre class=screen>
 # continued from the previous example
@@ -762,14 +762,14 @@ KeyError: 'pop from an empty set'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>b_set.difference(a_set) == a_set.difference(b_set)</kbd>                      <span class=u>&#x2464;</span></a>
 <samp class=pp>False</samp></pre>
 <ol>
-<li>The symmetric difference of <var>a_set</var> from <var>b_set</var> <em>looks</em> different than the symmetric difference of <var>b_set</var> from <var>a_set</var>, but remember, sets are unordered. Any two sets that contain all the same values (with none left over) are considered equal.
-<li>And that&#8217;s exactly what happens here. Don&#8217;t be fooled by the Python Shell&#8217;s printed representation of these sets. They contain the same values, so they are equal.
-<li>The union of two sets is also symmetric.
-<li>The intersection of two sets is also symmetric.
-<li>The difference of two sets is not symmetric. That makes sense; it&#8217;s analogous to subtracting one number from another. The order of the operands matters.
+<li>La différence symétrique de <var>a_set</var> par rapport à <var>b_set</var> <em>semble</em> différente de la différence symétrique de <var>b_set</var> par rapport à <var>a_set</var>, mais souvenez vous, les ensembles ne sont pas ordonnés. Deux ensembles quelconques qui contiennent exactement les mêmes valeurs sont considérés comme égaux.
+<li>Et c'est exactement ce qui se passe ici. Ne soyez pas trompés par la manière dont ces ensembles sont représentés dans le terminal interactif. Ils contiennent les mêmes valeurs, ils sont donc égaux.
+<li>L'union de deux ensembles est aussi symétrique.
+<li>L'intersection de deux ensembles est aussi symétrique.
+<li>La différence entre deux ensembles n'est pas symétrique. Cela paraît logique; c'est similaire à la soustraction d'un nombre à un autre. L'ordre des opérandes compte.
 </ol>
 
-<p>Finally, there are a few questions you can ask of sets.
+<p>Enfin, il existe certaines questions que vous pouvez vous poser à propos des ensembles.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
@@ -784,14 +784,14 @@ KeyError: 'pop from an empty set'</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>
 <samp class=pp>False</samp></pre>
 <ol>
-<li><var>a_set</var> is a <dfn>subset</dfn> of <var>b_set</var>&nbsp;&mdash;&nbsp;all the members of <var>a_set</var> are also members of <var>b_set</var>.
-<li>Asking the same question in reverse, <var>b_set</var> is a <dfn>superset</dfn> of <var>a_set</var>, because all the members of <var>a_set</var> are also members of <var>b_set</var>.
-<li>As soon as you add a value to <var>a_set</var> that is not in <var>b_set</var>, both tests return <code>False</code>.
+<li><var>a_set</var> est un <dfn>sous-ensemble</dfn> de <var>b_set</var>&nbsp;&mdash;&nbsp;tous les éléments de <var>a_set</var> appartiennent également à <var>b_set</var>.
+<li>Réciproquement, <var>b_set</var> est un <dfn>sur-ensemble</dfn> de <var>a_set</var>, car tous les éléments de <var>a_set</var> appartiennent également à <var>b_set</var>.
+<li>Dès que vous ajoutez à <var>a_set</var> une valeur qui n'appartient pas à  <var>b_set</var>, les deux tests retournent <code>False</code>.
 </ol>
 
-<h3 id=sets-in-a-boolean-context>Sets In A Boolean Context</h3>
+<h3 id=sets-in-a-boolean-context>Les Ensembles Dans Un Contexte Booléen</h3>
 
-<p>You can use sets in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+<p>Vous pouvez utiliser les ensembles dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
 
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
@@ -807,9 +807,9 @@ KeyError: 'pop from an empty set'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true({False})</kbd>        <span class=u>&#x2462;</span></a>
 <samp>yes, it's true</samp></pre>
 <ol>
-<li>In a boolean context, an empty set is false.
-<li>Any set with at least one item is true.
-<li>Any set with at least one item is true. The value of the items is irrelevant.
+<li>Dans un contexte booléen, un ensemble vide vaut Faux.
+<li>Un ensemble qui contient au moins un élément vaut Vrai.
+<li>Un ensemble qui contient au moins un élément vaut Vrai. La valeur des éléments n'est pas significative.
 </ol>
 
 <p class=a>&#x2042;
