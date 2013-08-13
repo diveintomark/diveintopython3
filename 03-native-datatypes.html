@@ -814,14 +814,14 @@ KeyError: 'pop from an empty set'</samp></pre>
 
 <p class=a>&#x2042;
 
-<h2 id=dictionaries>Dictionaries</h2>
+<h2 id=dictionaries>Les Dictionnaires</h2>
 
-<p>A <dfn>dictionary</dfn> is an unordered set of key-value pairs. When you add a key to a dictionary, you must also add a value for that key. (You can always change the value later.) Python dictionaries are optimized for retrieving the value when you know the key, but not the other way around.
+<p>Un <dfn>dictionnaire</dfn> est un ensemble non ordonné de paires clé-valeur. Lorsque vous ajoutez une clé à un dictionnaire, vous devez également ajouter une valeur pour cette clé. (Vous pouvez toujours modifier cette valeur ultérieurement.) Les dictionnaires Python sont optimisés pour retrouver une valeur à partir de sa clé, pas pour les cas inverses.
 <blockquote class='note compare perl5'>
-<p><span class=u>&#x261E;</span>A dictionary in Python is like a hash in Perl 5. In Perl 5, variables that store hashes always start with a <code>%</code> character. In Python, variables can be named anything, and Python keeps track of the datatype internally.
+<p><span class=u>&#x261E;</span>Un dictionnaire en Python est similaire à un hachage en Perl. En Perl 5, les noms des variables qui conservent des hachages commencent toujours par le caractère <code>%</code>. En Python, les variables peuvent être nommées à votre guise et Python conserve le type de données en interne.
 </blockquote>
-<h3 id=creating-dictionaries>Creating A Dictionary</h3>
-<p>Creating a dictionary is easy. The syntax is similar to <a href=#sets>sets</a>, but instead of values, you have key-value pairs. Once you have a dictionary, you can look up values by their key.
+<h3 id=creating-dictionaries>Créer Un Dictionnaire</h3>
+<p>La création d'un dictionnaire est facile. La syntaxe est similaire à celle des <a href=#sets>ensembles</a>, mais au lieu de valeurs, vous avez des paires clé-valeur. Une fois le dictionnaire créé, vous pouvez accéder à ses valeurs grâce à ses clés.
 <pre class=screen>
 <a><samp class=p>>>> </samp><kbd class=pp>a_dict = {'server': 'db.diveintopython3.org', 'database': 'mysql'}</kbd>  <span class=u>&#x2460;</span></a>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
@@ -835,13 +835,13 @@ KeyError: 'pop from an empty set'</samp></pre>
   File "&lt;stdin>", line 1, in &lt;module>
 KeyError: 'db.diveintopython3.org'</samp></pre>
 <ol>
-<li>First, you create a new dictionary with two items and assign it to the variable <var>a_dict</var>. Each item is a key-value pair, and the whole set of items is enclosed in curly braces.
-<li><code>'server'</code> is a key, and its associated value, referenced by <code>a_dict['server']</code>, is <code>'db.diveintopython3.org'</code>.
-<li><code>'database'</code> is a key, and its associated value, referenced by <code>a_dict['database']</code>, is <code>'mysql'</code>.
-<li>You can get values by key, but you can&#8217;t get keys by value. So <code>a_dict['server']</code> is <code>'db.diveintopython3.org'</code>, but <code>a_dict['db.diveintopython3.org']</code> raises an exception, because <code>'db.diveintopython3.org'</code> is not a key.
+<li>Tout d'abord, vous créez un dictionnaire contenant deux éléments et vous l'assignez à la variable <var>a_dict</var>. Chaque élément est une paire clé-valeur, et l'ensemble des éléments est entouré d'accolades.
+<li><code>'server'</code> est une clé, et sa valeur associée, référencée par <code>a_dict['server']</code>, vaut <code>'db.diveintopython3.org'</code>.
+<li><code>'database'</code> est une clé, et sa valeur associée, référencée par <code>a_dict['database']</code>, vaut <code>'mysql'</code>.
+<li>Vous pouvez retrouver une valeur par l'intermédiaire de sa clé, mais vous ne pouvez retrouver une clé à parir de sa valeur. Ainsi, <code>a_dict['server']</code> vaut <code>'db.diveintopython3.org'</code>, mais <code>a_dict['db.diveintopython3.org']</code> lève une exception, car <code>'db.diveintopython3.org'</code> n'est pas une clé.
 </ol>
-<h3 id=modifying-dictionaries>Modifying A Dictionary</h3>
-<p>Dictionaries do not have any predefined size limit. You can add new key-value pairs to a dictionary at any time, or you can modify the value of an existing key. Continuing from the previous example:
+<h3 id=modifying-dictionaries>Modifier Un Dictionnaire</h3>
+<p>Les dictionnaires n'ont pas de limite de taille prédéfinie. Vous pouvez ajouter des paires clé-valeur à un dictionnaire à tout moment, ou vous pouvez modifier la valeur d'une clé déjà existante. En poursuivant l'exemple précédent&nbsp;:
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
 <samp class=pp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
@@ -858,18 +858,18 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
 <samp class=pp>{'User': 'mark', 'server': 'db.diveintopython3.org', 'user': 'dora', 'database': 'blog'}</samp></pre>
 <ol>
-<li>You can not have duplicate keys in a dictionary. Assigning a value to an existing key will wipe out the old value.
-<li>You can add new key-value pairs at any time. This syntax is identical to modifying existing values.
-<li>The new dictionary item (key <code>'user'</code>, value <code>'mark'</code>) appears to be in the middle. In fact, it was just a coincidence that the items appeared to be in order in the first example; it is just as much a coincidence that they appear to be out of order now.
-<li>Assigning a value to an existing dictionary key simply replaces the old value with the new one.
-<li>Will this change the value of the <code>user</code> key back to "mark"?  No!  Look at the key closely&nbsp;&mdash;&nbsp;that&#8217;s a capital <kbd>U</kbd> in <kbd>"User"</kbd>. Dictionary keys are case-sensitive, so this statement is creating a new key-value pair, not overwriting an existing one. It may look similar to you, but as far as Python is concerned, it&#8217;s completely different.
+<li>Vous ne pouvez avoir deux clés identiques dans un dictionnaire. L'assignation d'une valeur à une clé déjà existante efface la valeur précédente.
+<li>Vous pouvez ajouter de nouvelles paires clé-valeur à tout moment. La syntaxe est identique à celle utilisée pour modifier une valeur existante.
+<li>Le nouvel élément du dictionnaire (clé <code>'user'</code>, valeur <code>'mark'</code>) semble être placé au milieu. En fait, c'était une coincidence si les éléments semblaient apparaître dans l'ordre dans le premier exemple; c'est également une coincidence s'ils semble être dorénavant dans le désordre.
+<li>L'assignation d'une valeur à une clé de dictionnaire déjà existante ne fait que remplacer l'ancienne valeur par la nouvelle.
+<li>Cela va t'il réassigner la valeur de la clé <code>user</code> à "mark"?  Non&nbsp;!  Regardez la clé de plus près&nbsp;&mdash;&nbsp;c'est un <kbd>U</kbd> majuscule dans <kbd>"User"</kbd>. Les clés de dictionnaires sont sensibles à la casse, cette expression va donc créer une nouvelle paire clé-valeur, et non pas en remplacer une. Ces clés peuvent vous sembler similaires, mais pour Python il s'agit de deux clés totalement différentes.
 </ol>
-<h3 id=mixed-value-dictionaries>Mixed-Value Dictionaries</h3>
-<p>Dictionaries aren&#8217;t just for strings. Dictionary values can be any datatype, including integers, booleans, arbitrary objects, or even other dictionaries. And within a single dictionary, the values don&#8217;t all need to be the same type; you can mix and match as needed. Dictionary keys are more restricted, but they can be strings, integers, and a few other types. You can also mix and match key datatypes within a dictionary.
-<p>In fact, you&#8217;ve already seen a dictionary with non-string keys and values, in <a href=your-first-python-program.html#divingin>your first Python program</a>.
+<h3 id=mixed-value-dictionaries>Dictionnaires À Valeurs Mixtes</h3>
+<p>Les dictionnaires ne concernent pas que les chaînes de caractères. Les valeurs de dictionnaire peuvent être de n'importe quel type de données, y compris des entiers, des booléens, des objets quelconques, ou même d'autres dictionnaires. Et dans un dictionnaire donné, les valeurs n'ont pas à être toutes du même type; vous pouvez panacher selon vos besoins. Il y a plus de restrictions sur les clés de dictionnaires, mais elles peuvent être de type chaîne de caractères, entiers, et quelques autres types. Vous pouvez également panacher les types des clés dans un dictionnaire.
+<p>D'ailleurs, vous avez déjà rencontré un dictionnaire dont des clés ou des valeurs ne sont pas des chaînes de caractères, dans <a href=your-first-python-program.html#divingin>votre premier programme en Python</a>.
 <pre class='nd pp'><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</code></pre>
-<p>Let's tear that apart in the interactive shell.
+<p>Décomposons cela dans le terminal interactif.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],</kbd>
 <samp class=p>... </samp><kbd class=pp>            1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</kbd>
@@ -884,15 +884,15 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000][3]</kbd>  <span class=u>&#x2464;</span></a>
 <samp class=pp>'TB'</samp></pre>
 <ol>
-<li>Like <a href=#lists>lists</a> and <a href=#sets>sets</a>, the <code>len()</code> function gives you the number of keys in a dictionary.
-<li>And like lists and sets, you can use the <code>in</code> operator to test whether a specific key is defined in a dictionary.
-<li><code>1000</code> <em>is</em> a key in the <code>SUFFIXES</code> dictionary; its value is a list of eight items (eight strings, to be precise).
-<li>Similarly, <code>1024</code> is a key in the <code>SUFFIXES</code> dictionary; its value is also a list of eight items.
-<li>Since <code>SUFFIXES[1000]</code> is a list, you can address individual items in the list by their 0-based index.
+<li>Comme pour les <a href=#lists>listes</a> et les <a href=#sets>ensembles</a>, la fonction <code>len()</code> vous donne le nombre de clés dans un dictionnaire.
+<li>Et comme pour les listes et les ensembles, vous pouvez utiliser l'opérateur <code>in</code> pour vérifier si une clé donnée est définie dans un dictionnaire.
+<li><code>1000</code> <em>est</em> du dictionnaire <code>SUFFIXES</code>; sa valeur est une liste de huit éléments (huit chaînes de caractères pour être précis).
+<li>De la même manière, <code>1024</code> est une clé du dictionnaire <code>SUFFIXES</code>; sa valeur est également une liste de huit éléments.
+<li>Puisque <code>SUFFIXES[1000]</code> est une liste, vous pouvez retrouver les éléments individuels de la liste par leur index.
 </ol>
-<h3 id=dictionaries-in-a-boolean-context>Dictionaries In A Boolean Context</h3>
-<aside>Empty dictionaries are false; all other dictionaries are true.</aside>
-<p>You can also use a dictionary in <a href=#booleans>a boolean context</a>, such as an <code>if</code> statement.
+<h3 id=dictionaries-in-a-boolean-context>Les Dictionnaires Dans Un Contexte Booléen</h3>
+<aside>Les dictionnaires vides valent Faux, tous les autres dictionnaires valent Vrai.</aside>
+<p>Vous pouvez également utiliser un dictionnaire dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
 <pre class=screen>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
@@ -905,14 +905,14 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <a><samp class=p>>>> </samp><kbd class=pp>is_it_true({'a': 1})</kbd>       <span class=u>&#x2461;</span></a>
 <samp>yes, it's true</samp></pre>
 <ol>
-<li>In a boolean context, an empty dictionary is false.
-<li>Any dictionary with at least one key-value pair is true.
+<li>Dans un contexte booléen, un dictionnaire vide vaut Faux.
+<li>Tout dictionnaire contenant au moins une paire clé-valeur vaut Vrai.
 </ol>
 <p class=a>&#x2042;
 
 <h2 id=none><code>None</code></h2>
-<p><code><dfn>None</dfn></code> is a special constant in Python. It is a <dfn>null</dfn> value. <code>None</code> is not the same as <code>False</code>. <code>None</code> is not 0. <code>None</code> is not an empty string. Comparing <code>None</code> to anything other than <code>None</code> will always return <code>False</code>.
-<p><code>None</code> is the only null value. It has its own datatype (<code>NoneType</code>). You can assign <code>None</code> to any variable, but you can not create other <code>NoneType</code> objects. All variables whose value is <code>None</code> are equal to each other.
+<p><code><dfn>None</dfn></code> (aucun, aucune) est une constante particulière en Python. Elle représente une valeur <dfn>nulle</dfn>. <code>None</code> est différent de  <code>False</code>. <code>None</code> n'est pas 0. <code>None</code> n'est pas une chaîne de caractères vide. Si vous comparez <code>None</code> à quoi que ce soit qui n'est pas  <code>None</code>, le résultat sera toujours <code>False</code>.
+<p><code>None</code> est la seule valeur nulle. Elle a son propre type de données (<code>NoneType</code>). Vous pouvez assigner <code>None</code> à n'importe quelle variable, mais vous ne pouvez créer d'autres objets <code>NoneType</code>. Toutes les variables dont la valeur est <code>None</code> sont égales entre elles.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>type(None)</kbd>
 <samp class=pp>&lt;class 'NoneType'></samp>
@@ -931,8 +931,8 @@ KeyError: 'db.diveintopython3.org'</samp></pre>
 <samp class=p>>>> </samp><kbd class=pp>x == y</kbd>
 <samp class=pp>True</samp>
 </pre>
-<h3 id=none-in-a-boolean-context><code>None</code> In A Boolean Context</h3>
-<p>In <a href=#booleans>a boolean context</a>, <code>None</code> is false and <code>not None</code> is true.
+<h3 id=none-in-a-boolean-context><code>None</code> Dans Un Contexte Booléen</h3>
+<p>Dans <a href=#booleans>un contexte booléen</a>, <code>None</code> vaut Faux et  <code>not None</code> vaut Vrai.
 <pre class='nd screen'>
 <samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
 <samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
