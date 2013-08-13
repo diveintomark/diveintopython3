@@ -1,0 +1,965 @@
+---
+title: Les types prédéfinis
+status: Relecture
+permalink: native-datatypes.html
+---
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Types prédéfinis - Plongez dans Python 3</title>
+<!--[if IE]><script src=j/html5.js></script><![endif]-->
+<link rel=stylesheet href=dip3.css>
+<style>
+body{counter-reset:h1 2}
+</style>
+<link rel=stylesheet media='only screen and (max-device-width: 480px)' href=mobile.css>
+<link rel=stylesheet media=print href=print.css>
+<meta name=viewport content='initial-scale=1.0'>
+<form action=http://www.google.com/cse><div><input type=hidden name=cx value=014021643941856155761:l5eihuescdw><input type=hidden name=ie value=UTF-8>&nbsp;<input type=search name=q size=25 placeholder="powered by Google&trade;">&nbsp;<input type=submit name=root value=Search></div></form>
+<p>Vous êtes ici&nbsp;: <a href=index.html>Accueil</a> <span class=u>&#8227;</span> <a href=table-of-contents.html#native-datatypes>Plongez dans Python 3</a> <span class=u>&#8227;</span>
+<p id=level>Difficulty level: <span class=u title=beginner>&#x2666;&#x2666;&#x2662;&#x2662;&#x2662;</span>
+<h1>Types prédéfinis</h1>
+<blockquote class=q>
+<p><span class=u>&#x275D;</span> L'admiration est fondement de toute philosophie, l'inquisition le progrès, l'ignorance le bout. <span class=u>&#x275E;</span><br>&mdash; Michel de Montaigne
+</blockquote>
+<p id=toc>&nbsp;
+<h2 id=divingin>Plongez</h2>
+<p class=f>Types de données. Mettez de côté <a href=your-first-python-program.html>votre premier programme en Python</a> pendant une minute, et parlons des types de données. En Python, <a href=your-first-python-program.html#declaringfunctions>chaque valeur a un type de données</a>, mais vous n'avez pas besoin de déclarer le type de données des variables. Comment cela fonctionne t'il&nbsp;? En fonction de l'assignation initiale de chaque variable, Python détermine quel est son type de données et conserve cette information en interne.
+<p>Python dispose de nombreux types de données prédéfinis. Voici les plus importants&nbsp;:
+<ol>
+<li><b>Les booléens</b> peuvent prendre les valeurs <code>True</code> (Vrai) ou <code>False</code> (Faux).
+<li><b>Les nombres</b> peuvent être des entiers (<code>1</code> et <code>2</code>), des décimaux (<code>1.1</code> et <code>1.2</code>), des fractions (<code>1/2</code> et <code>2/3</code>), ou même <a href=http://en.wikipedia.org/wiki/Complex_number>des nombres complexes</a>.
+<li><b>Les chaînes de caractères</b> sont des séquences de caractères Unicode, un document  <abbr>HTML</abbr> par exemple.
+<li><b>Les octets</b> et <b>les tableaux d'octets</b>, un fichier graphique  <abbr>JPEG</abbr> par exemple.
+<li><b>Les listes</b> sont des séquences ordonnées de valeurs.
+<li><b>Les tuples</b> sont des séquences ordonnées et immuables de valeurs.
+<li><b>Les ensembles</b> sont des collections non ordonnées de valeurs.
+<li><b>Les dictionnaires</b> sont des collections non ordonnées de paires clé-valeur.
+</ol>
+<p>Évidemment, il existe d'autres types en plus de ceux là. <a href=your-first-python-program.html#everythingisanobject>Tout est objet</a> en Python, il existe donc des types tels que <i>module</i>, <i>function</i>, <i>class</i>, <i>method</i>, <i>file</i>, et même <i>compiled code</i>. Vous en avez déjà rencontré certains&nbsp;: <a href=your-first-python-program.html#runningscripts>les modules ont des noms</a>, <a href=your-first-python-program.html#docstrings>les fonctions ont des  <code>docstrings</code></a>, <i class=baa>&amp;</i>c. Vous en apprendrez plus au sujet des classes dans <a href=iterators.html>Classes <i class=baa>&amp;</i> Iterateurs</a>, et à propos des fichiers dans <a href=files.html>Fichiers</a>.<p>Les chaînes de caractères et les octets sont suffisament importants et compliqués pour bénéficier de leur propre chapitre. Intéressons nous d'abord aux autres.
+<p class=a>&#x2042;
+
+<h2 id=booleans>Les booléens</h2>
+<aside>Vous pouvez utiliser à peu près n'importe quelle expression dans un contexte booléen.</aside>
+<p>Les booléens peuvent prendre les valeurs Vrai ou Faux. Python définit deux constantes, intelligement nommées <code><dfn>True</dfn></code> et <code><dfn>False</dfn></code>, qui peuvent être utilisées pour assigner directement des valeurs <dfn>booléennes</dfn>. Des expressions peuvent également être évaluées commes valeurs booléennes. Dans certain cas  (comme les expressions <code>if</code>), Python s'attend à ce qu'une expression soit évaluée comme valeur booléenne. Ces cas sont appellés <i>contextes booléens</i>. Vous pouvez utiliser à peu près n'importe quelle expression dans un contexte booléen, et Python tentera de déterminer si elle vaut Vrai ou Faux. Les différents types de données obéissent à des règles différentes lorsqu'il s'agit de les évaluer dans un contexte booléen (cela sera plus clair lorsque vous aurez vu les exemples concrets dans la suite de ce chapitre).
+<p>Par exemple, prenez cet extrait de code issu de <a href=your-first-python-program.html#divingin><code>humansize.py</code></a>:
+<pre class='nd pp'><code>if size &lt; 0:
+    raise ValueError('number must be non-negative')</code></pre>
+<p><var>size</var> est un entier, 0 est un entier, et <code>&lt;</code> est un opérateur numérique. Le résultat de l'expressionn <code>size &lt; 0</code> est toujours un booléen. Vous pouvez faire le test vous même dans le terminal interactif&nbsp;:
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>size = 1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>size = 0</kbd>
+<samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>size = -1</kbd>
+<samp class=p>>>> </samp><kbd class=pp>size &lt; 0</kbd>
+<samp class=pp>True</samp></pre>
+<p>Pour des raisons héritées de Python 2, les booléens peuvent être considérés comme des nombres. <code>True</code> vaut <code>1</code>, <code>False</code> vaut 0.
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>True + True</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>True - False</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>True * False</kbd>
+<samp class=pp>0</samp>
+<samp class=p>>>> </samp><kbd class=pp>True / False</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+ZeroDivisionError: int division or modulo by zero</samp></pre>
+<p>Hé hé ! Ne faites jamais ça. Oubliez même que je l'ai mentionné.
+
+<p class=a>&#x2042;
+
+<h2 id=numbers>Les nombres</h2>
+<p>Les nombres sont incroyables. Il y en a tellement de différents. Python gère les nombres <dfn>entiers</dfn> et <dfn>décimaux</dfn>. Il n'y a pas de déclaration de type pour les distinguer, Python les reconnaît grâce à la présence ou l'absence de séparateur <dfn>décimal</dfn>. (Ndt&nbsp;: attention, le séparateur décimal en Python est le point (.), pas la virgule (,)).
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>type(1)</kbd>                 <span class=u>&#x2460;</span></a>
+<samp class=pp>&lt;class 'int'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>isinstance(1, int)</kbd>      <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>1 + 1</kbd>                   <span class=u>&#x2462;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>1 + 1.0</kbd>                 <span class=u>&#x2463;</span></a>
+<samp class=pp>2.0</samp>
+<samp class=p>>>> </samp><kbd class=pp>type(2.0)</kbd>
+<samp class=pp>&lt;class 'float'></samp></pre>
+<ol>
+<li>Vous pouvez utiliser la fonction <code>type()</code> pour vérifier le type de n'importe quelle valeur ou variable. Comme vous pouviez vous y attendre, <code>1</code> est un <code>int</code>.
+<li>De manière similaire, vous pouvez utiliser la fonction <code>isinstance()</code> pour déterminer si une valeur ou une variable est d'un type donné.
+<li>L'addition d'un <code>int</code> et d'un <code>int</code> produit un <code>int</code>.
+<li>L'addition d'un <code>int</code> et d'un <code>float</code> produit un <code>float</code>. Python convertit l'<code>int</code> en <code>float</code> et retourne un <code>float</code> comme résultat.
+</ol>
+<h3 id=number-coercion>Conversion d'Entiers en Décimaux et Vice-Versa</h3>
+<p>Comme vous venez de le voir, certains opérateurs (comme l'addition) convertissent des entiers en décimaux lorsque cela est nécessaire. Vous pouvez également effectuer vous même des conversions.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>float(2)</kbd>                <span class=u>&#x2460;</span></a>
+<samp class=pp>2.0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>int(2.0)</kbd>                <span class=u>&#x2461;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>int(2.5)</kbd>                <span class=u>&#x2462;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>int(-2.5)</kbd>               <span class=u>&#x2463;</span></a>
+<samp class=pp>-2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>1.12345678901234567890</kbd>  <span class=u>&#x2464;</span></a>
+<samp class=pp>1.1234567890123457</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(1000000000000000)</kbd>  <span class=u>&#x2465;</span></a>
+<samp class=pp>&lt;class 'int'></samp></pre>
+<ol>
+<li>Vous pouvez convertir explicitement un <code>int</code> en <code>float</code> en appellant la fonction <code>float()</code>.
+<li>Pas de surprise, vous pouvez également convertir un <code>float</code> en <code>int</code> en appellant <code>int()</code>.
+<li>La fonction <code>int()</code> effectue une troncature, pas un arrondi.
+<li>La fonction <code>int()</code> tronque les nombres négatifs vers 0. Il s'agit d'une véritable troncature, elle ne retourne pas la partie entière.
+<li>Les nombres décimaux ont une précision de 15 décimales.
+<li>Les nombres entiers peuvent être arbitrairement grands.
+</ol>
+<blockquote class='note compare python2'>
+<p><span class=u>&#x261E;</span>Python 2 avait des types distincts pour les <code>int</code> les <code>long</code>. Le type de données <code>int</code> avait pour limite <code>sys.maxint</code>, qui dépendait de la plateforme mais valait en général <code>2<sup>32</sup>-1</code>. Python 3 n'a qu'un type pour les entiers, qui se comporte en général comme l'ancien type <code>long</code> de Python 2. Voir <a href=http://www.python.org/dev/peps/pep-0237><abbr>PEP</abbr> 237</a> pour plus de details.
+</blockquote>
+<h3 id=common-numerical-operations>Opérations Numériques Usuelles</h3>
+<p>Vous pouvez faire toutes sortes de choses avec les nombres.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>11 / 2</kbd>      <span class=u>&#x2460;</span></a>
+<samp class=pp>5.5</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>11 // 2</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>5</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>&minus;11 // 2</kbd>    <span class=u>&#x2462;</span></a>
+<samp class=pp>&minus;6</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>11.0 // 2</kbd>   <span class=u>&#x2463;</span></a>
+<samp class=pp>5.0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>11 ** 2</kbd>     <span class=u>&#x2464;</span></a>
+<samp class=pp>121</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>11 % 2</kbd>      <span class=u>&#x2465;</span></a>
+<samp class=pp>1</samp>
+</pre>
+<ol>
+<li>L'opérateur <code>/</code> effectue une division décimale. Il retourne un nombre décimal même si le numérateur et le dénominateur sont deux <code>int</code>s.
+<li>L'opérateur <code>//</code> effectue une sorte de division entière biscornue. Lorsque le résulat est positif, vous pouvez vous le représenter comme une troncature (et pas un arrondi) à 0 décimales, mais soyez prudent.
+<li>Lorsque vous effectuez une division entière dont le résultat est négatif, l'opérateur <code>//</code> arrondit à l'entier négatif inférieur. Vous pourriez être surpris si vous attendiez une troncature à <code>&minus;5</code>.
+<li>L'opérateur <code>//</code> ne retourne pas toujours un entier. Si le numérateur ou le dénominateur sont des <code>float</code>s, l'opérateur retournera bien un arrondi mais exprimé dans le type <code>float</code>.
+<li>L'opérateur <code>**</code> signifie &#8220;porté à la puissance.&#8221;  <code>11<sup>2</sup></code> vaut <code>121</code>.
+<li>L'opérateur <code>%</code> retourne le reste de la division entière. <code>11</code> divisé par <code>2</code> vaut <code>5</code> avec un reste qui vaut <code>1</code>, le résultat dans ce cas vaut donc <code>1</code>.
+</ol>
+<blockquote class='note compare python2'>
+<p><span class=u>&#x261E;</span>Dans Python 2, l'opérateur <code>/</code> indiquait habituellement la division entière, mais il était possible de lui imposer le comportement de la division décimale en ajoutant une directive particulière dans votre code. Dans Python 3, l'opérateur <code>/</code> représente toujours la division décimale. Voir <a href=http://www.python.org/dev/peps/pep-0238/><abbr>PEP</abbr> 238</a> pour plus de details.
+</blockquote>
+<h3 id=fractions>Les Fractions</h3>
+<p>Python n'est pas restreint aux entiers et aux nombres décimaux. Il est aussi capable d'effectuer les calculs mathématiques sympas que vous avez appris au collège et immédiatement oubliés.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>import fractions</kbd>              <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>x = fractions.Fraction(1, 3)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>x</kbd>
+<samp class=pp>Fraction(1, 3)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>x * 2</kbd>                         <span class=u>&#x2462;</span></a>
+<samp class=pp>Fraction(2, 3)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fractions.Fraction(6, 4)</kbd>      <span class=u>&#x2463;</span></a>
+<samp class=pp>Fraction(3, 2)</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>fractions.Fraction(0, 0)</kbd>      <span class=u>&#x2464;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "fractions.py", line 96, in __new__
+    raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
+ZeroDivisionError: Fraction(0, 0)</samp></pre>
+<ol>
+<li>Pour utiliser des fractions, importez le module <code>fractions</code>.
+<li>Pour définir une fraction, créez un objet <code>Fraction</code> et passez lui le numérateur et le dénominateur en arguments.
+<li>Vous pouvez effectuer toutes les opérations mathématiques usuelles sur des fractions. Les opérations retournent un nouvel objet <code>Fraction</code>. <code>2 * (1/3) = (2/3)</code>
+<li>Un objet <code>Fraction</code> réalise automatiquement la simplification des fractions. <code>(6/4) = (3/2)</code>
+<li>Python est assez censé pour refuser la création d'une fraction dont le dénominateur vaut zéro.
+</ol>
+<h3 id=trig>Trigonométrie</h3>
+<p>Vous pouvez également faire de la trigonométrie simple en Python.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>import math</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>math.pi</kbd>                <span class=u>&#x2460;</span></a>
+<samp class=pp>3.1415926535897931</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>math.sin(math.pi / 2)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>1.0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>math.tan(math.pi / 4)</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>0.99999999999999989</samp></pre>
+<ol>
+<li>Le module <code>math</code> définit une constante pour &pi;, le rapport de la circonférence d'un cercle sur son diamètre.
+<li>Le module <code>math</code> contient les fonctions trigonométriques de base, notamment <code>sin()</code>, <code>cos()</code>, <code>tan()</code>, et des variantes telles que <code>asin()</code>.
+<li>Notez bien, cependant, que Python n'a pas une précision infinie. <code>tan(&pi; / 4)</code> devrait retourner <code>1.0</code>, pas <code>0.99999999999999989</code>.
+</ol>
+<h3 id=numbers-in-a-boolean-context>Les Nombres Dans Un Contexte Booléen</h3>
+<aside>Les valeurs nulles valent Faux et les valeurs non nulles valent Vrai.</aside>
+<p>Vous pouvez utiliser les nombres <a href=#booleans>dans un contexte booléen</a>, tel qu'une expression <code>if</code>. Les valeurs nulles valent Faux et les valeurs non nulles valent Vrai.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>             <span class=u>&#x2460;</span></a>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(1)</kbd>                         <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(-1)</kbd>
+<samp>yes, it's true</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(0)</kbd>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(0.1)</kbd>                       <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(0.0)</kbd>
+<samp>no, it's false</samp>
+<samp class=p>>>> </samp><kbd class=pp>import fractions</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(fractions.Fraction(1, 2))</kbd>  <span class=u>&#x2463;</span></a>
+<samp>yes, it's true</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(fractions.Fraction(0, 1))</kbd>
+<samp>no, it's false</samp></pre>
+<ol>
+<li>Saviez vous que vous pouvez définir vos prores fonctions dans le terminal interactif Python&nbsp;? Pressez la touche <kbd>ENTER</kbd> après chaque ligne, et <kbd>ENTER</kbd> après une ligne vide pour terminer.
+<li>Dans un contexte booléen, les entiers non nuls valent Vrai, 0 vaut Faux.
+<li>Les nombres décimaux non nuls valent Vrai, <code>0.0</code> vaut Faux. Soyez prudents avec celui là&nbsp;! S'il y a la moindre erreur d'arrondi (ce qui n'est pas impossible comme vous l'avez vu dans la section précédente) alors Python évaluera la valeur booléenne de <code>0.0000000000001</code> au lieu de  <code>0</code> et retournera <code>True</code>.
+<li>Les fractions aussi peuvent être évaluées dans un contexte booléen. <code>Fraction(0, n)</code> vaut Faux quelle que soit la valeur de <var>n</var>. Toutes les autres fractions valent Vrai.
+</ol>
+<p class=a>&#x2042;
+
+<h2 id=lists>Les Listes</h2>
+<p>Les listes sont un type de données essentiel en Python. Quand je dis &#8220;<dfn>liste</dfn>,&#8221; vous imaginez peut-être &#8220;un tableau dont je dois déclarer la taille à l'avance et qui ne peut contenir que des éléments de même type, <i class=baa>&amp;</i>c.&#8221; Ne croyez pas cela. Les listes sont bien plus sympas que ça.
+<blockquote class='note compare perl5'>
+<p><span class=u>&#x261E;</span>Une liste en Python est similaire à un tableau en Perl 5. En Perl 5, les noms des variables auxquelles on assigne un tableau commencent toujours par le caractère <code>@</code>. En Python, on peut utiliser le nom que l'on souhaite et Python conserve le type de données en interne.
+</blockquote>
+<blockquote class='note compare java'>
+<p><span class=u>&#x261E;</span>Une liste en Python est bien plus qu'un tableau en Java (bien que vous puissiez l'utiliser de la même manière si c'est votre choix). Une meilleure analogie serait la classe <code>ArrayList</code>, qui peut contenir n'importe quelle sorte d'objets et grandir dynamiquement au fur et à mesure qu'on lui ajoute des objets.
+</blockquote>
+<h3 id=creatinglists>Créer Une Liste</h3>
+<p>La création d'une liste est facile&nbsp;: utilisez des crochets pour encadrer une liste de valeurs séparées par des virgules.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', 'z', 'example']</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[0]</kbd>                                        <span class=u>&#x2461;</span></a>
+<samp class=pp>'a'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[4]</kbd>                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>'example'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[-1]</kbd>                                       <span class=u>&#x2463;</span></a>
+<samp class=pp>'example'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[-3]</kbd>                                       <span class=u>&#x2464;</span></a>
+<samp class=pp>'mpilgrim'</samp></pre>
+<ol>
+<li>Tout d'abord, vous définissez une liste de cinq éléments. Notez bien qu'ils conservent leur ordre original. Ce n'est pas un hasard. Une liste est un ensemble ordonné d'éléments.
+<li>Une liste peut être utilisée comme un tableau dont l'index commence à zéro. Le premier élément d'une liste non vide est toujours <code>a_list[0]</code>.
+<li>Le dernier élément de cette liste contenant cinq éléments est <code>a_list[4]</code>, car l'index des listes commence toujours à zéro.
+<li>Un index négatif permet d'accéder aux éléments de la liste en comptant depuis la fin. Le dernier élément d'une liste non vide est toujours <code>a_list[-1]</code>.
+<li>Si l'index négatif vous perturbe, vous pouvez le voir de cette manière&nbsp;: <code>a_list[-<var>n</var>] == a_list[len(a_list) - <var>n</var>]</code>. Ainsi, pour cette liste, <code>a_list[-3] == a_list[5 - 3] == a_list[2]</code>.
+</ol>
+<h3 id=slicinglists>Découper Une Liste</h3>
+<aside>a_list[0] est le premier élément de a_list.</aside>
+<p>Une fois une liste définie, vous pouvez en obtenir n'importe quelle partie sous forme d'une nouvelle liste. On appelle cela <i>découper</i> la liste.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[1:3]</kbd>            <span class=u>&#x2460;</span></a>
+<samp class=pp>['b', 'mpilgrim']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[1:-1]</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=pp>['b', 'mpilgrim', 'z']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[0:3]</kbd>            <span class=u>&#x2462;</span></a>
+<samp class=pp>['a', 'b', 'mpilgrim']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[:3]</kbd>             <span class=u>&#x2463;</span></a>
+<samp class=pp>['a', 'b', 'mpilgrim']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[3:]</kbd>             <span class=u>&#x2464;</span></a>
+<samp class=pp>['z', 'example']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[:]</kbd>              <span class=u>&#x2465;</span></a>
+<samp class=pp>['a', 'b', 'mpilgrim', 'z', 'example']</samp></pre>
+<ol>
+<li>Vous pouvez obtenir une partie d'une liste, appellée une &#8220;portion&#8221;, en indiquant deux indices. La valeur de retour est une nouvelle liste contenant les éléments de la liste, ordonnés, depuis le premier index de la portion (dans notre cas <code>a_list[1]</code>), jusqu'au deuxième index de la portion (non inclus) (dans notre cas <code>a_list[3]</code>).
+<li>Le découpage fonctionne si l'un ou les deux indices de la portion sont négatifs. Si cela vous aide, vous pouvez vous représenter les choses ainsi&nbsp;: lorsqu'on lit la liste de gauche à droite, le premier index de portion représente le premier élément que vous voulez obtenir, et le deuxième index de portion représente le premier élément que vous ne souhaitez pas obtenir. La valeur de retour est ce qu'il y a entre les deux.
+<li>Les index de listes commencent à 0, ainsi <code>a_list[0:3]</code> retourne les trois premiers éléments de la liste, depuis <code>a_list[0]</code>, jusqu'à <code>a_list[3]</code> non inclus.
+<li>Si l'index gauche d'une portion vaut 0, vous pouvez l'omettre, et la valeur 0 est implicite. Ainsi, <code>a_list[:3]</code> représente la même portion que <code>a_list[0:3]</code>, car le 0 initial est implicite.
+<li>De la même manière, si l'index droit d'une portion vaut la longueur de la liste, vous pouvez également l'omettre. Ainsi, <code>a_list[3:]</code> représente la même portion que <code>a_list[3:5]</code>, car cette liste contient cinq éléments.  Il y a là une agréable symétrie. Pour cette liste de cinq éléments, <code>a_list[:3]</code> retourne les trois premiers éléments, et <code>a_list[3:]</code> retourne les deux derniers éléments. En fait, <code>a_list[:<var>n</var>]</code> retournera toujours les <var>n</var> premiers éléments, et <code>a_list[<var>n</var>:]</code> retournera les autres, quelle que soit la longueur de la liste.
+<li>Si les deux index de portion sont omis, tous les éléments de la liste sont inclus. Mais il ne s'agit plus de la variable <var>a_list</var> originale. Il s'agit d'une nouvelle liste qui contient les mêmes éléments. <code>a_list[:]</code> est un raccourci pour effectuer une copie d'une liste.
+</ol>
+<h3 id=extendinglists>Ajouter Des Éléments À Une Liste</h3>
+<p>Il existe quatre manières d'ajouter des éléments à une liste.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list = a_list + [2.0, 3]</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=pp>['a', 2.0, 3]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.append(True)</kbd>           <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 2.0, 3, True]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['four', '&Omega;'])</kbd>  <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 2.0, 3, True, 'four', '&Omega;']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.insert(0, '&Omega;')</kbd>         <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['&Omega;', 'a', 2.0, 3, True, 'four', '&Omega;']</samp></pre>
+<ol>
+<li>L'opérateur <code>+</code> concatène deux listes pour en créer une nouvelle. Une liste peut contenir n'importe quel nombre d'éléments; il n'y a pas de limite de taille (à part la mémoire disponible). Néanmoins, si l'occupation mémoire vous préoccupe, vous devez être averti que la concaténation de listes crée une nouvelle liste en mémoire. Dans cet exemple, cette nouvelle liste est immédiatement assignée à la variable <var>a_list</var> qui existe déjà. Cette ligne de code est donc un processus à deux étapes&nbsp;&mdash;&nbsp;concaténation puis assignation&nbsp;&mdash;&nbsp;qui peut (temporairement) consommer beaucoup de mémoire si vous manipulez des listes de grande taille.
+<li>Une liste peut contenir des éléments de n'importe quel type, et les éléments d'une liste donnée n'ont pas à être tous du même type. Ici, nous avons une liste qui contient une chaîne de caractères, un nombre deécimal et un entier.
+<li>La méthode <code>append()</code> ajoute un unique élément à la fin d'une liste. (Nous avons maintenant <em>quatre</em> types de données différents dans la liste&nbsp;!)
+<li>Les listes sont implémentées sous forme de classes.  La &#8220;création&#8221; d'une liste est en réalité l'instantiation d'une classe.  À ce titre, une liste possède des méthodes qu'on peut lui appliquer. La méthode <code>extend()</code> prend un argument, une liste, et ajoute chaque élément de l'argument à la liste originale.
+<li>La méthode <code>insert()</code> insère un unique élément dans une liste. Le premier argument est l'index du premier élément de la liste qui sera décalé. Les éléments d'une liste n'ont pas à être uniques; par exemple, il y a désormais deux éléments différents qui valent <code>'&Omega;'</code>&nbsp;: le premier élément, <code>a_list[0]</code>, et le dernier élément, <code>a_list[6]</code>.
+</ol>
+
+<blockquote class='note compare perl'>
+<p><span class=u>&#x261E;</span><code><var>a_list</var>.insert(0, <var>value</var>)</code> est similaire à la fonction <code>unshift()</code> en Perl. Cela ajoute un élément au début de la liste, et tous les autres éléments sont décalés pour faire de la place.
+</blockquote>
+
+<p>Regardons de plus près la différence entre la méthode <code>append()</code> et la méthode <code>extend()</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'c']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.extend(['d', 'e', 'f'])</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'c', 'd', 'e', 'f']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_list)</kbd>                     <span class=u>&#x2461;</span></a>
+<samp class=pp>6</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list[-1]</kbd>
+<samp class=pp>'f'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.append(['g', 'h', 'i'])</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'c', 'd', 'e', 'f', ['g', 'h', 'i']]</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_list)</kbd>                     <span class=u>&#x2463;</span></a>
+<samp class=pp>7</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list[-1]</kbd>
+<samp class=pp>['g', 'h', 'i']</samp></pre>
+<ol>
+<li>La méthode <code>extend()</code> prend un unique argument, qui est toujours une liste, et ajoute chaque élément de cette liste à <var>a_list</var>.
+<li>Si vous prenez une liste contenant trois éléments et que vous l'étendez avec une liste contenant trois éléments, vous obtenez une liste contenant six éléments.
+<li>En comparaison, la méthode <code>append()</code> prend un unique argument, qui peut être de n'importe quel type de données. Ici, vous appellez la méthode <code>append()</code> avec une liste de trois éléments comme argument.
+<li>Si vous prenez une liste de six éléments et lui ajoutez une liste, vous obtenez ...  une liste contenant sept éléments. Pourquoi sept&nbsp;? Parce que le dernier élément (que vous venez d'ajouter) <em>est lui même une liste</em>. Les listes peuvent contenir n'importe quel type de données, y compris d'autres listes. C'est peut-être ce que vous voulez, ou peut-être pas. Mais c'est ce que vous avez demandé, et c'est ce que vous obtenez.
+</ol>
+<h3 id=searchinglists>Rechercher Des Valeurs Dans Une Liste</h3>
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.count('new')</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>'new' in a_list</kbd>           <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>'c' in a_list</kbd>
+<samp class=pp>False</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('mpilgrim')</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('new')</kbd>       <span class=u>&#x2463;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.index('c')</kbd>         <span class=u>&#x2464;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+ValueError: list.index(x): x not in list</samp></pre>
+<ol>
+<li>Comme vous pouvez vous y attendre, la méthode <code>count()</code> retourne le nombre d'occurence d'une valeur donnée dans une liste.
+<li>Si vous souhaitez juste savoir si une valeur est présente ou non dans une liste, l'opérateur <code>in</code> est légèrement plus rapide que la méthode <code>count()</code>. L'opérateur <code>in</code> retourne toujours <code>True</code> ou <code>False</code>; il ne vous dira pas combien de fois la valeur apparaît dans la liste.
+<li>Ni l'opérateur <code>in</code> ni la méthode <code>count()</code> ne vous diront <em>où</em> une valeur apparaît dans la liste. Si vous devez savoir où une valeur apparaît dans une liste, appellez la méthode <code>index()</code>. Par défaut, la recherche sera effectuée sur la liste entière, mais vous pouvez utiliser un second argument optionnel pour préciser à partir de quel index (commencant à 0) commencer la recherche, et même un troisième argument optionnel pour préciser à quel index arrêter la recherche.
+<li>La méthode <code>index()</code> trouve la <em>première</em> occurrence d'une valeur dans la liste. Dans notre cas, <code>'new'</code> apparaît deux fois dans la liste, dans <code>a_list[2]</code> et <code>a_list[4]</code>, mais la méthode <code>index()</code> ne retourne que l'index de la première occurence.
+<li>Comme vous pouvez ne <em>pas</em> vous y attendre, si la valeur n'est pas trouvée dans la liste, la métode <code>index()</code> lèvera une exception.
+</ol>
+
+<p>Hein, quoi&nbsp;? C'est bien ça&nbsp;: la méthode <code>index()</code> lève une exception si elle ne trouve pas la valeur dans la liste. Cela est notablement différent de la plupart des langages, qui retournent un index non valide (comme <code>-1</code>). Bien que cela puisse paraître embêtant au premier abord, je pense que vous finirez par apprécier cette particularité. Cela permet à votre programme de planter à la source du problème plutôt que d'avoir des problèmes étranges et muets plus loin. Souvenez-vous, <a href=#creatinglists><code>-1</code> est un index valide dans une liste</a>. Si la méthode <code>index()</code> retournait <code>-1</code>, cela pourrait conduire à des sessions de débogage pas si drôles&nbsp;!
+
+<h3 id=removingfromlists>Supprimer Des Éléments D'une Liste</h3>
+
+<aside>Il n'y a jamais de trous dans une liste.</aside>
+
+<p>Les listes peuvent grandir et rétrécir automatiquement. Vous avez vu la partie aggrandissement. Il y a également plusieurs manières différentes de supprimer des éléments d'une liste.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim', 'new']</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>
+<samp class=pp>'b'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>del a_list[1]</kbd>         <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'new', 'mpilgrim', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list[1]</kbd>             <span class=u>&#x2461;</span></a>
+<samp class=pp>'new'</samp></pre>
+<ol>
+<li>Vous pouvez utiliser l'expression <code><dfn>del</dfn></code> pour supprimer un élément précis d'une liste.
+<li>L'accès à l'index <code>1</code> après avoir supprimé l'index <code>1</code> ne produit <em>pas</em> d'erreur. Tous les éléments situés après l'élément supprimé verront leur index décalé pour &#8220;remplir le trou&#8221; créé lors de la suppression de l'élément.
+</ol>
+
+<p>Vous ne connaissez pas l'index de position d'un élément&nbsp;? Pas de problème&nbsp;: vous pouvez aussi supprimer des éléments par leur valeur.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'mpilgrim', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'mpilgrim']</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.remove('new')</kbd>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+ValueError: list.remove(x): x not in list</samp></pre>
+<ol>
+<li>Vous pouvez aussi supprimer un élément d'une liste avec la méthode <code>remove()</code> . La méthode <code>remove()</code> prend une <em>valeur</em> en argument et supprime la première occurence de cette valeur de la liste. Là encore, tous les éléments situés après l'élément supprimé verront leurs index décrémentés pour &#8220;remplir le trou.&#8221; Il n'y a jamais de trous dans une liste.
+<li>Vous pouvez appeler la méthode <code>remove()</code> autant de fois que vous voulez, mais elle lèvera une exception si vous essayez de supprimer une valeur qui n'est pas dans la liste.
+</ol>
+
+<h3 id=popgoestheweasel>Supprimer Des Éléments D'une Liste&nbsp;: Tour Gratuit</h3>
+
+<p>Une autre méthode de liste intéressante est la méthode <code>pop()</code>. La méthode <code>pop()</code> est une autre manière de <a href=#removingfromlists>supprimer des éléments d'une liste</a>, mais avec un truc.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'new', 'mpilgrim']</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>   <span class=u>&#x2460;</span></a>
+<samp class=pp>'mpilgrim'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'b', 'new']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop(1)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>'b'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list</kbd>
+<samp class=pp>['a', 'new']</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>
+<samp class=pp>'new'</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>
+<samp class=pp>'a'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list.pop()</kbd>   <span class=u>&#x2462;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+IndexError: pop from empty list</samp></pre>
+<ol>
+<li>Lorsqu'elle est appellée sans argument, la méthode de liste <code>pop()</code> supprime le dernier élément de la liste <em>et retourne la valeur qu'elle a supprimée</em>.
+<li>Vous pouvez supprimer un élément quelconque d'une liste avec <code>pop()</code>. Il suffit de passer en argument un index de position à la méthode <code>pop()</code>. Cela supprimera l'élément en question, décalera tous les éléments qui le suivent pour &#8220;remplir le trou,&#8221; et retournera la valeur qui a été supprimée.
+<li>L'appel de <code>pop()</code> sur une liste vide lève une exception.
+</ol>
+
+<blockquote class='note compare perl'>
+<p><span class=u>&#x261E;</span>L'appel de la méthode de liste <code>pop()</code> sans argument est similaire à la fonction <code>pop()</code> en Perl. Cela supprime le dernier élément de la liste et retourne la valeur de l'élément supprimé. Perl dispose d'une autre fonction, <code>shift()</code>, qui supprime le premier élément et retourne sa valeur; en Python, c'est équivalent à appeller <code><var>a_list</var>.pop(0)</code>.
+</blockquote>
+
+<h3 id=lists-in-a-boolean-context>Les Listes Dans Un Contexte Booléen</h3>
+<aside>Les listes vides valent Faux. Toutes les autres listes valent Vrai.</aside>
+<p>Vous pouvez également utiliser les listes dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([])</kbd>             <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(['a'])</kbd>          <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true([False])</kbd>        <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp></pre>
+<ol>
+<li>Dans un contexte booléen, une liste vide vaut Faux.
+<li>Une liste contenant au moins un élément vaut Vrai.
+<li>Une liste contenant au moins un élément vaut Vrai. La valeur de l'élément n'est pas significative.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=tuples>Les Tuples</h2>
+
+<p>Un <dfn>tuple</dfn> est une liste immuable.  Un tuple ne peut plus être modifié d'aucune manière une fois qu'il est créé.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple = ("a", "b", "mpilgrim", "z", "example")</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_tuple</kbd>
+<samp class=pp>('a', 'b', 'mpilgrim', 'z', 'example')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[0]</kbd>                                        <span class=u>&#x2461;</span></a>
+<samp class=pp>'a'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[-1]</kbd>                                       <span class=u>&#x2462;</span></a>
+<samp class=pp>'example'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple[1:3]</kbd>                                      <span class=u>&#x2463;</span></a>
+<samp class=pp>('b', 'mpilgrim')</samp></pre>
+<ol>
+<li>Un tuple est défini de la même manière qu'une liste à la différence près que l'ensembles des éléments est entouré de parenthèses au lieu de crochets.
+<li>Les éléments d'un tuple possèdent un ordre bien défini, comme ceux d'une liste. Les indices d'un tuple commencent à zéro, comme ceux d'une liste, le premier élément d'un tuple non vide est donc toujours <code>a_tuple[0]</code>.
+<li>Les indices négatifs permettent de compter depuis la fin du tuple, comme pour une liste.
+<li>Le découpage fonctionne aussi, comme pour une liste. Lorsque vous découpez une liste, vous obtenez une nouvelle liste. Lorsque vous découpez un tuple, vous obtenez un nouveau tuple.
+</ol>
+
+<p>La différence fondamentale entre les tuples et les listes est que les tuples ne peuvent être modifiés. En termes techniques, les tuples sont <dfn>immuables</dfn>. En pratique, ils ne disposent pas de méthodes permettant des les modifier. Les listes disposent de méthodes comme <code>append()</code>, <code>extend()</code>, <code>insert()</code>, <code>remove()</code>, and <code>pop()</code>. Les tuples n'ont aucune de ces méthodes. Vous pouvez découper un tuple (puisque cela crée un nouveau tuple), et vous pouvez vérifier si un tuple contient une valeur donnée (puisque cela ne modifie pas le tuple), et &hellip; c'est à peu près tout.
+
+<pre class=screen>
+# continued from the previous example
+<samp class=p>>>> </samp><kbd class=pp>a_tuple</kbd>
+<samp class=pp>('a', 'b', 'mpilgrim', 'z', 'example')</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.append("new")</kbd>               <span class=u>&#x2460;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+AttributeError: 'tuple' object has no attribute 'append'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.remove("z")</kbd>                 <span class=u>&#x2461;</span></a>
+<samp class=traceback>Traceback (innermost last):
+  File "&lt;interactive input>", line 1, in ?
+AttributeError: 'tuple' object has no attribute 'remove'</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_tuple.index("example")</kbd>            <span class=u>&#x2462;</span></a>
+<samp class=pp>4</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>"z" in a_tuple</kbd>                      <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp></pre>
+<ol>
+<li>Vous ne pouvez ajouter d'éléments à un tuple. Les tuples n'ont pas de méthodes <code>append()</code> ou <code>extend()</code>.
+<li>Vous ne pouvez supprimer d'éléments d'un tuple. Les tuples n'ont pas de méthodes  <code>remove()</code> ou <code>pop()</code>.
+<li>Vous <em>pouvez</em> trouver des éléments dans un tuple, puisque cela ne modifie pas le tuple.
+<li>Vous pouvez aussi utiliser l'opérateur <code>in</code> pour vérifier si un élément est contenu dans un tuple.
+</ol>
+
+<p>Mais alors, à quoi servent les tuples&nbsp;?</p> 
+
+<ul> 
+<li>Les tuples sont plus rapides que les listes. Si vous devez définir un ensemble de valeurs constantes que vous ne ferez que lire, utilisez un tuple pltôt qu'une liste.
+<li>Votre code est plus robuste si vous &#8220;protégez en écriture&#8221; les données qui n'ont pas besoin d'être modifiées. En utilisant un tuple plutôt qu'une liste, vous bénéficiez d'une <code>assertion</code> implicite qui indique que ces données sont constantes et que vous devez y réfléchir à deux fois (et utiliser une fonction spécifique) pour outrepasser cette contrainte.
+<li>Certains tuples peuvent être utilisés comme clés de dictionnaires (en particulier les tuples qui contiennent des valeurs <i>immuables</i> comme des chaînes de caractères, des nombres et d'autres tuples). Les listes ne peuvent en aucun cas être utilisées comme clés de dictionnaires, car les listes ne sont pas immuables.
+</ul>
+
+<blockquote class=note>
+<p><span class=u>&#x261E;</span>Les tuples peuvent être convertis en listes, et réciproquement. La fonction native <code>tuple()</code> prend une liste en argument et retourne un tuple contenant les mêmes éléments, et la fonction <code>list()</code> prend un tuple en argument et retourne une liste. En pratique, <code>tuple()</code> fige une liste, et <code>list()</code> dégêle un tuple.
+</blockquote>
+
+<h3 id=tuples-in-a-boolean-context>Les Tuples Dans Un Contexte Booléen</h3>
+
+<p>Vous pouvez utiliser les tuples dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(())</kbd>             <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(('a', 'b'))</kbd>     <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true((False,))</kbd>       <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type((False))</kbd>              <span class=u>&#x2463;</span></a>
+<samp class=pp>&lt;class 'bool'></samp>
+<samp class=p>>>> </samp><kbd class=pp>type((False,))</kbd>
+<samp class=pp>&lt;class 'tuple'></samp></pre>
+<ol>
+<li>Dans un contexte booléen, un tuple vide vaut Faux.
+<li>Un tuple qui contient au moins un élément vaut Vrai.
+<li>Un tuple qui contient au moins un élément vaut Vrai. La valeur des éléments n'est pas significative. Mais qu'est-ce que cette virgule vient faire ici&nbsp;?
+<li>Pour créer un tuple contenant un seul élément, vous avez besoin d'une virgule après l'élément. Sans la virgule, Python considère que vous avez juste rajouté des parenthèses supplémentaires, ce qui est innoffensif mais ne crée pas un tuple.
+</ol>
+
+<h3 id=multivar>Assigner Plusieurs Valeurs D'un Seul Coup</h3>
+
+<p>Voici un raccourci de programmation bien sympa&nbsp;: en Python, vous pouvez utiliser un tuple pour assigner plusieurs valeurs d'un seul coup.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>v = ('a', 2, True)</kbd>
+<a><samp class=p>>>> </samp><kbd>(x, y, z) = v</kbd>       <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>x</kbd>
+<samp class=pp>'a'</samp>
+<samp class=p>>>> </samp><kbd class=pp>y</kbd>
+<samp class=pp>2</samp>
+<samp class=p>>>> </samp><kbd class=pp>z</kbd>
+<samp class=pp>True</samp></pre>
+<ol>
+<li><var>v</var> est un tuple contenant trois éléments, et <code>(x, y, z)</code> est un tuple contenant trois variables. L'assignation de l'un à l'autre provoque l'assignation de chaque valeur de <var>v</var> à chaque variable, en respectant l'ordre.
+</ol>
+
+<p>Cela permet toutes sortes d'usages. Supposons que vous souhaitez assigner des noms à une plage de valeurs. Vous pouvez utiliser la fonction native <code>range()</code> avec assignation multi-variables pour assigner rapidement des valeurs consécutives.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY) = range(7)</kbd>  <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>MONDAY</kbd>                                                                       <span class=u>&#x2461;</span></a>
+<samp class=pp>0</samp>
+<samp class=p>>>> </samp><kbd class=pp>TUESDAY</kbd>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>SUNDAY</kbd>
+<samp class=pp>6</samp></pre>
+<ol>
+<li>La fonction native <code>range()</code> produit une séquence d'entiers. (Au sens strict, la fonction <code>range()</code> retourne un <a href=iterators.html>itérateur</a>, et non une liste ou un tuple, mais vous apprendrez la différence plus tard.) <var>MONDAY</var>, <var>TUESDAY</var>, <var>WEDNESDAY</var>, <var>THURSDAY</var>, <var>FRIDAY</var>, <var>SATURDAY</var>, et <var>SUNDAY</var> sont les variables que vous définissez. (Cet exemple provient du module <code>calendar</code>, un amusant petit module qui affiche des calendriers, comme le programme <abbr>UNIX</abbr> <code>cal</code>. Le module <code>calendar</code> définit des constantes entières pour les jours de la semaine.)
+<li>Dorénavant, chaque variable a une valeur assignée&nbsp;: <var>MONDAY</var> vaut 0, <var>TUESDAY</var> vaut <code>1</code>, et ainsi de suite.
+</ol>
+
+<p>Vous pouvez également utiliser l'assignation multi-variables pour bâtir des fonctions qui retournent plusieurs valeurs, tout simplement en utilisant un tuple comme valeur de retour. L'appelant peut traiter le résultat comme un unique tuple, ou bien il peut assigner les valeurs à des variables individuelles. De nombreuses bibliothèques standard Python procèdent ainsi, notamment le module <code>os</code>, à propos duquel vous en apprendrez plus dans <a href=comprehensions.html#os>le prochain chapitre</a>.
+
+<p class=a>&#x2042;
+
+<h2 id=sets>Les Ensembles</h2>
+
+<p>Un <dfn>ensemble</dfn> est un &#8220;sac&#8221; de valeurs uniques non ordonnées. Un ensemble peut contenir des valeurs de n'importe quel type de données immuables. Une fois que vous avez deux ensembles, vous pouvez effectuer des opérations standards sur les ensembles comme l'union, l'intersection et la différence.
+
+<h3 id=creating-a-set>Créer Un Ensemble</h3>
+
+<p>Commençons par le début. Il est facile de créer un ensemble.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = {1}</kbd>     <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(a_set)</kbd>     <span class=u>&#x2461;</span></a>
+<samp class=pp>&lt;class 'set'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2}</samp></pre>
+<ol>
+<li>Pour créer un ensemble contenant un élément, encadrez la valeur par deux accolades (<code>{}</code>).
+<li>En réalité, les ensembles sont implémentés sous forme de <a href=iterators.html#defining-classes>classes</a>, mais ne vous préoccupez pas de cela pour le moment.
+<li>Pour créer un ensemble contenant plusieurs éléments, séparez les valeurs par des virgules et encadrez le tout d'accolades.
+</ol>
+
+<p>Vous pouvez également créer un ensemble à partir d'une <a href=#lists>liste</a>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_list = ['a', 'b', 'mpilgrim', True, False, 42]</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = set(a_list)</kbd>                           <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>                                         <span class=u>&#x2461;</span></a>
+<samp class=pp>{'a', False, 'b', True, 'mpilgrim', 42}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_list</kbd>                                        <span class=u>&#x2462;</span></a>
+<samp class=pp>['a', 'b', 'mpilgrim', True, False, 42]</samp></pre>
+<ol>
+<li>Pour créer un ensemble à partir d'une liste, utilisez la fonction <code>set()</code>. (Les pédants qui savent comment les ensembles sont implémentés souligneront qu'il ne s'agit pas d'un appel de fonction mais de l'instanciation d'une classe. Je vous <em>promets</em> que vous apprendrez la différence plus tard dans ce livre. Pour le moment, retenez que <code>set()</code> agit comme une fonction et retourne un ensemble.)
+<li>Comme mentionné plus tôt, un ensemble donné peut contenir des éléments de n'importe quel type de données. Et, comme mentionné plus tôt, les ensembles sont <em>non ordonnés</em>. Cet ensemble ne conserve pas l'ordre original de la liste dont il est issu. Si vous ajoutiez des éléments à cet ensemble, il ne conserverait pas l'ordre dans lequel vous les avez ajoutés.
+<li>La liste originale n'est pas modifiée.
+</ol>
+
+<p id=emptyset>Vous n'avez pas encore de valeurs&nbsp;? Pas de problème. Vous pouvez créer un ensemble vide.
+
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set = set()</kbd>    <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>            <span class=u>&#x2461;</span></a>
+<samp class=pp>set()</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>type(a_set)</kbd>      <span class=u>&#x2462;</span></a>
+<samp class=pp>&lt;class 'set'></samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>       <span class=u>&#x2463;</span></a>
+<samp class=pp>0</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>not_sure = {}</kbd>    <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>type(not_sure)</kbd>
+<samp class=pp>&lt;class 'dict'></samp></pre>
+<ol>
+<li>Pour créer un ensemble vide, appellez <code>set()</code> sans argument.
+<li>L'affichage d'un ensemble vide paraît un peu étrange. Vous vous attendiez à  <code>{}</code> peut-être&nbsp;? Cela représenterait un dictionnaire vide, pas un ensemble vide. Vous en apprendrez plus sur les dictionnaires plus loin dans ce chapitre.
+<li>Malgré l'étrange représentation, c'<em>est</em> bien un ensemble&nbsp;&hellip;
+<li>&hellip;&nbsp;et cet ensemble est vide.
+<li>En raison de bricolages issus de Python 2, vous ne pouvez pas créer un ensemble vide avec deux accolades. Cela crée un dictionnaire vide, pas un ensemble vide.
+</ol>
+
+<h3 id=modifying-sets>Modifier Un Ensemble</h3>
+
+<p>Il existe deux manières d'ajouter des valeurs à un ensemble&nbsp;: la méthode <code>add()</code> et la méthode <code>update()</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(4)</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 4}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2461;</span></a>
+<samp class=pp>3</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(1)</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=pp>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 4}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>len(a_set)</kbd>    <span class=u>&#x2463;</span></a>
+<samp class=pp>3</samp></pre>
+<ol>
+<li>La méthode <code>add()</code> prend un unique argument, qui peut être de n'importe quel type de données, et ajoute cette valeur à l'ensemble.
+<li>Cet ensemble contient maintenant trois éléments.
+<li>Les ensembles sont des sacs de <em>valeurs uniques</em>. Si vous essyez d'ajouter une valeur déjà présente dans l'ensemble, il ne se passera rien. Cela ne lèvera pas d'erreur; c'est juste une opération blanche.
+<li>Cet ensemble contient <em>encore</em> 3 éléments.
+</ol>
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({2, 4, 6})</kbd>                       <span class=u>&#x2460;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set</kbd>                                         <span class=u>&#x2461;</span></a>
+<samp class=pp>{1, 2, 3, 4, 6}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update({3, 6, 9}, {1, 2, 3, 5, 8, 13})</kbd>  <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 13}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.update([10, 20, 30])</kbd>                    <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 20, 30}</samp></pre>
+<ol>
+<li>La méthode <code>update()</code> prend un argument, un ensemble, et ajoute tous ses éléments à l'ensemble de départ. Cela revient à appeller la méthode <code>add()</code> successivement avec chaque élément de l'ensemble en argument.
+<li>Les doublons sont ignorés puisqu'un ensemble ne peut contenir deux fois la même valeur.
+<li>En réalité, vous pouvez appeler la méthode <code>update()</code> avec n'importe quel nombre d'arguments. Lorsqu'on l'appelle avec deux arguments, la méthode <code>update()</code> ajoute tous les éléments de chacun des ensembles à l'ensemble de départ (en ignorant les doublons).
+<li>La méthode <code>update()</code> peut prendre en argument des objets de différents types de données, notamment des listes. Lorsqu'elle est appellée avec une liste, la méthode <code>update()</code> ajoute chaque élément de la liste à l'ensemble original.
+</ol>
+
+<h3 id=removing-from-sets>Supprimer Des Éléments D'un Ensemble</h3>
+
+<p>Il y a trois manières de supprimer des éléments individuels d'un ensemble. Les deux premières, <code>discard()</code> and <code>remove()</code>, présentent une subtile différence.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 10, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.discard(10)</kbd>                        <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.discard(10)</kbd>                        <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.remove(21)</kbd>                         <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{1, 3, 36, 6, 45, 15, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.remove(21)</kbd>                         <span class=u>&#x2463;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 21</samp></pre>
+<ol>
+<li>La méthode <code>discard()</code> prend une valeur unique en argument et supprime cette valeur de l'ensemble.
+<li>Si vous appelez la méthode <code>discard()</code> avec une valeur qui n'est pas présente dans l'ensemble, il ne se passe rien. Pas d'erreur; c'est juste une opération blanche.
+<li>La méthode <code>remove()</code> prend aussi une valeur unique en argument, et supprime aussi cette valeur de l'ensemble.
+<li>Voilà la différence&nbsp;: si la valeur n'est pas présente dans l'ensemble, la méthode <code>remove()</code> lève une exception <code>KeyError</code>.
+</ol>
+
+<p>Comme les listes, les ensembles disposent d'une méthode <code>pop()</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>                                <span class=u>&#x2460;</span></a>
+<samp class=pp>1</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<samp class=pp>3</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>
+<samp class=pp>36</samp>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>{6, 10, 45, 15, 21, 28}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.clear()</kbd>                              <span class=u>&#x2461;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set</kbd>
+<samp class=pp>set()</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.pop()</kbd>                                <span class=u>&#x2462;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 'pop from an empty set'</samp></pre>
+<ol>
+<li>La méthode <code>pop()</code> supprime une valeur unique d'un ensemble et retourne cette valeur. Néanmoins, puisque les ensembles ne sont pas ordonnés, il n'existe pas de &#8220;dernière&#8221; valeur dans un ensemble, il n'est donc pas possible de contrôler quelle valeur est supprimée. C'est totalement arbitraire.
+<li>La méthode <code>clear()</code> supprime <em>toutes</em> les valeurs d'un ensemble, vous vous retrouvez avec un ensemble vide. Cela est équivalent à <code>a_set = set()</code>, qui crée un nouvel ensemble et remplace la valeur précédente de la variable <var>a_set</var>.
+<li>Si vous tentez d'utiliser la méthode <code>pop()</code> sur un ensemble vide, cela lèvera une exception <code>KeyError</code>.
+</ol>
+
+<h3 id=common-set-operations>Opérations Ususelles Sur Les Ensembles</h3>
+
+<p>Le type de données <code>set</code> (ensemble) accepte plusieurs opérations usuelles sur les ensembles.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {2, 4, 5, 9, 12, 21, 30, 51, 76, 127, 195}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>30 in a_set</kbd>                                                     <span class=u>&#x2460;</span></a>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>31 in a_set</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>b_set = {1, 2, 3, 5, 6, 8, 9, 12, 15, 17, 18, 21}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.union(b_set)</kbd>                                              <span class=u>&#x2461;</span></a>
+<samp class=pp>{1, 2, 195, 4, 5, 6, 8, 12, 76, 15, 17, 18, 3, 21, 30, 51, 9, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.intersection(b_set)</kbd>                                       <span class=u>&#x2462;</span></a>
+<samp class=pp>{9, 2, 12, 5, 21}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.difference(b_set)</kbd>                                         <span class=u>&#x2463;</span></a>
+<samp class=pp>{195, 4, 76, 51, 30, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.symmetric_difference(b_set)</kbd>                               <span class=u>&#x2464;</span></a>
+<samp class=pp>{1, 3, 4, 6, 8, 76, 15, 17, 18, 195, 127, 30, 51}</samp></pre>
+<ol>
+<li>Pour tester si une valeur donnée appartient à un ensemble, utilisez l'opérateur  <code>in</code>. Cela fonctionne de la même manière qu'avec les listes.
+<li>La méthode <code>union()</code> retourne un nouvel ensemble qui contient tous les éléments appartenant à <em>l'un ou l'autre</em> des ensembles.
+<li>La méthode <code>intersection()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent aux <em>deux</em> ensembles.
+<li>La méthode <code>difference()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent à <var>a_set</var> mais pas à <var>b_set</var>.
+<li>La méthode <code>symmetric_difference()</code> retourne un nouvel ensemble qui contient tous les éléments qui appartiennent à <em>exactement un</em> des deux ensembles.
+</ol>
+
+<p>Trois de ces méthodes sont symétriques.
+
+<pre class=screen>
+# continued from the previous example
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.symmetric_difference(a_set)</kbd>                                       <span class=u>&#x2460;</span></a>
+<samp class=pp>{3, 1, 195, 4, 6, 8, 76, 15, 17, 18, 51, 30, 127}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.symmetric_difference(a_set) == a_set.symmetric_difference(b_set)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.union(a_set) == a_set.union(b_set)</kbd>                                <span class=u>&#x2462;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.intersection(a_set) == a_set.intersection(b_set)</kbd>                  <span class=u>&#x2463;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.difference(a_set) == a_set.difference(b_set)</kbd>                      <span class=u>&#x2464;</span></a>
+<samp class=pp>False</samp></pre>
+<ol>
+<li>La différence symétrique de <var>a_set</var> par rapport à <var>b_set</var> <em>semble</em> différente de la différence symétrique de <var>b_set</var> par rapport à <var>a_set</var>, mais souvenez vous, les ensembles ne sont pas ordonnés. Deux ensembles quelconques qui contiennent exactement les mêmes valeurs sont considérés comme égaux.
+<li>Et c'est exactement ce qui se passe ici. Ne soyez pas trompés par la manière dont ces ensembles sont représentés dans le terminal interactif. Ils contiennent les mêmes valeurs, ils sont donc égaux.
+<li>L'union de deux ensembles est aussi symétrique.
+<li>L'intersection de deux ensembles est aussi symétrique.
+<li>La différence entre deux ensembles n'est pas symétrique. Cela paraît logique; c'est similaire à la soustraction d'un nombre à un autre. L'ordre des opérandes compte.
+</ol>
+
+<p>Enfin, il existe certaines questions que vous pouvez vous poser à propos des ensembles.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_set = {1, 2, 3}</kbd>
+<samp class=p>>>> </samp><kbd class=pp>b_set = {1, 2, 3, 4}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>    <span class=u>&#x2460;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>  <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_set.add(5)</kbd>             <span class=u>&#x2462;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_set.issubset(b_set)</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>b_set.issuperset(a_set)</kbd>
+<samp class=pp>False</samp></pre>
+<ol>
+<li><var>a_set</var> est un <dfn>sous-ensemble</dfn> de <var>b_set</var>&nbsp;&mdash;&nbsp;tous les éléments de <var>a_set</var> appartiennent également à <var>b_set</var>.
+<li>Réciproquement, <var>b_set</var> est un <dfn>sur-ensemble</dfn> de <var>a_set</var>, car tous les éléments de <var>a_set</var> appartiennent également à <var>b_set</var>.
+<li>Dès que vous ajoutez à <var>a_set</var> une valeur qui n'appartient pas à  <var>b_set</var>, les deux tests retournent <code>False</code>.
+</ol>
+
+<h3 id=sets-in-a-boolean-context>Les Ensembles Dans Un Contexte Booléen</h3>
+
+<p>Vous pouvez utiliser les ensembles dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
+
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true(set())</kbd>          <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({'a'})</kbd>          <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({False})</kbd>        <span class=u>&#x2462;</span></a>
+<samp>yes, it's true</samp></pre>
+<ol>
+<li>Dans un contexte booléen, un ensemble vide vaut Faux.
+<li>Un ensemble qui contient au moins un élément vaut Vrai.
+<li>Un ensemble qui contient au moins un élément vaut Vrai. La valeur des éléments n'est pas significative.
+</ol>
+
+<p class=a>&#x2042;
+
+<h2 id=dictionaries>Les Dictionnaires</h2>
+
+<p>Un <dfn>dictionnaire</dfn> est un ensemble non ordonné de paires clé-valeur. Lorsque vous ajoutez une clé à un dictionnaire, vous devez également ajouter une valeur pour cette clé. (Vous pouvez toujours modifier cette valeur ultérieurement.) Les dictionnaires Python sont optimisés pour retrouver une valeur à partir de sa clé, pas pour les cas inverses.
+<blockquote class='note compare perl5'>
+<p><span class=u>&#x261E;</span>Un dictionnaire en Python est similaire à un hachage en Perl. En Perl 5, les noms des variables qui conservent des hachages commencent toujours par le caractère <code>%</code>. En Python, les variables peuvent être nommées à votre guise et Python conserve le type de données en interne.
+</blockquote>
+<h3 id=creating-dictionaries>Créer Un Dictionnaire</h3>
+<p>La création d'un dictionnaire est facile. La syntaxe est similaire à celle des <a href=#sets>ensembles</a>, mais au lieu de valeurs, vous avez des paires clé-valeur. Une fois le dictionnaire créé, vous pouvez accéder à ses valeurs grâce à ses clés.
+<pre class=screen>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict = {'server': 'db.diveintopython3.org', 'database': 'mysql'}</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<samp class=pp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['server']</kbd>                                                    <span class=u>&#x2461;</span></a>
+'db.diveintopython3.org'
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['database']</kbd>                                                  <span class=u>&#x2462;</span></a>
+'mysql'
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['db.diveintopython3.org']</kbd>                                    <span class=u>&#x2463;</span></a>
+<samp class=traceback>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+KeyError: 'db.diveintopython3.org'</samp></pre>
+<ol>
+<li>Tout d'abord, vous créez un dictionnaire contenant deux éléments et vous l'assignez à la variable <var>a_dict</var>. Chaque élément est une paire clé-valeur, et l'ensemble des éléments est entouré d'accolades.
+<li><code>'server'</code> est une clé, et sa valeur associée, référencée par <code>a_dict['server']</code>, vaut <code>'db.diveintopython3.org'</code>.
+<li><code>'database'</code> est une clé, et sa valeur associée, référencée par <code>a_dict['database']</code>, vaut <code>'mysql'</code>.
+<li>Vous pouvez retrouver une valeur par l'intermédiaire de sa clé, mais vous ne pouvez retrouver une clé à parir de sa valeur. Ainsi, <code>a_dict['server']</code> vaut <code>'db.diveintopython3.org'</code>, mais <code>a_dict['db.diveintopython3.org']</code> lève une exception, car <code>'db.diveintopython3.org'</code> n'est pas une clé.
+</ol>
+<h3 id=modifying-dictionaries>Modifier Un Dictionnaire</h3>
+<p>Les dictionnaires n'ont pas de limite de taille prédéfinie. Vous pouvez ajouter des paires clé-valeur à un dictionnaire à tout moment, ou vous pouvez modifier la valeur d'une clé déjà existante. En poursuivant l'exemple précédent&nbsp;:
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<samp class=pp>{'server': 'db.diveintopython3.org', 'database': 'mysql'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['database'] = 'blog'</kbd>  <span class=u>&#x2460;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<samp class=pp>{'server': 'db.diveintopython3.org', 'database': 'blog'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['user'] = 'mark'</kbd>      <span class=u>&#x2461;</span></a>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>                       <span class=u>&#x2462;</span></a>
+<samp class=pp>{'server': 'db.diveintopython3.org', 'user': 'mark', 'database': 'blog'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['user'] = 'dora'</kbd>      <span class=u>&#x2463;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<samp class=pp>{'server': 'db.diveintopython3.org', 'user': 'dora', 'database': 'blog'}</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>a_dict['User'] = 'mark'</kbd>      <span class=u>&#x2464;</span></a>
+<samp class=p>>>> </samp><kbd class=pp>a_dict</kbd>
+<samp class=pp>{'User': 'mark', 'server': 'db.diveintopython3.org', 'user': 'dora', 'database': 'blog'}</samp></pre>
+<ol>
+<li>Vous ne pouvez avoir deux clés identiques dans un dictionnaire. L'assignation d'une valeur à une clé déjà existante efface la valeur précédente.
+<li>Vous pouvez ajouter de nouvelles paires clé-valeur à tout moment. La syntaxe est identique à celle utilisée pour modifier une valeur existante.
+<li>Le nouvel élément du dictionnaire (clé <code>'user'</code>, valeur <code>'mark'</code>) semble être placé au milieu. En fait, c'était une coincidence si les éléments semblaient apparaître dans l'ordre dans le premier exemple; c'est également une coincidence s'ils semble être dorénavant dans le désordre.
+<li>L'assignation d'une valeur à une clé de dictionnaire déjà existante ne fait que remplacer l'ancienne valeur par la nouvelle.
+<li>Cela va t'il réassigner la valeur de la clé <code>user</code> à "mark"?  Non&nbsp;!  Regardez la clé de plus près&nbsp;&mdash;&nbsp;c'est un <kbd>U</kbd> majuscule dans <kbd>"User"</kbd>. Les clés de dictionnaires sont sensibles à la casse, cette expression va donc créer une nouvelle paire clé-valeur, et non pas en remplacer une. Ces clés peuvent vous sembler similaires, mais pour Python il s'agit de deux clés totalement différentes.
+</ol>
+<h3 id=mixed-value-dictionaries>Dictionnaires À Valeurs Mixtes</h3>
+<p>Les dictionnaires ne concernent pas que les chaînes de caractères. Les valeurs de dictionnaire peuvent être de n'importe quel type de données, y compris des entiers, des booléens, des objets quelconques, ou même d'autres dictionnaires. Et dans un dictionnaire donné, les valeurs n'ont pas à être toutes du même type; vous pouvez panacher selon vos besoins. Il y a plus de restrictions sur les clés de dictionnaires, mais elles peuvent être de type chaîne de caractères, entiers, et quelques autres types. Vous pouvez également panacher les types des clés dans un dictionnaire.
+<p>D'ailleurs, vous avez déjà rencontré un dictionnaire dont des clés ou des valeurs ne sont pas des chaînes de caractères, dans <a href=your-first-python-program.html#divingin>votre premier programme en Python</a>.
+<pre class='nd pp'><code>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</code></pre>
+<p>Décomposons cela dans le terminal interactif.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],</kbd>
+<samp class=p>... </samp><kbd class=pp>            1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}</kbd>
+<a><samp class=p>>>> </samp><kbd class=pp>len(SUFFIXES)</kbd>      <span class=u>&#x2460;</span></a>
+<samp class=pp>2</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>1000 in SUFFIXES</kbd>   <span class=u>&#x2461;</span></a>
+<samp class=pp>True</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000]</kbd>     <span class=u>&#x2462;</span></a>
+<samp class=pp>['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1024]</kbd>     <span class=u>&#x2463;</span></a>
+<samp class=pp>['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>SUFFIXES[1000][3]</kbd>  <span class=u>&#x2464;</span></a>
+<samp class=pp>'TB'</samp></pre>
+<ol>
+<li>Comme pour les <a href=#lists>listes</a> et les <a href=#sets>ensembles</a>, la fonction <code>len()</code> vous donne le nombre de clés dans un dictionnaire.
+<li>Et comme pour les listes et les ensembles, vous pouvez utiliser l'opérateur <code>in</code> pour vérifier si une clé donnée est définie dans un dictionnaire.
+<li><code>1000</code> <em>est</em> du dictionnaire <code>SUFFIXES</code>; sa valeur est une liste de huit éléments (huit chaînes de caractères pour être précis).
+<li>De la même manière, <code>1024</code> est une clé du dictionnaire <code>SUFFIXES</code>; sa valeur est également une liste de huit éléments.
+<li>Puisque <code>SUFFIXES[1000]</code> est une liste, vous pouvez retrouver les éléments individuels de la liste par leur index.
+</ol>
+<h3 id=dictionaries-in-a-boolean-context>Les Dictionnaires Dans Un Contexte Booléen</h3>
+<aside>Les dictionnaires vides valent Faux, tous les autres dictionnaires valent Vrai.</aside>
+<p>Vous pouvez également utiliser un dictionnaire dans <a href=#booleans>un contexte booléen</a>, tel qu'une expression <code>if</code>.
+<pre class=screen>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({})</kbd>             <span class=u>&#x2460;</span></a>
+<samp>no, it's false</samp>
+<a><samp class=p>>>> </samp><kbd class=pp>is_it_true({'a': 1})</kbd>       <span class=u>&#x2461;</span></a>
+<samp>yes, it's true</samp></pre>
+<ol>
+<li>Dans un contexte booléen, un dictionnaire vide vaut Faux.
+<li>Tout dictionnaire contenant au moins une paire clé-valeur vaut Vrai.
+</ol>
+<p class=a>&#x2042;
+
+<h2 id=none><code>None</code></h2>
+<p><code><dfn>None</dfn></code> (aucun, aucune) est une constante particulière en Python. Elle représente une valeur <dfn>nulle</dfn>. <code>None</code> est différent de  <code>False</code>. <code>None</code> n'est pas 0. <code>None</code> n'est pas une chaîne de caractères vide. Si vous comparez <code>None</code> à quoi que ce soit qui n'est pas  <code>None</code>, le résultat sera toujours <code>False</code>.
+<p><code>None</code> est la seule valeur nulle. Elle a son propre type de données (<code>NoneType</code>). Vous pouvez assigner <code>None</code> à n'importe quelle variable, mais vous ne pouvez créer d'autres objets <code>NoneType</code>. Toutes les variables dont la valeur est <code>None</code> sont égales entre elles.
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>type(None)</kbd>
+<samp class=pp>&lt;class 'NoneType'></samp>
+<samp class=p>>>> </samp><kbd class=pp>None == False</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>None == 0</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>None == ''</kbd>
+<samp class=pp>False</samp>
+<samp class=p>>>> </samp><kbd class=pp>None == None</kbd>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>x = None</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x == None</kbd>
+<samp class=pp>True</samp>
+<samp class=p>>>> </samp><kbd class=pp>y = None</kbd>
+<samp class=p>>>> </samp><kbd class=pp>x == y</kbd>
+<samp class=pp>True</samp>
+</pre>
+<h3 id=none-in-a-boolean-context><code>None</code> Dans Un Contexte Booléen</h3>
+<p>Dans <a href=#booleans>un contexte booléen</a>, <code>None</code> vaut Faux et  <code>not None</code> vaut Vrai.
+<pre class='nd screen'>
+<samp class=p>>>> </samp><kbd class=pp>def is_it_true(anything):</kbd>
+<samp class=p>... </samp><kbd class=pp>  if anything:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("yes, it's true")</kbd>
+<samp class=p>... </samp><kbd class=pp>  else:</kbd>
+<samp class=p>... </samp><kbd class=pp>    print("no, it's false")</kbd>
+<samp class=p>...</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(None)</kbd>
+<samp>no, it's false</samp>
+<samp class=p>>>> </samp><kbd class=pp>is_it_true(not None)</kbd>
+<samp>yes, it's true</samp></pre>
+<p class=a>&#x2042;
+
+<h2 id=furtherreading>Pour En Savoir Plus</h2>
+<ul>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#boolean-operations-and-or-not>Boolean operations</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#numeric-types-int-float-long-complex>Numeric types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#sequence-types-str-unicode-list-tuple-buffer-xrange>Sequence types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#set-types-set-frozenset>Set types</a>
+<li><a href=http://docs.python.org/3.1/library/stdtypes.html#mapping-types-dict>Mapping types</a>
+<li><a href=http://docs.python.org/3.1/library/fractions.html><code>fractions</code> module</a>
+<li><a href=http://docs.python.org/3.1/library/math.html><code>math</code> module</a>
+<li><a href=http://www.python.org/dev/peps/pep-0237/><abbr>PEP</abbr> 237: Unifying Long Integers and Integers</a>
+<li><a href=http://www.python.org/dev/peps/pep-0238/><abbr>PEP</abbr> 238: Changing the Division Operator</a>
+</ul>
+<p class=v><a href=your-first-python-program.html rel=prev title='back to &#8220;Your First Python Program&#8221;'><span class=u>&#x261C;</span></a> <a href=comprehensions.html rel=next title='onward to &#8220;Comprehensions&#8221;'><span class=u>&#x261E;</span></a>
+<p class=c>&copy; 2001&ndash;11 <a href=about.html>Mark Pilgrim</a>
+<script src=j/jquery.js></script>
+<script src=j/prettify.js></script>
+<script src=j/dip3.js></script>
