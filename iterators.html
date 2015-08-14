@@ -236,7 +236,7 @@ All three of these class methods, <code>__init__</code>, <code>__iter__</code>, 
             self.pattern_file.close()
             raise StopIteration
 
-        pattern, search, replace = line.split(None, 3)
+        pattern, search, replace = line.split(None, 2)
         funcs = build_match_and_apply_functions(
             pattern, search, replace)
         self.cache.append(funcs)
@@ -304,7 +304,7 @@ rules = LazyRules()</code></pre>
         .
         .
         .
-        pattern, search, replace = line.split(None, 3)
+        pattern, search, replace = line.split(None, 2)
 <a>        funcs = build_match_and_apply_functions(        <span class=u>&#x2461;</span></a>
             pattern, search, replace)
 <a>        self.cache.append(funcs)                        <span class=u>&#x2462;</span></a>
