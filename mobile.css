@@ -40,6 +40,7 @@ body, .c, span, pre span, .c, .note, p, ul, ol {
 }
 pre, kbd, samp, code, var {
   font:normal 12px/18px monospace;
+  line-height: 1.0; // 1.1?
 }
 .baa {
   font:normal 14px/18px serif;
